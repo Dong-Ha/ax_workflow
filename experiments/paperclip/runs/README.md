@@ -21,3 +21,5 @@
 `muyhf5a7`의 최종 제품부 검토와 인수는 [delivery-review.md](./muyhf5a7/delivery-review.md)에 있습니다. 제품부 수락 뒤 별도로 실행한 런타임 guard 확인은 기록된 서버 파일 5개와 임시 패키지 변조 거부를 검증했습니다. 현재 위치 표시와 reset/poll 동작을 구현한 후속 실행 [muyiny8j](./muyiny8j/delivery-review.md)은 supplemental QA AXM-44 pass, 원래 승인 AXM-43 복구 후 pass, AXM-47 최종 제품부 수락 이력을 보존합니다. navigation position contract는 이 후속 실행에서 새 기준으로 검증됐으며 이전 수락을 소급해 결함 판정하지 않습니다.
 
 최종 저장소 검증은 [unit 148/build/browser 23/navigation 6/graph 500/topology 6 요약](./muyiny8j/final-repository-validation.json), [navigation root report](./muyiny8j/navigation-root-verification.json), [graph report](./muyiny8j/graph-root-verification.json), [topology report](./muyiny8j/topology-root-verification.json)에서 확인할 수 있습니다. [localhost 최종 패키지 전달·런타임 검사](./muyiny8j/final-local-verification.json)와 [이전 후보 rollback readiness](./muyiny8j/rollback-readiness.json)도 별도 기록했습니다.
+
+최종 로컬 실행의 [안정성 관찰](./muyiny8j/final-local-soak.json)은 약 9분 동안 18회 측정했으며 AX와 Paperclip의 응답 실패가 없었습니다.

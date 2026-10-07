@@ -1,0 +1,279 @@
+{
+  "verdict": "pass",
+  "sampleCount": 18,
+  "failures": [],
+  "samples": [
+    {
+      "at": "2026-10-07T20:41:51.831Z",
+      "checks": [
+        {
+          "name": "AX",
+          "status": 200,
+          "pass": true
+        },
+        {
+          "name": "Paperclip",
+          "status": 200,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "at": "2026-10-07T20:42:21.935Z",
+      "checks": [
+        {
+          "name": "AX",
+          "status": 200,
+          "pass": true
+        },
+        {
+          "name": "Paperclip",
+          "status": 200,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "at": "2026-10-07T20:42:51.996Z",
+      "checks": [
+        {
+          "name": "AX",
+          "status": 200,
+          "pass": true
+        },
+        {
+          "name": "Paperclip",
+          "status": 200,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "at": "2026-10-07T20:43:22.056Z",
+      "checks": [
+        {
+          "name": "AX",
+          "status": 200,
+          "pass": true
+        },
+        {
+          "name": "Paperclip",
+          "status": 200,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "at": "2026-10-07T20:43:52.116Z",
+      "checks": [
+        {
+          "name": "AX",
+          "status": 200,
+          "pass": true
+        },
+        {
+          "name": "Paperclip",
+          "status": 200,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "at": "2026-10-07T20:44:22.174Z",
+      "checks": [
+        {
+          "name": "AX",
+          "status": 200,
+          "pass": true
+        },
+        {
+          "name": "Paperclip",
+          "status": 200,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "at": "2026-10-07T20:44:52.228Z",
+      "checks": [
+        {
+          "name": "AX",
+          "status": 200,
+          "pass": true
+        },
+        {
+          "name": "Paperclip",
+          "status": 200,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "at": "2026-10-07T20:45:22.291Z",
+      "checks": [
+        {
+          "name": "AX",
+          "status": 200,
+          "pass": true
+        },
+        {
+          "name": "Paperclip",
+          "status": 200,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "at": "2026-10-07T20:45:52.350Z",
+      "checks": [
+        {
+          "name": "AX",
+          "status": 200,
+          "pass": true
+        },
+        {
+          "name": "Paperclip",
+          "status": 200,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "at": "2026-10-07T20:46:22.408Z",
+      "checks": [
+        {
+          "name": "AX",
+          "status": 200,
+          "pass": true
+        },
+        {
+          "name": "Paperclip",
+          "status": 200,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "at": "2026-10-07T20:46:52.463Z",
+      "checks": [
+        {
+          "name": "AX",
+          "status": 200,
+          "pass": true
+        },
+        {
+          "name": "Paperclip",
+          "status": 200,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "at": "2026-10-07T20:47:22.526Z",
+      "checks": [
+        {
+          "name": "AX",
+          "status": 200,
+          "pass": true
+        },
+        {
+          "name": "Paperclip",
+          "status": 200,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "at": "2026-10-07T20:47:52.590Z",
+      "checks": [
+        {
+          "name": "AX",
+          "status": 200,
+          "pass": true
+        },
+        {
+          "name": "Paperclip",
+          "status": 200,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "at": "2026-10-07T20:48:22.651Z",
+      "checks": [
+        {
+          "name": "AX",
+          "status": 200,
+          "pass": true
+        },
+        {
+          "name": "Paperclip",
+          "status": 200,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "at": "2026-10-07T20:48:52.711Z",
+      "checks": [
+        {
+          "name": "AX",
+          "status": 200,
+          "pass": true
+        },
+        {
+          "name": "Paperclip",
+          "status": 200,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "at": "2026-10-07T20:49:22.772Z",
+      "checks": [
+        {
+          "name": "AX",
+          "status": 200,
+          "pass": true
+        },
+        {
+          "name": "Paperclip",
+          "status": 200,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "at": "2026-10-07T20:49:52.828Z",
+      "checks": [
+        {
+          "name": "AX",
+          "status": 200,
+          "pass": true
+        },
+        {
+          "name": "Paperclip",
+          "status": 200,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "at": "2026-10-07T20:50:22.881Z",
+      "checks": [
+        {
+          "name": "AX",
+          "status": 200,
+          "pass": true
+        },
+        {
+          "name": "Paperclip",
+          "status": 200,
+          "pass": true
+        }
+      ]
+    }
+  ],
+  "workflowId": "muyiny8j",
+  "observation": "Accepted AX and Paperclip loopback HTTP health only; no conversation API response bodies retained."
+}
