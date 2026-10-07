@@ -1,6 +1,6 @@
-# AX Codex 관제 페이지
+# AX 에이전트 관제 페이지
 
-현재 PC의 Codex 기록에서 AX 대화와 하위 에이전트의 상태, 위임 관계, 작업 요청, 완료 응답을 확인하는 로컬 대시보드입니다. 한국어 관제실 화면이며 추가 모델 호출이 없습니다.
+현재 PC의 Codex, Claude Code, OpenCode 기록에서 프로젝트 대화와 하위 에이전트의 상태, 위임 관계, 작업 요청, 완료 응답을 확인하는 로컬 대시보드입니다. 한국어 관제실 화면이며 추가 모델 호출이 없습니다.
 
 ## 실행
 
@@ -16,7 +16,7 @@ npm start
 
 ## 설정
 
-기본 프로젝트 경로는 이 저장소의 디렉터리이며, Codex 데이터는 사용자 홈의 `.codex`에서 읽습니다. 설정을 바꾸려면 다음 환경 변수를 사용합니다.
+기본 프로젝트 경로는 이 저장소의 디렉터리입니다. 화면의 **도구 선택**에서 Codex, Claude Code, OpenCode를 전환합니다. 전환하면 세션과 활동 목록도 해당 도구의 기록으로 바뀝니다. 도구를 설치한 같은 PC에서 실행하세요. 설정을 바꾸려면 다음 환경 변수를 사용합니다.
 
 ```sh
 AX_PROJECT_ROOT=/home/dongha/AX AX_CODEX_HOME=/home/dongha/.codex PORT=3000 npm start
@@ -24,7 +24,19 @@ AX_PROJECT_ROOT=/home/dongha/AX AX_CODEX_HOME=/home/dongha/.codex PORT=3000 npm 
 
 - `AX_PROJECT_ROOT`: 조회할 프로젝트의 작업 디렉터리. 기본값은 이 앱의 루트입니다.
 - `AX_CODEX_HOME`: Codex 데이터 디렉터리. `CODEX_HOME`을 재정의하지 않습니다.
+- `AX_CLAUDE_HOME`: Claude Code 데이터 디렉터리. 기본값은 `CLAUDE_CONFIG_DIR` 또는 `~/.claude`.
+- `AX_OPENCODE_HOME`: OpenCode 데이터 디렉터리. 기본값은 `$XDG_DATA_HOME/opencode` 또는 `~/.local/share/opencode`.
 - `PORT`: HTTP 포트. 기본값 3000.
+
+다른 작업 폴더를 관제할 때는 다음처럼 실행합니다. 모델 API 키나 추가 모델 호출은 필요하지 않습니다.
+
+```sh
+AX_PROJECT_ROOT=/path/to/your/project npm start
+```
+
+Claude Code는 `projects/<project>/<session>.jsonl` 대화와 `<session>/subagents/agent-*.jsonl` 하위 기록을 읽습니다. 루트 대화의 `cwd`가 프로젝트 경로와 일치해야 하며, 하위 에이전트는 부모 세션 폴더 관계로 연결합니다. `end_turn`, `stop_sequence` 또는 `turn_duration` 종료 기록이 있어야 턴 완료로 표시합니다. 종료 근거가 없는 응답만으로는 완료로 처리하지 않습니다. Claude Code의 과거 평면 `agent-*.jsonl` 및 agent teams 별도 세션 연결은 지원하지 않습니다. [Claude Code 디렉터리 문서](https://code.claude.com/docs/en/claude-directory), [하위 에이전트 기록 문서](https://code.claude.com/docs/en/hooks#subagentstop).
+
+OpenCode는 데이터 디렉터리의 `opencode.db`에서 `session`, `message`, `part` 테이블을 읽습니다. `directory`로 루트를 제한하고 `parent_id`로 하위 세션을 연결합니다. 메시지의 `time.completed`, `finish`, `error`로 저장된 턴 상태를 표시합니다. SQLite 이전 JSON 저장 형식은 지원하지 않습니다. [OpenCode 저장소 안내](https://opencode.ai/docs/troubleshooting/#storage), [공식 메시지 형식 소스](https://github.com/anomalyco/opencode/blob/dev/packages/opencode/src/session/message-v2.ts).
 
 같은 프로젝트의 대화가 여러 개이면 최근 업데이트된 대화를 선택합니다. 하위 에이전트는 작업 디렉터리가 달라도 실제 위임 관계를 따라 포함합니다. 다른 프로젝트 기록은 API로도 조회할 수 없습니다.
 
@@ -34,18 +46,22 @@ AX_PROJECT_ROOT=/home/dongha/AX AX_CODEX_HOME=/home/dongha/.codex PORT=3000 npm 
 
 작업 요청과 완료 응답은 원문 텍스트를 길이 제한 안에서 표시합니다. 사용자에게 보이는 진행 메시지·계획과 활동 유형도 표시합니다. 추론, 인증 파일, 원시 명령 및 도구 출력은 화면으로 전달하지 않습니다. 표시 텍스트의 일반적인 인증 패턴은 가리지만 완전한 비밀정보 탐지 기능은 아닙니다. HTML은 실행하지 않으며 외부 폰트나 분석 서비스도 사용하지 않습니다.
 
-데이터베이스는 읽기 전용으로 엽니다. Codex CLI 0.160.1 환경에서 확인한 `state_5.sqlite` 및 `thread_history_1.sqlite` 내부 형식에 의존합니다. 다른 버전에서 형식이 바뀌면 연결 오류를 표시할 수 있습니다. 저장소가 없거나 잠겨 있거나 형식이 맞지 않으면 연결 오류를 표시하고 마지막 정상 화면을 유지합니다. 어댑터는 `server/store.mjs`입니다.
+데이터베이스는 읽기 전용으로 엽니다. Codex CLI 0.160.1 환경에서 확인한 `state_5.sqlite` 및 `thread_history_1.sqlite` 내부 형식에 의존합니다. 다른 버전에서 형식이 바뀌면 연결 오류를 표시할 수 있습니다. 저장소가 없거나 잠겨 있거나 형식이 맞지 않으면 연결 오류를 표시하고 마지막 정상 화면을 유지합니다. Codex 어댑터는 `server/store.mjs`, Claude Code는 `server/claude-store.mjs`, OpenCode는 `server/opencode-store.mjs`입니다. 모든 어댑터는 원본 기록을 수정하지 않습니다. 각 도구의 내부 기록 형식이 바뀌면 어댑터 수정이 필요할 수 있습니다.
 
 ## API와 검증
 
-- `GET /api/dashboard?sessionId=...`: AX 대화 목록, 선택된 대화, 에이전트, 위임 관계.
-- `GET /api/agents/:id/activity?sessionId=...&before=...`: 최근 활동 50개와 이전 페이지 커서.
+- `GET /api/dashboard?provider=codex|claude|opencode&sessionId=...`: AX 대화 목록, 선택된 대화, 에이전트, 위임 관계.
+- `GET /api/agents/:id/activity?provider=codex|claude|opencode&sessionId=...&before=...`: 최근 활동 50개와 이전 페이지 커서.
 
-`sessionId`를 생략하면 가장 최근 AX 대화를 사용합니다. 변경 요청은 지원하지 않습니다.
+`provider`를 생략하면 Codex를 사용합니다. `sessionId`를 생략하면 가장 최근 AX 대화를 사용합니다. 변경 요청은 지원하지 않습니다.
 
 ```sh
 npm test
 npm run build
 ```
 
-테스트는 별도 임시 SQLite를 사용해 프로젝트 범위, 상태 해석, 페이지 처리, 추론 및 원시 출력 제외, 잘못된 항목과 저장소 누락을 검증합니다. 실행·중지, 토큰 비용, 외부 배포와 로그인 기능은 포함하지 않습니다.
+테스트는 별도 임시 SQLite와 JSONL을 사용해 프로젝트 범위, 상태 해석, 페이지 처리, 추론 및 원시 출력 제외, 잘못된 항목과 저장소 누락을 검증합니다. 실행·중지, 토큰 비용, 외부 배포와 로그인 기능은 포함하지 않습니다.
+
+## 코딩 도구에서 이 저장소 개발하기
+
+공통 개발 지침은 `AGENTS.md`에 있습니다. Codex와 OpenCode는 이 파일을 사용하고, Claude Code는 `CLAUDE.md`에서 가져옵니다. 프로젝트 루트에서 각 도구를 실행하고 작업을 요청하면 됩니다. 관제 서버는 별도 터미널에서 `npm run dev`로 실행합니다.

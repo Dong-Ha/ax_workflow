@@ -26,6 +26,8 @@ type Dashboard = {
 type Activity = { id: string; type: string; label: string; timestamp: number | null; text: string };
 type ActivityResponse = { items: Activity[]; nextCursor: number | null };
 
+type Provider = 'codex' | 'claude' | 'opencode';
+const providerNames = { codex: 'Codex', claude: 'Claude Code', opencode: 'OpenCode' };
 const POLL_MS = 2000;
 const statusText: Record<AgentStatus, string> = {
   inProgress: '진행 중', completed: '턴 완료', failed: '실패', interrupted: '중단', unknown: '상태 미확인',
@@ -65,6 +67,7 @@ function Icon({ name }: { name: 'spark' | 'chevron' | 'clock' | 'arrow' | 'layer
 }
 
 export default function App() {
+  const [provider, setProvider] = useState<Provider>('codex');
   const [dashboard, setDashboard] = useState<Dashboard | null>(null);
   const [selectedSession, setSelectedSession] = useState('');
   const [selectedAgentId, setSelectedAgentId] = useState('');
@@ -81,7 +84,7 @@ export default function App() {
   const fetchDashboard = useCallback(async (sessionId?: string) => {
     const requestId = ++dashboardRequest.current;
     try {
-      const query = sessionId ? `?sessionId=${encodeURIComponent(sessionId)}` : '';
+      const query = `?${new URLSearchParams({provider, ...(sessionId ? {sessionId} : {})})}`;
       const response = await fetch(`/api/dashboard${query}`, { headers: { Accept: 'application/json' }, signal: AbortSignal.timeout(10000) });
       if (!response.ok) throw new Error(`대시보드 응답 오류 (${response.status})`);
       const data = await response.json() as Dashboard;
@@ -94,7 +97,7 @@ export default function App() {
       if (requestId !== dashboardRequest.current) return;
       setDashboardError(error instanceof Error ? error.message : '대시보드를 불러오지 못했습니다.');
     }
-  }, []);
+  }, [provider]);
 
   useEffect(() => {
     let cancelled = false;
@@ -112,7 +115,7 @@ export default function App() {
     if (!append && olderBusy.current) return;
     const requestId = ++activityRequest.current;
     try {
-      const params = new URLSearchParams({ sessionId });
+      const params = new URLSearchParams({ sessionId, provider });
       if (before != null) params.set('before', String(before));
       const response = await fetch(`/api/agents/${encodeURIComponent(agentId)}/activity?${params}`, { headers: { Accept: 'application/json' }, signal: AbortSignal.timeout(10000) });
       if (!response.ok) throw new Error(`활동 기록 응답 오류 (${response.status})`);
@@ -131,7 +134,7 @@ export default function App() {
     } finally {
       if (requestId === activityRequest.current) { setLoadingOlder(false); olderBusy.current = false; }
     }
-  }, []);
+  }, [provider]);
 
   useEffect(() => {
     setActivities([]); setNextCursor(null); setActivityError('');
@@ -186,7 +189,7 @@ export default function App() {
 
   return <main className="app-shell">
     <header className="topbar">
-      <a className="brand" href="#top" aria-label="AX Codex Mission Control 홈"><span className="brand-mark"><Icon name="spark" /></span><span className="brand-word">AX<span>CODEX</span></span><span className="brand-divider"/><span className="brand-context">MISSION CONTROL</span></a>
+      <a className="brand" href="#top" aria-label="AX Mission Control 홈"><span className="brand-mark"><Icon name="spark" /></span><span className="brand-word">AX<span>AGENTS</span></span><span className="brand-divider"/><span className="brand-context">MISSION CONTROL</span></a>
       <div className="topbar-right"><span className="local-indicator"><i /> LOCAL INSTANCE</span><span className="topbar-divider"/><span className="clock-readout"><Icon name="clock" /> {formatTime(Date.now())}</span></div>
     </header>
 
@@ -195,6 +198,12 @@ export default function App() {
 
       <section className="hero-row">
         <div><div className="eyebrow"><span className="eyebrow-line"/> LIVE SYSTEM OVERVIEW</div><h1>미션 컨트롤<span className="title-period">.</span></h1><p className="hero-copy">에이전트의 작업 흐름과 위임 상태를 한눈에 확인합니다.</p></div>
+        <label className="session-select-wrap"><span>도구 선택</span><span className="select-control"><select value={provider} onChange={(event) => {
+          dashboardRequest.current += 1; activityRequest.current += 1;
+          setProvider(event.target.value as Provider); setDashboard(null); setSelectedSession(''); setSelectedAgentId('');
+          setActivities([]); setNextCursor(null); setDashboardError(''); setActivityError('');
+          hasOlder.current = false; olderBusy.current = false; setLoadingOlder(false);
+        }} aria-label="관제 도구 선택">{Object.entries(providerNames).map(([id,name]) => <option key={id} value={id}>{name}</option>)}</select><Icon name="chevron" /></span></label>
         <label className="session-select-wrap"><span>세션 선택</span><span className="select-control"><select value={selectedSession} onChange={(event) => { setSelectedSession(event.target.value); }} aria-label="모니터링 세션 선택"><option value="">세션 선택</option>{dashboard?.sessions.map((session) => <option key={session.id} value={session.id}>{session.title}</option>)}</select><Icon name="chevron" /></span></label>
       </section>
 
@@ -229,9 +238,9 @@ export default function App() {
         </aside>
       </div>
 
-      <section className="roles-section" aria-label="사용 가능한 역할"><div className="roles-head"><div><div className="section-kicker">AVAILABLE ROLES</div><h2>미사용 역할</h2></div><span>현재 세션에 아직 배정되지 않은 역할</span></div><div className="role-chips">{[{role:'worker_luna',label:'Luna',description:'탐색 · 실행'},{role:'senior_sol',label:'Sol',description:'심층 분석'},{role:'expert_astra',label:'Astra',description:'전문 리뷰'}].filter(item => !dashboard?.agents.some(agent => agent.role === item.role)).map(item => <RoleChip key={item.role} {...item}/>)}</div></section>
+      {provider === 'codex' && <section className="roles-section" aria-label="사용 가능한 역할"><div className="roles-head"><div><div className="section-kicker">AVAILABLE ROLES</div><h2>미사용 역할</h2></div><span>현재 세션에 아직 배정되지 않은 역할</span></div><div className="role-chips">{[{role:'worker_luna',label:'Luna',description:'탐색 · 실행'},{role:'senior_sol',label:'Sol',description:'심층 분석'},{role:'expert_astra',label:'Astra',description:'전문 리뷰'}].filter(item => !dashboard?.agents.some(agent => agent.role === item.role)).map(item => <RoleChip key={item.role} {...item}/>)}</div></section>}
 
-      <footer className="footer"><span>AX CODEX <i/> LOCAL OBSERVABILITY</span><span><i className="footer-live"/> POLLING EVERY 2 SEC <b>·</b> 마지막 동기화 {formatTime(dashboard?.updatedAt)}</span></footer>
+      <footer className="footer"><span>AX AGENTS <i/> LOCAL OBSERVABILITY</span><span><i className="footer-live"/> POLLING EVERY 2 SEC <b>·</b> 마지막 동기화 {formatTime(dashboard?.updatedAt)}</span></footer>
     </div>
   </main>;
 }
