@@ -23,3 +23,5 @@
 최종 저장소 검증은 [unit 148/build/browser 23/navigation 6/graph 500/topology 6 요약](./muyiny8j/final-repository-validation.json), [navigation root report](./muyiny8j/navigation-root-verification.json), [graph report](./muyiny8j/graph-root-verification.json), [topology report](./muyiny8j/topology-root-verification.json)에서 확인할 수 있습니다. [localhost 최종 패키지 전달·런타임 검사](./muyiny8j/final-local-verification.json)와 [이전 후보 rollback readiness](./muyiny8j/rollback-readiness.json)도 별도 기록했습니다.
 
 최종 로컬 실행의 [안정성 관찰](./muyiny8j/final-local-soak.json)은 약 9분 동안 18회 측정했으며 AX와 Paperclip의 응답 실패가 없었습니다.
+
+작업 중 확인한 원본 프로세스 이미지와 실행·검증 화면은 [이미지 모음](../screenshots/README.md)에서 볼 수 있습니다.

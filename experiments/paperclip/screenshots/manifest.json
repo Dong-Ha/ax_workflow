@@ -1,0 +1,117 @@
+{
+  "schemaVersion": 1,
+  "images": [
+    {
+      "file": "paperclip-example-dashboard.png",
+      "caption": "기존 3에이전트 예제 대시보드",
+      "stage": "기존 Slugify 예제",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "348389315e7316f4c3b1b4ffca7b669ca53e3da4ddb9c572534bf59b13a60b82",
+      "source": ".paperclip-lab/evidence/paperclip-current.png",
+      "data": "Paperclip experiment UI"
+    },
+    {
+      "file": "paperclip-ax-pipeline.png",
+      "caption": "AX 개발 파이프라인 생성·실행 화면",
+      "stage": "초기 AX 흐름 실행 중",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "a81b156fd1baa045563b7989ff3407535c63ed0718003ee8d78287563d527744",
+      "source": ".paperclip-lab/evidence/ax-pipeline.png",
+      "data": "Paperclip experiment UI"
+    },
+    {
+      "file": "ax-filter-mobile-overview.png",
+      "caption": "검색·상태 필터 초기 모바일 전체 화면",
+      "stage": "초기 기능 확인",
+      "width": 375,
+      "height": 2307,
+      "sha256": "9e17b636e8a939cd0baf1cf084b365a4cdd9b4c0cab374a354abfa1c095cf3bd",
+      "source": ".paperclip-lab/evidence/agent-filter-smoke.png",
+      "data": "synthetic AX fixture"
+    },
+    {
+      "file": "ax-muy8gyek-mobile-smoke.png",
+      "caption": "초기 기능 모바일 스모크",
+      "stage": "muy8gyek",
+      "width": 375,
+      "height": 2492,
+      "sha256": "2452a21015920239b71b0c63bc306e2fefb2a5e6ad3b529f4f5a3a578178a8aa",
+      "source": ".paperclip-lab/workspaces/ax-muy8gyek/workflow-artifacts/agent-filter-smoke.png",
+      "data": "synthetic AX fixture"
+    },
+    {
+      "file": "ax-muycf1mz-mobile-smoke.png",
+      "caption": "필터 계산 개선 후 모바일 스모크",
+      "stage": "muycf1mz",
+      "width": 375,
+      "height": 2492,
+      "sha256": "2f68e564a773ae758c337ab5ce0aa3c90ddcbde0dcc4d6332d48bb395dc921ec",
+      "source": ".paperclip-lab/workspaces/ax-muycf1mz/workflow-artifacts/agent-filter-smoke.png",
+      "data": "synthetic AX fixture"
+    },
+    {
+      "file": "ax-muydy728-mobile-smoke.png",
+      "caption": "평탄한 트리 표시 개선 후 모바일 스모크",
+      "stage": "muydy728",
+      "width": 375,
+      "height": 2360,
+      "sha256": "4924c96f080617751ac8af0f4daf8eccc224378eae3f55c3c095b301b8b813a5",
+      "source": ".paperclip-lab/workspaces/ax-muydy728/workflow-artifacts/agent-filter-smoke.png",
+      "data": "synthetic AX fixture"
+    },
+    {
+      "file": "ax-muydy728-deep-tree-mobile.png",
+      "caption": "1,000개 연쇄 관계의 깊이 998·999 모바일 확인",
+      "stage": "muydy728",
+      "width": 360,
+      "height": 850,
+      "sha256": "d87a8019a5e818fa21b9c84ecfc65cff32fb9edab74aafd4adb526cd30a52cca",
+      "source": ".paperclip-lab/evidence/ui-graph-chain-360-muydy728.png",
+      "data": "synthetic AX fixture"
+    },
+    {
+      "file": "ax-muyhf5a7-mobile-smoke.png",
+      "caption": "이전·다음 항목 이동 추가 후 모바일 스모크",
+      "stage": "muyhf5a7",
+      "width": 375,
+      "height": 2442,
+      "sha256": "398035b307e0271f332455f254a2f2d81f170a157eab9951a9cc5670b41de267",
+      "source": ".paperclip-lab/workspaces/ax-muyhf5a7/workflow-artifacts/agent-filter-smoke.png",
+      "data": "synthetic AX fixture"
+    },
+    {
+      "file": "ax-muyhf5a7-navigation-mobile.png",
+      "caption": "모바일 검색·이동 버튼·키보드 안내 영역",
+      "stage": "muyhf5a7",
+      "width": 334,
+      "height": 341,
+      "sha256": "cbaf624b6bad70be4e170c7916ca4136647a148800aaa43dd73d4fe7dfdd6476",
+      "source": ".paperclip-lab/evidence/navigation-shortcuts-360.png",
+      "data": "synthetic AX fixture"
+    },
+    {
+      "file": "ax-muyiny8j-mobile-smoke.png",
+      "caption": "이동 순번 추가 후 최종 모바일 스모크",
+      "stage": "muyiny8j",
+      "width": 375,
+      "height": 2442,
+      "sha256": "073d18a8fa7a1a7a6eafd24c8c7745e1aeedc5199176ef70532e0e303c39a202",
+      "source": "workflow-artifacts/agent-filter-smoke.png",
+      "data": "synthetic AX fixture"
+    },
+    {
+      "file": "ax-muyiny8j-position-desktop.png",
+      "caption": "최종 데스크톱 미리보기: 이동 위치 2 / 3",
+      "stage": "muyiny8j",
+      "width": 1280,
+      "height": 1000,
+      "sha256": "708cf88cd9ef58ae3bfe69ea3fab1f62e02fd665570a7a6f3d1ba92508aa979c",
+      "source": ".paperclip-lab/final-position-preview.png",
+      "data": "synthetic AX fixture"
+    }
+  ],
+  "referenceImage": "../reference-process.png",
+  "deduplication": "Final root and ax-muyiny8j smoke images are byte-identical; one copy retained. Workspace reference-image copies use the existing tracked original."
+}

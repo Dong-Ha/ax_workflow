@@ -163,3 +163,5 @@ Paperclip의 파이프라인은 단계 전환과 작업 상태를 시각화하�
 - 브라우저에서 Dashboard, Pipelines와 단계 상세 화면을 확인했습니다. 정의된 순서를 건너뛰는 전환은 API가 409로 거부했습니다.
 
 공식 참고: [어댑터](https://docs.paperclip.ing/reference/adapters/overview/), [파이프라인 튜토리얼](https://github.com/paperclipai/paperclip/blob/master/docs/pipelines-tutorial.md).
+
+작업 중 확인한 원본 프로세스 이미지와 실행·검증 화면은 [이미지 모음](./screenshots/README.md)에서 볼 수 있습니다.

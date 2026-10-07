@@ -78,3 +78,5 @@ npm run test:browser
 전달된 소프트웨어 개발 프로세스 이미지를 적용한 AX 기능 개발은 `paperclip:ax:seed`, `paperclip:ax:run`으로 실행합니다. 제품부·개발팀·테스트팀·운영팀이 에이전트 검색·상태 필터를 실제로 개발하고, 결함 수정·재검증·출시 승인을 거쳐 localhost에 배포합니다. [팀별 흐름과 단계 대응](experiments/paperclip/FLOW.md), [실행·검증·반영 방법](experiments/paperclip/README.md)을 확인하세요.
 
 검색 결과는 **Alt + ↑ / ↓**로 이전·다음 항목으로 이동하며 현재 위치를 `k/N`으로 확인할 수 있습니다. 검색·상태·범위·필터 초기화 시 이동 위치는 재설정되고, 같은 범위의 유효한 갱신 중에는 유지됩니다. 개발·검증 근거는 [실제 실행 기록](experiments/paperclip/runs/README.md)에 있습니다.
+
+작업 중 확인한 원본 프로세스 이미지와 실행·검증 화면은 [이미지 모음](experiments/paperclip/screenshots/README.md)에서 볼 수 있습니다.
