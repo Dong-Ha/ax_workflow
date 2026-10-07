@@ -1,0 +1,10 @@
+{
+  "name": "AX · 고정 워크플로 테스트",
+  "project": "Slugify 라이브러리",
+  "description": "요구사항 정리 → 구현 → 검증. 앞 단계의 실제 산출물과 종료 결과를 확인한 뒤 다음 에이전트를 호출합니다.",
+  "stages": [
+    { "key": "planner", "name": "요구사항 정리", "agent": "Planner", "role": "pm", "output": "requirements.md" },
+    { "key": "builder", "name": "구현", "agent": "Builder", "role": "engineer", "output": "slugify.mjs" },
+    { "key": "reviewer", "name": "검증", "agent": "Reviewer", "role": "qa", "output": "report.md" }
+  ]
+}
