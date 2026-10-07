@@ -1,0 +1,53 @@
+{
+  "stage": "system",
+  "issueId": "9be50b52-c104-4e4b-a1c1-da5bdd398999",
+  "runId": "222c2f5f-bc17-4ba2-85b0-3417ff910d37",
+  "verdict": "fail",
+  "agentVerdict": "fail",
+  "findings": [
+    "전체 회귀 테스트 실패: npm test가 실패했다. 변경하지 않은 전체 테스트의 별도 TAP 실행에서도 ax-local-server, ax-release-check, ax-stage-agent, paperclip 테스트 파일이 실패했다."
+  ],
+  "agentUnverifiedChecks": [
+    "샌드박스 권한 제한으로 브라우저가 시작하지 못해 필수 브라우저 수용 시나리오와 스크린샷을 검증하지 못했다.",
+    "독립 합성 이동 검증기가 시작하지 못해 3,000개 체인 이동, 순환, 커서 초기화·유지 및 상세 유지 시나리오는 미검증이다.",
+    "전체 회귀 테스트 실패의 세부 원인을 제품 결함 또는 환경 제한으로 확정하지 못했다."
+  ],
+  "checks": [
+    {
+      "command": "file tests/agent-filter.test.mjs",
+      "status": "pass"
+    },
+    {
+      "command": "file tests/agent-filter.browser.mjs",
+      "status": "pass"
+    },
+    {
+      "command": "AX_VERIFY_URL configured",
+      "status": "pass"
+    },
+    {
+      "command": "npm test",
+      "status": "pass"
+    },
+    {
+      "command": "npm run build",
+      "status": "pass"
+    },
+    {
+      "command": "node tests/agent-filter.browser.mjs",
+      "status": "pass"
+    },
+    {
+      "command": "node experiments/paperclip/verify-agent-filter.mjs",
+      "status": "pass"
+    },
+    {
+      "command": "node experiments/paperclip/verify-agent-topology.mjs",
+      "status": "pass"
+    },
+    {
+      "command": "node experiments/paperclip/verify-agent-navigation.mjs",
+      "status": "pass"
+    }
+  ]
+}

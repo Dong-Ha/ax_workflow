@@ -1,0 +1,15 @@
+{
+  "buildRoot": "/home/dongha/AX/.paperclip-lab/workspaces/ax-muyhf5a7/dist",
+  "results": [
+    {
+      "name": "3000-node parent ring keeps unique cards, exact counts, and safe last-result navigation",
+      "verdict": "pass"
+    },
+    {
+      "name": "3000 unique IDs with one duplicate preserve first record and navigate its real matches once",
+      "verdict": "pass"
+    }
+  ],
+  "unexpectedRequests": 0,
+  "pageErrors": 0
+}

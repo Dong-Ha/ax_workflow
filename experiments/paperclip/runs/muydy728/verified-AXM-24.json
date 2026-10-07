@@ -1,0 +1,50 @@
+{
+  "stage": "system",
+  "issueId": "dbd6c6c1-05e4-452b-9a0e-99a45f06c2b3",
+  "runId": "351bdd96-8b29-44ce-bed3-2b12dfa0e73c",
+  "verdict": "fail",
+  "agentVerdict": "pass",
+  "findings": [
+    "node experiments/paperclip/verify-agent-topology.mjs failed",
+    "Topology verification report is malformed or has mismatches"
+  ],
+  "agentUnverifiedChecks": [
+    "npm test 전체 통과는 미검증: localhost 바인딩이 샌드박스에서 거부되어 관련 회귀 테스트가 실패했다.",
+    "브라우저 수용 검증은 미검증: 샌드박스 권한 제한으로 Chromium을 시작하지 못했다.",
+    "브라우저 스크린샷은 미검증: 브라우저 시작 실패로 이미지가 생성되지 않았으며 러너의 screenshotSaved는 false다."
+  ],
+  "checks": [
+    {
+      "command": "file tests/agent-filter.test.mjs",
+      "status": "pass"
+    },
+    {
+      "command": "file tests/agent-filter.browser.mjs",
+      "status": "pass"
+    },
+    {
+      "command": "AX_VERIFY_URL configured",
+      "status": "pass"
+    },
+    {
+      "command": "npm test",
+      "status": "pass"
+    },
+    {
+      "command": "npm run build",
+      "status": "pass"
+    },
+    {
+      "command": "node tests/agent-filter.browser.mjs",
+      "status": "pass"
+    },
+    {
+      "command": "node experiments/paperclip/verify-agent-filter.mjs",
+      "status": "pass"
+    },
+    {
+      "command": "node experiments/paperclip/verify-agent-topology.mjs",
+      "status": "fail"
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "approval": {
+    "approved": false,
+    "reason": "승인 보류. 현재 계약·보완·설계·구현·QA·출시 입력과 이동 위치 후속 범위를 검토했다. system.json과 verified-AXM-42.json은 동일 실행의 필수 명령 모두 pass이며, 기존 브라우저 23개·계층 6개·이동 6개 및 고정 그래프 검증도 통과다. 그러나 같은 세션 갱신에서 이동 대상이 삭제되거나 더 이상 일치하지 않으면 위치 0으로 초기화하고 자동 이동하지 않는 후속 계약은 통과한 검증기에 포함되지 않았다. 해당 디버그 시나리오는 브라우저 시작 차단으로 미검증이며 현재 QA의 미검증 설명도 후속 범위 공백을 기록한다. 컨트롤러 통과와 자체 실행 제약을 구분하되 이 필수 범위의 QA 재검증 전에는 출시를 승인하지 않는다. 이전 승인·출시 입력의 과거 실행 참조와 상태·이동 범위 충돌은 현재 계약으로 명시했다."
+  },
+  "previousNavigation": {
+    "schemaVersion": 1,
+    "suite": "offline synthetic match navigation verifier",
+    "verdict": "pass",
+    "buildRoot": "/home/dongha/AX/.paperclip-lab/workspaces/ax-muyiny8j/dist",
+    "generatedAt": "2026-10-07T20:00:21.244Z",
+    "requestPolicy": "synthetic API and build assets locally fulfilled; all other requests aborted",
+    "cases": [
+      {
+        "name": "deep-desktop",
+        "verdict": "pass",
+        "failureCodes": [],
+        "unexpectedRequestCount": 0,
+        "pageErrorCount": 0,
+        "checkCount": 27
+      },
+      {
+        "name": "deep-mobile",
+        "verdict": "pass",
+        "failureCodes": [],
+        "unexpectedRequestCount": 0,
+        "pageErrorCount": 0,
+        "checkCount": 27
+      },
+      {
+        "name": "next-previous-wrap",
+        "verdict": "pass",
+        "failureCodes": [],
+        "unexpectedRequestCount": 0,
+        "pageErrorCount": 0,
+        "checkCount": 65
+      },
+      {
+        "name": "filter-cursor-reset",
+        "verdict": "pass",
+        "failureCodes": [],
+        "unexpectedRequestCount": 0,
+        "pageErrorCount": 0,
+        "checkCount": 65
+      },
+      {
+        "name": "scope-cursor-reset",
+        "verdict": "pass",
+        "failureCodes": [],
+        "unexpectedRequestCount": 0,
+        "pageErrorCount": 0,
+        "checkCount": 51
+      },
+      {
+        "name": "hidden-selection-retained",
+        "verdict": "pass",
+        "failureCodes": [],
+        "unexpectedRequestCount": 0,
+        "pageErrorCount": 0,
+        "checkCount": 18
+      }
+    ]
+  },
+  "previousVerifierSHA256": "5e296786301230db0d549aa1e76b8bc11f1593ad98cf1cc678818b67c4c89d74",
+  "reviewedVerifierSHA256": "8afd698e5e36edff0962fc2f103c1ab23038d597f208d2bd9c83a6a3e22204c2",
+  "reason": "Formal QA must cover rendered polling revisions, reorder and removal of the current match before PM recovery."
+}

@@ -1,0 +1,10 @@
+{
+  "issue": "AXM-41",
+  "runId": "13798a7c-149c-4408-bb89-5918ef958823",
+  "status": "cancelled",
+  "previousVerifierSHA256": "59f27e38093480651f359c27f03d1231753059a6dc153d72a735aebe676b6f52",
+  "reviewedVerifierSHA256": "5e296786301230db0d549aa1e76b8bc11f1593ad98cf1cc678818b67c4c89d74",
+  "correction": "single matching agent requires position 1 / 1",
+  "allOtherAssertionsReviewed": true,
+  "productSourcePreserved": true
+}

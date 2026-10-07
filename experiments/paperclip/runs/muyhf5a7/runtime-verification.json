@@ -1,0 +1,10 @@
+{
+  "workflowId": "muyhf5a7",
+  "sourceDigestPresent": true,
+  "originalRuntimeVerdict": "pass",
+  "runtimeFileCount": 5,
+  "copyMutationRejected": true,
+  "copiedFilesAfterProbe": 0,
+  "serverStartedForMutationCheck": false,
+  "cleanup": "temporary copy removed"
+}

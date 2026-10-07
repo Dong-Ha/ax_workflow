@@ -1,0 +1,7 @@
+{
+  "accepted": true,
+  "reason": "온라인 수용 검사와 제품 승인 통과. 수정된 전달 기록의 workflow·소스 digest가 배포와 일치하고 세 자산 및 집계 해시를 독립 검증했다. 자산 해시는 verification-time 기준이다.",
+  "releaseDigest": "6e62aff223ccfbe15666ba87a8de289b3586b62d120ed4652f92830c6ad0f941",
+  "acceptanceRunId": "7adbd965-c856-4b5d-9506-8c02bc3f1d74",
+  "acceptanceIssueId": "825558b1-2d1c-48f2-9255-ea6582ffab0c"
+}

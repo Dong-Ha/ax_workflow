@@ -1,0 +1,11 @@
+{
+  "stage": "delivery-review",
+  "issueId": "9e4c5d79-bd87-43fa-a5cb-2361897863de",
+  "runId": "380f514d-261d-47c2-96e9-5c1416a81206",
+  "verdict": "pass",
+  "accepted": true,
+  "reason": "온라인 수용 검증과 제품 승인이 통과했고, 패키지·전달 릴리스 및 모든 자산 해시가 일치하며 전달 검사가 모두 통과했다.",
+  "releaseDigest": "24955f81c12f069b883acf47f96d0bb1de689f33b6d96c0b87c93640e87f612e",
+  "acceptanceRunId": "beb2d0aa-f9c0-4840-bc18-a2dc78b32a08",
+  "acceptanceIssueId": "797db66b-9690-4e8e-be4f-ebead48dac87"
+}

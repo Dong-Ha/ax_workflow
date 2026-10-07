@@ -1,0 +1,26 @@
+{
+  "verdict": "pass",
+  "url": "http://127.0.0.1:3201",
+  "checks": [
+    {
+      "asset": "assets/index-Drfl24f5.css",
+      "sha256": "5f130778329164918b89101b7ff8ae176d4f44800f424819c3a4add2d2911814",
+      "status": "pass"
+    },
+    {
+      "asset": "assets/index-c_m7FgwP.js",
+      "sha256": "b58369021c30f5fe502407f2974baf7119ef004cbc4cc2ad92e7e06984d3dca0",
+      "status": "pass"
+    },
+    {
+      "asset": "index.html",
+      "sha256": "f3a1eea95ef450e7d5c2b9690d3aab82e0547cf0fe85f3b56c22adc74bf00cdf",
+      "status": "pass"
+    }
+  ],
+  "workflowId": "muyiny8j",
+  "releaseDigest": "12faeffa438c0a7179914670928722085c0fd437bf54710993d5febc32a4acac",
+  "assetDigest": "59a49868e0cd1fb3809a4628500af102126d0d65af5b783ee16ba927634359ce",
+  "assetBaseline": "packaging-time",
+  "verifiedAt": "2026-10-07T20:29:12.815Z"
+}

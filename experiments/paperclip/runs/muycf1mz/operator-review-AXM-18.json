@@ -1,0 +1,20 @@
+{
+  "runId": "f632fa3f-b269-49d0-8d5f-db35cac974ac",
+  "issueId": "e0ecb99b-9c89-4afa-8321-393923a2f334",
+  "review": "Independent npm test reproduced exactly two fixture failures caused by repeated setupEnv teardown leaking AX_VERIFY_FILTER_GRAPH. WeakMap original-value restoration and explicit fixture defaults repair isolation without changing assertions. Isolated stage suite now passes 35 of 35. The development run changed filter source and artifacts but did not complete validation.",
+  "previousValidation": {
+    "runId": "f632fa3f-b269-49d0-8d5f-db35cac974ac",
+    "issueId": "e0ecb99b-9c89-4afa-8321-393923a2f334",
+    "verdict": "fail",
+    "checks": [
+      {
+        "command": "npm test",
+        "status": "fail"
+      },
+      {
+        "command": "npm run build",
+        "status": "pass"
+      }
+    ]
+  }
+}

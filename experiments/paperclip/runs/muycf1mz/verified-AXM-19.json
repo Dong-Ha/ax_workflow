@@ -1,0 +1,42 @@
+{
+  "stage": "system",
+  "issueId": "bb179f8f-d745-4e6b-827f-f89648c6f632",
+  "runId": "24278a4a-f0dc-4d0e-9acd-49516c35119d",
+  "verdict": "pass",
+  "agentVerdict": "pass",
+  "findings": [],
+  "agentUnverifiedChecks": [
+    "npm test의 ax-local-server, ax-release-check, ax-stage-agent, paperclip 검증은 격리 환경의 네트워크·프로세스 실행 제한으로 완료하지 못했습니다.",
+    "브라우저 시작 권한이 샌드박스에서 거부되어 브라우저 수용 시나리오와 스크린샷은 검증하지 못했습니다."
+  ],
+  "checks": [
+    {
+      "command": "file tests/agent-filter.test.mjs",
+      "status": "pass"
+    },
+    {
+      "command": "file tests/agent-filter.browser.mjs",
+      "status": "pass"
+    },
+    {
+      "command": "AX_VERIFY_URL configured",
+      "status": "pass"
+    },
+    {
+      "command": "npm test",
+      "status": "pass"
+    },
+    {
+      "command": "npm run build",
+      "status": "pass"
+    },
+    {
+      "command": "node tests/agent-filter.browser.mjs",
+      "status": "pass"
+    },
+    {
+      "command": "node experiments/paperclip/verify-agent-filter.mjs",
+      "status": "pass"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "generatedAt": "2026-10-07T20:36:34.398Z",
+  "unit": {
+    "passed": 148,
+    "failed": 0
+  },
+  "build": "pass",
+  "browser": {
+    "passed": 23,
+    "failed": 0
+  },
+  "navigation": {
+    "passed": 6,
+    "failed": 0
+  },
+  "source": "Final applied repository validation; synthetic browser requests locally fulfilled; no original conversation fixtures exported.",
+  "graph": {
+    "cases": 500,
+    "mismatches": 0
+  },
+  "topology": {
+    "passed": 6,
+    "failed": 0
+  }
+}

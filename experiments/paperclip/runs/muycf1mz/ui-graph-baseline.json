@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "suite": "offline synthetic malformed-topology UI probe",
+  "verdict": "pass",
+  "generatedAt": "2026-10-07T17:39:19.268Z",
+  "buildRoot": "/home/dongha/AX/dist",
+  "requestPolicy": "synthetic dashboard/activity and local build assets only; unexpected requests aborted",
+  "cases": [
+    {
+      "name": "two-node-cycle-and-unrelated-root",
+      "verdict": "pass",
+      "failureCodes": [],
+      "totalCount": 3,
+      "unexpectedRequestCount": 0,
+      "pageErrorCount": 0,
+      "initialCardCount": 3,
+      "matchedIds": [
+        "cycle-match"
+      ],
+      "contextIds": [
+        "cycle-anchor"
+      ],
+      "uniqueCardCount": 3,
+      "detailChecks": 2
+    },
+    {
+      "name": "self-parent-missing-parent-and-orphan",
+      "verdict": "pass",
+      "failureCodes": [],
+      "totalCount": 3,
+      "unexpectedRequestCount": 0,
+      "pageErrorCount": 0,
+      "initialCardCount": 3,
+      "matchedIds": [
+        "self-loop"
+      ],
+      "contextIds": [],
+      "uniqueCardCount": 3,
+      "detailChecks": 2
+    },
+    {
+      "name": "duplicate-id-first-record-wins-across-parents",
+      "verdict": "pass",
+      "failureCodes": [],
+      "totalCount": 4,
+      "unexpectedRequestCount": 0,
+      "pageErrorCount": 0,
+      "initialCardCount": 4,
+      "matchedIds": [
+        "deep-target"
+      ],
+      "contextIds": [
+        "parent-a",
+        "shared-id"
+      ],
+      "uniqueCardCount": 4,
+      "detailChecks": 2
+    }
+  ]
+}

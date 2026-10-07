@@ -1,0 +1,32 @@
+{
+  "previousRunId": "f533dbec-8e9b-4161-a942-2b859b672de3",
+  "deniedReview": {
+    "accepted": false,
+    "reason": "온라인 수용 검사·제품 승인·전달 자산 검사는 통과했으나 전달 기록에 배포 digest 연결이 없어 패키지 digest 일치를 확인할 수 없다.",
+    "releaseDigest": "6e62aff223ccfbe15666ba87a8de289b3586b62d120ed4652f92830c6ad0f941",
+    "acceptanceRunId": "7adbd965-c856-4b5d-9506-8c02bc3f1d74",
+    "acceptanceIssueId": "825558b1-2d1c-48f2-9255-ea6582ffab0c"
+  },
+  "previousDelivery": {
+    "verdict": "pass",
+    "url": "http://127.0.0.1:3201",
+    "checks": [
+      {
+        "asset": "assets/index-BebKoVmW.js",
+        "sha256": "0622036d975e88b5c4c6765fd5e2cd049d16861b859aea74f912570c02d2f08a",
+        "status": "pass"
+      },
+      {
+        "asset": "assets/index-Drfl24f5.css",
+        "sha256": "5f130778329164918b89101b7ff8ae176d4f44800f424819c3a4add2d2911814",
+        "status": "pass"
+      },
+      {
+        "asset": "index.html",
+        "sha256": "bc6b4e329a805ef2006d4837b8059b725ede17959de456004ea3d36e693ae67e",
+        "status": "pass"
+      }
+    ]
+  },
+  "reviewedOutcome": "mixed"
+}

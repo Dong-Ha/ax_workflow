@@ -1,0 +1,23 @@
+{
+  "buildRoot": "/home/dongha/AX/.paperclip-lab/workspaces/ax-muyhf5a7/dist",
+  "results": [
+    {
+      "name": "shortcuts from search focus matching cards without changing selection or details",
+      "verdict": "pass"
+    },
+    {
+      "name": "shortcuts continue from focused matches and wrap in both directions",
+      "verdict": "pass"
+    },
+    {
+      "name": "zero matches remain safe and navigation controls disabled",
+      "verdict": "pass"
+    },
+    {
+      "name": "360px filter area screenshot captured with synthetic matches",
+      "verdict": "pass"
+    }
+  ],
+  "unexpectedRequests": 0,
+  "pageErrors": 0
+}

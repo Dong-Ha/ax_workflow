@@ -1,0 +1,38 @@
+{
+  "stage": "smoke",
+  "issueId": "ff3ca502-0af8-4dfa-8b46-f162f48fcfb0",
+  "runId": "5355e416-5772-4522-8aa4-a30000f96d31",
+  "verdict": "fail",
+  "agentVerdict": "pass",
+  "findings": [
+    "node tests/agent-filter.browser.mjs failed",
+    "Browser failure scenario: Keyboard selection status clear accessible live summary and visible focus"
+  ],
+  "agentUnverifiedChecks": [
+    "Chromium startup was denied by the sandbox; browser acceptance checks and a fresh screenshot remain unverified.",
+    "Three regression cases require Paperclip execution forbidden by the isolation guard; npm test did not fully pass.",
+    "Previously reported status-control accessibility defect requires an independent browser retest."
+  ],
+  "checks": [
+    {
+      "command": "file tests/agent-filter.test.mjs",
+      "status": "pass"
+    },
+    {
+      "command": "file tests/agent-filter.browser.mjs",
+      "status": "pass"
+    },
+    {
+      "command": "npm test",
+      "status": "pass"
+    },
+    {
+      "command": "npm run build",
+      "status": "pass"
+    },
+    {
+      "command": "node tests/agent-filter.browser.mjs",
+      "status": "fail"
+    }
+  ]
+}

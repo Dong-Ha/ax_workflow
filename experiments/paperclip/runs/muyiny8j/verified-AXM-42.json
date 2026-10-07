@@ -1,0 +1,51 @@
+{
+  "stage": "system",
+  "issueId": "d4e38f04-fe09-4e3e-ad5e-ed94f63bb8ff",
+  "runId": "ee68b586-14e4-48d1-b631-dae2be74efbd",
+  "verdict": "pass",
+  "agentVerdict": "pass",
+  "findings": [],
+  "agentUnverifiedChecks": [
+    "npm test requires independent rerun: localhost binding restrictions prevent completion of four regression suites.",
+    "Browser scenarios and screenshot remain unverified because sandbox permissions prevent Chromium startup.",
+    "Accepted match-navigation position behavior requires independent offline browser verification; existing browser scenarios do not cover this follow-up."
+  ],
+  "checks": [
+    {
+      "command": "file tests/agent-filter.test.mjs",
+      "status": "pass"
+    },
+    {
+      "command": "file tests/agent-filter.browser.mjs",
+      "status": "pass"
+    },
+    {
+      "command": "AX_VERIFY_URL configured",
+      "status": "pass"
+    },
+    {
+      "command": "npm test",
+      "status": "pass"
+    },
+    {
+      "command": "npm run build",
+      "status": "pass"
+    },
+    {
+      "command": "node tests/agent-filter.browser.mjs",
+      "status": "pass"
+    },
+    {
+      "command": "node experiments/paperclip/verify-agent-filter.mjs",
+      "status": "pass"
+    },
+    {
+      "command": "node experiments/paperclip/verify-agent-topology.mjs",
+      "status": "pass"
+    },
+    {
+      "command": "node experiments/paperclip/verify-agent-navigation.mjs",
+      "status": "pass"
+    }
+  ]
+}

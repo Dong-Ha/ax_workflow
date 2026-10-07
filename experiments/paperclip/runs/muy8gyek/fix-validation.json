@@ -1,0 +1,15 @@
+{
+  "runId": "51296530-d37b-4b7f-8a02-57f50519087f",
+  "issueId": "5733db74-425b-4d17-beb1-0b5daab359a3",
+  "verdict": "pass",
+  "checks": [
+    {
+      "command": "npm test",
+      "status": "pass"
+    },
+    {
+      "command": "npm run build",
+      "status": "pass"
+    }
+  ]
+}

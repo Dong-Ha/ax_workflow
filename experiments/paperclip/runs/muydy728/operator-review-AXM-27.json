@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "suite": "synthetic reset locator timing",
+  "buildRoot": "/home/dongha/AX/.paperclip-lab/workspaces/ax-muydy728/dist",
+  "size": 3000,
+  "generatedAt": "2026-10-07T17:51:56.573Z",
+  "results": [
+    {
+      "strategy": "role",
+      "trials": [
+        {
+          "iteration": 1,
+          "beforeCards": 3000,
+          "beforeContexts": 2999,
+          "locatorAndNameMs": 0,
+          "clickMs": 15000,
+          "clickTimedOut": true,
+          "afterCards": null,
+          "afterContexts": null
+        }
+      ],
+      "unexpectedRequestCount": 0,
+      "pageErrorCount": 0,
+      "beforeCountsCorrect": true,
+      "afterCountsCorrect": true,
+      "accessibleNameChecks": 0,
+      "failureCodes": [
+        "reset-click-timeout"
+      ]
+    },
+    {
+      "strategy": "css",
+      "trials": [
+        {
+          "iteration": 1,
+          "beforeCards": 3000,
+          "beforeContexts": 2999,
+          "locatorAndNameMs": 28.58,
+          "clickMs": 198.99,
+          "domReactionMs": 164.8,
+          "afterCards": 3000,
+          "afterContexts": 0
+        },
+        {
+          "iteration": 2,
+          "beforeCards": 3000,
+          "beforeContexts": 2999,
+          "locatorAndNameMs": 22.82,
+          "clickMs": 196.48,
+          "domReactionMs": 160.2,
+          "afterCards": 3000,
+          "afterContexts": 0
+        },
+        {
+          "iteration": 3,
+          "beforeCards": 3000,
+          "beforeContexts": 2999,
+          "locatorAndNameMs": 25.03,
+          "clickMs": 196.7,
+          "domReactionMs": 145.9,
+          "afterCards": 3000,
+          "afterContexts": 0
+        }
+      ],
+      "unexpectedRequestCount": 0,
+      "pageErrorCount": 0,
+      "beforeCountsCorrect": true,
+      "afterCountsCorrect": true,
+      "accessibleNameChecks": 3,
+      "failureCodes": []
+    }
+  ]
+}

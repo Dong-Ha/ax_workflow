@@ -1,0 +1,121 @@
+{
+  "verdict": "pass",
+  "screenshotSaved": true,
+  "results": [
+    {
+      "name": "Initial guidance and no default selection",
+      "verdict": "pass",
+      "finding": "Acceptance check passed: Initial guidance and no default selection"
+    },
+    {
+      "name": "Status all exact option label and matching count",
+      "verdict": "pass",
+      "finding": "Acceptance check passed: Status all exact option label and matching count"
+    },
+    {
+      "name": "Status inProgress exact option label and matching count",
+      "verdict": "pass",
+      "finding": "Acceptance check passed: Status inProgress exact option label and matching count"
+    },
+    {
+      "name": "Status completed exact option label and matching count",
+      "verdict": "pass",
+      "finding": "Acceptance check passed: Status completed exact option label and matching count"
+    },
+    {
+      "name": "Status failed exact option label and matching count",
+      "verdict": "pass",
+      "finding": "Acceptance check passed: Status failed exact option label and matching count"
+    },
+    {
+      "name": "Status interrupted exact option label and matching count",
+      "verdict": "pass",
+      "finding": "Acceptance check passed: Status interrupted exact option label and matching count"
+    },
+    {
+      "name": "Status unknown exact option label and matching count",
+      "verdict": "pass",
+      "finding": "Acceptance check passed: Status unknown exact option label and matching count"
+    },
+    {
+      "name": "No waiting reinterpretation or extra status options",
+      "verdict": "pass",
+      "finding": "Acceptance check passed: No waiting reinterpretation or extra status options"
+    },
+    {
+      "name": "Name ID original and Korean role searches and normalization",
+      "verdict": "pass",
+      "finding": "Acceptance check passed: Name ID original and Korean role searches and normalization"
+    },
+    {
+      "name": "AND filtering and full-snapshot status summary",
+      "verdict": "pass",
+      "finding": "Acceptance check passed: AND filtering and full-snapshot status summary"
+    },
+    {
+      "name": "Descendant path retains only real ancestors as context and allows context selection",
+      "verdict": "pass",
+      "finding": "Acceptance check passed: Descendant path retains only real ancestors as context and allows context selection"
+    },
+    {
+      "name": "Hidden selection survives filters no match and clear without changing counts",
+      "verdict": "pass",
+      "finding": "Acceptance check passed: Hidden selection survives filters no match and clear without changing counts"
+    },
+    {
+      "name": "provider reset immediately clears filters detail activity and retains guidance with same IDs",
+      "verdict": "pass",
+      "finding": "Acceptance check passed: provider reset immediately clears filters detail activity and retains guidance with same IDs"
+    },
+    {
+      "name": "session reset immediately clears filters detail activity and retains guidance with same IDs",
+      "verdict": "pass",
+      "finding": "Acceptance check passed: session reset immediately clears filters detail activity and retains guidance with same IDs"
+    },
+    {
+      "name": "Late old activity response after session reset cannot restore stale detail",
+      "verdict": "pass",
+      "finding": "Acceptance check passed: Late old activity response after session reset cannot restore stale detail"
+    },
+    {
+      "name": "Selected deletion visible removes stale details and shows unavailable state",
+      "verdict": "pass",
+      "finding": "Acceptance check passed: Selected deletion visible removes stale details and shows unavailable state"
+    },
+    {
+      "name": "Selected deletion hidden removes stale details and shows unavailable state",
+      "verdict": "pass",
+      "finding": "Acceptance check passed: Selected deletion hidden removes stale details and shows unavailable state"
+    },
+    {
+      "name": "Same session refresh preserves filters updates counts and removes previous turn result",
+      "verdict": "pass",
+      "finding": "Acceptance check passed: Same session refresh preserves filters updates counts and removes previous turn result"
+    },
+    {
+      "name": "Empty snapshot has separate session-empty message and zero totals",
+      "verdict": "pass",
+      "finding": "Acceptance check passed: Empty snapshot has separate session-empty message and zero totals"
+    },
+    {
+      "name": "Keyboard selection status clear accessible live summary and visible focus",
+      "verdict": "pass",
+      "finding": "Acceptance check passed: Keyboard selection status clear accessible live summary and visible focus"
+    },
+    {
+      "name": "Activity pagination does not alter snapshot counts or match counts",
+      "verdict": "pass",
+      "finding": "Acceptance check passed: Activity pagination does not alter snapshot counts or match counts"
+    },
+    {
+      "name": "Search stays transient excludes sensitive fields and sends no extra requests",
+      "verdict": "pass",
+      "finding": "Acceptance check passed: Search stays transient excludes sensitive fields and sends no extra requests"
+    },
+    {
+      "name": "Narrow viewport keeps controls usable detail below tree and saves screenshot",
+      "verdict": "pass",
+      "finding": "Acceptance check passed: Narrow viewport keeps controls usable detail below tree and saves screenshot"
+    }
+  ]
+}

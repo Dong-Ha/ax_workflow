@@ -1,0 +1,37 @@
+{
+  "verdict": "pass",
+  "runId": "5aee8642-a516-48fc-b6a7-ad2c589077b0",
+  "issueId": "4f28820b-c34d-4939-9956-7dadbe5b6a66",
+  "agentVerdict": "pass",
+  "findings": [],
+  "agentUnverifiedChecks": [
+    "전체 npm test 통과는 미검증입니다. Paperclip 회귀 3개는 네트워크·Paperclip 실행 금지에 따라 격리 가드가 차단했습니다.",
+    "브라우저 수용 시나리오와 새 스크린샷은 샌드박스의 브라우저 시작 권한 차단으로 미검증입니다. 실행 결과의 screenshotSaved는 false이며 기존 이미지는 이번 실행 증거가 아닙니다."
+  ],
+  "checks": [
+    {
+      "command": "file tests/agent-filter.test.mjs",
+      "status": "pass"
+    },
+    {
+      "command": "file tests/agent-filter.browser.mjs",
+      "status": "pass"
+    },
+    {
+      "command": "AX_VERIFY_URL configured",
+      "status": "pass"
+    },
+    {
+      "command": "npm test",
+      "status": "pass"
+    },
+    {
+      "command": "npm run build",
+      "status": "pass"
+    },
+    {
+      "command": "node tests/agent-filter.browser.mjs",
+      "status": "pass"
+    }
+  ]
+}

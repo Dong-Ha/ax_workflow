@@ -1,0 +1,47 @@
+{
+  "runId": "96991bb3-df2d-4cd7-9763-02a5b8e2010e",
+  "issueId": "c3d90bc6-f0d6-4430-bf0c-f41b8c31dd9e",
+  "review": "Independent acceptance checks all passed, including npm test, build, browser and 500-case graph comparison. Final protected-path verification rejected the runner own graph report refresh because its QA allowlist entry was omitted while adding topology verification. The QA-only flag-specific graph allowance is restored and regression-tested; no product source or test expectations changed.",
+  "previousAcceptance": {
+    "verdict": "pass",
+    "runId": "96991bb3-df2d-4cd7-9763-02a5b8e2010e",
+    "issueId": "c3d90bc6-f0d6-4430-bf0c-f41b8c31dd9e",
+    "agentVerdict": "pass",
+    "findings": [],
+    "agentUnverifiedChecks": [
+      "전체 npm test 완료: 네 테스트 묶음이 샌드박스의 localhost 바인딩 권한 제한으로 실패했습니다.",
+      "브라우저 수용 검증: 샌드박스가 Chromium 시작을 차단하여 시나리오를 실행하지 못했습니다.",
+      "현재 실행의 스크린샷 저장 및 screenshotSaved=true 결과 확인은 브라우저 시작 제한으로 미검증입니다."
+    ],
+    "checks": [
+      {
+        "command": "file tests/agent-filter.test.mjs",
+        "status": "pass"
+      },
+      {
+        "command": "file tests/agent-filter.browser.mjs",
+        "status": "pass"
+      },
+      {
+        "command": "AX_VERIFY_URL configured",
+        "status": "pass"
+      },
+      {
+        "command": "npm test",
+        "status": "pass"
+      },
+      {
+        "command": "npm run build",
+        "status": "pass"
+      },
+      {
+        "command": "node tests/agent-filter.browser.mjs",
+        "status": "pass"
+      },
+      {
+        "command": "node experiments/paperclip/verify-agent-filter.mjs",
+        "status": "pass"
+      }
+    ]
+  }
+}

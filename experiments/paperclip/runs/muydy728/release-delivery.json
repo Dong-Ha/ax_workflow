@@ -1,0 +1,26 @@
+{
+  "verdict": "pass",
+  "url": "http://127.0.0.1:3201",
+  "checks": [
+    {
+      "asset": "assets/index-BebKoVmW.js",
+      "sha256": "0622036d975e88b5c4c6765fd5e2cd049d16861b859aea74f912570c02d2f08a",
+      "status": "pass"
+    },
+    {
+      "asset": "assets/index-Drfl24f5.css",
+      "sha256": "5f130778329164918b89101b7ff8ae176d4f44800f424819c3a4add2d2911814",
+      "status": "pass"
+    },
+    {
+      "asset": "index.html",
+      "sha256": "bc6b4e329a805ef2006d4837b8059b725ede17959de456004ea3d36e693ae67e",
+      "status": "pass"
+    }
+  ],
+  "workflowId": "muydy728",
+  "releaseDigest": "6e62aff223ccfbe15666ba87a8de289b3586b62d120ed4652f92830c6ad0f941",
+  "assetDigest": "648d4d38120fe25d2d6b5e4bed2d6eba703577acc7b95cbed3c0c94c40c69be5",
+  "assetBaseline": "verification-time",
+  "verifiedAt": "2026-10-07T18:43:39.019Z"
+}

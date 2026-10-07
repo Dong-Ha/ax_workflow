@@ -1,0 +1,57 @@
+{
+  "workflowId": "muyiny8j",
+  "sourceDigest": "12faeffa438c0a7179914670928722085c0fd437bf54710993d5febc32a4acac",
+  "assetDigest": "59a49868e0cd1fb3809a4628500af102126d0d65af5b783ee16ba927634359ce",
+  "appliedBuildMatches": true,
+  "runtime": {
+    "verdict": "pass",
+    "checks": [
+      {
+        "file": "server/claude-store.mjs",
+        "sha256": "c4f6185530eb8377bb16aeae37744edda963be733070b11e6a83d1f164ab768c",
+        "status": "pass"
+      },
+      {
+        "file": "server/index.mjs",
+        "sha256": "9f462d86df80903570ab9ec110be564586dd89c45a3fd553a59cc6d5d6e56299",
+        "status": "pass"
+      },
+      {
+        "file": "server/opencode-store.mjs",
+        "sha256": "ab49164a1a3a03b3a91a65866b70a074a8246e143b04510670d1259d6d2026a4",
+        "status": "pass"
+      },
+      {
+        "file": "server/snapshot-store.mjs",
+        "sha256": "1a71d6dd42b5382a085311f903f82c89e9c53956324bff21aa44c5cdd4ccd3ed",
+        "status": "pass"
+      },
+      {
+        "file": "server/store.mjs",
+        "sha256": "ec48d788f034305775becfc2497f922c4322a6f6d2c66ebe0cd7f8af465e3733",
+        "status": "pass"
+      }
+    ]
+  },
+  "delivery": {
+    "verdict": "pass",
+    "url": "http://127.0.0.1:3201",
+    "checks": [
+      {
+        "asset": "assets/index-Drfl24f5.css",
+        "sha256": "5f130778329164918b89101b7ff8ae176d4f44800f424819c3a4add2d2911814",
+        "status": "pass"
+      },
+      {
+        "asset": "assets/index-c_m7FgwP.js",
+        "sha256": "b58369021c30f5fe502407f2974baf7119ef004cbc4cc2ad92e7e06984d3dca0",
+        "status": "pass"
+      },
+      {
+        "asset": "index.html",
+        "sha256": "f3a1eea95ef450e7d5c2b9690d3aab82e0547cf0fe85f3b56c22adc74bf00cdf",
+        "status": "pass"
+      }
+    ]
+  }
+}

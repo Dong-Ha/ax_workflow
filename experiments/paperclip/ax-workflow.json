@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "name": "AX · 이미지 기반 소프트웨어 개발",
+  "project": "AX 에이전트 검색과 상태 필터",
+  "description": "제품부 → 개발팀 → 테스트팀 → 운영팀. 결함은 개발팀으로 되돌리고 재검증하며 출시 승인 후 로컬 배포합니다.",
+  "teams": [
+    { "key": "product", "name": "제품부", "role": "pm" },
+    { "key": "development", "name": "개발팀", "role": "engineer" },
+    { "key": "test", "name": "테스트팀", "role": "qa" },
+    { "key": "operations", "name": "운영 유지팀", "role": "devops" }
+  ],
+  "stages": [
+    { "key": "requirements", "name": "요구사항 수집 · 조직 검토 · 프로토타입", "team": "product", "phase": "제품 단계" },
+    { "key": "design", "name": "개발 계획 · 상세 설계 · 개발 규칙", "team": "development", "phase": "개발 단계" },
+    { "key": "test-plan", "name": "테스트 계획 · 테스트 케이스 검토", "team": "test", "phase": "개발 단계" },
+    { "key": "implement", "name": "기능 구현 · 단위 테스트", "team": "development", "phase": "개발 단계" },
+    { "key": "environment", "name": "테스트 환경 준비 · 버전 기록", "team": "operations", "phase": "개발 단계" },
+    { "key": "smoke", "name": "스모크 테스트", "team": "test", "phase": "개발 단계" },
+    { "key": "system", "name": "시스템 테스트 · 결함 추적 · 결과 피드백", "team": "test", "phase": "시스템 테스트" },
+    { "key": "approval", "name": "검증 결과 검토 · 출시 승인", "team": "product", "phase": "시스템 테스트" },
+    { "key": "release", "name": "업그레이드 패키지 · 로컬 배포", "team": "operations", "phase": "온라인" },
+    { "key": "acceptance", "name": "온라인 요구 검증 · 릴리스 관찰", "team": "test", "phase": "온라인" },
+    { "key": "delivery-review", "name": "배포 결과 검토 · 확인된 제품 패키지", "team": "product", "phase": "온라인" }
+  ],
+  "rework": { "key": "fix", "name": "결함 수정 · 업그레이드 패키지 갱신", "team": "development", "maxAttempts": 3 }
+}

@@ -1,0 +1,21 @@
+{
+  "verdict": "pass",
+  "url": "http://127.0.0.1:3201",
+  "checks": [
+    {
+      "asset": "assets/index-B2pdW2by.css",
+      "sha256": "cbf0add5b401daabb1e07666229c3b452b47fd3c21178285bb5f0cd94ed6872f",
+      "status": "pass"
+    },
+    {
+      "asset": "assets/index-Bp6-ilQy.js",
+      "sha256": "cc8c79333450447651b75e24f0e9593018b8b0a939d63708bd7c0f3f9494036b",
+      "status": "pass"
+    },
+    {
+      "asset": "index.html",
+      "sha256": "05ccc513fac790b15aea4ad7707259fbf393b23ab3370c79f35ea67d4ca8308f",
+      "status": "pass"
+    }
+  ]
+}

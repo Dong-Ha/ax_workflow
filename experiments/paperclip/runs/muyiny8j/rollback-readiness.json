@@ -1,0 +1,27 @@
+{
+  "workflowId": "muyiny8j",
+  "previousWorkflowId": "muyhf5a7",
+  "pointerUnchanged": true,
+  "previousRuntimeVerifiedBeforeStart": true,
+  "delivery": {
+    "verdict": "pass",
+    "url": "http://127.0.0.1:3203",
+    "checks": [
+      {
+        "asset": "assets/index-DKudsI4n.js",
+        "sha256": "155f6013df85084026e3d989086cf8149fbda8850e7918ebee7071506b1f8f4f",
+        "status": "pass"
+      },
+      {
+        "asset": "assets/index-Drfl24f5.css",
+        "sha256": "5f130778329164918b89101b7ff8ae176d4f44800f424819c3a4add2d2911814",
+        "status": "pass"
+      },
+      {
+        "asset": "index.html",
+        "sha256": "2fc27a69748c2ad45aaa774b09ada54bda7f1f930e427cd5205de381e0174eb0",
+        "status": "pass"
+      }
+    ]
+  }
+}

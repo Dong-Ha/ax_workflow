@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-10-07T20:05:16.686Z",
+  "workflowId": "muyiny8j",
+  "negativeControl": "injected effect resets navigation cursor on dashboard changes",
+  "sourceChangeKind": "temporary src/App.tsx useEffect(() => setMatchCursor(null), [dashboard]) only",
+  "buildStatus": "pass",
+  "verifierStatus": "expected-fail",
+  "wrapCaseVerdict": "fail",
+  "wrapFailureCodes": [
+    "poll-preserves-navigation-position-value",
+    "next-target-not-focused",
+    "next-second-position-value",
+    "next-wrap-position-value",
+    "previous-target-not-focused",
+    "previous-wrap-position-value",
+    "previous-second-position-value",
+    "previous-second-wrap-position-value",
+    "reorder-preserves-beta-cursor-identity-value",
+    "removed-match-does-not-autofocus-remaining-match"
+  ],
+  "pageErrorCount": 0,
+  "unexpectedRequestCount": 0,
+  "buildTimeMs": 2993,
+  "verifierTimeMs": 12734,
+  "candidateSourceUnchanged": true,
+  "cleanup": true,
+  "verdict": "pass",
+  "expectedFailureObserved": true
+}

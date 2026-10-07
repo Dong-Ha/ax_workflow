@@ -1,0 +1,52 @@
+{
+  "stage": "smoke",
+  "issueId": "8e8d52a2-afe9-49fc-acad-648ac6e624e8",
+  "runId": "97a8ae59-6bec-4ab3-b170-3c319f978d26",
+  "verdict": "fail",
+  "agentVerdict": "fail",
+  "findings": [
+    "상태 선택의 접근 가능한 이름 결함 (F09): 운영자 독립 Playwright 검증에서 getByLabel(상태, exact:true)가 컨트롤을 찾지 못했다. 레이블에 선택지 문구가 포함되고 select에 명시적 접근성 이름이 없어 상태 관련 브라우저 검증이 실패한다. 개발팀 수정 후 기존 테스트로 재검증해야 한다.",
+    "node tests/agent-filter.browser.mjs failed",
+    "Browser failure scenario: Status all exact option label and matching count",
+    "Browser failure scenario: Status inProgress exact option label and matching count",
+    "Browser failure scenario: Status completed exact option label and matching count",
+    "Browser failure scenario: Status failed exact option label and matching count",
+    "Browser failure scenario: Status interrupted exact option label and matching count",
+    "Browser failure scenario: Status unknown exact option label and matching count",
+    "Browser failure scenario: No waiting reinterpretation or extra status options",
+    "Browser failure scenario: AND filtering and full-snapshot status summary",
+    "Browser failure scenario: Hidden selection survives filters no match and clear without changing counts",
+    "Browser failure scenario: provider reset immediately clears filters detail activity and retains guidance with same IDs",
+    "Browser failure scenario: session reset immediately clears filters detail activity and retains guidance with same IDs",
+    "Browser failure scenario: Late old activity response after session reset cannot restore stale detail",
+    "Browser failure scenario: Selected deletion hidden removes stale details and shows unavailable state",
+    "Browser failure scenario: Same session refresh preserves filters updates counts and removes previous turn result",
+    "Browser failure scenario: Keyboard selection status clear accessible live summary and visible focus"
+  ],
+  "agentUnverifiedChecks": [
+    "현재 샌드박스에서 Chromium 시작이 거부되어 브라우저 수용 시나리오와 새 스크린샷을 검증하지 못했다.",
+    "격리 가드가 전체 npm test 중 네트워크/Paperclip 관련 3개 검증을 차단했다."
+  ],
+  "checks": [
+    {
+      "command": "file tests/agent-filter.test.mjs",
+      "status": "pass"
+    },
+    {
+      "command": "file tests/agent-filter.browser.mjs",
+      "status": "pass"
+    },
+    {
+      "command": "npm test",
+      "status": "pass"
+    },
+    {
+      "command": "npm run build",
+      "status": "pass"
+    },
+    {
+      "command": "node tests/agent-filter.browser.mjs",
+      "status": "fail"
+    }
+  ]
+}

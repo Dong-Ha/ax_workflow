@@ -1,0 +1,51 @@
+{
+  "stage": "acceptance",
+  "issueId": "d46104a9-8bbb-4cfa-9748-3faea8164969",
+  "runId": "e6e95aeb-19e1-43ab-ae92-d823a0b7367c",
+  "verdict": "pass",
+  "agentVerdict": "pass",
+  "findings": [],
+  "agentUnverifiedChecks": [
+    "npm test failed under isolation controls; blocked and unresolved regression checks require independent execution.",
+    "Browser startup was denied by the sandbox; browser scenarios and a new screenshot remain unverified.",
+    "Navigation position accessibility, ordering, wrap, resets, refresh and removed-target behavior require independent browser verification; existing required tests lack these assertions."
+  ],
+  "checks": [
+    {
+      "command": "file tests/agent-filter.test.mjs",
+      "status": "pass"
+    },
+    {
+      "command": "file tests/agent-filter.browser.mjs",
+      "status": "pass"
+    },
+    {
+      "command": "AX_VERIFY_URL configured",
+      "status": "pass"
+    },
+    {
+      "command": "npm test",
+      "status": "pass"
+    },
+    {
+      "command": "npm run build",
+      "status": "pass"
+    },
+    {
+      "command": "node tests/agent-filter.browser.mjs",
+      "status": "pass"
+    },
+    {
+      "command": "node experiments/paperclip/verify-agent-filter.mjs",
+      "status": "pass"
+    },
+    {
+      "command": "node experiments/paperclip/verify-agent-topology.mjs",
+      "status": "pass"
+    },
+    {
+      "command": "node experiments/paperclip/verify-agent-navigation.mjs",
+      "status": "pass"
+    }
+  ]
+}

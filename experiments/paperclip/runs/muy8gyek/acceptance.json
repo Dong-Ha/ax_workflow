@@ -1,0 +1,38 @@
+{
+  "verdict": "pass",
+  "runId": "df2f8585-c978-4beb-ba86-0be61dfaf857",
+  "issueId": "832d0a40-8d20-4960-a6eb-f794ddc75c2c",
+  "agentVerdict": "pass",
+  "findings": [],
+  "agentUnverifiedChecks": [
+    "전체 npm test의 Paperclip 회귀 3건은 네트워크·Paperclip 실행 금지 경계로 검증하지 못했습니다.",
+    "샌드박스 권한 제한으로 브라우저가 시작하지 못해 브라우저 시나리오는 미검증입니다.",
+    "현재 실행에서 스크린샷을 생성하지 못했으므로 브라우저 결과의 screenshotSaved:true 조건은 미검증입니다."
+  ],
+  "checks": [
+    {
+      "command": "file tests/agent-filter.test.mjs",
+      "status": "pass"
+    },
+    {
+      "command": "file tests/agent-filter.browser.mjs",
+      "status": "pass"
+    },
+    {
+      "command": "AX_VERIFY_URL configured",
+      "status": "pass"
+    },
+    {
+      "command": "npm test",
+      "status": "pass"
+    },
+    {
+      "command": "npm run build",
+      "status": "pass"
+    },
+    {
+      "command": "node tests/agent-filter.browser.mjs",
+      "status": "pass"
+    }
+  ]
+}

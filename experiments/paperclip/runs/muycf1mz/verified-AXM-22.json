@@ -1,0 +1,42 @@
+{
+  "stage": "acceptance",
+  "issueId": "c3d90bc6-f0d6-4430-bf0c-f41b8c31dd9e",
+  "runId": "70e7e6c9-f931-402b-b3ab-82dc4bf51b86",
+  "verdict": "pass",
+  "agentVerdict": "pass",
+  "findings": [],
+  "agentUnverifiedChecks": [
+    "Full npm test verification remains incomplete because localhost binding is denied by the sandbox in four test files.",
+    "Browser acceptance scenarios and a fresh screenshot remain unverified because sandbox permissions prevent Chromium startup."
+  ],
+  "checks": [
+    {
+      "command": "file tests/agent-filter.test.mjs",
+      "status": "pass"
+    },
+    {
+      "command": "file tests/agent-filter.browser.mjs",
+      "status": "pass"
+    },
+    {
+      "command": "AX_VERIFY_URL configured",
+      "status": "pass"
+    },
+    {
+      "command": "npm test",
+      "status": "pass"
+    },
+    {
+      "command": "npm run build",
+      "status": "pass"
+    },
+    {
+      "command": "node tests/agent-filter.browser.mjs",
+      "status": "pass"
+    },
+    {
+      "command": "node experiments/paperclip/verify-agent-filter.mjs",
+      "status": "pass"
+    }
+  ]
+}

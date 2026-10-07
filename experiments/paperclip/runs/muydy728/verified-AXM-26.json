@@ -1,0 +1,49 @@
+{
+  "stage": "system",
+  "issueId": "3f133397-a065-485c-9b03-8da04beadfa2",
+  "runId": "d92c4b3b-4226-49b8-848e-ed3c08553cd5",
+  "verdict": "fail",
+  "agentVerdict": "pass",
+  "findings": [
+    "node experiments/paperclip/verify-agent-topology.mjs failed",
+    "Topology verification report is malformed or has mismatches"
+  ],
+  "agentUnverifiedChecks": [
+    "전체 npm test의 네 테스트 파일은 샌드박스의 localhost 바인딩 권한 제한으로 검증을 완료하지 못했습니다.",
+    "브라우저 시작 권한 제한으로 브라우저 수용 검증과 신규 스크린샷 저장을 완료하지 못했습니다."
+  ],
+  "checks": [
+    {
+      "command": "file tests/agent-filter.test.mjs",
+      "status": "pass"
+    },
+    {
+      "command": "file tests/agent-filter.browser.mjs",
+      "status": "pass"
+    },
+    {
+      "command": "AX_VERIFY_URL configured",
+      "status": "pass"
+    },
+    {
+      "command": "npm test",
+      "status": "pass"
+    },
+    {
+      "command": "npm run build",
+      "status": "pass"
+    },
+    {
+      "command": "node tests/agent-filter.browser.mjs",
+      "status": "pass"
+    },
+    {
+      "command": "node experiments/paperclip/verify-agent-filter.mjs",
+      "status": "pass"
+    },
+    {
+      "command": "node experiments/paperclip/verify-agent-topology.mjs",
+      "status": "fail"
+    }
+  ]
+}

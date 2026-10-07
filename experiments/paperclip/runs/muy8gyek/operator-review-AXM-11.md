@@ -1,0 +1,3 @@
+# Native select keyboard input review
+
+An independent minimal HTML select reproduced the failed test without AX product code: Home, ArrowDown, Enter opens the closed native popup; the following Tab closes it while focus remains on the select. The test did not open the popup before selecting and committing. Space, Home, ArrowDown, Enter, Tab chooses inProgress and moves focus to the next button. This preserves selection, Enter commit, Tab order and all focus/count assertions. The reviewed correction adds Space before Home; it does not remove or relax any assertion. Do not replace standard native select behavior with custom handlers to satisfy the former input sequence. Parent will apply the test-input correction only after the active development run is terminal.

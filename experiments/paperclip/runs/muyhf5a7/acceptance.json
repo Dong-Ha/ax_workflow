@@ -1,0 +1,50 @@
+{
+  "verdict": "pass",
+  "runId": "beb2d0aa-f9c0-4840-bc18-a2dc78b32a08",
+  "issueId": "797db66b-9690-4e8e-be4f-ebead48dac87",
+  "agentVerdict": "pass",
+  "findings": [],
+  "agentUnverifiedChecks": [
+    "npm test could not complete four localhost-dependent suites; diagnostics confirmed 24 checks blocked by sandbox binding permissions.",
+    "Offline browser acceptance and a fresh screenshot remain unverified because sandbox denied browser startup.",
+    "Independent match-navigation and topology browser checks did not complete; their failed executions require independent verification."
+  ],
+  "checks": [
+    {
+      "command": "file tests/agent-filter.test.mjs",
+      "status": "pass"
+    },
+    {
+      "command": "file tests/agent-filter.browser.mjs",
+      "status": "pass"
+    },
+    {
+      "command": "AX_VERIFY_URL configured",
+      "status": "pass"
+    },
+    {
+      "command": "npm test",
+      "status": "pass"
+    },
+    {
+      "command": "npm run build",
+      "status": "pass"
+    },
+    {
+      "command": "node tests/agent-filter.browser.mjs",
+      "status": "pass"
+    },
+    {
+      "command": "node experiments/paperclip/verify-agent-filter.mjs",
+      "status": "pass"
+    },
+    {
+      "command": "node experiments/paperclip/verify-agent-topology.mjs",
+      "status": "pass"
+    },
+    {
+      "command": "node experiments/paperclip/verify-agent-navigation.mjs",
+      "status": "pass"
+    }
+  ]
+}

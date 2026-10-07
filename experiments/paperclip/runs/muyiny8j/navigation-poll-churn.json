@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-10-07T19:56:49.053Z",
+  "suite": "offline synthetic navigation polling churn probe",
+  "workflowId": "muyiny8j",
+  "verdict": "pass",
+  "phaseTimeoutMs": 4000,
+  "totalTimeoutMs": 20000,
+  "requestPolicy": "synthetic API and build assets locally fulfilled; all other requests aborted",
+  "dashboardRequests": 4,
+  "pageErrorCount": 0,
+  "unexpectedRequestCount": 0,
+  "checks": [
+    {
+      "code": "initial-snapshot-received",
+      "pass": true
+    },
+    {
+      "code": "accessible-position-status",
+      "pass": true
+    },
+    {
+      "code": "initial-filter-position-zero-two",
+      "pass": true
+    },
+    {
+      "code": "first-next-position-one-two",
+      "pass": true
+    },
+    {
+      "code": "second-next-position-two-two",
+      "pass": true
+    },
+    {
+      "code": "selected-detail-before-churn",
+      "pass": true
+    },
+    {
+      "code": "reorder-poll-observed",
+      "pass": true
+    },
+    {
+      "code": "reorder-recomputed-position-one-two",
+      "pass": true
+    },
+    {
+      "code": "reorder-snapshot-applied",
+      "pass": true
+    },
+    {
+      "code": "reorder-preserves-selected-detail",
+      "pass": true
+    },
+    {
+      "code": "remove-poll-observed",
+      "pass": true
+    },
+    {
+      "code": "removed-current-resets-position-zero-one",
+      "pass": true
+    },
+    {
+      "code": "removed-snapshot-applied",
+      "pass": true
+    },
+    {
+      "code": "removal-does-not-autofocus-remaining-match",
+      "pass": true
+    },
+    {
+      "code": "removal-preserves-selected-detail",
+      "pass": true
+    },
+    {
+      "code": "next-after-removal-position-one-one",
+      "pass": true
+    },
+    {
+      "code": "next-after-removal-focuses-remaining-match",
+      "pass": true
+    }
+  ],
+  "phases": [
+    {
+      "phase": "reorder",
+      "requests": 1,
+      "observedWithinTimeout": true
+    },
+    {
+      "phase": "remove",
+      "requests": 1,
+      "observedWithinTimeout": true
+    }
+  ],
+  "reorderedFocusObservation": true
+}

@@ -1,0 +1,34 @@
+{
+  "stage": "smoke",
+  "issueId": "3e0a8122-f4b0-4f66-a692-dd645e9144c4",
+  "runId": "20f9125b-4175-4bad-b991-1cfabb0de476",
+  "verdict": "pass",
+  "agentVerdict": "pass",
+  "findings": [],
+  "agentUnverifiedChecks": [
+    "전체 npm test 완료: Paperclip 회귀 3개는 네트워크 및 Paperclip 실행 금지로 미검증입니다.",
+    "Playwright 브라우저 시나리오 및 새 스크린샷: 샌드박스가 브라우저 시작을 차단했습니다."
+  ],
+  "checks": [
+    {
+      "command": "file tests/agent-filter.test.mjs",
+      "status": "pass"
+    },
+    {
+      "command": "file tests/agent-filter.browser.mjs",
+      "status": "pass"
+    },
+    {
+      "command": "npm test",
+      "status": "pass"
+    },
+    {
+      "command": "npm run build",
+      "status": "pass"
+    },
+    {
+      "command": "node tests/agent-filter.browser.mjs",
+      "status": "pass"
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "suite": "offline synthetic match navigation verifier",
+  "verdict": "pass",
+  "buildRoot": "/home/dongha/AX/.paperclip-lab/workspaces/ax-muyiny8j/dist",
+  "generatedAt": "2026-10-07T20:34:05.783Z",
+  "requestPolicy": "synthetic API and build assets locally fulfilled; all other requests aborted",
+  "cases": [
+    {
+      "name": "deep-desktop",
+      "verdict": "pass",
+      "failureCodes": [],
+      "unexpectedRequestCount": 0,
+      "pageErrorCount": 0,
+      "checkCount": 27
+    },
+    {
+      "name": "deep-mobile",
+      "verdict": "pass",
+      "failureCodes": [],
+      "unexpectedRequestCount": 0,
+      "pageErrorCount": 0,
+      "checkCount": 27
+    },
+    {
+      "name": "next-previous-wrap",
+      "verdict": "pass",
+      "failureCodes": [],
+      "unexpectedRequestCount": 0,
+      "pageErrorCount": 0,
+      "checkCount": 107
+    },
+    {
+      "name": "filter-cursor-reset",
+      "verdict": "pass",
+      "failureCodes": [],
+      "unexpectedRequestCount": 0,
+      "pageErrorCount": 0,
+      "checkCount": 65
+    },
+    {
+      "name": "scope-cursor-reset",
+      "verdict": "pass",
+      "failureCodes": [],
+      "unexpectedRequestCount": 0,
+      "pageErrorCount": 0,
+      "checkCount": 51
+    },
+    {
+      "name": "hidden-selection-retained",
+      "verdict": "pass",
+      "failureCodes": [],
+      "unexpectedRequestCount": 0,
+      "pageErrorCount": 0,
+      "checkCount": 18
+    }
+  ]
+}

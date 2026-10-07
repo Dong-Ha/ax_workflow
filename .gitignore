@@ -5,3 +5,6 @@ dist/
 
 # Isolated Paperclip evaluation runtime, database, credentials and artifacts
 .paperclip-lab/
+
+# Generated local browser verification evidence (reviewed reports live under runs/)
+workflow-artifacts/

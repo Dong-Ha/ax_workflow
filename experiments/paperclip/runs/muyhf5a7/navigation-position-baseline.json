@@ -1,0 +1,152 @@
+{
+  "schemaVersion": 1,
+  "suite": "offline synthetic match navigation verifier",
+  "verdict": "fail",
+  "buildRoot": "/home/dongha/AX/dist",
+  "generatedAt": "2026-10-07T19:43:50.925Z",
+  "requestPolicy": "synthetic API and build assets locally fulfilled; all other requests aborted",
+  "cases": [
+    {
+      "name": "deep-desktop",
+      "verdict": "fail",
+      "failureCodes": [
+        "initial-position-polite-status",
+        "initial-position-value",
+        "deep-query-reset-position-polite-status",
+        "deep-query-reset-position-value",
+        "deep-next-position-polite-status",
+        "deep-next-position-value",
+        "deep-previous-wrap-position-polite-status",
+        "deep-previous-wrap-position-value"
+      ],
+      "unexpectedRequestCount": 0,
+      "pageErrorCount": 0,
+      "checkCount": 19
+    },
+    {
+      "name": "deep-mobile",
+      "verdict": "fail",
+      "failureCodes": [
+        "initial-position-polite-status",
+        "initial-position-value",
+        "deep-query-reset-position-polite-status",
+        "deep-query-reset-position-value",
+        "deep-next-position-polite-status",
+        "deep-next-position-value",
+        "deep-previous-wrap-position-polite-status",
+        "deep-previous-wrap-position-value"
+      ],
+      "unexpectedRequestCount": 0,
+      "pageErrorCount": 0,
+      "checkCount": 19
+    },
+    {
+      "name": "next-previous-wrap",
+      "verdict": "fail",
+      "failureCodes": [
+        "initial-position-polite-status",
+        "initial-position-value",
+        "sibling-query-reset-position-polite-status",
+        "sibling-query-reset-position-value",
+        "next-first-position-polite-status",
+        "next-first-position-value",
+        "poll-preserves-navigation-position-polite-status",
+        "poll-preserves-navigation-position-value",
+        "next-second-position-polite-status",
+        "next-second-position-value",
+        "next-wrap-position-polite-status",
+        "next-wrap-position-value",
+        "previous-wrap-position-polite-status",
+        "previous-wrap-position-value",
+        "previous-second-position-polite-status",
+        "previous-second-position-value",
+        "previous-second-wrap-position-polite-status",
+        "previous-second-wrap-position-value"
+      ],
+      "unexpectedRequestCount": 0,
+      "pageErrorCount": 0,
+      "checkCount": 47
+    },
+    {
+      "name": "filter-cursor-reset",
+      "verdict": "fail",
+      "failureCodes": [
+        "initial-position-polite-status",
+        "initial-position-value",
+        "query-filter-reset-position-polite-status",
+        "query-filter-reset-position-value",
+        "filter-first-position-polite-status",
+        "filter-first-position-value",
+        "filter-second-position-polite-status",
+        "filter-second-position-value",
+        "query-reset-position-polite-status",
+        "query-reset-position-value",
+        "query-reset-first-position-polite-status",
+        "query-reset-first-position-value",
+        "query-restore-reset-position-polite-status",
+        "query-restore-reset-position-value",
+        "query-restore-first-position-polite-status",
+        "query-restore-first-position-value",
+        "status-reset-position-polite-status",
+        "status-reset-position-value",
+        "status-reset-first-position-polite-status",
+        "status-reset-first-position-value",
+        "no-match-position-polite-status",
+        "no-match-position-value",
+        "clear-reset-position-polite-status",
+        "clear-reset-position-value",
+        "clear-first-position-polite-status",
+        "clear-first-position-value"
+      ],
+      "unexpectedRequestCount": 0,
+      "pageErrorCount": 0,
+      "checkCount": 39
+    },
+    {
+      "name": "scope-cursor-reset",
+      "verdict": "fail",
+      "failureCodes": [
+        "initial-position-polite-status",
+        "initial-position-value",
+        "scope-no-match-position-polite-status",
+        "scope-no-match-position-value",
+        "scope-query-status-reset-position-polite-status",
+        "scope-query-status-reset-position-value",
+        "scope-first-position-polite-status",
+        "scope-first-position-value",
+        "scope-second-position-polite-status",
+        "scope-second-position-value",
+        "provider-reset-position-polite-status",
+        "provider-reset-position-value",
+        "provider-query-reset-position-polite-status",
+        "provider-query-reset-position-value",
+        "provider-first-position-polite-status",
+        "provider-first-position-value",
+        "session-reset-position-polite-status",
+        "session-reset-position-value",
+        "session-query-reset-position-polite-status",
+        "session-query-reset-position-value",
+        "session-first-position-polite-status",
+        "session-first-position-value"
+      ],
+      "unexpectedRequestCount": 0,
+      "pageErrorCount": 0,
+      "checkCount": 29
+    },
+    {
+      "name": "hidden-selection-retained",
+      "verdict": "fail",
+      "failureCodes": [
+        "initial-position-polite-status",
+        "initial-position-value",
+        "hidden-selection-query-reset-position-polite-status",
+        "hidden-selection-query-reset-position-value",
+        "hidden-selection-first-position-polite-status",
+        "hidden-selection-first-position-value"
+      ],
+      "unexpectedRequestCount": 0,
+      "pageErrorCount": 0,
+      "checkCount": 12
+    }
+  ]
+}

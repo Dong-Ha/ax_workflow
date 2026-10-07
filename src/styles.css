@@ -3,3 +3,42 @@
 @media(max-width:1040px){.workspace-grid{grid-template-columns:minmax(0,1.3fr) minmax(300px,.9fr)}.tree-roots{gap:22px}.tree-branch{min-width:176px}.agent-card{width:176px}.tree-children{gap:11px}.tree-children .tree-branch,.tree-children .agent-card{min-width:155px;width:155px}.panel-heading{padding-left:16px;padding-right:16px}.detail-block,.detail-identity,.activity-heading{padding-left:16px;padding-right:16px}}
 @media(max-width:760px){.topbar{height:60px;padding:0 18px}.brand-context{display:none}.brand-divider{display:none}.topbar-right{gap:10px}.clock-readout{font-size:0}.clock-readout svg{width:15px;height:15px}.topbar-divider{margin:0}.page-content{padding:32px 18px 23px}.hero-row{align-items:flex-start;gap:20px;flex-direction:column;margin-bottom:22px}.session-select-wrap{width:min(100%,380px)}.metrics-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.metric-card{min-height:104px;padding:13px}.workspace-grid{grid-template-columns:1fr}.topology-panel{min-height:445px}.topology-canvas{justify-content:flex-start;min-height:285px;padding:28px 20px}.tree-roots{justify-content:flex-start;width:max-content}.detail-panel{min-height:0}.detail-panel>.empty-state{min-height:225px}.activity-list{max-height:235px}.role-chips{flex-wrap:wrap}.role-chip{flex:1;min-width:155px}.footer{gap:10px;align-items:flex-start;flex-direction:column}.roles-head{align-items:flex-start;gap:7px;flex-direction:column}}
 @media(max-width:430px){.topbar{padding:0 13px}.brand{gap:8px}.brand-word{font-size:11px}.local-indicator{font-size:8px;letter-spacing:.08em}.topbar-divider{height:14px}.page-content{padding-left:13px;padding-right:13px}h1{font-size:34px}.hero-copy{font-size:11px}.panel-heading{padding:15px 13px}.panel-meta{gap:5px}.updated-label{font-size:8px}.tree-legend{gap:10px;padding-left:14px;font-size:8px}.topology-footer{padding-left:13px;padding-right:13px;font-size:8px}.topology-canvas{padding-left:14px;padding-right:14px}.tree-roots{gap:17px}.role-chip{min-width:calc(50% - 6px);padding:8px}.roles-head>span{font-size:8px}.footer{font-size:7px}}
+
+.agent-filters{display:flex;flex-wrap:wrap;align-items:flex-end;gap:12px;margin:22px 0;padding:18px;border:1px solid #29363f;border-radius:10px;background:#111a21}
+.agent-filters label{display:flex;flex-direction:column;gap:7px;font-size:12px;color:#bdcccf}
+.agent-filters label:first-child{flex:1;min-width:min(260px,100%)}
+.agent-filters input,.agent-filters select{min-height:40px;padding:9px 11px;border:1px solid #42555e;border-radius:6px;background:#0c141b;color:#e4eded;font:inherit;width:100%;box-sizing:border-box}
+.filter-reset{min-height:40px;padding:9px 13px;border:1px solid #42665d;border-radius:6px;background:#172b27;color:#bce6d9;cursor:pointer;font:inherit;font-size:12px}
+.filter-reset:disabled{opacity:.45;cursor:default}
+.filter-help{width:100%;font-size:11px;line-height:1.6;color:#95a7af;margin:0}
+.filter-summary{display:flex;flex-wrap:wrap;gap:8px 18px;width:100%;font-size:12px;color:#adbdc4;line-height:1.7;overflow-wrap:anywhere}
+.filter-summary strong{color:#dcf0e9;font-weight:600}
+.filter-summary>span:last-child{width:100%}
+.agent-card{height:auto;min-height:176px;gap:5px;padding-bottom:12px}
+.agent-role,.agent-id{font-size:10px;color:#acbfc4;overflow-wrap:anywhere;text-align:left}
+.agent-card .agent-name{white-space:normal;overflow-wrap:anywhere;margin-top:5px;text-align:left}
+.agent-card .role-label{overflow-wrap:anywhere;text-align:left}
+.context-badge,.selection-badge{font-size:10px;line-height:1.5;text-align:left;border-radius:4px;padding:3px 5px;border:1px solid #4d626b;color:#c3d3d9;background:#1e2c33}
+.selection-badge{color:#a8efd8;border-color:#4b917c}
+.agent-card:has(.context-badge){border-style:dashed}
+.agent-card-foot{margin-top:8px;flex-wrap:wrap}
+.hidden-selection{margin:14px 18px;padding:12px;border:1px solid #5e684a;border-radius:6px;color:#d9dbac;line-height:1.7;font-size:12px;display:flex;flex-wrap:wrap;gap:10px}
+.detail-identity>div:last-child{min-width:0}
+.detail-identity h3,.detail-identity p{overflow-wrap:anywhere}
+.list-empty{margin:auto;text-align:center}
+button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid #8cebd4;outline-offset:4px}
+@media(max-width:760px){.agent-filters{padding:14px}.agent-filters label:first-child{flex-basis:100%}.agent-filters label:nth-child(2){flex:1}.hero-row .session-select-wrap{width:100%}}
+
+/* Flat preorder rows retain parent/depth context without nesting DOM by depth.
+   Logarithmic indentation grows without a depth cap and leaves cards readable. */
+.tree-list{list-style:none;margin:0;padding:0;width:100%;min-width:0;display:flex;flex-direction:column;gap:14px}
+.tree-row{min-width:0;scroll-margin-top:90px;border-inline-start:1px solid #30434a}
+.tree-row .agent-card{width:100%;min-width:0;min-height:176px}
+.agent-depth{font-size:10px;color:#acbfc4;overflow-wrap:anywhere}
+.parent-link{border:0;padding:0;background:transparent;cursor:pointer;text-decoration:underline;display:inline-block;margin:6px 0 0 8px;color:#8cebd4;font-size:10px;overflow-wrap:anywhere}
+
+/* Keep large snapshots inside the topology pane so filter changes cannot
+   stretch the page and inspector by thousands of rows. Every card remains
+   in the DOM, searchable and reachable by keyboard and parent navigation. */
+.topology-canvas{max-height:680px;max-height:max(335px,70vh);overscroll-behavior:contain}
+.tree-row{content-visibility:auto;contain-intrinsic-block-size:auto 240px}

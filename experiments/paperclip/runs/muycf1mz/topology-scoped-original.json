@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 1,
+  "suite": "offline synthetic agent topology verifier",
+  "verdict": "fail",
+  "buildRoot": "/home/dongha/AX/dist",
+  "generatedAt": "2026-10-07T17:57:35.923Z",
+  "requestPolicy": "synthetic API and build assets locally fulfilled; all other requests aborted",
+  "cases": [
+    {
+      "shape": "chain",
+      "size": 100,
+      "verdict": "pass",
+      "failureCodes": [],
+      "unexpectedRequestCount": 0,
+      "pageErrorCount": 0,
+      "initialRenderMs": 312.1,
+      "initialCardCount": 100,
+      "searchMs": 35.3,
+      "matchSummary": "일치 1 / 전체 100",
+      "visibleCardCount": 100,
+      "contextCardCount": 99,
+      "selectionGuidance": true,
+      "selectionDetail": true
+    },
+    {
+      "shape": "chain",
+      "size": 1000,
+      "verdict": "fail",
+      "failureCodes": [
+        "initial-card-count-unavailable"
+      ],
+      "unexpectedRequestCount": 0,
+      "pageErrorCount": 0,
+      "initialRenderMs": 2396.3,
+      "initialCardCount": null,
+      "searchMs": null,
+      "matchSummary": null,
+      "visibleCardCount": null,
+      "contextCardCount": null,
+      "selectionGuidance": false,
+      "selectionDetail": false
+    },
+    {
+      "shape": "chain",
+      "size": 3000,
+      "verdict": "fail",
+      "failureCodes": [
+        "initial-render-timeout",
+        "initial-card-count-mismatch",
+        "page-error"
+      ],
+      "unexpectedRequestCount": 0,
+      "pageErrorCount": 1,
+      "initialRenderMs": 7091.6,
+      "initialCardCount": 0,
+      "searchMs": null,
+      "matchSummary": null,
+      "visibleCardCount": null,
+      "contextCardCount": null,
+      "selectionGuidance": false,
+      "selectionDetail": false
+    },
+    {
+      "shape": "star",
+      "size": 100,
+      "verdict": "pass",
+      "failureCodes": [],
+      "unexpectedRequestCount": 0,
+      "pageErrorCount": 0,
+      "initialRenderMs": 197.6,
+      "initialCardCount": 100,
+      "searchMs": 25.8,
+      "matchSummary": "일치 1 / 전체 100",
+      "visibleCardCount": 2,
+      "contextCardCount": 1,
+      "selectionGuidance": true,
+      "selectionDetail": true
+    },
+    {
+      "shape": "star",
+      "size": 1000,
+      "verdict": "pass",
+      "failureCodes": [],
+      "unexpectedRequestCount": 0,
+      "pageErrorCount": 0,
+      "initialRenderMs": 234.5,
+      "initialCardCount": 1000,
+      "searchMs": 62.2,
+      "matchSummary": "일치 1 / 전체 1000",
+      "visibleCardCount": 2,
+      "contextCardCount": 1,
+      "selectionGuidance": true,
+      "selectionDetail": true
+    },
+    {
+      "shape": "star",
+      "size": 3000,
+      "verdict": "pass",
+      "failureCodes": [],
+      "unexpectedRequestCount": 0,
+      "pageErrorCount": 0,
+      "initialRenderMs": 774.2,
+      "initialCardCount": 3000,
+      "searchMs": 174.3,
+      "matchSummary": "일치 1 / 전체 3000",
+      "visibleCardCount": 2,
+      "contextCardCount": 1,
+      "selectionGuidance": true,
+      "selectionDetail": true
+    }
+  ]
+}

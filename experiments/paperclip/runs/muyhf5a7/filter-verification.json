@@ -1,0 +1,28 @@
+{
+  "seed": "0x7a5b3c1d",
+  "synthetic": {
+    "cases": 500,
+    "mismatches": 0,
+    "duplicateIdCases": 125,
+    "missingParentEdges": 2980,
+    "explicitCycleGraphs": 125,
+    "graphEdges": 14071
+  },
+  "chainAllMatch": [
+    {
+      "size": 100,
+      "medianMs": 0.063,
+      "runs": 7
+    },
+    {
+      "size": 1000,
+      "medianMs": 0.605,
+      "runs": 7
+    },
+    {
+      "size": 3000,
+      "medianMs": 1.843,
+      "runs": 7
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "stage": "system",
+  "issueId": "0e523b8c-1dd5-4345-92c4-9887e5c5f3a9",
+  "runId": "0aa97225-d58e-4661-879e-c6ff41def966",
+  "verdict": "pass",
+  "agentVerdict": "pass",
+  "findings": [],
+  "agentUnverifiedChecks": [
+    "Full npm test completion: 24 checks require network binding or prohibited workflow execution in this isolated workspace.",
+    "Browser acceptance and fresh screenshot: sandbox permissions prevented Chromium startup.",
+    "Previous/next match navigation, keyboard focus, scrolling and cursor resets require the unavailable browser."
+  ],
+  "checks": [
+    {
+      "command": "file tests/agent-filter.test.mjs",
+      "status": "pass"
+    },
+    {
+      "command": "file tests/agent-filter.browser.mjs",
+      "status": "pass"
+    },
+    {
+      "command": "AX_VERIFY_URL configured",
+      "status": "pass"
+    },
+    {
+      "command": "npm test",
+      "status": "pass"
+    },
+    {
+      "command": "npm run build",
+      "status": "pass"
+    },
+    {
+      "command": "node tests/agent-filter.browser.mjs",
+      "status": "pass"
+    },
+    {
+      "command": "node experiments/paperclip/verify-agent-filter.mjs",
+      "status": "pass"
+    },
+    {
+      "command": "node experiments/paperclip/verify-agent-topology.mjs",
+      "status": "pass"
+    },
+    {
+      "command": "node experiments/paperclip/verify-agent-navigation.mjs",
+      "status": "pass"
+    }
+  ]
+}

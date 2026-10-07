@@ -12,7 +12,13 @@
     "paperclip:start": "node experiments/paperclip/lab.mjs start",
     "paperclip:seed": "node experiments/paperclip/lab.mjs seed",
     "paperclip:run": "node experiments/paperclip/lab.mjs run",
-    "paperclip:status": "node experiments/paperclip/lab.mjs status"
+    "paperclip:status": "node experiments/paperclip/lab.mjs status",
+    "paperclip:ax:seed": "node experiments/paperclip/ax-controller.mjs seed",
+    "paperclip:ax:run": "node experiments/paperclip/ax-controller.mjs run",
+    "paperclip:ax:status": "node experiments/paperclip/ax-controller.mjs status",
+    "paperclip:ax:apply": "node experiments/paperclip/ax-controller.mjs apply",
+    "paperclip:ax:serve": "node experiments/paperclip/ax-controller.mjs serve",
+    "test:browser": "node tests/agent-filter.browser.mjs && node experiments/paperclip/verify-agent-navigation.mjs"
   },
   "dependencies": {
     "react": "^19.0.0",
@@ -21,6 +27,7 @@
   "devDependencies": {
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
+    "playwright": "^1.63.0",
     "typescript": "^5.9.0",
     "vite": "^7.0.0"
   }

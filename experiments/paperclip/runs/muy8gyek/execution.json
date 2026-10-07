@@ -1,0 +1,1090 @@
+{
+  "workflowId": "muy8gyek",
+  "companyId": "9d75f7be-71c6-49cd-8302-d89bad8fe949",
+  "pipelineId": "83ea0b3c-86ed-4357-8bf5-a82242fcce56",
+  "caseId": "1cb435b9-b305-4fa6-834c-86d0d9d4bc22",
+  "teams": [
+    {
+      "key": "product",
+      "name": "제품부",
+      "role": "pm"
+    },
+    {
+      "key": "development",
+      "name": "개발팀",
+      "role": "engineer"
+    },
+    {
+      "key": "test",
+      "name": "테스트팀",
+      "role": "qa"
+    },
+    {
+      "key": "operations",
+      "name": "운영 유지팀",
+      "role": "devops"
+    }
+  ],
+  "tasks": [
+    {
+      "stage": "requirements",
+      "issueId": "b28b52a7-4b19-4728-bd9d-68db628bdb4d",
+      "identifier": "AXM-1",
+      "agentId": "7b3ce22a-5bfd-44d8-9585-f737030b6072",
+      "runId": "d5e28a78-628d-4c8e-a248-2cafd760bf08",
+      "runHistory": [],
+      "verdict": "pass"
+    },
+    {
+      "stage": "design",
+      "issueId": "95c6a227-512d-4c77-8328-e1736fa292eb",
+      "identifier": "AXM-2",
+      "agentId": "35a324a3-65d7-469c-a719-0d1c39091661",
+      "runId": "6dd543b2-d737-4345-aa69-c2ce7a1c0f3c",
+      "runHistory": [],
+      "verdict": "pass"
+    },
+    {
+      "stage": "test-plan",
+      "issueId": "19324a4f-45de-47da-b2bd-ccfe30ef4501",
+      "identifier": "AXM-3",
+      "agentId": "a53edb0b-01c6-4ad8-9234-5c5e2f4e699c",
+      "runId": "396f7cc7-d00f-4a7b-935e-e90c33001493",
+      "runHistory": [],
+      "verdict": "pass"
+    },
+    {
+      "stage": "implement",
+      "issueId": "7b3a3623-c912-4d42-87f4-de781e1f99da",
+      "identifier": "AXM-4",
+      "agentId": "35a324a3-65d7-469c-a719-0d1c39091661",
+      "runId": "d9785ad1-18b2-474c-9469-a8bea7fc8fee",
+      "runHistory": [],
+      "verdict": "pass"
+    },
+    {
+      "stage": "environment",
+      "issueId": "cf416b2c-67ff-4014-9cca-f031bd2b9873",
+      "identifier": "AXM-5",
+      "agentId": "83bf8623-5f49-4a24-b574-208d903e05a4",
+      "runId": "32089ba3-a841-434c-9a9b-49b0c99b1f83",
+      "runHistory": [],
+      "verdict": "pass"
+    },
+    {
+      "stage": "smoke",
+      "issueId": "cefcf8d3-e8d7-4db3-ba00-2295d8f9e6fd",
+      "identifier": "AXM-6",
+      "agentId": "a53edb0b-01c6-4ad8-9234-5c5e2f4e699c",
+      "runId": "1e2a80d9-3854-4a52-a2d1-e74ec4a05729",
+      "runHistory": [
+        "5b2e1dca-69ff-4395-8ad4-5ffb973a01cd"
+      ],
+      "verdict": "fail",
+      "checks": [
+        {
+          "command": "file tests/agent-filter.test.mjs",
+          "status": "pass"
+        },
+        {
+          "command": "file tests/agent-filter.browser.mjs",
+          "status": "pass"
+        },
+        {
+          "command": "npm test",
+          "status": "fail"
+        },
+        {
+          "command": "npm run build",
+          "status": "pass"
+        },
+        {
+          "command": "node tests/agent-filter.browser.mjs",
+          "status": "fail"
+        }
+      ],
+      "findings": [
+        "npm test failed",
+        "node tests/agent-filter.browser.mjs failed"
+      ],
+      "agentVerdict": "fail",
+      "agentUnverifiedChecks": []
+    },
+    {
+      "stage": "fix",
+      "issueId": "2f382fa5-5cc6-44e3-9419-61b2ac0dbe90",
+      "identifier": "AXM-7",
+      "agentId": "35a324a3-65d7-469c-a719-0d1c39091661",
+      "runId": "15cd0347-5740-4ede-9a01-ab6f12581388",
+      "runHistory": [],
+      "verdict": "pass"
+    },
+    {
+      "stage": "smoke",
+      "issueId": "8e8d52a2-afe9-49fc-acad-648ac6e624e8",
+      "identifier": "AXM-8",
+      "agentId": "a53edb0b-01c6-4ad8-9234-5c5e2f4e699c",
+      "runId": "97a8ae59-6bec-4ab3-b170-3c319f978d26",
+      "runHistory": [
+        "8555d0db-edbb-4113-9f7a-d12b6a074c2b"
+      ],
+      "verdict": "fail",
+      "checks": [
+        {
+          "command": "file tests/agent-filter.test.mjs",
+          "status": "pass"
+        },
+        {
+          "command": "file tests/agent-filter.browser.mjs",
+          "status": "pass"
+        },
+        {
+          "command": "npm test",
+          "status": "pass"
+        },
+        {
+          "command": "npm run build",
+          "status": "pass"
+        },
+        {
+          "command": "node tests/agent-filter.browser.mjs",
+          "status": "fail"
+        }
+      ],
+      "findings": [
+        "상태 선택의 접근 가능한 이름 결함 (F09): 운영자 독립 Playwright 검증에서 getByLabel(상태, exact:true)가 컨트롤을 찾지 못했다. 레이블에 선택지 문구가 포함되고 select에 명시적 접근성 이름이 없어 상태 관련 브라우저 검증이 실패한다. 개발팀 수정 후 기존 테스트로 재검증해야 한다.",
+        "node tests/agent-filter.browser.mjs failed",
+        "Browser failure scenario: Status all exact option label and matching count",
+        "Browser failure scenario: Status inProgress exact option label and matching count",
+        "Browser failure scenario: Status completed exact option label and matching count",
+        "Browser failure scenario: Status failed exact option label and matching count",
+        "Browser failure scenario: Status interrupted exact option label and matching count",
+        "Browser failure scenario: Status unknown exact option label and matching count",
+        "Browser failure scenario: No waiting reinterpretation or extra status options",
+        "Browser failure scenario: AND filtering and full-snapshot status summary",
+        "Browser failure scenario: Hidden selection survives filters no match and clear without changing counts",
+        "Browser failure scenario: provider reset immediately clears filters detail activity and retains guidance with same IDs",
+        "Browser failure scenario: session reset immediately clears filters detail activity and retains guidance with same IDs",
+        "Browser failure scenario: Late old activity response after session reset cannot restore stale detail",
+        "Browser failure scenario: Selected deletion hidden removes stale details and shows unavailable state",
+        "Browser failure scenario: Same session refresh preserves filters updates counts and removes previous turn result",
+        "Browser failure scenario: Keyboard selection status clear accessible live summary and visible focus"
+      ],
+      "agentVerdict": "fail",
+      "agentUnverifiedChecks": [
+        "현재 샌드박스에서 Chromium 시작이 거부되어 브라우저 수용 시나리오와 새 스크린샷을 검증하지 못했다.",
+        "격리 가드가 전체 npm test 중 네트워크/Paperclip 관련 3개 검증을 차단했다."
+      ]
+    },
+    {
+      "stage": "fix",
+      "issueId": "63664a0d-04c9-479d-ac09-cd926b137d6e",
+      "identifier": "AXM-9",
+      "agentId": "35a324a3-65d7-469c-a719-0d1c39091661",
+      "runId": "201cbd32-e8df-4d9a-85c5-08a7d414bbc2",
+      "runHistory": [],
+      "verdict": "pass"
+    },
+    {
+      "stage": "smoke",
+      "issueId": "ff3ca502-0af8-4dfa-8b46-f162f48fcfb0",
+      "identifier": "AXM-10",
+      "agentId": "a53edb0b-01c6-4ad8-9234-5c5e2f4e699c",
+      "runId": "5355e416-5772-4522-8aa4-a30000f96d31",
+      "runHistory": [],
+      "verdict": "fail",
+      "checks": [
+        {
+          "command": "file tests/agent-filter.test.mjs",
+          "status": "pass"
+        },
+        {
+          "command": "file tests/agent-filter.browser.mjs",
+          "status": "pass"
+        },
+        {
+          "command": "npm test",
+          "status": "pass"
+        },
+        {
+          "command": "npm run build",
+          "status": "pass"
+        },
+        {
+          "command": "node tests/agent-filter.browser.mjs",
+          "status": "fail"
+        }
+      ],
+      "findings": [
+        "node tests/agent-filter.browser.mjs failed",
+        "Browser failure scenario: Keyboard selection status clear accessible live summary and visible focus"
+      ],
+      "agentVerdict": "pass",
+      "agentUnverifiedChecks": [
+        "Chromium startup was denied by the sandbox; browser acceptance checks and a fresh screenshot remain unverified.",
+        "Three regression cases require Paperclip execution forbidden by the isolation guard; npm test did not fully pass.",
+        "Previously reported status-control accessibility defect requires an independent browser retest."
+      ]
+    },
+    {
+      "stage": "fix",
+      "issueId": "58b41410-1723-4916-af4f-fafc4a62d861",
+      "identifier": "AXM-11",
+      "agentId": "35a324a3-65d7-469c-a719-0d1c39091661",
+      "runId": "cf17dfdf-3443-48e9-af3f-d6bafad3cc1a",
+      "runHistory": [],
+      "verdict": "pass"
+    },
+    {
+      "stage": "fix",
+      "issueId": "5733db74-425b-4d17-beb1-0b5daab359a3",
+      "identifier": "AXM-12",
+      "agentId": "35a324a3-65d7-469c-a719-0d1c39091661",
+      "runId": "51296530-d37b-4b7f-8a02-57f50519087f",
+      "runHistory": [],
+      "verdict": "pass"
+    },
+    {
+      "stage": "smoke",
+      "issueId": "3e0a8122-f4b0-4f66-a692-dd645e9144c4",
+      "identifier": "AXM-13",
+      "agentId": "a53edb0b-01c6-4ad8-9234-5c5e2f4e699c",
+      "runId": "20f9125b-4175-4bad-b991-1cfabb0de476",
+      "runHistory": [],
+      "verdict": "pass",
+      "checks": [
+        {
+          "command": "file tests/agent-filter.test.mjs",
+          "status": "pass"
+        },
+        {
+          "command": "file tests/agent-filter.browser.mjs",
+          "status": "pass"
+        },
+        {
+          "command": "npm test",
+          "status": "pass"
+        },
+        {
+          "command": "npm run build",
+          "status": "pass"
+        },
+        {
+          "command": "node tests/agent-filter.browser.mjs",
+          "status": "pass"
+        }
+      ],
+      "findings": [],
+      "agentVerdict": "pass",
+      "agentUnverifiedChecks": [
+        "전체 npm test 완료: Paperclip 회귀 3개는 네트워크 및 Paperclip 실행 금지로 미검증입니다.",
+        "Playwright 브라우저 시나리오 및 새 스크린샷: 샌드박스가 브라우저 시작을 차단했습니다."
+      ]
+    },
+    {
+      "stage": "system",
+      "issueId": "4f28820b-c34d-4939-9956-7dadbe5b6a66",
+      "identifier": "AXM-14",
+      "agentId": "a53edb0b-01c6-4ad8-9234-5c5e2f4e699c",
+      "runId": "5aee8642-a516-48fc-b6a7-ad2c589077b0",
+      "runHistory": [],
+      "verdict": "pass",
+      "checks": [
+        {
+          "command": "file tests/agent-filter.test.mjs",
+          "status": "pass"
+        },
+        {
+          "command": "file tests/agent-filter.browser.mjs",
+          "status": "pass"
+        },
+        {
+          "command": "AX_VERIFY_URL configured",
+          "status": "pass"
+        },
+        {
+          "command": "npm test",
+          "status": "pass"
+        },
+        {
+          "command": "npm run build",
+          "status": "pass"
+        },
+        {
+          "command": "node tests/agent-filter.browser.mjs",
+          "status": "pass"
+        }
+      ],
+      "findings": [],
+      "agentVerdict": "pass",
+      "agentUnverifiedChecks": [
+        "전체 npm test 통과는 미검증입니다. Paperclip 회귀 3개는 네트워크·Paperclip 실행 금지에 따라 격리 가드가 차단했습니다.",
+        "브라우저 수용 시나리오와 새 스크린샷은 샌드박스의 브라우저 시작 권한 차단으로 미검증입니다. 실행 결과의 screenshotSaved는 false이며 기존 이미지는 이번 실행 증거가 아닙니다."
+      ]
+    },
+    {
+      "stage": "approval",
+      "issueId": "9fed14a3-abfc-46ef-8726-e61e0f7b49e1",
+      "identifier": "AXM-15",
+      "agentId": "7b3ce22a-5bfd-44d8-9585-f737030b6072",
+      "runId": "ce8f3fe8-ae2e-4074-9d27-5c2ad6d225b0",
+      "runHistory": [],
+      "verdict": "pass"
+    },
+    {
+      "stage": "release",
+      "issueId": "af1d7c66-f7a4-4813-8a78-eb01e8e309d9",
+      "identifier": "AXM-16",
+      "agentId": "83bf8623-5f49-4a24-b574-208d903e05a4",
+      "runId": "5c8507ed-5f99-4f68-8573-e0c87c1bba48",
+      "runHistory": [],
+      "verdict": "pass"
+    },
+    {
+      "stage": "acceptance",
+      "issueId": "832d0a40-8d20-4960-a6eb-f794ddc75c2c",
+      "identifier": "AXM-17",
+      "agentId": "a53edb0b-01c6-4ad8-9234-5c5e2f4e699c",
+      "runId": "df2f8585-c978-4beb-ba86-0be61dfaf857",
+      "runHistory": [],
+      "verdict": "pass",
+      "checks": [
+        {
+          "command": "file tests/agent-filter.test.mjs",
+          "status": "pass"
+        },
+        {
+          "command": "file tests/agent-filter.browser.mjs",
+          "status": "pass"
+        },
+        {
+          "command": "AX_VERIFY_URL configured",
+          "status": "pass"
+        },
+        {
+          "command": "npm test",
+          "status": "pass"
+        },
+        {
+          "command": "npm run build",
+          "status": "pass"
+        },
+        {
+          "command": "node tests/agent-filter.browser.mjs",
+          "status": "pass"
+        }
+      ],
+      "findings": [],
+      "agentVerdict": "pass",
+      "agentUnverifiedChecks": [
+        "전체 npm test의 Paperclip 회귀 3건은 네트워크·Paperclip 실행 금지 경계로 검증하지 못했습니다.",
+        "샌드박스 권한 제한으로 브라우저가 시작하지 못해 브라우저 시나리오는 미검증입니다.",
+        "현재 실행에서 스크린샷을 생성하지 못했으므로 브라우저 결과의 screenshotSaved:true 조건은 미검증입니다."
+      ]
+    }
+  ],
+  "events": [
+    {
+      "at": "2026-10-07T15:00:17.422Z",
+      "type": "task-created",
+      "stage": "requirements",
+      "issueId": "b28b52a7-4b19-4728-bd9d-68db628bdb4d"
+    },
+    {
+      "at": "2026-10-07T15:00:17.760Z",
+      "type": "run-started",
+      "stage": "requirements",
+      "runId": "d5e28a78-628d-4c8e-a248-2cafd760bf08"
+    },
+    {
+      "at": "2026-10-07T15:03:32.959Z",
+      "type": "run-verified",
+      "stage": "requirements",
+      "runId": "d5e28a78-628d-4c8e-a248-2cafd760bf08",
+      "verdict": "pass"
+    },
+    {
+      "at": "2026-10-07T15:03:33.079Z",
+      "type": "transition",
+      "to": "design",
+      "reason": "requirements: verified"
+    },
+    {
+      "at": "2026-10-07T15:03:33.154Z",
+      "type": "task-created",
+      "stage": "design",
+      "issueId": "95c6a227-512d-4c77-8328-e1736fa292eb"
+    },
+    {
+      "at": "2026-10-07T15:03:33.448Z",
+      "type": "run-started",
+      "stage": "design",
+      "runId": "6dd543b2-d737-4345-aa69-c2ce7a1c0f3c"
+    },
+    {
+      "at": "2026-10-07T15:08:27.732Z",
+      "type": "run-verified",
+      "stage": "design",
+      "runId": "6dd543b2-d737-4345-aa69-c2ce7a1c0f3c",
+      "verdict": "pass"
+    },
+    {
+      "at": "2026-10-07T15:08:27.854Z",
+      "type": "transition",
+      "to": "test-plan",
+      "reason": "design: verified"
+    },
+    {
+      "at": "2026-10-07T15:08:27.942Z",
+      "type": "task-created",
+      "stage": "test-plan",
+      "issueId": "19324a4f-45de-47da-b2bd-ccfe30ef4501"
+    },
+    {
+      "at": "2026-10-07T15:08:28.202Z",
+      "type": "run-started",
+      "stage": "test-plan",
+      "runId": "396f7cc7-d00f-4a7b-935e-e90c33001493"
+    },
+    {
+      "at": "2026-10-07T15:12:16.456Z",
+      "type": "run-verified",
+      "stage": "test-plan",
+      "runId": "396f7cc7-d00f-4a7b-935e-e90c33001493",
+      "verdict": "pass"
+    },
+    {
+      "at": "2026-10-07T15:12:16.591Z",
+      "type": "transition",
+      "to": "implement",
+      "reason": "test-plan: verified"
+    },
+    {
+      "at": "2026-10-07T15:12:16.708Z",
+      "type": "task-created",
+      "stage": "implement",
+      "issueId": "7b3a3623-c912-4d42-87f4-de781e1f99da"
+    },
+    {
+      "at": "2026-10-07T15:12:17.008Z",
+      "type": "run-started",
+      "stage": "implement",
+      "runId": "d9785ad1-18b2-474c-9469-a8bea7fc8fee"
+    },
+    {
+      "at": "2026-10-07T15:19:49.919Z",
+      "type": "run-verified",
+      "stage": "implement",
+      "runId": "d9785ad1-18b2-474c-9469-a8bea7fc8fee",
+      "verdict": "pass"
+    },
+    {
+      "at": "2026-10-07T15:19:50.001Z",
+      "type": "transition",
+      "to": "environment",
+      "reason": "implement: verified"
+    },
+    {
+      "at": "2026-10-07T15:19:50.069Z",
+      "type": "task-created",
+      "stage": "environment",
+      "issueId": "cf416b2c-67ff-4014-9cca-f031bd2b9873"
+    },
+    {
+      "at": "2026-10-07T15:19:50.293Z",
+      "type": "run-started",
+      "stage": "environment",
+      "runId": "32089ba3-a841-434c-9a9b-49b0c99b1f83"
+    },
+    {
+      "at": "2026-10-07T15:22:27.498Z",
+      "type": "run-verified",
+      "stage": "environment",
+      "runId": "32089ba3-a841-434c-9a9b-49b0c99b1f83",
+      "verdict": "pass"
+    },
+    {
+      "at": "2026-10-07T15:22:27.645Z",
+      "type": "transition",
+      "to": "smoke",
+      "reason": "environment: verified"
+    },
+    {
+      "at": "2026-10-07T15:22:29.994Z",
+      "type": "task-created",
+      "stage": "smoke",
+      "issueId": "cefcf8d3-e8d7-4db3-ba00-2295d8f9e6fd"
+    },
+    {
+      "at": "2026-10-07T15:22:30.279Z",
+      "type": "run-started",
+      "stage": "smoke",
+      "runId": "5b2e1dca-69ff-4395-8ad4-5ffb973a01cd"
+    },
+    {
+      "at": "2026-10-07T15:38:28.620Z",
+      "type": "operator-reviewed-test-contract",
+      "stage": "smoke",
+      "reason": "Reviewed stronger raw-state assertions following requirements amendment; retry with current execution guard."
+    },
+    {
+      "at": "2026-10-07T15:38:31.164Z",
+      "type": "task-linked",
+      "issueId": "cefcf8d3-e8d7-4db3-ba00-2295d8f9e6fd"
+    },
+    {
+      "at": "2026-10-07T15:46:08.988Z",
+      "type": "run-skipped",
+      "stage": "smoke",
+      "status": "skipped",
+      "reason": "execution_reconciliation_required",
+      "issueId": "cefcf8d3-e8d7-4db3-ba00-2295d8f9e6fd",
+      "executionRunId": "5b2e1dca-69ff-4395-8ad4-5ffb973a01cd"
+    },
+    {
+      "at": "2026-10-07T15:48:59.027Z",
+      "type": "execution-reconciled",
+      "stage": "smoke",
+      "runId": "1e2a80d9-3854-4a52-a2d1-e74ec4a05729",
+      "previousRunId": "5b2e1dca-69ff-4395-8ad4-5ffb973a01cd",
+      "actionId": "531c659e-c3b1-4873-af19-0f871745771d",
+      "actionOutcome": "mixed"
+    },
+    {
+      "at": "2026-10-07T15:53:34.312Z",
+      "type": "run-verified",
+      "stage": "smoke",
+      "runId": "1e2a80d9-3854-4a52-a2d1-e74ec4a05729",
+      "verdict": "fail"
+    },
+    {
+      "at": "2026-10-07T15:53:34.354Z",
+      "type": "defect-found",
+      "stage": "smoke",
+      "attempt": 1
+    },
+    {
+      "at": "2026-10-07T15:53:34.355Z",
+      "type": "transition-planned",
+      "to": "fix",
+      "reason": "QA smoke: repair required"
+    },
+    {
+      "at": "2026-10-07T15:53:34.421Z",
+      "type": "transition",
+      "to": "fix",
+      "reason": "QA smoke: repair required"
+    },
+    {
+      "at": "2026-10-07T15:53:34.423Z",
+      "type": "task-planned",
+      "stage": "fix",
+      "requestKey": "ax-1cb435b9-b305-4fa6-834c-86d0d9d4bc22-cbca0092-f900-4d48-882b-997797c6e6b5"
+    },
+    {
+      "at": "2026-10-07T15:53:34.501Z",
+      "type": "task-created",
+      "stage": "fix",
+      "issueId": "2f382fa5-5cc6-44e3-9419-61b2ac0dbe90"
+    },
+    {
+      "at": "2026-10-07T15:53:34.517Z",
+      "type": "task-linked",
+      "issueId": "2f382fa5-5cc6-44e3-9419-61b2ac0dbe90"
+    },
+    {
+      "at": "2026-10-07T15:53:34.739Z",
+      "type": "run-started",
+      "stage": "fix",
+      "runId": "15cd0347-5740-4ede-9a01-ab6f12581388"
+    },
+    {
+      "at": "2026-10-07T15:57:04.231Z",
+      "type": "run-verified",
+      "stage": "fix",
+      "runId": "15cd0347-5740-4ede-9a01-ab6f12581388",
+      "verdict": "pass"
+    },
+    {
+      "at": "2026-10-07T15:57:04.274Z",
+      "type": "transition-planned",
+      "to": "smoke",
+      "reason": "Development repaired defects; QA must retest"
+    },
+    {
+      "at": "2026-10-07T15:57:04.371Z",
+      "type": "transition",
+      "to": "smoke",
+      "reason": "Development repaired defects; QA must retest"
+    },
+    {
+      "at": "2026-10-07T15:57:04.372Z",
+      "type": "task-planned",
+      "stage": "smoke",
+      "requestKey": "ax-1cb435b9-b305-4fa6-834c-86d0d9d4bc22-217c23bf-96d7-489d-8f75-e4cfa3b2264e"
+    },
+    {
+      "at": "2026-10-07T15:57:04.464Z",
+      "type": "task-created",
+      "stage": "smoke",
+      "issueId": "8e8d52a2-afe9-49fc-acad-648ac6e624e8"
+    },
+    {
+      "at": "2026-10-07T15:57:04.479Z",
+      "type": "task-linked",
+      "issueId": "8e8d52a2-afe9-49fc-acad-648ac6e624e8"
+    },
+    {
+      "at": "2026-10-07T15:57:04.696Z",
+      "type": "run-started",
+      "stage": "smoke",
+      "runId": "8555d0db-edbb-4113-9f7a-d12b6a074c2b"
+    },
+    {
+      "at": "2026-10-07T16:08:47.080Z",
+      "type": "operator-reviewed-test-additions",
+      "stage": "smoke",
+      "issueId": "8e8d52a2-afe9-49fc-acad-648ac6e624e8",
+      "diagnostic": "status control has no exact accessible label; independent tests preserved"
+    },
+    {
+      "at": "2026-10-07T16:09:13.614Z",
+      "type": "recovery-planned",
+      "stage": "smoke",
+      "actionId": "e05eb643-ffb2-4d13-83d1-557b9322fa49",
+      "previousRunId": "8555d0db-edbb-4113-9f7a-d12b6a074c2b",
+      "actionOutcome": "mixed"
+    },
+    {
+      "at": "2026-10-07T16:09:17.960Z",
+      "type": "execution-reconciled",
+      "stage": "smoke",
+      "runId": "97a8ae59-6bec-4ab3-b170-3c319f978d26",
+      "previousRunId": "8555d0db-edbb-4113-9f7a-d12b6a074c2b",
+      "actionId": "e05eb643-ffb2-4d13-83d1-557b9322fa49",
+      "actionOutcome": "mixed"
+    },
+    {
+      "at": "2026-10-07T16:12:27.779Z",
+      "type": "run-verified",
+      "stage": "smoke",
+      "runId": "97a8ae59-6bec-4ab3-b170-3c319f978d26",
+      "verdict": "fail"
+    },
+    {
+      "at": "2026-10-07T16:12:27.817Z",
+      "type": "defect-found",
+      "stage": "smoke",
+      "attempt": 2
+    },
+    {
+      "at": "2026-10-07T16:12:27.819Z",
+      "type": "transition-planned",
+      "to": "fix",
+      "reason": "QA smoke: repair required"
+    },
+    {
+      "at": "2026-10-07T16:12:27.887Z",
+      "type": "transition",
+      "to": "fix",
+      "reason": "QA smoke: repair required"
+    },
+    {
+      "at": "2026-10-07T16:12:27.888Z",
+      "type": "task-planned",
+      "stage": "fix",
+      "requestKey": "ax-1cb435b9-b305-4fa6-834c-86d0d9d4bc22-7707b9a3-9616-4b53-8db3-726ad7432eba"
+    },
+    {
+      "at": "2026-10-07T16:12:27.990Z",
+      "type": "task-created",
+      "stage": "fix",
+      "issueId": "63664a0d-04c9-479d-ac09-cd926b137d6e"
+    },
+    {
+      "at": "2026-10-07T16:12:28.009Z",
+      "type": "task-linked",
+      "issueId": "63664a0d-04c9-479d-ac09-cd926b137d6e"
+    },
+    {
+      "at": "2026-10-07T16:12:28.240Z",
+      "type": "run-started",
+      "stage": "fix",
+      "runId": "201cbd32-e8df-4d9a-85c5-08a7d414bbc2"
+    },
+    {
+      "at": "2026-10-07T16:14:57.986Z",
+      "type": "run-verified",
+      "stage": "fix",
+      "runId": "201cbd32-e8df-4d9a-85c5-08a7d414bbc2",
+      "verdict": "pass"
+    },
+    {
+      "at": "2026-10-07T16:14:58.036Z",
+      "type": "transition-planned",
+      "to": "smoke",
+      "reason": "Development repaired defects; QA must retest"
+    },
+    {
+      "at": "2026-10-07T16:14:58.109Z",
+      "type": "transition",
+      "to": "smoke",
+      "reason": "Development repaired defects; QA must retest"
+    },
+    {
+      "at": "2026-10-07T16:14:58.110Z",
+      "type": "task-planned",
+      "stage": "smoke",
+      "requestKey": "ax-1cb435b9-b305-4fa6-834c-86d0d9d4bc22-3a05dbb2-e2a3-493f-9755-7100a66a8d42"
+    },
+    {
+      "at": "2026-10-07T16:14:58.187Z",
+      "type": "task-created",
+      "stage": "smoke",
+      "issueId": "ff3ca502-0af8-4dfa-8b46-f162f48fcfb0"
+    },
+    {
+      "at": "2026-10-07T16:14:58.201Z",
+      "type": "task-linked",
+      "issueId": "ff3ca502-0af8-4dfa-8b46-f162f48fcfb0"
+    },
+    {
+      "at": "2026-10-07T16:14:58.485Z",
+      "type": "run-started",
+      "stage": "smoke",
+      "runId": "5355e416-5772-4522-8aa4-a30000f96d31"
+    },
+    {
+      "at": "2026-10-07T16:19:12.624Z",
+      "type": "run-verified",
+      "stage": "smoke",
+      "runId": "5355e416-5772-4522-8aa4-a30000f96d31",
+      "verdict": "fail"
+    },
+    {
+      "at": "2026-10-07T16:19:12.669Z",
+      "type": "defect-found",
+      "stage": "smoke",
+      "attempt": 3
+    },
+    {
+      "at": "2026-10-07T16:19:12.670Z",
+      "type": "transition-planned",
+      "to": "fix",
+      "reason": "QA smoke: repair required"
+    },
+    {
+      "at": "2026-10-07T16:19:12.737Z",
+      "type": "transition",
+      "to": "fix",
+      "reason": "QA smoke: repair required"
+    },
+    {
+      "at": "2026-10-07T16:19:12.738Z",
+      "type": "task-planned",
+      "stage": "fix",
+      "requestKey": "ax-1cb435b9-b305-4fa6-834c-86d0d9d4bc22-9bce516f-36b7-4b07-9e08-0bbef06fd489"
+    },
+    {
+      "at": "2026-10-07T16:19:12.826Z",
+      "type": "task-created",
+      "stage": "fix",
+      "issueId": "58b41410-1723-4916-af4f-fafc4a62d861"
+    },
+    {
+      "at": "2026-10-07T16:19:12.895Z",
+      "type": "task-linked",
+      "issueId": "58b41410-1723-4916-af4f-fafc4a62d861"
+    },
+    {
+      "at": "2026-10-07T16:19:13.170Z",
+      "type": "run-started",
+      "stage": "fix",
+      "runId": "cf17dfdf-3443-48e9-af3f-d6bafad3cc1a"
+    },
+    {
+      "at": "2026-10-07T16:25:36.002Z",
+      "type": "operator-reviewed-keyboard-input",
+      "issueId": "58b41410-1723-4916-af4f-fafc4a62d861",
+      "change": "Open native select with Space before Home/ArrowDown/Enter; every assertion preserved",
+      "evidence": "Independent native HTML reproduces old input sequence focus remaining select; corrected sequence moves focus to button"
+    },
+    {
+      "at": "2026-10-07T16:25:36.339Z",
+      "type": "run-verified",
+      "stage": "fix",
+      "runId": "cf17dfdf-3443-48e9-af3f-d6bafad3cc1a",
+      "verdict": "pass"
+    },
+    {
+      "at": "2026-10-07T16:25:36.369Z",
+      "type": "code-review-revision",
+      "stage": "fix",
+      "issueId": "58b41410-1723-4916-af4f-fafc4a62d861",
+      "reason": "Native HTML reproduced the previous keyboard test failure without AX code. The test now opens the native select with Space before Home/ArrowDown/Enter/Tab and retains all assertions. Remove the custom Enter preventDefault handler so the standard select can open and commit normally; do not edit tests. Read operator-review-AXM-11.md for the independent proof. Run normal independent validation and return to QA."
+    },
+    {
+      "at": "2026-10-07T16:25:36.448Z",
+      "type": "task-planned",
+      "stage": "fix",
+      "requestKey": "ax-1cb435b9-b305-4fa6-834c-86d0d9d4bc22-95dd4b12-3547-4f59-bebd-141d6c0b26f3"
+    },
+    {
+      "at": "2026-10-07T16:25:36.596Z",
+      "type": "task-created",
+      "stage": "fix",
+      "issueId": "5733db74-425b-4d17-beb1-0b5daab359a3"
+    },
+    {
+      "at": "2026-10-07T16:25:36.616Z",
+      "type": "task-linked",
+      "issueId": "5733db74-425b-4d17-beb1-0b5daab359a3"
+    },
+    {
+      "at": "2026-10-07T16:25:36.843Z",
+      "type": "run-started",
+      "stage": "fix",
+      "runId": "51296530-d37b-4b7f-8a02-57f50519087f"
+    },
+    {
+      "at": "2026-10-07T16:27:37.663Z",
+      "type": "run-verified",
+      "stage": "fix",
+      "runId": "51296530-d37b-4b7f-8a02-57f50519087f",
+      "verdict": "pass"
+    },
+    {
+      "at": "2026-10-07T16:27:37.697Z",
+      "type": "transition-planned",
+      "to": "smoke",
+      "reason": "Development repaired defects; QA must retest"
+    },
+    {
+      "at": "2026-10-07T16:27:37.762Z",
+      "type": "transition",
+      "to": "smoke",
+      "reason": "Development repaired defects; QA must retest"
+    },
+    {
+      "at": "2026-10-07T16:30:04.620Z",
+      "type": "task-planned",
+      "stage": "smoke",
+      "requestKey": "ax-1cb435b9-b305-4fa6-834c-86d0d9d4bc22-5ebab8c7-e7d6-4804-9c1a-0b13ca46b165"
+    },
+    {
+      "at": "2026-10-07T16:30:04.713Z",
+      "type": "task-created",
+      "stage": "smoke",
+      "issueId": "3e0a8122-f4b0-4f66-a692-dd645e9144c4"
+    },
+    {
+      "at": "2026-10-07T16:30:04.733Z",
+      "type": "task-linked",
+      "issueId": "3e0a8122-f4b0-4f66-a692-dd645e9144c4"
+    },
+    {
+      "at": "2026-10-07T16:30:04.961Z",
+      "type": "run-started",
+      "stage": "smoke",
+      "runId": "20f9125b-4175-4bad-b991-1cfabb0de476"
+    },
+    {
+      "at": "2026-10-07T16:34:28.682Z",
+      "type": "run-verified",
+      "stage": "smoke",
+      "runId": "20f9125b-4175-4bad-b991-1cfabb0de476",
+      "verdict": "pass"
+    },
+    {
+      "at": "2026-10-07T16:34:28.715Z",
+      "type": "transition-planned",
+      "to": "system",
+      "reason": "smoke: verified"
+    },
+    {
+      "at": "2026-10-07T16:34:28.773Z",
+      "type": "transition",
+      "to": "system",
+      "reason": "smoke: verified"
+    },
+    {
+      "at": "2026-10-07T16:34:28.775Z",
+      "type": "task-planned",
+      "stage": "system",
+      "requestKey": "ax-1cb435b9-b305-4fa6-834c-86d0d9d4bc22-3e4f8994-6711-4402-95c8-470c90e651d3"
+    },
+    {
+      "at": "2026-10-07T16:34:28.847Z",
+      "type": "task-created",
+      "stage": "system",
+      "issueId": "4f28820b-c34d-4939-9956-7dadbe5b6a66"
+    },
+    {
+      "at": "2026-10-07T16:34:28.863Z",
+      "type": "task-linked",
+      "issueId": "4f28820b-c34d-4939-9956-7dadbe5b6a66"
+    },
+    {
+      "at": "2026-10-07T16:34:29.087Z",
+      "type": "run-started",
+      "stage": "system",
+      "runId": "5aee8642-a516-48fc-b6a7-ad2c589077b0"
+    },
+    {
+      "at": "2026-10-07T16:38:51.771Z",
+      "type": "run-verified",
+      "stage": "system",
+      "runId": "5aee8642-a516-48fc-b6a7-ad2c589077b0",
+      "verdict": "pass"
+    },
+    {
+      "at": "2026-10-07T16:38:51.812Z",
+      "type": "transition-planned",
+      "to": "approval",
+      "reason": "system: verified"
+    },
+    {
+      "at": "2026-10-07T16:38:51.877Z",
+      "type": "transition",
+      "to": "approval",
+      "reason": "system: verified"
+    },
+    {
+      "at": "2026-10-07T16:38:51.878Z",
+      "type": "task-planned",
+      "stage": "approval",
+      "requestKey": "ax-1cb435b9-b305-4fa6-834c-86d0d9d4bc22-92d4254b-d22f-4b40-a88f-f50abfa843c7"
+    },
+    {
+      "at": "2026-10-07T16:38:51.959Z",
+      "type": "task-created",
+      "stage": "approval",
+      "issueId": "9fed14a3-abfc-46ef-8726-e61e0f7b49e1"
+    },
+    {
+      "at": "2026-10-07T16:38:51.973Z",
+      "type": "task-linked",
+      "issueId": "9fed14a3-abfc-46ef-8726-e61e0f7b49e1"
+    },
+    {
+      "at": "2026-10-07T16:38:52.243Z",
+      "type": "run-started",
+      "stage": "approval",
+      "runId": "ce8f3fe8-ae2e-4074-9d27-5c2ad6d225b0"
+    },
+    {
+      "at": "2026-10-07T16:40:44.911Z",
+      "type": "run-verified",
+      "stage": "approval",
+      "runId": "ce8f3fe8-ae2e-4074-9d27-5c2ad6d225b0",
+      "verdict": "pass"
+    },
+    {
+      "at": "2026-10-07T16:40:44.945Z",
+      "type": "transition-planned",
+      "to": "release",
+      "reason": "approval: verified"
+    },
+    {
+      "at": "2026-10-07T16:40:45.010Z",
+      "type": "transition",
+      "to": "release",
+      "reason": "approval: verified"
+    },
+    {
+      "at": "2026-10-07T16:40:45.011Z",
+      "type": "task-planned",
+      "stage": "release",
+      "requestKey": "ax-1cb435b9-b305-4fa6-834c-86d0d9d4bc22-2f79a291-da66-4a51-b4bb-88309579b4dc"
+    },
+    {
+      "at": "2026-10-07T16:40:45.083Z",
+      "type": "task-created",
+      "stage": "release",
+      "issueId": "af1d7c66-f7a4-4813-8a78-eb01e8e309d9"
+    },
+    {
+      "at": "2026-10-07T16:40:45.098Z",
+      "type": "task-linked",
+      "issueId": "af1d7c66-f7a4-4813-8a78-eb01e8e309d9"
+    },
+    {
+      "at": "2026-10-07T16:40:45.324Z",
+      "type": "run-started",
+      "stage": "release",
+      "runId": "5c8507ed-5f99-4f68-8573-e0c87c1bba48"
+    },
+    {
+      "at": "2026-10-07T16:44:13.278Z",
+      "type": "run-verified",
+      "stage": "release",
+      "runId": "5c8507ed-5f99-4f68-8573-e0c87c1bba48",
+      "verdict": "pass"
+    },
+    {
+      "at": "2026-10-07T16:44:17.923Z",
+      "type": "transition-planned",
+      "to": "acceptance",
+      "reason": "release: verified"
+    },
+    {
+      "at": "2026-10-07T16:44:18.001Z",
+      "type": "transition",
+      "to": "acceptance",
+      "reason": "release: verified"
+    },
+    {
+      "at": "2026-10-07T16:44:18.146Z",
+      "type": "task-planned",
+      "stage": "acceptance",
+      "requestKey": "ax-1cb435b9-b305-4fa6-834c-86d0d9d4bc22-883a7f45-7283-4efb-81f8-b7d8a8d83dbc"
+    },
+    {
+      "at": "2026-10-07T16:44:18.236Z",
+      "type": "task-created",
+      "stage": "acceptance",
+      "issueId": "832d0a40-8d20-4960-a6eb-f794ddc75c2c"
+    },
+    {
+      "at": "2026-10-07T16:44:18.252Z",
+      "type": "task-linked",
+      "issueId": "832d0a40-8d20-4960-a6eb-f794ddc75c2c"
+    },
+    {
+      "at": "2026-10-07T16:44:18.497Z",
+      "type": "run-started",
+      "stage": "acceptance",
+      "runId": "df2f8585-c978-4beb-ba86-0be61dfaf857"
+    },
+    {
+      "at": "2026-10-07T16:47:21.590Z",
+      "type": "run-verified",
+      "stage": "acceptance",
+      "runId": "df2f8585-c978-4beb-ba86-0be61dfaf857",
+      "verdict": "pass"
+    },
+    {
+      "at": "2026-10-07T16:47:21.624Z",
+      "type": "transition-planned",
+      "to": "done",
+      "reason": "acceptance: verified"
+    },
+    {
+      "at": "2026-10-07T16:47:21.690Z",
+      "type": "transition",
+      "to": "done",
+      "reason": "acceptance: verified"
+    },
+    {
+      "at": "2026-10-07T16:47:21.713Z",
+      "type": "release-accepted",
+      "digest": "a45f6a9fa9bdaa196759487d2dd71ca85e623b6c2a19a44209e4dcd441558f07"
+    }
+  ],
+  "release": {
+    "digest": "a45f6a9fa9bdaa196759487d2dd71ca85e623b6c2a19a44209e4dcd441558f07",
+    "approved": true,
+    "accepted": true,
+    "url": "http://127.0.0.1:3201"
+  }
+}
