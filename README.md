@@ -65,7 +65,7 @@ npm run test:browser
 
 테스트는 별도 임시 SQLite와 JSONL을 사용해 프로젝트 범위, 상태 해석, 페이지 처리, 추론 및 원시 출력 제외, 잘못된 항목과 저장소 누락을 검증합니다. 실행·중지, 토큰 비용, 외부 배포와 로그인 기능은 포함하지 않습니다.
 
-브라우저 검증은 빌드 결과와 합성 API 응답만 사용하며 원본 기록을 읽지 않습니다. Playwright Chromium이 없다면 `npx playwright install chromium`으로 설치합니다. 실행 결과와 스크린샷은 Git에서 제외된 `workflow-artifacts/`에 생성합니다.
+브라우저 검증은 빌드 결과와 합성 API 응답만 사용하며 원본 기록을 읽지 않습니다. Playwright Chromium이 없다면 `npx playwright install chromium`으로 설치합니다. `npm run test:browser`는 기본 화면 검사와 여섯 탐색 시나리오를 함께 실행합니다. 기본 검사 결과와 스크린샷은 `workflow-artifacts/`, 탐색 보고서는 `.paperclip-lab/evidence/navigation-verification.json`에 생성하며 두 위치 모두 Git에서 제외합니다.
 
 ## 코딩 도구에서 이 저장소 개발하기
 
