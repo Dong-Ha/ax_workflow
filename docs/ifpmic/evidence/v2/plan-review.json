@@ -1,0 +1,27 @@
+{
+  "kind": "independent_supplemental_plan_review",
+  "decision": "approved_for_V2_mock_implementation",
+  "plan": "../../V2-SCENARIOS.md",
+  "reviewed_plan_sha256": "cb493258be85adf1b9744cf6e8d8e9a22c4d822c96bf7a649ad0e6fa78ea93b5",
+  "author_agent": "/root",
+  "reviewer_agent": "/root/paperclip_ui_extension",
+  "reviewer_role": "worker_luna; read-only independent reviewer",
+  "recorded_at": "2026-10-15T10:12:14.374123+00:00",
+  "approved_scope": [
+    "Fixed mock scenario catalog and deterministic replay projection",
+    "Standalone and native Paperclip visualization",
+    "Independent tests and synthetic verification evidence"
+  ],
+  "reviewed_clarifications": [
+    "Pause/cancel safe boundaries, lease handling and late receipts",
+    "Infrastructure attempts and additional business rework counted separately",
+    "COUPLED exemptions require both execution and judgment steps",
+    "Manual device evidence requires performer, device, image, script, timestamps, cases and artifact"
+  ],
+  "not_approved": [
+    "V2 completion or acceptance gate passage",
+    "Real acceptance test completion",
+    "Real environment execution, deployment or remote submission"
+  ],
+  "waivers": []
+}
