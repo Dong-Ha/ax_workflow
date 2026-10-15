@@ -1,0 +1,16 @@
+{
+  "kind": "independent_native_host_capture_procedure_review",
+  "decision": "approved_for_candidate_freeze",
+  "procedure": "../../V2-EXCEPTION-UI-CAPTURE.md",
+  "sha256": "d8b78a35f9d00b49be12d60f2b7e4f3b92f3692cff501590473580aa3087deed",
+  "reviewer_agent": "/root/paperclip_ui_extension",
+  "recorded_at": "2026-10-15T11:49:03.853376+00:00",
+  "checks": [
+    "No click, POST exception, suppression or request count exclusion",
+    "Unique known announcement identity and absence of IFPMIC descendants before visibility change",
+    "Capture adjustment or explicit absence recorded, write-zero unchanged"
+  ],
+  "limitation": "The existing synthetic host announcement was already dismissed by the failed pre-freeze diagnostic. Real-host count=1 hide branch lacks execution evidence; it has independent source review only. Host announcement functionality is outside this IFPMIC capture verification. No server write is used to restore the announcement.",
+  "scope": "Capture environment procedure only; final candidate gate and audit required",
+  "waivers": []
+}

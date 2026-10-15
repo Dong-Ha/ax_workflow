@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
@@ -8,9 +9,10 @@ import { replayScenario } from '../src/ifpmic/replay.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const specs = path.join(root, 'docs/ifpmic/design-v1/specs');
-const [workflow, stateContract] = await Promise.all([
+const [workflow, stateContract, priorCatalogEvidence] = await Promise.all([
   readFile(path.join(specs, 'workflow.v1.json'), 'utf8').then(JSON.parse),
   readFile(path.join(specs, 'state-contract.json'), 'utf8').then(JSON.parse),
+  readFile(path.join(root, 'docs/ifpmic/evidence/v2/ui-catalog.json'), 'utf8').then(JSON.parse),
 ]);
 
 const expectedScenarioIds = [
@@ -19,6 +21,8 @@ const expectedScenarioIds = [
   'plan-rejection', 'release-reject-code', 'release-reject-design', 'metadata-recovery',
   'metric-missing', 'stale-result', 'stale-candidate', 'stale-approval', 'duplicate-events',
   'retry-limit', 'cycle-limit', 'device-boundaries', 'flash-unknown', 'notes-only',
+  'spec-question-wait', 'spec-question-resolution', 'spec-question-retry', 'spec-question-repeat',
+  'remote-uncertainty', 'remote-recovery', 'remote-device-quarantine',
 ];
 
 // Literal checkpoint oracle from docs/ifpmic/V2-UI.md. start/end are required
@@ -52,6 +56,13 @@ const checkpointOracle = {
   ],
   'flash-unknown': ['unknown', 'idle'],
   'notes-only': ['notes-failed', 'notes-retry', 'completed'],
+  'spec-question-wait': ['question', 'blocked'],
+  'spec-question-resolution': ['question', 'answered', 'review-blocked', 'reviewed', 'continued'],
+  'spec-question-retry': ['question', 'answered', 'reviewed-first', 'retry-wait', 'retried', 'review-blocked', 'reviewed', 'continued'],
+  'spec-question-repeat': ['question', 'answered', 'question-two', 'stale-answer', 'answered-two', 'reviewed', 'continued'],
+  'remote-uncertainty': ['unknown', 'queried-unknown', 'absent', 'conflict', 'stale'],
+  'remote-recovery': ['unknown', 'absent', 'found', 'late', 'completed'],
+  'remote-device-quarantine': ['unknown', 'quarantined', 'idle', 'blocked'],
 };
 
 // Independent fixed final-state oracle; it intentionally does not derive route
@@ -82,6 +93,13 @@ const finalOracle = {
   'device-boundaries': { current_step: 'P22', state: 'RUNNING', status: 'RECONCILING', reassign_allowed: false },
   'flash-unknown': { current_step: 'P22', state: 'RUNNING', status: 'RECONCILING', reassign_allowed: false },
   'notes-only': { current_step: 'END', status: 'COMPLETED', state: 'SUCCEEDED', p26Attempt: 2, publication_count: 1 },
+  'spec-question-wait': { current_step: 'P03', status: 'WAITING_HUMAN', state: 'WAITING_HUMAN', cycle: 1, requirements_version: 'mock:requirements:v1', spec: { question_id: 'mock:question:spec-question-wait:q1', ordinal: 1, resolved: false, reviewed: false } },
+  'spec-question-resolution': { current_step: 'P04', status: 'RUNNING', cycle: 1, requirements_version: 'mock:requirements:v2', spec: { question_id: 'mock:question:spec-question-resolution:q1', ordinal: 1, resolved: true, reviewed: true, review_attempt: 1, review_execution_id: 'mock:P03:c1:a1' } },
+  'spec-question-retry': { current_step: 'P04', status: 'RUNNING', cycle: 1, requirements_version: 'mock:requirements:v2', p03Attempt: 2, spec: { question_id: 'mock:question:spec-question-retry:q1', ordinal: 1, resolved: true, reviewed: true, review_attempt: 2, review_execution_id: 'mock:P03:c1:a2' } },
+  'spec-question-repeat': { current_step: 'P04', status: 'RUNNING', cycle: 1, requirements_version: 'mock:requirements:v3', spec: { question_id: 'mock:question:spec-question-repeat:q2', ordinal: 2, resolved: true, reviewed: true, review_attempt: 1, review_execution_id: 'mock:P03:c1:a1' } },
+  'remote-uncertainty': { current_step: 'P25', status: 'RECONCILING', cycle: 1, attempt: 1, publication_count: 0, receipt_id: null, remote: { operation_key: 'mock:remote-uncertainty:operation', query_seq: 3, outcome: 'conflict' } },
+  'remote-recovery': { current_step: 'END', status: 'COMPLETED', cycle: 1, attempt: 1, publication_count: 1, receipt_id: 'mock:remote-recovery:remote:receipt', remote: { operation_key: 'mock:remote-recovery:operation', query_seq: 2, outcome: 'found' } },
+  'remote-device-quarantine': { current_step: 'P25', status: 'RECONCILING', cycle: 1, attempt: 1, publication_count: 0, receipt_id: null, device_quarantined: true, remote: { operation_key: 'mock:remote-device-quarantine:operation', query_seq: 0, outcome: 'unknown' } },
 };
 
 function deepFrozen(value, seen = new Set()) {
@@ -111,12 +129,22 @@ function assertExpectedEnd(result, expected, scenarioId) {
   if (expected.x03Attempt !== undefined) assert.equal(result.steps.X03.attempt, expected.x03Attempt, scenarioId);
   if (expected.p26Attempt !== undefined) assert.equal(result.steps.P26.attempt, expected.p26Attempt, scenarioId);
   if (expected.attempt !== undefined) assert.equal(result.steps.P13.attempt, expected.attempt, scenarioId);
+  if (expected.p03Attempt !== undefined) assert.equal(result.steps.P03.attempt, expected.p03Attempt, scenarioId);
   if (expected.archivedAttempts !== undefined) {
     assert.equal(result.history.filter(row => row.kind === 'attempt' && row.step_id === 'P13').length, expected.archivedAttempts, scenarioId);
   }
   if (expected.timeline !== undefined) assert.equal(result.timeline.length, expected.timeline, scenarioId);
   if (expected.duplicate_count !== undefined) assert.equal(result.duplicate_count, expected.duplicate_count, scenarioId);
   if (expected.conflict_count !== undefined) assert.equal(result.conflict_count, expected.conflict_count, scenarioId);
+  if (expected.requirements_version !== undefined) assert.equal(result.requirements_version, expected.requirements_version, scenarioId);
+  if (Object.hasOwn(expected, 'receipt_id')) assert.equal(result.release.receipt_id, expected.receipt_id, scenarioId);
+  if (expected.remote !== undefined) {
+    for (const [key, value] of Object.entries(expected.remote)) assert.equal(result.remote_reconciliation[key], value, `${scenarioId}/remote.${key}`);
+  }
+  if (expected.device_quarantined !== undefined) assert.equal(result.device.quarantined, expected.device_quarantined, scenarioId);
+  if (expected.spec !== undefined) {
+    for (const [key, value] of Object.entries(expected.spec)) assert.equal(result.spec_review[key], value, `${scenarioId}/spec.${key}`);
+  }
   if (scenarioId === 'cycle-limit') assert.ok(result.failure_bundle.length > 0);
 }
 
@@ -125,7 +153,7 @@ test('fixed mock catalog inventory, frozen values and checkpoint IDs match liter
   const originalContract = structuredClone(stateContract);
   const catalog = createScenarioCatalog(workflow, stateContract);
   assert.deepEqual(catalog.map(item => item.id).sort(), [...expectedScenarioIds].sort());
-  assert.equal(catalog.length, 25);
+  assert.equal(catalog.length, 32);
   assert.deepEqual(workflow, originalWorkflow);
   assert.deepEqual(stateContract, originalContract);
   assert.ok(deepFrozen(catalog), 'catalog, scenarios, events, payloads and checkpoints are deeply frozen');
@@ -151,6 +179,13 @@ test('fixed mock catalog inventory, frozen values and checkpoint IDs match liter
       }
       assert.equal(event.job_id, `mock:${scenario.id}`, `${scenario.id} job identity`);
     }
+  }
+  const priorFixtures = new Map(priorCatalogEvidence.scenarios.map(item => [item.id, item.fixture_sha256]));
+  for (const id of expectedScenarioIds.slice(0, 25)) {
+    const scenario = catalog.find(item => item.id === id);
+    assert.ok(priorFixtures.has(id), `previous catalog manifest contains ${id}`);
+    assert.equal(createHash('sha256').update(JSON.stringify(scenario.events)).digest('hex'), priorFixtures.get(id),
+      `${id} event fixture bytes remain identical to previously accepted 25-scenario catalog`);
   }
   assert.deepEqual(workflow, originalWorkflow, 'catalog builder did not mutate workflow input');
   assert.deepEqual(stateContract, originalContract, 'catalog builder did not mutate state contract input');
@@ -186,6 +221,110 @@ test('every checkpoint deterministically replays exactly its event prefix and le
     assert.equal(start.cycle, 1, `${scenario.id}/start`);
     assert.ok(Object.values(start.steps).every(step => step.state === 'PENDING'), `${scenario.id}/start has no prior-state leakage`);
   }
+});
+
+test('all 32 catalog endpoints and exception checkpoints match independent literal state oracle', () => {
+  const catalog = createScenarioCatalog(workflow, stateContract);
+  const byId = new Map(catalog.map(item => [item.id, item]));
+  const expected = {
+    'spec-question-wait': {
+      question: { current: 'P03', status: 'WAITING_HUMAN', state: 'WAITING_HUMAN', version: 'mock:requirements:v1', q: 'mock:question:spec-question-wait:q1', task: 'mock:task:P03:c1:a1:q1', ordinal: 1, resolved: false, reviewed: false },
+      blocked: { current: 'P03', status: 'WAITING_HUMAN', state: 'WAITING_HUMAN', version: 'mock:requirements:v1', q: 'mock:question:spec-question-wait:q1', task: 'mock:task:P03:c1:a1:q1', ordinal: 1, resolved: false, reviewed: false },
+    },
+    'spec-question-resolution': {
+      question: { current: 'P03', status: 'WAITING_HUMAN', state: 'WAITING_HUMAN', version: 'mock:requirements:v1', q: 'mock:question:spec-question-resolution:q1', task: 'mock:task:P03:c1:a1:q1', ordinal: 1, resolved: false, reviewed: false },
+      answered: { current: 'P03', status: 'RUNNING', state: 'READY', version: 'mock:requirements:v2', resolved: true, reviewed: false },
+      'review-blocked': { current: 'P03', status: 'RUNNING', state: 'RUNNING', version: 'mock:requirements:v2', resolved: true, reviewed: false },
+      reviewed: { current: 'P03', status: 'RUNNING', state: 'RUNNING', version: 'mock:requirements:v2', resolved: true, reviewed: true, reviewAttempt: 1, reviewExecution: 'mock:P03:c1:a1' },
+      continued: { current: 'P04', status: 'RUNNING', state: 'SUCCEEDED', version: 'mock:requirements:v2', resolved: true, reviewed: true },
+    },
+    'spec-question-retry': {
+      question: { current: 'P03', status: 'WAITING_HUMAN', state: 'WAITING_HUMAN', version: 'mock:requirements:v1', q: 'mock:question:spec-question-retry:q1', task: 'mock:task:P03:c1:a1:q1', ordinal: 1, resolved: false, reviewed: false },
+      answered: { current: 'P03', status: 'RUNNING', state: 'READY', version: 'mock:requirements:v2', resolved: true, reviewed: false },
+      'reviewed-first': { current: 'P03', status: 'RUNNING', state: 'RUNNING', version: 'mock:requirements:v2', attempt: 1, resolved: true, reviewed: true, reviewAttempt: 1, reviewExecution: 'mock:P03:c1:a1' },
+      'retry-wait': { current: 'P03', status: 'RUNNING', state: 'WAITING_RETRY', version: 'mock:requirements:v2', resolved: true, reviewed: true },
+      retried: { current: 'P03', status: 'RUNNING', state: 'READY', version: 'mock:requirements:v2', attempt: 2, resolved: true, reviewed: true, reviewAttempt: 1, reviewExecution: 'mock:P03:c1:a1' },
+      'review-blocked': { current: 'P03', status: 'RUNNING', state: 'RUNNING', version: 'mock:requirements:v2', attempt: 2, resolved: true, reviewed: true, reviewAttempt: 1, reviewExecution: 'mock:P03:c1:a1' },
+      reviewed: { current: 'P03', status: 'RUNNING', state: 'RUNNING', version: 'mock:requirements:v2', attempt: 2, resolved: true, reviewed: true, reviewAttempt: 2, reviewExecution: 'mock:P03:c1:a2' },
+      continued: { current: 'P04', status: 'RUNNING', state: 'SUCCEEDED', version: 'mock:requirements:v2', attempt: 2, resolved: true, reviewed: true, reviewAttempt: 2, reviewExecution: 'mock:P03:c1:a2' },
+    },
+    'spec-question-repeat': {
+      question: { current: 'P03', status: 'WAITING_HUMAN', state: 'WAITING_HUMAN', version: 'mock:requirements:v1', q: 'mock:question:spec-question-repeat:q1', ordinal: 1, resolved: false, reviewed: false },
+      answered: { current: 'P03', status: 'RUNNING', state: 'READY', version: 'mock:requirements:v2', q: 'mock:question:spec-question-repeat:q1', ordinal: 1, resolved: true, reviewed: false },
+      'question-two': { current: 'P03', status: 'WAITING_HUMAN', state: 'WAITING_HUMAN', version: 'mock:requirements:v2', q: 'mock:question:spec-question-repeat:q2', task: 'mock:task:P03:c1:a1:q2', ordinal: 2, resolved: false, reviewed: false },
+      'stale-answer': { current: 'P03', status: 'WAITING_HUMAN', state: 'WAITING_HUMAN', version: 'mock:requirements:v2', q: 'mock:question:spec-question-repeat:q2', ordinal: 2, resolved: false, reviewed: false },
+      'answered-two': { current: 'P03', status: 'RUNNING', state: 'READY', version: 'mock:requirements:v3', q: 'mock:question:spec-question-repeat:q2', ordinal: 2, resolved: true, reviewed: false },
+      reviewed: { current: 'P03', status: 'RUNNING', state: 'RUNNING', version: 'mock:requirements:v3', q: 'mock:question:spec-question-repeat:q2', ordinal: 2, resolved: true, reviewed: true },
+      continued: { current: 'P04', status: 'RUNNING', state: 'SUCCEEDED', version: 'mock:requirements:v3', q: 'mock:question:spec-question-repeat:q2', ordinal: 2, resolved: true, reviewed: true },
+    },
+    'remote-uncertainty': {
+      unknown: { current: 'P25', status: 'RECONCILING', state: 'RECONCILING', query: 0, outcome: 'unknown', publication: 0, receipt: null },
+      'queried-unknown': { current: 'P25', status: 'RECONCILING', state: 'RECONCILING', query: 1, outcome: 'unknown', publication: 0, receipt: null },
+      absent: { current: 'P25', status: 'RECONCILING', state: 'RECONCILING', query: 2, outcome: 'absent', publication: 0, receipt: null },
+      conflict: { current: 'P25', status: 'RECONCILING', state: 'RECONCILING', query: 3, outcome: 'conflict', publication: 0, receipt: null },
+      stale: { current: 'P25', status: 'RECONCILING', state: 'RECONCILING', query: 3, outcome: 'conflict', publication: 0, receipt: null },
+    },
+    'remote-recovery': {
+      unknown: { current: 'P25', status: 'RECONCILING', state: 'RECONCILING', query: 0, outcome: 'unknown', publication: 0, receipt: null },
+      absent: { current: 'P25', status: 'RECONCILING', state: 'RECONCILING', query: 1, outcome: 'absent', publication: 0, receipt: null },
+      found: { current: 'P26', status: 'RUNNING', p25: 'SUCCEEDED', query: 2, outcome: 'found', publication: 1, receipt: 'mock:remote-recovery:remote:receipt' },
+      late: { current: 'P26', status: 'RUNNING', p25: 'SUCCEEDED', query: 2, outcome: 'found', publication: 1, receipt: 'mock:remote-recovery:remote:receipt' },
+      completed: { current: 'END', status: 'COMPLETED', p25: 'SUCCEEDED', query: 2, outcome: 'found', publication: 1, receipt: 'mock:remote-recovery:remote:receipt' },
+    },
+    'remote-device-quarantine': {
+      unknown: { current: 'P25', status: 'RECONCILING', state: 'RECONCILING', query: 0, outcome: 'unknown', quarantined: false, publication: 0 },
+      quarantined: { current: 'P25', status: 'RECONCILING', state: 'RECONCILING', query: 0, outcome: 'unknown', quarantined: true, publication: 0 },
+      idle: { current: 'P25', status: 'RECONCILING', state: 'RECONCILING', query: 0, outcome: 'unknown', quarantined: true, publication: 0 },
+      blocked: { current: 'P25', status: 'RECONCILING', state: 'RECONCILING', query: 0, outcome: 'unknown', quarantined: true, publication: 0 },
+    },
+  };
+
+  const read = (scenarioId, checkpointId) => {
+    const scenario = byId.get(scenarioId);
+    const point = scenario.checkpoints.find(item => item.id === checkpointId);
+    assert.ok(point, `${scenarioId}/${checkpointId} is a literal oracle checkpoint`);
+    return replayScenario(scenario, workflow, stateContract, point.cursor);
+  };
+  for (const [scenarioId, checkpoints] of Object.entries(expected)) {
+    for (const [checkpointId, want] of Object.entries(checkpoints)) {
+      const result = read(scenarioId, checkpointId);
+      assert.equal(result.current_step, want.current, `${scenarioId}/${checkpointId}/current`);
+      assert.equal(result.status, want.status, `${scenarioId}/${checkpointId}/status`);
+      const stepId = want.current === 'P04' || want.current === 'P26' || want.current === 'END' ? 'P03' : want.current;
+      if (want.state !== undefined) assert.equal(result.steps[stepId].state, want.state, `${scenarioId}/${checkpointId}/state`);
+      if (want.p25 !== undefined) assert.equal(result.steps.P25.state, want.p25, `${scenarioId}/${checkpointId}/P25`);
+      if (want.version !== undefined) assert.equal(result.requirements_version, want.version, `${scenarioId}/${checkpointId}/requirements version`);
+      if (want.attempt !== undefined) assert.equal(result.steps.P03.attempt, want.attempt, `${scenarioId}/${checkpointId}/attempt`);
+      if (want.q !== undefined) assert.equal(result.spec_review.question_id, want.q, `${scenarioId}/${checkpointId}/question`);
+      if (want.task !== undefined) assert.equal(result.spec_review.task_id, want.task, `${scenarioId}/${checkpointId}/task`);
+      if (want.ordinal !== undefined) assert.equal(result.spec_review.ordinal, want.ordinal, `${scenarioId}/${checkpointId}/ordinal`);
+      if (want.resolved !== undefined) assert.equal(result.spec_review.resolved, want.resolved, `${scenarioId}/${checkpointId}/resolved`);
+      if (want.reviewed !== undefined) assert.equal(result.spec_review.reviewed, want.reviewed, `${scenarioId}/${checkpointId}/reviewed`);
+      if (want.reviewAttempt !== undefined) assert.equal(result.spec_review.review_attempt, want.reviewAttempt, `${scenarioId}/${checkpointId}/review attempt`);
+      if (want.reviewExecution !== undefined) assert.equal(result.spec_review.review_execution_id, want.reviewExecution, `${scenarioId}/${checkpointId}/review execution`);
+      if (want.query !== undefined) assert.equal(result.remote_reconciliation.query_seq, want.query, `${scenarioId}/${checkpointId}/query sequence`);
+      if (want.outcome !== undefined) assert.equal(result.remote_reconciliation.outcome, want.outcome, `${scenarioId}/${checkpointId}/remote outcome`);
+      if (want.publication !== undefined) assert.equal(result.release.publication_count, want.publication, `${scenarioId}/${checkpointId}/publication`);
+      if (Object.hasOwn(want, 'receipt')) assert.equal(result.release.receipt_id, want.receipt, `${scenarioId}/${checkpointId}/receipt`);
+      if (want.quarantined !== undefined) assert.equal(result.device?.quarantined ?? false, want.quarantined, `${scenarioId}/${checkpointId}/device quarantine`);
+    }
+  }
+  const staleRemote = read('remote-uncertainty', 'stale');
+  assert.equal(staleRemote.timeline.at(-1).applied, false);
+  assert.equal(staleRemote.timeline.at(-1).reason, 'stale_remote_query');
+  assert.equal(staleRemote.remote_reconciliation.observations.length, 4);
+  const retryEnd = read('spec-question-retry', 'end');
+  const oldReview = retryEnd.history.find(row => row.kind === 'spec_review_attempt');
+  assert.ok(oldReview);
+  assert.equal(oldReview.spec_review.review_attempt, 1);
+  assert.equal(oldReview.spec_review.review_execution_id, 'mock:P03:c1:a1');
+  assert.ok(oldReview.spec_review.review_evidence_id);
+  const repeatEnd = read('spec-question-repeat', 'end');
+  const firstQuestion = repeatEnd.history.find(row => row.kind === 'spec_question');
+  assert.ok(firstQuestion);
+  assert.equal(firstQuestion.spec_review.question_id, 'mock:question:spec-question-repeat:q1');
+  assert.equal(firstQuestion.spec_review.resolved_requirements_version, 'mock:requirements:v2');
+  assert.ok(firstQuestion.spec_review.resolution_evidence_id);
 });
 
 test('critical prefixes retain expected wait, failure, quality and release boundaries', () => {

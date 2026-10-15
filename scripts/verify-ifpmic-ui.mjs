@@ -15,22 +15,22 @@ async function files(directory) {
 }
 async function snapshot() {
   const paths = (await Promise.all(['src', 'server', 'tests', 'scripts', 'plugins', 'docs/ifpmic/design-v1'].map(files))).flat();
-  paths.push('README.md', 'docs/ifpmic/V2-UI.md', 'docs/ifpmic/V2-SCENARIOS.md', 'docs/ifpmic/V2-PROTOCOLS.md', 'docs/ifpmic/V2-IMPLEMENTATION.md', 'docs/ifpmic/evidence/v2/ui-plan-review.json', 'package.json', 'package-lock.json', 'vite.config.ts', 'tsconfig.json', 'index.html', 'ifpmic.html', 'docs/ifpmic/PLAN.md', 'docs/ifpmic/VERIFICATION.md', 'docs/ifpmic/evidence/plan-review.json', 'docs/ifpmic/source-manifest.json', 'IFPMIC_AX_Design_Package_v1.zip', 'IFPMIC_AX_Design_v1.docx');
+  paths.push('docs/ifpmic/V2-EXCEPTION-UI-CAPTURE.md', 'docs/ifpmic/evidence/v2/exception-ui-capture-review.json', 'docs/ifpmic/evidence/v2/ui-catalog.json', 'docs/ifpmic/V2-EXCEPTION-UI.md', 'docs/ifpmic/V2-EXCEPTIONS.md', 'docs/ifpmic/evidence/v2/exception-ui-plan-review.json', 'docs/ifpmic/evidence/v2/exceptions-plan-review-2.json', 'README.md', 'docs/ifpmic/V2-UI.md', 'docs/ifpmic/V2-SCENARIOS.md', 'docs/ifpmic/V2-PROTOCOLS.md', 'docs/ifpmic/V2-IMPLEMENTATION.md', 'docs/ifpmic/evidence/v2/ui-plan-review.json', 'package.json', 'package-lock.json', 'vite.config.ts', 'tsconfig.json', 'index.html', 'ifpmic.html', 'docs/ifpmic/PLAN.md', 'docs/ifpmic/VERIFICATION.md', 'docs/ifpmic/evidence/plan-review.json', 'docs/ifpmic/source-manifest.json', 'IFPMIC_AX_Design_Package_v1.zip', 'IFPMIC_AX_Design_v1.docx');
   for (const name of await readdir(join(root, 'experiments/paperclip'))) if (/\.(mjs|json)$/.test(name)) paths.push(join('experiments/paperclip', name));
   return Object.fromEntries(await Promise.all([...new Set(paths)].sort().map(async path => [path, sha256(await readFile(join(root, path)))])));
 }
 const before = await snapshot();
-const report = { kind: 'ifpmic_v2_partial_ui_candidate_verification', scope: '25-scenario mock catalog/UI plus V0/V1/AX regression; partial V2 only, no real AT completion', attempt, startedAt: new Date().toISOString(), sourceHashes: before, sourceFingerprint: sha256(JSON.stringify(before)), commands: [], reports: {}, verdict: 'running' };
+const report = { kind: 'ifpmic_v2_partial_ui_candidate_verification', scope: '32-scenario mock catalog/UI plus V0/V1/AX regression; partial V2 only, no real AT completion', attempt, startedAt: new Date().toISOString(), sourceHashes: before, sourceFingerprint: sha256(JSON.stringify(before)), commands: [], reports: {}, verdict: 'running' };
 async function run(name, command, args) {
   const log = join(directory, `${name}.log`);
   const startedAt = new Date().toISOString();
   let output = '';
   const exitCode = await new Promise((accept, reject) => {
-    const child = spawn(command, args, { cwd: root, env: process.env, stdio: ['ignore', 'pipe', 'pipe'] });
+    const child = spawn(command, args, { cwd: root, env: process.env, stdio: ['ignore', 'pipe', 'pipe'], timeout: 120000 });
     child.stdout.on('data', data => { output += data.toString(); });
     child.stderr.on('data', data => { output += data.toString(); });
     child.on('error', reject);
-    child.on('exit', code => accept(code));
+    child.on('close', code => accept(code));
   });
   await writeFile(log, output);
   const counts = Object.fromEntries(['tests', 'pass', 'fail', 'skipped'].flatMap(key => {
@@ -43,6 +43,9 @@ async function run(name, command, args) {
 }
 try {
   await run('unit', 'npm', ['test']);
+  const unit = report.commands.find(command => command.name === 'unit');
+  if (!unit.counts || unit.counts.tests < 1 || unit.counts.pass !== unit.counts.tests
+      || unit.counts.fail !== 0 || unit.counts.skipped !== 0) throw new Error('All unit tests must pass without skips');
   await run('build', 'npm', ['run', 'build']);
   await run('plugin-build', 'npm', ['run', 'ifpmic:plugin:build']);
   await run('source-uploads', 'npm', ['run', 'ifpmic:verify-sources']);
@@ -71,7 +74,7 @@ try {
     const bytes = await readFile(join(root, 'workflow-artifacts/verification/V2/ui', name));
     const value = JSON.parse(bytes);
     if (name.includes('browser') && value.verdict !== 'pass') throw new Error(`${name} did not pass`);
-    if (name === 'catalog.json' && (value.scenario_count !== 25 || value.mode !== 'mock')) throw new Error('Catalog manifest incomplete');
+    if (name === 'catalog.json' && (value.scenario_count !== 32 || value.mode !== 'mock')) throw new Error('Catalog manifest incomplete');
     await writeFile(join(directory, `ui-${name}`), bytes);
     report.reports[`ui-${name}`] = { path: relative(root, join(directory, `ui-${name}`)), sha256: sha256(bytes) };
     if (name.includes('browser')) for (const screenshot of value.evidence || []) {

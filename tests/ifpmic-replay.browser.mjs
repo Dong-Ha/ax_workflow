@@ -16,6 +16,7 @@ const report = {
   checks: [],
   unexpectedExternalRequests: [],
   browserWriteRequests: [],
+  captureAdjustments: [],
   apiRequests: [],
   pageErrors: [],
   consoleErrors: [],
@@ -48,6 +49,13 @@ const scenarioOracle = {
   'device-boundaries': { current: 'P22', status: 'RECONCILING', cycle: 1 },
   'flash-unknown': { current: 'P22', status: 'RECONCILING', cycle: 1 },
   'notes-only': { current: 'END', status: 'COMPLETED', cycle: 1 },
+  'spec-question-wait': { current: 'P03', status: 'WAITING_HUMAN', cycle: 1 },
+  'spec-question-resolution': { current: 'P04', status: 'RUNNING', cycle: 1 },
+  'spec-question-retry': { current: 'P04', status: 'RUNNING', cycle: 1 },
+  'spec-question-repeat': { current: 'P04', status: 'RUNNING', cycle: 1 },
+  'remote-uncertainty': { current: 'P25', status: 'RECONCILING', cycle: 1 },
+  'remote-recovery': { current: 'END', status: 'COMPLETED', cycle: 1 },
+  'remote-device-quarantine': { current: 'P25', status: 'RECONCILING', cycle: 1 },
 };
 
 let browser;
@@ -197,6 +205,29 @@ async function bootBrowser() {
   const url = hostMode ? new URL(routePath, base).href : `${origin}/ifpmic.html`;
   await page.goto(url, { waitUntil: 'networkidle' });
   report.route = hostMode ? routePath : '/ifpmic.html';
+  if (hostMode) {
+    const announcement = page.locator('aside[aria-label="Paperclip announcements"]');
+    await announcement.waitFor({ state: 'visible', timeout: 10000 }).catch(() => {});
+    const count = await announcement.count();
+    const selector = 'aside[aria-label="Paperclip announcements"]';
+    assert.ok(count === 0 || count === 1, `expected at most one Paperclip announcement container, got ${count}`);
+    if (count === 0) {
+      report.captureAdjustments.push({ selector, count: 0, action: 'none', observedText: null });
+    } else {
+      const observedText = await announcement.innerText();
+      assert.ok(observedText.includes('Introducing Connectors'), 'announcement title matches expected Paperclip notice');
+      assert.ok(observedText.includes('Give your agents the access they need'), 'announcement copy matches expected Paperclip notice');
+      const containsIfpmic = await announcement.evaluate(element => Boolean(element.querySelector(
+        '#ifpmic-root, main.ifpmic-shell, [data-testid^="ifpmic-"]',
+      )));
+      assert.equal(containsIfpmic, false, 'announcement is separate from IFPMIC content');
+      await announcement.evaluate(element => { element.style.visibility = 'hidden'; });
+      report.captureAdjustments.push({
+        selector, count, action: 'visibility:hidden for screenshot capture only; no dismissal control or API was invoked',
+        observedText,
+      });
+    }
+  }
 }
 
 try {
@@ -216,7 +247,7 @@ try {
     assert.ok((await replayPanel().innerText()).includes('MOCK'));
   });
 
-  await record('catalog exposes all 25 frozen scenarios and starts each at cursor zero', async () => {
+  await record('catalog exposes all 32 frozen scenarios and starts each at cursor zero', async () => {
     const expectedIds = Object.keys(scenarioOracle);
     const options = await scenarioSelect().locator('option').evaluateAll(items => items.map(item => item.value).filter(Boolean));
     assert.deepEqual([...options].sort(), [...expectedIds].sort());
@@ -228,7 +259,7 @@ try {
     }
   });
 
-  await record('all 25 scenarios reach their fixed endpoint through the end-observation control', async () => {
+  await record('all 32 scenarios reach their fixed endpoint through the end-observation control', async () => {
     for (const [id, expected] of Object.entries(scenarioOracle)) {
       await selectScenario(id);
       await replayPanel().getByRole('button', { name: '끝 관측', exact: true }).click();
@@ -359,6 +390,187 @@ try {
     assert.equal(geometry.focused, true, `P22 focus: ${JSON.stringify(geometry)}`);
     assert.ok(geometry.node.left >= geometry.viewport.left - 1 && geometry.node.right <= geometry.viewport.right + 1,
       `P22 is visible in workflow scroller: ${JSON.stringify(geometry)}`);
+  });
+
+  await record('question panels distinguish durable answer, current-attempt review and archived review history', async () => {
+    await selectScenario('spec-question-wait');
+    await moveCheckpoint('end');
+    const waitingQuestion = page.getByTestId('ifpmic-spec-observation');
+    assert.equal(await waitingQuestion.getAttribute('data-question-id'), 'mock:question:spec-question-wait:q1');
+    assert.equal(await waitingQuestion.getAttribute('data-requirements-version'), 'mock:requirements:v1');
+    assert.equal(await waitingQuestion.getAttribute('data-question-attempt'), '1');
+    assert.equal(await waitingQuestion.getAttribute('data-current-review'), 'false');
+    const waitingQuestionText = await waitingQuestion.innerText();
+    for (const text of ['미해결', '질문 당시 버전', 'mock:requirements:v1',
+      '배정 task', 'mock:task:P03:c1:a1:q1', '현재 P03 attempt']) {
+      assert.ok(waitingQuestionText.includes(text), `unresolved question shows ${text}`);
+    }
+    assert.match(waitingQuestionText, /현재 P03 attempt\s*1/);
+
+    await selectScenario('spec-question-resolution');
+    await moveCheckpoint('answered');
+    const answeredQuestion = page.getByTestId('ifpmic-spec-observation');
+    assert.equal(await summary().getAttribute('data-current-step'), 'P03');
+    assert.equal(await card('P03').getAttribute('data-state'), 'READY');
+    assert.equal(await answeredQuestion.getAttribute('data-requirements-version'), 'mock:requirements:v2');
+    assert.equal(await answeredQuestion.getAttribute('data-current-review'), 'false');
+    assert.ok((await answeredQuestion.innerText()).includes('해결됨'));
+    assert.ok((await answeredQuestion.innerText()).includes('미완료'));
+    await moveCheckpoint('reviewed');
+    assert.equal(await answeredQuestion.getAttribute('data-current-review'), 'true');
+    assert.equal(await answeredQuestion.getAttribute('data-review-attempt'), '1');
+
+    await selectScenario('spec-question-retry');
+    await moveCheckpoint('review-blocked');
+    await assertSummary({ current: 'P03', status: 'RUNNING', cycle: 1 });
+    const question = page.getByRole('region', { name: '사양 질문 모의 관측', exact: true });
+    assert.equal(await question.getAttribute('data-testid'), 'ifpmic-spec-observation');
+    assert.equal(await question.getAttribute('data-question-id'), 'mock:question:spec-question-retry:q1');
+    assert.equal(await question.getAttribute('data-requirements-version'), 'mock:requirements:v2');
+    assert.equal(await question.getAttribute('data-question-attempt'), '1');
+    assert.equal(await question.getAttribute('data-review-attempt'), '1');
+    assert.equal(await question.getAttribute('data-current-review'), 'false');
+    const questionText = await question.innerText();
+    for (const label of ['요구사항 현재 버전', '질문 ID', '배정 task', '질문 원래 실행', '질문 증거',
+      '답변 반영 버전', '답변 증거', '현재 P03 실행', '현재 실행 검토', '기록된 검토 실행', '검토 증거']) {
+      assert.ok(questionText.includes(label), `question panel exposes ${label}`);
+    }
+    assert.ok(questionText.includes('미완료'), 'a1 review does not approve current a2 execution');
+    const history = page.getByRole('region', { name: '모의 과거 이력' });
+    assert.equal(await history.getByTestId('ifpmic-spec-history').count(), 0,
+      'the a1 review is still current question metadata until the new a2 review is recorded');
+
+    await moveCheckpoint('reviewed');
+    assert.equal(await question.getAttribute('data-review-attempt'), '2');
+    assert.equal(await question.getAttribute('data-current-review'), 'true');
+    assert.ok((await question.innerText()).includes('유효'), 'current a2 review is valid');
+    const specHistory = history.getByTestId('ifpmic-spec-history');
+    assert.ok(await specHistory.count() > 0);
+    assert.equal(await specHistory.first().getAttribute('data-review-attempt'), '1');
+    await moveCheckpoint('review-blocked');
+    assert.equal(await question.getAttribute('data-current-review'), 'false');
+    assert.equal(await question.getAttribute('data-review-attempt'), '1');
+    assert.equal(await history.getByTestId('ifpmic-spec-history').count(), 0,
+      'rewinding before the new review restores the prefix without a future history row');
+    await moveCheckpoint('reviewed');
+    assert.equal(await question.getAttribute('data-current-review'), 'true');
+    const oldReviewText = await specHistory.first().innerText();
+    for (const text of ['질문 원래 좌표', '질문 당시 버전', '기록된 검토 attempt', 'mock:requirements:v1',
+      'mock:requirements:v2', 'mock:P03:c1:a1']) assert.ok(oldReviewText.includes(text), `a1 history shows ${text}`);
+    assert.ok(oldReviewText.includes('1'), 'archived review attempt is shown');
+    const currentQuestionText = await question.innerText();
+    for (const text of ['질문 당시 버전', '기록된 검토 attempt', 'mock:requirements:v1',
+      'mock:requirements:v2', 'mock:P03:c1:a2', '현재 P03 attempt']) assert.ok(currentQuestionText.includes(text), `current question shows ${text}`);
+    assert.match(currentQuestionText, /현재 P03 attempt\s*2/);
+
+    await selectScenario('spec-question-repeat');
+    assert.match(await replayPanel().locator('output').innerText(), /관측\s*0\s*\//,
+      'new scenario begins at observation cursor zero');
+    assert.equal(await page.getByTestId('ifpmic-spec-observation').count(), 0,
+      'switching to another question case starts before its first question event');
+    assert.equal(await page.getByTestId('ifpmic-spec-history').count(), 0,
+      'switching cases clears prior question history');
+    await moveCheckpoint('end');
+    const repeated = page.getByRole('region', { name: '사양 질문 모의 관측', exact: true });
+    assert.equal(await repeated.getAttribute('data-question-id'), 'mock:question:spec-question-repeat:q2');
+    assert.equal(await repeated.getAttribute('data-requirements-version'), 'mock:requirements:v3');
+    assert.equal(await repeated.getAttribute('data-question-attempt'), '1');
+    const repeatedText = await repeated.innerText();
+    for (const text of ['질문 당시 버전', '기록된 검토 attempt', 'mock:requirements:v2',
+      'mock:requirements:v3', 'mock:P03:c1:a1']) assert.ok(repeatedText.includes(text), `current q2 shows ${text}`);
+    const archivedQuestions = page.getByRole('region', { name: '모의 과거 이력' }).getByTestId('ifpmic-spec-history');
+    assert.ok(await archivedQuestions.count() >= 1);
+    const repeatHistory = await page.getByRole('region', { name: '모의 과거 이력' }).innerText();
+    assert.ok(repeatHistory.includes('mock:question:spec-question-repeat:q1'));
+    assert.ok(repeatHistory.includes('mock:requirements:v1'));
+    assert.ok(repeatHistory.includes('mock:requirements:v2'));
+    await page.setViewportSize({ width: 1440, height: 1000 });
+    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+    await repeated.evaluate(element => element.scrollIntoView({ block: 'center', inline: 'nearest' }));
+    await page.screenshot({ path: path.join(evidenceDir, `${hostMode ? 'host' : 'standalone'}-spec-question-repeat-end-desktop.png`), fullPage: true });
+    report.evidence.push(`workflow-artifacts/verification/V2/ui/${hostMode ? 'host' : 'standalone'}-spec-question-repeat-end-desktop.png`);
+    await replayPanel().getByRole('button', { name: '처음 관측', exact: true }).click();
+    assert.equal(await page.getByTestId('ifpmic-spec-observation').count(), 0);
+    assert.equal(await page.getByTestId('ifpmic-spec-history').count(), 0);
+    assert.ok((await page.getByRole('region', { name: '모의 과거 이력' }).innerText()).includes('과거 이력 없음'));
+  });
+
+  await record('remote panel shows stale-query rejection, one found receipt and quarantine independently', async () => {
+    await selectScenario('remote-uncertainty');
+    await moveCheckpoint('stale');
+    await assertSummary({ current: 'P25', status: 'RECONCILING', cycle: 1 });
+    const remote = page.getByRole('region', { name: '원격 결과 모의 관측', exact: true });
+    assert.equal(await remote.getAttribute('data-testid'), 'ifpmic-remote-observation');
+    assert.equal(await remote.getAttribute('data-operation-key'), 'mock:remote-uncertainty:operation');
+    assert.equal(await remote.getAttribute('data-query-seq'), '3');
+    assert.equal(await remote.getAttribute('data-outcome'), 'conflict');
+    const remoteText = await remote.innerText();
+    for (const label of ['동작 key', '명세 ID', 'digest', '후보', 'P25 단계 상태', '조회 순번', '조회 결과', '모의 영수증', '실제 제출 허용']) {
+      assert.ok(remoteText.includes(label), `remote panel exposes ${label}`);
+    }
+    const timeline = page.getByRole('list', { name: '모의 사건 목록' });
+    assert.ok((await timeline.innerText()).includes('stale_remote_query'));
+    assert.equal(await card('P25').getAttribute('data-state'), 'RECONCILING');
+    await page.setViewportSize({ width: 1440, height: 1000 });
+    await remote.evaluate(element => element.scrollIntoView({ block: 'center', inline: 'nearest' }));
+    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+    await page.screenshot({ path: path.join(evidenceDir, `${hostMode ? 'host' : 'standalone'}-remote-uncertainty-stale-desktop.png`), fullPage: true });
+    report.evidence.push(`workflow-artifacts/verification/V2/ui/${hostMode ? 'host' : 'standalone'}-remote-uncertainty-stale-desktop.png`);
+
+    await page.setViewportSize({ width: 375, height: 812 });
+    await remote.evaluate(element => element.scrollIntoView({ block: 'center', inline: 'nearest' }));
+    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+    assert.ok(await remote.isVisible());
+    await page.screenshot({ path: path.join(evidenceDir, `${hostMode ? 'host' : 'standalone'}-remote-uncertainty-stale-mobile-375.png`), fullPage: true });
+    report.evidence.push(`workflow-artifacts/verification/V2/ui/${hostMode ? 'host' : 'standalone'}-remote-uncertainty-stale-mobile-375.png`);
+
+    await selectScenario('remote-recovery');
+    await moveCheckpoint('found');
+    const recovered = page.getByRole('region', { name: '원격 결과 모의 관측', exact: true });
+    assert.equal(await recovered.getAttribute('data-query-seq'), '2');
+    assert.equal(await recovered.getAttribute('data-outcome'), 'found');
+    assert.ok((await recovered.innerText()).includes('mock:remote-recovery:remote:receipt'));
+    assert.equal(await card('P25').getAttribute('data-state'), 'SUCCEEDED');
+    assert.equal(await summary().getAttribute('data-current-step'), 'P26');
+    assert.equal(await page.getByRole('region', { name: '배포 모의 관측' }).innerText().then(text => /실제 제출 허용[\s\S]*?(아니오|false)/.test(text)), true);
+    await page.setViewportSize({ width: 1440, height: 1000 });
+    await recovered.evaluate(element => element.scrollIntoView({ block: 'center', inline: 'nearest' }));
+    await page.screenshot({ path: path.join(evidenceDir, `${hostMode ? 'host' : 'standalone'}-remote-recovery-found-desktop.png`), fullPage: true });
+    report.evidence.push(`workflow-artifacts/verification/V2/ui/${hostMode ? 'host' : 'standalone'}-remote-recovery-found-desktop.png`);
+
+    await selectScenario('remote-device-quarantine');
+    await moveCheckpoint('blocked');
+    const quarantinedRemote = page.getByRole('region', { name: '원격 결과 모의 관측', exact: true });
+    assert.equal(await quarantinedRemote.getAttribute('data-query-seq'), '0');
+    assert.equal(await quarantinedRemote.getAttribute('data-outcome'), 'unknown');
+    assert.equal(await card('P25').getAttribute('data-state'), 'RECONCILING');
+    const deviceText = await page.getByRole('region', { name: '장비 모의 관측' }).innerText();
+    assert.match(deviceText, /격리[\s\S]*true/);
+
+    await selectScenario('happy-path');
+    // Scenario changes already reset the cursor to the first observation.
+    assert.equal(await page.getByTestId('ifpmic-spec-observation').count(), 0);
+    assert.equal(await page.getByTestId('ifpmic-remote-observation').count(), 0);
+    assert.equal(await page.getByTestId('ifpmic-spec-history').count(), 0,
+      'switching cases clears question review history');
+  });
+
+  await record('question review-blocked checkpoint remains legible at 1440px and 375px', async () => {
+    await selectScenario('spec-question-retry');
+    await moveCheckpoint('review-blocked');
+    await page.setViewportSize({ width: 1440, height: 1000 });
+    const question = page.getByTestId('ifpmic-spec-observation');
+    assert.equal(await question.getAttribute('data-current-review'), 'false');
+    await question.evaluate(element => element.scrollIntoView({ block: 'center', inline: 'nearest' }));
+    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+    await page.screenshot({ path: path.join(evidenceDir, `${hostMode ? 'host' : 'standalone'}-spec-question-retry-review-blocked-desktop.png`), fullPage: true });
+    report.evidence.push(`workflow-artifacts/verification/V2/ui/${hostMode ? 'host' : 'standalone'}-spec-question-retry-review-blocked-desktop.png`);
+    await page.setViewportSize({ width: 375, height: 812 });
+    await question.evaluate(element => element.scrollIntoView({ block: 'center', inline: 'nearest' }));
+    assert.ok(await question.isVisible());
+    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+    await page.screenshot({ path: path.join(evidenceDir, `${hostMode ? 'host' : 'standalone'}-spec-question-retry-review-blocked-mobile-375.png`), fullPage: true });
+    report.evidence.push(`workflow-artifacts/verification/V2/ui/${hostMode ? 'host' : 'standalone'}-spec-question-retry-review-blocked-mobile-375.png`);
   });
 
   await record('1440px and 375px layouts expose replay controls and details without horizontal page overflow', async () => {

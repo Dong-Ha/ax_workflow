@@ -18,6 +18,7 @@ function fixture(id, title, workflow) {
   const attempts = Object.fromEntries(workflow.nodes.map(node => [node.id, 1]));
   let manifest;
   const candidate = 'mock:candidate:A';
+  let requirementsVersion = 'mock:requirements:v1', questionOrdinal = 0, openQuestion;
   const emit = (type, step_id, payload, overrides = {}) => {
     const event = { event_id: `mock:${id}:e${++sequence}`, source_id: 'mock:catalog', source_seq: sequence,
       type, mode: 'mock', job_id: `mock:${id}`, step_id, cycle, attempt: attempts[step_id],
@@ -50,6 +51,32 @@ function fixture(id, title, workflow) {
     evidence_id: evidenceId('X03'), manifest_id: manifest.manifest_id, digest: manifest.digest,
     candidate_fingerprint: candidate, decision, ...extra,
   });
+  function question() {
+    questionOrdinal++;
+    openQuestion = { question_id: `mock:question:${id}:q${questionOrdinal}`,
+      task_id: `mock:task:P03:c${cycle}:a${attempts.P03}:q${questionOrdinal}`,
+      requirements_version: requirementsVersion };
+    emit('spec_unresolved', 'P03', { question_id: openQuestion.question_id,
+      candidate_fingerprint: candidate, requirements_version: requirementsVersion,
+      evidence_id: `mock:${id}:question:q${questionOrdinal}` });
+  }
+  function answer(extra = {}, advance = true) {
+    const nextVersion = `mock:requirements:v${questionOrdinal + 1}`;
+    emit('spec_resolution', 'P03', { ...openQuestion, actor: 'mock:human', plan_version: 'mock:plan:v1',
+      candidate_fingerprint: candidate, resolved_requirements_version: nextVersion, complete: true,
+      evidence_id: `mock:${id}:answer:q${questionOrdinal}`, ...extra });
+    if (advance) requirementsVersion = nextVersion;
+  }
+  const review = () => emit('spec_reviewed', 'P03', { actor: 'mock:spec-gen',
+    candidate_fingerprint: candidate, requirements_version: requirementsVersion,
+    evidence_id: `mock:${id}:review:a${attempts.P03}:q${questionOrdinal}` });
+  const remoteCoordinates = () => ({ manifest_id: manifest.manifest_id, digest: manifest.digest,
+    candidate_fingerprint: candidate, operation_key: `mock:${id}:operation` });
+  const unknownRemote = () => emit('remote_unknown', 'P25', { ...remoteCoordinates(), evidence_id: `mock:${id}:remote:unknown` });
+  const query = (outcome, querySeq, overrides = {}) => emit('remote_reconcile', 'P25', {
+    ...remoteCoordinates(), query_seq: querySeq, outcome, evidence_id: `mock:${id}:query:${querySeq}:${outcome}`,
+    ...(outcome === 'found' ? { receipt_id: `mock:${id}:remote:receipt` } : {}),
+  }, overrides);
   function run(step) {
     const node = nodes.get(step);
     start(step);
@@ -90,6 +117,7 @@ function fixture(id, title, workflow) {
     }
   }
   return { events, mark, emit, state, start, done, human, measurement, material, approval, run, until, failure, route,
+    question, answer, review, unknownRemote, query,
     retry(step, now) { emit('retry', step, { now_ms: now }); attempts[step]++; },
     nextAttempt(step) { attempts[step]++; },
     finish() { mark('end', '끝 관측'); return { id, title, requirement_ids: [...requirements], events, checkpoints }; },
@@ -182,6 +210,54 @@ export function createScenarioCatalog(workflow, stateContract) {
     // notes_retry creates READY, rather than a new business cycle or publication.
     f.nextAttempt('P26'); f.state('P26', 'RUNNING'); f.state('P26', 'SUCCEEDED');
     f.mark('completed', '노트만 모의 완료');
+  });
+  make('spec-question-wait', '사양 질문 · 사람 답변 대기', f => {
+    f.until('P03'); f.start('P03'); f.question(); f.mark('question', '미해결 사양 질문');
+    f.emit('agent', 'P03', { status: 'completed' }); f.state('P03', 'SUCCEEDED'); f.mark('blocked', '답변 없는 성공 차단');
+  });
+  make('spec-question-resolution', '사양 답변 · 새 요구사항 재검토 후 진행', f => {
+    f.until('P03'); f.start('P03'); f.question(); f.mark('question', '미해결 질문');
+    f.answer(); f.mark('answered', '답변을 새 요구사항 버전에 반영');
+    f.state('P03', 'RUNNING'); f.state('P03', 'SUCCEEDED'); f.mark('review-blocked', '재검토 없는 성공 차단');
+    f.review(); f.mark('reviewed', '현재 실행의 spec-gen 검토'); f.done('P03'); f.mark('continued', 'P04 진행');
+  });
+  make('spec-question-retry', '사양 재검토 · 재시도마다 새 검토 필요', f => {
+    f.until('P03'); f.start('P03'); f.question(); f.mark('question', '원래 질문');
+    f.answer(); f.mark('answered', '답변 버전 보존'); f.state('P03', 'RUNNING');
+    f.review(); f.mark('reviewed-first', 'attempt 1 검토');
+    f.emit('infra_error', 'P03', { now_ms: 0, operation: 'agent' }); f.mark('retry-wait', '인프라 재시도 대기');
+    f.retry('P03', 10000); f.mark('retried', 'attempt 2 · 이전 답변 보존');
+    f.state('P03', 'RUNNING'); f.state('P03', 'SUCCEEDED'); f.mark('review-blocked', '이전 attempt 검토로 성공 차단');
+    f.review(); f.mark('reviewed', 'attempt 2 새 검토'); f.done('P03'); f.mark('continued', 'P04 진행');
+  });
+  make('spec-question-repeat', '추가 사양 질문 · 이전 답변과 현재 질문 구분', f => {
+    f.until('P03'); f.start('P03'); f.question(); f.mark('question', '첫 질문');
+    f.answer(); f.mark('answered', '첫 답변 v2'); f.state('P03', 'RUNNING');
+    f.question(); f.mark('question-two', '새 ordinal의 두 번째 질문');
+    f.answer({ question_id: 'mock:question:spec-question-repeat:q1', task_id: 'mock:task:P03:c1:a1:q1',
+      requirements_version: 'mock:requirements:v1', evidence_id: 'mock:spec-question-repeat:stale-answer' }, false);
+    f.mark('stale-answer', '이전 질문의 답변 차단'); f.answer(); f.mark('answered-two', '새 답변 v3');
+    f.state('P03', 'RUNNING'); f.review(); f.mark('reviewed', '현재 v3 검토'); f.done('P03'); f.mark('continued', 'P04 진행');
+  });
+  make('remote-uncertainty', '원격 결과 불명확 · 과거 조회로 충돌을 해제하지 않음', f => {
+    f.until('P25'); f.start('P25'); f.unknownRemote(); f.mark('unknown', '응답 유실 · 재제출 없음');
+    f.query('unknown', 1); f.mark('queried-unknown', '조회 1 · 불명확');
+    f.query('absent', 2); f.mark('absent', '조회 2 · 미발견');
+    f.query('conflict', 3); f.mark('conflict', '조회 3 · 충돌');
+    f.query('found', 2, { source_id: 'mock:late-query-source', source_seq: 1 }); f.mark('stale', '다른 source의 과거 조회 거절');
+  });
+  make('remote-recovery', '원격 결과 확인 · 기존 영수증 재사용 후 노트 완료', f => {
+    f.until('P25'); f.start('P25'); f.unknownRemote(); f.mark('unknown', '원격 결과 조회 대기');
+    f.query('absent', 1); f.mark('absent', '미발견 · 재제출 없음');
+    f.query('found', 2); f.mark('found', '동일 동작 영수증 확인 · 발행 1회');
+    f.query('found', 3); f.mark('late', '완료된 단계의 늦은 응답 거절');
+    f.run('P26'); f.mark('completed', '노트까지 모의 완료');
+  });
+  make('remote-device-quarantine', '원격 결과와 장비 격리 · found도 격리를 해제하지 않음', f => {
+    f.until('P25'); f.start('P25'); f.unknownRemote(); f.mark('unknown', '원격 결과 불명확');
+    f.emit('device', 'P25', { mode: 'mock', now_ms: 5000, last_heartbeat_ms: 0, lease_expires_ms: 60000, operation_state: 'unknown' }); f.mark('quarantined', '장비 결과도 불명확');
+    f.emit('device', 'P25', { mode: 'mock', now_ms: 10000, last_heartbeat_ms: 10000, lease_expires_ms: 60000, operation_state: 'idle' }); f.mark('idle', 'idle에도 격리 유지');
+    f.query('found', 1); f.mark('blocked', '원격 found로 격리 해제 금지');
   });
   return freeze(catalog);
 }

@@ -1,0 +1,67 @@
+{
+  "kind": "independent_partial_exception_ui_acceptance",
+  "decision": "accepted_32_scenario_mock_catalog_ui_increment",
+  "implementer_agent": "/root",
+  "test_author_agent": "/root/verification_plan",
+  "reviewer_agent": "/root/paperclip_ui_extension",
+  "reviewer_role": "worker_luna; independent read-only plan/source/TC/evidence review",
+  "recorded_at": "2026-10-15T11:52:42.257701+00:00",
+  "plan": "../../V2-EXCEPTION-UI.md",
+  "plan_sha256": "9af5d2757376126b0ef43f40582da0f02a89e7349a02bbcf209b8ff24dc629b3",
+  "capture_procedure": "../../V2-EXCEPTION-UI-CAPTURE.md",
+  "candidate_fingerprint": "1f68feeda7c3fd115bc5e9ae9de881ac7b54d76a35d7d28e3cbb2592e7c27d4b",
+  "report": "exception-ui-verification.json",
+  "report_sha256": "f048fac6e1f186e4fa8e340607eaf91a07611a6ba42345ef2676436479fa1e15",
+  "source_paths_audited": 107,
+  "source_hash_matches": 107,
+  "reports_and_screenshots_hash_matched": 30,
+  "command_logs_hash_matched": 11,
+  "command_exits_zero": 11,
+  "reviewed_source_sha256": {
+    "src/ifpmic/ReplayPanel.tsx": "2f08aac1b90f862cade1450fce82fc56413745e888a8c84851ebe09ac4fb7e11",
+    "src/ifpmic/scenarios.mjs": "26a73eb7c40f6217220186a9561af0b15ca351ffe8aa4cd35822c2ebaa52a3fd",
+    "tests/ifpmic-catalog.test.mjs": "0fa602ba3c1406a717ad87630cc460243a5d0b705e2a79041f0b2d1d8e263b20",
+    "tests/ifpmic-replay.browser.mjs": "39feeee9b9a056da1cfc2e00a8b3287c7fcbd102f12cec83f3ab35e7926c8d4f",
+    "scripts/ifpmic-catalog-evidence.mjs": "5af57d2fdb4d12d2a00fbbaa6ff33f14f2f88f6149e443fdf4a26c777a3d847e",
+    "scripts/verify-ifpmic-ui.mjs": "151a62a14d30140badeb21e46d45f2ee50eb266ad6b6401ce5b3fe391806debb"
+  },
+  "checks": {
+    "unit": "226/226, fail=0, skipped=0",
+    "standalone_replay_browser": "14/14",
+    "native_host_replay_browser": "15/15",
+    "catalog": "32 frozen fixtures; prior 25 event hashes unchanged; seven new checkpoint/endpoint literal oracles",
+    "new_required_screenshots": "6 per environment; 11 total screenshots per environment",
+    "source_changed": [],
+    "browser_api_writes_external_requests_runtime_errors": 0,
+    "host_api_reads": "Native host uses permitted GET requests; report.apiRequests lists only blocked offline API attempts and does not count native host GET traffic.",
+    "reviewer_reran_commands": false
+  },
+  "resolved_findings": [
+    "Explicit original question cycle/attempt/version and archived review attempt labels",
+    "Current P03 attempt shown independently of current workflow node",
+    "TC receipt ID and reset cursor expectations corrected with failure records retained",
+    "Actual native announcement dismiss POST failed write-zero; final tests never click or suppress a POST and record capture adjustments transparently"
+  ],
+  "capture_limitations": {
+    "actual_host_ledger": [
+      {
+        "selector": "aside[aria-label=\"Paperclip announcements\"]",
+        "count": 0,
+        "action": "none",
+        "observedText": null
+      }
+    ],
+    "present_announcement_branch": "Source reviewed only; no real-host execution evidence. Already-dismissed host state was not restored through a server write. Host announcement functionality is outside the IFPMIC UI proof."
+  },
+  "approved_scope": [
+    "Seven new exception scenarios plus original 25 fixtures, standalone and native Paperclip UI",
+    "Question answer/version/current-attempt review and original/archived evidence separation",
+    "Remote query sequence/outcome/receipt and device quarantine distinction",
+    "Existing V0/V1/AX regression for this fixed candidate"
+  ],
+  "not_approved": [
+    "Full V2 and remaining skip/manual/child/pause/cancel/no-change/P22 trial families",
+    "B01-B13, real AT/runtime/device/publisher execution or final publication"
+  ],
+  "waivers": []
+}

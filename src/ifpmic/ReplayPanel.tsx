@@ -1,4 +1,4 @@
-import type { MockScenario, ReplaySnapshot, ReplayStep } from './replay.mjs';
+import type { MockScenario, MockSpecReview, ReplaySnapshot, ReplayStep } from './replay.mjs';
 
 const labels: Record<string, string> = {
   PENDING: '미시작', READY: '준비', RUNNING: '진행 중', SUCCEEDED: '완료', FAILED: '실패',
@@ -21,6 +21,53 @@ export function ObservationDetail({ step, snapshot }: { step: ReplayStep; snapsh
   </section>;
 }
 
+function SpecHistory({ question }: { question: MockSpecReview }) {
+  return <div data-testid="ifpmic-spec-history" data-question-id={question.question_id} data-review-attempt={question.review_attempt ?? ''}>
+    <dl><dt>질문 ID</dt><dd>{question.question_id}</dd><dt>배정 task</dt><dd>{question.task_id}</dd>
+      <dt>질문 원래 좌표</dt><dd>cycle {question.cycle} · attempt {question.attempt}</dd><dt>질문 당시 버전</dt><dd>{question.requirements_version}</dd><dt>질문 원래 실행</dt><dd>{question.execution_id}</dd><dt>질문 증거</dt><dd>{question.question_evidence_id}</dd>
+      <dt>답변 반영 버전</dt><dd>{question.resolved_requirements_version ?? '없음'}</dd><dt>답변 증거</dt><dd>{question.resolution_evidence_id ?? '없음'}</dd>
+      <dt>기록된 검토 attempt</dt><dd>{question.review_attempt ?? '없음'}</dd><dt>기록된 검토 실행</dt><dd>{question.review_execution_id ?? '없음'}</dd><dt>검토 증거</dt><dd>{question.review_evidence_id ?? '없음'}</dd>
+    </dl>
+  </div>;
+}
+
+function ExceptionObservations({ snapshot }: { snapshot: ReplaySnapshot }) {
+  const question = snapshot.spec_review;
+  const remote = snapshot.remote_reconciliation;
+  const specStep = snapshot.steps.P03;
+  const currentReview = Boolean(question?.resolved && question.reviewed && question.cycle === snapshot.cycle
+    && question.candidate_fingerprint === snapshot.candidate_fingerprint
+    && question.review_attempt === specStep.attempt && question.review_execution_id === specStep.execution_id
+    && question.resolved_requirements_version === snapshot.requirements_version);
+  return <>
+    {question && <section className="ifpmic-observation" aria-label="사양 질문 모의 관측" data-testid="ifpmic-spec-observation"
+      data-question-id={question.question_id} data-requirements-version={snapshot.requirements_version} data-question-attempt={question.attempt}
+      data-review-attempt={question.review_attempt ?? ''} data-current-review={String(currentReview)}>
+      <h3><span className="ifpmic-mock">MOCK</span> 사양 질문·답변과 재검토</h3>
+      <dl><dt>요구사항 현재 버전</dt><dd>{snapshot.requirements_version}</dd><dt>질문 ID</dt><dd>{question.question_id}</dd>
+        <dt>배정 task</dt><dd>{question.task_id}</dd><dt>질문 당시 버전</dt><dd>{question.requirements_version}</dd><dt>질문 원래 실행</dt><dd>{question.execution_id}</dd>
+        <dt>질문 증거</dt><dd>{question.question_evidence_id}</dd><dt>질문 범위</dt><dd>{question.cycle === snapshot.cycle ? '현재 cycle' : '이전 cycle'} · cycle {question.cycle} · attempt {question.attempt}</dd>
+        <dt>답변 상태</dt><dd>{question.resolved ? '해결됨' : '미해결'}</dd><dt>답변 반영 버전</dt><dd>{question.resolved_requirements_version ?? '없음'}</dd>
+        <dt>답변 증거</dt><dd>{question.resolution_evidence_id ?? '없음'}</dd><dt>현재 P03 attempt</dt><dd>{specStep.attempt}</dd><dt>현재 P03 실행</dt><dd>{specStep.execution_id}</dd>
+        <dt>현재 실행 검토</dt><dd><strong>{currentReview ? '유효' : '미완료'}</strong></dd>
+        <dt>기록된 검토 attempt</dt><dd>{question.review_attempt ?? '없음'}</dd><dt>기록된 검토 실행</dt><dd>{question.review_execution_id ?? '없음'}</dd><dt>검토 증거</dt><dd>{question.review_evidence_id ?? '없음'}</dd>
+      </dl>
+      {question.reviewed && !currentReview && <p>이전 검토 기록은 보존하지만 현재 실행의 검토를 대신하지 않습니다.</p>}
+      <p>질문·답변과 spec-gen 재검토의 합성 관측입니다. 사람 제출이나 실제 검토를 실행하지 않습니다.</p>
+    </section>}
+    {remote && <section className="ifpmic-observation" aria-label="원격 결과 모의 관측" data-testid="ifpmic-remote-observation"
+      data-operation-key={remote.operation_key} data-query-seq={remote.query_seq} data-outcome={remote.outcome}>
+      <h3><span className="ifpmic-mock">MOCK</span> 원격 결과 조회 관측</h3>
+      <dl><dt>동작 key</dt><dd>{remote.operation_key}</dd><dt>명세 ID</dt><dd>{remote.manifest_id}</dd><dt>digest</dt><dd>{remote.digest}</dd>
+        <dt>후보</dt><dd>{remote.candidate_fingerprint}</dd><dt>P25 단계 상태</dt><dd>{snapshot.steps.P25.state}</dd>
+        <dt>조회 순번</dt><dd>{remote.query_seq}</dd><dt>조회 결과</dt><dd>{remote.outcome}</dd><dt>모의 영수증</dt><dd>{snapshot.release.receipt_id ?? '없음'}</dd>
+        <dt>실제 제출 허용</dt><dd>false</dd></dl>
+      <ol className="ifpmic-journal" aria-label="모의 원격 조회 기록">{remote.observations.map(row => <li key={row.query_seq}><span>MOCK · {row.query_seq} · {row.outcome}</span><code>{row.evidence_id}</code></li>)}</ol>
+      <p>수용된 조회 기록만 표시합니다. 미발견·충돌은 재제출 허가가 아니며, 원격 결과가 장비 격리를 해제하지 않습니다.</p>
+    </section>}
+  </>;
+}
+
 interface Props {
   catalog: readonly MockScenario[]; scenario: MockScenario; cursor: number; snapshot: ReplaySnapshot;
   onScenario: (id: string) => void; onCursor: (cursor: number) => void; onCurrent: () => void;
@@ -30,7 +77,7 @@ export function ReplayPanel({ catalog, scenario, cursor, snapshot, onScenario, o
   const checkpoint = scenario.checkpoints.find(item => item.cursor === cursor)?.id ?? '';
   const lastIgnored = snapshot.ignored[snapshot.ignored.length - 1];
   return <section className="ifpmic-replay" aria-label="모의 사건 재생">
-    <div className="ifpmic-replay-heading"><div><p className="ifpmic-eyebrow">MOCK · 관측 탐색</p><h2>진행과 복귀를 사건 단위로</h2></div><span className="ifpmic-mock">25개 시나리오 · V2 진행 중</span></div>
+    <div className="ifpmic-replay-heading"><div><p className="ifpmic-eyebrow">MOCK · 관측 탐색</p><h2>진행과 복귀를 사건 단위로</h2></div><span className="ifpmic-mock">{catalog.length}개 시나리오 · V2 진행 중</span></div>
     <p>합성 기록의 앞부분을 탐색합니다. 실제 업무·승인·장비·배포에는 연결되지 않습니다.</p>
     <div className="ifpmic-replay-controls">
       <label>모의 시나리오 선택<select aria-label="모의 시나리오 선택" value={scenario.id} onChange={e => onScenario(e.target.value)}>{catalog.map(item => <option key={item.id} value={item.id}>{item.title}</option>)}</select></label>
@@ -47,10 +94,11 @@ export function ReplayPanel({ catalog, scenario, cursor, snapshot, onScenario, o
       <div><span>Cycle · 재작업</span><strong>{snapshot.cycle} · {snapshot.rework_count} / 3</strong></div><div><span>현재 attempt</span><strong>{current.attempt}</strong></div>
       <div><span>모의 발행 관측</span><strong>{snapshot.release.publication_count}회</strong></div>
     </div>
-    <p className="ifpmic-replay-coordinates"><span className="ifpmic-mock">MOCK</span> {snapshot.job_id} · 후보 {snapshot.candidate_fingerprint}<br />요구사항 {scenario.requirement_ids.join(', ')}</p>
+    <p className="ifpmic-replay-coordinates"><span className="ifpmic-mock">MOCK</span> {snapshot.job_id} · 후보 {snapshot.candidate_fingerprint}<br />요구사항 버전 {snapshot.requirements_version}<br />요구사항 {scenario.requirement_ids.join(', ')}</p>
     <p className="ifpmic-replay-reason" data-testid="ifpmic-replay-reason">대기·차단 사유: <code>{snapshot.wait_reason || lastIgnored?.reason || '없음'}</code> · 중복 {snapshot.duplicate_count} · 충돌 {snapshot.conflict_count}</p>
     {snapshot.required_revalidation.length > 0 && <p className="ifpmic-revalidation">필수 재평가 구간: {snapshot.required_revalidation.join(' → ')}</p>}
     <div className="ifpmic-replay-grid">
+      <ExceptionObservations snapshot={snapshot} />
       <section className="ifpmic-observation" aria-label="장비 모의 관측"><h3><span className="ifpmic-mock">MOCK</span> 장비 관측</h3>
         {snapshot.device ? <dl><dt>상태</dt><dd>{snapshot.device.status}</dd><dt>로컬 활동</dt><dd>{snapshot.device.operation_state ?? 'UNKNOWN'}</dd>
           <dt>연결</dt><dd>{snapshot.device.offline ? 'OFFLINE' : snapshot.device.status === 'UNKNOWN' ? 'UNKNOWN' : 'ONLINE'}</dd><dt>Heartbeat 기한</dt><dd>{snapshot.device.heartbeat_due ? '도달' : '미도달'}</dd>
@@ -65,11 +113,12 @@ export function ReplayPanel({ catalog, scenario, cursor, snapshot, onScenario, o
         const steps = entry.steps ? Object.entries(entry.steps).filter(([, step]) => step.state !== 'PENDING') : entry.step && entry.step_id ? [[entry.step_id, entry.step] as const] : [];
         return <details key={index} open={index === snapshot.history.length - 1}><summary>MOCK · {entry.kind} · cycle {entry.cycle}{entry.step_id ? ` · ${entry.step_id}` : ''}{steps.some(([, step]) => step.state === 'FAILED') ? ` · 실패 ${steps.filter(([, step]) => step.state === 'FAILED').map(([id]) => id).join(', ')}` : ''}</summary>
           <ul>{steps.map(([id, step]) => <li key={id}>{id} · {step.state} · attempt {step.attempt}{step.gate_verdict ? ` · gate ${step.gate_verdict}` : ''}{step.evidence_ids.length > 0 && <small>MOCK 증거 {step.evidence_ids.join(', ')}</small>}</li>)}</ul>
+          {entry.spec_review && <SpecHistory question={entry.spec_review} />}
           {entry.release && <p>MOCK · 이전 명세 {entry.release.manifest?.manifest_id} · 반려 {entry.release.rejection}</p>}
         </details>;
       })}</div>{snapshot.history.length === 0 && <p>이 관측까지 과거 이력 없음</p>}
       {snapshot.failure_bundle.length > 0 && <p>MOCK · 한도 도달 증거 {snapshot.failure_bundle.map(item => `${item.step_id} c${item.cycle} a${item.attempt} ${item.evidence_id}`).join(', ')}</p>}</section>
     </div>
-    <p className="ifpmic-replay-pending"><strong>전체 V2 미완료</strong> · 후속 범위: 생략·정책 면제, 수동 장비·SQE trial 상세, 자식 Agent, pause/resume/cancel, no-change, P03 미해결 및 P25 원격 불명확 결과. 실제 AT 미실행.</p>
+    <p className="ifpmic-replay-pending"><strong>전체 V2 미완료</strong> · 후속 범위: 생략·정책 면제, 수동 장비·SQE trial 상세, 자식 Agent, pause/resume/cancel, no-change. 실제 AT 미실행.</p>
   </section>;
 }

@@ -56,7 +56,7 @@
         "REQ-14"
       ],
       "implementation_notes": "V2-IMPLEMENTATION.md",
-      "scope": "Pure mock replay core, return/retry/release protocols, 25-scenario UI and dedicated P03 question/P25 reconciliation protocols verified as partial increments. Remaining protocols, new exception UI cases and full V2 acceptance pending; no real AT completion.",
+      "scope": "Pure mock replay and protocols plus 32-scenario standalone/native Paperclip UI verified as partial increments, including P03 questions/current-attempt review and P25 remote result reconciliation. Remaining protocols/catalog families and full V2 acceptance pending; no real AT completion.",
       "increments": [
         {
           "id": "mock_replay_core",
@@ -88,6 +88,14 @@
           "evidence": "evidence/v2/exceptions-verification.json",
           "independent_acceptance": "evidence/v2/exceptions-review.json",
           "candidate_fingerprint": "8359e610796e114490b00a3f12a357251de06070a017f3a883a47c8dec1288e2"
+        },
+        {
+          "id": "mock_exception_catalog_ui_32",
+          "status": "verified",
+          "scope": "Original 25 fixture events preserved and seven new P03/P25 exception scenarios integrated, with standalone/native-host UI, history and viewport regression. Partial V2 only.",
+          "evidence": "evidence/v2/exception-ui-verification.json",
+          "independent_acceptance": "evidence/v2/exception-ui-review.json",
+          "candidate_fingerprint": "1f68feeda7c3fd115bc5e9ae9de881ac7b54d76a35d7d28e3cbb2592e7c27d4b"
         }
       ]
     },
@@ -306,12 +314,12 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "V2: integrate tested P03 question/P25 reconciliation into scenario catalog and standalone/native host UI; complete skip/policy-exempt/manual, P22 trial details, child-agent, pause/resume/cancel/no-change protocols and remaining catalog cases, then full V2 gate. B01-B13 and real AT remain pending.",
+  "next_step": "V2: complete skip/policy-exempt/manual, P22 trial details, child-agent, pause/resume/cancel/no-change protocols and corresponding catalog/UI cases, then full V2 gate. B01-B13 and real AT remain pending.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",
     "Approved Bedrock/Claude runtime profile"
   ],
   "publication_policy": "Only authorized git repository documentation, source and synthetic verification summaries/screenshots; never runtime credentials or application logs.",
-  "updated_at": "2026-10-15T11:31:00.585928+00:00"
+  "updated_at": "2026-10-15T11:52:42.257965+00:00"
 }

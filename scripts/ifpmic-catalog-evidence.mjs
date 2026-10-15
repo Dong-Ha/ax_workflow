@@ -11,7 +11,19 @@ const directory = resolve(root, 'workflow-artifacts/verification/V2/ui');
 const sha256 = value => createHash('sha256').update(value).digest('hex');
 const summary = value => ({ mode: value.mode, status: value.status, current_step: value.current_step,
   cycle: value.cycle, rework_count: value.rework_count, publication_count: value.release.publication_count,
-  duplicate_count: value.duplicate_count, conflict_count: value.conflict_count, real_publish_allowed: value.real_publish_allowed });
+  duplicate_count: value.duplicate_count, conflict_count: value.conflict_count, real_publish_allowed: value.real_publish_allowed,
+  requirements_version: value.requirements_version,
+  spec_review: value.spec_review ? { question_id: value.spec_review.question_id,
+    question_attempt: value.spec_review.attempt, question_execution_id: value.spec_review.execution_id,
+    resolved: value.spec_review.resolved, resolved_requirements_version: value.spec_review.resolved_requirements_version,
+    review_attempt: value.spec_review.review_attempt, review_execution_id: value.spec_review.review_execution_id,
+    current_review: value.spec_review.resolved && value.spec_review.reviewed && value.spec_review.cycle === value.cycle
+      && value.spec_review.candidate_fingerprint === value.candidate_fingerprint
+      && value.spec_review.review_attempt === value.steps.P03.attempt
+      && value.spec_review.review_execution_id === value.steps.P03.execution_id
+      && value.spec_review.resolved_requirements_version === value.requirements_version } : null,
+  remote_reconciliation: value.remote_reconciliation ? { operation_key: value.remote_reconciliation.operation_key,
+    query_seq: value.remote_reconciliation.query_seq, outcome: value.remote_reconciliation.outcome } : null });
 await mkdir(directory, { recursive: true });
 const catalog = createScenarioCatalog(workflow, states);
 const manifest = { kind: 'mock_catalog_manifest', mode: 'mock', scenario_count: catalog.length,
@@ -33,7 +45,7 @@ for (const scenario of catalog) {
   manifest.scenarios.push({ id: scenario.id, title: scenario.title, requirement_ids: scenario.requirement_ids,
     event_count: scenario.events.length, fixture_sha256: sha256(JSON.stringify(scenario.events)),
     final: summary(previous), checkpoints: scenario.checkpoints.map(point => ({ ...point,
-      expected_observation: summary(replayScenario(scenario, workflow, states, point.cursor)) })) });
+      observed_snapshot: summary(replayScenario(scenario, workflow, states, point.cursor)) })) });
 }
 const bytes = JSON.stringify(journals, null, 2) + '\n';
 await writeFile(resolve(directory, 'catalog-journal.json'), bytes);

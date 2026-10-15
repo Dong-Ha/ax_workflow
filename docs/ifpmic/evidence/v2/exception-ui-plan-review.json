@@ -1,0 +1,19 @@
+{
+  "kind": "independent_exception_ui_plan_review",
+  "decision": "approved",
+  "plan": "../../V2-EXCEPTION-UI.md",
+  "sha256": "9af5d2757376126b0ef43f40582da0f02a89e7349a02bbcf209b8ff24dc629b3",
+  "reviewer_agent": "/root/paperclip_ui_extension",
+  "implementer_agent": "/root",
+  "test_author_agent": "/root/verification_plan",
+  "recorded_at": "2026-10-15T11:36:35.506201+00:00",
+  "scope": "Seven additional mock exception scenarios and standalone/native-host observation UI; 32 scenarios total, partial V2 only",
+  "checks": [
+    "Original P03/P25 contract preserved; no execution capabilities",
+    "Current-attempt review/version binding distinct from prior question/answer/review history",
+    "Same-operation query order, single receipt and sticky device quarantine",
+    "Independent literal checkpoint oracle and full existing regression with source freeze",
+    "Six mandatory new screenshots in each of standalone offline and isolated native Paperclip host"
+  ],
+  "waivers": []
+}

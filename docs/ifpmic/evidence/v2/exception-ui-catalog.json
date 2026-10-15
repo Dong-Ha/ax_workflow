@@ -1,0 +1,4644 @@
+{
+  "kind": "mock_catalog_manifest",
+  "mode": "mock",
+  "scenario_count": 32,
+  "scope": "Partial V2 catalog and UI; remaining protocols/full V2/real AT are not accepted",
+  "scenarios": [
+    {
+      "id": "happy-path",
+      "title": "정상 · 요구사항부터 최종 노트까지",
+      "requirement_ids": [
+        "REQ-02",
+        "REQ-05",
+        "REQ-08",
+        "REQ-10",
+        "REQ-12",
+        "REQ-14"
+      ],
+      "event_count": 125,
+      "fixture_sha256": "8ace7171d51586b0a86d331e29aa123c936e7628d541000d16037d5e9f12b14c",
+      "final": {
+        "mode": "mock",
+        "status": "COMPLETED",
+        "current_step": "END",
+        "cycle": 1,
+        "rework_count": 0,
+        "publication_count": 1,
+        "duplicate_count": 0,
+        "conflict_count": 0,
+        "real_publish_allowed": false,
+        "requirements_version": "mock:requirements:v1",
+        "spec_review": null,
+        "remote_reconciliation": null
+      },
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P01",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "planning",
+          "title": "요구사항과 실행 계획 · MOCK",
+          "cursor": 20,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "X01",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "development",
+          "title": "개발과 TC 통합 · MOCK",
+          "cursor": 65,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P15",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "quality",
+          "title": "품질 판정 완료 · MOCK",
+          "cursor": 106,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "X02",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "approved",
+          "title": "현재 명세 모의 승인 · MOCK",
+          "cursor": 116,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P25",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "published",
+          "title": "모의 영수증 확인 · MOCK",
+          "cursor": 121,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P26",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 1,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "completed",
+          "title": "모의 전체 완료 · MOCK",
+          "cursor": 125,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "COMPLETED",
+            "current_step": "END",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 1,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 125,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "COMPLETED",
+            "current_step": "END",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 1,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "human-wait",
+      "title": "P07 · 사람 제출 대기",
+      "requirement_ids": [
+        "REQ-02",
+        "REQ-05",
+        "REQ-08",
+        "REQ-10",
+        "REQ-12",
+        "REQ-14"
+      ],
+      "event_count": 35,
+      "fixture_sha256": "0386b603b71174b8c19f035845b7de8e19923dd3cd2704adeb02f25fb7e17abe",
+      "final": {
+        "mode": "mock",
+        "status": "WAITING_HUMAN",
+        "current_step": "P07",
+        "cycle": 1,
+        "rework_count": 0,
+        "publication_count": 0,
+        "duplicate_count": 0,
+        "conflict_count": 0,
+        "real_publish_allowed": false,
+        "requirements_version": "mock:requirements:v1",
+        "spec_review": null,
+        "remote_reconciliation": null
+      },
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P01",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "wait",
+          "title": "배정된 사람 작업 대기 · MOCK",
+          "cursor": 33,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "WAITING_HUMAN",
+            "current_step": "P07",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "agent-completed",
+          "title": "Agent 완료 관측 · MOCK",
+          "cursor": 34,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "WAITING_HUMAN",
+            "current_step": "P07",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "blocked",
+          "title": "사람 증거 없이 성공 차단 · MOCK",
+          "cursor": 35,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "WAITING_HUMAN",
+            "current_step": "P07",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 35,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "WAITING_HUMAN",
+            "current_step": "P07",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "human-wait-oss",
+      "title": "P21 · 사람 제출 대기",
+      "requirement_ids": [
+        "REQ-02",
+        "REQ-05",
+        "REQ-08",
+        "REQ-10",
+        "REQ-12",
+        "REQ-14"
+      ],
+      "event_count": 94,
+      "fixture_sha256": "430dda39cc74aef77e403147c7fb845bf7e3a57c00d9dc4f93493c55242f3db7",
+      "final": {
+        "mode": "mock",
+        "status": "WAITING_HUMAN",
+        "current_step": "P21",
+        "cycle": 1,
+        "rework_count": 0,
+        "publication_count": 0,
+        "duplicate_count": 0,
+        "conflict_count": 0,
+        "real_publish_allowed": false,
+        "requirements_version": "mock:requirements:v1",
+        "spec_review": null,
+        "remote_reconciliation": null
+      },
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P01",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "wait",
+          "title": "배정된 사람 작업 대기 · MOCK",
+          "cursor": 92,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "WAITING_HUMAN",
+            "current_step": "P21",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "agent-completed",
+          "title": "Agent 완료 관측 · MOCK",
+          "cursor": 93,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "WAITING_HUMAN",
+            "current_step": "P21",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "blocked",
+          "title": "사람 증거 없이 성공 차단 · MOCK",
+          "cursor": 94,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "WAITING_HUMAN",
+            "current_step": "P21",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 94,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "WAITING_HUMAN",
+            "current_step": "P21",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "debug-failure",
+      "title": "빌드·UT 실패 → 코드 수정",
+      "requirement_ids": [
+        "REQ-02",
+        "REQ-05",
+        "REQ-08",
+        "REQ-10",
+        "REQ-12",
+        "REQ-14"
+      ],
+      "event_count": 61,
+      "fixture_sha256": "7080b2c7500a68c823a0dcf8fdfb8dfd1e75d8e5ffb4d8de46d56bb0b7142dd5",
+      "final": {
+        "mode": "mock",
+        "status": "RUNNING",
+        "current_step": "P11",
+        "cycle": 2,
+        "rework_count": 1,
+        "publication_count": 0,
+        "duplicate_count": 0,
+        "conflict_count": 0,
+        "real_publish_allowed": false,
+        "requirements_version": "mock:requirements:v1",
+        "spec_review": null,
+        "remote_reconciliation": null
+      },
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P01",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "failed",
+          "title": "P13 실패 증거 · MOCK",
+          "cursor": 60,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "FAILED",
+            "current_step": "P13",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "returned",
+          "title": "P11 복귀 · MOCK",
+          "cursor": 61,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P11",
+            "cycle": 2,
+            "rework_count": 1,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 61,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P11",
+            "cycle": 2,
+            "rework_count": 1,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "review-failure",
+      "title": "코드 리뷰 불합격 → 코드 수정",
+      "requirement_ids": [
+        "REQ-02",
+        "REQ-05",
+        "REQ-08",
+        "REQ-10",
+        "REQ-12",
+        "REQ-14"
+      ],
+      "event_count": 65,
+      "fixture_sha256": "2421d7e30598938978c908276427b9f249b34e3dde7de8666abe918c04cc73fa",
+      "final": {
+        "mode": "mock",
+        "status": "RUNNING",
+        "current_step": "P11",
+        "cycle": 2,
+        "rework_count": 1,
+        "publication_count": 0,
+        "duplicate_count": 0,
+        "conflict_count": 0,
+        "real_publish_allowed": false,
+        "requirements_version": "mock:requirements:v1",
+        "spec_review": null,
+        "remote_reconciliation": null
+      },
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P01",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "failed",
+          "title": "P14 실패 증거 · MOCK",
+          "cursor": 64,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "FAILED",
+            "current_step": "P14",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "returned",
+          "title": "P11 복귀 · MOCK",
+          "cursor": 65,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P11",
+            "cycle": 2,
+            "rework_count": 1,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 65,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P11",
+            "cycle": 2,
+            "rework_count": 1,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "sam-failure",
+      "title": "SAM 불합격 → 아키텍처 재검토",
+      "requirement_ids": [
+        "REQ-02",
+        "REQ-05",
+        "REQ-08",
+        "REQ-10",
+        "REQ-12",
+        "REQ-14"
+      ],
+      "event_count": 74,
+      "fixture_sha256": "158ea9f200872e6a2e9eba91ffdfbcae8c3d7c3e698caed17d629137b5e65a5f",
+      "final": {
+        "mode": "mock",
+        "status": "RUNNING",
+        "current_step": "P07",
+        "cycle": 2,
+        "rework_count": 1,
+        "publication_count": 0,
+        "duplicate_count": 0,
+        "conflict_count": 0,
+        "real_publish_allowed": false,
+        "requirements_version": "mock:requirements:v1",
+        "spec_review": null,
+        "remote_reconciliation": null
+      },
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P01",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "failed",
+          "title": "P16 실패 증거 · MOCK",
+          "cursor": 73,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "FAILED",
+            "current_step": "P16",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "returned",
+          "title": "P07 복귀 · MOCK",
+          "cursor": 74,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P07",
+            "cycle": 2,
+            "rework_count": 1,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 74,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P07",
+            "cycle": 2,
+            "rework_count": 1,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "tem-failure",
+      "title": "TEM 불합격 → 코드 수정",
+      "requirement_ids": [
+        "REQ-02",
+        "REQ-05",
+        "REQ-08",
+        "REQ-10",
+        "REQ-12",
+        "REQ-14"
+      ],
+      "event_count": 82,
+      "fixture_sha256": "39ebff05e1ee1fd22395e6ac24d099a938e26e0771a7313efa6aaa481080ae59",
+      "final": {
+        "mode": "mock",
+        "status": "RUNNING",
+        "current_step": "P11",
+        "cycle": 2,
+        "rework_count": 1,
+        "publication_count": 0,
+        "duplicate_count": 0,
+        "conflict_count": 0,
+        "real_publish_allowed": false,
+        "requirements_version": "mock:requirements:v1",
+        "spec_review": null,
+        "remote_reconciliation": null
+      },
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P01",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "failed",
+          "title": "P18 실패 증거 · MOCK",
+          "cursor": 81,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "FAILED",
+            "current_step": "P18",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "returned",
+          "title": "P11 복귀 · MOCK",
+          "cursor": 82,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P11",
+            "cycle": 2,
+            "rework_count": 1,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 82,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P11",
+            "cycle": 2,
+            "rework_count": 1,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "static-failure",
+      "title": "정적분석 불합격 → 코드 수정",
+      "requirement_ids": [
+        "REQ-02",
+        "REQ-05",
+        "REQ-08",
+        "REQ-10",
+        "REQ-12",
+        "REQ-14"
+      ],
+      "event_count": 90,
+      "fixture_sha256": "e4c6f133c69cbf28005a4195c57c195b85c318ccc123d9c3ef0c66546fd3cab7",
+      "final": {
+        "mode": "mock",
+        "status": "RUNNING",
+        "current_step": "P11",
+        "cycle": 2,
+        "rework_count": 1,
+        "publication_count": 0,
+        "duplicate_count": 0,
+        "conflict_count": 0,
+        "real_publish_allowed": false,
+        "requirements_version": "mock:requirements:v1",
+        "spec_review": null,
+        "remote_reconciliation": null
+      },
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P01",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "failed",
+          "title": "P20 실패 증거 · MOCK",
+          "cursor": 89,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "FAILED",
+            "current_step": "P20",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "returned",
+          "title": "P11 복귀 · MOCK",
+          "cursor": 90,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P11",
+            "cycle": 2,
+            "rework_count": 1,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 90,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P11",
+            "cycle": 2,
+            "rework_count": 1,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "sqe-failure",
+      "title": "SQE 보고 후 불합격 → 설계 재검토",
+      "requirement_ids": [
+        "REQ-02",
+        "REQ-05",
+        "REQ-08",
+        "REQ-10",
+        "REQ-12",
+        "REQ-14"
+      ],
+      "event_count": 107,
+      "fixture_sha256": "f2e9e3716ba160890bdb3cc77b67aaa95d927ebf18fb30051183cd301f10a560",
+      "final": {
+        "mode": "mock",
+        "status": "RUNNING",
+        "current_step": "P07",
+        "cycle": 2,
+        "rework_count": 1,
+        "publication_count": 0,
+        "duplicate_count": 0,
+        "conflict_count": 0,
+        "real_publish_allowed": false,
+        "requirements_version": "mock:requirements:v1",
+        "spec_review": null,
+        "remote_reconciliation": null
+      },
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P01",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "failed",
+          "title": "P24 실패 증거 · MOCK",
+          "cursor": 106,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "FAILED",
+            "current_step": "P24",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "returned",
+          "title": "P07 복귀 · MOCK",
+          "cursor": 107,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P07",
+            "cycle": 2,
+            "rework_count": 1,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 107,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P07",
+            "cycle": 2,
+            "rework_count": 1,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "oss-failure",
+      "title": "OSS 사람 반려 → 코드 수정",
+      "requirement_ids": [
+        "REQ-02",
+        "REQ-05",
+        "REQ-08",
+        "REQ-10",
+        "REQ-12",
+        "REQ-14"
+      ],
+      "event_count": 95,
+      "fixture_sha256": "f4a423e3cd307aa49e139d4cb4d646bd6f7b7123134f3e0a52897c12bbd028e2",
+      "final": {
+        "mode": "mock",
+        "status": "RUNNING",
+        "current_step": "P11",
+        "cycle": 2,
+        "rework_count": 1,
+        "publication_count": 0,
+        "duplicate_count": 0,
+        "conflict_count": 0,
+        "real_publish_allowed": false,
+        "requirements_version": "mock:requirements:v1",
+        "spec_review": null,
+        "remote_reconciliation": null
+      },
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P01",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "rejected",
+          "title": "P21 사람 반려 · MOCK",
+          "cursor": 93,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "WAITING_HUMAN",
+            "current_step": "P21",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "failed",
+          "title": "P21 실패 증거 · MOCK",
+          "cursor": 94,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "FAILED",
+            "current_step": "P21",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "returned",
+          "title": "P11 복귀 · MOCK",
+          "cursor": 95,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P11",
+            "cycle": 2,
+            "rework_count": 1,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 95,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P11",
+            "cycle": 2,
+            "rework_count": 1,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "oss-design-change",
+      "title": "OSS 설계 영향 → 아키텍처 재검토",
+      "requirement_ids": [
+        "REQ-02",
+        "REQ-05",
+        "REQ-08",
+        "REQ-10",
+        "REQ-12",
+        "REQ-14"
+      ],
+      "event_count": 95,
+      "fixture_sha256": "e42d733758a1123a2f361bdc7781d5b6045b34885c3d82c1b3a46b3343be6e12",
+      "final": {
+        "mode": "mock",
+        "status": "RUNNING",
+        "current_step": "P07",
+        "cycle": 2,
+        "rework_count": 1,
+        "publication_count": 0,
+        "duplicate_count": 0,
+        "conflict_count": 0,
+        "real_publish_allowed": false,
+        "requirements_version": "mock:requirements:v1",
+        "spec_review": null,
+        "remote_reconciliation": null
+      },
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P01",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "rejected",
+          "title": "P21 사람 반려 · MOCK",
+          "cursor": 93,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "WAITING_HUMAN",
+            "current_step": "P21",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "failed",
+          "title": "P21 실패 증거 · MOCK",
+          "cursor": 94,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "FAILED",
+            "current_step": "P21",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "returned",
+          "title": "P07 복귀 · MOCK",
+          "cursor": 95,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P07",
+            "cycle": 2,
+            "rework_count": 1,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 95,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P07",
+            "cycle": 2,
+            "rework_count": 1,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "plan-rejection",
+      "title": "실행 계획 반려 → 요구사항 분석",
+      "requirement_ids": [
+        "REQ-02",
+        "REQ-05",
+        "REQ-08",
+        "REQ-10",
+        "REQ-12",
+        "REQ-14"
+      ],
+      "event_count": 26,
+      "fixture_sha256": "341ca07cf16adbdeb4a02355d85faa5f5a5775aeb628d29282074964f1a947f9",
+      "final": {
+        "mode": "mock",
+        "status": "RUNNING",
+        "current_step": "P02",
+        "cycle": 2,
+        "rework_count": 1,
+        "publication_count": 0,
+        "duplicate_count": 0,
+        "conflict_count": 0,
+        "real_publish_allowed": false,
+        "requirements_version": "mock:requirements:v1",
+        "spec_review": null,
+        "remote_reconciliation": null
+      },
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P01",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "rejected",
+          "title": "X01 사람 반려 · MOCK",
+          "cursor": 24,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "WAITING_HUMAN",
+            "current_step": "X01",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "failed",
+          "title": "X01 실패 증거 · MOCK",
+          "cursor": 25,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "FAILED",
+            "current_step": "X01",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "returned",
+          "title": "P02 복귀 · MOCK",
+          "cursor": 26,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P02",
+            "cycle": 2,
+            "rework_count": 1,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 26,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P02",
+            "cycle": 2,
+            "rework_count": 1,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "release-reject-code",
+      "title": "배포 승인 반려 → 코드 수정",
+      "requirement_ids": [
+        "REQ-02",
+        "REQ-05",
+        "REQ-08",
+        "REQ-10",
+        "REQ-12",
+        "REQ-14"
+      ],
+      "event_count": 117,
+      "fixture_sha256": "34b31ed4209a88c6223cec6837076f53a83a1979bf989075398d8f0d90a326aa",
+      "final": {
+        "mode": "mock",
+        "status": "RUNNING",
+        "current_step": "P11",
+        "cycle": 2,
+        "rework_count": 1,
+        "publication_count": 0,
+        "duplicate_count": 0,
+        "conflict_count": 0,
+        "real_publish_allowed": false,
+        "requirements_version": "mock:requirements:v1",
+        "spec_review": null,
+        "remote_reconciliation": null
+      },
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P01",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "rejected",
+          "title": "X03 사람 반려 · MOCK",
+          "cursor": 115,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "WAITING_HUMAN",
+            "current_step": "X03",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "failed",
+          "title": "X03 실패 증거 · MOCK",
+          "cursor": 116,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "FAILED",
+            "current_step": "X03",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "returned",
+          "title": "P11 복귀 · MOCK",
+          "cursor": 117,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P11",
+            "cycle": 2,
+            "rework_count": 1,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 117,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P11",
+            "cycle": 2,
+            "rework_count": 1,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "release-reject-design",
+      "title": "배포 승인 반려 → 설계 재검토",
+      "requirement_ids": [
+        "REQ-02",
+        "REQ-05",
+        "REQ-08",
+        "REQ-10",
+        "REQ-12",
+        "REQ-14"
+      ],
+      "event_count": 117,
+      "fixture_sha256": "c86e053d06eaf047c287e186338fd8317e620010784dc444d213d4587e49b10f",
+      "final": {
+        "mode": "mock",
+        "status": "RUNNING",
+        "current_step": "P07",
+        "cycle": 2,
+        "rework_count": 1,
+        "publication_count": 0,
+        "duplicate_count": 0,
+        "conflict_count": 0,
+        "real_publish_allowed": false,
+        "requirements_version": "mock:requirements:v1",
+        "spec_review": null,
+        "remote_reconciliation": null
+      },
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P01",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "rejected",
+          "title": "X03 사람 반려 · MOCK",
+          "cursor": 115,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "WAITING_HUMAN",
+            "current_step": "X03",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "failed",
+          "title": "X03 실패 증거 · MOCK",
+          "cursor": 116,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "FAILED",
+            "current_step": "X03",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "returned",
+          "title": "P07 복귀 · MOCK",
+          "cursor": 117,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P07",
+            "cycle": 2,
+            "rework_count": 1,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 117,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P07",
+            "cycle": 2,
+            "rework_count": 1,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "metadata-recovery",
+      "title": "배포 자료 반려 · 품질 보존 후 수정 완료",
+      "requirement_ids": [
+        "REQ-02",
+        "REQ-05",
+        "REQ-08",
+        "REQ-10",
+        "REQ-12",
+        "REQ-14"
+      ],
+      "event_count": 136,
+      "fixture_sha256": "1a7a18625249fd69b0464ce30833fa659e175c77373935d1e70121dcb12a7177",
+      "final": {
+        "mode": "mock",
+        "status": "COMPLETED",
+        "current_step": "END",
+        "cycle": 1,
+        "rework_count": 1,
+        "publication_count": 1,
+        "duplicate_count": 0,
+        "conflict_count": 0,
+        "real_publish_allowed": false,
+        "requirements_version": "mock:requirements:v1",
+        "spec_review": null,
+        "remote_reconciliation": null
+      },
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P01",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "rejected",
+          "title": "X03 사람 반려 · MOCK",
+          "cursor": 115,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "WAITING_HUMAN",
+            "current_step": "X03",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "returned",
+          "title": "같은 cycle의 자료 재작성 · MOCK",
+          "cursor": 117,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "X02",
+            "cycle": 1,
+            "rework_count": 1,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "corrected",
+          "title": "새 명세·digest 관측 · MOCK",
+          "cursor": 122,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "X03",
+            "cycle": 1,
+            "rework_count": 1,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "approved",
+          "title": "새 task의 모의 승인 · MOCK",
+          "cursor": 127,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P25",
+            "cycle": 1,
+            "rework_count": 1,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "completed",
+          "title": "영수증 1회로 모의 완료 · MOCK",
+          "cursor": 136,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "COMPLETED",
+            "current_step": "END",
+            "cycle": 1,
+            "rework_count": 1,
+            "publication_count": 1,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 136,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "COMPLETED",
+            "current_step": "END",
+            "cycle": 1,
+            "rework_count": 1,
+            "publication_count": 1,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "metric-missing",
+      "title": "지표 누락 · exit 0으로 PASS를 추정하지 않음",
+      "requirement_ids": [
+        "REQ-02",
+        "REQ-05",
+        "REQ-08",
+        "REQ-10",
+        "REQ-12",
+        "REQ-14"
+      ],
+      "event_count": 73,
+      "fixture_sha256": "139a7d102dcac6f66e0972e0626ab1736fddbef7eab17d09c69d2e3af7e9a2e9",
+      "final": {
+        "mode": "mock",
+        "status": "RUNNING",
+        "current_step": "P16",
+        "cycle": 1,
+        "rework_count": 0,
+        "publication_count": 0,
+        "duplicate_count": 0,
+        "conflict_count": 0,
+        "real_publish_allowed": false,
+        "requirements_version": "mock:requirements:v1",
+        "spec_review": null,
+        "remote_reconciliation": null
+      },
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P01",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "incomplete",
+          "title": "측정 불완전 · MOCK",
+          "cursor": 72,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P16",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "blocked",
+          "title": "PASS 근거 부족으로 차단 · MOCK",
+          "cursor": 73,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P16",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 73,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P16",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "stale-result",
+      "title": "이전 cycle 결과 차단",
+      "requirement_ids": [
+        "REQ-02",
+        "REQ-05",
+        "REQ-08",
+        "REQ-10",
+        "REQ-12",
+        "REQ-14"
+      ],
+      "event_count": 73,
+      "fixture_sha256": "5e8794096bb46a09590a52752fe5895e5b99dcb9d32739f04cc2b98946339b6d",
+      "final": {
+        "mode": "mock",
+        "status": "RUNNING",
+        "current_step": "P16",
+        "cycle": 1,
+        "rework_count": 0,
+        "publication_count": 0,
+        "duplicate_count": 0,
+        "conflict_count": 0,
+        "real_publish_allowed": false,
+        "requirements_version": "mock:requirements:v1",
+        "spec_review": null,
+        "remote_reconciliation": null
+      },
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P01",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "stale",
+          "title": "과거 증거 거절 · MOCK",
+          "cursor": 72,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P16",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "blocked",
+          "title": "현재 gate 해제 없음 · MOCK",
+          "cursor": 73,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P16",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 73,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P16",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "stale-candidate",
+      "title": "다른 후보의 측정 차단",
+      "requirement_ids": [
+        "REQ-02",
+        "REQ-05",
+        "REQ-08",
+        "REQ-10",
+        "REQ-12",
+        "REQ-14"
+      ],
+      "event_count": 73,
+      "fixture_sha256": "4efd759a02a6f7772104472bba44b79bbb24bcb228acabbf6322dca3b62a533f",
+      "final": {
+        "mode": "mock",
+        "status": "RUNNING",
+        "current_step": "P16",
+        "cycle": 1,
+        "rework_count": 0,
+        "publication_count": 0,
+        "duplicate_count": 0,
+        "conflict_count": 0,
+        "real_publish_allowed": false,
+        "requirements_version": "mock:requirements:v1",
+        "spec_review": null,
+        "remote_reconciliation": null
+      },
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P01",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "stale",
+          "title": "과거 증거 거절 · MOCK",
+          "cursor": 72,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P16",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "blocked",
+          "title": "현재 gate 해제 없음 · MOCK",
+          "cursor": 73,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P16",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 73,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P16",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "stale-approval",
+      "title": "이전 digest의 승인 차단",
+      "requirement_ids": [
+        "REQ-02",
+        "REQ-05",
+        "REQ-08",
+        "REQ-10",
+        "REQ-12",
+        "REQ-14"
+      ],
+      "event_count": 115,
+      "fixture_sha256": "ceda6bb2d8823eac5f2360d9c38773dd7dacb26d58e23e88fb7bdf16af03de76",
+      "final": {
+        "mode": "mock",
+        "status": "WAITING_HUMAN",
+        "current_step": "X03",
+        "cycle": 1,
+        "rework_count": 0,
+        "publication_count": 0,
+        "duplicate_count": 0,
+        "conflict_count": 0,
+        "real_publish_allowed": false,
+        "requirements_version": "mock:requirements:v1",
+        "spec_review": null,
+        "remote_reconciliation": null
+      },
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P01",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "stale",
+          "title": "현재 명세와 다른 승인 거절 · MOCK",
+          "cursor": 115,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "WAITING_HUMAN",
+            "current_step": "X03",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 115,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "WAITING_HUMAN",
+            "current_step": "X03",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "duplicate-events",
+      "title": "중복·충돌 사건 · 한 번만 표시",
+      "requirement_ids": [
+        "REQ-02",
+        "REQ-05",
+        "REQ-08",
+        "REQ-10",
+        "REQ-12",
+        "REQ-14"
+      ],
+      "event_count": 4,
+      "fixture_sha256": "d9df4633615d9f760e614b8b242cbb981fc1f0a186195bdedb9475e8d7d11a2a",
+      "final": {
+        "mode": "mock",
+        "status": "RUNNING",
+        "current_step": "P01",
+        "cycle": 1,
+        "rework_count": 0,
+        "publication_count": 0,
+        "duplicate_count": 3,
+        "conflict_count": 1,
+        "real_publish_allowed": false,
+        "requirements_version": "mock:requirements:v1",
+        "spec_review": null,
+        "remote_reconciliation": null
+      },
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P01",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "first",
+          "title": "최초 관측 · MOCK",
+          "cursor": 1,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P01",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "duplicates",
+          "title": "중복 3 · 충돌 1 · MOCK",
+          "cursor": 4,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P01",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 3,
+            "conflict_count": 1,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 4,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P01",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 3,
+            "conflict_count": 1,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "retry-limit",
+      "title": "인프라 재시도 · 10초·30초 후 사람 판단",
+      "requirement_ids": [
+        "REQ-02",
+        "REQ-05",
+        "REQ-08",
+        "REQ-10",
+        "REQ-12",
+        "REQ-14"
+      ],
+      "event_count": 69,
+      "fixture_sha256": "29b9298cddb281d7d42906152df96b132918790c8c924a89db691b8255be54bb",
+      "final": {
+        "mode": "mock",
+        "status": "WAITING_HUMAN",
+        "current_step": "P13",
+        "cycle": 1,
+        "rework_count": 0,
+        "publication_count": 0,
+        "duplicate_count": 0,
+        "conflict_count": 0,
+        "real_publish_allowed": false,
+        "requirements_version": "mock:requirements:v1",
+        "spec_review": null,
+        "remote_reconciliation": null
+      },
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P01",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "wait-first",
+          "title": "10초 대기 · MOCK",
+          "cursor": 60,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P13",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "attempt-two",
+          "title": "새 attempt 2 · MOCK",
+          "cursor": 62,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P13",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "wait-second",
+          "title": "30초 대기 · MOCK",
+          "cursor": 64,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P13",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "limit",
+          "title": "attempt 4 생성 없이 사람 대기 · MOCK",
+          "cursor": 69,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "WAITING_HUMAN",
+            "current_step": "P13",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 69,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "WAITING_HUMAN",
+            "current_step": "P13",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "cycle-limit",
+      "title": "재작업 한도 · 추가 3회 후 사람 판단",
+      "requirement_ids": [
+        "REQ-02",
+        "REQ-05",
+        "REQ-08",
+        "REQ-10",
+        "REQ-12",
+        "REQ-14"
+      ],
+      "event_count": 97,
+      "fixture_sha256": "ba20f40214136908497da4e169d61df2866df7b2c46ea8b8a15bdd40858f441a",
+      "final": {
+        "mode": "mock",
+        "status": "WAITING_HUMAN",
+        "current_step": "P13",
+        "cycle": 4,
+        "rework_count": 3,
+        "publication_count": 0,
+        "duplicate_count": 0,
+        "conflict_count": 0,
+        "real_publish_allowed": false,
+        "requirements_version": "mock:requirements:v1",
+        "spec_review": null,
+        "remote_reconciliation": null
+      },
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P01",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "return-one",
+          "title": "재작업 1 · MOCK",
+          "cursor": 61,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P11",
+            "cycle": 2,
+            "rework_count": 1,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "return-two",
+          "title": "재작업 2 · MOCK",
+          "cursor": 73,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P11",
+            "cycle": 3,
+            "rework_count": 2,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "return-three",
+          "title": "재작업 3 · MOCK",
+          "cursor": 85,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P11",
+            "cycle": 4,
+            "rework_count": 3,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "limit",
+          "title": "추가 복귀 차단 · MOCK",
+          "cursor": 97,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "WAITING_HUMAN",
+            "current_step": "P13",
+            "cycle": 4,
+            "rework_count": 3,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 97,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "WAITING_HUMAN",
+            "current_step": "P13",
+            "cycle": 4,
+            "rework_count": 3,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "device-boundaries",
+      "title": "장비 · heartbeat·offline·lease 경계",
+      "requirement_ids": [
+        "REQ-02",
+        "REQ-05",
+        "REQ-08",
+        "REQ-10",
+        "REQ-12",
+        "REQ-14"
+      ],
+      "event_count": 105,
+      "fixture_sha256": "513ce86f3506a7bd3088d02d45612e14b38fcfcf7a8cdd43ca13cea66d85ccd0",
+      "final": {
+        "mode": "mock",
+        "status": "RECONCILING",
+        "current_step": "P22",
+        "cycle": 1,
+        "rework_count": 0,
+        "publication_count": 0,
+        "duplicate_count": 0,
+        "conflict_count": 0,
+        "real_publish_allowed": false,
+        "requirements_version": "mock:requirements:v1",
+        "spec_review": null,
+        "remote_reconciliation": null
+      },
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P01",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "time-9999",
+          "title": "9999ms 관측 · MOCK",
+          "cursor": 97,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P22",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "time-10000",
+          "title": "10000ms 관측 · MOCK",
+          "cursor": 98,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P22",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "time-10001",
+          "title": "10001ms 관측 · MOCK",
+          "cursor": 99,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P22",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "time-29999",
+          "title": "29999ms 관측 · MOCK",
+          "cursor": 100,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P22",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "time-30000",
+          "title": "30000ms 관측 · MOCK",
+          "cursor": 101,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P22",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "time-30001",
+          "title": "30001ms 관측 · MOCK",
+          "cursor": 102,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P22",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "time-59999",
+          "title": "59999ms 관측 · MOCK",
+          "cursor": 103,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P22",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "time-60000",
+          "title": "60000ms 관측 · MOCK",
+          "cursor": 104,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RECONCILING",
+            "current_step": "P22",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "time-60001",
+          "title": "60001ms 관측 · MOCK",
+          "cursor": 105,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RECONCILING",
+            "current_step": "P22",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 105,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RECONCILING",
+            "current_step": "P22",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "flash-unknown",
+      "title": "장비 작업 불명확 · 격리 유지",
+      "requirement_ids": [
+        "REQ-02",
+        "REQ-05",
+        "REQ-08",
+        "REQ-10",
+        "REQ-12",
+        "REQ-14"
+      ],
+      "event_count": 98,
+      "fixture_sha256": "ed6e2261bdf8b4df4852c0fad3bdaf21634405b4672fc0b5ab8b084c78088495",
+      "final": {
+        "mode": "mock",
+        "status": "RECONCILING",
+        "current_step": "P22",
+        "cycle": 1,
+        "rework_count": 0,
+        "publication_count": 0,
+        "duplicate_count": 0,
+        "conflict_count": 0,
+        "real_publish_allowed": false,
+        "requirements_version": "mock:requirements:v1",
+        "spec_review": null,
+        "remote_reconciliation": null
+      },
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P01",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "unknown",
+          "title": "작업 결과 불명확 · MOCK",
+          "cursor": 97,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RECONCILING",
+            "current_step": "P22",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "idle",
+          "title": "새 idle 관측만으로 격리 해제하지 않음 · MOCK",
+          "cursor": 98,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RECONCILING",
+            "current_step": "P22",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 98,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RECONCILING",
+            "current_step": "P22",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "notes-only",
+      "title": "발행 뒤 노트 실패 · 노트만 재시도",
+      "requirement_ids": [
+        "REQ-02",
+        "REQ-05",
+        "REQ-08",
+        "REQ-10",
+        "REQ-12",
+        "REQ-14"
+      ],
+      "event_count": 127,
+      "fixture_sha256": "16466d6786dd1ccf6ec7239045fb878c2218741cd9661e5843d5c5905eb4ef07",
+      "final": {
+        "mode": "mock",
+        "status": "COMPLETED",
+        "current_step": "END",
+        "cycle": 1,
+        "rework_count": 0,
+        "publication_count": 1,
+        "duplicate_count": 0,
+        "conflict_count": 0,
+        "real_publish_allowed": false,
+        "requirements_version": "mock:requirements:v1",
+        "spec_review": null,
+        "remote_reconciliation": null
+      },
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P01",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "notes-failed",
+          "title": "발행 완료 · 노트 대기 · MOCK",
+          "cursor": 124,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RELEASED_PENDING_NOTES",
+            "current_step": "P26",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 1,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "notes-retry",
+          "title": "노트 새 attempt · MOCK",
+          "cursor": 125,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RELEASED_PENDING_NOTES",
+            "current_step": "P26",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 1,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "completed",
+          "title": "노트만 모의 완료 · MOCK",
+          "cursor": 127,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "COMPLETED",
+            "current_step": "END",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 1,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 127,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "COMPLETED",
+            "current_step": "END",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 1,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "spec-question-wait",
+      "title": "사양 질문 · 사람 답변 대기",
+      "requirement_ids": [
+        "REQ-02",
+        "REQ-05",
+        "REQ-08",
+        "REQ-10",
+        "REQ-12",
+        "REQ-14"
+      ],
+      "event_count": 13,
+      "fixture_sha256": "c7ca579920d81834f42439e60f4498ce795315f602bcff7aedb1286bc21816b5",
+      "final": {
+        "mode": "mock",
+        "status": "WAITING_HUMAN",
+        "current_step": "P03",
+        "cycle": 1,
+        "rework_count": 0,
+        "publication_count": 0,
+        "duplicate_count": 0,
+        "conflict_count": 0,
+        "real_publish_allowed": false,
+        "requirements_version": "mock:requirements:v1",
+        "spec_review": {
+          "question_id": "mock:question:spec-question-wait:q1",
+          "question_attempt": 1,
+          "question_execution_id": "mock:P03:c1:a1",
+          "resolved": false,
+          "resolved_requirements_version": null,
+          "review_attempt": null,
+          "review_execution_id": null,
+          "current_review": false
+        },
+        "remote_reconciliation": null
+      },
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P01",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "question",
+          "title": "미해결 사양 질문 · MOCK",
+          "cursor": 11,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "WAITING_HUMAN",
+            "current_step": "P03",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": {
+              "question_id": "mock:question:spec-question-wait:q1",
+              "question_attempt": 1,
+              "question_execution_id": "mock:P03:c1:a1",
+              "resolved": false,
+              "resolved_requirements_version": null,
+              "review_attempt": null,
+              "review_execution_id": null,
+              "current_review": false
+            },
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "blocked",
+          "title": "답변 없는 성공 차단 · MOCK",
+          "cursor": 13,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "WAITING_HUMAN",
+            "current_step": "P03",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": {
+              "question_id": "mock:question:spec-question-wait:q1",
+              "question_attempt": 1,
+              "question_execution_id": "mock:P03:c1:a1",
+              "resolved": false,
+              "resolved_requirements_version": null,
+              "review_attempt": null,
+              "review_execution_id": null,
+              "current_review": false
+            },
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 13,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "WAITING_HUMAN",
+            "current_step": "P03",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": {
+              "question_id": "mock:question:spec-question-wait:q1",
+              "question_attempt": 1,
+              "question_execution_id": "mock:P03:c1:a1",
+              "resolved": false,
+              "resolved_requirements_version": null,
+              "review_attempt": null,
+              "review_execution_id": null,
+              "current_review": false
+            },
+            "remote_reconciliation": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "spec-question-resolution",
+      "title": "사양 답변 · 새 요구사항 재검토 후 진행",
+      "requirement_ids": [
+        "REQ-02",
+        "REQ-05",
+        "REQ-08",
+        "REQ-10",
+        "REQ-12",
+        "REQ-14"
+      ],
+      "event_count": 16,
+      "fixture_sha256": "5c58f7e5b1b8142cfc09117489f8982c10a046a6cdf7ce257930b9b5dbbfe2bb",
+      "final": {
+        "mode": "mock",
+        "status": "RUNNING",
+        "current_step": "P04",
+        "cycle": 1,
+        "rework_count": 0,
+        "publication_count": 0,
+        "duplicate_count": 0,
+        "conflict_count": 0,
+        "real_publish_allowed": false,
+        "requirements_version": "mock:requirements:v2",
+        "spec_review": {
+          "question_id": "mock:question:spec-question-resolution:q1",
+          "question_attempt": 1,
+          "question_execution_id": "mock:P03:c1:a1",
+          "resolved": true,
+          "resolved_requirements_version": "mock:requirements:v2",
+          "review_attempt": 1,
+          "review_execution_id": "mock:P03:c1:a1",
+          "current_review": true
+        },
+        "remote_reconciliation": null
+      },
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P01",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "question",
+          "title": "미해결 질문 · MOCK",
+          "cursor": 11,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "WAITING_HUMAN",
+            "current_step": "P03",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": {
+              "question_id": "mock:question:spec-question-resolution:q1",
+              "question_attempt": 1,
+              "question_execution_id": "mock:P03:c1:a1",
+              "resolved": false,
+              "resolved_requirements_version": null,
+              "review_attempt": null,
+              "review_execution_id": null,
+              "current_review": false
+            },
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "answered",
+          "title": "답변을 새 요구사항 버전에 반영 · MOCK",
+          "cursor": 12,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P03",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v2",
+            "spec_review": {
+              "question_id": "mock:question:spec-question-resolution:q1",
+              "question_attempt": 1,
+              "question_execution_id": "mock:P03:c1:a1",
+              "resolved": true,
+              "resolved_requirements_version": "mock:requirements:v2",
+              "review_attempt": null,
+              "review_execution_id": null,
+              "current_review": false
+            },
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "review-blocked",
+          "title": "재검토 없는 성공 차단 · MOCK",
+          "cursor": 14,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P03",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v2",
+            "spec_review": {
+              "question_id": "mock:question:spec-question-resolution:q1",
+              "question_attempt": 1,
+              "question_execution_id": "mock:P03:c1:a1",
+              "resolved": true,
+              "resolved_requirements_version": "mock:requirements:v2",
+              "review_attempt": null,
+              "review_execution_id": null,
+              "current_review": false
+            },
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "reviewed",
+          "title": "현재 실행의 spec-gen 검토 · MOCK",
+          "cursor": 15,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P03",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v2",
+            "spec_review": {
+              "question_id": "mock:question:spec-question-resolution:q1",
+              "question_attempt": 1,
+              "question_execution_id": "mock:P03:c1:a1",
+              "resolved": true,
+              "resolved_requirements_version": "mock:requirements:v2",
+              "review_attempt": 1,
+              "review_execution_id": "mock:P03:c1:a1",
+              "current_review": true
+            },
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "continued",
+          "title": "P04 진행 · MOCK",
+          "cursor": 16,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P04",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v2",
+            "spec_review": {
+              "question_id": "mock:question:spec-question-resolution:q1",
+              "question_attempt": 1,
+              "question_execution_id": "mock:P03:c1:a1",
+              "resolved": true,
+              "resolved_requirements_version": "mock:requirements:v2",
+              "review_attempt": 1,
+              "review_execution_id": "mock:P03:c1:a1",
+              "current_review": true
+            },
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 16,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P04",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v2",
+            "spec_review": {
+              "question_id": "mock:question:spec-question-resolution:q1",
+              "question_attempt": 1,
+              "question_execution_id": "mock:P03:c1:a1",
+              "resolved": true,
+              "resolved_requirements_version": "mock:requirements:v2",
+              "review_attempt": 1,
+              "review_execution_id": "mock:P03:c1:a1",
+              "current_review": true
+            },
+            "remote_reconciliation": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "spec-question-retry",
+      "title": "사양 재검토 · 재시도마다 새 검토 필요",
+      "requirement_ids": [
+        "REQ-02",
+        "REQ-05",
+        "REQ-08",
+        "REQ-10",
+        "REQ-12",
+        "REQ-14"
+      ],
+      "event_count": 20,
+      "fixture_sha256": "d9bbd56ebd27bfd53c3d8e1998478bd38c21d3df11654879ec6fad5e8eff8e17",
+      "final": {
+        "mode": "mock",
+        "status": "RUNNING",
+        "current_step": "P04",
+        "cycle": 1,
+        "rework_count": 0,
+        "publication_count": 0,
+        "duplicate_count": 0,
+        "conflict_count": 0,
+        "real_publish_allowed": false,
+        "requirements_version": "mock:requirements:v2",
+        "spec_review": {
+          "question_id": "mock:question:spec-question-retry:q1",
+          "question_attempt": 1,
+          "question_execution_id": "mock:P03:c1:a1",
+          "resolved": true,
+          "resolved_requirements_version": "mock:requirements:v2",
+          "review_attempt": 2,
+          "review_execution_id": "mock:P03:c1:a2",
+          "current_review": true
+        },
+        "remote_reconciliation": null
+      },
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P01",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "question",
+          "title": "원래 질문 · MOCK",
+          "cursor": 11,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "WAITING_HUMAN",
+            "current_step": "P03",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": {
+              "question_id": "mock:question:spec-question-retry:q1",
+              "question_attempt": 1,
+              "question_execution_id": "mock:P03:c1:a1",
+              "resolved": false,
+              "resolved_requirements_version": null,
+              "review_attempt": null,
+              "review_execution_id": null,
+              "current_review": false
+            },
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "answered",
+          "title": "답변 버전 보존 · MOCK",
+          "cursor": 12,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P03",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v2",
+            "spec_review": {
+              "question_id": "mock:question:spec-question-retry:q1",
+              "question_attempt": 1,
+              "question_execution_id": "mock:P03:c1:a1",
+              "resolved": true,
+              "resolved_requirements_version": "mock:requirements:v2",
+              "review_attempt": null,
+              "review_execution_id": null,
+              "current_review": false
+            },
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "reviewed-first",
+          "title": "attempt 1 검토 · MOCK",
+          "cursor": 14,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P03",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v2",
+            "spec_review": {
+              "question_id": "mock:question:spec-question-retry:q1",
+              "question_attempt": 1,
+              "question_execution_id": "mock:P03:c1:a1",
+              "resolved": true,
+              "resolved_requirements_version": "mock:requirements:v2",
+              "review_attempt": 1,
+              "review_execution_id": "mock:P03:c1:a1",
+              "current_review": true
+            },
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "retry-wait",
+          "title": "인프라 재시도 대기 · MOCK",
+          "cursor": 15,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P03",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v2",
+            "spec_review": {
+              "question_id": "mock:question:spec-question-retry:q1",
+              "question_attempt": 1,
+              "question_execution_id": "mock:P03:c1:a1",
+              "resolved": true,
+              "resolved_requirements_version": "mock:requirements:v2",
+              "review_attempt": 1,
+              "review_execution_id": "mock:P03:c1:a1",
+              "current_review": true
+            },
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "retried",
+          "title": "attempt 2 · 이전 답변 보존 · MOCK",
+          "cursor": 16,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P03",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v2",
+            "spec_review": {
+              "question_id": "mock:question:spec-question-retry:q1",
+              "question_attempt": 1,
+              "question_execution_id": "mock:P03:c1:a1",
+              "resolved": true,
+              "resolved_requirements_version": "mock:requirements:v2",
+              "review_attempt": 1,
+              "review_execution_id": "mock:P03:c1:a1",
+              "current_review": false
+            },
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "review-blocked",
+          "title": "이전 attempt 검토로 성공 차단 · MOCK",
+          "cursor": 18,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P03",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v2",
+            "spec_review": {
+              "question_id": "mock:question:spec-question-retry:q1",
+              "question_attempt": 1,
+              "question_execution_id": "mock:P03:c1:a1",
+              "resolved": true,
+              "resolved_requirements_version": "mock:requirements:v2",
+              "review_attempt": 1,
+              "review_execution_id": "mock:P03:c1:a1",
+              "current_review": false
+            },
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "reviewed",
+          "title": "attempt 2 새 검토 · MOCK",
+          "cursor": 19,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P03",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v2",
+            "spec_review": {
+              "question_id": "mock:question:spec-question-retry:q1",
+              "question_attempt": 1,
+              "question_execution_id": "mock:P03:c1:a1",
+              "resolved": true,
+              "resolved_requirements_version": "mock:requirements:v2",
+              "review_attempt": 2,
+              "review_execution_id": "mock:P03:c1:a2",
+              "current_review": true
+            },
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "continued",
+          "title": "P04 진행 · MOCK",
+          "cursor": 20,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P04",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v2",
+            "spec_review": {
+              "question_id": "mock:question:spec-question-retry:q1",
+              "question_attempt": 1,
+              "question_execution_id": "mock:P03:c1:a1",
+              "resolved": true,
+              "resolved_requirements_version": "mock:requirements:v2",
+              "review_attempt": 2,
+              "review_execution_id": "mock:P03:c1:a2",
+              "current_review": true
+            },
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 20,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P04",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v2",
+            "spec_review": {
+              "question_id": "mock:question:spec-question-retry:q1",
+              "question_attempt": 1,
+              "question_execution_id": "mock:P03:c1:a1",
+              "resolved": true,
+              "resolved_requirements_version": "mock:requirements:v2",
+              "review_attempt": 2,
+              "review_execution_id": "mock:P03:c1:a2",
+              "current_review": true
+            },
+            "remote_reconciliation": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "spec-question-repeat",
+      "title": "추가 사양 질문 · 이전 답변과 현재 질문 구분",
+      "requirement_ids": [
+        "REQ-02",
+        "REQ-05",
+        "REQ-08",
+        "REQ-10",
+        "REQ-12",
+        "REQ-14"
+      ],
+      "event_count": 19,
+      "fixture_sha256": "be25a867c551a4f80f1ee681ad764f702b52ba36c5d6a7fd5de5755712cc6436",
+      "final": {
+        "mode": "mock",
+        "status": "RUNNING",
+        "current_step": "P04",
+        "cycle": 1,
+        "rework_count": 0,
+        "publication_count": 0,
+        "duplicate_count": 0,
+        "conflict_count": 0,
+        "real_publish_allowed": false,
+        "requirements_version": "mock:requirements:v3",
+        "spec_review": {
+          "question_id": "mock:question:spec-question-repeat:q2",
+          "question_attempt": 1,
+          "question_execution_id": "mock:P03:c1:a1",
+          "resolved": true,
+          "resolved_requirements_version": "mock:requirements:v3",
+          "review_attempt": 1,
+          "review_execution_id": "mock:P03:c1:a1",
+          "current_review": true
+        },
+        "remote_reconciliation": null
+      },
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P01",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "question",
+          "title": "첫 질문 · MOCK",
+          "cursor": 11,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "WAITING_HUMAN",
+            "current_step": "P03",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": {
+              "question_id": "mock:question:spec-question-repeat:q1",
+              "question_attempt": 1,
+              "question_execution_id": "mock:P03:c1:a1",
+              "resolved": false,
+              "resolved_requirements_version": null,
+              "review_attempt": null,
+              "review_execution_id": null,
+              "current_review": false
+            },
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "answered",
+          "title": "첫 답변 v2 · MOCK",
+          "cursor": 12,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P03",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v2",
+            "spec_review": {
+              "question_id": "mock:question:spec-question-repeat:q1",
+              "question_attempt": 1,
+              "question_execution_id": "mock:P03:c1:a1",
+              "resolved": true,
+              "resolved_requirements_version": "mock:requirements:v2",
+              "review_attempt": null,
+              "review_execution_id": null,
+              "current_review": false
+            },
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "question-two",
+          "title": "새 ordinal의 두 번째 질문 · MOCK",
+          "cursor": 14,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "WAITING_HUMAN",
+            "current_step": "P03",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v2",
+            "spec_review": {
+              "question_id": "mock:question:spec-question-repeat:q2",
+              "question_attempt": 1,
+              "question_execution_id": "mock:P03:c1:a1",
+              "resolved": false,
+              "resolved_requirements_version": null,
+              "review_attempt": null,
+              "review_execution_id": null,
+              "current_review": false
+            },
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "stale-answer",
+          "title": "이전 질문의 답변 차단 · MOCK",
+          "cursor": 15,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "WAITING_HUMAN",
+            "current_step": "P03",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v2",
+            "spec_review": {
+              "question_id": "mock:question:spec-question-repeat:q2",
+              "question_attempt": 1,
+              "question_execution_id": "mock:P03:c1:a1",
+              "resolved": false,
+              "resolved_requirements_version": null,
+              "review_attempt": null,
+              "review_execution_id": null,
+              "current_review": false
+            },
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "answered-two",
+          "title": "새 답변 v3 · MOCK",
+          "cursor": 16,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P03",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v3",
+            "spec_review": {
+              "question_id": "mock:question:spec-question-repeat:q2",
+              "question_attempt": 1,
+              "question_execution_id": "mock:P03:c1:a1",
+              "resolved": true,
+              "resolved_requirements_version": "mock:requirements:v3",
+              "review_attempt": null,
+              "review_execution_id": null,
+              "current_review": false
+            },
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "reviewed",
+          "title": "현재 v3 검토 · MOCK",
+          "cursor": 18,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P03",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v3",
+            "spec_review": {
+              "question_id": "mock:question:spec-question-repeat:q2",
+              "question_attempt": 1,
+              "question_execution_id": "mock:P03:c1:a1",
+              "resolved": true,
+              "resolved_requirements_version": "mock:requirements:v3",
+              "review_attempt": 1,
+              "review_execution_id": "mock:P03:c1:a1",
+              "current_review": true
+            },
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "continued",
+          "title": "P04 진행 · MOCK",
+          "cursor": 19,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P04",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v3",
+            "spec_review": {
+              "question_id": "mock:question:spec-question-repeat:q2",
+              "question_attempt": 1,
+              "question_execution_id": "mock:P03:c1:a1",
+              "resolved": true,
+              "resolved_requirements_version": "mock:requirements:v3",
+              "review_attempt": 1,
+              "review_execution_id": "mock:P03:c1:a1",
+              "current_review": true
+            },
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 19,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P04",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v3",
+            "spec_review": {
+              "question_id": "mock:question:spec-question-repeat:q2",
+              "question_attempt": 1,
+              "question_execution_id": "mock:P03:c1:a1",
+              "resolved": true,
+              "resolved_requirements_version": "mock:requirements:v3",
+              "review_attempt": 1,
+              "review_execution_id": "mock:P03:c1:a1",
+              "current_review": true
+            },
+            "remote_reconciliation": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "remote-uncertainty",
+      "title": "원격 결과 불명확 · 과거 조회로 충돌을 해제하지 않음",
+      "requirement_ids": [
+        "REQ-02",
+        "REQ-05",
+        "REQ-08",
+        "REQ-10",
+        "REQ-12",
+        "REQ-14"
+      ],
+      "event_count": 123,
+      "fixture_sha256": "0ce7615c8dbfd8f14b37d8fb6a444747f39d40f74d23e8f22dd24c3f7b7b861b",
+      "final": {
+        "mode": "mock",
+        "status": "RECONCILING",
+        "current_step": "P25",
+        "cycle": 1,
+        "rework_count": 0,
+        "publication_count": 0,
+        "duplicate_count": 0,
+        "conflict_count": 0,
+        "real_publish_allowed": false,
+        "requirements_version": "mock:requirements:v1",
+        "spec_review": null,
+        "remote_reconciliation": {
+          "operation_key": "mock:remote-uncertainty:operation",
+          "query_seq": 3,
+          "outcome": "conflict"
+        }
+      },
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P01",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "unknown",
+          "title": "응답 유실 · 재제출 없음 · MOCK",
+          "cursor": 119,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RECONCILING",
+            "current_step": "P25",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": {
+              "operation_key": "mock:remote-uncertainty:operation",
+              "query_seq": 0,
+              "outcome": "unknown"
+            }
+          }
+        },
+        {
+          "id": "queried-unknown",
+          "title": "조회 1 · 불명확 · MOCK",
+          "cursor": 120,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RECONCILING",
+            "current_step": "P25",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": {
+              "operation_key": "mock:remote-uncertainty:operation",
+              "query_seq": 1,
+              "outcome": "unknown"
+            }
+          }
+        },
+        {
+          "id": "absent",
+          "title": "조회 2 · 미발견 · MOCK",
+          "cursor": 121,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RECONCILING",
+            "current_step": "P25",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": {
+              "operation_key": "mock:remote-uncertainty:operation",
+              "query_seq": 2,
+              "outcome": "absent"
+            }
+          }
+        },
+        {
+          "id": "conflict",
+          "title": "조회 3 · 충돌 · MOCK",
+          "cursor": 122,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RECONCILING",
+            "current_step": "P25",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": {
+              "operation_key": "mock:remote-uncertainty:operation",
+              "query_seq": 3,
+              "outcome": "conflict"
+            }
+          }
+        },
+        {
+          "id": "stale",
+          "title": "다른 source의 과거 조회 거절 · MOCK",
+          "cursor": 123,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RECONCILING",
+            "current_step": "P25",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": {
+              "operation_key": "mock:remote-uncertainty:operation",
+              "query_seq": 3,
+              "outcome": "conflict"
+            }
+          }
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 123,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RECONCILING",
+            "current_step": "P25",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": {
+              "operation_key": "mock:remote-uncertainty:operation",
+              "query_seq": 3,
+              "outcome": "conflict"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "remote-recovery",
+      "title": "원격 결과 확인 · 기존 영수증 재사용 후 노트 완료",
+      "requirement_ids": [
+        "REQ-02",
+        "REQ-05",
+        "REQ-08",
+        "REQ-10",
+        "REQ-12",
+        "REQ-14"
+      ],
+      "event_count": 126,
+      "fixture_sha256": "f271b686a6414780ea21c814d9260e445ea5ebb862fdd63a3e224096829bf9f5",
+      "final": {
+        "mode": "mock",
+        "status": "COMPLETED",
+        "current_step": "END",
+        "cycle": 1,
+        "rework_count": 0,
+        "publication_count": 1,
+        "duplicate_count": 0,
+        "conflict_count": 0,
+        "real_publish_allowed": false,
+        "requirements_version": "mock:requirements:v1",
+        "spec_review": null,
+        "remote_reconciliation": {
+          "operation_key": "mock:remote-recovery:operation",
+          "query_seq": 2,
+          "outcome": "found"
+        }
+      },
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P01",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "unknown",
+          "title": "원격 결과 조회 대기 · MOCK",
+          "cursor": 119,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RECONCILING",
+            "current_step": "P25",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": {
+              "operation_key": "mock:remote-recovery:operation",
+              "query_seq": 0,
+              "outcome": "unknown"
+            }
+          }
+        },
+        {
+          "id": "absent",
+          "title": "미발견 · 재제출 없음 · MOCK",
+          "cursor": 120,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RECONCILING",
+            "current_step": "P25",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": {
+              "operation_key": "mock:remote-recovery:operation",
+              "query_seq": 1,
+              "outcome": "absent"
+            }
+          }
+        },
+        {
+          "id": "found",
+          "title": "동일 동작 영수증 확인 · 발행 1회 · MOCK",
+          "cursor": 121,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P26",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 1,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": {
+              "operation_key": "mock:remote-recovery:operation",
+              "query_seq": 2,
+              "outcome": "found"
+            }
+          }
+        },
+        {
+          "id": "late",
+          "title": "완료된 단계의 늦은 응답 거절 · MOCK",
+          "cursor": 122,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P26",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 1,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": {
+              "operation_key": "mock:remote-recovery:operation",
+              "query_seq": 2,
+              "outcome": "found"
+            }
+          }
+        },
+        {
+          "id": "completed",
+          "title": "노트까지 모의 완료 · MOCK",
+          "cursor": 126,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "COMPLETED",
+            "current_step": "END",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 1,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": {
+              "operation_key": "mock:remote-recovery:operation",
+              "query_seq": 2,
+              "outcome": "found"
+            }
+          }
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 126,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "COMPLETED",
+            "current_step": "END",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 1,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": {
+              "operation_key": "mock:remote-recovery:operation",
+              "query_seq": 2,
+              "outcome": "found"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "remote-device-quarantine",
+      "title": "원격 결과와 장비 격리 · found도 격리를 해제하지 않음",
+      "requirement_ids": [
+        "REQ-02",
+        "REQ-05",
+        "REQ-08",
+        "REQ-10",
+        "REQ-12",
+        "REQ-14"
+      ],
+      "event_count": 122,
+      "fixture_sha256": "3298a3fff488f5f1513126e3e3a21f6689815d161c9b0a064fd6da770fe95472",
+      "final": {
+        "mode": "mock",
+        "status": "RECONCILING",
+        "current_step": "P25",
+        "cycle": 1,
+        "rework_count": 0,
+        "publication_count": 0,
+        "duplicate_count": 0,
+        "conflict_count": 0,
+        "real_publish_allowed": false,
+        "requirements_version": "mock:requirements:v1",
+        "spec_review": null,
+        "remote_reconciliation": {
+          "operation_key": "mock:remote-device-quarantine:operation",
+          "query_seq": 0,
+          "outcome": "unknown"
+        }
+      },
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RUNNING",
+            "current_step": "P01",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": null
+          }
+        },
+        {
+          "id": "unknown",
+          "title": "원격 결과 불명확 · MOCK",
+          "cursor": 119,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RECONCILING",
+            "current_step": "P25",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": {
+              "operation_key": "mock:remote-device-quarantine:operation",
+              "query_seq": 0,
+              "outcome": "unknown"
+            }
+          }
+        },
+        {
+          "id": "quarantined",
+          "title": "장비 결과도 불명확 · MOCK",
+          "cursor": 120,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RECONCILING",
+            "current_step": "P25",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": {
+              "operation_key": "mock:remote-device-quarantine:operation",
+              "query_seq": 0,
+              "outcome": "unknown"
+            }
+          }
+        },
+        {
+          "id": "idle",
+          "title": "idle에도 격리 유지 · MOCK",
+          "cursor": 121,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RECONCILING",
+            "current_step": "P25",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": {
+              "operation_key": "mock:remote-device-quarantine:operation",
+              "query_seq": 0,
+              "outcome": "unknown"
+            }
+          }
+        },
+        {
+          "id": "blocked",
+          "title": "원격 found로 격리 해제 금지 · MOCK",
+          "cursor": 122,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RECONCILING",
+            "current_step": "P25",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": {
+              "operation_key": "mock:remote-device-quarantine:operation",
+              "query_seq": 0,
+              "outcome": "unknown"
+            }
+          }
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 122,
+          "observed_snapshot": {
+            "mode": "mock",
+            "status": "RECONCILING",
+            "current_step": "P25",
+            "cycle": 1,
+            "rework_count": 0,
+            "publication_count": 0,
+            "duplicate_count": 0,
+            "conflict_count": 0,
+            "real_publish_allowed": false,
+            "requirements_version": "mock:requirements:v1",
+            "spec_review": null,
+            "remote_reconciliation": {
+              "operation_key": "mock:remote-device-quarantine:operation",
+              "query_seq": 0,
+              "outcome": "unknown"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "journal_sha256": "63a37749326ba0a0721a00a00a423bbd99022f6f7d2e78f0db144d1db5a294fa"
+}

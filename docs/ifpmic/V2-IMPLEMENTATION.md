@@ -55,3 +55,9 @@ TC가 독립적인 25개 끝 상태와 checkpoint oracle, 실제 host/offline br
 승인된 `V2-EXCEPTIONS.md`에 따라 P03 질문→사람 답변→새 요구사항 버전의 spec-gen 재검토 및 P25 불명확→동일 operation의 최신 원격 receipt 재사용을 추가한다. 사건은 합성이며 실제 질문 서버·원격 조회·제출을 호출하지 않는다. 전용 TC와 전체 단위/build/plugin-build, 소스 고정 및 독립 수용을 거친 뒤 부분 증분으로 기록한다. 검증 명령은 `node scripts/verify-ifpmic-exceptions.mjs`이고 결과는 `workflow-artifacts/verification/V2/exceptions/gates/`에 남긴다.
 
 이번 증분은 새 UI·카탈로그를 추가하지 않으므로 기존 25개 화면 시나리오의 지원 범위를 확장했다고 표시하지 않는다. 새 질문/원격 조회의 화면 연결, 나머지 skip/manual/child/pause/cancel/no-change/P22 trial과 전체 V2 gate는 계속 필요하다.
+
+## 질문·원격 조회 화면 연결
+
+`V2-EXCEPTION-UI.md` 계획에 따라 기존 25개 fixture를 유지하고 P03 질문/답변/재시도/추가 질문 및 P25 불명확/복구/장비 격리 7개를 추가한다. 전체 32개와 주요 checkpoint를 탐색하며, 질문 원래 좌표·답변 버전·현재 실행의 검토 좌표 및 원격 동작·순번·결과·증거를 별도 패널로 표시한다. catalog evidence의 `observed_snapshot`은 재생에서 관측한 값이며, TC의 독립 고정 oracle을 대신하지 않는다.
+
+32개 catalog/unit, standalone/isolated native-host의 새 예외 관측과 기존 화면, 375/1440px, 전체 AX 회귀를 같은 고정 후보에서 검증한다. 전체 V2와 B 단계/실제 AT는 여전히 별도다.

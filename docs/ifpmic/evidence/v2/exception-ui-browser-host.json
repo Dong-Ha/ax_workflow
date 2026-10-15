@@ -1,0 +1,103 @@
+{
+  "kind": "ifpmic-v2-replay-host-browser",
+  "route": "/IFP/ifpmic-ax",
+  "checks": [
+    {
+      "name": "isolated existing Paperclip host prerequisites are ready (GET-only)",
+      "verdict": "pass",
+      "details": {
+        "routePath": "/IFP/ifpmic-ax",
+        "setupWrites": 0
+      }
+    },
+    {
+      "name": "design view is the default and replay view requires explicit selection",
+      "verdict": "pass"
+    },
+    {
+      "name": "catalog exposes all 32 frozen scenarios and starts each at cursor zero",
+      "verdict": "pass"
+    },
+    {
+      "name": "all 32 scenarios reach their fixed endpoint through the end-observation control",
+      "verdict": "pass"
+    },
+    {
+      "name": "scenario change clears display filters and resets selection and cursor",
+      "verdict": "pass"
+    },
+    {
+      "name": "previous/next/first/last and checkpoint selection move stored prefixes only",
+      "verdict": "pass"
+    },
+    {
+      "name": "observation panel separates mock job, step, agent and gate data and opens current node",
+      "verdict": "pass"
+    },
+    {
+      "name": "metadata recovery and notes checkpoints keep current approval and publication observability",
+      "verdict": "pass"
+    },
+    {
+      "name": "retry, cycle and device telemetry are distinct and never expose allocatable authority",
+      "verdict": "pass"
+    },
+    {
+      "name": "current-stage navigation reveals, focuses and scrolls a node hidden by active filters",
+      "verdict": "pass"
+    },
+    {
+      "name": "question panels distinguish durable answer, current-attempt review and archived review history",
+      "verdict": "pass"
+    },
+    {
+      "name": "remote panel shows stale-query rejection, one found receipt and quarantine independently",
+      "verdict": "pass"
+    },
+    {
+      "name": "question review-blocked checkpoint remains legible at 1440px and 375px",
+      "verdict": "pass"
+    },
+    {
+      "name": "1440px and 375px layouts expose replay controls and details without horizontal page overflow",
+      "verdict": "pass"
+    },
+    {
+      "name": "browser replay makes no API writes, external requests or runtime errors",
+      "verdict": "pass"
+    }
+  ],
+  "unexpectedExternalRequests": [],
+  "browserWriteRequests": [],
+  "captureAdjustments": [
+    {
+      "selector": "aside[aria-label=\"Paperclip announcements\"]",
+      "count": 0,
+      "action": "none",
+      "observedText": null
+    }
+  ],
+  "apiRequests": [],
+  "pageErrors": [],
+  "consoleErrors": [],
+  "evidence": [
+    "workflow-artifacts/verification/V2/ui/host-spec-question-repeat-end-desktop.png",
+    "workflow-artifacts/verification/V2/ui/host-remote-uncertainty-stale-desktop.png",
+    "workflow-artifacts/verification/V2/ui/host-remote-uncertainty-stale-mobile-375.png",
+    "workflow-artifacts/verification/V2/ui/host-remote-recovery-found-desktop.png",
+    "workflow-artifacts/verification/V2/ui/host-spec-question-retry-review-blocked-desktop.png",
+    "workflow-artifacts/verification/V2/ui/host-spec-question-retry-review-blocked-mobile-375.png",
+    "workflow-artifacts/verification/V2/ui/host-desktop.png",
+    "workflow-artifacts/verification/V2/ui/host-sam-failure-returned-desktop.png",
+    "workflow-artifacts/verification/V2/ui/host-metadata-completed-desktop.png",
+    "workflow-artifacts/verification/V2/ui/host-device-time-60000-desktop.png",
+    "workflow-artifacts/verification/V2/ui/host-device-time-60000-mobile-375.png"
+  ],
+  "host": {
+    "version": "2026.1005.0",
+    "deploymentMode": "local_trusted",
+    "companyId": "d27585f7-287a-46d8-a289-b4b08eeb2e5b",
+    "pluginId": "741e5059-86e9-4f84-af0f-a51a64d3f36e"
+  },
+  "verdict": "pass"
+}

@@ -1,0 +1,111 @@
+{
+  "kind": "pre_freeze_exception_ui_browser_diagnostic",
+  "recorded_at": "2026-10-15T11:40:21.256497+00:00",
+  "report": "workflow-artifacts/verification/V2/ui/diagnostics/exception-ui-attempt-1.json",
+  "report_sha256": "e1fe85a60310108738e1de50f2451ee470d158da3e4a042dad66e3015c2193b5",
+  "checks": [
+    {
+      "name": "design view is the default and replay view requires explicit selection",
+      "verdict": "pass"
+    },
+    {
+      "name": "catalog exposes all 32 frozen scenarios and starts each at cursor zero",
+      "verdict": "pass"
+    },
+    {
+      "name": "all 32 scenarios reach their fixed endpoint through the end-observation control",
+      "verdict": "pass"
+    },
+    {
+      "name": "scenario change clears display filters and resets selection and cursor",
+      "verdict": "pass"
+    },
+    {
+      "name": "previous/next/first/last and checkpoint selection move stored prefixes only",
+      "verdict": "pass"
+    },
+    {
+      "name": "observation panel separates mock job, step, agent and gate data and opens current node",
+      "verdict": "pass"
+    },
+    {
+      "name": "metadata recovery and notes checkpoints keep current approval and publication observability",
+      "verdict": "pass"
+    },
+    {
+      "name": "retry, cycle and device telemetry are distinct and never expose allocatable authority",
+      "verdict": "pass"
+    },
+    {
+      "name": "current-stage navigation reveals, focuses and scrolls a node hidden by active filters",
+      "verdict": "pass"
+    },
+    {
+      "name": "question panels distinguish durable answer, current-attempt review and archived review history",
+      "verdict": "pass"
+    },
+    {
+      "name": "remote panel shows stale-query rejection, one found receipt and quarantine independently",
+      "verdict": "fail",
+      "finding": "The expression evaluated to a falsy value:\n\n  assert.ok((await recovered.innerText()).includes('mock:receipt:remote-recovery:v1'))\n"
+    },
+    {
+      "name": "question review-blocked checkpoint remains legible at 1440px and 375px",
+      "verdict": "pass"
+    },
+    {
+      "name": "1440px and 375px layouts expose replay controls and details without horizontal page overflow",
+      "verdict": "pass"
+    },
+    {
+      "name": "browser replay makes no API writes, external requests or runtime errors",
+      "verdict": "pass"
+    }
+  ],
+  "finding_class": "TC oracle error: remote recovery receipt fixture has a remote qualifier in its ID. Expected ID corrected; original failure retained.",
+  "source_frozen": false,
+  "recovery": "Rebuild latest visible history fields, rerun both browser environments, then freeze full candidate for complete gate and independent audit.",
+  "additional_tc_oracle_correction": {
+    "finding": "A diagnostic attempted First observation while scenario selection had already reset cursor to 0; the button was correctly disabled.",
+    "evidence": "TC agent report; original per-run JSON was superseded before root archived it. No fixed-candidate gate had started.",
+    "correction": "Test First observation after moving to a non-zero checkpoint. Preserve cursor-zero disabled-button semantics.",
+    "product_change": false
+  },
+  "visual_evidence_correction": {
+    "finding": "Native host marketing announcement obscured workflow captures; dismiss button unexpectedly issued a real POST and failed write-zero.",
+    "recovery": "No further clicks, request suppression or server writes. Independently reviewed identity-checked ephemeral DOM visibility adjustment if that unrelated announcement exists; otherwise explicit absence ledger. All API-write-zero checks retained.",
+    "procedure": "../../V2-EXCEPTION-UI-CAPTURE.md",
+    "limitation": "The announcement is already absent on the existing synthetic host. Present-banner hiding has source review but no real-host execution proof."
+  },
+  "actual_host_write_failure": {
+    "report": "workflow-artifacts/verification/V2/ui/host-announcement-dismiss-failed.json",
+    "sha256": "c3951bf1d44fa545ceac16918f69aded0e9536956eaaff07e1fff9011df8d54f",
+    "verdict": "fail",
+    "failures": [
+      {
+        "name": "browser replay makes no API writes, external requests or runtime errors",
+        "verdict": "fail",
+        "finding": "Dismiss announcement click attempted POST to http://127.0.0.1:3100/api/announcements/2026-09-14-connectors/dismiss; API-write-zero assertion failed."
+      }
+    ],
+    "browser_write_requests": [
+      {
+        "method": "POST",
+        "url": "http://127.0.0.1:3100/api/announcements/2026-09-14-connectors/dismiss"
+      }
+    ]
+  },
+  "reset_tc_failure": {
+    "report": "workflow-artifacts/verification/V2/ui/standalone-reset-assertion-attempt.json",
+    "sha256": "f59ad762b003d7f1c7caddcb8707a0e3d52f6e3dbcf306f22e311f0c8746b036",
+    "verdict": "fail",
+    "failures": [
+      {
+        "name": "question panels distinguish durable answer, current-attempt review and archived review history",
+        "verdict": "fail",
+        "finding": "Expected values to be strictly equal:\n\nnull !== '0'\n"
+      }
+    ],
+    "browser_write_requests": []
+  }
+}

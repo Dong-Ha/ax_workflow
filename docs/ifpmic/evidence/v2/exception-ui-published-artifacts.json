@@ -1,0 +1,50 @@
+{
+  "kind": "synthetic_exception_ui_evidence_publication",
+  "gate_sha256": "f048fac6e1f186e4fa8e340607eaf91a07611a6ba42345ef2676436479fa1e15",
+  "artifacts": [
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T11-49-14-490Z/gate.json",
+      "published": "exception-ui-verification.json",
+      "sha256": "f048fac6e1f186e4fa8e340607eaf91a07611a6ba42345ef2676436479fa1e15"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T11-49-14-490Z/ui-catalog.json",
+      "published": "exception-ui-catalog.json",
+      "sha256": "d9e94efd47a7cbe4d533cc2b5f83bf3cb3c574a5f46cb7a162de82b812e21a20"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T11-49-14-490Z/ui-standalone-browser.json",
+      "published": "exception-ui-browser-standalone.json",
+      "sha256": "78e577ab79585f6cbfbf58a23bcdecc5764f61579081ce0e8a96991ebdd89d31"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T11-49-14-490Z/ui-host-browser.json",
+      "published": "exception-ui-browser-host.json",
+      "sha256": "1b15657a333faa17684ab92ae87de1f0028ef9f04368bc8c7cbb2683f1d73f5e"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T11-49-14-490Z/host-spec-question-retry-review-blocked-desktop.png",
+      "published": "exception-ui-host-question-retry.png",
+      "sha256": "929913020fcdfd052281d531b91f94823d38523653a61ccfbc1929c90c3452e3"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T11-49-14-490Z/standalone-remote-uncertainty-stale-mobile-375.png",
+      "published": "exception-ui-remote-mobile.png",
+      "sha256": "c102468b15bc8e7d3294afd467c9937d6405ec57262de8bef1435aa6953970dd"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T11-49-14-490Z/host-remote-recovery-found-desktop.png",
+      "published": "exception-ui-host-remote-found.png",
+      "sha256": "6e2e04264ff3886ffc6620652d545d576d40cd89087f51c85715e3b0e3b58e8f"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T11-49-14-490Z/standalone-spec-question-repeat-end-desktop.png",
+      "published": "exception-ui-question-history.png",
+      "sha256": "dc8e22959ca57e809120c5260fa514adceae59ef197c03f9924c3a5e8eaab70d"
+    }
+  ],
+  "local_only": [
+    "Full synthetic fixture journal, command logs and remaining screenshots are retained at the immutable gate directory; hashes are in exception-ui-verification.json."
+  ],
+  "actual_acceptance": "not_executed"
+}
