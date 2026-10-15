@@ -1,0 +1,41 @@
+{
+  "kind": "independent_verification_plan_review",
+  "decision": "approved_for_V0_V1_V2_implementation",
+  "author_agent": "/root/verification_plan",
+  "reviewer_agent": "/root/paperclip_ui_extension",
+  "reviewer_role": "worker_luna; read-only independent reviewer",
+  "implementer_agent": "/root",
+  "reviewed_plan_sha256": "ef941621ab09436a26c7ba7f2313c73a09afa714d9ecef45d90d77835c8084db",
+  "published_plan_sha256": "b0f1e0dbe74f1a6aae5e84218f672fcb42d0db6133e072d66e92d21d2bb1ef98",
+  "publication_only_edits": [
+    "Remove draft title",
+    "Publish review status and link; no gate criteria changed"
+  ],
+  "timestamp": "2026-10-15T09:34:49.393017+00:00",
+  "findings": [
+    {
+      "id": "PR-01",
+      "issue": "V-stage AT references must not count as actual AT execution",
+      "resolution": "Common rule 5 separates V-stage evidence and mock/real B-stage ledgers",
+      "status": "resolved"
+    },
+    {
+      "id": "PR-02",
+      "issue": "41 edges do not include three non-node special outcomes; END rendering unspecified",
+      "resolution": "Section 3 requires all 8 outcomes including three non-node actions and visible END terminal",
+      "status": "resolved"
+    }
+  ],
+  "approved_scope": [
+    "V0 plan/source verification",
+    "V1 static contract visualization and real Paperclip page mount",
+    "V2 mock scenario visualization"
+  ],
+  "not_approved": [
+    "Product completion",
+    "B-stage acceptance execution",
+    "Real environment integration",
+    "Deployment or remote submission"
+  ],
+  "waivers": []
+}
