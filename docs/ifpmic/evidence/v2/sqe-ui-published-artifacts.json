@@ -1,0 +1,201 @@
+{
+  "kind": "published_synthetic_sqe_ui_artifacts",
+  "gate_fingerprint": "d20d125530ae5bdf13bc6639a55a444b6936c464549e6d4859331de913862451",
+  "artifacts": [
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-10-40-388Z/sqe-unit-observations.json",
+      "path": "docs/ifpmic/evidence/v2/sqe-ui-unit-observations.json",
+      "sha256": "c61c884cd8b803bc89bd682a1b21daf4f258aaae3de5f3b6774b4139f4d6d341"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-10-40-388Z/ui-standalone-browser.json",
+      "path": "docs/ifpmic/evidence/v2/sqe-ui-ui-standalone-browser.json",
+      "sha256": "5ab34ddc452f5a0cf33b19632c463436a221cd89d97d25d45a6ab6e8dae242bf"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-10-40-388Z/standalone-sqe-manual-waiting-1440.png",
+      "path": "docs/ifpmic/evidence/v2/sqe-ui-standalone-sqe-manual-waiting-1440.png",
+      "sha256": "0ed68a32126747de023925dc2a938dee10eaaea3e93724a880639478a35fb236"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-10-40-388Z/standalone-sqe-manual-submitted-375.png",
+      "path": "docs/ifpmic/evidence/v2/sqe-ui-standalone-sqe-manual-submitted-375.png",
+      "sha256": "a3002fb4a53d59ea51387354d883967426bcc5531472c5585ad421330a0bb041"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-10-40-388Z/standalone-sqe-manual-submitted-target-375.png",
+      "path": "docs/ifpmic/evidence/v2/sqe-ui-standalone-sqe-manual-submitted-target-375.png",
+      "sha256": "73af8f175d3cbbde5c73cbf0920dfaab5b37524ea2d347a92974c61fe121ed24"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-10-40-388Z/standalone-sqe-manual-submitted-assignment-375.png",
+      "path": "docs/ifpmic/evidence/v2/sqe-ui-standalone-sqe-manual-submitted-assignment-375.png",
+      "sha256": "f005736336bb4ffb83d79bcfe8d4d8fc077bd5422a2c7887be56162985361ffa"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-10-40-388Z/standalone-sqe-manual-submitted-result-375.png",
+      "path": "docs/ifpmic/evidence/v2/sqe-ui-standalone-sqe-manual-submitted-result-375.png",
+      "sha256": "4fa558fb73b455095e8b48981f7532bd9edb4cdf7d7ebfafcb0b95423994b073"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-10-40-388Z/standalone-sqe-manual-judged-1440.png",
+      "path": "docs/ifpmic/evidence/v2/sqe-ui-standalone-sqe-manual-judged-1440.png",
+      "sha256": "d6d861b3ab90bba66c53cddf3ca4854bc1586938cc630c4c9737bcb4db18ec17"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-10-40-388Z/standalone-sqe-manual-fail-rerouted-history-1440.png",
+      "path": "docs/ifpmic/evidence/v2/sqe-ui-standalone-sqe-manual-fail-rerouted-history-1440.png",
+      "sha256": "47dcfe2380b6348cffec8cf14d67c83d9899007ca06efc3ce26eecb6de225ed3"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-10-40-388Z/standalone-sqe-incomplete-blocked-1440.png",
+      "path": "docs/ifpmic/evidence/v2/sqe-ui-standalone-sqe-incomplete-blocked-1440.png",
+      "sha256": "2d3534aad24c82ddee1c99f09a3616c051d1214bbe9482b9b0342b0581e175ab"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-10-40-388Z/standalone-sqe-manual-retry-waiting-two-375.png",
+      "path": "docs/ifpmic/evidence/v2/sqe-ui-standalone-sqe-manual-retry-waiting-two-375.png",
+      "sha256": "af7958740ca09969557f01e41a13094ea0c11f74bf8a1cb52019791bd24d5e09"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-10-40-388Z/standalone-sqe-manual-retry-a1-history-375.png",
+      "path": "docs/ifpmic/evidence/v2/sqe-ui-standalone-sqe-manual-retry-a1-history-375.png",
+      "sha256": "9c2f23de4e06e4239738d139e1ebe0907fcead2e62a8d396b7ee8277aa91175f"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-10-40-388Z/standalone-sqe-manual-retry-a1-result-history-375.png",
+      "path": "docs/ifpmic/evidence/v2/sqe-ui-standalone-sqe-manual-retry-a1-result-history-375.png",
+      "sha256": "6b0365c0265ce8b083fb87f643bbe2ca5e0ff957821c9c60f2a48bd4898f3060"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-10-40-388Z/standalone-sqe-report-retry-current-1440.png",
+      "path": "docs/ifpmic/evidence/v2/sqe-ui-standalone-sqe-report-retry-current-1440.png",
+      "sha256": "0a157bb2d1f600c44aba56a907d61560057de6950f961ef32866c56e99d10151"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-10-40-388Z/standalone-sqe-judgment-retry-stale-history-1440.png",
+      "path": "docs/ifpmic/evidence/v2/sqe-ui-standalone-sqe-judgment-retry-stale-history-1440.png",
+      "sha256": "1d9efaa0ab79af8af275364da2f1843011ce95649f50b41a25e67d084d3e28d5"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-10-40-388Z/standalone-sqe-judgment-retry-a1-history-1440.png",
+      "path": "docs/ifpmic/evidence/v2/sqe-ui-standalone-sqe-judgment-retry-a1-history-1440.png",
+      "sha256": "e00eb25cc7b26aa1b316eb1ad3ab229cca5d8f32818ca34161e578f70ac50626"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-10-40-388Z/standalone-sqe-manual-quarantine-blocked-1440.png",
+      "path": "docs/ifpmic/evidence/v2/sqe-ui-standalone-sqe-manual-quarantine-blocked-1440.png",
+      "sha256": "8462a142ae800667aa60da5accb4a54387cbf978c9734302aeeac08c11ba5bc8"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-10-40-388Z/ui-host-browser.json",
+      "path": "docs/ifpmic/evidence/v2/sqe-ui-ui-host-browser.json",
+      "sha256": "86dfc678005ffbb2a65b2ee8313df0da7156331f10f6d044599154c7fb7769dd"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-10-40-388Z/host-sqe-manual-waiting-1440.png",
+      "path": "docs/ifpmic/evidence/v2/sqe-ui-host-sqe-manual-waiting-1440.png",
+      "sha256": "4dc6c657f2f911c5dcce891f7b9270d67aafc0210e1458aa568f682be20f5f50"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-10-40-388Z/host-sqe-manual-submitted-375.png",
+      "path": "docs/ifpmic/evidence/v2/sqe-ui-host-sqe-manual-submitted-375.png",
+      "sha256": "69ea494c464ad00b67e84ff65fb3da49c46e5475337209280f29cc1e12844ac0"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-10-40-388Z/host-sqe-manual-submitted-target-375.png",
+      "path": "docs/ifpmic/evidence/v2/sqe-ui-host-sqe-manual-submitted-target-375.png",
+      "sha256": "d54caa148d75408265c337251053cb547a902f17472decbc9d47d09e4bd2faea"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-10-40-388Z/host-sqe-manual-submitted-assignment-375.png",
+      "path": "docs/ifpmic/evidence/v2/sqe-ui-host-sqe-manual-submitted-assignment-375.png",
+      "sha256": "b120bbe16bed3c8ea726951aceb1d869a6f22ce83438af52f2aef59022dc95e6"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-10-40-388Z/host-sqe-manual-submitted-result-375.png",
+      "path": "docs/ifpmic/evidence/v2/sqe-ui-host-sqe-manual-submitted-result-375.png",
+      "sha256": "660604d4789a5ae942c419f5ca7127f5c934a7802cebc9a61c25fdf074ef4ba7"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-10-40-388Z/host-sqe-manual-judged-1440.png",
+      "path": "docs/ifpmic/evidence/v2/sqe-ui-host-sqe-manual-judged-1440.png",
+      "sha256": "01a03c4ba23660e912b6d263dabd7e2faa9a1713c5c79e23332f626fc70fa17e"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-10-40-388Z/host-sqe-manual-fail-rerouted-history-1440.png",
+      "path": "docs/ifpmic/evidence/v2/sqe-ui-host-sqe-manual-fail-rerouted-history-1440.png",
+      "sha256": "d997de0ba90a2710c86e3b77cc176bf1cf6e3b93791108e86708e29ff8e10b94"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-10-40-388Z/host-sqe-incomplete-blocked-1440.png",
+      "path": "docs/ifpmic/evidence/v2/sqe-ui-host-sqe-incomplete-blocked-1440.png",
+      "sha256": "852834d1bb0a9d816c28ac08e0bc92947f64aa9c8f33b733a1da62ce19bb936b"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-10-40-388Z/host-sqe-manual-retry-waiting-two-375.png",
+      "path": "docs/ifpmic/evidence/v2/sqe-ui-host-sqe-manual-retry-waiting-two-375.png",
+      "sha256": "5e98e5e920b1213927009469ee350b72001c0941c1214bcab584e52165e3931b"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-10-40-388Z/host-sqe-manual-retry-a1-history-375.png",
+      "path": "docs/ifpmic/evidence/v2/sqe-ui-host-sqe-manual-retry-a1-history-375.png",
+      "sha256": "3d38022570f03a8971aa1b88c83d21ea3e7b0d5bd5890cc09501e929f08ae7ac"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-10-40-388Z/host-sqe-manual-retry-a1-result-history-375.png",
+      "path": "docs/ifpmic/evidence/v2/sqe-ui-host-sqe-manual-retry-a1-result-history-375.png",
+      "sha256": "354be370e74fd297271c6b9ff2267175dcb73ad70f79f789a1eb786fc01e8bcf"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-10-40-388Z/host-sqe-report-retry-current-1440.png",
+      "path": "docs/ifpmic/evidence/v2/sqe-ui-host-sqe-report-retry-current-1440.png",
+      "sha256": "1ab867128eb2d8c94c7ef28b97b7a978c6edbb7f77c36918fa576fdf6687b46a"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-10-40-388Z/host-sqe-judgment-retry-stale-history-1440.png",
+      "path": "docs/ifpmic/evidence/v2/sqe-ui-host-sqe-judgment-retry-stale-history-1440.png",
+      "sha256": "71ee4b81ecd2b3163275a304aa5c75a514c6ac2e6b447b3f100f050c4ba83e66"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-10-40-388Z/host-sqe-judgment-retry-a1-history-1440.png",
+      "path": "docs/ifpmic/evidence/v2/sqe-ui-host-sqe-judgment-retry-a1-history-1440.png",
+      "sha256": "881b10295dd489572e005e7f516400ad387228dfe8a11a4f5454579303efe8cf"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-10-40-388Z/host-sqe-manual-quarantine-blocked-1440.png",
+      "path": "docs/ifpmic/evidence/v2/sqe-ui-host-sqe-manual-quarantine-blocked-1440.png",
+      "sha256": "ef1f806e8f8f75c24e9332812efbc7537b24839d56ade0e74d60a4ee7ed50eee"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-10-40-388Z/ui-catalog.json",
+      "path": "docs/ifpmic/evidence/v2/sqe-ui-ui-catalog.json",
+      "sha256": "038425027c41afa4da3d96662e447498c9161a670d15f28beac21c69717c10e1"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-10-40-388Z/ui-catalog-journal.json",
+      "path": "docs/ifpmic/evidence/v2/sqe-ui-ui-catalog-journal.json",
+      "sha256": "28bff3dff01a479e438862ffd1b8f670bb8b8bb54ded057c5feb0c54e21666ec"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-10-40-388Z/ui-sqe-migration.json",
+      "path": "docs/ifpmic/evidence/v2/sqe-ui-migration.json",
+      "sha256": "fc8a72eb819bfc5a4494e400b7a0c999327b98a8459c11475c4f4fc061c62114"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/sqe-ui-routing-capture-supplement/report.json",
+      "path": "docs/ifpmic/evidence/v2/sqe-ui-routing-mobile-capture.json",
+      "sha256": "f0dd2e62ff1faa4b63a4c754b3db46d146e6fc30a74ce5aeed6cfe8c16b3aa86"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/sqe-ui-routing-capture-supplement/capture.mjs",
+      "path": "docs/ifpmic/evidence/v2/sqe-ui-routing-mobile-capture-script.txt",
+      "sha256": "f2c4872d5f4b0cf14fb5ef620cf9dd62ec8885ebd9504e5f46ee06095e5f7f13"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/sqe-ui-routing-capture-supplement/routing-exempt-p24-detail-375-1800.png",
+      "path": "docs/ifpmic/evidence/v2/sqe-ui-routing-host-p24-detail-375-1800.png",
+      "sha256": "7ead6da4ebb58375b306b25c7bb7dfa77afd587977d6f9d860e9fa24e3c63cbc"
+    }
+  ]
+}

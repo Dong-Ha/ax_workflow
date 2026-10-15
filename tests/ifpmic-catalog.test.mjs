@@ -9,13 +9,15 @@ import { replayScenario } from '../src/ifpmic/replay.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const specs = path.join(root, 'docs/ifpmic/design-v1/specs');
-const [workflow, stateContract, priorCatalogEvidence, routingUiBaseline, sqeBaseline] = await Promise.all([
+const [workflow, stateContract, priorCatalogEvidence, routingUiBaseline, sqeBaseline, sqeUiBaselineText] = await Promise.all([
   readFile(path.join(specs, 'workflow.v1.json'), 'utf8').then(JSON.parse),
   readFile(path.join(specs, 'state-contract.json'), 'utf8').then(JSON.parse),
   readFile(path.join(root, 'docs/ifpmic/evidence/v2/ui-catalog.json'), 'utf8').then(JSON.parse),
   readFile(path.join(root, 'docs/ifpmic/evidence/v2/routing-ui-baseline-32.json'), 'utf8').then(JSON.parse),
   readFile(path.join(root, 'docs/ifpmic/evidence/v2/sqe-baseline-41.json'), 'utf8').then(JSON.parse),
+  readFile(path.join(root, 'docs/ifpmic/evidence/v2/sqe-ui-baseline-41.json'), 'utf8'),
 ]);
+const sqeUiBaseline = JSON.parse(sqeUiBaselineText);
 
 const originalCatalogView = scenario => {
   const events = scenario.events.filter(event => event.source_id !== 'mock:sqe-catalog');
@@ -34,6 +36,13 @@ const expectedScenarioIds = [
   'remote-uncertainty', 'remote-recovery', 'remote-device-quarantine',
   'routing-reuse', 'routing-new-hw', 'routing-exempt', 'routing-pilot-denied',
   'routing-no-change', 'routing-no-change-denied', 'routing-candidate', 'routing-replan', 'routing-metadata',
+  'sqe-manual-pass', 'sqe-manual-fail', 'sqe-incomplete', 'sqe-parser-error', 'sqe-identity-mismatch',
+  'sqe-manual-retry', 'sqe-report-retry', 'sqe-judgment-retry', 'sqe-manual-quarantine',
+];
+const migratedScenarioIds = expectedScenarioIds.slice(0, 41);
+const sqeUiScenarioIds = [
+  'sqe-manual-pass', 'sqe-manual-fail', 'sqe-incomplete', 'sqe-parser-error', 'sqe-identity-mismatch',
+  'sqe-manual-retry', 'sqe-report-retry', 'sqe-judgment-retry', 'sqe-manual-quarantine',
 ];
 const sqeProofCountOracle = {
   'happy-path': 3, 'human-wait': 0, 'human-wait-oss': 0, 'debug-failure': 0, 'review-failure': 0,
@@ -124,6 +133,15 @@ const checkpointOracle = {
   'routing-candidate': ['confirmed', 'changed', 'blocked'],
   'routing-replan': ['rejected', 'rerouted', 'stale', 'replanned'],
   'routing-metadata': ['exempt', 'rejected', 'retried'],
+  'sqe-manual-pass': ['waiting', 'rejected', 'submitted', 'reported', 'judged'],
+  'sqe-manual-fail': ['submitted', 'reported', 'judged', 'rerouted'],
+  'sqe-incomplete': ['collected', 'reported', 'blocked'],
+  'sqe-parser-error': ['collected', 'reported', 'blocked'],
+  'sqe-identity-mismatch': ['collected', 'reported', 'blocked'],
+  'sqe-manual-retry': ['waiting', 'submitted', 'backoff', 'retried', 'waiting-two', 'stale', 'submitted-two', 'judged'],
+  'sqe-report-retry': ['reported', 'backoff', 'retried', 'stale', 'reported-two'],
+  'sqe-judgment-retry': ['judged', 'backoff', 'retried', 'stale', 'judged-two'],
+  'sqe-manual-quarantine': ['waiting', 'quarantined', 'blocked'],
 };
 
 // Independent fixed final-state oracle; it intentionally does not derive route
@@ -170,6 +188,15 @@ const finalOracle = {
   'routing-candidate': { current_step: 'END', status: 'COMPLETED', cycle: 1, publication_count: 1, routing: { candidate_fingerprint: 'mock:candidate:B' }, gate_dispositions: ['PASS', 'PASS', 'PASS', 'PASS'] },
   'routing-replan': { current_step: 'P06', status: 'RUNNING', cycle: 2, rework_count: 1, publication_count: 0, routing: { plan_version: 'mock:routing-replan:plan:c2', confirmed: true } },
   'routing-metadata': { current_step: 'END', status: 'COMPLETED', cycle: 1, rework_count: 1, x02Attempt: 2, x03Attempt: 2, publication_count: 1, gate_dispositions: ['EXEMPT', 'EXEMPT', 'EXEMPT', 'EXEMPT'] },
+  'sqe-manual-pass': { current_step: 'END', status: 'COMPLETED', cycle: 1, publication_count: 1, sqe_mode: 'manual', verdict: 'PASS', complete: true },
+  'sqe-manual-fail': { current_step: 'P07', status: 'RUNNING', cycle: 2, rework_count: 1, publication_count: 0 },
+  'sqe-incomplete': { current_step: 'P24', status: 'RUNNING', cycle: 1, publication_count: 0, verdict: 'INCONCLUSIVE', complete: false },
+  'sqe-parser-error': { current_step: 'P24', status: 'RUNNING', cycle: 1, publication_count: 0, verdict: 'ERROR', complete: false },
+  'sqe-identity-mismatch': { current_step: 'P24', status: 'RUNNING', cycle: 1, publication_count: 0, verdict: 'INCONCLUSIVE', complete: false },
+  'sqe-manual-retry': { current_step: 'END', status: 'COMPLETED', cycle: 1, publication_count: 1, sqe_mode: 'manual', p22Attempt: 2, verdict: 'PASS', complete: true },
+  'sqe-report-retry': { current_step: 'END', status: 'COMPLETED', cycle: 1, publication_count: 1, p23Attempt: 2, verdict: 'PASS', complete: true },
+  'sqe-judgment-retry': { current_step: 'END', status: 'COMPLETED', cycle: 1, publication_count: 1, p24Attempt: 2, verdict: 'PASS', complete: true },
+  'sqe-manual-quarantine': { current_step: 'P22', status: 'RECONCILING', cycle: 1, publication_count: 0, quarantined: true, sqe_result: null },
 };
 
 const routingReuseScope = ['P03', 'P04', 'P05', 'P06', 'P07', 'P08', 'P09', 'P10', 'P11', 'P12'];
@@ -275,6 +302,14 @@ function assertExpectedEnd(result, expected, scenarioId) {
     else assert.equal(result.no_change, expected.no_change, scenarioId);
   }
   if (expected.gate_dispositions !== undefined) assert.deepEqual(result.release.manifest?.gate_dispositions, expected.gate_dispositions, scenarioId);
+  if (expected.sqe_mode !== undefined) assert.equal(result.steps.P22.sqe_execution_mode, expected.sqe_mode, scenarioId);
+  if (Object.hasOwn(expected, 'verdict')) assert.equal(result.steps.P24.gate_verdict, expected.verdict, scenarioId);
+  if (Object.hasOwn(expected, 'complete')) assert.equal(result.steps.P24.gate_complete, expected.complete, scenarioId);
+  if (expected.p22Attempt !== undefined) assert.equal(result.steps.P22.attempt, expected.p22Attempt, scenarioId);
+  if (expected.p23Attempt !== undefined) assert.equal(result.steps.P23.attempt, expected.p23Attempt, scenarioId);
+  if (expected.p24Attempt !== undefined) assert.equal(result.steps.P24.attempt, expected.p24Attempt, scenarioId);
+  if (Object.hasOwn(expected, 'sqe_result')) assert.equal(result.steps.P22.sqe_result ?? null, expected.sqe_result, scenarioId);
+  if (expected.quarantined !== undefined) assert.equal(result.device?.quarantined, expected.quarantined, scenarioId);
   if (expected.routing !== undefined) {
     const routing = expected.routing;
     if (routing.profile_kind !== undefined) assert.equal(result.route_plan.context?.profile_kind, routing.profile_kind, `${scenarioId}/profile`);
@@ -332,8 +367,8 @@ test('fixed 41-scenario mock catalog inventory, frozen values and checkpoint IDs
   const originalWorkflow = structuredClone(workflow);
   const originalContract = structuredClone(stateContract);
   const catalog = createScenarioCatalog(workflow, stateContract);
-  assert.deepEqual(catalog.map(item => item.id).sort(), [...expectedScenarioIds].sort());
-  assert.equal(catalog.length, 41);
+  assert.deepEqual(catalog.map(item => item.id), expectedScenarioIds, 'the original 41 ordered scenarios remain the unchanged prefix before the nine appended cases');
+  assert.equal(catalog.length, 50);
   assert.deepEqual(workflow, originalWorkflow);
   assert.deepEqual(stateContract, originalContract);
   assert.ok(deepFrozen(catalog), 'catalog, scenarios, events, payloads and checkpoints are deeply frozen');
@@ -384,9 +419,9 @@ test('fixed 41-scenario mock catalog inventory, frozen values and checkpoint IDs
   assert.equal(sqeBaseline.scenarios.length, 41);
   const baseline41 = new Map(sqeBaseline.scenarios.map(item => [item.id, item]));
   assert.equal(baseline41.size, 41);
-  assert.deepEqual(Object.keys(sqeProofCountOracle).sort(), expectedScenarioIds.slice(0, 41).sort(),
-    'literal insertion-count oracle covers every migrated catalog scenario exactly once');
-  for (const scenario of catalog) {
+  assert.deepEqual(Object.keys(sqeProofCountOracle).sort(), migratedScenarioIds.sort(),
+    'literal insertion-count oracle covers only the 41 migrated baseline scenarios');
+  for (const scenario of catalog.slice(0, 41)) {
     const baseline = baseline41.get(scenario.id);
     assert.ok(baseline, `${scenario.id} exists in approved pre-SQE baseline`);
     const normalized = originalCatalogView(scenario);
@@ -447,6 +482,38 @@ test('fixed 41-scenario mock catalog inventory, frozen values and checkpoint IDs
       assert.equal(row.applied, true, `${scenario.id}/${event.type} is current usable evidence, not stale/inactive residue`);
     }
   }
+  for (const scenario of catalog.slice(41)) {
+    assert.ok(sqeUiScenarioIds.includes(scenario.id), `${scenario.id} belongs to the nine-case SQE UI extension`);
+    assert.ok(!baseline41.has(scenario.id), `${scenario.id} is not misrepresented as an original-41 baseline fixture`);
+    const authored = scenario.events.filter(event => event.source_id === 'mock:sqe-ui');
+    assert.ok(authored.length > 0, `${scenario.id} has explicit new SQE UI events`);
+    assert.ok(authored.every(event => event.mode === 'mock' && Number.isSafeInteger(event.source_seq) && event.source_seq > 0),
+      `${scenario.id} new-source events are mock and sequenced`);
+    assert.ok(authored.every((event, index) => index === 0 || authored[index - 1].source_seq < event.source_seq),
+      `${scenario.id} new-source sequence increases strictly`);
+    for (const [index, event] of authored.entries()) {
+      assert.equal(event.source_seq, index + 1, `${scenario.id} fixed SQE UI source sequence`);
+      assert.equal(event.event_id, `mock:${scenario.id}:ui:e${index + 1}`, `${scenario.id} fixed SQE UI event ID`);
+    }
+  }
+  assert.equal(sqeUiBaseline.kind, 'immutable_pre_sqe_ui_catalog_baseline');
+  assert.equal(sqeUiBaseline.source_commit, '2d6319f');
+  assert.equal(sqeUiBaseline.scenario_count, 41);
+  assert.equal(createHash('sha256').update(sqeUiBaselineText).digest('hex'),
+    '0716157c37e7fa97a76e007f1c16f114131b86d1663f1ac10eef89111644aa4a',
+    'the approved immutable 2d6319f 41-scenario registry stays pinned');
+  const uiBaseline41 = new Map(sqeUiBaseline.scenarios.map(item => [item.id, item]));
+  assert.equal(uiBaseline41.size, 41);
+  for (const scenario of catalog.slice(0, 41)) {
+    const baseline = uiBaseline41.get(scenario.id);
+    assert.ok(baseline, `${scenario.id} belongs to the immutable pre-UI 41 baseline`);
+    assert.equal(createHash('sha256').update(JSON.stringify(scenario.events)).digest('hex'), baseline.events_sha256,
+      `${scenario.id} raw event fixture exactly matches commit 2d6319f without SQE normalization`);
+    assert.deepEqual(scenario.checkpoints, baseline.checkpoints,
+      `${scenario.id} raw checkpoint list/cursors exactly match commit 2d6319f`);
+    assert.equal(createHash('sha256').update(JSON.stringify(scenario.checkpoints)).digest('hex'), baseline.checkpoints_sha256,
+      `${scenario.id} raw checkpoint SHA matches commit 2d6319f`);
+  }
   assert.deepEqual(workflow, originalWorkflow, 'catalog builder did not mutate workflow input');
   assert.deepEqual(stateContract, originalContract, 'catalog builder did not mutate state contract input');
 });
@@ -483,7 +550,7 @@ test('every checkpoint deterministically replays exactly its event prefix and le
   }
 });
 
-test('all 41 catalog endpoints and exception checkpoints match independent literal state oracle', () => {
+test('all 50 catalog endpoints and exception checkpoints match independent literal state oracle', () => {
   const catalog = createScenarioCatalog(workflow, stateContract);
   const byId = new Map(catalog.map(item => [item.id, item]));
   const expected = {
@@ -585,6 +652,174 @@ test('all 41 catalog endpoints and exception checkpoints match independent liter
   assert.equal(firstQuestion.spec_review.question_id, 'mock:question:spec-question-repeat:q1');
   assert.equal(firstQuestion.spec_review.resolved_requirements_version, 'mock:requirements:v2');
   assert.ok(firstQuestion.spec_review.resolution_evidence_id);
+});
+
+test('nine SQE UI scenarios satisfy literal checkpoints, typed proof bindings, stale-attempt guards and archive rules', () => {
+  const catalog = createScenarioCatalog(workflow, stateContract);
+  const byId = new Map(catalog.map(item => [item.id, item]));
+  const oracle = {
+    'sqe-manual-pass': {
+      waiting: { current: 'P22', status: 'WAITING_HUMAN', step: 'WAITING_HUMAN', attempt: 1, mode: 'manual', verdict: null },
+      rejected: { current: 'P22', status: 'WAITING_HUMAN', step: 'WAITING_HUMAN', attempt: 1, mode: 'manual', rejected: true },
+      submitted: { current: 'P22', status: 'RUNNING', step: 'READY', attempt: 1, mode: 'manual', verdict: null, result: true },
+      reported: { current: 'P24', status: 'RUNNING', p22: 'SUCCEEDED', p23: 'SUCCEEDED', p24: 'PENDING', report: true },
+      judged: { current: 'X02', status: 'RUNNING', p22: 'SUCCEEDED', p23: 'SUCCEEDED', p24: 'SUCCEEDED', verdict: 'PASS', complete: true },
+    },
+      'sqe-manual-fail': {
+      submitted: { current: 'P22', status: 'RUNNING', step: 'READY', attempt: 1, mode: 'manual', verdict: null, result: true },
+      reported: { current: 'P24', status: 'RUNNING', p22: 'SUCCEEDED', p23: 'SUCCEEDED', p24: 'PENDING', report: true },
+      judged: { current: 'P24', status: 'RUNNING', cycle: 1, p22: 'SUCCEEDED', p23: 'SUCCEEDED', p24: 'RUNNING', verdict: 'FAIL', complete: true },
+      rerouted: { current: 'P07', status: 'RUNNING', cycle: 2, rework: 1, p22: 'PENDING', p24: 'PENDING', history: true },
+    },
+    'sqe-incomplete': {
+      collected: { current: 'P22', status: 'RUNNING', p22: 'RUNNING', p23: 'PENDING', result: true, verdict: null },
+      reported: { current: 'P24', status: 'RUNNING', p22: 'SUCCEEDED', p23: 'SUCCEEDED', p24: 'PENDING', verdict: null },
+      blocked: { current: 'P24', status: 'RUNNING', p22: 'SUCCEEDED', p23: 'SUCCEEDED', p24: 'RUNNING', verdict: 'INCONCLUSIVE', complete: false },
+    },
+    'sqe-parser-error': {
+      collected: { current: 'P22', status: 'RUNNING', p22: 'RUNNING', p23: 'PENDING', result: true, verdict: null },
+      reported: { current: 'P24', status: 'RUNNING', p22: 'SUCCEEDED', p23: 'SUCCEEDED', p24: 'PENDING', verdict: null },
+      blocked: { current: 'P24', status: 'RUNNING', p22: 'SUCCEEDED', p23: 'SUCCEEDED', p24: 'RUNNING', verdict: 'ERROR', complete: false },
+    },
+    'sqe-identity-mismatch': {
+      collected: { current: 'P22', status: 'RUNNING', p22: 'RUNNING', p23: 'PENDING', result: true, verdict: null },
+      reported: { current: 'P24', status: 'RUNNING', p22: 'SUCCEEDED', p23: 'SUCCEEDED', p24: 'PENDING', verdict: null },
+      blocked: { current: 'P24', status: 'RUNNING', p22: 'SUCCEEDED', p23: 'SUCCEEDED', p24: 'RUNNING', verdict: 'INCONCLUSIVE', complete: false },
+    },
+    'sqe-manual-retry': {
+      waiting: { current: 'P22', status: 'WAITING_HUMAN', step: 'WAITING_HUMAN', attempt: 1, mode: 'manual' },
+      submitted: { current: 'P22', status: 'RUNNING', step: 'READY', attempt: 1, mode: 'manual', result: true },
+      backoff: { current: 'P22', status: 'RUNNING', step: 'WAITING_RETRY', attempt: 1, infrastructure: true },
+      retried: { current: 'P22', status: 'RUNNING', step: 'READY', attempt: 2, mode: null, result: false, history: true },
+      'waiting-two': { current: 'P22', status: 'WAITING_HUMAN', step: 'WAITING_HUMAN', attempt: 2, mode: 'manual' },
+      stale: { current: 'P22', status: 'WAITING_HUMAN', step: 'WAITING_HUMAN', attempt: 2, rejected: true },
+      'submitted-two': { current: 'P22', status: 'RUNNING', step: 'READY', attempt: 2, mode: 'manual', result: true },
+      judged: { current: 'X02', status: 'RUNNING', p22: 'SUCCEEDED', verdict: 'PASS', complete: true },
+    },
+    'sqe-report-retry': {
+      reported: { current: 'P23', status: 'RUNNING', p23: 'RUNNING', attempt: 1, report: true },
+      backoff: { current: 'P23', status: 'RUNNING', p23: 'WAITING_RETRY', attempt: 1, report: true },
+      retried: { current: 'P23', status: 'RUNNING', p23: 'READY', attempt: 2, report: false, history: true },
+      stale: { current: 'P23', status: 'RUNNING', p23: 'RUNNING', attempt: 2, rejected: true, report: false },
+      'reported-two': { current: 'P23', status: 'RUNNING', p23: 'RUNNING', attempt: 2, report: true },
+    },
+    'sqe-judgment-retry': {
+      judged: { current: 'P24', status: 'RUNNING', p24: 'RUNNING', attempt: 1, verdict: 'PASS' },
+      backoff: { current: 'P24', status: 'RUNNING', p24: 'WAITING_RETRY', attempt: 1, verdict: 'PASS' },
+      retried: { current: 'P24', status: 'RUNNING', p24: 'READY', attempt: 2, verdict: null, history: true },
+      stale: { current: 'P24', status: 'RUNNING', p24: 'RUNNING', attempt: 2, rejected: true, verdict: null },
+      'judged-two': { current: 'P24', status: 'RUNNING', p24: 'RUNNING', attempt: 2, verdict: 'PASS', complete: true },
+    },
+    'sqe-manual-quarantine': {
+      waiting: { current: 'P22', status: 'WAITING_HUMAN', step: 'WAITING_HUMAN', attempt: 1, mode: 'manual' },
+      quarantined: { current: 'P22', status: 'RECONCILING', step: 'WAITING_HUMAN', quarantined: true, result: false },
+      blocked: { current: 'P22', status: 'RECONCILING', step: 'WAITING_HUMAN', quarantined: true, result: false, rejected: true },
+    },
+  };
+  assert.deepEqual(Object.keys(oracle), sqeUiScenarioIds, 'checkpoint oracle covers each new SQE scenario exactly once');
+  const at = (scenarioId, checkpointId) => {
+    const scenario = byId.get(scenarioId);
+    assert.ok(scenario, `${scenarioId} is present`);
+    const point = scenario.checkpoints.find(item => item.id === checkpointId);
+    assert.ok(point, `${scenarioId}/${checkpointId} is present`);
+    const before = structuredClone(scenario);
+    const result = replayScenario(scenario, workflow, stateContract, point.cursor);
+    assert.deepEqual(scenario, before, `${scenarioId}/${checkpointId} leaves fixture immutable`);
+    assert.equal(result.real_publish_allowed, false, `${scenarioId}/${checkpointId} never authorizes real publish`);
+    return result;
+  };
+  for (const [scenarioId, points] of Object.entries(oracle)) {
+    for (const [checkpointId, expected] of Object.entries(points)) {
+      const result = at(scenarioId, checkpointId);
+      const label = `${scenarioId}/${checkpointId}`;
+      assert.equal(result.current_step, expected.current, `${label}/current`);
+      assert.equal(result.status, expected.status, `${label}/status`);
+      if (expected.cycle !== undefined) assert.equal(result.cycle, expected.cycle, `${label}/cycle`);
+      if (expected.rework !== undefined) assert.equal(result.rework_count, expected.rework, `${label}/rework`);
+      for (const key of ['p22', 'p23', 'p24']) if (expected[key] !== undefined) {
+        assert.equal(result.steps[key.toUpperCase()].state, expected[key], `${label}/${key} state`);
+      }
+      if (expected.step !== undefined) assert.equal(result.steps.P22.state, expected.step, `${label}/P22 state`);
+      if (expected.attempt !== undefined) assert.equal(result.steps[expected.p23 !== undefined ? 'P23' : expected.p24 !== undefined ? 'P24' : 'P22'].attempt, expected.attempt, `${label}/attempt`);
+      if (expected.mode !== undefined) assert.equal(result.steps.P22.sqe_execution_mode ?? null, expected.mode, `${label}/execution mode`);
+      if (Object.hasOwn(expected, 'verdict')) assert.equal(result.steps.P24.gate_verdict ?? null, expected.verdict, `${label}/verdict`);
+      if (Object.hasOwn(expected, 'complete')) assert.equal(result.steps.P24.gate_complete ?? null, expected.complete, `${label}/complete`);
+      if (Object.hasOwn(expected, 'result')) assert.equal(Boolean(result.steps.P22.sqe_result), expected.result, `${label}/result presence`);
+      if (Object.hasOwn(expected, 'report')) assert.equal(Boolean(result.steps.P23.sqe_report), expected.report, `${label}/report presence`);
+      if (Object.hasOwn(expected, 'quarantined')) assert.equal(result.device?.quarantined, expected.quarantined, `${label}/quarantine`);
+      if (expected.history) assert.ok(result.history.some(row => ['attempt', 'cycle'].includes(row.kind)), `${label}/archived attempt`);
+      if (expected.rejected) {
+        const rejected = result.timeline.at(-1);
+        assert.equal(rejected?.applied, false, `${label}/rejection applied=false`);
+        const reasons = {
+          'sqe-manual-pass/rejected': 'invalid_manual_submission',
+          'sqe-manual-retry/stale': 'invalid_sqe_result',
+          'sqe-report-retry/stale': 'stale_execution',
+          'sqe-judgment-retry/stale': 'stale_execution',
+          'sqe-manual-quarantine/blocked': 'reconciliation_required',
+        };
+        const reason = reasons[label] ?? (['sqe-incomplete', 'sqe-parser-error', 'sqe-identity-mismatch'].includes(scenarioId)
+          ? 'gate_pass_required' : undefined);
+        if (reason) assert.equal(rejected.reason, reason, `${label}/fixed rejection reason`);
+        else assert.ok(rejected?.reason, `${label}/rejection reason present`);
+      }
+    }
+  }
+
+  const catalogById = new Map(catalog.map(item => [item.id, item]));
+  const manualReady = at('sqe-manual-pass', 'submitted');
+  assert.equal(manualReady.steps.P22.sqe_result.execution_status, 'completed');
+  assert.equal(manualReady.steps.P22.sqe_execution_mode, 'manual');
+  assert.equal(manualReady.steps.P22.state, 'READY');
+  assert.equal(manualReady.steps.P24.gate_verdict, null, 'manual bundle acceptance is not a judgment');
+  assert.equal(manualReady.steps.P23.sqe_report, null, 'manual bundle acceptance is not a report');
+  const manualRejected = at('sqe-manual-pass', 'rejected');
+  assert.equal(manualRejected.timeline.at(-1).applied, false, 'wrong manual task is rejected');
+  const incomplete = at('sqe-incomplete', 'blocked');
+  assert.ok(!incomplete.steps.P22.sqe_result.cases.some(row => row.case_id === 'mock:sqe:case:function'), 'incomplete fixture actually omits a mandatory case');
+  assert.equal(incomplete.steps.P24.gate_complete, false);
+  const parserError = at('sqe-parser-error', 'blocked');
+  assert.equal(parserError.steps.P22.sqe_result.parser_status, 'error');
+  assert.equal(parserError.steps.P22.sqe_result.exit_code, null);
+  const identityMismatch = at('sqe-identity-mismatch', 'blocked');
+  assert.notEqual(identityMismatch.steps.P22.sqe_result.observed_image_identity, identityMismatch.steps.P22.sqe_context.expected_image_identity,
+    'identity-mismatch fixture preserves a distinct observed boot identity');
+
+  const manualRetry = at('sqe-manual-retry', 'end');
+  assert.equal(manualRetry.steps.P22.attempt, 2);
+  assert.equal(manualRetry.steps.P22.sqe_execution_mode, 'manual');
+  assert.ok(manualRetry.steps.P22.sqe_manual_task.requested_at_ms >= 15000, 'new human request is after retry eligibility');
+  assert.ok(manualRetry.steps.P22.sqe_result.started_at_ms >= manualRetry.steps.P22.sqe_manual_task.requested_at_ms,
+    'new manual bundle cannot predate its attempt-2 request');
+  assert.ok(manualRetry.steps.P22.sqe_result.finished_at_ms >= manualRetry.steps.P22.sqe_result.started_at_ms,
+    'attempt-2 finish follows start');
+  assert.ok(manualRetry.history.some(row => row.kind === 'attempt' && row.step_id === 'P22' && row.step.attempt === 1
+    && row.step.sqe_result?.execution_status === 'infrastructure_error'), 'a1 manual infra bundle is archived');
+  const reportRetry = at('sqe-report-retry', 'stale');
+  const reportFixture = catalogById.get('sqe-report-retry');
+  const reportStaleCursor = reportFixture.checkpoints.find(point => point.id === 'stale').cursor;
+  const authoredReports = reportFixture.events.slice(0, reportStaleCursor)
+    .filter(event => event.source_id === 'mock:sqe-ui' && event.type === 'sqe_report');
+  assert.equal(authoredReports.length, 2);
+  assert.deepEqual(authoredReports[1].payload, authoredReports[0].payload, 'retry replays the actual a1 report payload');
+  assert.equal(authoredReports[1].attempt, 1, 'stale report keeps original a1 outer attempt coordinate');
+  assert.equal(authoredReports[1].execution_id, 'mock:P23:c1:a1', 'stale report keeps original a1 execution coordinate');
+  assert.equal(reportRetry.timeline.at(-1).applied, false, 'stale a1 report payload is rejected in a2');
+  assert.equal(reportRetry.steps.P23.sqe_report, null, 'rejected old report did not become current a2 report');
+  const judgmentRetry = at('sqe-judgment-retry', 'stale');
+  const measurementFixture = catalogById.get('sqe-judgment-retry');
+  const measurementStaleCursor = measurementFixture.checkpoints.find(point => point.id === 'stale').cursor;
+  const measurementEvents = measurementFixture.events.slice(0, measurementStaleCursor)
+    .filter(event => event.source_id === 'mock:sqe-ui' && event.type === 'measurement');
+  assert.equal(measurementEvents.length, 2);
+  assert.deepEqual(measurementEvents[1].payload, measurementEvents[0].payload, 'retry replays the actual a1 measurement payload');
+  assert.equal(measurementEvents[1].attempt, 1, 'stale measurement keeps original a1 outer attempt coordinate');
+  assert.equal(measurementEvents[1].execution_id, 'mock:P24:c1:a1', 'stale measurement keeps original a1 execution coordinate');
+  assert.equal(judgmentRetry.timeline.at(-1).applied, false, 'stale a1 measurement is rejected in a2');
+  assert.equal(judgmentRetry.steps.P24.gate_verdict, null, 'rejected old measurement does not populate the a2 gate');
+  const quarantined = at('sqe-manual-quarantine', 'blocked');
+  assert.equal(quarantined.device.quarantined, true);
+  assert.equal(quarantined.steps.P22.sqe_result, null, 'quarantine blocks human submission from becoming current result');
 });
 
 test('all nine routing catalog cases satisfy the independent fixed checkpoint oracle', () => {

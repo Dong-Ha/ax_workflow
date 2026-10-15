@@ -1,0 +1,432 @@
+{
+  "kind": "ifpmic-v2-replay-standalone-offline-browser",
+  "route": "/ifpmic.html",
+  "checks": [
+    {
+      "name": "design view is the default and replay view requires explicit selection",
+      "verdict": "pass"
+    },
+    {
+      "name": "catalog exposes all 50 frozen scenarios and starts each at cursor zero",
+      "verdict": "pass"
+    },
+    {
+      "name": "all 50 scenarios reach their fixed endpoint through the end-observation control",
+      "verdict": "pass"
+    },
+    {
+      "name": "routing scenarios expose reuse, exemption, terminal, candidate and replan authority checkpoints",
+      "verdict": "pass"
+    },
+    {
+      "name": "scenario change clears display filters and resets selection and cursor",
+      "verdict": "pass"
+    },
+    {
+      "name": "previous/next/first/last and checkpoint selection move stored prefixes only",
+      "verdict": "pass"
+    },
+    {
+      "name": "observation panel separates mock job, step, agent and gate data and opens current node",
+      "verdict": "pass"
+    },
+    {
+      "name": "metadata recovery and notes checkpoints keep current approval and publication observability",
+      "verdict": "pass"
+    },
+    {
+      "name": "retry, cycle and device telemetry are distinct and never expose allocatable authority",
+      "verdict": "pass"
+    },
+    {
+      "name": "current-stage navigation reveals, focuses and scrolls a node hidden by active filters",
+      "verdict": "pass"
+    },
+    {
+      "name": "question panels distinguish durable answer, current-attempt review and archived review history",
+      "verdict": "pass"
+    },
+    {
+      "name": "remote panel shows stale-query rejection, one found receipt and quarantine independently",
+      "verdict": "pass"
+    },
+    {
+      "name": "SQE manual, report and judgment checkpoints remain separate across retries and history",
+      "verdict": "pass"
+    },
+    {
+      "name": "question review-blocked checkpoint remains legible at 1440px and 375px",
+      "verdict": "pass"
+    },
+    {
+      "name": "1440px and 375px layouts expose replay controls and details without horizontal page overflow",
+      "verdict": "pass"
+    },
+    {
+      "name": "browser replay makes no API writes, external requests or runtime errors",
+      "verdict": "pass"
+    }
+  ],
+  "unexpectedExternalRequests": [],
+  "browserWriteRequests": [],
+  "captureAdjustments": [],
+  "geometryMethod": "Target full bounding box must fit the viewport and each overflow-clipping ancestor. The 4x4 hit grid counts only the target or its descendants; hits on ancestors are rejected.",
+  "sqeCaptureGeometry": [
+    {
+      "name": "manual-waiting",
+      "width": 1440,
+      "height": 1000,
+      "target": "ifpmic-sqe-step-detail",
+      "rect": {
+        "left": 1121,
+        "top": 35.734375,
+        "right": 1375,
+        "bottom": 964.515625,
+        "width": 254,
+        "height": 928.78125
+      },
+      "hit_grid": {
+        "samples": 16,
+        "inside_target_or_descendant": 16
+      },
+      "fixed_sticky_overlaps": [],
+      "overflow_clipping_ancestors": []
+    },
+    {
+      "name": "manual-submitted",
+      "width": 375,
+      "height": 1800,
+      "target": "ifpmic-sqe-step-detail",
+      "rect": {
+        "left": 42,
+        "top": 152.34375,
+        "right": 333,
+        "bottom": 1647.375,
+        "width": 291,
+        "height": 1495.03125
+      },
+      "hit_grid": {
+        "samples": 16,
+        "inside_target_or_descendant": 16
+      },
+      "fixed_sticky_overlaps": [],
+      "overflow_clipping_ancestors": []
+    },
+    {
+      "name": "manual-submitted-target",
+      "width": 375,
+      "height": 1800,
+      "target": "SQE 시험 대상",
+      "rect": {
+        "left": 42,
+        "top": 726.21875,
+        "right": 333,
+        "bottom": 1073.578125,
+        "width": 291,
+        "height": 347.359375
+      },
+      "hit_grid": {
+        "samples": 16,
+        "inside_target_or_descendant": 16
+      },
+      "fixed_sticky_overlaps": [],
+      "overflow_clipping_ancestors": []
+    },
+    {
+      "name": "manual-submitted-assignment",
+      "width": 375,
+      "height": 1800,
+      "target": "SQE 수동 배정",
+      "rect": {
+        "left": 42,
+        "top": 784.578125,
+        "right": 333,
+        "bottom": 1014.96875,
+        "width": 291,
+        "height": 230.390625
+      },
+      "hit_grid": {
+        "samples": 16,
+        "inside_target_or_descendant": 16
+      },
+      "fixed_sticky_overlaps": [],
+      "overflow_clipping_ancestors": []
+    },
+    {
+      "name": "manual-submitted-result",
+      "width": 375,
+      "height": 1800,
+      "target": "SQE 수집 결과",
+      "rect": {
+        "left": 42,
+        "top": 559.96875,
+        "right": 333,
+        "bottom": 1239.28125,
+        "width": 291,
+        "height": 679.3125
+      },
+      "hit_grid": {
+        "samples": 16,
+        "inside_target_or_descendant": 16
+      },
+      "fixed_sticky_overlaps": [],
+      "overflow_clipping_ancestors": []
+    },
+    {
+      "name": "manual-judged",
+      "width": 1440,
+      "height": 1000,
+      "target": "ifpmic-sqe-step-detail",
+      "rect": {
+        "left": 1121,
+        "top": 309.140625,
+        "right": 1375,
+        "bottom": 689.859375,
+        "width": 254,
+        "height": 380.71875
+      },
+      "hit_grid": {
+        "samples": 16,
+        "inside_target_or_descendant": 16
+      },
+      "fixed_sticky_overlaps": [],
+      "overflow_clipping_ancestors": []
+    },
+    {
+      "name": "manual-fail-rerouted-history",
+      "width": 1440,
+      "height": 1000,
+      "target": "ifpmic-sqe-history",
+      "rect": {
+        "left": 757,
+        "top": 346.265625,
+        "right": 1374,
+        "bottom": 654.15625,
+        "width": 617,
+        "height": 307.890625
+      },
+      "hit_grid": {
+        "samples": 16,
+        "inside_target_or_descendant": 16
+      },
+      "fixed_sticky_overlaps": [],
+      "overflow_clipping_ancestors": []
+    },
+    {
+      "name": "incomplete-blocked",
+      "width": 1440,
+      "height": 1000,
+      "target": "SQE 수집 결과",
+      "rect": {
+        "left": 1121,
+        "top": 114.15625,
+        "right": 1375,
+        "bottom": 886.4375,
+        "width": 254,
+        "height": 772.28125
+      },
+      "hit_grid": {
+        "samples": 16,
+        "inside_target_or_descendant": 16
+      },
+      "fixed_sticky_overlaps": [],
+      "overflow_clipping_ancestors": []
+    },
+    {
+      "name": "manual-retry-waiting-two",
+      "width": 375,
+      "height": 1800,
+      "target": "SQE 수동 배정",
+      "rect": {
+        "left": 42,
+        "top": 806.21875,
+        "right": 333,
+        "bottom": 1036.609375,
+        "width": 291,
+        "height": 230.390625
+      },
+      "hit_grid": {
+        "samples": 16,
+        "inside_target_or_descendant": 16
+      },
+      "fixed_sticky_overlaps": [],
+      "overflow_clipping_ancestors": []
+    },
+    {
+      "name": "manual-retry-compact-history-negative-diagnostic",
+      "width": 375,
+      "target": "SQE 수집 결과",
+      "expected_clipped": true,
+      "overflow_clipping_ancestors": [
+        {
+          "selector": "#ifpmic-replay-history",
+          "overflowY": "auto",
+          "clip_top": -1330.53125,
+          "clip_bottom": -1130.53125,
+          "target_top": -421.015625,
+          "target_bottom": 281.890625,
+          "fitsY": false
+        }
+      ]
+    },
+    {
+      "name": "manual-retry-a1-history",
+      "width": 375,
+      "height": 1800,
+      "target": "SQE 수동 배정",
+      "rect": {
+        "left": 56,
+        "top": 784.59375,
+        "right": 337,
+        "bottom": 1014.984375,
+        "width": 281,
+        "height": 230.390625
+      },
+      "hit_grid": {
+        "samples": 16,
+        "inside_target_or_descendant": 16
+      },
+      "fixed_sticky_overlaps": [],
+      "overflow_clipping_ancestors": []
+    },
+    {
+      "name": "manual-retry-a1-result-history",
+      "width": 375,
+      "height": 1800,
+      "target": "SQE 수집 결과",
+      "rect": {
+        "left": 56,
+        "top": 548.984375,
+        "right": 337,
+        "bottom": 1251.890625,
+        "width": 281,
+        "height": 702.90625
+      },
+      "hit_grid": {
+        "samples": 16,
+        "inside_target_or_descendant": 16
+      },
+      "fixed_sticky_overlaps": [],
+      "overflow_clipping_ancestors": []
+    },
+    {
+      "name": "report-retry-current",
+      "width": 1440,
+      "height": 1000,
+      "target": "ifpmic-sqe-step-detail",
+      "rect": {
+        "left": 1121,
+        "top": 218.78125,
+        "right": 1375,
+        "bottom": 780.703125,
+        "width": 254,
+        "height": 561.921875
+      },
+      "hit_grid": {
+        "samples": 16,
+        "inside_target_or_descendant": 16
+      },
+      "fixed_sticky_overlaps": [],
+      "overflow_clipping_ancestors": []
+    },
+    {
+      "name": "judgment-retry-stale-history",
+      "width": 1440,
+      "height": 1000,
+      "target": "ifpmic-sqe-step-detail",
+      "rect": {
+        "left": 1121,
+        "top": 327.78125,
+        "right": 1375,
+        "bottom": 671.3125,
+        "width": 254,
+        "height": 343.53125
+      },
+      "hit_grid": {
+        "samples": 16,
+        "inside_target_or_descendant": 16
+      },
+      "fixed_sticky_overlaps": [],
+      "overflow_clipping_ancestors": []
+    },
+    {
+      "name": "judgment-retry-a1-history",
+      "width": 1440,
+      "height": 1000,
+      "target": "ifpmic-sqe-history",
+      "rect": {
+        "left": 84,
+        "top": 345.640625,
+        "right": 701,
+        "bottom": 653.53125,
+        "width": 617,
+        "height": 307.890625
+      },
+      "hit_grid": {
+        "samples": 16,
+        "inside_target_or_descendant": 16
+      },
+      "fixed_sticky_overlaps": [],
+      "overflow_clipping_ancestors": []
+    },
+    {
+      "name": "manual-quarantine-blocked",
+      "width": 1440,
+      "height": 1000,
+      "target": "ifpmic-sqe-step-detail",
+      "rect": {
+        "left": 1121,
+        "top": 26.734375,
+        "right": 1375,
+        "bottom": 974.109375,
+        "width": 254,
+        "height": 947.375
+      },
+      "hit_grid": {
+        "samples": 16,
+        "inside_target_or_descendant": 16
+      },
+      "fixed_sticky_overlaps": [],
+      "overflow_clipping_ancestors": []
+    }
+  ],
+  "apiRequests": [],
+  "pageErrors": [],
+  "consoleErrors": [],
+  "evidence": [
+    "workflow-artifacts/verification/V2/ui/standalone-routing-reuse-local-1440.png",
+    "workflow-artifacts/verification/V2/ui/standalone-routing-exempt-exempt-1440.png",
+    "workflow-artifacts/verification/V2/ui/standalone-routing-exempt-exempt-375.png",
+    "workflow-artifacts/verification/V2/ui/standalone-routing-no-change-closed-1440.png",
+    "workflow-artifacts/verification/V2/ui/standalone-routing-no-change-closed-375.png",
+    "workflow-artifacts/verification/V2/ui/standalone-routing-candidate-blocked-1440.png",
+    "workflow-artifacts/verification/V2/ui/standalone-routing-replan-replanned-1440.png",
+    "workflow-artifacts/verification/V2/ui/standalone-spec-question-repeat-end-desktop.png",
+    "workflow-artifacts/verification/V2/ui/standalone-remote-uncertainty-stale-desktop.png",
+    "workflow-artifacts/verification/V2/ui/standalone-remote-uncertainty-stale-mobile-375.png",
+    "workflow-artifacts/verification/V2/ui/standalone-remote-recovery-found-desktop.png",
+    "workflow-artifacts/verification/V2/ui/standalone-sqe-manual-waiting-1440.png",
+    "workflow-artifacts/verification/V2/ui/standalone-sqe-manual-submitted-375.png",
+    "workflow-artifacts/verification/V2/ui/standalone-sqe-manual-submitted-target-375.png",
+    "workflow-artifacts/verification/V2/ui/standalone-sqe-manual-submitted-assignment-375.png",
+    "workflow-artifacts/verification/V2/ui/standalone-sqe-manual-submitted-result-375.png",
+    "workflow-artifacts/verification/V2/ui/standalone-sqe-manual-judged-1440.png",
+    "workflow-artifacts/verification/V2/ui/standalone-sqe-manual-fail-rerouted-history-1440.png",
+    "workflow-artifacts/verification/V2/ui/standalone-sqe-incomplete-blocked-1440.png",
+    "workflow-artifacts/verification/V2/ui/standalone-sqe-manual-retry-waiting-two-375.png",
+    "workflow-artifacts/verification/V2/ui/standalone-sqe-manual-retry-a1-history-375.png",
+    "workflow-artifacts/verification/V2/ui/standalone-sqe-manual-retry-a1-result-history-375.png",
+    "workflow-artifacts/verification/V2/ui/standalone-sqe-report-retry-current-1440.png",
+    "workflow-artifacts/verification/V2/ui/standalone-sqe-judgment-retry-stale-history-1440.png",
+    "workflow-artifacts/verification/V2/ui/standalone-sqe-judgment-retry-a1-history-1440.png",
+    "workflow-artifacts/verification/V2/ui/standalone-sqe-manual-quarantine-blocked-1440.png",
+    "workflow-artifacts/verification/V2/ui/standalone-spec-question-retry-review-blocked-desktop.png",
+    "workflow-artifacts/verification/V2/ui/standalone-spec-question-retry-review-blocked-mobile-375.png",
+    "workflow-artifacts/verification/V2/ui/standalone-desktop.png",
+    "workflow-artifacts/verification/V2/ui/standalone-sam-failure-returned-desktop.png",
+    "workflow-artifacts/verification/V2/ui/standalone-metadata-completed-desktop.png",
+    "workflow-artifacts/verification/V2/ui/standalone-device-time-60000-desktop.png",
+    "workflow-artifacts/verification/V2/ui/standalone-device-time-60000-mobile-375.png"
+  ],
+  "verdict": "pass"
+}

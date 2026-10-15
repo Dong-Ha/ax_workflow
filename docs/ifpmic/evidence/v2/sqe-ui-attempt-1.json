@@ -1,0 +1,95 @@
+{
+  "kind": "sqe_ui_pre_gate_diagnostics",
+  "recorded_at": "2026-10-15T13:49:43.787121+00:00",
+  "scope": "Draft integration diagnostics before source freeze, not acceptance evidence",
+  "findings": [
+    {
+      "classification": "implementation fixture defect",
+      "finding": "Initial manual FAIL route used outcome=fail; original route contract requires business_fail. Smoke replay stayed FAILED atP24.",
+      "recovery": "Use original business_fail outcome; subsequent smoke reaches cycle2/P07/RUNNING with manual evidence in cycle1 history."
+    },
+    {
+      "classification": "TypeScript integration defect",
+      "finding": "First build rejected importing sqe-profile.mjs without declaration (TS7016/TS7006).",
+      "recovery": "Added literal readonly sqe-profile.d.mts; subsequent TypeScript/Vite build passed52modules."
+    },
+    {
+      "classification": "fixture/checkpoint plan mismatch",
+      "finding": "TC inventory found unplanned extra waiting/collected/reported/judged checkpoints on several new scenarios.",
+      "recovery": "Removed only unplanned checkpoint marks; retained actual protocol events and approved literal checkpoint lists."
+    },
+    {
+      "classification": "TC oracle clarification before browser acceptance",
+      "finding": "Current cycle2 SQE records reset after FAIL; P23 reported-two checkpoint is report accepted while P23 RUNNING, before step success. Task IDs are in selected detail; prior attempt references are in history.",
+      "recovery": "TC keeps current/history assertions distinct and literal planned boundaries; no product past-proof promotion."
+    },
+    {
+      "classification": "independent source review defect before freeze",
+      "finding": "Unconditional empty P24 SQE detail could appear on exempt or unrelated P24, despite no SQE execution.",
+      "recovery": "Require snapshot SQE association for empty/fresh P24 detail; historical records require their own proof. Reviewer reapproved and TC adds exemption/pending retry regression."
+    },
+    {
+      "classification": "actual UI history readability defect found by browser geometry",
+      "finding": "Long archived SQE result703px was clipped by existing200px history overflow container; full viewport bbox alone did not make text readable. Four-by-four hit test rejected clipped target.",
+      "diagnostic": "workflow-artifacts/verification/V2/ui/sqe-ui-diagnostics/standalone-attempt-5.json",
+      "recovery": "Add view-only history expand/collapse with accessible state and scenario-change reset; retain default compact history. TC expands before history geometry/capture and checks reset. No inspection criterion weakened."
+    },
+    {
+      "classification": "TC history reset expectation before final gate",
+      "finding": "A diagnostic asserted an expand button immediately after changing to cursor0, where history and its control are correctly absent.",
+      "recovery": "Assert no control at cursor0 and compact aria-expanded=false at the first checkpoint with history; rerun standalone16/16 andhost17/17 passed."
+    }
+  ],
+  "evidence_limit": "Early diagnostic terminal outputs were inspected but no separate full raw command logs retained. This summary does not substitute for frozen unit/build/browser/gate proof.",
+  "acceptance": "Final frozen candidate passed259 units and11 commands after TC geometry correction; see sqe-ui-review.json. Prior automated pass rejected by image review is preserved separately.",
+  "browser_diagnostic_reports": [
+    {
+      "path": "workflow-artifacts/verification/V2/ui/sqe-ui-diagnostics/host-attempt-8-pre-strict-hits.json",
+      "sha256": "09d80493bc9e17d57a10a15e04dc622151e322f0fc76aaf7015cbccc4bf0b9ce"
+    },
+    {
+      "path": "workflow-artifacts/verification/V2/ui/sqe-ui-diagnostics/host-attempt-9-pre-specific-clip.json",
+      "sha256": "86dfc678005ffbb2a65b2ee8313df0da7156331f10f6d044599154c7fb7769dd"
+    },
+    {
+      "path": "workflow-artifacts/verification/V2/ui/sqe-ui-diagnostics/standalone-attempt-1.json",
+      "sha256": "353af692757208210ca6392e71166eca04337a879056777be380bb3d6279d0dc"
+    },
+    {
+      "path": "workflow-artifacts/verification/V2/ui/sqe-ui-diagnostics/standalone-attempt-2.json",
+      "sha256": "16dd244ce41e837f6f6c5730020d99dea62d1e3980c9e1f2d5771dd3a8d4324b"
+    },
+    {
+      "path": "workflow-artifacts/verification/V2/ui/sqe-ui-diagnostics/standalone-attempt-3.json",
+      "sha256": "b2119b46131e088c4f19949e921735ab472e6a939046c04d9c1aea5404f5be61"
+    },
+    {
+      "path": "workflow-artifacts/verification/V2/ui/sqe-ui-diagnostics/standalone-attempt-4.json",
+      "sha256": "3f836029b5a3160602f020c5b52fc7144492cb99d36b89db7bed0fe6f178abec"
+    },
+    {
+      "path": "workflow-artifacts/verification/V2/ui/sqe-ui-diagnostics/standalone-attempt-5.json",
+      "sha256": "e8d27975350d1ac367ad00802f002ac00fdafd2662914727ca732d0e17bfae6f"
+    },
+    {
+      "path": "workflow-artifacts/verification/V2/ui/sqe-ui-diagnostics/standalone-attempt-6.json",
+      "sha256": "e8d27975350d1ac367ad00802f002ac00fdafd2662914727ca732d0e17bfae6f"
+    },
+    {
+      "path": "workflow-artifacts/verification/V2/ui/sqe-ui-diagnostics/standalone-attempt-7.json",
+      "sha256": "e9a7f43568064c38ec5550cac433e1c16797f4f07807163d4f590b51a9923e3b"
+    },
+    {
+      "path": "workflow-artifacts/verification/V2/ui/sqe-ui-diagnostics/standalone-attempt-7b.json",
+      "sha256": "e9a7f43568064c38ec5550cac433e1c16797f4f07807163d4f590b51a9923e3b"
+    },
+    {
+      "path": "workflow-artifacts/verification/V2/ui/sqe-ui-diagnostics/standalone-attempt-8-pre-strict-hits.json",
+      "sha256": "6a384854b411c04dfdf356e7630e6f744550caf9644909d0113b9ac701f75e36"
+    },
+    {
+      "path": "workflow-artifacts/verification/V2/ui/sqe-ui-diagnostics/standalone-attempt-9-pre-specific-clip.json",
+      "sha256": "5ab34ddc452f5a0cf33b19632c463436a221cd89d97d25d45a6ab6e8dae242bf"
+    }
+  ]
+}

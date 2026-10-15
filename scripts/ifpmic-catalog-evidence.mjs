@@ -49,9 +49,9 @@ for (const scenario of catalog) {
   const inserted = scenario.events.filter(event => event.source_id === 'mock:sqe-catalog');
   const restored = scenario.events.filter(event => event.source_id !== 'mock:sqe-catalog');
   const restoredPoints = scenario.checkpoints.map(point => ({ ...point, cursor: scenario.events.slice(0, point.cursor).filter(event => event.source_id !== 'mock:sqe-catalog').length }));
-  if (!original || hashObject(restored) !== original.events_sha256 || hashObject(restoredPoints) !== original.checkpoints_sha256
-    || !inserted.every(event => ['sqe_context', 'sqe_result', 'sqe_report'].includes(event.type))) throw new Error(`Invalid SQE fixture migration: ${scenario.id}`);
-  migration.scenarios.push({ id: scenario.id, original_events_sha256: original.events_sha256,
+  if (original && (hashObject(restored) !== original.events_sha256 || hashObject(restoredPoints) !== original.checkpoints_sha256
+    || !inserted.every(event => ['sqe_context', 'sqe_result', 'sqe_report'].includes(event.type)))) throw new Error(`Invalid SQE fixture migration: ${scenario.id}`);
+  if (original) migration.scenarios.push({ id: scenario.id, original_events_sha256: original.events_sha256,
     restored_events_sha256: hashObject(restored), current_events_sha256: hashObject(scenario.events),
     original_checkpoints_sha256: original.checkpoints_sha256, restored_checkpoints_sha256: hashObject(restoredPoints),
     current_checkpoints_sha256: hashObject(scenario.checkpoints), inserted_events: inserted.map(event => ({ event_id: event.event_id, source_id: event.source_id, source_seq: event.source_seq, type: event.type, step_id: event.step_id, cycle: event.cycle, attempt: event.attempt, execution_id: event.execution_id })) });

@@ -17,6 +17,8 @@ const report = {
   unexpectedExternalRequests: [],
   browserWriteRequests: [],
   captureAdjustments: [],
+  geometryMethod: 'Target full bounding box must fit the viewport and each overflow-clipping ancestor. The 4x4 hit grid counts only the target or its descendants; hits on ancestors are rejected.',
+  sqeCaptureGeometry: [],
   apiRequests: [],
   pageErrors: [],
   consoleErrors: [],
@@ -65,6 +67,15 @@ const scenarioOracle = {
   'routing-candidate': { current: 'END', status: 'COMPLETED', cycle: 1 },
   'routing-replan': { current: 'P06', status: 'RUNNING', cycle: 2, rework: 1 },
   'routing-metadata': { current: 'END', status: 'COMPLETED', cycle: 1, rework: 1 },
+  'sqe-manual-pass': { current: 'END', status: 'COMPLETED', cycle: 1 },
+  'sqe-manual-fail': { current: 'P07', status: 'RUNNING', cycle: 2, rework: 1 },
+  'sqe-incomplete': { current: 'P24', status: 'RUNNING', cycle: 1 },
+  'sqe-parser-error': { current: 'P24', status: 'RUNNING', cycle: 1 },
+  'sqe-identity-mismatch': { current: 'P24', status: 'RUNNING', cycle: 1 },
+  'sqe-manual-retry': { current: 'END', status: 'COMPLETED', cycle: 1 },
+  'sqe-report-retry': { current: 'END', status: 'COMPLETED', cycle: 1 },
+  'sqe-judgment-retry': { current: 'END', status: 'COMPLETED', cycle: 1 },
+  'sqe-manual-quarantine': { current: 'P22', status: 'RECONCILING', cycle: 1 },
 };
 
 let browser;
@@ -256,7 +267,7 @@ try {
     assert.ok((await replayPanel().innerText()).includes('MOCK'));
   });
 
-  await record('catalog exposes all 41 frozen scenarios and starts each at cursor zero', async () => {
+  await record('catalog exposes all 50 frozen scenarios and starts each at cursor zero', async () => {
     const expectedIds = Object.keys(scenarioOracle);
     const options = await scenarioSelect().locator('option').evaluateAll(items => items.map(item => item.value).filter(Boolean));
     assert.deepEqual([...options].sort(), [...expectedIds].sort());
@@ -268,7 +279,7 @@ try {
     }
   });
 
-  await record('all 41 scenarios reach their fixed endpoint through the end-observation control', async () => {
+  await record('all 50 scenarios reach their fixed endpoint through the end-observation control', async () => {
     for (const [id, expected] of Object.entries(scenarioOracle)) {
       await selectScenario(id);
       await replayPanel().getByRole('button', { name: '끝 관측', exact: true }).click();
@@ -353,6 +364,8 @@ try {
     await card('P24').click();
     const detail = page.getByTestId('ifpmic-observation-detail');
     const detailText = await detail.innerText();
+    assert.equal(await page.getByTestId('ifpmic-sqe-step-detail').count(), 0,
+      'a paired exemption is not rendered as an SQE measurement or report');
     for (const text of ['EXEMPT', '측정 완료', 'false']) assert.ok(detailText.includes(text), `P24 detail distinguishes exemption evidence: ${text}`);
     const skipBasis = await page.getByTestId('ifpmic-skip-basis').innerText();
     for (const text of ['COUPLED', 'mock:human', 'mock:policy:exempt:v1', 'cycle 1', 'attempt 1', 'mock:P24:c1:a1']) {
@@ -772,6 +785,284 @@ try {
     assert.equal(await page.getByTestId('ifpmic-remote-observation').count(), 0);
     assert.equal(await page.getByTestId('ifpmic-spec-history').count(), 0,
       'switching cases clears question review history');
+  });
+
+  await record('SQE manual, report and judgment checkpoints remain separate across retries and history', async () => {
+    const panel = () => page.getByTestId('ifpmic-sqe-observation');
+    const detail = () => page.getByTestId('ifpmic-sqe-step-detail');
+    const history = () => page.getByRole('region', { name: '모의 과거 이력', exact: true });
+    const captureSqe = async (name, width, target) => {
+      const height = width === 375 ? 1800 : 1000;
+      await page.setViewportSize({ width, height });
+      await target.evaluate(element => element.scrollIntoView({ block: 'center', inline: 'nearest' }));
+      const view = await target.evaluate(element => {
+        const r = element.getBoundingClientRect();
+        const rect = { left: r.left, top: r.top, right: r.right, bottom: r.bottom, width: r.width, height: r.height };
+        const points = [];
+        for (let row = 1; row <= 4; row++) for (let col = 1; col <= 4; col++) {
+          const x = r.left + r.width * col / 5, y = r.top + r.height * row / 5;
+          const hit = document.elementFromPoint(x, y);
+          points.push({ x, y, insideTargetOrDescendant: Boolean(hit && (hit === element || element.contains(hit))) });
+        }
+        const overlaps = [];
+        for (const candidate of document.querySelectorAll('*')) {
+          if (candidate === element || element.contains(candidate) || candidate.contains(element)) continue;
+          const style = getComputedStyle(candidate);
+          if (!['fixed', 'sticky'].includes(style.position) || style.display === 'none' || style.visibility === 'hidden' || Number(style.opacity) === 0) continue;
+          const overlay = candidate.getBoundingClientRect();
+          if (overlay.width <= 0 || overlay.height <= 0) continue;
+          const intersection = { left: Math.max(r.left, overlay.left), top: Math.max(r.top, overlay.top),
+            right: Math.min(r.right, overlay.right), bottom: Math.min(r.bottom, overlay.bottom) };
+          if (intersection.right > intersection.left && intersection.bottom > intersection.top) {
+            overlaps.push({ selector: candidate.id ? `#${candidate.id}`
+              : candidate.getAttribute('data-testid') ? `[data-testid="${candidate.getAttribute('data-testid')}"]`
+                : `${candidate.tagName.toLowerCase()}${candidate.getAttribute('aria-label') ? `[aria-label="${candidate.getAttribute('aria-label')}"]` : ''}`,
+            position: style.position, rect: { left: overlay.left, top: overlay.top, right: overlay.right, bottom: overlay.bottom }, intersection });
+          }
+        }
+        const clippingAncestors = [];
+        for (let ancestor = element.parentElement; ancestor; ancestor = ancestor.parentElement) {
+          const style = getComputedStyle(ancestor);
+          const clipsX = ['hidden', 'auto', 'scroll', 'clip'].includes(style.overflowX);
+          const clipsY = ['hidden', 'auto', 'scroll', 'clip'].includes(style.overflowY);
+          if (!clipsX && !clipsY) continue;
+          const a = ancestor.getBoundingClientRect();
+          const box = { left: a.left + ancestor.clientLeft, top: a.top + ancestor.clientTop,
+            right: a.left + ancestor.clientLeft + ancestor.clientWidth,
+            bottom: a.top + ancestor.clientTop + ancestor.clientHeight };
+          clippingAncestors.push({ selector: ancestor.id ? `#${ancestor.id}`
+            : ancestor.classList?.length ? `${ancestor.tagName.toLowerCase()}.${[...ancestor.classList].join('.')}`
+              : ancestor.tagName.toLowerCase(), overflowX: style.overflowX, overflowY: style.overflowY,
+          box, clipsX, clipsY,
+          fitsX: !clipsX || (r.left >= box.left && r.right <= box.right),
+          fitsY: !clipsY || (r.top >= box.top && r.bottom <= box.bottom) });
+        }
+        return { rect, viewport: { width: innerWidth, height: innerHeight }, points, overlaps, clippingAncestors,
+          fullyVisible: r.left >= 0 && r.top >= 0 && r.right <= innerWidth && r.bottom <= innerHeight };
+      });
+      assert.equal(view.fullyVisible, true, `${name} target fully fits the actual viewport: ${JSON.stringify(view)}`);
+      assert.ok(view.points.every(point => point.insideTargetOrDescendant), `${name} target 4x4 hit-grid hits only the target or its descendants: ${JSON.stringify(view)}`);
+      assert.deepEqual(view.overlaps, [], `${name} has no visible fixed/sticky overlap: ${JSON.stringify(view.overlaps)}`);
+      assert.ok(view.clippingAncestors.every(ancestor => ancestor.fitsX && ancestor.fitsY),
+        `${name} target fits every overflow-clipping ancestor on each clipped axis: ${JSON.stringify(view.clippingAncestors)}`);
+      assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true, `${name} no horizontal overflow`);
+      report.sqeCaptureGeometry.push({ name, width, height, target: await target.getAttribute('data-testid')
+        || await target.getAttribute('aria-label') || 'nested SQE section', rect: view.rect,
+      hit_grid: { samples: view.points.length, inside_target_or_descendant: view.points.filter(point => point.insideTargetOrDescendant).length },
+      fixed_sticky_overlaps: view.overlaps,
+      overflow_clipping_ancestors: view.clippingAncestors });
+      const filename = `${hostMode ? 'host' : 'standalone'}-sqe-${name}-${width}.png`;
+      await page.screenshot({ path: path.join(evidenceDir, filename), fullPage: false });
+      report.evidence.push(`workflow-artifacts/verification/V2/ui/${filename}`);
+    };
+    const assertAttempts = async (values) => {
+      for (const [key, value] of Object.entries(values)) assert.equal(await panel().getAttribute(`data-${key}-attempt`), String(value));
+    };
+
+    await selectScenario('sqe-manual-pass');
+    await moveCheckpoint('waiting');
+    let observation = panel();
+    assert.equal(await observation.getAttribute('data-mode'), 'manual');
+    await assertAttempts({ p22: 1 });
+    assert.equal(await card('P22').getAttribute('data-state'), 'WAITING_HUMAN');
+    for (const text of ['수동', '사람 결과 대기']) assert.ok((await observation.innerText()).includes(text));
+    await card('P22').click();
+    let selected = detail();
+    assert.equal(await selected.getAttribute('data-step-id'), 'P22');
+    assert.equal(await selected.getAttribute('data-mode'), 'manual');
+    assert.equal(await selected.getAttribute('data-result-evidence-id'), '');
+    for (const text of ['mock:human', 'mock:manual:P22:c1:a1', '배정 수행자']) assert.ok((await selected.innerText()).includes(text));
+    await captureSqe('manual-waiting', 1440, selected);
+    await moveCheckpoint('rejected');
+    assert.equal(await card('P22').getAttribute('data-state'), 'WAITING_HUMAN');
+    assert.ok((await page.getByRole('list', { name: '모의 사건 목록' }).innerText()).includes('invalid_manual_submission'));
+    await moveCheckpoint('submitted');
+    assert.equal(await card('P22').getAttribute('data-state'), 'READY', 'manual acceptance is not completion');
+    assert.equal(await card('P23').getAttribute('data-state'), 'PENDING');
+    await card('P22').click();
+    selected = detail();
+    assert.equal(await selected.getAttribute('data-mode'), 'manual');
+    assert.ok(await selected.getAttribute('data-result-evidence-id'));
+    await captureSqe('manual-submitted', 375, selected);
+    for (const [name, region] of [
+      ['manual-submitted-target', selected.getByRole('region', { name: 'SQE 시험 대상', exact: true })],
+      ['manual-submitted-assignment', selected.getByRole('region', { name: 'SQE 수동 배정', exact: true })],
+      ['manual-submitted-result', selected.getByRole('region', { name: 'SQE 수집 결과', exact: true })],
+    ]) await captureSqe(name, 375, region);
+    await moveCheckpoint('reported');
+    await card('P23').click();
+    selected = detail();
+    assert.equal(await selected.getAttribute('data-step-id'), 'P23');
+    assert.equal(await selected.getAttribute('data-mode'), 'manual', 'P23 report preserves manual execution mode');
+    assert.ok((await selected.innerText()).includes('수동 · manual'));
+    await moveCheckpoint('judged');
+    await assertSummary({ current: 'X02', status: 'RUNNING', cycle: 1 });
+    observation = panel();
+    assert.equal(await observation.getAttribute('data-verdict'), 'PASS');
+    await assertAttempts({ p22: 1, p23: 1, p24: 1 });
+    await card('P24').click();
+    selected = detail();
+    assert.equal(await selected.getAttribute('data-step-id'), 'P24');
+    assert.ok((await selected.innerText()).includes('PASS'));
+    assert.ok(await selected.getAttribute('data-report-evidence-id'));
+    await captureSqe('manual-judged', 1440, selected);
+
+    await selectScenario('sqe-manual-fail');
+    await moveCheckpoint('rerouted');
+    await assertSummary({ current: 'P07', status: 'RUNNING', cycle: 2, rework: 1 });
+    assert.equal(await panel().count(), 0, 'cycle-2 SQE current view is reset, with old FAIL in history only');
+    assert.ok((await history().innerText()).includes('FAIL'));
+    assert.equal(await card('P24').getAttribute('data-state'), 'PENDING', 'cycle-1 FAIL is not promoted into current cycle P24');
+    const failHistoryToggle = page.getByRole('button', { name: '이력 영역 펼치기', exact: true });
+    assert.equal(await failHistoryToggle.getAttribute('aria-expanded'), 'false');
+    await failHistoryToggle.click();
+    const archivedP24 = page.locator('[data-testid="ifpmic-sqe-history"][data-step-id="P24"]').first();
+    await archivedP24.waitFor();
+    await captureSqe('manual-fail-rerouted-history', 1440, archivedP24);
+
+    for (const [id, verdict] of [['sqe-incomplete', 'INCONCLUSIVE'], ['sqe-parser-error', 'ERROR'], ['sqe-identity-mismatch', 'INCONCLUSIVE']]) {
+      await selectScenario(id);
+      await moveCheckpoint('blocked');
+      await assertSummary({ current: 'P24', status: 'RUNNING', cycle: 1 });
+      observation = panel();
+      assert.equal(await observation.getAttribute('data-verdict'), verdict, id);
+      assert.equal(await card('P22').getAttribute('data-state'), 'SUCCEEDED', id);
+      assert.equal(await card('P23').getAttribute('data-state'), 'SUCCEEDED', id);
+      assert.equal(await card('P24').getAttribute('data-state'), 'RUNNING', id);
+      assert.equal(await card('P24').getAttribute('data-gate'), verdict, id);
+      assert.ok((await observation.innerText()).includes('false'), `${id} remains incomplete`);
+      await card('P22').click();
+      const sqeDetail = detail();
+      const sqeText = await sqeDetail.innerText();
+      if (id === 'sqe-incomplete') {
+        assert.ok(sqeText.includes('누락'));
+        assert.ok(sqeText.includes('mock:sqe:case:function'));
+      } else if (id === 'sqe-parser-error') {
+        assert.ok(sqeText.includes('error'));
+        assert.match(sqeText, /종료 코드\s*없음/);
+      } else {
+        assert.ok(sqeText.includes('기대 부팅 식별'));
+        assert.ok(sqeText.includes('different-boot'));
+      }
+    }
+    await selectScenario('sqe-incomplete');
+    await moveCheckpoint('blocked');
+    await card('P22').click();
+    selected = detail();
+    assert.ok((await selected.innerText()).includes('누락'));
+    await captureSqe('incomplete-blocked', 1440, page.getByRole('region', { name: 'SQE 수집 결과', exact: true }));
+
+    await selectScenario('sqe-manual-retry');
+    await moveCheckpoint('waiting-two');
+    await assertSummary({ current: 'P22', status: 'WAITING_HUMAN', cycle: 1 });
+    observation = panel();
+    assert.equal(await observation.getAttribute('data-mode'), 'manual');
+    await assertAttempts({ p22: 2 });
+    await card('P22').click();
+    assert.ok((await detail().innerText()).includes('mock:manual:P22:c1:a2'));
+    assert.ok((await history().innerText()).includes('mock:manual:P22:c1:a1'));
+    await captureSqe('manual-retry-waiting-two', 375, detail().getByRole('region', { name: 'SQE 수동 배정', exact: true }));
+    const historyToggle = page.getByRole('button', { name: '이력 영역 펼치기', exact: true });
+    assert.equal(await historyToggle.getAttribute('aria-expanded'), 'false');
+    const archivedManualAttempt = page.locator('[data-testid="ifpmic-sqe-history"][data-step-id="P22"]').first();
+    const compactResult = archivedManualAttempt.getByRole('region', { name: 'SQE 수집 결과', exact: true });
+    const compactClips = await compactResult.evaluate(element => {
+      const r = element.getBoundingClientRect(), found = [];
+      for (let ancestor = element.parentElement; ancestor; ancestor = ancestor.parentElement) {
+        const style = getComputedStyle(ancestor);
+        const clipsY = ['hidden', 'auto', 'scroll', 'clip'].includes(style.overflowY);
+        if (!clipsY) continue;
+        const a = ancestor.getBoundingClientRect();
+        const top = a.top + ancestor.clientTop, bottom = top + ancestor.clientHeight;
+        found.push({ selector: ancestor.id ? `#${ancestor.id}`
+          : ancestor.classList?.length ? `${ancestor.tagName.toLowerCase()}.${[...ancestor.classList].join('.')}`
+            : ancestor.tagName.toLowerCase(), overflowY: style.overflowY,
+        clip_top: top, clip_bottom: bottom, target_top: r.top, target_bottom: r.bottom,
+        fitsY: r.top >= top && r.bottom <= bottom });
+      }
+      return found;
+    });
+    const compactHistoryClip = compactClips.find(ancestor => ancestor.selector === '#ifpmic-replay-history');
+    assert.ok(compactHistoryClip && compactHistoryClip.overflowY === 'auto' && !compactHistoryClip.fitsY
+      && compactHistoryClip.clip_bottom - compactHistoryClip.clip_top === 200,
+    `bounded diagnostic confirms the compact 200px history scroller clips archived SQE detail: ${JSON.stringify(compactClips)}`);
+    report.sqeCaptureGeometry.push({ name: 'manual-retry-compact-history-negative-diagnostic', width: 375,
+      target: 'SQE 수집 결과', expected_clipped: true, overflow_clipping_ancestors: compactClips });
+    await historyToggle.click();
+    const collapseHistory = page.getByRole('button', { name: '이력 영역 접기', exact: true });
+    assert.equal(await collapseHistory.getAttribute('aria-expanded'), 'true');
+    assert.equal(await archivedManualAttempt.getAttribute('data-attempt'), '1');
+    assert.equal(await archivedManualAttempt.getAttribute('data-mode'), 'manual');
+    assert.ok(await archivedManualAttempt.getAttribute('data-result-evidence-id'));
+    await captureSqe('manual-retry-a1-history', 375,
+      archivedManualAttempt.getByRole('region', { name: 'SQE 수동 배정', exact: true }));
+    await captureSqe('manual-retry-a1-result-history', 375,
+      archivedManualAttempt.getByRole('region', { name: 'SQE 수집 결과', exact: true }));
+    await collapseHistory.click();
+    assert.equal(await page.getByRole('button', { name: '이력 영역 펼치기', exact: true }).getAttribute('aria-expanded'), 'false');
+    await historyToggle.click();
+    assert.equal(await page.getByRole('button', { name: '이력 영역 접기', exact: true }).getAttribute('aria-expanded'), 'true');
+
+    await selectScenario('sqe-report-retry');
+    assert.equal(await page.getByRole('button', { name: /이력 영역 (펼치기|접기)/ }).count(), 0,
+      'scenario starts at cursor zero with no history control');
+    await moveCheckpoint('reported-two');
+    assert.equal(await page.getByRole('button', { name: '이력 영역 펼치기', exact: true }).getAttribute('aria-expanded'), 'false',
+      'scenario change restores compact history');
+    await assertSummary({ current: 'P23', status: 'RUNNING', cycle: 1 });
+    observation = panel();
+    await assertAttempts({ p22: 1, p23: 2, p24: 1 });
+    await card('P23').click();
+    selected = detail();
+    assert.equal(await selected.getAttribute('data-step-id'), 'P23');
+    assert.equal(await selected.getAttribute('data-attempt'), '2');
+    assert.equal(await selected.getAttribute('data-mode'), 'bridge_mock');
+    assert.ok((await selected.innerText()).includes('bridge mock · 합성'));
+    assert.ok(await selected.getAttribute('data-report-evidence-id'));
+    await captureSqe('report-retry-current', 1440, selected);
+
+    await selectScenario('sqe-judgment-retry');
+    await moveCheckpoint('stale');
+    await assertSummary({ current: 'P24', status: 'RUNNING', cycle: 1 });
+    observation = panel();
+    assert.equal(await observation.getAttribute('data-verdict'), '');
+    await assertAttempts({ p22: 1, p23: 1, p24: 2 });
+    assert.equal(await card('P24').getAttribute('data-state'), 'RUNNING');
+    assert.equal(await card('P24').getAttribute('data-gate'), null);
+    assert.ok((await history().innerText()).includes('PASS'));
+    assert.ok((await page.getByRole('list', { name: '모의 사건 목록' }).innerText()).includes('stale_execution'));
+    await card('P24').click();
+    selected = detail();
+    assert.equal(await selected.getAttribute('data-step-id'), 'P24');
+    assert.equal(await selected.getAttribute('data-attempt'), '2');
+    assert.equal(await selected.count(), 1, 'current P24 retry association renders its not-yet-judged SQE detail');
+    assert.equal(await selected.getAttribute('data-result-evidence-id'), '');
+    assert.ok((await page.getByTestId('ifpmic-observation-detail').innerText()).includes('미판정'));
+    await captureSqe('judgment-retry-stale-history', 1440, selected);
+    const judgmentHistoryToggle = page.getByRole('button', { name: '이력 영역 펼치기', exact: true });
+    assert.equal(await judgmentHistoryToggle.getAttribute('aria-expanded'), 'false');
+    await judgmentHistoryToggle.click();
+    assert.equal(await page.getByRole('button', { name: '이력 영역 접기', exact: true }).getAttribute('aria-expanded'), 'true');
+    const archivedJudgmentAttempt = page.locator('[data-testid="ifpmic-sqe-history"][data-step-id="P24"]').first();
+    assert.equal(await archivedJudgmentAttempt.getAttribute('data-attempt'), '1');
+    assert.ok((await archivedJudgmentAttempt.innerText()).includes('PASS'));
+    await captureSqe('judgment-retry-a1-history', 1440, archivedJudgmentAttempt);
+
+    await selectScenario('sqe-manual-quarantine');
+    await moveCheckpoint('blocked');
+    await assertSummary({ current: 'P22', status: 'RECONCILING', cycle: 1 });
+    observation = panel();
+    assert.match(await page.getByRole('region', { name: '장비 모의 관측' }).innerText(), /격리[\s\S]*true/);
+    assert.equal(await card('P22').getAttribute('data-state'), 'WAITING_HUMAN');
+    await card('P22').click();
+    selected = detail();
+    assert.equal(await selected.getAttribute('data-result-evidence-id'), '');
+    await captureSqe('manual-quarantine-blocked', 1440, selected);
+
+    await selectScenario('sqe-manual-pass');
+    await assertSummary({ current: 'P01', status: 'RUNNING', cycle: 1 });
+    assert.equal(await panel().count(), 0, 'scenario reset clears SQE observation');
+    assert.ok((await history().innerText()).includes('이 관측까지 과거 이력 없음'), 'scenario reset clears SQE history');
   });
 
   await record('question review-blocked checkpoint remains legible at 1440px and 375px', async () => {

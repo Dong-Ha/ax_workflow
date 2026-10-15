@@ -106,3 +106,5 @@ npm run test:browser
 재사용·정책 면제·무변경 종료의 합성 사건 형식은 [routing 프로토콜](./docs/ifpmic/V2-ROUTING.md)에 정의합니다. `node scripts/verify-ifpmic-routing.mjs`는 전용 검사를 포함한 전체 단위·build·plugin-build와 소스 해시를 기록합니다. 새 화면 시나리오와 독립 검증 기준은 [routing 화면 계획](./docs/ifpmic/V2-ROUTING-UI.md)에 정의합니다. 실제 정책·장비·배포는 후속 검증 대상입니다.
 
 비면제 SQE의 P22 결과 수집·P23 보고·P24 판정은 [필수 SQE 증거 계획](./docs/ifpmic/V2-SQE.md)에 따라 별도 근거를 요구합니다. 과거 41개 사건은 별도 출처의 합성 SQE 증거만 삽입해 이관하며 원래 사건·checkpoint를 복원해 검증합니다. `npm run ifpmic:verify:ui`는 이관 ledger(`sqe-migration.json`)와 전체 UI 회귀를 기록합니다. 새 수동/시험 전용 화면과 실제 장비·정책·AT는 후속 범위입니다.
+
+[SQE 관측 화면](./docs/ifpmic/V2-SQE-UI.md)은 수동 배정·결과 수락, SQE 수집·보고와 시스템 판정을 나눠 표시합니다. 기존 41개 사건/체크포인트를 그대로 보존하고 수동 PASS/FAIL, 불완전·오류·이미지 불일치, 단계별 재시도와 격리 관측 9개를 추가한 총 50개 합성 시나리오를 탐색합니다. 긴 과거 기록은 이력 영역 펼치기로 읽을 수 있고, 시나리오를 바꾸면 압축 보기로 돌아옵니다. artifact와 보고 링크는 안전한 식별자이며 실제 파일이나 외부 주소를 열지 않습니다. 실제 장비·사람 요청·실 AT 연동은 후속 범위입니다.

@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+import { SqeObservations, StepSqeDetails } from './SqeObservations';
 import { RoutingObservations, RoutingHistory, StepRoutingDetails } from './RoutingObservations';
 import type { MockScenario, MockSpecReview, ReplaySnapshot, ReplayStep } from './replay.mjs';
 
@@ -17,7 +19,7 @@ export function ObservationDetail({ step, snapshot }: { step: ReplayStep; snapsh
       <dt>작업 ID</dt><dd><code>{snapshot.job_id}</code></dd><dt>실행 좌표</dt><dd><code>{step.execution_id}</code></dd><dt>현재 후보</dt><dd><code>{snapshot.candidate_fingerprint}</code></dd>
       {step.retry_due_ms !== null && <><dt>합성 재시도 시각</dt><dd>{step.retry_due_ms}ms</dd></>}
     </dl>
-    <StepRoutingDetails step={step} /><p>모의 증거 · 실제 승인/측정 결과로 사용할 수 없습니다.</p>
+    <StepRoutingDetails step={step} /><StepSqeDetails step={step} stepId={Object.entries(snapshot.steps).find(([, value]) => value === step)?.[0] ?? ''} sqeAssociated={Boolean(snapshot.steps.P22.sqe_context || snapshot.steps.P22.sqe_result || snapshot.steps.P23.sqe_report || snapshot.steps.P24.gate_sqe_report_evidence_id)} /><p>모의 증거 · 실제 승인/측정 결과로 사용할 수 없습니다.</p>
     {step.evidence_ids.length ? <ul>{step.evidence_ids.map(id => <li key={id}><span className="ifpmic-mock">MOCK</span> <code>{id}</code></li>)}</ul> : <p>이 관측까지 증거 없음</p>}
   </section>;
 }
@@ -74,6 +76,8 @@ interface Props {
   onScenario: (id: string) => void; onCursor: (cursor: number) => void; onCurrent: () => void;
 }
 export function ReplayPanel({ catalog, scenario, cursor, snapshot, onScenario, onCursor, onCurrent }: Props) {
+  const [historyExpanded, setHistoryExpanded] = useState(false);
+  useEffect(() => setHistoryExpanded(false), [snapshot.job_id]);
   const current = snapshot.steps[snapshot.current_step === 'END' ? 'P26' : snapshot.current_step];
   const checkpoint = scenario.checkpoints.find(item => item.cursor === cursor)?.id ?? '';
   const lastIgnored = snapshot.ignored[snapshot.ignored.length - 1];
@@ -99,7 +103,7 @@ export function ReplayPanel({ catalog, scenario, cursor, snapshot, onScenario, o
     <p className="ifpmic-replay-reason" data-testid="ifpmic-replay-reason">대기·차단 사유: <code>{snapshot.wait_reason || lastIgnored?.reason || '없음'}</code> · 중복 {snapshot.duplicate_count} · 충돌 {snapshot.conflict_count}</p>
     {snapshot.required_revalidation.length > 0 && <p className="ifpmic-revalidation">필수 재평가 구간: {snapshot.required_revalidation.join(' → ')}</p>}
     <div className="ifpmic-replay-grid">
-      <ExceptionObservations snapshot={snapshot} /><RoutingObservations snapshot={snapshot} />
+      <ExceptionObservations snapshot={snapshot} /><RoutingObservations snapshot={snapshot} /><SqeObservations snapshot={snapshot} />
       <section className="ifpmic-observation" aria-label="장비 모의 관측"><h3><span className="ifpmic-mock">MOCK</span> 장비 관측</h3>
         {snapshot.device ? <dl><dt>상태</dt><dd>{snapshot.device.status}</dd><dt>로컬 활동</dt><dd>{snapshot.device.operation_state ?? 'UNKNOWN'}</dd>
           <dt>연결</dt><dd>{snapshot.device.offline ? 'OFFLINE' : snapshot.device.status === 'UNKNOWN' ? 'UNKNOWN' : 'ONLINE'}</dd><dt>Heartbeat 기한</dt><dd>{snapshot.device.heartbeat_due ? '도달' : '미도달'}</dd>
@@ -111,10 +115,10 @@ export function ReplayPanel({ catalog, scenario, cursor, snapshot, onScenario, o
       <section className="ifpmic-observation" aria-label="모의 사건 목록"><h3>사건 · MOCK</h3><ol className="ifpmic-journal" aria-label="모의 사건 목록">{snapshot.timeline.map(row => <li key={row.event_id} className={row.applied ? '' : 'ignored'}>
         <button aria-label={`${row.event_id} 사건 보기`} onClick={() => onCursor(scenario.events.findIndex(event => event.event_id === row.event_id) + 1)}><span className="ifpmic-mock">MOCK</span> {row.step_id} · {row.type}</button><span>{row.applied ? '적용' : `거절 · ${row.reason}`}</span>
       </li>)}</ol>{snapshot.timeline.length === 0 && <p>아직 재생한 사건이 없습니다.</p>}</section>
-      <section className="ifpmic-observation" aria-label="모의 과거 이력"><h3>이전 cycle·attempt · MOCK</h3><div className="ifpmic-history">{snapshot.history.map((entry, index) => {
+      <section className="ifpmic-observation" aria-label="모의 과거 이력"><h3>이전 cycle·attempt · MOCK</h3>{snapshot.history.length > 0 && <button type="button" aria-expanded={historyExpanded} aria-controls="ifpmic-replay-history" onClick={() => setHistoryExpanded(value => !value)}>{historyExpanded ? '이력 영역 접기' : '이력 영역 펼치기'}</button>}<div id="ifpmic-replay-history" className={`ifpmic-history${historyExpanded ? ' expanded' : ''}`}>{snapshot.history.map((entry, index) => {
         const steps = entry.steps ? Object.entries(entry.steps).filter(([, step]) => step.state !== 'PENDING') : entry.step && entry.step_id ? [[entry.step_id, entry.step] as const] : [];
         return <details key={index} open={index === snapshot.history.length - 1}><summary>MOCK · {entry.kind} · cycle {entry.cycle}{entry.step_id ? ` · ${entry.step_id}` : ''}{steps.some(([, step]) => step.state === 'FAILED') ? ` · 실패 ${steps.filter(([, step]) => step.state === 'FAILED').map(([id]) => id).join(', ')}` : ''}</summary>
-          <ul>{steps.map(([id, step]) => <li key={id}>{id} · {step.state} · attempt {step.attempt}{step.gate_verdict ? ` · gate ${step.gate_verdict}` : ''}{step.evidence_ids.length > 0 && <small>MOCK 증거 {step.evidence_ids.join(', ')}</small>}<StepRoutingDetails step={step} /></li>)}</ul>
+          <ul>{steps.map(([id, step]) => <li key={id}>{id} · {step.state} · attempt {step.attempt}{step.gate_verdict ? ` · gate ${step.gate_verdict}` : ''}{step.evidence_ids.length > 0 && <small>MOCK 증거 {step.evidence_ids.join(', ')}</small>}<StepRoutingDetails step={step} /><StepSqeDetails step={step} stepId={id} historical /></li>)}</ul>
           {entry.route_plan && <RoutingHistory plan={entry.route_plan} />}
           {entry.spec_review && <SpecHistory question={entry.spec_review} />}
           {entry.release && <p>MOCK · 이전 명세 {entry.release.manifest?.manifest_id} · 반려 {entry.release.rejection} · 과거 Gate 처분 {entry.release.manifest?.gate_dispositions.join(', ') || '없음'}</p>}
@@ -122,6 +126,6 @@ export function ReplayPanel({ catalog, scenario, cursor, snapshot, onScenario, o
       })}</div>{snapshot.history.length === 0 && <p>이 관측까지 과거 이력 없음</p>}
       {snapshot.failure_bundle.length > 0 && <p>MOCK · 한도 도달 증거 {snapshot.failure_bundle.map(item => `${item.step_id} c${item.cycle} a${item.attempt} ${item.evidence_id}`).join(', ')}</p>}</section>
     </div>
-    <p className="ifpmic-replay-pending"><strong>전체 V2 미완료</strong> · 후속 범위: 수동 장비·SQE trial 상세, 자식 Agent, pause/resume/cancel 및 전체 V2 검증. 실제 AT 미실행.</p>
+    <p className="ifpmic-replay-pending"><strong>전체 V2 미완료</strong> · 후속 범위: 자식 Agent, pause/resume/cancel 및 전체 V2 검증. 실제 수동 장비·SQE 실행 연동은 별도 범위. 실제 AT 미실행.</p>
   </section>;
 }

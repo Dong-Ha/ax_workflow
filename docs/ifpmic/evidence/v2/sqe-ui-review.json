@@ -1,0 +1,92 @@
+{
+  "kind": "independent_partial_sqe_ui_acceptance",
+  "decision": "accepted_mock_sqe_ui_50_scenarios",
+  "recorded_at": "2026-10-15T14:16:01.084625+00:00",
+  "implementer_agent": "/root",
+  "test_author_agent": "/root/verification_plan",
+  "reviewer_agent": "/root/paperclip_ui_extension",
+  "reviewer_role": "worker_luna; read-only independent plan/source/TC/gate/image audit",
+  "plan": "../../V2-SQE-UI.md",
+  "plan_sha256": "a821ec2dfe3040a50cd26bc361b7461146d2162e32d71669ffd9224ef37b6245",
+  "plan_review": "sqe-ui-plan-review.json",
+  "baseline_41": "sqe-ui-baseline-41.json",
+  "baseline_41_sha256": "0716157c37e7fa97a76e007f1c16f114131b86d1663f1ac10eef89111644aa4a",
+  "candidate_fingerprint": "d20d125530ae5bdf13bc6639a55a444b6936c464549e6d4859331de913862451",
+  "report": "sqe-ui-verification.json",
+  "report_sha256": "d0af9abc7841321fb8cd3d9adb2597fd4b567c209979346e3ecb67c10332fa37",
+  "source_hash_matches": 131,
+  "command_exits_zero": 11,
+  "command_logs_hash_matched": 11,
+  "gate_reports_hash_matched": 76,
+  "build_assets_hash_matched": 6,
+  "plugin_assets_hash_matched": 4,
+  "published_artifacts": "sqe-ui-published-artifacts.json",
+  "published_artifact_copies_hash_matched": 39,
+  "checks": {
+    "unit": "259/259; fail=0, skipped=0",
+    "catalog_unit": "8/8",
+    "catalog_scenarios": 50,
+    "original_41_exact_events_checkpoints_unchanged": true,
+    "migration_original_41_restored": true,
+    "existing_migration_sqe_insertions": 38,
+    "standalone_browser": "16/16",
+    "native_host_browser": "17/17",
+    "sqe_positive_captures_per_environment": 15,
+    "strict_target_or_descendant_hits_per_capture": 16,
+    "every_overflow_clipping_ancestor_contains_entire_target": true,
+    "visible_fixed_sticky_overlaps": 0,
+    "exact_compact_200px_history_negative_per_environment": 1,
+    "browser_writes": 0,
+    "external_requests": 0,
+    "page_errors": 0,
+    "console_errors": 0,
+    "source_changed": [],
+    "reviewer_reran_tests": false
+  },
+  "reviewed_test_sha256": {
+    "tests/ifpmic-catalog.test.mjs": "a1dfe14796f101cb0d9cb82162362279faf7b5219eddaa60a7bb835726e2e4b7",
+    "tests/ifpmic-replay.browser.mjs": "1ddb963531c282e0c6b291d5f381a98c22cefb1cf8ce546b3c6783156b797ae9"
+  },
+  "approved_scope": [
+    "Immutable original41 event/checkpoint bytes and nine explicit new SQE mock scenarios",
+    "Current and historical manual task/performer/result, expected and observed identity, fixed profile versions/cases/artifact IDs",
+    "Separate P22 collection, P23 report and P24 judgment/report/manifest references; incomplete/ERROR/EXEMPT distinct from PASS",
+    "P22/P23/P24 retry and stale-proof rejection, quarantine, view-only history expansion/collapse/scenario reset",
+    "Standalone/native Paperclip responsive UI, original workflow/AX/source regressions and strict geometric/capture verification"
+  ],
+  "diagnostics": [
+    "sqe-ui-attempt-1.json",
+    "sqe-ui-capture-review-attempt-1.json",
+    "sqe-ui-gate-attempt-1.json"
+  ],
+  "rejected_gate": {
+    "sha256": "35757a89c64da9e597ef18475bcd715eaa5a52c2db6251d33a0ecc25f73a952e",
+    "reason": "Automated pass was not accepted after image review found archive clipping and weak ancestor-hit predicate. TC corrected; new frozen full gate passed."
+  },
+  "visual_supplement": {
+    "scope": "Existing routing P24 capture-only correction; no source/TC change after final11-command gate",
+    "report": "sqe-ui-routing-mobile-capture.json",
+    "report_sha256": "f0dd2e62ff1faa4b63a4c754b3db46d146e6fc30a74ce5aeed6cfe8c16b3aa86",
+    "script_snapshot": "sqe-ui-routing-mobile-capture-script.txt",
+    "script_sha256": "f2c4872d5f4b0cf14fb5ef620cf9dd62ec8885ebd9504e5f46ee06095e5f7f13",
+    "image": "sqe-ui-routing-host-p24-detail-375-1800.png",
+    "image_sha256": "7ead6da4ebb58375b306b25c7bb7dfa77afd587977d6f9d860e9fa24e3c63cbc",
+    "reviewer_opened_image": true,
+    "viewport": {
+      "width": 375,
+      "height": 1800
+    },
+    "browser_get_count": 80,
+    "non_get_requests": 0,
+    "external_requests": 0,
+    "errors": 0,
+    "source_build_plugin_before_after_unchanged": true,
+    "overlay_intersections": 0,
+    "hit_points": 9
+  },
+  "not_approved": [
+    "Full V2; child-agent and pause/resume/cancel protocols",
+    "B01-B13, real SQE profile/policy/manual submission/device/runtime/AT/publisher execution"
+  ],
+  "waivers": []
+}

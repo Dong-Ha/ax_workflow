@@ -81,3 +81,11 @@ TC의 41개 literal endpoint/checkpoint oracle, 기존 32개 사건/checkpoint S
 `V2-SQE.md`의 독립 승인에 따라 모든 비면제 P22/P23/P24에서 현재 결과·보고서·규칙 판정 참조를 요구한다. 고정 합성 profile의 두 필수 사례는 실제 사례 수나 기준이 아니다. P22의 수집 완료는 품질 PASS와 다르고, P23은 실패/불완전 결과도 작업 내 보고서로 남기며 P24가 PASS/FAIL/ERROR/INCONCLUSIVE를 구분한다. manual_request는 사람 대기로 이동하고 배정된 수동 결과를 기록해 READY로 돌아간다. 실제 장비 조작·격리 해제·점유·실행 또는 인증을 구현한 것으로 표시하지 않는다.
 
 기존 41개 원래 사건/체크포인트는 `sqe-baseline-41.json`으로 보존한다. 별도 source의 명시적 SQE proof만 삽입하고 TC가 이를 제거했을 때 원래 SHA와 checkpoint cursor가 복원되는지 검증한다. 과거의 사건 byte 불변 수용을 새 실행의 검증으로 재사용하지 않는다. 전용 수동/시험 unit와 전체 단위/11명령 UI gate를 새로운 고정 후보에서 실행하며, 별도 migration ledger와 보고/manifest 참조를 기록한다. 새 수동/trial panel·시나리오·전용 화면 검증, child/control 및 전체 V2·B/실 AT는 남는다.
+
+## SQE 수동·결과·보고·판정 화면 연결
+
+독립 승인된 `V2-SQE-UI.md`에 따라 기존41 events/checkpoints의 SHA를2d6319f 기준으로 보존하고 새9개를 추가한다. 원본 SQE protocol 코어는 변경하지 않는다. UI는 accepted current record와 history만 읽으며 수동 제출의 READY, 수집/보고 완료, P24 판정/complete와 report/manifest 참조를 구분한다. 기대/관측 identity·버전·사례 누락·파서 오류·task/performer·시각·artifact 식별자를 현재/과거 좌표와 함께 표시한다. 원시 결과나 실제 링크·실행·수동 제출 API는 만들지 않는다.
+
+TC가 독립 고정 oracle로 모든50 끝상태·새9 checkpoint·기존41 byte 보존을 검사하고 standalone/native host의 상세·history/reset·375/1440px 및 전체11명령 gate로 검증한다. 긴 상세 mobile 캡처는 host UI를 가리지 않는 viewport 또는 분할 캡처로 읽힘을 확인한다. 전체 V2, child/control, B01–B13/실제 장비·정책·AT는 계속 미완료다.
+
+긴 SQE 과거 기록의 기존200px clipping은 사용자용 이력 펼치기/접기와 시나리오 전환 초기화로 해소한다. 이 보기 상태는 workflow나 승인/실행 사건을 만들지 않는다. TC의 전체 bbox·fixed/sticky 교차·hit-grid 검사를 약화하지 않고 확장한 실제 이력을 캡처한다.

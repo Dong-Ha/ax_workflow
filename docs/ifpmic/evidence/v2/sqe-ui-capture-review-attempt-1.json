@@ -1,0 +1,15 @@
+{
+  "kind": "independent_visual_review_rejected_automated_pass",
+  "recorded_at": "2026-10-15T14:05:27.880226+00:00",
+  "gate": "sqe-ui-gate-attempt-1.json",
+  "gate_sha256": "35757a89c64da9e597ef18475bcd715eaa5a52c2db6251d33a0ecc25f73a952e",
+  "fingerprint": "fb2d73dbc30e550fdc4a1dd1b4b9f672c5054091bcdd289ba2a697a2ce5127e2",
+  "automated_result": "11 commands pass;259/259 unit; standalone16/16 host17/17",
+  "acceptance": "not accepted: final main image review found archive clipping",
+  "image": "sqe-ui-attempt-1-judgment-history-clipped.png",
+  "image_sha256": "cc764fe542e0fa8f4f1fbce9f4f31d3b5c80dae6882ecf90975adae8369fc6df",
+  "finding": "Archived P24 detail bbox is286px high inside200px history scrollport. Interior4x4 hit samples happen to lie within visible center200px, missing clipped header and final evidence. Viewport fit alone did not prove ancestor scrollport containment.",
+  "recovery": "Remove ancestor-hit acceptance: only target or its descendants count. Require full per-axis containment in all clipping ancestor client boxes and retain viewport/fixed-sticky checks. Prove compact archive is rejected by the strengthened geometry before expanding via existing UI and recapturing. Repeat frozen11-command gate after TC correction.",
+  "prior_browser_test_sha256": "e3b70a720b42142c189ff04c4bac26eeddcaad78253ef194d0bdf9685985cc7f",
+  "additional_root_cause": "The draft hit predicate also accepted hit.contains(target), so an ancestor hit outside the clipped target could count as visible. This weakened the target-only criterion and was missed during initial static TC review."
+}

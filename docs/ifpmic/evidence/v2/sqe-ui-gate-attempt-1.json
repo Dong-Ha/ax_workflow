@@ -1,0 +1,611 @@
+{
+  "kind": "ifpmic_v2_partial_ui_candidate_verification",
+  "scope": "SQE manual/result/report/judgment UI with immutable41 plus nine new scenarios and V0/V1/AX regression; partial V2 only, no real AT completion",
+  "attempt": "2026-10-15T14-00-37-543Z",
+  "startedAt": "2026-10-15T14:00:37.680Z",
+  "sourceHashes": {
+    "IFPMIC_AX_Design_Package_v1.zip": "34946eda4c85fd9706b40e218a233a3fdd5ab0a00b2538778c9b9cf047e19080",
+    "IFPMIC_AX_Design_v1.docx": "18a14876a689beae0599b5d4014bf95db79bef047d0e4ceafa60d9a9417624fc",
+    "README.md": "96e67b4884bba9e0a51f7d2226f2ae3264307182a5dfb3bb1bf0e663770260b9",
+    "docs/ifpmic/PLAN.md": "3b99c7b3629a8e0e6bc41d524329d2a0de27a468ec447a990fa360dcc38aa39d",
+    "docs/ifpmic/V2-EXCEPTION-UI-CAPTURE.md": "d8b78a35f9d00b49be12d60f2b7e4f3b92f3692cff501590473580aa3087deed",
+    "docs/ifpmic/V2-EXCEPTION-UI.md": "9af5d2757376126b0ef43f40582da0f02a89e7349a02bbcf209b8ff24dc629b3",
+    "docs/ifpmic/V2-EXCEPTIONS.md": "9294b6849699940a8782031c6e469404a360cc48214ccb8ca9dafdd1e9cee267",
+    "docs/ifpmic/V2-IMPLEMENTATION.md": "cb467ec760111618ce762f7c1c7a765349be762d3f774fb0f9a466217b7ed050",
+    "docs/ifpmic/V2-PROTOCOLS.md": "201fb94cd0fb4e862104b66e81afeae38f51e3ef6b69cbd6dccb4961b275f0d2",
+    "docs/ifpmic/V2-ROUTING-UI.md": "c0869de0ee5ba98951c3c6b8e3ec354eddd87f882361307cfe30ca5fc7407e94",
+    "docs/ifpmic/V2-ROUTING.md": "3b78784e620faf2826c17f1a51ad0db36a331cee22759488a74b30197d467ded",
+    "docs/ifpmic/V2-SCENARIOS.md": "cb493258be85adf1b9744cf6e8d8e9a22c4d822c96bf7a649ad0e6fa78ea93b5",
+    "docs/ifpmic/V2-SQE-UI.md": "a821ec2dfe3040a50cd26bc361b7461146d2162e32d71669ffd9224ef37b6245",
+    "docs/ifpmic/V2-SQE.md": "329f74ac551b57b3ec80337a10f89035c375bf27f3e95e0568f61d8d0ddc07cb",
+    "docs/ifpmic/V2-UI.md": "21f81e0c61b1ced3faac5b354795d6775d56130684ab5cf3c196be85e9f57dd3",
+    "docs/ifpmic/VERIFICATION.md": "b0f1e0dbe74f1a6aae5e84218f672fcb42d0db6133e072d66e92d21d2bb1ef98",
+    "docs/ifpmic/design-v1/README.txt": "33ff9f07a74c3e276ac63746340a56e4bbdeca18d2531de24cc978d533283122",
+    "docs/ifpmic/design-v1/qa/design-validation.json": "499d203d19980fac95cb9f9974ace988b54392a0ce968544d220b1a421b49fd4",
+    "docs/ifpmic/design-v1/qa/package-manifest.json": "46fe63988e7cd9312c379761c6023fc5e28e1259770274463ea848eb92960386",
+    "docs/ifpmic/design-v1/qa/visual-review.json": "e4dc7b7e91dd514158dc48688e7e79074c6686298d9395cbf9139158821b8755",
+    "docs/ifpmic/design-v1/specs/acceptance-cases.json": "f7163553edc9e8e753965cb8748ab04aac8f68c1a453f567f62284a01b38b0d5",
+    "docs/ifpmic/design-v1/specs/agent-contract.json": "ca6d4bea7abf0fffe7354c482af0d521c3a2e367217a69923a4bfe43fa27ab64",
+    "docs/ifpmic/design-v1/specs/bridge-contract.json": "d9a0deaa745d4078a779a153aad6a889a49b7675dc8ad3688f8b4c641233047d",
+    "docs/ifpmic/design-v1/specs/data-model.json": "00c84f8a39b1b8959daa8d94b1d67e860d83ad9bdb809065a5cd3b18af07071b",
+    "docs/ifpmic/design-v1/specs/implementation-backlog.json": "115e48568e0464b8e67ef17274dba97b3046a8de902e1cf426d9b70e1528e5d0",
+    "docs/ifpmic/design-v1/specs/openapi.v1.json": "2ed780cfa06349b18f5025937e050fd98a5cefa34b552eb836cfaccad416dd7a",
+    "docs/ifpmic/design-v1/specs/project-profile.example.json": "37301c6ff5c9cae237b6037a3106368cfd07e4582462d52a35dfee39de7839f2",
+    "docs/ifpmic/design-v1/specs/requirements.json": "6e1dc87cdbcaa66ed690ffd13d2d70242dff43410c9f822447bd520719ce249b",
+    "docs/ifpmic/design-v1/specs/sources.json": "c0c6f96c54ba4fd1c7a1bd70b954a7316bebdba86ff681e5a07141c682eeb7ef",
+    "docs/ifpmic/design-v1/specs/state-contract.json": "0248e130017043539319c56af854f5388a95d33e7e687902a3438fdff414244a",
+    "docs/ifpmic/design-v1/specs/workflow.v1.json": "bab40a7abb3929896add1ef2cd074893dd2a7de14d200a5d6cea4b7a77eb0e89",
+    "docs/ifpmic/design-v1/validation-requirements.txt": "756cc9e506ae4ee1a6f6c0507088b5cfc0dc8ba350fb2d2d46f1ffa72033adb6",
+    "docs/ifpmic/design-v1/verify_design.py": "05abad3464f815144bd313257a691194fd0ac96b84a542485260d128c681cedb",
+    "docs/ifpmic/evidence/plan-review.json": "df800e146c9375fa628070d0c4228437f20ec22f1ad4c494904eda90ae042021",
+    "docs/ifpmic/evidence/v2/exception-ui-capture-review.json": "1054fd334ec4ceaec8b431195c020708b2872c6bde4398ebf78fcd1c07346cbf",
+    "docs/ifpmic/evidence/v2/exception-ui-plan-review.json": "5a701c6804ad8413cc845663161ba89d68461ad6ef05e4ec46198c0e3758c490",
+    "docs/ifpmic/evidence/v2/exceptions-plan-review-2.json": "d6309882e3fb57dcaa3b6c1e7392743e43ff1d64bbafaed0c7892e5927bbe655",
+    "docs/ifpmic/evidence/v2/routing-plan-review.json": "94f2d4c336334d651364e697db5809ba7a0028ae073c495934db027475a768e4",
+    "docs/ifpmic/evidence/v2/routing-ui-baseline-32.json": "50b6c3a432783e942952d1acea38df2acce155596273523c6c3d0c5a03c05329",
+    "docs/ifpmic/evidence/v2/routing-ui-plan-review.json": "c971a40d899b262b2381fd3bb27fa1ddb7381557017060c483802f398d7b019a",
+    "docs/ifpmic/evidence/v2/sqe-baseline-41.json": "d60d037cf0f822977f38622afa8ed6ba6ca0070cc9649e696d0add8fc318d5d5",
+    "docs/ifpmic/evidence/v2/sqe-design-review.json": "9ff98bf544ce9bd5f667cb4c1d6701d6651fb13d0ca5f2a82f5b5ea15ffc3634",
+    "docs/ifpmic/evidence/v2/sqe-plan-review.json": "ccf39cd4c1581058ccac887801c81fc5e1bc3332f8a9504d9b402322abe0093f",
+    "docs/ifpmic/evidence/v2/sqe-ui-baseline-41.json": "0716157c37e7fa97a76e007f1c16f114131b86d1663f1ac10eef89111644aa4a",
+    "docs/ifpmic/evidence/v2/sqe-ui-plan-review.json": "8112e7d44bf7b89164a60d8a93c7b062ddbfbf645321af9097adfe870c5d6dff",
+    "docs/ifpmic/evidence/v2/ui-catalog.json": "d4db6c5f87c6d923445212132d34dfc46ced1485783981689f3be17e6df4cdda",
+    "docs/ifpmic/evidence/v2/ui-plan-review.json": "f14a81afdfd4a2e3de963fc1b531db7b071312abe23e97249652d7ef616507a8",
+    "docs/ifpmic/source-manifest.json": "8afba9c1fc16ef3a6565f45576792cad51a1aaab59857d3a28666c71ec43007c",
+    "experiments/paperclip/ax-controller.mjs": "01608575658d8621bf30762e9075b440e7f70abb4586425ef5ca63be2a017561",
+    "experiments/paperclip/ax-local-server.mjs": "4bf7304d0f775f76f7b4dda62935b6c5f6f10d2350ec5c224e3aa4ae7d4c3f82",
+    "experiments/paperclip/ax-release-check.mjs": "33a48b31766ea0159823c374d242f6f5acab21a675e198fed6041da4c33357c4",
+    "experiments/paperclip/ax-stage-agent.mjs": "03b73df876c5b6af6a22f15f770c3e800c3fa247d63dfbf0fcefd5fca62f1f32",
+    "experiments/paperclip/ax-workflow.json": "db0d8a219ffb7e519b728781ac68b9d67dfd586ee9dc50bd8c8e2e9e0cdc8242",
+    "experiments/paperclip/lab.mjs": "05960142972b438ecead717b9b8d9d0fb631dffd801f795fd16b34554d0b32fe",
+    "experiments/paperclip/stage-agent.mjs": "67ce28cba1189675df8c41995ba8d5f3316656cfdc3971b78c828e519dacf8a4",
+    "experiments/paperclip/verify-agent-filter.mjs": "dfd83872952cd645e200964e3c2247259494ffa1a4fb0b2292830c3450c7549c",
+    "experiments/paperclip/verify-agent-navigation.mjs": "8afd698e5e36edff0962fc2f103c1ab23038d597f208d2bd9c83a6a3e22204c2",
+    "experiments/paperclip/verify-agent-topology.mjs": "92df06fefb8fd4c959f3ea7c2f8308b0a8427918ed9b877fa386d89fc277e6f4",
+    "experiments/paperclip/workflow.json": "6ddcb3091d9eb0203f59b3a89fb250795c9e56731af17330c29e9e3dc34e29d1",
+    "ifpmic.html": "24236fa3c43b13c08c9452b5ff6235b4bc567e2a99c0ace4943494e81f587ba9",
+    "index.html": "41d4bc4ea7d8ef8fc575d22072ecf048bb5d764ca796d0374e425786175824c4",
+    "package-lock.json": "c2ba0f8ad9699bb52ebd8647bdaf7fe1ef6b2f93967b94a3f292b412c29159ed",
+    "package.json": "0fb1b392b5f384e4fb48a0c812b42e8666f4ba1354fe3815d73f0a63af7977ea",
+    "plugins/ifpmic-ax/manifest.mjs": "25304d897bd26f2a9475a110acf6e40aca41d91b26eb5c2f1ff0f8d2a96c113d",
+    "plugins/ifpmic-ax/package.json": "9e5921e12ad8f363c36ff31ec69afc43a132c7b532869249b9c9d78b822836df",
+    "plugins/ifpmic-ax/ui.tsx": "dda268570d188f9376f3a1ca96fbf2635f304fbd8f35bdd7f647b3618c0faa2b",
+    "plugins/ifpmic-ax/worker.mjs": "5f33c2266890dbeeb526684335e84f0899ef890bdf6e7652901fdfcc6bee82fa",
+    "scripts/build-ifpmic-plugin.mjs": "4eeb673b5c17f8b9d5e33751a17e7ee700102007f595b083ee2af0fd4fa94c46",
+    "scripts/ifpmic-catalog-evidence.mjs": "8d30fb39d0ccdab1e95e190cbf22143455e2da8b6915cad040cf082b02006266",
+    "scripts/ifpmic-lab.mjs": "6aff79b57d7dba3708121161ea66308bc4edda07e868a717c92cb97597817562",
+    "scripts/verify-ifpmic-exceptions.mjs": "623c5170fe4941018c4f7e6294cf1f42d612714abb032920ed6eac1f745641e8",
+    "scripts/verify-ifpmic-routing.mjs": "7bba87e215b657384c6e46ecbcee55404bfaedef21a5895ee14ec55ad873475f",
+    "scripts/verify-ifpmic-ui.mjs": "a98f767e56a8cdab3cf5004b2325786780c47301ca16b53dcd5af03940c40070",
+    "scripts/verify-ifpmic-v1.mjs": "764e02810f9919fe5dafbfc3dbb8e31156e3e8772c634f8315da78b1bfdeda52",
+    "server/claude-store.mjs": "c4f6185530eb8377bb16aeae37744edda963be733070b11e6a83d1f164ab768c",
+    "server/index.mjs": "9f462d86df80903570ab9ec110be564586dd89c45a3fd553a59cc6d5d6e56299",
+    "server/opencode-store.mjs": "ab49164a1a3a03b3a91a65866b70a074a8246e143b04510670d1259d6d2026a4",
+    "server/snapshot-store.mjs": "1a71d6dd42b5382a085311f903f82c89e9c53956324bff21aa44c5cdd4ccd3ed",
+    "server/store.mjs": "ec48d788f034305775becfc2497f922c4322a6f6d2c66ebe0cd7f8af465e3733",
+    "src/App.tsx": "8b1bca0ceaeadd764d13bdc220ffa48ea3ad28ac4db3783e74feba719ec5bdba",
+    "src/agent-filter.d.mts": "3bdcb6a01166fd617256c153b88f51eacce13dfee944cfdb09019d4172622339",
+    "src/agent-filter.mjs": "9467ac7f59f09eadb123a5153a92603684293350a3212c7c4d4a5d7fcd71731a",
+    "src/ifpmic/ReplayPanel.tsx": "541ed5b0c8e05dd942ee611bdd8c6d973e289e9e8b5fc22c32b7999129c7fa12",
+    "src/ifpmic/RoutingObservations.tsx": "1fc68ebee813f696aa0f14fa7806551c86f09877c4be22a618d8697928afd19d",
+    "src/ifpmic/SqeObservations.tsx": "8516e047ddd8c31ca1f9eaeaba5b26a79916b5e3470c082862b49761d4e7351f",
+    "src/ifpmic/WorkflowPage.tsx": "a2e93dfa06abf88ad51733ce2326f7bf613f433b51f86953eb544a34408b6310",
+    "src/ifpmic/assets.d.ts": "f138ad28ea15f370cfa14b484be92a1e25936e0f6a289d30e4d48043ccf0ced1",
+    "src/ifpmic/contract.d.mts": "a883bc8e64b635d7a8245f720f2bb607151521804dc061c55897b7e93ff2d43f",
+    "src/ifpmic/contract.mjs": "64b8b8237ba88fb4ae7ae8ab38b6ca5882244db3095d1cd4c56413ed914ddfa7",
+    "src/ifpmic/exceptions.mjs": "086c90ef443b3752e5187b86a0f254dcb10934876ee602ec441846366f5c734d",
+    "src/ifpmic/main.tsx": "c592156a4de5082c305ef4dfc61e1f95c94a7a26e0c8567f7e3a301a67de88d1",
+    "src/ifpmic/protocols.mjs": "3bfc6d280b5a711f5f941324040a43dc2e25c1ed61b41f0a6aa83233ef5a885a",
+    "src/ifpmic/replay.d.mts": "1e062beddd3ece3a3868b8803ef205684d547eb7e8893d9c9c32e79530b072ce",
+    "src/ifpmic/replay.mjs": "75cb2d5793f3c5ea3d519820a7411d1061224684be22381be5b40faf8e0dd6cd",
+    "src/ifpmic/routing-scenarios.mjs": "9d1e0ba517ec7964a2603ef3953c8ef64a7874a40a64c3792342d8ad47f781af",
+    "src/ifpmic/routing.mjs": "543ec615fdb405e4a8779e3db92bb0dc8f03d32aa213a81e226da9f8b24463c6",
+    "src/ifpmic/scenarios.d.mts": "96c8f1afbdd24892c2ac686e2283c86e095e2891d830c686f499ce117a9aa73a",
+    "src/ifpmic/scenarios.mjs": "a832bdf7de66472997652f536bb59e333658ff56420a9a6ecd8e810787349163",
+    "src/ifpmic/sqe-catalog.mjs": "35e8a1427ebce3c45f320a28df3b0cfb91f4176aa92d7f7065c5a5dac84430eb",
+    "src/ifpmic/sqe-profile.d.mts": "7929195cd5fa0f88c11bfb220ab7c8bd51911095e539eeae4edb2a3c6720e4a1",
+    "src/ifpmic/sqe-profile.mjs": "a25e7519fac51ed2dd5f46d1831e903ceb941d0ed2e8e14efdef8ab645c5772c",
+    "src/ifpmic/sqe-ui-scenarios.mjs": "951045d1a28b8c8e63d683a29cffdaf4f75a3b2cdf41dd14c9895f2b84b61893",
+    "src/ifpmic/sqe.mjs": "9fce76dc99899516375dae3881e6d5e089caa0aa905afd5c9ab315bb77082dac",
+    "src/ifpmic/workflow.css": "cc8a52946a759b32ecbcb1ac8909e0d729315c81e373af66bf73cb50923b153f",
+    "src/main.tsx": "a85c901d00b446ca1bea89b9c224a53d1075c52995933ede6d7ac1d9d2060891",
+    "src/styles.css": "cfba25b6214ad4e82961384c79bf6b7e9402868b7e1ceab41c46e5eac3cd1db9",
+    "tests/agent-filter.browser.mjs": "599db9047851753180925c2b342f729a083354c0eecc7b137fd91abe39b18153",
+    "tests/agent-filter.test.mjs": "3c84a9d93b9f07cd606cc886315c005768a30d601d6e89a164b3ef00986fb78f",
+    "tests/ax-local-server.test.mjs": "7383dc392c4ae529fa7128d3e56639f1161e04927d22e28b0e9ac70e425919d6",
+    "tests/ax-release-check.test.mjs": "7ba056fe8921ea6fe43027316d8d254be7c75d67b08cf57d518c98ff49fe88c3",
+    "tests/ax-stage-agent.test.mjs": "816a06858e7b33f3126f93c76b39d2f369fb51d44301ed3031fa1f529f58bc05",
+    "tests/ax-workflow.test.mjs": "f923e7d7ca35013a792002e374b700be4c754ea57e75751b7cd35e05e1388ede",
+    "tests/claude.test.mjs": "34561c6dd2af9739af21db9da6b6cc1ac28e9aad6289b6287259f3ae7aa6e711",
+    "tests/ifpmic-catalog.test.mjs": "a1dfe14796f101cb0d9cb82162362279faf7b5219eddaa60a7bb835726e2e4b7",
+    "tests/ifpmic-contract.test.mjs": "04edd2401b26c41a051f4c92a2f6786faab5ddb195e91c795655c7c15255addc",
+    "tests/ifpmic-exceptions.test.mjs": "b92c9c8cdd15d11f10767782e2aa285ddb1a532a3ac01b18028ff8ae5c8e80f7",
+    "tests/ifpmic-host.browser.mjs": "a80131f401b69ee9e7a77de07193b342ba4ba599fc2f75bb51e96fe257add7b0",
+    "tests/ifpmic-protocols.test.mjs": "d1b2299ad18a739d68edf43da6afb830bf8ef19afa51463d4b6f46fcb1cc7772",
+    "tests/ifpmic-replay-guards.test.mjs": "1c40a57da80a8abc38f57e0ed62d1e1cef6b2e10393dc4d428e1349fb76edbcb",
+    "tests/ifpmic-replay.browser.mjs": "e3b70a720b42142c189ff04c4bac26eeddcaad78253ef194d0bdf9685985cc7f",
+    "tests/ifpmic-replay.test.mjs": "c59b80bfce688c28ec52fc630d5a24fffc8013dc46075c305e204133e5ce4691",
+    "tests/ifpmic-routing.test.mjs": "5edd4a786b8fa3a06646265e773b8b68fa0186e08d18952dc8ab7eecfa116bf6",
+    "tests/ifpmic-source-negative.test.mjs": "6ac08b36dccfdb93595a65db31389add302dff8ba6c7d967b41de640db09bd36",
+    "tests/ifpmic-source-upload.mjs": "903e3c8673d2c5a04ed96d887509499ddeddcffa4a17ea786cfef87d6d14a655",
+    "tests/ifpmic-sqe.test.mjs": "9683be9b08995d8bbacbb20149faac559245c133fff8cb12fb1d78ada3f87d29",
+    "tests/ifpmic.browser.mjs": "96f53b51d89f8911319f37f346e20edd5977d0d75fbaf3d01599127710da3502",
+    "tests/opencode.test.mjs": "f3be87a6c11928a983eb525a68330475d394676f8bd4c2676d0eb5b21d04b3ef",
+    "tests/paperclip.test.mjs": "fab946b54e5568a162d7249b404381e061ee9c4eafd5c48aa48610378e16b316",
+    "tests/store.test.mjs": "950bb3bd50d7a0c227c55765d403e913c4a6d98a5ed668b59dadc33f82e9ba38",
+    "tsconfig.json": "03854d796a684d2bea079bbf4ac7bb9d71cc5830bb429fac7bd5dab71fa5945f",
+    "vite.config.ts": "054ee708c7cee13c62f0af627bae0730cbf83f2df7345906eb092fe0803279c6"
+  },
+  "sourceFingerprint": "fb2d73dbc30e550fdc4a1dd1b4b9f672c5054091bcdd289ba2a697a2ce5127e2",
+  "commands": [
+    {
+      "name": "unit",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "startedAt": "2026-10-15T14:00:37.680Z",
+      "finishedAt": "2026-10-15T14:01:01.045Z",
+      "exitCode": 0,
+      "counts": {
+        "tests": 259,
+        "pass": 259,
+        "fail": 0,
+        "skipped": 0
+      },
+      "log": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/unit.log",
+      "logSha256": "880c0a71707420f9e9eb5a2e3723f2b31fd92647bec3f8bf58baaa1b8a3117b0"
+    },
+    {
+      "name": "build",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "startedAt": "2026-10-15T14:01:01.050Z",
+      "finishedAt": "2026-10-15T14:01:07.347Z",
+      "exitCode": 0,
+      "log": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/build.log",
+      "logSha256": "546d473851d7e88f15dbc78efc4af09348a98080c8712023d0f2c2b8b5c78ebc"
+    },
+    {
+      "name": "plugin-build",
+      "command": [
+        "npm",
+        "run",
+        "ifpmic:plugin:build"
+      ],
+      "startedAt": "2026-10-15T14:01:07.348Z",
+      "finishedAt": "2026-10-15T14:01:07.788Z",
+      "exitCode": 0,
+      "log": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/plugin-build.log",
+      "logSha256": "e8264a2643dc26ecfa01fbf7bfa695f449060da8c0c52e4727f8f0fe7f680da8"
+    },
+    {
+      "name": "source-uploads",
+      "command": [
+        "npm",
+        "run",
+        "ifpmic:verify-sources"
+      ],
+      "startedAt": "2026-10-15T14:01:07.789Z",
+      "finishedAt": "2026-10-15T14:01:08.056Z",
+      "exitCode": 0,
+      "log": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/source-uploads.log",
+      "logSha256": "b492da2b1f01db8326f2198d4eac6b76e77fac56c4deacfafb60398c45da90c4"
+    },
+    {
+      "name": "design-validator",
+      "command": [
+        "python3",
+        "-c",
+        "import pathlib, tempfile, shutil, subprocess\nwith tempfile.TemporaryDirectory(prefix=\"ifpmic-gate-\") as temp:\n target=pathlib.Path(temp)/\"design\"\n shutil.copytree(\"docs/ifpmic/design-v1\",target)\n subprocess.run([\"python3\",str(target/\"verify_design.py\")],check=True)"
+      ],
+      "startedAt": "2026-10-15T14:01:08.056Z",
+      "finishedAt": "2026-10-15T14:01:08.366Z",
+      "exitCode": 0,
+      "log": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/design-validator.log",
+      "logSha256": "2a781792052f4ea7099623a39c991399958a17abade73349c969b0f19de65c4c"
+    },
+    {
+      "name": "ifpmic-browser",
+      "command": [
+        "npm",
+        "run",
+        "test:ifpmic:browser"
+      ],
+      "startedAt": "2026-10-15T14:01:08.366Z",
+      "finishedAt": "2026-10-15T14:01:12.030Z",
+      "exitCode": 0,
+      "log": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/ifpmic-browser.log",
+      "logSha256": "0ac428bd021e553ca8f3a293eb2c36382eee7049bd465de45b713ec259b09343"
+    },
+    {
+      "name": "paperclip-host",
+      "command": [
+        "npm",
+        "run",
+        "test:ifpmic:host"
+      ],
+      "startedAt": "2026-10-15T14:01:12.030Z",
+      "finishedAt": "2026-10-15T14:01:16.335Z",
+      "exitCode": 0,
+      "log": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/paperclip-host.log",
+      "logSha256": "a347f91dc41284fc44742a4d1f590b2f4cecec92a16d29c7bd05eb5a017220c8"
+    },
+    {
+      "name": "catalog-evidence",
+      "command": [
+        "node",
+        "scripts/ifpmic-catalog-evidence.mjs"
+      ],
+      "startedAt": "2026-10-15T14:01:16.336Z",
+      "finishedAt": "2026-10-15T14:01:22.291Z",
+      "exitCode": 0,
+      "log": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/catalog-evidence.log",
+      "logSha256": "ca289d0483bb05c323b0c38ed2b8de36d0ea66636be1986304d31dceab3d6777"
+    },
+    {
+      "name": "replay-browser",
+      "command": [
+        "npm",
+        "run",
+        "test:ifpmic:replay"
+      ],
+      "startedAt": "2026-10-15T14:01:22.291Z",
+      "finishedAt": "2026-10-15T14:01:46.393Z",
+      "exitCode": 0,
+      "log": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/replay-browser.log",
+      "logSha256": "8978b2ca985ed2d789bde52626f3fbbd7e88f72e4128e7b8eca355e8f0006b66"
+    },
+    {
+      "name": "replay-host",
+      "command": [
+        "npm",
+        "run",
+        "test:ifpmic:replay:host"
+      ],
+      "startedAt": "2026-10-15T14:01:46.393Z",
+      "finishedAt": "2026-10-15T14:02:22.621Z",
+      "exitCode": 0,
+      "log": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/replay-host.log",
+      "logSha256": "7ca7e0d2c0bf2f7ffb2f8eb43f39ae2ad741b817d2238e6b8af10866ca564e12"
+    },
+    {
+      "name": "legacy-browser",
+      "command": [
+        "npm",
+        "run",
+        "test:browser"
+      ],
+      "startedAt": "2026-10-15T14:02:22.621Z",
+      "finishedAt": "2026-10-15T14:02:59.320Z",
+      "exitCode": 0,
+      "log": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/legacy-browser.log",
+      "logSha256": "a1c97c159052b8318bd84f89fe37a49ae813569b214ddf9b065ed84f5b64eec1"
+    }
+  ],
+  "reports": {
+    "sqe-unit-observations.json": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/sqe-unit-observations.json",
+      "sha256": "28a41a5722886fe93704b5d844524811a9d47496ed70cf2583302ad007d21d10"
+    },
+    "browser.json": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/browser.json",
+      "sha256": "3ee24820c1862f73f01c0ebb114e4dcafb46a360eb646094bdb42ae7076ef1ec"
+    },
+    "host-browser.json": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/host-browser.json",
+      "sha256": "0e889052cdb14ae6d93d51b79adaa13ea0c21cb7d8c8cf4b7013b0329a08caa6"
+    },
+    "source-upload.json": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/source-upload.json",
+      "sha256": "3ef0a07db987088bbb4fcf119c84b22220a082df39ccd3fd318bc176fc2b78a1"
+    },
+    "negative-fixtures.json": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/negative-fixtures.json",
+      "sha256": "e3f3643c3173a4005dc87c1a38a76b2d45a0249102d3733902633796f44baf44"
+    },
+    "ui-standalone-browser.json": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/ui-standalone-browser.json",
+      "sha256": "ab6d270bf38c791f8c789c58c207d8530f0ef292b7d4bbac6fa08369fb4d6dfb"
+    },
+    "standalone-routing-reuse-local-1440.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/standalone-routing-reuse-local-1440.png",
+      "sha256": "0b173dec8dfddd1084afc82b7ed8a5718f7cf7097a9360719e27a90cba113aba"
+    },
+    "standalone-routing-exempt-exempt-1440.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/standalone-routing-exempt-exempt-1440.png",
+      "sha256": "468b0656801f5704b3810f637454c74bcca3b2da413eb74be096417caf427c27"
+    },
+    "standalone-routing-exempt-exempt-375.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/standalone-routing-exempt-exempt-375.png",
+      "sha256": "a9e51927f65a0bd8cb685ca81b8b74c2abcbe2dabff89250c7c8ae862c87e415"
+    },
+    "standalone-routing-no-change-closed-1440.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/standalone-routing-no-change-closed-1440.png",
+      "sha256": "60ef33097942433bb26044b68458f1891fa6a2aab66e0608b89adfea39deee1e"
+    },
+    "standalone-routing-no-change-closed-375.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/standalone-routing-no-change-closed-375.png",
+      "sha256": "8dce873e92fd669f6dd00f0ec8eef22a7a0cb90ede84678984f8b245e0b5abfc"
+    },
+    "standalone-routing-candidate-blocked-1440.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/standalone-routing-candidate-blocked-1440.png",
+      "sha256": "01b413053b3b1cc9510288a7be8be3df7e565ee9643c09856c9fc9af21269ae4"
+    },
+    "standalone-routing-replan-replanned-1440.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/standalone-routing-replan-replanned-1440.png",
+      "sha256": "dd97c740a538387779aca98fa29dfc80f33d02fcbf5718a43da3ae4177b451b8"
+    },
+    "standalone-spec-question-repeat-end-desktop.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/standalone-spec-question-repeat-end-desktop.png",
+      "sha256": "2f81820187f683f0a43435b68446a5f6b513013c009455e1a3404b6ae73501ed"
+    },
+    "standalone-remote-uncertainty-stale-desktop.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/standalone-remote-uncertainty-stale-desktop.png",
+      "sha256": "c4bff01b30e9e52dfca3acdfe38244ca068f135bc57b46940f3a52d0a35ba40e"
+    },
+    "standalone-remote-uncertainty-stale-mobile-375.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/standalone-remote-uncertainty-stale-mobile-375.png",
+      "sha256": "d0fa07a5d58f894289a4766fa0a09c86d5e30b114139829a24d128f60c1aa556"
+    },
+    "standalone-remote-recovery-found-desktop.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/standalone-remote-recovery-found-desktop.png",
+      "sha256": "b5d5d014870a8a93eddbf810f4122ec36610ca956750d0407d5ce50ea689aeee"
+    },
+    "standalone-sqe-manual-waiting-1440.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/standalone-sqe-manual-waiting-1440.png",
+      "sha256": "24b168e92374e93a7f7fde1b814a3089bc78990a70ac315af11bb444f6b40a0b"
+    },
+    "standalone-sqe-manual-submitted-375.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/standalone-sqe-manual-submitted-375.png",
+      "sha256": "a3002fb4a53d59ea51387354d883967426bcc5531472c5585ad421330a0bb041"
+    },
+    "standalone-sqe-manual-submitted-target-375.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/standalone-sqe-manual-submitted-target-375.png",
+      "sha256": "73af8f175d3cbbde5c73cbf0920dfaab5b37524ea2d347a92974c61fe121ed24"
+    },
+    "standalone-sqe-manual-submitted-assignment-375.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/standalone-sqe-manual-submitted-assignment-375.png",
+      "sha256": "f005736336bb4ffb83d79bcfe8d4d8fc077bd5422a2c7887be56162985361ffa"
+    },
+    "standalone-sqe-manual-submitted-result-375.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/standalone-sqe-manual-submitted-result-375.png",
+      "sha256": "4fa558fb73b455095e8b48981f7532bd9edb4cdf7d7ebfafcb0b95423994b073"
+    },
+    "standalone-sqe-manual-judged-1440.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/standalone-sqe-manual-judged-1440.png",
+      "sha256": "d6bf46c5ec04da36a277f340fde3b26952e41637bbed77a6a6417c58da64bd9a"
+    },
+    "standalone-sqe-manual-fail-rerouted-history-1440.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/standalone-sqe-manual-fail-rerouted-history-1440.png",
+      "sha256": "e21a31d6d4e1964e4b5289b1f6f4db38eced2c6bf8509823a2148f232f0ebfac"
+    },
+    "standalone-sqe-incomplete-blocked-1440.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/standalone-sqe-incomplete-blocked-1440.png",
+      "sha256": "2d3534aad24c82ddee1c99f09a3616c051d1214bbe9482b9b0342b0581e175ab"
+    },
+    "standalone-sqe-manual-retry-waiting-two-375.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/standalone-sqe-manual-retry-waiting-two-375.png",
+      "sha256": "af7958740ca09969557f01e41a13094ea0c11f74bf8a1cb52019791bd24d5e09"
+    },
+    "standalone-sqe-manual-retry-a1-history-375.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/standalone-sqe-manual-retry-a1-history-375.png",
+      "sha256": "9c2f23de4e06e4239738d139e1ebe0907fcead2e62a8d396b7ee8277aa91175f"
+    },
+    "standalone-sqe-manual-retry-a1-result-history-375.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/standalone-sqe-manual-retry-a1-result-history-375.png",
+      "sha256": "6b0365c0265ce8b083fb87f643bbe2ca5e0ff957821c9c60f2a48bd4898f3060"
+    },
+    "standalone-sqe-report-retry-current-1440.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/standalone-sqe-report-retry-current-1440.png",
+      "sha256": "0a157bb2d1f600c44aba56a907d61560057de6950f961ef32866c56e99d10151"
+    },
+    "standalone-sqe-judgment-retry-stale-history-1440.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/standalone-sqe-judgment-retry-stale-history-1440.png",
+      "sha256": "35ea3f08d38e7996dd1e536b2d2ae7cb2e8648fe77335172e6318dbe8b0d003c"
+    },
+    "standalone-sqe-judgment-retry-a1-history-1440.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/standalone-sqe-judgment-retry-a1-history-1440.png",
+      "sha256": "fd9f9db2a427eb630d191116ac5740d8dcc37b4da4d625ea718f1bfa869274cd"
+    },
+    "standalone-sqe-manual-quarantine-blocked-1440.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/standalone-sqe-manual-quarantine-blocked-1440.png",
+      "sha256": "9c69361aa272bda20c1f3106dcb6990017a0a0647385343f543b03f9ce9e2e33"
+    },
+    "standalone-spec-question-retry-review-blocked-desktop.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/standalone-spec-question-retry-review-blocked-desktop.png",
+      "sha256": "660ba104d2e4abf68b72565ad472036c4702ed4929019d8c4d4a56b6d63b26d0"
+    },
+    "standalone-spec-question-retry-review-blocked-mobile-375.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/standalone-spec-question-retry-review-blocked-mobile-375.png",
+      "sha256": "1fb0d2d8d53b7dafb85ac3ecdd1a56b0c370c921f50e7f1c03b04024b914af84"
+    },
+    "standalone-desktop.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/standalone-desktop.png",
+      "sha256": "78b66ec5ba19c3894cec06930186e9534b62020c2927ed7b0f9dbcda7523ac2f"
+    },
+    "standalone-sam-failure-returned-desktop.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/standalone-sam-failure-returned-desktop.png",
+      "sha256": "c68e5e9b3f8abffafeb7bb274d1b72b013d43dd9b8f497d938ec757bdb37b5e5"
+    },
+    "standalone-metadata-completed-desktop.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/standalone-metadata-completed-desktop.png",
+      "sha256": "613952e0f8aa0b41cdf646b06f967533ef661cb9861dba0505a4664480dd197d"
+    },
+    "standalone-device-time-60000-desktop.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/standalone-device-time-60000-desktop.png",
+      "sha256": "6868361886098495dcfcbb264784ce2fbf6dbb4f03d3d425eddc1725077d7592"
+    },
+    "standalone-device-time-60000-mobile-375.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/standalone-device-time-60000-mobile-375.png",
+      "sha256": "ceb0f49f2d90a9de94b84ac902aff9180fb35d68cb5284f99aefd41bf13e73f1"
+    },
+    "ui-host-browser.json": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/ui-host-browser.json",
+      "sha256": "a9d9793547ee844dce08cec385624ad6ee8c37b004c5aebe18cf9b3b0ceea3b1"
+    },
+    "host-routing-reuse-local-1440.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/host-routing-reuse-local-1440.png",
+      "sha256": "6a68f84b9b58786bf819d4b322c172642166c2f6d41841ddae7f3f7b94e975a5"
+    },
+    "host-routing-exempt-exempt-1440.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/host-routing-exempt-exempt-1440.png",
+      "sha256": "def9b2eedd239917496dd9c8af52879b48f3acdc44467bf535d396b6cea74db2"
+    },
+    "host-routing-exempt-exempt-375.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/host-routing-exempt-exempt-375.png",
+      "sha256": "78f97c20c9b3b2f441a72d84694bd564e2c6947f07afd073fd6326a8f0cdb973"
+    },
+    "host-routing-no-change-closed-1440.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/host-routing-no-change-closed-1440.png",
+      "sha256": "58fba3e6bf53dcf82fc4f95f9a5e94336ba84063b81bca8ebce8e290752200cc"
+    },
+    "host-routing-no-change-closed-375.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/host-routing-no-change-closed-375.png",
+      "sha256": "a84697848eb521281b17dc20b05767830c31aeffcc716109f01ff394e2ffb26d"
+    },
+    "host-routing-candidate-blocked-1440.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/host-routing-candidate-blocked-1440.png",
+      "sha256": "c2fb018cf94527a177a6e4bbb2024ad444e1af4123a19933e62d96a131deb8bd"
+    },
+    "host-routing-replan-replanned-1440.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/host-routing-replan-replanned-1440.png",
+      "sha256": "b7a14c788375c12e12505fb38100c28e0ac17cea50299bca318e531838b643f0"
+    },
+    "host-spec-question-repeat-end-desktop.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/host-spec-question-repeat-end-desktop.png",
+      "sha256": "42cc2f145558ea3e4302cf89535c6bc0b66608e968eb822564e2bb055ba53016"
+    },
+    "host-remote-uncertainty-stale-desktop.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/host-remote-uncertainty-stale-desktop.png",
+      "sha256": "b444816d6daf25db70d92c0d13d0ecdba0387aec613f1c83364589ea17ecdf4a"
+    },
+    "host-remote-uncertainty-stale-mobile-375.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/host-remote-uncertainty-stale-mobile-375.png",
+      "sha256": "4b948a7ca5d4a6de9b8c5ad6f682dbc83a16478abeffd945d30cebdc093c0d71"
+    },
+    "host-remote-recovery-found-desktop.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/host-remote-recovery-found-desktop.png",
+      "sha256": "d7ca2088604aba803dfe631744954088b4ce1e3724cc92b912d57ed65b3c7762"
+    },
+    "host-sqe-manual-waiting-1440.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/host-sqe-manual-waiting-1440.png",
+      "sha256": "1411546250466fd58a85099c6a8b2e40a44d0c2804698c47f98b9734c2c3f30f"
+    },
+    "host-sqe-manual-submitted-375.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/host-sqe-manual-submitted-375.png",
+      "sha256": "5624d78929b8ea9dc8f4bd9fb24c78c2b6b937dbee35f7a8a0f85fada2a4529a"
+    },
+    "host-sqe-manual-submitted-target-375.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/host-sqe-manual-submitted-target-375.png",
+      "sha256": "626dedcdafa95cc2d9103fa12ef0d42ad8b006bcb5d1f25e9dfcc2c6c5fc6e2b"
+    },
+    "host-sqe-manual-submitted-assignment-375.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/host-sqe-manual-submitted-assignment-375.png",
+      "sha256": "b11fb4156e38d73348ab96bb35afdfa359953bd42f0fd411d7a6717b03ce410c"
+    },
+    "host-sqe-manual-submitted-result-375.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/host-sqe-manual-submitted-result-375.png",
+      "sha256": "a0b28f029b8f192b22760bf710685a1c975578ad156152f68099ac8b8e4cc5ee"
+    },
+    "host-sqe-manual-judged-1440.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/host-sqe-manual-judged-1440.png",
+      "sha256": "01a03c4ba23660e912b6d263dabd7e2faa9a1713c5c79e23332f626fc70fa17e"
+    },
+    "host-sqe-manual-fail-rerouted-history-1440.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/host-sqe-manual-fail-rerouted-history-1440.png",
+      "sha256": "6157eacb7866ac12adb67861c29d30fe9cf2bfa560ff5f701908db7d2f16cbaf"
+    },
+    "host-sqe-incomplete-blocked-1440.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/host-sqe-incomplete-blocked-1440.png",
+      "sha256": "852834d1bb0a9d816c28ac08e0bc92947f64aa9c8f33b733a1da62ce19bb936b"
+    },
+    "host-sqe-manual-retry-waiting-two-375.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/host-sqe-manual-retry-waiting-two-375.png",
+      "sha256": "72c28dc01cfb161b06ad0339f992d04a31a144581a3856453d20dea0abbb3d29"
+    },
+    "host-sqe-manual-retry-a1-history-375.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/host-sqe-manual-retry-a1-history-375.png",
+      "sha256": "993d3ce81215f7f9537dddbb1fb3b7e15eb37f2be7cac1e8a553a005e8242021"
+    },
+    "host-sqe-manual-retry-a1-result-history-375.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/host-sqe-manual-retry-a1-result-history-375.png",
+      "sha256": "354be370e74fd297271c6b9ff2267175dcb73ad70f79f789a1eb786fc01e8bcf"
+    },
+    "host-sqe-report-retry-current-1440.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/host-sqe-report-retry-current-1440.png",
+      "sha256": "1ab867128eb2d8c94c7ef28b97b7a978c6edbb7f77c36918fa576fdf6687b46a"
+    },
+    "host-sqe-judgment-retry-stale-history-1440.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/host-sqe-judgment-retry-stale-history-1440.png",
+      "sha256": "979287ab6ea87d8daf9c3f96313b5ee19f612176c46e280a8eea4c04721b1378"
+    },
+    "host-sqe-judgment-retry-a1-history-1440.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/host-sqe-judgment-retry-a1-history-1440.png",
+      "sha256": "cc764fe542e0fa8f4f1fbce9f4f31d3b5c80dae6882ecf90975adae8369fc6df"
+    },
+    "host-sqe-manual-quarantine-blocked-1440.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/host-sqe-manual-quarantine-blocked-1440.png",
+      "sha256": "8a620234fc675004acce80692b5f2e69c8c688388b3de8614916fc6328e7fed4"
+    },
+    "host-spec-question-retry-review-blocked-desktop.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/host-spec-question-retry-review-blocked-desktop.png",
+      "sha256": "b58fdc5dcc50c8bfe06369e44c6e6a13d705b2441287fa19b01225e89bc454f3"
+    },
+    "host-spec-question-retry-review-blocked-mobile-375.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/host-spec-question-retry-review-blocked-mobile-375.png",
+      "sha256": "974ad7c9d000db3bb22283f41e7d8d5eab7de78ebed948fba85965720c7830f7"
+    },
+    "host-desktop.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/host-desktop.png",
+      "sha256": "811e52fddb9314bbf040255878be149a5e117d561daa4824997fbb9c02f28652"
+    },
+    "host-sam-failure-returned-desktop.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/host-sam-failure-returned-desktop.png",
+      "sha256": "3b87e398428180f5dc13250b8052c3efb0dd187bda87ff049f66bbbfef7d8481"
+    },
+    "host-metadata-completed-desktop.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/host-metadata-completed-desktop.png",
+      "sha256": "5495559310b0549271031838236e5077bac290c3e79482685d42574fc29841b8"
+    },
+    "host-device-time-60000-desktop.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/host-device-time-60000-desktop.png",
+      "sha256": "8be313a543bc385f2a0a6d6c971ec48d518b5c2810ea48328d226bd9764019ed"
+    },
+    "host-device-time-60000-mobile-375.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/host-device-time-60000-mobile-375.png",
+      "sha256": "3adc997183b09c488d575fdb928b29ffabc053b55afc8078327e6f659088b4e7"
+    },
+    "ui-catalog.json": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/ui-catalog.json",
+      "sha256": "038425027c41afa4da3d96662e447498c9161a670d15f28beac21c69717c10e1"
+    },
+    "ui-catalog-journal.json": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/ui-catalog-journal.json",
+      "sha256": "28bff3dff01a479e438862ffd1b8f670bb8b8bb54ded057c5feb0c54e21666ec"
+    },
+    "ui-sqe-migration.json": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T14-00-37-543Z/ui-sqe-migration.json",
+      "sha256": "fc8a72eb819bfc5a4494e400b7a0c999327b98a8459c11475c4f4fc061c62114"
+    }
+  },
+  "verdict": "pass",
+  "buildAssets": {
+    "dist/assets/client-CAHGjawS.js": "5fa7239379911c904db9b9302fd405a3b9e95325a502751ff2e1cb005e6ec769",
+    "dist/assets/ifpmic-xfMTk7-8.js": "4aab17b938eb66c240b296b235de327aeae7632370188e6639512e22d5911071",
+    "dist/assets/main-CylYjkUS.js": "ddbb9ffd85519b9bebb4689f7cac226a376fbc3cc1cca57dcbadeff28f4dc377",
+    "dist/assets/main-Drfl24f5.css": "5f130778329164918b89101b7ff8ae176d4f44800f424819c3a4add2d2911814",
+    "dist/ifpmic.html": "decdc2c48ef24ec29846cf8f3861d4a124e8a11bc149c5922a1dccfdc1fb6b99",
+    "dist/index.html": "f0c4ef087190c0cfe694cf7cf27837494f3fc22ee4bcc05ee2c14a244056890f"
+  },
+  "pluginAssets": {
+    ".paperclip-lab/ifpmic-plugin/dist/manifest.js": "b97837792de4a4c3134470f8bd775128d734f79ec43d6e3ec8469e591956d01e",
+    ".paperclip-lab/ifpmic-plugin/dist/ui/index.js": "abc6f11d0ee57383adb95473f41b4615dfa816645d6c5b6515c3fe21e0b2b1b0",
+    ".paperclip-lab/ifpmic-plugin/dist/worker.js": "a28019a206135c594bb59a6f60011b6be2fc37a80b1b42bfe1cde55a16dc31ce",
+    ".paperclip-lab/ifpmic-plugin/package.json": "9e5921e12ad8f363c36ff31ec69afc43a132c7b532869249b9c9d78b822836df"
+  },
+  "finishedAt": "2026-10-15T14:02:59.560Z"
+}

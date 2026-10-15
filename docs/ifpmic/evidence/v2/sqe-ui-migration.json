@@ -1,0 +1,812 @@
+{
+  "kind": "explicit_sqe_proof_catalog_migration",
+  "mode": "mock",
+  "source_commit": "d8c4757",
+  "scope": "New independently authored SQE proof events; original 41 event streams restored by removing only mock:sqe-catalog source",
+  "scenarios": [
+    {
+      "id": "happy-path",
+      "original_events_sha256": "8ace7171d51586b0a86d331e29aa123c936e7628d541000d16037d5e9f12b14c",
+      "restored_events_sha256": "8ace7171d51586b0a86d331e29aa123c936e7628d541000d16037d5e9f12b14c",
+      "current_events_sha256": "15f6840504d0abdeaa7fd14738286e1d92d762beb498253fad3fa225a5cca8de",
+      "original_checkpoints_sha256": "903db5a41d6114ce113b1c264d78fb0fc760551c79be4c52141aa8e138cdb73a",
+      "restored_checkpoints_sha256": "903db5a41d6114ce113b1c264d78fb0fc760551c79be4c52141aa8e138cdb73a",
+      "current_checkpoints_sha256": "960e38ffe3bc89ce5beb9b69c45ca68934f09d2d9e4487d77271097b9c910d99",
+      "inserted_events": [
+        {
+          "event_id": "mock:happy-path:sqe-event:1",
+          "source_id": "mock:sqe-catalog",
+          "source_seq": 1,
+          "type": "sqe_context",
+          "step_id": "P22",
+          "cycle": 1,
+          "attempt": 1,
+          "execution_id": "mock:P22:c1:a1"
+        },
+        {
+          "event_id": "mock:happy-path:sqe-event:2",
+          "source_id": "mock:sqe-catalog",
+          "source_seq": 2,
+          "type": "sqe_result",
+          "step_id": "P22",
+          "cycle": 1,
+          "attempt": 1,
+          "execution_id": "mock:P22:c1:a1"
+        },
+        {
+          "event_id": "mock:happy-path:sqe-event:3",
+          "source_id": "mock:sqe-catalog",
+          "source_seq": 3,
+          "type": "sqe_report",
+          "step_id": "P23",
+          "cycle": 1,
+          "attempt": 1,
+          "execution_id": "mock:P23:c1:a1"
+        }
+      ]
+    },
+    {
+      "id": "human-wait",
+      "original_events_sha256": "0386b603b71174b8c19f035845b7de8e19923dd3cd2704adeb02f25fb7e17abe",
+      "restored_events_sha256": "0386b603b71174b8c19f035845b7de8e19923dd3cd2704adeb02f25fb7e17abe",
+      "current_events_sha256": "0386b603b71174b8c19f035845b7de8e19923dd3cd2704adeb02f25fb7e17abe",
+      "original_checkpoints_sha256": "2cc86f0da6a9093d30d7460763977ac00dd331e178cc63726e941ad158549b8b",
+      "restored_checkpoints_sha256": "2cc86f0da6a9093d30d7460763977ac00dd331e178cc63726e941ad158549b8b",
+      "current_checkpoints_sha256": "2cc86f0da6a9093d30d7460763977ac00dd331e178cc63726e941ad158549b8b",
+      "inserted_events": []
+    },
+    {
+      "id": "human-wait-oss",
+      "original_events_sha256": "430dda39cc74aef77e403147c7fb845bf7e3a57c00d9dc4f93493c55242f3db7",
+      "restored_events_sha256": "430dda39cc74aef77e403147c7fb845bf7e3a57c00d9dc4f93493c55242f3db7",
+      "current_events_sha256": "430dda39cc74aef77e403147c7fb845bf7e3a57c00d9dc4f93493c55242f3db7",
+      "original_checkpoints_sha256": "57217ad0f4eae6406fab7a5917752df92227cf73a5b527ac3568d29bd15792a1",
+      "restored_checkpoints_sha256": "57217ad0f4eae6406fab7a5917752df92227cf73a5b527ac3568d29bd15792a1",
+      "current_checkpoints_sha256": "57217ad0f4eae6406fab7a5917752df92227cf73a5b527ac3568d29bd15792a1",
+      "inserted_events": []
+    },
+    {
+      "id": "debug-failure",
+      "original_events_sha256": "7080b2c7500a68c823a0dcf8fdfb8dfd1e75d8e5ffb4d8de46d56bb0b7142dd5",
+      "restored_events_sha256": "7080b2c7500a68c823a0dcf8fdfb8dfd1e75d8e5ffb4d8de46d56bb0b7142dd5",
+      "current_events_sha256": "7080b2c7500a68c823a0dcf8fdfb8dfd1e75d8e5ffb4d8de46d56bb0b7142dd5",
+      "original_checkpoints_sha256": "7cad154812c63e8e391f4983e6503192b4e0bb09c320a6e9e8cc71e210d6a704",
+      "restored_checkpoints_sha256": "7cad154812c63e8e391f4983e6503192b4e0bb09c320a6e9e8cc71e210d6a704",
+      "current_checkpoints_sha256": "7cad154812c63e8e391f4983e6503192b4e0bb09c320a6e9e8cc71e210d6a704",
+      "inserted_events": []
+    },
+    {
+      "id": "review-failure",
+      "original_events_sha256": "2421d7e30598938978c908276427b9f249b34e3dde7de8666abe918c04cc73fa",
+      "restored_events_sha256": "2421d7e30598938978c908276427b9f249b34e3dde7de8666abe918c04cc73fa",
+      "current_events_sha256": "2421d7e30598938978c908276427b9f249b34e3dde7de8666abe918c04cc73fa",
+      "original_checkpoints_sha256": "2bba879af3ebf68dd54abe7a9e09ebd403ff53e00b847bf406dfafff4ecf13ae",
+      "restored_checkpoints_sha256": "2bba879af3ebf68dd54abe7a9e09ebd403ff53e00b847bf406dfafff4ecf13ae",
+      "current_checkpoints_sha256": "2bba879af3ebf68dd54abe7a9e09ebd403ff53e00b847bf406dfafff4ecf13ae",
+      "inserted_events": []
+    },
+    {
+      "id": "sam-failure",
+      "original_events_sha256": "158ea9f200872e6a2e9eba91ffdfbcae8c3d7c3e698caed17d629137b5e65a5f",
+      "restored_events_sha256": "158ea9f200872e6a2e9eba91ffdfbcae8c3d7c3e698caed17d629137b5e65a5f",
+      "current_events_sha256": "158ea9f200872e6a2e9eba91ffdfbcae8c3d7c3e698caed17d629137b5e65a5f",
+      "original_checkpoints_sha256": "d5c84c87c83a5cf85428a1ec0908041e5708f36ef7ea857ba54e91b2916d26b4",
+      "restored_checkpoints_sha256": "d5c84c87c83a5cf85428a1ec0908041e5708f36ef7ea857ba54e91b2916d26b4",
+      "current_checkpoints_sha256": "d5c84c87c83a5cf85428a1ec0908041e5708f36ef7ea857ba54e91b2916d26b4",
+      "inserted_events": []
+    },
+    {
+      "id": "tem-failure",
+      "original_events_sha256": "39ebff05e1ee1fd22395e6ac24d099a938e26e0771a7313efa6aaa481080ae59",
+      "restored_events_sha256": "39ebff05e1ee1fd22395e6ac24d099a938e26e0771a7313efa6aaa481080ae59",
+      "current_events_sha256": "39ebff05e1ee1fd22395e6ac24d099a938e26e0771a7313efa6aaa481080ae59",
+      "original_checkpoints_sha256": "4498dcff511768a908e298232e34490defe82eecc43be6fffd4e29665270a560",
+      "restored_checkpoints_sha256": "4498dcff511768a908e298232e34490defe82eecc43be6fffd4e29665270a560",
+      "current_checkpoints_sha256": "4498dcff511768a908e298232e34490defe82eecc43be6fffd4e29665270a560",
+      "inserted_events": []
+    },
+    {
+      "id": "static-failure",
+      "original_events_sha256": "e4c6f133c69cbf28005a4195c57c195b85c318ccc123d9c3ef0c66546fd3cab7",
+      "restored_events_sha256": "e4c6f133c69cbf28005a4195c57c195b85c318ccc123d9c3ef0c66546fd3cab7",
+      "current_events_sha256": "e4c6f133c69cbf28005a4195c57c195b85c318ccc123d9c3ef0c66546fd3cab7",
+      "original_checkpoints_sha256": "3399377ca1e6fafea9a2d582bcd40eb3e22ddfd2d38c9c080ad7dc7ff8177d83",
+      "restored_checkpoints_sha256": "3399377ca1e6fafea9a2d582bcd40eb3e22ddfd2d38c9c080ad7dc7ff8177d83",
+      "current_checkpoints_sha256": "3399377ca1e6fafea9a2d582bcd40eb3e22ddfd2d38c9c080ad7dc7ff8177d83",
+      "inserted_events": []
+    },
+    {
+      "id": "sqe-failure",
+      "original_events_sha256": "f2e9e3716ba160890bdb3cc77b67aaa95d927ebf18fb30051183cd301f10a560",
+      "restored_events_sha256": "f2e9e3716ba160890bdb3cc77b67aaa95d927ebf18fb30051183cd301f10a560",
+      "current_events_sha256": "237a75ced9fb5fed6b907a1f47fc194dd5c1333b6f1756166fe6dd9793b1d7ca",
+      "original_checkpoints_sha256": "6975fd10f30c2a9185c2a364ce163eadd559ab0913236151be1555d6b5f1608e",
+      "restored_checkpoints_sha256": "6975fd10f30c2a9185c2a364ce163eadd559ab0913236151be1555d6b5f1608e",
+      "current_checkpoints_sha256": "4e24f78b74e27d2a24046bf908d2244db50cdec94e680b2cb76ff860fb761dae",
+      "inserted_events": [
+        {
+          "event_id": "mock:sqe-failure:sqe-event:1",
+          "source_id": "mock:sqe-catalog",
+          "source_seq": 1,
+          "type": "sqe_context",
+          "step_id": "P22",
+          "cycle": 1,
+          "attempt": 1,
+          "execution_id": "mock:P22:c1:a1"
+        },
+        {
+          "event_id": "mock:sqe-failure:sqe-event:2",
+          "source_id": "mock:sqe-catalog",
+          "source_seq": 2,
+          "type": "sqe_result",
+          "step_id": "P22",
+          "cycle": 1,
+          "attempt": 1,
+          "execution_id": "mock:P22:c1:a1"
+        },
+        {
+          "event_id": "mock:sqe-failure:sqe-event:3",
+          "source_id": "mock:sqe-catalog",
+          "source_seq": 3,
+          "type": "sqe_report",
+          "step_id": "P23",
+          "cycle": 1,
+          "attempt": 1,
+          "execution_id": "mock:P23:c1:a1"
+        }
+      ]
+    },
+    {
+      "id": "oss-failure",
+      "original_events_sha256": "f4a423e3cd307aa49e139d4cb4d646bd6f7b7123134f3e0a52897c12bbd028e2",
+      "restored_events_sha256": "f4a423e3cd307aa49e139d4cb4d646bd6f7b7123134f3e0a52897c12bbd028e2",
+      "current_events_sha256": "f4a423e3cd307aa49e139d4cb4d646bd6f7b7123134f3e0a52897c12bbd028e2",
+      "original_checkpoints_sha256": "75a78884acf6af70449bdbc246ddf55115afd986bc04de68db8985c165dada08",
+      "restored_checkpoints_sha256": "75a78884acf6af70449bdbc246ddf55115afd986bc04de68db8985c165dada08",
+      "current_checkpoints_sha256": "75a78884acf6af70449bdbc246ddf55115afd986bc04de68db8985c165dada08",
+      "inserted_events": []
+    },
+    {
+      "id": "oss-design-change",
+      "original_events_sha256": "e42d733758a1123a2f361bdc7781d5b6045b34885c3d82c1b3a46b3343be6e12",
+      "restored_events_sha256": "e42d733758a1123a2f361bdc7781d5b6045b34885c3d82c1b3a46b3343be6e12",
+      "current_events_sha256": "e42d733758a1123a2f361bdc7781d5b6045b34885c3d82c1b3a46b3343be6e12",
+      "original_checkpoints_sha256": "33bcdad8c79e164cfaaa7559d3563cb8260ea249d7179220bcbcccf3d3e26220",
+      "restored_checkpoints_sha256": "33bcdad8c79e164cfaaa7559d3563cb8260ea249d7179220bcbcccf3d3e26220",
+      "current_checkpoints_sha256": "33bcdad8c79e164cfaaa7559d3563cb8260ea249d7179220bcbcccf3d3e26220",
+      "inserted_events": []
+    },
+    {
+      "id": "plan-rejection",
+      "original_events_sha256": "341ca07cf16adbdeb4a02355d85faa5f5a5775aeb628d29282074964f1a947f9",
+      "restored_events_sha256": "341ca07cf16adbdeb4a02355d85faa5f5a5775aeb628d29282074964f1a947f9",
+      "current_events_sha256": "341ca07cf16adbdeb4a02355d85faa5f5a5775aeb628d29282074964f1a947f9",
+      "original_checkpoints_sha256": "8723ee745d5e9868e5d218a8038625c152b5375d6c895b30357b75c1b8a7ffb5",
+      "restored_checkpoints_sha256": "8723ee745d5e9868e5d218a8038625c152b5375d6c895b30357b75c1b8a7ffb5",
+      "current_checkpoints_sha256": "8723ee745d5e9868e5d218a8038625c152b5375d6c895b30357b75c1b8a7ffb5",
+      "inserted_events": []
+    },
+    {
+      "id": "release-reject-code",
+      "original_events_sha256": "34b31ed4209a88c6223cec6837076f53a83a1979bf989075398d8f0d90a326aa",
+      "restored_events_sha256": "34b31ed4209a88c6223cec6837076f53a83a1979bf989075398d8f0d90a326aa",
+      "current_events_sha256": "cdd984fc0ae65919b5f1efd1b1ef22571744e1e394da100a04bfe0b01598ea6d",
+      "original_checkpoints_sha256": "71b67cd170bd534d85266e3528c50cbdc031fe84187a989986f28d1adc2aaa76",
+      "restored_checkpoints_sha256": "71b67cd170bd534d85266e3528c50cbdc031fe84187a989986f28d1adc2aaa76",
+      "current_checkpoints_sha256": "b2e486d4aba25da2ab9f6c2c6480a1f67c1fcd8d28d748f76dd8b60c6bfbb800",
+      "inserted_events": [
+        {
+          "event_id": "mock:release-reject-code:sqe-event:1",
+          "source_id": "mock:sqe-catalog",
+          "source_seq": 1,
+          "type": "sqe_context",
+          "step_id": "P22",
+          "cycle": 1,
+          "attempt": 1,
+          "execution_id": "mock:P22:c1:a1"
+        },
+        {
+          "event_id": "mock:release-reject-code:sqe-event:2",
+          "source_id": "mock:sqe-catalog",
+          "source_seq": 2,
+          "type": "sqe_result",
+          "step_id": "P22",
+          "cycle": 1,
+          "attempt": 1,
+          "execution_id": "mock:P22:c1:a1"
+        },
+        {
+          "event_id": "mock:release-reject-code:sqe-event:3",
+          "source_id": "mock:sqe-catalog",
+          "source_seq": 3,
+          "type": "sqe_report",
+          "step_id": "P23",
+          "cycle": 1,
+          "attempt": 1,
+          "execution_id": "mock:P23:c1:a1"
+        }
+      ]
+    },
+    {
+      "id": "release-reject-design",
+      "original_events_sha256": "c86e053d06eaf047c287e186338fd8317e620010784dc444d213d4587e49b10f",
+      "restored_events_sha256": "c86e053d06eaf047c287e186338fd8317e620010784dc444d213d4587e49b10f",
+      "current_events_sha256": "d1b3032419f8bc15fd3c44945ff9eb9257b57c909027f7f7e6d8d27b0de294a3",
+      "original_checkpoints_sha256": "74fb702aadacd0e311c1d92dbe5023f7bb56a2a85587aab10395750546624102",
+      "restored_checkpoints_sha256": "74fb702aadacd0e311c1d92dbe5023f7bb56a2a85587aab10395750546624102",
+      "current_checkpoints_sha256": "88f521bc16205aac122a16c5f47c2da760ee3da5ac0dd90fd458f2b30aeb59fc",
+      "inserted_events": [
+        {
+          "event_id": "mock:release-reject-design:sqe-event:1",
+          "source_id": "mock:sqe-catalog",
+          "source_seq": 1,
+          "type": "sqe_context",
+          "step_id": "P22",
+          "cycle": 1,
+          "attempt": 1,
+          "execution_id": "mock:P22:c1:a1"
+        },
+        {
+          "event_id": "mock:release-reject-design:sqe-event:2",
+          "source_id": "mock:sqe-catalog",
+          "source_seq": 2,
+          "type": "sqe_result",
+          "step_id": "P22",
+          "cycle": 1,
+          "attempt": 1,
+          "execution_id": "mock:P22:c1:a1"
+        },
+        {
+          "event_id": "mock:release-reject-design:sqe-event:3",
+          "source_id": "mock:sqe-catalog",
+          "source_seq": 3,
+          "type": "sqe_report",
+          "step_id": "P23",
+          "cycle": 1,
+          "attempt": 1,
+          "execution_id": "mock:P23:c1:a1"
+        }
+      ]
+    },
+    {
+      "id": "metadata-recovery",
+      "original_events_sha256": "1a7a18625249fd69b0464ce30833fa659e175c77373935d1e70121dcb12a7177",
+      "restored_events_sha256": "1a7a18625249fd69b0464ce30833fa659e175c77373935d1e70121dcb12a7177",
+      "current_events_sha256": "8db42b3f79759e6d01d81e34facceb46a2d8479a077ed3d62a3ddd7bfb8b2d3f",
+      "original_checkpoints_sha256": "2e9634553e27f638c6ddeb12a36d3d077dbf3fac22528815715b3b99a2eb8fb0",
+      "restored_checkpoints_sha256": "2e9634553e27f638c6ddeb12a36d3d077dbf3fac22528815715b3b99a2eb8fb0",
+      "current_checkpoints_sha256": "d72298859003c9fc2f58a16e8a0c07e29cbeedc26568b75a1eab34b904ce0479",
+      "inserted_events": [
+        {
+          "event_id": "mock:metadata-recovery:sqe-event:1",
+          "source_id": "mock:sqe-catalog",
+          "source_seq": 1,
+          "type": "sqe_context",
+          "step_id": "P22",
+          "cycle": 1,
+          "attempt": 1,
+          "execution_id": "mock:P22:c1:a1"
+        },
+        {
+          "event_id": "mock:metadata-recovery:sqe-event:2",
+          "source_id": "mock:sqe-catalog",
+          "source_seq": 2,
+          "type": "sqe_result",
+          "step_id": "P22",
+          "cycle": 1,
+          "attempt": 1,
+          "execution_id": "mock:P22:c1:a1"
+        },
+        {
+          "event_id": "mock:metadata-recovery:sqe-event:3",
+          "source_id": "mock:sqe-catalog",
+          "source_seq": 3,
+          "type": "sqe_report",
+          "step_id": "P23",
+          "cycle": 1,
+          "attempt": 1,
+          "execution_id": "mock:P23:c1:a1"
+        }
+      ]
+    },
+    {
+      "id": "metric-missing",
+      "original_events_sha256": "139a7d102dcac6f66e0972e0626ab1736fddbef7eab17d09c69d2e3af7e9a2e9",
+      "restored_events_sha256": "139a7d102dcac6f66e0972e0626ab1736fddbef7eab17d09c69d2e3af7e9a2e9",
+      "current_events_sha256": "139a7d102dcac6f66e0972e0626ab1736fddbef7eab17d09c69d2e3af7e9a2e9",
+      "original_checkpoints_sha256": "e78e891967aeb5df372f44ade950fd1778331b75e8e0903061977330a696509a",
+      "restored_checkpoints_sha256": "e78e891967aeb5df372f44ade950fd1778331b75e8e0903061977330a696509a",
+      "current_checkpoints_sha256": "e78e891967aeb5df372f44ade950fd1778331b75e8e0903061977330a696509a",
+      "inserted_events": []
+    },
+    {
+      "id": "stale-result",
+      "original_events_sha256": "5e8794096bb46a09590a52752fe5895e5b99dcb9d32739f04cc2b98946339b6d",
+      "restored_events_sha256": "5e8794096bb46a09590a52752fe5895e5b99dcb9d32739f04cc2b98946339b6d",
+      "current_events_sha256": "5e8794096bb46a09590a52752fe5895e5b99dcb9d32739f04cc2b98946339b6d",
+      "original_checkpoints_sha256": "22d45f6dc2d6ba36fe3022763a633d0c91e74d3080b0dede1529afb48c4c7d60",
+      "restored_checkpoints_sha256": "22d45f6dc2d6ba36fe3022763a633d0c91e74d3080b0dede1529afb48c4c7d60",
+      "current_checkpoints_sha256": "22d45f6dc2d6ba36fe3022763a633d0c91e74d3080b0dede1529afb48c4c7d60",
+      "inserted_events": []
+    },
+    {
+      "id": "stale-candidate",
+      "original_events_sha256": "4efd759a02a6f7772104472bba44b79bbb24bcb228acabbf6322dca3b62a533f",
+      "restored_events_sha256": "4efd759a02a6f7772104472bba44b79bbb24bcb228acabbf6322dca3b62a533f",
+      "current_events_sha256": "4efd759a02a6f7772104472bba44b79bbb24bcb228acabbf6322dca3b62a533f",
+      "original_checkpoints_sha256": "22d45f6dc2d6ba36fe3022763a633d0c91e74d3080b0dede1529afb48c4c7d60",
+      "restored_checkpoints_sha256": "22d45f6dc2d6ba36fe3022763a633d0c91e74d3080b0dede1529afb48c4c7d60",
+      "current_checkpoints_sha256": "22d45f6dc2d6ba36fe3022763a633d0c91e74d3080b0dede1529afb48c4c7d60",
+      "inserted_events": []
+    },
+    {
+      "id": "stale-approval",
+      "original_events_sha256": "ceda6bb2d8823eac5f2360d9c38773dd7dacb26d58e23e88fb7bdf16af03de76",
+      "restored_events_sha256": "ceda6bb2d8823eac5f2360d9c38773dd7dacb26d58e23e88fb7bdf16af03de76",
+      "current_events_sha256": "2f8363570c840eb0cb61257529bc61e9d1574f15aff25c53c0e188dd6b3b9583",
+      "original_checkpoints_sha256": "42d62a63bd82c0980b3140dd292ff736ff2520f1ff1eb5b41daa8e9273f26af4",
+      "restored_checkpoints_sha256": "42d62a63bd82c0980b3140dd292ff736ff2520f1ff1eb5b41daa8e9273f26af4",
+      "current_checkpoints_sha256": "eac3f86201acce5b5c3a0a20183624963bcc8c115324bb37fbedcce7a750178c",
+      "inserted_events": [
+        {
+          "event_id": "mock:stale-approval:sqe-event:1",
+          "source_id": "mock:sqe-catalog",
+          "source_seq": 1,
+          "type": "sqe_context",
+          "step_id": "P22",
+          "cycle": 1,
+          "attempt": 1,
+          "execution_id": "mock:P22:c1:a1"
+        },
+        {
+          "event_id": "mock:stale-approval:sqe-event:2",
+          "source_id": "mock:sqe-catalog",
+          "source_seq": 2,
+          "type": "sqe_result",
+          "step_id": "P22",
+          "cycle": 1,
+          "attempt": 1,
+          "execution_id": "mock:P22:c1:a1"
+        },
+        {
+          "event_id": "mock:stale-approval:sqe-event:3",
+          "source_id": "mock:sqe-catalog",
+          "source_seq": 3,
+          "type": "sqe_report",
+          "step_id": "P23",
+          "cycle": 1,
+          "attempt": 1,
+          "execution_id": "mock:P23:c1:a1"
+        }
+      ]
+    },
+    {
+      "id": "duplicate-events",
+      "original_events_sha256": "d9df4633615d9f760e614b8b242cbb981fc1f0a186195bdedb9475e8d7d11a2a",
+      "restored_events_sha256": "d9df4633615d9f760e614b8b242cbb981fc1f0a186195bdedb9475e8d7d11a2a",
+      "current_events_sha256": "d9df4633615d9f760e614b8b242cbb981fc1f0a186195bdedb9475e8d7d11a2a",
+      "original_checkpoints_sha256": "6b88f80f43c14de1ea409895dd6c53c66f5e47827bda89caab02b072097c8112",
+      "restored_checkpoints_sha256": "6b88f80f43c14de1ea409895dd6c53c66f5e47827bda89caab02b072097c8112",
+      "current_checkpoints_sha256": "6b88f80f43c14de1ea409895dd6c53c66f5e47827bda89caab02b072097c8112",
+      "inserted_events": []
+    },
+    {
+      "id": "retry-limit",
+      "original_events_sha256": "29b9298cddb281d7d42906152df96b132918790c8c924a89db691b8255be54bb",
+      "restored_events_sha256": "29b9298cddb281d7d42906152df96b132918790c8c924a89db691b8255be54bb",
+      "current_events_sha256": "29b9298cddb281d7d42906152df96b132918790c8c924a89db691b8255be54bb",
+      "original_checkpoints_sha256": "df28af118a83a6ae67f8cb8c4031c06f48aac0fca0fca7ef4f19e526cf2ba760",
+      "restored_checkpoints_sha256": "df28af118a83a6ae67f8cb8c4031c06f48aac0fca0fca7ef4f19e526cf2ba760",
+      "current_checkpoints_sha256": "df28af118a83a6ae67f8cb8c4031c06f48aac0fca0fca7ef4f19e526cf2ba760",
+      "inserted_events": []
+    },
+    {
+      "id": "cycle-limit",
+      "original_events_sha256": "ba20f40214136908497da4e169d61df2866df7b2c46ea8b8a15bdd40858f441a",
+      "restored_events_sha256": "ba20f40214136908497da4e169d61df2866df7b2c46ea8b8a15bdd40858f441a",
+      "current_events_sha256": "ba20f40214136908497da4e169d61df2866df7b2c46ea8b8a15bdd40858f441a",
+      "original_checkpoints_sha256": "3a52e05d0ef7a2ca8575265ce1427f1b2255e5c4d653a93c334cc60ac08cfd93",
+      "restored_checkpoints_sha256": "3a52e05d0ef7a2ca8575265ce1427f1b2255e5c4d653a93c334cc60ac08cfd93",
+      "current_checkpoints_sha256": "3a52e05d0ef7a2ca8575265ce1427f1b2255e5c4d653a93c334cc60ac08cfd93",
+      "inserted_events": []
+    },
+    {
+      "id": "device-boundaries",
+      "original_events_sha256": "513ce86f3506a7bd3088d02d45612e14b38fcfcf7a8cdd43ca13cea66d85ccd0",
+      "restored_events_sha256": "513ce86f3506a7bd3088d02d45612e14b38fcfcf7a8cdd43ca13cea66d85ccd0",
+      "current_events_sha256": "5f3ee89d5c01cb18c039ffd603821fd2aa61c8560b282b47df679a54bdbddc09",
+      "original_checkpoints_sha256": "95f6391cc926eb149efb99d99c4d8271e6114016fa8ca2af2f52650c9065efd9",
+      "restored_checkpoints_sha256": "95f6391cc926eb149efb99d99c4d8271e6114016fa8ca2af2f52650c9065efd9",
+      "current_checkpoints_sha256": "73ecd6c6cf0b339b1d6700bbe9c8a915817111fd64728be4dbd6f91474246c37",
+      "inserted_events": [
+        {
+          "event_id": "mock:device-boundaries:sqe-event:1",
+          "source_id": "mock:sqe-catalog",
+          "source_seq": 1,
+          "type": "sqe_context",
+          "step_id": "P22",
+          "cycle": 1,
+          "attempt": 1,
+          "execution_id": "mock:P22:c1:a1"
+        }
+      ]
+    },
+    {
+      "id": "flash-unknown",
+      "original_events_sha256": "ed6e2261bdf8b4df4852c0fad3bdaf21634405b4672fc0b5ab8b084c78088495",
+      "restored_events_sha256": "ed6e2261bdf8b4df4852c0fad3bdaf21634405b4672fc0b5ab8b084c78088495",
+      "current_events_sha256": "526abd7ed6bb5f00ad9a60068202600467db85e5fd96acc22302691944921ae4",
+      "original_checkpoints_sha256": "e7dd29726d0c4f96cb04b63f7368996a6f4c56d1167f989437e4f3e7924cb262",
+      "restored_checkpoints_sha256": "e7dd29726d0c4f96cb04b63f7368996a6f4c56d1167f989437e4f3e7924cb262",
+      "current_checkpoints_sha256": "701a7b2adeba9421bb473cd9c4eaec20b8c52de9b3040846b259f5e23f4398f3",
+      "inserted_events": [
+        {
+          "event_id": "mock:flash-unknown:sqe-event:1",
+          "source_id": "mock:sqe-catalog",
+          "source_seq": 1,
+          "type": "sqe_context",
+          "step_id": "P22",
+          "cycle": 1,
+          "attempt": 1,
+          "execution_id": "mock:P22:c1:a1"
+        }
+      ]
+    },
+    {
+      "id": "notes-only",
+      "original_events_sha256": "16466d6786dd1ccf6ec7239045fb878c2218741cd9661e5843d5c5905eb4ef07",
+      "restored_events_sha256": "16466d6786dd1ccf6ec7239045fb878c2218741cd9661e5843d5c5905eb4ef07",
+      "current_events_sha256": "ed318eda922f5f5244c19aa4c4678f3628c375e6c8beaab018839e81ee06ba26",
+      "original_checkpoints_sha256": "c3acf1d37dfbd59df7624750cc18912384d80139f2063e0faa55bbff2f842b3c",
+      "restored_checkpoints_sha256": "c3acf1d37dfbd59df7624750cc18912384d80139f2063e0faa55bbff2f842b3c",
+      "current_checkpoints_sha256": "5651cfce2df527a28ff8c23057cf71cc90873687a20d0f99ffb6c6d1de049b3d",
+      "inserted_events": [
+        {
+          "event_id": "mock:notes-only:sqe-event:1",
+          "source_id": "mock:sqe-catalog",
+          "source_seq": 1,
+          "type": "sqe_context",
+          "step_id": "P22",
+          "cycle": 1,
+          "attempt": 1,
+          "execution_id": "mock:P22:c1:a1"
+        },
+        {
+          "event_id": "mock:notes-only:sqe-event:2",
+          "source_id": "mock:sqe-catalog",
+          "source_seq": 2,
+          "type": "sqe_result",
+          "step_id": "P22",
+          "cycle": 1,
+          "attempt": 1,
+          "execution_id": "mock:P22:c1:a1"
+        },
+        {
+          "event_id": "mock:notes-only:sqe-event:3",
+          "source_id": "mock:sqe-catalog",
+          "source_seq": 3,
+          "type": "sqe_report",
+          "step_id": "P23",
+          "cycle": 1,
+          "attempt": 1,
+          "execution_id": "mock:P23:c1:a1"
+        }
+      ]
+    },
+    {
+      "id": "spec-question-wait",
+      "original_events_sha256": "c7ca579920d81834f42439e60f4498ce795315f602bcff7aedb1286bc21816b5",
+      "restored_events_sha256": "c7ca579920d81834f42439e60f4498ce795315f602bcff7aedb1286bc21816b5",
+      "current_events_sha256": "c7ca579920d81834f42439e60f4498ce795315f602bcff7aedb1286bc21816b5",
+      "original_checkpoints_sha256": "51122f960f63ef187c4324ae19d0bb7a87634571b5cfad438ebb02cfb6498d36",
+      "restored_checkpoints_sha256": "51122f960f63ef187c4324ae19d0bb7a87634571b5cfad438ebb02cfb6498d36",
+      "current_checkpoints_sha256": "51122f960f63ef187c4324ae19d0bb7a87634571b5cfad438ebb02cfb6498d36",
+      "inserted_events": []
+    },
+    {
+      "id": "spec-question-resolution",
+      "original_events_sha256": "5c58f7e5b1b8142cfc09117489f8982c10a046a6cdf7ce257930b9b5dbbfe2bb",
+      "restored_events_sha256": "5c58f7e5b1b8142cfc09117489f8982c10a046a6cdf7ce257930b9b5dbbfe2bb",
+      "current_events_sha256": "5c58f7e5b1b8142cfc09117489f8982c10a046a6cdf7ce257930b9b5dbbfe2bb",
+      "original_checkpoints_sha256": "02fe972dfa1e5674eafcc285f5b169d10fab0677797949417d10fe16397b57d3",
+      "restored_checkpoints_sha256": "02fe972dfa1e5674eafcc285f5b169d10fab0677797949417d10fe16397b57d3",
+      "current_checkpoints_sha256": "02fe972dfa1e5674eafcc285f5b169d10fab0677797949417d10fe16397b57d3",
+      "inserted_events": []
+    },
+    {
+      "id": "spec-question-retry",
+      "original_events_sha256": "d9bbd56ebd27bfd53c3d8e1998478bd38c21d3df11654879ec6fad5e8eff8e17",
+      "restored_events_sha256": "d9bbd56ebd27bfd53c3d8e1998478bd38c21d3df11654879ec6fad5e8eff8e17",
+      "current_events_sha256": "d9bbd56ebd27bfd53c3d8e1998478bd38c21d3df11654879ec6fad5e8eff8e17",
+      "original_checkpoints_sha256": "b539e3ee89788c0ebff449f5912a2b440eace17ecf118fae257d0e6798953cbf",
+      "restored_checkpoints_sha256": "b539e3ee89788c0ebff449f5912a2b440eace17ecf118fae257d0e6798953cbf",
+      "current_checkpoints_sha256": "b539e3ee89788c0ebff449f5912a2b440eace17ecf118fae257d0e6798953cbf",
+      "inserted_events": []
+    },
+    {
+      "id": "spec-question-repeat",
+      "original_events_sha256": "be25a867c551a4f80f1ee681ad764f702b52ba36c5d6a7fd5de5755712cc6436",
+      "restored_events_sha256": "be25a867c551a4f80f1ee681ad764f702b52ba36c5d6a7fd5de5755712cc6436",
+      "current_events_sha256": "be25a867c551a4f80f1ee681ad764f702b52ba36c5d6a7fd5de5755712cc6436",
+      "original_checkpoints_sha256": "af58700deabd7c7573c5bf74dbd3d7830c8fb697480c15a498bae156a59de004",
+      "restored_checkpoints_sha256": "af58700deabd7c7573c5bf74dbd3d7830c8fb697480c15a498bae156a59de004",
+      "current_checkpoints_sha256": "af58700deabd7c7573c5bf74dbd3d7830c8fb697480c15a498bae156a59de004",
+      "inserted_events": []
+    },
+    {
+      "id": "remote-uncertainty",
+      "original_events_sha256": "0ce7615c8dbfd8f14b37d8fb6a444747f39d40f74d23e8f22dd24c3f7b7b861b",
+      "restored_events_sha256": "0ce7615c8dbfd8f14b37d8fb6a444747f39d40f74d23e8f22dd24c3f7b7b861b",
+      "current_events_sha256": "1de4c1ccaf3742ed115e236e0a9bf6fd97134de69607dffce202a4a070db116f",
+      "original_checkpoints_sha256": "d7b94cb983a2341d8afc8d5cda242c52a7ac37478b99eaba7ff69c221dc0853d",
+      "restored_checkpoints_sha256": "d7b94cb983a2341d8afc8d5cda242c52a7ac37478b99eaba7ff69c221dc0853d",
+      "current_checkpoints_sha256": "2a1d277431526e6751525db28b2328dcb59ea7fc75ecac1c3982213626ce9ece",
+      "inserted_events": [
+        {
+          "event_id": "mock:remote-uncertainty:sqe-event:1",
+          "source_id": "mock:sqe-catalog",
+          "source_seq": 1,
+          "type": "sqe_context",
+          "step_id": "P22",
+          "cycle": 1,
+          "attempt": 1,
+          "execution_id": "mock:P22:c1:a1"
+        },
+        {
+          "event_id": "mock:remote-uncertainty:sqe-event:2",
+          "source_id": "mock:sqe-catalog",
+          "source_seq": 2,
+          "type": "sqe_result",
+          "step_id": "P22",
+          "cycle": 1,
+          "attempt": 1,
+          "execution_id": "mock:P22:c1:a1"
+        },
+        {
+          "event_id": "mock:remote-uncertainty:sqe-event:3",
+          "source_id": "mock:sqe-catalog",
+          "source_seq": 3,
+          "type": "sqe_report",
+          "step_id": "P23",
+          "cycle": 1,
+          "attempt": 1,
+          "execution_id": "mock:P23:c1:a1"
+        }
+      ]
+    },
+    {
+      "id": "remote-recovery",
+      "original_events_sha256": "f271b686a6414780ea21c814d9260e445ea5ebb862fdd63a3e224096829bf9f5",
+      "restored_events_sha256": "f271b686a6414780ea21c814d9260e445ea5ebb862fdd63a3e224096829bf9f5",
+      "current_events_sha256": "28363f032927b99456616c076283d60f0caf7dee0e566eb24ce3ccd30d6f21f2",
+      "original_checkpoints_sha256": "3aedde8bf69497dc351aefcfc969e491797fb4450ce80abb57fc0514ccdbfb82",
+      "restored_checkpoints_sha256": "3aedde8bf69497dc351aefcfc969e491797fb4450ce80abb57fc0514ccdbfb82",
+      "current_checkpoints_sha256": "7168c9bd1d2cc817dc8af9ea73bd1594c84b916509c88698c50ec9256af79bc7",
+      "inserted_events": [
+        {
+          "event_id": "mock:remote-recovery:sqe-event:1",
+          "source_id": "mock:sqe-catalog",
+          "source_seq": 1,
+          "type": "sqe_context",
+          "step_id": "P22",
+          "cycle": 1,
+          "attempt": 1,
+          "execution_id": "mock:P22:c1:a1"
+        },
+        {
+          "event_id": "mock:remote-recovery:sqe-event:2",
+          "source_id": "mock:sqe-catalog",
+          "source_seq": 2,
+          "type": "sqe_result",
+          "step_id": "P22",
+          "cycle": 1,
+          "attempt": 1,
+          "execution_id": "mock:P22:c1:a1"
+        },
+        {
+          "event_id": "mock:remote-recovery:sqe-event:3",
+          "source_id": "mock:sqe-catalog",
+          "source_seq": 3,
+          "type": "sqe_report",
+          "step_id": "P23",
+          "cycle": 1,
+          "attempt": 1,
+          "execution_id": "mock:P23:c1:a1"
+        }
+      ]
+    },
+    {
+      "id": "remote-device-quarantine",
+      "original_events_sha256": "3298a3fff488f5f1513126e3e3a21f6689815d161c9b0a064fd6da770fe95472",
+      "restored_events_sha256": "3298a3fff488f5f1513126e3e3a21f6689815d161c9b0a064fd6da770fe95472",
+      "current_events_sha256": "64025f5653e4ec1f68377fd024d40c80d4d96c48559d00911331e9964470b0bb",
+      "original_checkpoints_sha256": "479018f4a6501789e5c81727f1533b99013c80719f40ebc006686729dea800a2",
+      "restored_checkpoints_sha256": "479018f4a6501789e5c81727f1533b99013c80719f40ebc006686729dea800a2",
+      "current_checkpoints_sha256": "3340a90f13ecd50272858273ada28d755061d21123804ba58a16ce4b83541bce",
+      "inserted_events": [
+        {
+          "event_id": "mock:remote-device-quarantine:sqe-event:1",
+          "source_id": "mock:sqe-catalog",
+          "source_seq": 1,
+          "type": "sqe_context",
+          "step_id": "P22",
+          "cycle": 1,
+          "attempt": 1,
+          "execution_id": "mock:P22:c1:a1"
+        },
+        {
+          "event_id": "mock:remote-device-quarantine:sqe-event:2",
+          "source_id": "mock:sqe-catalog",
+          "source_seq": 2,
+          "type": "sqe_result",
+          "step_id": "P22",
+          "cycle": 1,
+          "attempt": 1,
+          "execution_id": "mock:P22:c1:a1"
+        },
+        {
+          "event_id": "mock:remote-device-quarantine:sqe-event:3",
+          "source_id": "mock:sqe-catalog",
+          "source_seq": 3,
+          "type": "sqe_report",
+          "step_id": "P23",
+          "cycle": 1,
+          "attempt": 1,
+          "execution_id": "mock:P23:c1:a1"
+        }
+      ]
+    },
+    {
+      "id": "routing-reuse",
+      "original_events_sha256": "910cb2d25237cfe1378647364afaa7f50e7ad3f27a7391fdebce0595e44033fa",
+      "restored_events_sha256": "910cb2d25237cfe1378647364afaa7f50e7ad3f27a7391fdebce0595e44033fa",
+      "current_events_sha256": "8cc109d6224154c1ccb358222e9ac6972ac693633b8ab653348231ea886e68a3",
+      "original_checkpoints_sha256": "1bf2bf8bd7f4809ef9d0e4fadb8f5692f63acf82af135c9feac0a8685d882652",
+      "restored_checkpoints_sha256": "1bf2bf8bd7f4809ef9d0e4fadb8f5692f63acf82af135c9feac0a8685d882652",
+      "current_checkpoints_sha256": "3ef3dcdfa9c833427c9031b8e7126a4cfa664d432abbe4507819146b25cd5337",
+      "inserted_events": [
+        {
+          "event_id": "mock:routing-reuse:sqe-event:1",
+          "source_id": "mock:sqe-catalog",
+          "source_seq": 1,
+          "type": "sqe_context",
+          "step_id": "P22",
+          "cycle": 1,
+          "attempt": 1,
+          "execution_id": "mock:P22:c1:a1"
+        },
+        {
+          "event_id": "mock:routing-reuse:sqe-event:2",
+          "source_id": "mock:sqe-catalog",
+          "source_seq": 2,
+          "type": "sqe_result",
+          "step_id": "P22",
+          "cycle": 1,
+          "attempt": 1,
+          "execution_id": "mock:P22:c1:a1"
+        },
+        {
+          "event_id": "mock:routing-reuse:sqe-event:3",
+          "source_id": "mock:sqe-catalog",
+          "source_seq": 3,
+          "type": "sqe_report",
+          "step_id": "P23",
+          "cycle": 1,
+          "attempt": 1,
+          "execution_id": "mock:P23:c1:a1"
+        }
+      ]
+    },
+    {
+      "id": "routing-new-hw",
+      "original_events_sha256": "d377d29106fe23bffd34d7b8d92186eb7eb7b967cf4fbeb031d85dca618e36ec",
+      "restored_events_sha256": "d377d29106fe23bffd34d7b8d92186eb7eb7b967cf4fbeb031d85dca618e36ec",
+      "current_events_sha256": "d377d29106fe23bffd34d7b8d92186eb7eb7b967cf4fbeb031d85dca618e36ec",
+      "original_checkpoints_sha256": "3a412d7db52ef45270ddd7f7ad889dc0a209e5938f4ab41fa843965b107e862a",
+      "restored_checkpoints_sha256": "3a412d7db52ef45270ddd7f7ad889dc0a209e5938f4ab41fa843965b107e862a",
+      "current_checkpoints_sha256": "3a412d7db52ef45270ddd7f7ad889dc0a209e5938f4ab41fa843965b107e862a",
+      "inserted_events": []
+    },
+    {
+      "id": "routing-exempt",
+      "original_events_sha256": "200b4a303b2f5d4cb7e57dbccc5a8a9c9054d63e4dabc4d44170b52bd6c0e3b5",
+      "restored_events_sha256": "200b4a303b2f5d4cb7e57dbccc5a8a9c9054d63e4dabc4d44170b52bd6c0e3b5",
+      "current_events_sha256": "200b4a303b2f5d4cb7e57dbccc5a8a9c9054d63e4dabc4d44170b52bd6c0e3b5",
+      "original_checkpoints_sha256": "eedfeda1ecb6b77e688f0652d898967b82d5fb43a7d0795b18f64289c1e3fb90",
+      "restored_checkpoints_sha256": "eedfeda1ecb6b77e688f0652d898967b82d5fb43a7d0795b18f64289c1e3fb90",
+      "current_checkpoints_sha256": "eedfeda1ecb6b77e688f0652d898967b82d5fb43a7d0795b18f64289c1e3fb90",
+      "inserted_events": []
+    },
+    {
+      "id": "routing-pilot-denied",
+      "original_events_sha256": "976a32bd2e97fff53a48affff7f28dd31bb94fd6c50b0d885573887f638962b2",
+      "restored_events_sha256": "976a32bd2e97fff53a48affff7f28dd31bb94fd6c50b0d885573887f638962b2",
+      "current_events_sha256": "976a32bd2e97fff53a48affff7f28dd31bb94fd6c50b0d885573887f638962b2",
+      "original_checkpoints_sha256": "9562339459d644b730cd258620091582fc3a35d32b783b7d6754cd113fb075cc",
+      "restored_checkpoints_sha256": "9562339459d644b730cd258620091582fc3a35d32b783b7d6754cd113fb075cc",
+      "current_checkpoints_sha256": "9562339459d644b730cd258620091582fc3a35d32b783b7d6754cd113fb075cc",
+      "inserted_events": []
+    },
+    {
+      "id": "routing-no-change",
+      "original_events_sha256": "db38e90ff457cb2a101b44d9425f6e36e52901ea2d4360e2979735f0bc0982db",
+      "restored_events_sha256": "db38e90ff457cb2a101b44d9425f6e36e52901ea2d4360e2979735f0bc0982db",
+      "current_events_sha256": "db38e90ff457cb2a101b44d9425f6e36e52901ea2d4360e2979735f0bc0982db",
+      "original_checkpoints_sha256": "1efa205386c3ba4c89d5c24b9588f62f36c9e63a70c554c744b07aedb45eb611",
+      "restored_checkpoints_sha256": "1efa205386c3ba4c89d5c24b9588f62f36c9e63a70c554c744b07aedb45eb611",
+      "current_checkpoints_sha256": "1efa205386c3ba4c89d5c24b9588f62f36c9e63a70c554c744b07aedb45eb611",
+      "inserted_events": []
+    },
+    {
+      "id": "routing-no-change-denied",
+      "original_events_sha256": "c88283fa1fb6fb465ab96a32d23fbd05b1ca25ccb37eefccc14df706c24e5bd0",
+      "restored_events_sha256": "c88283fa1fb6fb465ab96a32d23fbd05b1ca25ccb37eefccc14df706c24e5bd0",
+      "current_events_sha256": "c88283fa1fb6fb465ab96a32d23fbd05b1ca25ccb37eefccc14df706c24e5bd0",
+      "original_checkpoints_sha256": "812a51ff8f0f285c037aebfe337229444f9aa90192aa4dee1efe9e42b0d45d15",
+      "restored_checkpoints_sha256": "812a51ff8f0f285c037aebfe337229444f9aa90192aa4dee1efe9e42b0d45d15",
+      "current_checkpoints_sha256": "812a51ff8f0f285c037aebfe337229444f9aa90192aa4dee1efe9e42b0d45d15",
+      "inserted_events": []
+    },
+    {
+      "id": "routing-candidate",
+      "original_events_sha256": "997421d0136d09bb81b0c1330007f894f415dc20ad3f734c2ff0900260e02ce2",
+      "restored_events_sha256": "997421d0136d09bb81b0c1330007f894f415dc20ad3f734c2ff0900260e02ce2",
+      "current_events_sha256": "0ac792af70901a242b3b52eea7199c0b06bfd24df12b9c4aa55d82cd2dbbb13e",
+      "original_checkpoints_sha256": "ff49bf3e8c64b1d31b25ff5dd0e17451d1cf6e2fd9fbcb37d0ad10f33911924b",
+      "restored_checkpoints_sha256": "ff49bf3e8c64b1d31b25ff5dd0e17451d1cf6e2fd9fbcb37d0ad10f33911924b",
+      "current_checkpoints_sha256": "170492424e7d5e7f034b02eb422ff4d6024378f24f51ad569914c091143174af",
+      "inserted_events": [
+        {
+          "event_id": "mock:routing-candidate:sqe-event:1",
+          "source_id": "mock:sqe-catalog",
+          "source_seq": 1,
+          "type": "sqe_context",
+          "step_id": "P22",
+          "cycle": 1,
+          "attempt": 1,
+          "execution_id": "mock:P22:c1:a1"
+        },
+        {
+          "event_id": "mock:routing-candidate:sqe-event:2",
+          "source_id": "mock:sqe-catalog",
+          "source_seq": 2,
+          "type": "sqe_result",
+          "step_id": "P22",
+          "cycle": 1,
+          "attempt": 1,
+          "execution_id": "mock:P22:c1:a1"
+        },
+        {
+          "event_id": "mock:routing-candidate:sqe-event:3",
+          "source_id": "mock:sqe-catalog",
+          "source_seq": 3,
+          "type": "sqe_report",
+          "step_id": "P23",
+          "cycle": 1,
+          "attempt": 1,
+          "execution_id": "mock:P23:c1:a1"
+        }
+      ]
+    },
+    {
+      "id": "routing-replan",
+      "original_events_sha256": "3bdb6e61ada217fdd3dd7702748e9647aab835dee6e4a01c8acbae186abb4a95",
+      "restored_events_sha256": "3bdb6e61ada217fdd3dd7702748e9647aab835dee6e4a01c8acbae186abb4a95",
+      "current_events_sha256": "3bdb6e61ada217fdd3dd7702748e9647aab835dee6e4a01c8acbae186abb4a95",
+      "original_checkpoints_sha256": "b90b0f808e35f005f6670cd69e202022a94925b419e412b6c70c8ef9a6e921a7",
+      "restored_checkpoints_sha256": "b90b0f808e35f005f6670cd69e202022a94925b419e412b6c70c8ef9a6e921a7",
+      "current_checkpoints_sha256": "b90b0f808e35f005f6670cd69e202022a94925b419e412b6c70c8ef9a6e921a7",
+      "inserted_events": []
+    },
+    {
+      "id": "routing-metadata",
+      "original_events_sha256": "037c6165ee56cc168123f78c474f1e16f8fa94f80c8817bff68ddde72e6421be",
+      "restored_events_sha256": "037c6165ee56cc168123f78c474f1e16f8fa94f80c8817bff68ddde72e6421be",
+      "current_events_sha256": "037c6165ee56cc168123f78c474f1e16f8fa94f80c8817bff68ddde72e6421be",
+      "original_checkpoints_sha256": "9c638d488533f48135690d936430f11e619cdb4fea4d785e10a5ccd840bd4513",
+      "restored_checkpoints_sha256": "9c638d488533f48135690d936430f11e619cdb4fea4d785e10a5ccd840bd4513",
+      "current_checkpoints_sha256": "9c638d488533f48135690d936430f11e619cdb4fea4d785e10a5ccd840bd4513",
+      "inserted_events": []
+    }
+  ]
+}
