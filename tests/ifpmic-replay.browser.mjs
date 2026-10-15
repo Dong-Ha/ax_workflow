@@ -56,6 +56,15 @@ const scenarioOracle = {
   'remote-uncertainty': { current: 'P25', status: 'RECONCILING', cycle: 1 },
   'remote-recovery': { current: 'END', status: 'COMPLETED', cycle: 1 },
   'remote-device-quarantine': { current: 'P25', status: 'RECONCILING', cycle: 1 },
+  'routing-reuse': { current: 'END', status: 'COMPLETED', cycle: 1 },
+  'routing-new-hw': { current: 'P11', status: 'RUNNING', cycle: 1 },
+  'routing-exempt': { current: 'END', status: 'COMPLETED', cycle: 1 },
+  'routing-pilot-denied': { current: 'P15', status: 'RUNNING', cycle: 1 },
+  'routing-no-change': { current: 'P12', status: 'NO_CHANGE', cycle: 1 },
+  'routing-no-change-denied': { current: 'P12', status: 'RUNNING', cycle: 1 },
+  'routing-candidate': { current: 'END', status: 'COMPLETED', cycle: 1 },
+  'routing-replan': { current: 'P06', status: 'RUNNING', cycle: 2, rework: 1 },
+  'routing-metadata': { current: 'END', status: 'COMPLETED', cycle: 1, rework: 1 },
 };
 
 let browser;
@@ -247,7 +256,7 @@ try {
     assert.ok((await replayPanel().innerText()).includes('MOCK'));
   });
 
-  await record('catalog exposes all 32 frozen scenarios and starts each at cursor zero', async () => {
+  await record('catalog exposes all 41 frozen scenarios and starts each at cursor zero', async () => {
     const expectedIds = Object.keys(scenarioOracle);
     const options = await scenarioSelect().locator('option').evaluateAll(items => items.map(item => item.value).filter(Boolean));
     assert.deepEqual([...options].sort(), [...expectedIds].sort());
@@ -259,7 +268,7 @@ try {
     }
   });
 
-  await record('all 32 scenarios reach their fixed endpoint through the end-observation control', async () => {
+  await record('all 41 scenarios reach their fixed endpoint through the end-observation control', async () => {
     for (const [id, expected] of Object.entries(scenarioOracle)) {
       await selectScenario(id);
       await replayPanel().getByRole('button', { name: '끝 관측', exact: true }).click();
@@ -267,6 +276,216 @@ try {
       const current = expected.current === 'END' ? page.getByTestId('ifpmic-end') : card(expected.current);
       assert.equal(await current.getAttribute('data-current'), 'true', `${id} current node`);
     }
+  });
+
+  await record('routing scenarios expose reuse, exemption, terminal, candidate and replan authority checkpoints', async () => {
+    const routingPanel = () => page.getByTestId('ifpmic-routing-observation');
+    const noChangePanel = () => page.getByTestId('ifpmic-no-change-observation');
+    const routeHistory = () => page.getByTestId('ifpmic-routing-history');
+    const capture = async (stem, width = 1440, height = 1000, target = null) => {
+      await page.setViewportSize({ width, height });
+      if (target) await target.evaluate(element => element.scrollIntoView({ block: 'center', inline: 'nearest' }));
+      assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true, `${stem} viewport has no page overflow`);
+      const filename = `${hostMode ? 'host' : 'standalone'}-${stem}-${width}.png`;
+      await page.screenshot({ path: path.join(evidenceDir, filename), fullPage: true });
+      report.evidence.push(`workflow-artifacts/verification/V2/ui/${filename}`);
+    };
+
+    await selectScenario('routing-reuse');
+    await moveCheckpoint('local');
+    await assertSummary({ current: 'P03', status: 'RUNNING', cycle: 1 });
+    assert.equal(await card('P03').getAttribute('data-state'), 'PENDING');
+    assert.equal(await card('P03').getAttribute('data-current'), 'true');
+    let plan = routingPanel();
+    assert.equal(await plan.getAttribute('data-context-cycle'), '1');
+    assert.equal(await plan.getAttribute('data-current-authority'), 'false', 'local P03 confirmation is not global plan authority');
+    const localPlanText = await plan.innerText();
+    for (const text of ['계획 원래 cycle', '프로파일', '변경 유형', '재사용 범위', '미확정']) assert.ok(localPlanText.includes(text), `local plan panel shows ${text}`);
+    await capture('routing-reuse-local', 1440, 1000, plan);
+    await moveCheckpoint('early');
+    await assertSummary({ current: 'X01', status: 'RUNNING', cycle: 1 });
+    for (const id of ['P03', 'P04', 'P05']) assert.equal(await card(id).getAttribute('data-state'), 'SKIPPED');
+    await moveCheckpoint('confirmed');
+    await assertSummary({ current: 'P06', status: 'RUNNING', cycle: 1 });
+    plan = routingPanel();
+    assert.equal(await plan.getAttribute('data-current-authority'), 'true');
+    const reuseText = await plan.innerText();
+    for (const id of ['P03', 'P04', 'P05', 'P06', 'P07', 'P08', 'P09', 'P10', 'P11', 'P12']) assert.ok(reuseText.includes(id), `the approved global reuse scope includes ${id}`);
+    await moveCheckpoint('reused');
+    for (const id of ['P03', 'P04', 'P05', 'P06', 'P07', 'P08', 'P09', 'P10', 'P11', 'P12']) {
+      assert.equal(await card(id).getAttribute('data-state'), 'SKIPPED', `${id} is visibly skipped`);
+    }
+    await moveCheckpoint('end');
+    await assertSummary(scenarioOracle['routing-reuse']);
+
+    await selectScenario('routing-new-hw');
+    await moveCheckpoint('early-blocked');
+    assert.equal(await card('P03').getAttribute('data-state'), 'PENDING');
+    assert.ok((await page.getByRole('list', { name: '모의 사건 목록' }).innerText()).includes('invalid_reuse_confirmation'));
+    await moveCheckpoint('confirmed');
+    assert.equal(await card('P03').getAttribute('data-state'), 'SUCCEEDED');
+    assert.equal(await card('P04').getAttribute('data-state'), 'SUCCEEDED');
+    assert.equal(await card('P05').getAttribute('data-state'), 'SUCCEEDED');
+    assert.ok((await routingPanel().innerText()).includes('P10'));
+    await moveCheckpoint('reused');
+    assert.equal(await card('P10').getAttribute('data-state'), 'SKIPPED');
+    await assertSummary(scenarioOracle['routing-new-hw']);
+
+    await selectScenario('routing-exempt');
+    await moveCheckpoint('confirmed');
+    assert.equal(await routingPanel().getAttribute('data-current-authority'), 'true');
+    await moveCheckpoint('paired');
+    assert.equal(await card('P16').getAttribute('data-state'), 'SKIPPED');
+    assert.equal(await card('P16').getAttribute('data-gate'), 'EXEMPT');
+    await moveCheckpoint('report-blocked');
+    assert.equal(await card('P23').getAttribute('data-state'), 'RUNNING');
+    assert.equal(await card('P24').getAttribute('data-state'), 'PENDING');
+    assert.ok((await page.getByRole('list', { name: '모의 사건 목록' }).innerText()).includes('exemption_report_required'));
+    await moveCheckpoint('reported');
+    assert.equal(await card('P23').getAttribute('data-state'), 'SUCCEEDED');
+    await card('P23').click();
+    const reportDetail = await page.getByTestId('ifpmic-observation-detail').innerText();
+    assert.ok(reportDetail.includes('SQE 시험 미수행 보고'));
+    assert.match(reportDetail, /시험 수행[\s\S]*false/);
+    await moveCheckpoint('exempt');
+    await assertSummary({ current: 'X02', status: 'RUNNING', cycle: 1 });
+    for (const id of ['P16', 'P18', 'P20', 'P24']) assert.equal(await card(id).getAttribute('data-gate'), 'EXEMPT', `${id} disposition remains EXEMPT`);
+    await card('P24').click();
+    const detail = page.getByTestId('ifpmic-observation-detail');
+    const detailText = await detail.innerText();
+    for (const text of ['EXEMPT', '측정 완료', 'false']) assert.ok(detailText.includes(text), `P24 detail distinguishes exemption evidence: ${text}`);
+    const skipBasis = await page.getByTestId('ifpmic-skip-basis').innerText();
+    for (const text of ['COUPLED', 'mock:human', 'mock:policy:exempt:v1', 'cycle 1', 'attempt 1', 'mock:P24:c1:a1']) {
+      assert.ok(skipBasis.includes(text), `P24 skip basis preserves ${text}`);
+    }
+    assert.match(skipBasis, /생략 증거[\s\S]*mock:routing-exempt:X01:a1:c1/);
+    await capture('routing-exempt-exempt', 1440, 1000, detail);
+    await capture('routing-exempt-exempt', 375, 812, detail);
+    await moveCheckpoint('end');
+    const exemptRelease = await page.getByRole('region', { name: '배포 모의 관측' }).innerText();
+    assert.ok(exemptRelease.includes('EXEMPT'));
+    await assertSummary(scenarioOracle['routing-exempt']);
+
+    await selectScenario('routing-pilot-denied');
+    await moveCheckpoint('denied');
+    await assertSummary({ current: 'X01', status: 'WAITING_HUMAN', cycle: 1 });
+    assert.equal(await routingPanel().getAttribute('data-current-authority'), 'false');
+    await moveCheckpoint('confirmed');
+    assert.equal(await routingPanel().getAttribute('data-current-authority'), 'true');
+    await moveCheckpoint('blocked');
+    assert.equal(await card('P15').getAttribute('data-state'), 'PENDING');
+    assert.ok((await page.getByRole('list', { name: '모의 사건 목록' }).innerText()).includes('skip_authorization_required'));
+    await assertSummary(scenarioOracle['routing-pilot-denied']);
+
+    await selectScenario('routing-no-change');
+    await moveCheckpoint('production');
+    assert.equal(await card('P11').getAttribute('data-state'), 'SKIPPED');
+    await card('P11').click();
+    let analysisDetail = await page.getByTestId('ifpmic-observation-detail').innerText();
+    for (const text of ['mock:code-dev', '변경 필요\nfalse', '요구사항 충족\ntrue', 'mock:routing-no-change:source:c1', 'mock:routing-no-change:analysis:P11:c1']) {
+      assert.ok(analysisDetail.includes(text), `P11 analysis detail shows ${text}`);
+    }
+    assert.equal(await card('P12').getAttribute('data-state'), 'PENDING');
+    assert.equal(await noChangePanel().count(), 0, 'analysis alone does not show the close panel');
+    await moveCheckpoint('analysed');
+    assert.equal(await card('P12').getAttribute('data-state'), 'PENDING');
+    await card('P12').click();
+    analysisDetail = await page.getByTestId('ifpmic-observation-detail').innerText();
+    for (const text of ['mock:tc', '변경 필요\nfalse', '요구사항 충족\ntrue', 'mock:routing-no-change:tests:c1', 'mock:routing-no-change:analysis:P12:c1']) {
+      assert.ok(analysisDetail.includes(text), `P12 analysis detail shows ${text}`);
+    }
+    assert.equal(await noChangePanel().count(), 0);
+    await moveCheckpoint('closed');
+    await assertSummary({ current: 'P12', status: 'NO_CHANGE', cycle: 1 });
+    assert.equal(await card('P12').getAttribute('data-state'), 'SKIPPED');
+    assert.ok(await noChangePanel().isVisible());
+    const closeText = await noChangePanel().innerText();
+    for (const text of ['발행', 'P13', 'PENDING', 'mock:no-change:P12:c1:a1']) assert.ok(closeText.includes(text), `NO_CHANGE panel shows ${text}`);
+    await capture('routing-no-change-closed', 1440, 1000, noChangePanel());
+    await capture('routing-no-change-closed', 375, 812, noChangePanel());
+    await moveCheckpoint('terminal');
+    assert.ok((await page.getByRole('list', { name: '모의 사건 목록' }).innerText()).includes('terminal_no_change'));
+    assert.equal(await page.getByRole('region', { name: '배포 모의 관측' }).innerText().then(text => /실제 제출 허용[\s\S]*?(아니오|false)/.test(text)), true);
+    await assertSummary({ current: 'P12', status: 'NO_CHANGE', cycle: 1 });
+
+    await selectScenario('routing-no-change-denied');
+    await moveCheckpoint('production');
+    await moveCheckpoint('analysed');
+    assert.equal(await card('P12').getAttribute('data-state'), 'PENDING');
+    await moveCheckpoint('denied');
+    assert.equal(await card('P12').getAttribute('data-state'), 'PENDING');
+    await card('P12').click();
+    const deniedAnalysis = await page.getByTestId('ifpmic-observation-detail').innerText();
+    assert.match(deniedAnalysis, /변경 필요[\s\S]*true/);
+    assert.equal(await noChangePanel().count(), 0);
+    await assertSummary(scenarioOracle['routing-no-change-denied']);
+
+    await selectScenario('routing-candidate');
+    await moveCheckpoint('confirmed');
+    await moveCheckpoint('changed');
+    await assertSummary({ current: 'P13', status: 'RUNNING', cycle: 1 });
+    const changedPlan = routingPanel();
+    const changedPlanText = await changedPlan.innerText();
+    assert.ok(changedPlanText.includes('mock:candidate:B'));
+    const planCandidate = changedPlan.locator('dl').locator('dt').filter({ hasText: '계획 후보' });
+    assert.equal(await planCandidate.locator('xpath=following-sibling::dd[1]').innerText(), 'mock:candidate:A', 'approved plan remains bound to candidate A');
+    const currentCandidate = changedPlan.locator('dl').locator('dt').filter({ hasText: '현재 후보' });
+    assert.equal(await currentCandidate.locator('xpath=following-sibling::dd[1]').innerText(), 'mock:candidate:B', 'current candidate is B');
+    await moveCheckpoint('blocked');
+    await assertSummary({ current: 'P15', status: 'RUNNING', cycle: 1 });
+    assert.equal(await card('P15').getAttribute('data-state'), 'PENDING');
+    assert.equal(await routingPanel().getAttribute('data-current-authority'), 'false');
+    assert.ok((await page.getByRole('list', { name: '모의 사건 목록' }).innerText()).includes('stale_route_context'));
+    await capture('routing-candidate-blocked', 1440, 1000, routingPanel());
+    await moveCheckpoint('end');
+    await assertSummary(scenarioOracle['routing-candidate']);
+
+    await selectScenario('routing-replan');
+    await moveCheckpoint('rejected');
+    assert.equal(await card('X01').getAttribute('data-state'), 'FAILED');
+    await moveCheckpoint('rerouted');
+    await assertSummary({ current: 'P02', status: 'RUNNING', cycle: 2, rework: 1 });
+    assert.equal(await routeHistory().count(), 0, 'old route plan is preserved as stale context until replacement is confirmed');
+    await moveCheckpoint('stale');
+    assert.equal(await routingPanel().getAttribute('data-context-cycle'), '1');
+    assert.equal(await routingPanel().getAttribute('data-current-authority'), 'false');
+    assert.ok((await page.getByRole('list', { name: '모의 사건 목록' }).innerText()).includes('invalid_route_context'));
+    await moveCheckpoint('replanned');
+    await assertSummary({ current: 'P06', status: 'RUNNING', cycle: 2, rework: 1 });
+    for (const id of ['P03', 'P04', 'P05']) assert.equal(await card(id).getAttribute('data-state'), 'SUCCEEDED');
+    assert.equal(await routingPanel().getAttribute('data-context-cycle'), '2');
+    assert.equal(await routingPanel().getAttribute('data-current-authority'), 'true');
+    assert.ok(await routeHistory().count() > 0, 'old route plan moves to history when new context is accepted');
+    const historyText = await routeHistory().innerText();
+    assert.ok(historyText.includes('mock:routing-replan:plan:c1'), 'history preserves old cycle-1 plan version');
+    assert.ok(historyText.includes('mock:candidate:A'), 'history preserves old candidate A');
+    assert.ok((await routingPanel().innerText()).includes('mock:routing-replan:plan:c2'), 'current plan displays cycle-2 version separately');
+    assert.ok((await routingPanel().innerText()).includes('mock:candidate:A'), 'current cycle-2 plan remains bound to candidate A');
+    await capture('routing-replan-replanned', 1440, 1000, routingPanel());
+    await moveCheckpoint('end');
+    await assertSummary(scenarioOracle['routing-replan']);
+
+    await selectScenario('routing-metadata');
+    await moveCheckpoint('exempt');
+    await moveCheckpoint('rejected');
+    assert.equal(await summary().getAttribute('data-current-step'), 'X03');
+    await moveCheckpoint('retried');
+    await assertSummary({ current: 'X02', status: 'RUNNING', cycle: 1, rework: 1 });
+    for (const id of ['P16', 'P18', 'P20', 'P24']) assert.equal(await card(id).getAttribute('data-gate'), 'EXEMPT');
+    assert.equal(await card('X02').getAttribute('data-attempt'), '2');
+    await moveCheckpoint('end');
+    for (const id of ['P16', 'P18', 'P20', 'P24']) assert.equal(await card(id).getAttribute('data-gate'), 'EXEMPT');
+    await assertSummary(scenarioOracle['routing-metadata']);
+
+    await selectScenario('routing-no-change');
+    await moveCheckpoint('closed');
+    assert.ok(await noChangePanel().isVisible());
+    await selectScenario('happy-path');
+    await assertSummary({ current: 'P01', status: 'RUNNING', cycle: 1 });
+    assert.equal(await routingPanel().count(), 0, 'new scenario clears the old route plan panel');
+    assert.equal(await noChangePanel().count(), 0, 'new scenario clears the old NO_CHANGE panel');
+    assert.equal(await routeHistory().count(), 0, 'new scenario clears old routing history');
+    assert.match(await replayPanel().locator('output').innerText(), /관측\s*0\s*\//, 'scenario switch resets the cursor');
   });
 
   await record('scenario change clears display filters and resets selection and cursor', async () => {

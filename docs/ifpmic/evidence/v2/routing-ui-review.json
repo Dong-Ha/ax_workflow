@@ -1,0 +1,74 @@
+{
+  "kind": "independent_partial_routing_ui_acceptance",
+  "decision": "accepted_41_scenario_mock_routing_ui",
+  "recorded_at": "2026-10-15T12:52:50.403373+00:00",
+  "implementer_agent": "/root",
+  "test_author_agent": "/root/verification_plan",
+  "reviewer_agent": "/root/paperclip_ui_extension",
+  "reviewer_role": "worker_luna; read-only independent plan/source/TC/gate/image audit",
+  "plan": "../../V2-ROUTING-UI.md",
+  "plan_sha256": "c0869de0ee5ba98951c3c6b8e3ec354eddd87f882361307cfe30ca5fc7407e94",
+  "plan_review": "routing-ui-plan-review.json",
+  "baseline_32": "routing-ui-baseline-32.json",
+  "candidate_fingerprint": "7c66377c7b19c01f82ce6a7c39a87818910111c3401a5ba8b6535395a828031f",
+  "report": "routing-ui-verification.json",
+  "report_sha256": "c533a621f5f03cb6428b9f7e8dfc2d5f5d846e81ae826acfed3794dd9cd51b65",
+  "source_paths_audited": 117,
+  "source_hash_matches": 117,
+  "command_logs_hash_matched": 11,
+  "command_exits_zero": 11,
+  "gate_reports_hash_matched": 44,
+  "build_assets_hash_matched": 6,
+  "plugin_assets_hash_matched": 4,
+  "published_artifacts": "routing-ui-published-artifacts.json",
+  "published_artifact_copies_hash_matched": 20,
+  "checks": {
+    "unit": "242/242; fail=0, skipped=0",
+    "standalone_browser": "15/15 checks, all 41 endpoints and nine routing checkpoint journeys",
+    "native_host_browser": "16/16 checks",
+    "browser_writes": 0,
+    "external_requests": 0,
+    "page_errors": 0,
+    "console_errors": 0,
+    "source_changed": [],
+    "reviewer_reran_tests": false
+  },
+  "reviewed_test_sha256": {
+    "tests/ifpmic-catalog.test.mjs": "56e0dae41afcf085eeb4e75aa0dc8f8ce08a913b145102475b6ed3802a376e5b",
+    "tests/ifpmic-replay.browser.mjs": "d7c4bad012a2ea353cca559ca1ff88f29c296fbb64d5f29f31477277456854bb"
+  },
+  "approved_scope": [
+    "Existing 32 events/checkpoints byte-hash preservation and nine routing scenarios, total 41",
+    "Separate local/global reuse, unchanged production/TC analysis and human NO_CHANGE display",
+    "Policy/coupled EXEMPT distinct from PASS, P23 unperformed report and manifest gate dispositions",
+    "Current candidate versus plan candidate, old cycle plan history and metadata retry observability",
+    "Standalone/native Paperclip read-only interaction, selected detail/reset/navigation and responsive UI regression"
+  ],
+  "diagnostic": "routing-ui-attempt-1.json",
+  "visual_supplement": {
+    "report": "routing-ui-mobile-capture.json",
+    "report_sha256": "c398ac6334cbd98a26bef180a0e52c575e466f793944d8e69d6346960693a44a",
+    "image": "routing-ui-host-p24-detail-375-1800.png",
+    "image_sha256": "b60faee778e3686bcd0ecdf9420aa4973e63bb94e054d4cb7cebf16e8fb8dcb9",
+    "script_snapshot": "routing-ui-mobile-capture-script.txt",
+    "script_sha256": "233160617e39a0958dc5a3133b809c4438d78abdcdd771937f1ccd388df6cdef",
+    "author_agent": "/root/verification_plan",
+    "executor_agent": "/root",
+    "reviewer_opened_image": true,
+    "resolution": "Original host fullPage 375px capture preserved. Additional actual viewport capture shows full P24 detail without navigation overlap. No DOM/CSS hiding or writes. Same source/build/plugin before and after; 0 overlay intersections, 9 unobstructed hit points.",
+    "viewport": {
+      "width": 375,
+      "height": 1800
+    },
+    "browser_get_count": 80,
+    "non_get_requests": 0,
+    "external_requests": 0,
+    "errors": 0,
+    "verification_scope": "RU2 capture-only correction. RU3 fixed gate remains unchanged and all 117 source/6 build/4 plugin hashes were independently rechecked. 1800px capture height improves evidence readability; original 375x812 interactive checks remain in the fixed gate."
+  },
+  "not_approved": [
+    "Full V2 or manual/P22 trial/child-agent/pause/resume/cancel protocols",
+    "B01-B13, real policy approval or real AT/runtime/device/publisher execution"
+  ],
+  "waivers": []
+}

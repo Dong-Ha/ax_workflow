@@ -69,3 +69,9 @@ TC가 독립적인 25개 끝 상태와 checkpoint oracle, 실제 host/offline br
 면제된 gate는 PASS가 아닌 EXEMPT이며 측정 완료를 주장하지 않는다. mock manifest에도 네 gate의 disposition을 보존한다. NO_CHANGE는 P12에서 멈추고 이후 빌드·배포·빈 커밋을 만들지 않는다. 실제 사람 승인·장비·발행 API 호출은 없다. X01 이전 재사용 시점, 면제 시 SQE 보고, EXEMPT 배포 정책, NO_CHANGE 종료 위치는 mock 설계 결정이며 실제 B01 정책 승인과 구분한다.
 
 검증은 별도 TC와 `node scripts/verify-ifpmic-routing.mjs`의 전체 단위/build/plugin-build, 소스 고정 및 독립 수용이다. 이 증분은 React/CSS/기존 32개 카탈로그를 변경하지 않으며 새 routing 화면을 검증했다고 표시하지 않는다. 후속 routing 카탈로그·standalone/native-host 화면, manual/trial/child-agent/pause/resume/cancel과 전체 V2·B01–B13·실제 AT는 계속 필요하다.
+
+## 재사용·면제·무변경 화면 연결
+
+`V2-ROUTING-UI.md`의 독립 승인 후 기존 32개 events/checkpoints 해시를 고정하고 새 routing 시나리오 9개를 추가한다. 별도 합성 fixture 모듈은 replay 결과를 읽어 결정을 만들지 않는다. local 확인과 X01 승인을 분리하고 원래 cycle/후보/승인 실행을 표시하며 현재 권한을 비교한다. 선택 상세는 생략 근거·별도 분석·SQE 미수행 보고와 측정 완료 여부를 표시한다. NO_CHANGE는 사람 확인 뒤에만 전용 패널을 만들고 manifest 처분과 과거 계획/품질 처분을 구분한다.
+
+TC의 41개 literal endpoint/checkpoint oracle, 기존 32개 사건/checkpoint SHA 보존, standalone/native-host 주요 경계와 375/1440px 캡처, 11명령 전체 UI gate 및 독립 증빙 감사로 수용한다. 실제 정책/장비/AT와 전체 V2는 계속 미완료다.

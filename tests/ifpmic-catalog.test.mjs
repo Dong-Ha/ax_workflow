@@ -9,10 +9,11 @@ import { replayScenario } from '../src/ifpmic/replay.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const specs = path.join(root, 'docs/ifpmic/design-v1/specs');
-const [workflow, stateContract, priorCatalogEvidence] = await Promise.all([
+const [workflow, stateContract, priorCatalogEvidence, routingUiBaseline] = await Promise.all([
   readFile(path.join(specs, 'workflow.v1.json'), 'utf8').then(JSON.parse),
   readFile(path.join(specs, 'state-contract.json'), 'utf8').then(JSON.parse),
   readFile(path.join(root, 'docs/ifpmic/evidence/v2/ui-catalog.json'), 'utf8').then(JSON.parse),
+  readFile(path.join(root, 'docs/ifpmic/evidence/v2/routing-ui-baseline-32.json'), 'utf8').then(JSON.parse),
 ]);
 
 const expectedScenarioIds = [
@@ -23,6 +24,8 @@ const expectedScenarioIds = [
   'retry-limit', 'cycle-limit', 'device-boundaries', 'flash-unknown', 'notes-only',
   'spec-question-wait', 'spec-question-resolution', 'spec-question-retry', 'spec-question-repeat',
   'remote-uncertainty', 'remote-recovery', 'remote-device-quarantine',
+  'routing-reuse', 'routing-new-hw', 'routing-exempt', 'routing-pilot-denied',
+  'routing-no-change', 'routing-no-change-denied', 'routing-candidate', 'routing-replan', 'routing-metadata',
 ];
 
 // Literal checkpoint oracle from docs/ifpmic/V2-UI.md. start/end are required
@@ -63,6 +66,15 @@ const checkpointOracle = {
   'remote-uncertainty': ['unknown', 'queried-unknown', 'absent', 'conflict', 'stale'],
   'remote-recovery': ['unknown', 'absent', 'found', 'late', 'completed'],
   'remote-device-quarantine': ['unknown', 'quarantined', 'idle', 'blocked'],
+  'routing-reuse': ['local', 'early', 'confirmed', 'reused'],
+  'routing-new-hw': ['early-blocked', 'confirmed', 'reused'],
+  'routing-exempt': ['confirmed', 'paired', 'report-blocked', 'reported', 'exempt'],
+  'routing-pilot-denied': ['denied', 'confirmed', 'blocked'],
+  'routing-no-change': ['production', 'analysed', 'closed', 'terminal'],
+  'routing-no-change-denied': ['production', 'analysed', 'denied'],
+  'routing-candidate': ['confirmed', 'changed', 'blocked'],
+  'routing-replan': ['rejected', 'rerouted', 'stale', 'replanned'],
+  'routing-metadata': ['exempt', 'rejected', 'retried'],
 };
 
 // Independent fixed final-state oracle; it intentionally does not derive route
@@ -100,6 +112,72 @@ const finalOracle = {
   'remote-uncertainty': { current_step: 'P25', status: 'RECONCILING', cycle: 1, attempt: 1, publication_count: 0, receipt_id: null, remote: { operation_key: 'mock:remote-uncertainty:operation', query_seq: 3, outcome: 'conflict' } },
   'remote-recovery': { current_step: 'END', status: 'COMPLETED', cycle: 1, attempt: 1, publication_count: 1, receipt_id: 'mock:remote-recovery:remote:receipt', remote: { operation_key: 'mock:remote-recovery:operation', query_seq: 2, outcome: 'found' } },
   'remote-device-quarantine': { current_step: 'P25', status: 'RECONCILING', cycle: 1, attempt: 1, publication_count: 0, receipt_id: null, device_quarantined: true, remote: { operation_key: 'mock:remote-device-quarantine:operation', query_seq: 0, outcome: 'unknown' } },
+  'routing-reuse': { current_step: 'END', status: 'COMPLETED', cycle: 1, publication_count: 1, routing: { profile_kind: 'pilot', confirmed: true }, gate_dispositions: ['PASS', 'PASS', 'PASS', 'PASS'] },
+  'routing-new-hw': { current_step: 'P11', status: 'RUNNING', cycle: 1, publication_count: 0, step: 'P11', state: 'PENDING', routing: { change_type: 'NEW_HW', reuse_steps: ['P10'] } },
+  'routing-exempt': { current_step: 'END', status: 'COMPLETED', cycle: 1, publication_count: 1, routing: { profile_kind: 'policy_demo', confirmed: true }, gate_dispositions: ['EXEMPT', 'EXEMPT', 'EXEMPT', 'EXEMPT'] },
+  'routing-pilot-denied': { current_step: 'P15', status: 'RUNNING', cycle: 1, publication_count: 0, step: 'P15', state: 'PENDING', routing: { profile_kind: 'pilot', confirmed: true } },
+  'routing-no-change': { current_step: 'P12', status: 'NO_CHANGE', cycle: 1, publication_count: 0, step: 'P12', state: 'SKIPPED', receipt_id: null, manifest_id: null, no_change: true },
+  'routing-no-change-denied': { current_step: 'P12', status: 'RUNNING', cycle: 1, publication_count: 0, step: 'P12', state: 'PENDING', no_change: null },
+  'routing-candidate': { current_step: 'END', status: 'COMPLETED', cycle: 1, publication_count: 1, routing: { candidate_fingerprint: 'mock:candidate:B' }, gate_dispositions: ['PASS', 'PASS', 'PASS', 'PASS'] },
+  'routing-replan': { current_step: 'P06', status: 'RUNNING', cycle: 2, rework_count: 1, publication_count: 0, routing: { plan_version: 'mock:routing-replan:plan:c2', confirmed: true } },
+  'routing-metadata': { current_step: 'END', status: 'COMPLETED', cycle: 1, rework_count: 1, x02Attempt: 2, x03Attempt: 2, publication_count: 1, gate_dispositions: ['EXEMPT', 'EXEMPT', 'EXEMPT', 'EXEMPT'] },
+};
+
+const routingReuseScope = ['P03', 'P04', 'P05', 'P06', 'P07', 'P08', 'P09', 'P10', 'P11', 'P12'];
+const routingSuffixFromP02 = ['P02', 'P03', 'P04', 'P05', 'X01', 'P06', 'P07', 'P08', 'P09', 'P10', 'P11', 'P12', 'P13', 'P14', 'P15', 'P16', 'P17', 'P18', 'P19', 'P20', 'P21', 'P22', 'P23', 'P24', 'X02', 'X03', 'P25', 'P26'];
+const routingSuffixFromP07 = ['P07', 'P08', 'P09', 'P10', 'P11', 'P12', 'P13', 'P14', 'P15', 'P16', 'P17', 'P18', 'P19', 'P20', 'P21', 'P22', 'P23', 'P24', 'X02', 'X03', 'P25', 'P26'];
+const routingGateIds = ['P16', 'P18', 'P20', 'P24'];
+const routingCheckpointOracle = {
+  'routing-reuse': {
+    local: { current: 'P03', status: 'RUNNING', cycle: 1, states: { P03: 'PENDING' }, confirmed: false, localReuse: ['P03'] },
+    early: { current: 'X01', status: 'RUNNING', cycle: 1, states: { P03: 'SKIPPED', P04: 'SKIPPED', P05: 'SKIPPED', X01: 'PENDING' }, confirmed: false },
+    confirmed: { current: 'P06', status: 'RUNNING', cycle: 1, states: { X01: 'SUCCEEDED', P06: 'PENDING' }, confirmed: true, reuseScope: routingReuseScope },
+    reused: { current: 'P13', status: 'RUNNING', cycle: 1, states: Object.fromEntries(routingReuseScope.map(id => [id, 'SKIPPED'])), confirmed: true, reuseScope: routingReuseScope },
+  },
+  'routing-new-hw': {
+    'early-blocked': { current: 'P03', status: 'RUNNING', cycle: 1, states: { P03: 'PENDING' }, confirmed: false, reason: 'invalid_reuse_confirmation' },
+    confirmed: { current: 'P06', status: 'RUNNING', cycle: 1, states: { P03: 'SUCCEEDED', P04: 'SUCCEEDED', P05: 'SUCCEEDED', P06: 'PENDING' }, confirmed: true, reuseScope: ['P10'] },
+    reused: { current: 'P11', status: 'RUNNING', cycle: 1, states: { P10: 'SKIPPED', P11: 'PENDING' }, confirmed: true, reuseScope: ['P10'] },
+  },
+  'routing-exempt': {
+    confirmed: { current: 'P06', status: 'RUNNING', cycle: 1, confirmed: true, exempt_steps: ['P15', 'P16', 'P17', 'P18', 'P19', 'P20', 'P21', 'P22', 'P24'] },
+    paired: { current: 'P17', status: 'RUNNING', cycle: 1, states: { P15: 'SKIPPED', P16: 'SKIPPED', P17: 'PENDING' }, gates: { P16: 'EXEMPT' }, confirmed: true },
+    'report-blocked': { current: 'P23', status: 'RUNNING', cycle: 1, states: { P22: 'SKIPPED', P23: 'RUNNING', P24: 'PENDING' }, gates: { P16: 'EXEMPT', P18: 'EXEMPT', P20: 'EXEMPT' }, reason: 'exemption_report_required' },
+    reported: { current: 'P24', status: 'RUNNING', cycle: 1, states: { P23: 'SUCCEEDED', P24: 'PENDING' }, exemptionPerformed: false },
+    exempt: { current: 'X02', status: 'RUNNING', cycle: 1, states: { P24: 'SKIPPED', X02: 'PENDING' }, gates: { P16: 'EXEMPT', P18: 'EXEMPT', P20: 'EXEMPT', P24: 'EXEMPT' } },
+  },
+  'routing-pilot-denied': {
+    denied: { current: 'X01', status: 'WAITING_HUMAN', cycle: 1, states: { X01: 'WAITING_HUMAN' }, confirmed: false, reason: 'invalid_exemption_scope' },
+    confirmed: { current: 'P06', status: 'RUNNING', cycle: 1, confirmed: true, exempt_steps: [] },
+    blocked: { current: 'P15', status: 'RUNNING', cycle: 1, states: { P15: 'PENDING' }, reason: 'skip_authorization_required' },
+  },
+  'routing-no-change': {
+    production: { current: 'P12', status: 'RUNNING', cycle: 1, states: { P11: 'SKIPPED', P12: 'PENDING' }, analyses: { P11: { needs_changes: false, requirements_satisfied: true } } },
+    analysed: { current: 'P12', status: 'RUNNING', cycle: 1, states: { P12: 'PENDING' }, analyses: { P12: { needs_changes: false, requirements_satisfied: true } } },
+    closed: { current: 'P12', status: 'NO_CHANGE', cycle: 1, states: { P12: 'SKIPPED', P13: 'PENDING' }, noChange: true, publication: 0 },
+    terminal: { current: 'P12', status: 'NO_CHANGE', cycle: 1, states: { P12: 'SKIPPED', P13: 'PENDING' }, noChange: true, publication: 0, reason: 'terminal_no_change' },
+  },
+  'routing-no-change-denied': {
+    production: { current: 'P12', status: 'RUNNING', cycle: 1, states: { P11: 'SKIPPED', P12: 'PENDING' } },
+    analysed: { current: 'P12', status: 'RUNNING', cycle: 1, states: { P12: 'PENDING' }, analyses: { P12: { needs_changes: true, requirements_satisfied: true } } },
+    denied: { current: 'P12', status: 'RUNNING', cycle: 1, states: { P12: 'PENDING' }, noChange: false, publication: 0, reason: 'invalid_no_change' },
+  },
+  'routing-candidate': {
+    confirmed: { current: 'P06', status: 'RUNNING', cycle: 1, confirmed: true },
+    changed: { current: 'P13', status: 'RUNNING', cycle: 1, states: { P13: 'RUNNING' }, candidate: 'mock:candidate:B' },
+    blocked: { current: 'P15', status: 'RUNNING', cycle: 1, states: { P15: 'PENDING' }, candidate: 'mock:candidate:B', reason: 'stale_route_context' },
+  },
+  'routing-replan': {
+    rejected: { current: 'X01', status: 'FAILED', cycle: 1, states: { X01: 'FAILED' } },
+    rerouted: { current: 'P02', status: 'RUNNING', cycle: 2, states: { P02: 'PENDING' }, contextCycle: 1, historyKinds: ['cycle'] },
+    stale: { current: 'P02', status: 'RUNNING', cycle: 2, states: { P02: 'RUNNING' }, contextCycle: 1, confirmed: false, reason: 'invalid_route_context' },
+    replanned: { current: 'P06', status: 'RUNNING', cycle: 2, states: { P03: 'SUCCEEDED', P04: 'SUCCEEDED', P05: 'SUCCEEDED', X01: 'SUCCEEDED', P06: 'PENDING' }, contextCycle: 2, confirmed: true, planVersion: 'mock:routing-replan:plan:c2', required: routingSuffixFromP02, historyKinds: ['cycle', 'route_plan'] },
+  },
+  'routing-metadata': {
+    exempt: { current: 'X02', status: 'RUNNING', cycle: 1, gates: { P16: 'EXEMPT', P18: 'EXEMPT', P20: 'EXEMPT', P24: 'EXEMPT' } },
+    rejected: { current: 'X03', status: 'WAITING_HUMAN', cycle: 1, states: { X03: 'WAITING_HUMAN' }, approved: false, rejection: 'reject_release_metadata' },
+    retried: { current: 'X02', status: 'RUNNING', cycle: 1, rework: 1, states: { X02: 'PENDING', X03: 'PENDING', P25: 'PENDING', P26: 'PENDING' }, attempts: { X02: 2, X03: 2 }, gates: { P16: 'EXEMPT', P18: 'EXEMPT', P20: 'EXEMPT', P24: 'EXEMPT' }, manifest: null, historyKinds: ['release_metadata', 'attempt', 'attempt'] },
+  },
 };
 
 function deepFrozen(value, seen = new Set()) {
@@ -142,18 +220,71 @@ function assertExpectedEnd(result, expected, scenarioId) {
     for (const [key, value] of Object.entries(expected.remote)) assert.equal(result.remote_reconciliation[key], value, `${scenarioId}/remote.${key}`);
   }
   if (expected.device_quarantined !== undefined) assert.equal(result.device.quarantined, expected.device_quarantined, scenarioId);
+  if (Object.hasOwn(expected, 'manifest_id')) assert.equal(result.release.manifest?.manifest_id ?? null, expected.manifest_id, scenarioId);
+  if (Object.hasOwn(expected, 'no_change')) {
+    if (expected.no_change === true) assert.ok(result.no_change, scenarioId);
+    else assert.equal(result.no_change, expected.no_change, scenarioId);
+  }
+  if (expected.gate_dispositions !== undefined) assert.deepEqual(result.release.manifest?.gate_dispositions, expected.gate_dispositions, scenarioId);
+  if (expected.routing !== undefined) {
+    const routing = expected.routing;
+    if (routing.profile_kind !== undefined) assert.equal(result.route_plan.context?.profile_kind, routing.profile_kind, `${scenarioId}/profile`);
+    if (routing.change_type !== undefined) assert.equal(result.route_plan.context?.change_type, routing.change_type, `${scenarioId}/change type`);
+    if (routing.candidate_fingerprint !== undefined) assert.equal(result.candidate_fingerprint, routing.candidate_fingerprint, `${scenarioId}/candidate`);
+    if (routing.confirmed !== undefined) assert.equal(Boolean(result.route_plan.confirmed), routing.confirmed, `${scenarioId}/plan confirmation`);
+    if (routing.plan_version !== undefined) assert.equal(result.route_plan.confirmed?.plan_version, routing.plan_version, `${scenarioId}/plan version`);
+    if (routing.reuse_steps !== undefined) assert.deepEqual(result.route_plan.confirmed?.reuse_steps.map(item => item.step_id), routing.reuse_steps, `${scenarioId}/reuse scope`);
+    if (routing.exempt_steps !== undefined) assert.deepEqual(result.route_plan.confirmed?.exempt_steps, routing.exempt_steps, `${scenarioId}/exemption scope`);
+    if (routing.required !== undefined) assert.deepEqual(result.required_revalidation, routing.required, `${scenarioId}/required revalidation`);
+  }
   if (expected.spec !== undefined) {
     for (const [key, value] of Object.entries(expected.spec)) assert.equal(result.spec_review[key], value, `${scenarioId}/spec.${key}`);
   }
   if (scenarioId === 'cycle-limit') assert.ok(result.failure_bundle.length > 0);
 }
 
-test('fixed mock catalog inventory, frozen values and checkpoint IDs match literal oracle', () => {
+function assertRoutingCheckpoint(result, expected, scenarioId, checkpointId) {
+  const label = `${scenarioId}/${checkpointId}`;
+  assert.equal(result.current_step, expected.current, `${label}/current`);
+  assert.equal(result.status, expected.status, `${label}/status`);
+  assert.equal(result.cycle, expected.cycle, `${label}/cycle`);
+  if (expected.rework !== undefined) assert.equal(result.rework_count, expected.rework, `${label}/rework`);
+  for (const [id, state] of Object.entries(expected.states ?? {})) assert.equal(result.steps[id].state, state, `${label}/${id}`);
+  if (expected.confirmed !== undefined) assert.equal(Boolean(result.route_plan.confirmed), expected.confirmed, `${label}/confirmed`);
+  if (expected.contextCycle !== undefined) assert.equal(result.route_plan.context?.cycle, expected.contextCycle, `${label}/context cycle`);
+  if (expected.planVersion !== undefined) assert.equal(result.route_plan.confirmed?.plan_version, expected.planVersion, `${label}/plan version`);
+  if (expected.localReuse !== undefined) assert.deepEqual(Object.keys(result.route_plan.reuse_confirmations).sort(), expected.localReuse, `${label}/local reuse confirmations`);
+  if (expected.reuseScope !== undefined) assert.deepEqual(result.route_plan.confirmed?.reuse_steps.map(item => item.step_id), expected.reuseScope, `${label}/approved reuse scope`);
+  if (expected.exempt_steps !== undefined) assert.deepEqual(result.route_plan.confirmed?.exempt_steps, expected.exempt_steps, `${label}/approved exemption scope`);
+  for (const [id, verdict] of Object.entries(expected.gates ?? {})) assert.equal(result.steps[id].gate_verdict, verdict, `${label}/${id} gate`);
+  if (expected.exemptionPerformed !== undefined) assert.equal(result.steps.P23.exemption_report?.performed, expected.exemptionPerformed, `${label}/P23 report`);
+  for (const [id, values] of Object.entries(expected.analyses ?? {})) {
+    for (const [key, value] of Object.entries(values)) assert.equal(result.steps[id].unchanged_analysis?.[key], value, `${label}/${id}.${key}`);
+  }
+  if (expected.candidate !== undefined) assert.equal(result.candidate_fingerprint, expected.candidate, `${label}/candidate`);
+  if (expected.noChange !== undefined) assert.equal(Boolean(result.no_change), expected.noChange, `${label}/no_change`);
+  if (expected.publication !== undefined) assert.equal(result.release.publication_count, expected.publication, `${label}/publication`);
+  if (Object.hasOwn(expected, 'manifest')) assert.equal(result.release.manifest, expected.manifest, `${label}/manifest`);
+  if (Object.hasOwn(expected, 'rejection')) assert.equal(result.release.rejection, expected.rejection, `${label}/release rejection`);
+  if (expected.attempts !== undefined) {
+    for (const [id, attempt] of Object.entries(expected.attempts)) assert.equal(result.steps[id].attempt, attempt, `${label}/${id} attempt`);
+  }
+  if (expected.required !== undefined) assert.deepEqual(result.required_revalidation, expected.required, `${label}/required revalidation`);
+  if (expected.historyKinds !== undefined) assert.deepEqual(result.history.map(row => row.kind), expected.historyKinds, `${label}/history kinds`);
+  if (expected.reason !== undefined) {
+    assert.equal(result.timeline.at(-1)?.reason, expected.reason, `${label}/rejection reason`);
+    assert.equal(result.timeline.at(-1)?.applied, false, `${label}/rejected event`);
+  }
+  if (expected.approved !== undefined) assert.equal(result.release.approved, expected.approved, `${label}/release approval`);
+  if (expected.gateDispositions !== undefined) assert.deepEqual(result.release.manifest?.gate_dispositions, expected.gateDispositions, `${label}/manifest gate dispositions`);
+}
+
+test('fixed 41-scenario mock catalog inventory, frozen values and checkpoint IDs match literal oracle', () => {
   const originalWorkflow = structuredClone(workflow);
   const originalContract = structuredClone(stateContract);
   const catalog = createScenarioCatalog(workflow, stateContract);
   assert.deepEqual(catalog.map(item => item.id).sort(), [...expectedScenarioIds].sort());
-  assert.equal(catalog.length, 32);
+  assert.equal(catalog.length, 41);
   assert.deepEqual(workflow, originalWorkflow);
   assert.deepEqual(stateContract, originalContract);
   assert.ok(deepFrozen(catalog), 'catalog, scenarios, events, payloads and checkpoints are deeply frozen');
@@ -186,6 +317,17 @@ test('fixed mock catalog inventory, frozen values and checkpoint IDs match liter
     assert.ok(priorFixtures.has(id), `previous catalog manifest contains ${id}`);
     assert.equal(createHash('sha256').update(JSON.stringify(scenario.events)).digest('hex'), priorFixtures.get(id),
       `${id} event fixture bytes remain identical to previously accepted 25-scenario catalog`);
+  }
+  assert.equal(routingUiBaseline.scenario_count, 32);
+  assert.equal(routingUiBaseline.scenarios.length, 32);
+  const baseline32 = new Map(routingUiBaseline.scenarios.map(item => [item.id, item]));
+  for (const scenario of catalog.slice(0, 32)) {
+    const baseline = baseline32.get(scenario.id);
+    assert.ok(baseline, `${scenario.id} exists in frozen 32-scenario baseline`);
+    assert.equal(createHash('sha256').update(JSON.stringify(scenario.events)).digest('hex'), baseline.events_sha256,
+      `${scenario.id} original event bytes preserved`);
+    assert.equal(createHash('sha256').update(JSON.stringify(scenario.checkpoints)).digest('hex'), baseline.checkpoints_sha256,
+      `${scenario.id} original checkpoint bytes preserved`);
   }
   assert.deepEqual(workflow, originalWorkflow, 'catalog builder did not mutate workflow input');
   assert.deepEqual(stateContract, originalContract, 'catalog builder did not mutate state contract input');
@@ -223,7 +365,7 @@ test('every checkpoint deterministically replays exactly its event prefix and le
   }
 });
 
-test('all 32 catalog endpoints and exception checkpoints match independent literal state oracle', () => {
+test('all 41 catalog endpoints and exception checkpoints match independent literal state oracle', () => {
   const catalog = createScenarioCatalog(workflow, stateContract);
   const byId = new Map(catalog.map(item => [item.id, item]));
   const expected = {
@@ -325,6 +467,24 @@ test('all 32 catalog endpoints and exception checkpoints match independent liter
   assert.equal(firstQuestion.spec_review.question_id, 'mock:question:spec-question-repeat:q1');
   assert.equal(firstQuestion.spec_review.resolved_requirements_version, 'mock:requirements:v2');
   assert.ok(firstQuestion.spec_review.resolution_evidence_id);
+});
+
+test('all nine routing catalog cases satisfy the independent fixed checkpoint oracle', () => {
+  const catalog = createScenarioCatalog(workflow, stateContract);
+  const byId = new Map(catalog.map(item => [item.id, item]));
+  for (const [scenarioId, checkpoints] of Object.entries(routingCheckpointOracle)) {
+    const scenario = byId.get(scenarioId);
+    assert.ok(scenario, `${scenarioId} is present in the catalog`);
+    for (const [checkpointId, expected] of Object.entries(checkpoints)) {
+      const point = scenario.checkpoints.find(item => item.id === checkpointId);
+      assert.ok(point, `${scenarioId}/${checkpointId} is a planned checkpoint`);
+      const original = structuredClone(scenario);
+      const result = replayScenario(scenario, workflow, stateContract, point.cursor);
+      assertRoutingCheckpoint(result, expected, scenarioId, checkpointId);
+      assert.equal(result.real_publish_allowed, false, `${scenarioId}/${checkpointId} never grants real publish authority`);
+      assert.deepEqual(scenario, original, `${scenarioId}/${checkpointId} does not mutate fixture input`);
+    }
+  }
 });
 
 test('critical prefixes retain expected wait, failure, quality and release boundaries', () => {

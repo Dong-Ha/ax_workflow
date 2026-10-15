@@ -1,0 +1,15 @@
+{
+  "kind": "independent_routing_ui_plan_review",
+  "decision": "approved",
+  "plan": "../../V2-ROUTING-UI.md",
+  "sha256": "c0869de0ee5ba98951c3c6b8e3ec354eddd87f882361307cfe30ca5fc7407e94",
+  "baseline": "routing-ui-baseline-32.json",
+  "baseline_sha256": "50b6c3a432783e942952d1acea38df2acce155596273523c6c3d0c5a03c05329",
+  "reviewer_agent": "/root/paperclip_ui_extension",
+  "implementer_agent": "/root",
+  "test_author_agent": "/root/verification_plan",
+  "recorded_at": "2026-10-15T12:33:23.665087+00:00",
+  "resolved_finding": "RU3 must pin new UI plan, baseline32, review and routing plan/review, force count41; generated observed_snapshot is not an independent TC oracle.",
+  "scope": "Plan approval only; source/TC/fixed gate and browser evidence acceptance pending",
+  "waivers": []
+}

@@ -56,7 +56,7 @@
         "REQ-14"
       ],
       "implementation_notes": "V2-IMPLEMENTATION.md",
-      "scope": "Pure mock replay/protocols including reuse/exemption/NO_CHANGE core and existing 32-scenario standalone/native UI verified as partial increments. New routing catalog/UI, remaining protocols and full V2 acceptance pending; no real AT completion.",
+      "scope": "Pure mock replay/protocols and 41-scenario standalone/native Paperclip UI verified as partial increments, including reuse/exemption/NO_CHANGE and current versus historical authority. Remaining manual/trial/child/control protocols/catalog and full V2 acceptance pending; no real AT completion.",
       "increments": [
         {
           "id": "mock_replay_core",
@@ -104,6 +104,15 @@
           "evidence": "evidence/v2/routing-verification.json",
           "independent_acceptance": "evidence/v2/routing-review.json",
           "candidate_fingerprint": "83561ca61fbc2626995eb48a9962e9b0b66570b8fba0accb557fa0ec9154be95"
+        },
+        {
+          "id": "mock_routing_catalog_ui_41",
+          "status": "verified",
+          "scope": "Existing 32 synthetic fixtures preserved, nine reuse/exemption/NO_CHANGE/candidate/replan/metadata scenarios integrated into standalone/native UI; partial V2 only.",
+          "evidence": "evidence/v2/routing-ui-verification.json",
+          "independent_acceptance": "evidence/v2/routing-ui-review.json",
+          "visual_supplement": "evidence/v2/routing-ui-mobile-capture.json",
+          "candidate_fingerprint": "7c66377c7b19c01f82ce6a7c39a87818910111c3401a5ba8b6535395a828031f"
         }
       ]
     },
@@ -322,12 +331,12 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "V2: integrate verified routing cases into catalog/UI and verify standalone/native host; implement manual/P22 trial/child-agent/pause/resume/cancel and remaining catalog families, then full V2 gate. B01-B13 and real AT remain pending.",
+  "next_step": "V2: implement manual-device/P22 trial details, child-agent and pause/resume/cancel protocols with independent plans, catalog/UI and full V2 gate. B01-B13 and real AT remain pending.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",
     "Approved Bedrock/Claude runtime profile"
   ],
   "publication_policy": "Only authorized git repository documentation, source and synthetic verification summaries/screenshots; never runtime credentials or application logs.",
-  "updated_at": "2026-10-15T12:29:01.686699+00:00"
+  "updated_at": "2026-10-15T12:52:50.403373+00:00"
 }

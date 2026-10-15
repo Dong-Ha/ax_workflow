@@ -6,7 +6,7 @@ IFPMIC workflow 시각화로 확장하는 방향은 [기준 자료와 이관 계
 
 ## IFPMIC 흐름 보기
 
-`npm run build` 후 기존 AX 서버의 **http://127.0.0.1:3000/ifpmic.html**에서 IFPMIC v1의 29개 단계, 6개 구간, 41개 정상·복귀 연결과 단계별 담당·입출력·통과 조건을 확인할 수 있습니다. 단계 검색, 담당 필터, 방향키·Home·End 이동과 상세 경로 이동을 지원합니다. 기본 설계 보기에서 ‘모의 시나리오’로 전환하면 32개 합성 시나리오의 관측을 앞뒤로 탐색할 수 있습니다. 사람 대기, 실패 복귀, cycle·attempt 이력, metadata 반려 후 복구, 모의 승인·영수증과 장비 격리를 구분합니다. 사양 질문의 답변 버전·현재 실행의 재검토, 원격 조회의 미발견·충돌·확인 결과도 별도로 표시합니다. 실제 작업 및 수용시험 완료로 집계하지 않습니다.
+`npm run build` 후 기존 AX 서버의 **http://127.0.0.1:3000/ifpmic.html**에서 IFPMIC v1의 29개 단계, 6개 구간, 41개 정상·복귀 연결과 단계별 담당·입출력·통과 조건을 확인할 수 있습니다. 단계 검색, 담당 필터, 방향키·Home·End 이동과 상세 경로 이동을 지원합니다. 기본 설계 보기에서 ‘모의 시나리오’로 전환하면 41개 합성 시나리오의 관측을 앞뒤로 탐색할 수 있습니다. 사람 대기, 실패 복귀, cycle·attempt 이력, metadata 반려 후 복구, 모의 승인·영수증과 장비 격리를 구분합니다. 재사용 근거·정책 면제(EXEMPT)·사람 확인 무변경 종료(NO_CHANGE), 현재 계획과 과거 계획을 구분합니다. 사양 질문의 답변 버전·현재 실행의 재검토, 원격 조회의 미발견·충돌·확인 결과도 별도로 표시합니다. 실제 작업 및 수용시험 완료로 집계하지 않습니다.
 
 Paperclip 안에서는 전용 page 플러그인으로 장착합니다. 플러그인은 `ui.page.register` 권한만 요청합니다. 실행·배포·외부 전송 권한이 없으며, 기존 실험과 분리한 로컬 데이터 디렉터리를 사용합니다.
 
@@ -103,4 +103,4 @@ npm run test:browser
 
 모의 재생 화면 검증은 `npm run test:ifpmic:replay`(offline)와 `npm run test:ifpmic:replay:host`(기존 격리 host, GET-only 준비 확인)로 실행합니다. `npm run ifpmic:verify:ui`는 원본 파일과 격리 host를 전제로 단위·build·plugin·원본 검증·V1/AX 회귀 및 두 재생 browser 검증을 수행하고 소스/빌드/화면/사건 journal 해시를 `workflow-artifacts/verification/V2/ui/gates/`에 고정합니다. [UI 검증 범위](./docs/ifpmic/V2-UI.md)의 후속 프로토콜과 전체 V2/실제 AT 검증은 별도로 남아 있습니다.
 
-재사용·정책 면제·무변경 종료의 합성 사건 형식은 [routing 프로토콜](./docs/ifpmic/V2-ROUTING.md)에 정의합니다. `node scripts/verify-ifpmic-routing.mjs`는 전용 검사를 포함한 전체 단위·build·plugin-build와 소스 해시를 기록합니다. 이 로직의 새 화면 시나리오와 실제 정책·장비·배포는 후속 검증 대상입니다.
+재사용·정책 면제·무변경 종료의 합성 사건 형식은 [routing 프로토콜](./docs/ifpmic/V2-ROUTING.md)에 정의합니다. `node scripts/verify-ifpmic-routing.mjs`는 전용 검사를 포함한 전체 단위·build·plugin-build와 소스 해시를 기록합니다. 새 화면 시나리오와 독립 검증 기준은 [routing 화면 계획](./docs/ifpmic/V2-ROUTING-UI.md)에 정의합니다. 실제 정책·장비·배포는 후속 검증 대상입니다.

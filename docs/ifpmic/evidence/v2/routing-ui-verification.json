@@ -1,0 +1,469 @@
+{
+  "kind": "ifpmic_v2_partial_ui_candidate_verification",
+  "scope": "41-scenario mock catalog/UI plus V0/V1/AX regression; partial V2 only, no real AT completion",
+  "attempt": "2026-10-15T12-42-12-951Z",
+  "startedAt": "2026-10-15T12:42:13.089Z",
+  "sourceHashes": {
+    "IFPMIC_AX_Design_Package_v1.zip": "34946eda4c85fd9706b40e218a233a3fdd5ab0a00b2538778c9b9cf047e19080",
+    "IFPMIC_AX_Design_v1.docx": "18a14876a689beae0599b5d4014bf95db79bef047d0e4ceafa60d9a9417624fc",
+    "README.md": "c323e18c644ea30f726e6233f472f3cbbea60f96099524cf3ff5e9a624966662",
+    "docs/ifpmic/PLAN.md": "3b99c7b3629a8e0e6bc41d524329d2a0de27a468ec447a990fa360dcc38aa39d",
+    "docs/ifpmic/V2-EXCEPTION-UI-CAPTURE.md": "d8b78a35f9d00b49be12d60f2b7e4f3b92f3692cff501590473580aa3087deed",
+    "docs/ifpmic/V2-EXCEPTION-UI.md": "9af5d2757376126b0ef43f40582da0f02a89e7349a02bbcf209b8ff24dc629b3",
+    "docs/ifpmic/V2-EXCEPTIONS.md": "9294b6849699940a8782031c6e469404a360cc48214ccb8ca9dafdd1e9cee267",
+    "docs/ifpmic/V2-IMPLEMENTATION.md": "2881694f1021b038fb8a08fec397ebad14c0923b7db6029f82ea4f0580e3b17a",
+    "docs/ifpmic/V2-PROTOCOLS.md": "201fb94cd0fb4e862104b66e81afeae38f51e3ef6b69cbd6dccb4961b275f0d2",
+    "docs/ifpmic/V2-ROUTING-UI.md": "c0869de0ee5ba98951c3c6b8e3ec354eddd87f882361307cfe30ca5fc7407e94",
+    "docs/ifpmic/V2-ROUTING.md": "3b78784e620faf2826c17f1a51ad0db36a331cee22759488a74b30197d467ded",
+    "docs/ifpmic/V2-SCENARIOS.md": "cb493258be85adf1b9744cf6e8d8e9a22c4d822c96bf7a649ad0e6fa78ea93b5",
+    "docs/ifpmic/V2-UI.md": "21f81e0c61b1ced3faac5b354795d6775d56130684ab5cf3c196be85e9f57dd3",
+    "docs/ifpmic/VERIFICATION.md": "b0f1e0dbe74f1a6aae5e84218f672fcb42d0db6133e072d66e92d21d2bb1ef98",
+    "docs/ifpmic/design-v1/README.txt": "33ff9f07a74c3e276ac63746340a56e4bbdeca18d2531de24cc978d533283122",
+    "docs/ifpmic/design-v1/qa/design-validation.json": "499d203d19980fac95cb9f9974ace988b54392a0ce968544d220b1a421b49fd4",
+    "docs/ifpmic/design-v1/qa/package-manifest.json": "46fe63988e7cd9312c379761c6023fc5e28e1259770274463ea848eb92960386",
+    "docs/ifpmic/design-v1/qa/visual-review.json": "e4dc7b7e91dd514158dc48688e7e79074c6686298d9395cbf9139158821b8755",
+    "docs/ifpmic/design-v1/specs/acceptance-cases.json": "f7163553edc9e8e753965cb8748ab04aac8f68c1a453f567f62284a01b38b0d5",
+    "docs/ifpmic/design-v1/specs/agent-contract.json": "ca6d4bea7abf0fffe7354c482af0d521c3a2e367217a69923a4bfe43fa27ab64",
+    "docs/ifpmic/design-v1/specs/bridge-contract.json": "d9a0deaa745d4078a779a153aad6a889a49b7675dc8ad3688f8b4c641233047d",
+    "docs/ifpmic/design-v1/specs/data-model.json": "00c84f8a39b1b8959daa8d94b1d67e860d83ad9bdb809065a5cd3b18af07071b",
+    "docs/ifpmic/design-v1/specs/implementation-backlog.json": "115e48568e0464b8e67ef17274dba97b3046a8de902e1cf426d9b70e1528e5d0",
+    "docs/ifpmic/design-v1/specs/openapi.v1.json": "2ed780cfa06349b18f5025937e050fd98a5cefa34b552eb836cfaccad416dd7a",
+    "docs/ifpmic/design-v1/specs/project-profile.example.json": "37301c6ff5c9cae237b6037a3106368cfd07e4582462d52a35dfee39de7839f2",
+    "docs/ifpmic/design-v1/specs/requirements.json": "6e1dc87cdbcaa66ed690ffd13d2d70242dff43410c9f822447bd520719ce249b",
+    "docs/ifpmic/design-v1/specs/sources.json": "c0c6f96c54ba4fd1c7a1bd70b954a7316bebdba86ff681e5a07141c682eeb7ef",
+    "docs/ifpmic/design-v1/specs/state-contract.json": "0248e130017043539319c56af854f5388a95d33e7e687902a3438fdff414244a",
+    "docs/ifpmic/design-v1/specs/workflow.v1.json": "bab40a7abb3929896add1ef2cd074893dd2a7de14d200a5d6cea4b7a77eb0e89",
+    "docs/ifpmic/design-v1/validation-requirements.txt": "756cc9e506ae4ee1a6f6c0507088b5cfc0dc8ba350fb2d2d46f1ffa72033adb6",
+    "docs/ifpmic/design-v1/verify_design.py": "05abad3464f815144bd313257a691194fd0ac96b84a542485260d128c681cedb",
+    "docs/ifpmic/evidence/plan-review.json": "df800e146c9375fa628070d0c4228437f20ec22f1ad4c494904eda90ae042021",
+    "docs/ifpmic/evidence/v2/exception-ui-capture-review.json": "1054fd334ec4ceaec8b431195c020708b2872c6bde4398ebf78fcd1c07346cbf",
+    "docs/ifpmic/evidence/v2/exception-ui-plan-review.json": "5a701c6804ad8413cc845663161ba89d68461ad6ef05e4ec46198c0e3758c490",
+    "docs/ifpmic/evidence/v2/exceptions-plan-review-2.json": "d6309882e3fb57dcaa3b6c1e7392743e43ff1d64bbafaed0c7892e5927bbe655",
+    "docs/ifpmic/evidence/v2/routing-plan-review.json": "94f2d4c336334d651364e697db5809ba7a0028ae073c495934db027475a768e4",
+    "docs/ifpmic/evidence/v2/routing-ui-baseline-32.json": "50b6c3a432783e942952d1acea38df2acce155596273523c6c3d0c5a03c05329",
+    "docs/ifpmic/evidence/v2/routing-ui-plan-review.json": "c971a40d899b262b2381fd3bb27fa1ddb7381557017060c483802f398d7b019a",
+    "docs/ifpmic/evidence/v2/ui-catalog.json": "d4db6c5f87c6d923445212132d34dfc46ced1485783981689f3be17e6df4cdda",
+    "docs/ifpmic/evidence/v2/ui-plan-review.json": "f14a81afdfd4a2e3de963fc1b531db7b071312abe23e97249652d7ef616507a8",
+    "docs/ifpmic/source-manifest.json": "8afba9c1fc16ef3a6565f45576792cad51a1aaab59857d3a28666c71ec43007c",
+    "experiments/paperclip/ax-controller.mjs": "01608575658d8621bf30762e9075b440e7f70abb4586425ef5ca63be2a017561",
+    "experiments/paperclip/ax-local-server.mjs": "4bf7304d0f775f76f7b4dda62935b6c5f6f10d2350ec5c224e3aa4ae7d4c3f82",
+    "experiments/paperclip/ax-release-check.mjs": "33a48b31766ea0159823c374d242f6f5acab21a675e198fed6041da4c33357c4",
+    "experiments/paperclip/ax-stage-agent.mjs": "03b73df876c5b6af6a22f15f770c3e800c3fa247d63dfbf0fcefd5fca62f1f32",
+    "experiments/paperclip/ax-workflow.json": "db0d8a219ffb7e519b728781ac68b9d67dfd586ee9dc50bd8c8e2e9e0cdc8242",
+    "experiments/paperclip/lab.mjs": "05960142972b438ecead717b9b8d9d0fb631dffd801f795fd16b34554d0b32fe",
+    "experiments/paperclip/stage-agent.mjs": "67ce28cba1189675df8c41995ba8d5f3316656cfdc3971b78c828e519dacf8a4",
+    "experiments/paperclip/verify-agent-filter.mjs": "dfd83872952cd645e200964e3c2247259494ffa1a4fb0b2292830c3450c7549c",
+    "experiments/paperclip/verify-agent-navigation.mjs": "8afd698e5e36edff0962fc2f103c1ab23038d597f208d2bd9c83a6a3e22204c2",
+    "experiments/paperclip/verify-agent-topology.mjs": "92df06fefb8fd4c959f3ea7c2f8308b0a8427918ed9b877fa386d89fc277e6f4",
+    "experiments/paperclip/workflow.json": "6ddcb3091d9eb0203f59b3a89fb250795c9e56731af17330c29e9e3dc34e29d1",
+    "ifpmic.html": "24236fa3c43b13c08c9452b5ff6235b4bc567e2a99c0ace4943494e81f587ba9",
+    "index.html": "41d4bc4ea7d8ef8fc575d22072ecf048bb5d764ca796d0374e425786175824c4",
+    "package-lock.json": "c2ba0f8ad9699bb52ebd8647bdaf7fe1ef6b2f93967b94a3f292b412c29159ed",
+    "package.json": "0fb1b392b5f384e4fb48a0c812b42e8666f4ba1354fe3815d73f0a63af7977ea",
+    "plugins/ifpmic-ax/manifest.mjs": "25304d897bd26f2a9475a110acf6e40aca41d91b26eb5c2f1ff0f8d2a96c113d",
+    "plugins/ifpmic-ax/package.json": "9e5921e12ad8f363c36ff31ec69afc43a132c7b532869249b9c9d78b822836df",
+    "plugins/ifpmic-ax/ui.tsx": "dda268570d188f9376f3a1ca96fbf2635f304fbd8f35bdd7f647b3618c0faa2b",
+    "plugins/ifpmic-ax/worker.mjs": "5f33c2266890dbeeb526684335e84f0899ef890bdf6e7652901fdfcc6bee82fa",
+    "scripts/build-ifpmic-plugin.mjs": "4eeb673b5c17f8b9d5e33751a17e7ee700102007f595b083ee2af0fd4fa94c46",
+    "scripts/ifpmic-catalog-evidence.mjs": "e8ef0552f538b210cfdf25080ea2eb085d0460b2411f276e545259d5e42ecc60",
+    "scripts/ifpmic-lab.mjs": "6aff79b57d7dba3708121161ea66308bc4edda07e868a717c92cb97597817562",
+    "scripts/verify-ifpmic-exceptions.mjs": "623c5170fe4941018c4f7e6294cf1f42d612714abb032920ed6eac1f745641e8",
+    "scripts/verify-ifpmic-routing.mjs": "7bba87e215b657384c6e46ecbcee55404bfaedef21a5895ee14ec55ad873475f",
+    "scripts/verify-ifpmic-ui.mjs": "e8981b6cd695c97406b6073f889e48eb1a23c1c8bfe90933b18b9788e8b18a02",
+    "scripts/verify-ifpmic-v1.mjs": "764e02810f9919fe5dafbfc3dbb8e31156e3e8772c634f8315da78b1bfdeda52",
+    "server/claude-store.mjs": "c4f6185530eb8377bb16aeae37744edda963be733070b11e6a83d1f164ab768c",
+    "server/index.mjs": "9f462d86df80903570ab9ec110be564586dd89c45a3fd553a59cc6d5d6e56299",
+    "server/opencode-store.mjs": "ab49164a1a3a03b3a91a65866b70a074a8246e143b04510670d1259d6d2026a4",
+    "server/snapshot-store.mjs": "1a71d6dd42b5382a085311f903f82c89e9c53956324bff21aa44c5cdd4ccd3ed",
+    "server/store.mjs": "ec48d788f034305775becfc2497f922c4322a6f6d2c66ebe0cd7f8af465e3733",
+    "src/App.tsx": "8b1bca0ceaeadd764d13bdc220ffa48ea3ad28ac4db3783e74feba719ec5bdba",
+    "src/agent-filter.d.mts": "3bdcb6a01166fd617256c153b88f51eacce13dfee944cfdb09019d4172622339",
+    "src/agent-filter.mjs": "9467ac7f59f09eadb123a5153a92603684293350a3212c7c4d4a5d7fcd71731a",
+    "src/ifpmic/ReplayPanel.tsx": "ad93545d2a2d67d1ea9a89bcc7ebfecc587cdd1360f8f2babd32842ab6b959be",
+    "src/ifpmic/RoutingObservations.tsx": "1fc68ebee813f696aa0f14fa7806551c86f09877c4be22a618d8697928afd19d",
+    "src/ifpmic/WorkflowPage.tsx": "a2e93dfa06abf88ad51733ce2326f7bf613f433b51f86953eb544a34408b6310",
+    "src/ifpmic/assets.d.ts": "f138ad28ea15f370cfa14b484be92a1e25936e0f6a289d30e4d48043ccf0ced1",
+    "src/ifpmic/contract.d.mts": "a883bc8e64b635d7a8245f720f2bb607151521804dc061c55897b7e93ff2d43f",
+    "src/ifpmic/contract.mjs": "64b8b8237ba88fb4ae7ae8ab38b6ca5882244db3095d1cd4c56413ed914ddfa7",
+    "src/ifpmic/exceptions.mjs": "086c90ef443b3752e5187b86a0f254dcb10934876ee602ec441846366f5c734d",
+    "src/ifpmic/main.tsx": "c592156a4de5082c305ef4dfc61e1f95c94a7a26e0c8567f7e3a301a67de88d1",
+    "src/ifpmic/protocols.mjs": "feb64dbc23c18a3659e39d690890e7f522c2119015656d1a734e5d2bf9aae07f",
+    "src/ifpmic/replay.d.mts": "8c7dfe16eedaff817c90e905c277465d6ddfdf970d73fd0fa7f06ebee71ac625",
+    "src/ifpmic/replay.mjs": "de503c6f8e7bea0b1b58427118ad40dcd5997ca2435e9fe9de0f7b4b1af66643",
+    "src/ifpmic/routing-scenarios.mjs": "9d1e0ba517ec7964a2603ef3953c8ef64a7874a40a64c3792342d8ad47f781af",
+    "src/ifpmic/routing.mjs": "543ec615fdb405e4a8779e3db92bb0dc8f03d32aa213a81e226da9f8b24463c6",
+    "src/ifpmic/scenarios.d.mts": "96c8f1afbdd24892c2ac686e2283c86e095e2891d830c686f499ce117a9aa73a",
+    "src/ifpmic/scenarios.mjs": "b7898943f2f4cdf4525f7295d4d5d09a136ebb6ab59dd61e0a20a2bbe884dd51",
+    "src/ifpmic/workflow.css": "993043914eac822f1ceb8e4c1265b00cbd3fb2858781c88c49de3a9303b6c50d",
+    "src/main.tsx": "a85c901d00b446ca1bea89b9c224a53d1075c52995933ede6d7ac1d9d2060891",
+    "src/styles.css": "cfba25b6214ad4e82961384c79bf6b7e9402868b7e1ceab41c46e5eac3cd1db9",
+    "tests/agent-filter.browser.mjs": "599db9047851753180925c2b342f729a083354c0eecc7b137fd91abe39b18153",
+    "tests/agent-filter.test.mjs": "3c84a9d93b9f07cd606cc886315c005768a30d601d6e89a164b3ef00986fb78f",
+    "tests/ax-local-server.test.mjs": "7383dc392c4ae529fa7128d3e56639f1161e04927d22e28b0e9ac70e425919d6",
+    "tests/ax-release-check.test.mjs": "7ba056fe8921ea6fe43027316d8d254be7c75d67b08cf57d518c98ff49fe88c3",
+    "tests/ax-stage-agent.test.mjs": "816a06858e7b33f3126f93c76b39d2f369fb51d44301ed3031fa1f529f58bc05",
+    "tests/ax-workflow.test.mjs": "f923e7d7ca35013a792002e374b700be4c754ea57e75751b7cd35e05e1388ede",
+    "tests/claude.test.mjs": "34561c6dd2af9739af21db9da6b6cc1ac28e9aad6289b6287259f3ae7aa6e711",
+    "tests/ifpmic-catalog.test.mjs": "56e0dae41afcf085eeb4e75aa0dc8f8ce08a913b145102475b6ed3802a376e5b",
+    "tests/ifpmic-contract.test.mjs": "04edd2401b26c41a051f4c92a2f6786faab5ddb195e91c795655c7c15255addc",
+    "tests/ifpmic-exceptions.test.mjs": "946e08cb84e993bf914f5ddf5b33f41338fea519717e4861bb4216f955a2f902",
+    "tests/ifpmic-host.browser.mjs": "a80131f401b69ee9e7a77de07193b342ba4ba599fc2f75bb51e96fe257add7b0",
+    "tests/ifpmic-protocols.test.mjs": "78228a52af6de018d3497bc42c646a4feb959bba9c929745b129927413e35b3b",
+    "tests/ifpmic-replay-guards.test.mjs": "1c40a57da80a8abc38f57e0ed62d1e1cef6b2e10393dc4d428e1349fb76edbcb",
+    "tests/ifpmic-replay.browser.mjs": "d7c4bad012a2ea353cca559ca1ff88f29c296fbb64d5f29f31477277456854bb",
+    "tests/ifpmic-replay.test.mjs": "c59b80bfce688c28ec52fc630d5a24fffc8013dc46075c305e204133e5ce4691",
+    "tests/ifpmic-routing.test.mjs": "b1dd6069906ea36f3265a1788b4b5dd766d78f344ca2d231ca8613a4788f5ac6",
+    "tests/ifpmic-source-negative.test.mjs": "6ac08b36dccfdb93595a65db31389add302dff8ba6c7d967b41de640db09bd36",
+    "tests/ifpmic-source-upload.mjs": "903e3c8673d2c5a04ed96d887509499ddeddcffa4a17ea786cfef87d6d14a655",
+    "tests/ifpmic.browser.mjs": "96f53b51d89f8911319f37f346e20edd5977d0d75fbaf3d01599127710da3502",
+    "tests/opencode.test.mjs": "f3be87a6c11928a983eb525a68330475d394676f8bd4c2676d0eb5b21d04b3ef",
+    "tests/paperclip.test.mjs": "fab946b54e5568a162d7249b404381e061ee9c4eafd5c48aa48610378e16b316",
+    "tests/store.test.mjs": "950bb3bd50d7a0c227c55765d403e913c4a6d98a5ed668b59dadc33f82e9ba38",
+    "tsconfig.json": "03854d796a684d2bea079bbf4ac7bb9d71cc5830bb429fac7bd5dab71fa5945f",
+    "vite.config.ts": "054ee708c7cee13c62f0af627bae0730cbf83f2df7345906eb092fe0803279c6"
+  },
+  "sourceFingerprint": "7c66377c7b19c01f82ce6a7c39a87818910111c3401a5ba8b6535395a828031f",
+  "commands": [
+    {
+      "name": "unit",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "startedAt": "2026-10-15T12:42:13.089Z",
+      "finishedAt": "2026-10-15T12:42:36.337Z",
+      "exitCode": 0,
+      "counts": {
+        "tests": 242,
+        "pass": 242,
+        "fail": 0,
+        "skipped": 0
+      },
+      "log": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/unit.log",
+      "logSha256": "9198e64ce9fa2d9c2a081bfc587d0791394de43b8dfdb726ee2072a674cca79d"
+    },
+    {
+      "name": "build",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "startedAt": "2026-10-15T12:42:36.338Z",
+      "finishedAt": "2026-10-15T12:42:39.994Z",
+      "exitCode": 0,
+      "log": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/build.log",
+      "logSha256": "f5ba1d82f0b794450d9b11f4d085b368d5bd4277fb0174ac32377e557a2bf963"
+    },
+    {
+      "name": "plugin-build",
+      "command": [
+        "npm",
+        "run",
+        "ifpmic:plugin:build"
+      ],
+      "startedAt": "2026-10-15T12:42:39.994Z",
+      "finishedAt": "2026-10-15T12:42:40.291Z",
+      "exitCode": 0,
+      "log": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/plugin-build.log",
+      "logSha256": "e8264a2643dc26ecfa01fbf7bfa695f449060da8c0c52e4727f8f0fe7f680da8"
+    },
+    {
+      "name": "source-uploads",
+      "command": [
+        "npm",
+        "run",
+        "ifpmic:verify-sources"
+      ],
+      "startedAt": "2026-10-15T12:42:40.291Z",
+      "finishedAt": "2026-10-15T12:42:40.455Z",
+      "exitCode": 0,
+      "log": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/source-uploads.log",
+      "logSha256": "b492da2b1f01db8326f2198d4eac6b76e77fac56c4deacfafb60398c45da90c4"
+    },
+    {
+      "name": "design-validator",
+      "command": [
+        "python3",
+        "-c",
+        "import pathlib, tempfile, shutil, subprocess\nwith tempfile.TemporaryDirectory(prefix=\"ifpmic-gate-\") as temp:\n target=pathlib.Path(temp)/\"design\"\n shutil.copytree(\"docs/ifpmic/design-v1\",target)\n subprocess.run([\"python3\",str(target/\"verify_design.py\")],check=True)"
+      ],
+      "startedAt": "2026-10-15T12:42:40.456Z",
+      "finishedAt": "2026-10-15T12:42:40.657Z",
+      "exitCode": 0,
+      "log": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/design-validator.log",
+      "logSha256": "2a781792052f4ea7099623a39c991399958a17abade73349c969b0f19de65c4c"
+    },
+    {
+      "name": "ifpmic-browser",
+      "command": [
+        "npm",
+        "run",
+        "test:ifpmic:browser"
+      ],
+      "startedAt": "2026-10-15T12:42:40.657Z",
+      "finishedAt": "2026-10-15T12:42:43.616Z",
+      "exitCode": 0,
+      "log": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/ifpmic-browser.log",
+      "logSha256": "0ac428bd021e553ca8f3a293eb2c36382eee7049bd465de45b713ec259b09343"
+    },
+    {
+      "name": "paperclip-host",
+      "command": [
+        "npm",
+        "run",
+        "test:ifpmic:host"
+      ],
+      "startedAt": "2026-10-15T12:42:43.616Z",
+      "finishedAt": "2026-10-15T12:42:47.307Z",
+      "exitCode": 0,
+      "log": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/paperclip-host.log",
+      "logSha256": "a347f91dc41284fc44742a4d1f590b2f4cecec92a16d29c7bd05eb5a017220c8"
+    },
+    {
+      "name": "catalog-evidence",
+      "command": [
+        "node",
+        "scripts/ifpmic-catalog-evidence.mjs"
+      ],
+      "startedAt": "2026-10-15T12:42:47.307Z",
+      "finishedAt": "2026-10-15T12:42:49.771Z",
+      "exitCode": 0,
+      "log": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/catalog-evidence.log",
+      "logSha256": "0d2306a47e9708daf2a2a2eaac0462ac9e591a13d355075bc61d2cb88fe18644"
+    },
+    {
+      "name": "replay-browser",
+      "command": [
+        "npm",
+        "run",
+        "test:ifpmic:replay"
+      ],
+      "startedAt": "2026-10-15T12:42:49.771Z",
+      "finishedAt": "2026-10-15T12:43:03.708Z",
+      "exitCode": 0,
+      "log": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/replay-browser.log",
+      "logSha256": "39b9987eb32fc84a45dec040fd46bb3b70d26229104a5251b766126d8d5ec439"
+    },
+    {
+      "name": "replay-host",
+      "command": [
+        "npm",
+        "run",
+        "test:ifpmic:replay:host"
+      ],
+      "startedAt": "2026-10-15T12:43:03.708Z",
+      "finishedAt": "2026-10-15T12:43:27.957Z",
+      "exitCode": 0,
+      "log": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/replay-host.log",
+      "logSha256": "855695579a776e8e0330e6cc855d93753dc8bf41692fa49ff94d85f3b48aa9ae"
+    },
+    {
+      "name": "legacy-browser",
+      "command": [
+        "npm",
+        "run",
+        "test:browser"
+      ],
+      "startedAt": "2026-10-15T12:43:27.957Z",
+      "finishedAt": "2026-10-15T12:43:56.041Z",
+      "exitCode": 0,
+      "log": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/legacy-browser.log",
+      "logSha256": "a1c97c159052b8318bd84f89fe37a49ae813569b214ddf9b065ed84f5b64eec1"
+    }
+  ],
+  "reports": {
+    "browser.json": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/browser.json",
+      "sha256": "3ee24820c1862f73f01c0ebb114e4dcafb46a360eb646094bdb42ae7076ef1ec"
+    },
+    "host-browser.json": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/host-browser.json",
+      "sha256": "8c4943a8405d287a6cf61569e715fbdbf2cf086032933e64139c2173e583316c"
+    },
+    "source-upload.json": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/source-upload.json",
+      "sha256": "3ef0a07db987088bbb4fcf119c84b22220a082df39ccd3fd318bc176fc2b78a1"
+    },
+    "negative-fixtures.json": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/negative-fixtures.json",
+      "sha256": "e3f3643c3173a4005dc87c1a38a76b2d45a0249102d3733902633796f44baf44"
+    },
+    "ui-standalone-browser.json": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/ui-standalone-browser.json",
+      "sha256": "853b51d24dd4259fbcb07dc6a580f5d6aa2022baba4578ed532f83ca6f60d0fd"
+    },
+    "standalone-routing-reuse-local-1440.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/standalone-routing-reuse-local-1440.png",
+      "sha256": "3330e80051d1a01b1e38026fb287169ababab1efbde53358c606681bcb303269"
+    },
+    "standalone-routing-exempt-exempt-1440.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/standalone-routing-exempt-exempt-1440.png",
+      "sha256": "c59286d274d5307239b63d6498483b270b7c3ec6ef0bbcdbaae3c436c91c92b0"
+    },
+    "standalone-routing-exempt-exempt-375.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/standalone-routing-exempt-exempt-375.png",
+      "sha256": "ea880414ebc1e1501255d1fffde1c7c7caaa72cb2c19c105bac81b04808c3a7d"
+    },
+    "standalone-routing-no-change-closed-1440.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/standalone-routing-no-change-closed-1440.png",
+      "sha256": "ba59f416ee693701da70d69e811b54f757dbbd70b145b6318a04cabf54a2c2e8"
+    },
+    "standalone-routing-no-change-closed-375.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/standalone-routing-no-change-closed-375.png",
+      "sha256": "3eacec228200a5dbf40e842aa4845c5a8d04a7434249edd5555f7680d5d2912b"
+    },
+    "standalone-routing-candidate-blocked-1440.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/standalone-routing-candidate-blocked-1440.png",
+      "sha256": "00c8680751a5d32e0af37670ae1ccafb8c9d68fdbc02e3efbfdc79bd4450fd19"
+    },
+    "standalone-routing-replan-replanned-1440.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/standalone-routing-replan-replanned-1440.png",
+      "sha256": "18f6d6060f0eadb5f0f375c693cdb736b1e45e6b3365e28022a5547bf8023182"
+    },
+    "standalone-spec-question-repeat-end-desktop.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/standalone-spec-question-repeat-end-desktop.png",
+      "sha256": "6bd69eb325fd0802575e034e5e8a2b5cd4f1621d96d3f2bd5c7cdb255d273f54"
+    },
+    "standalone-remote-uncertainty-stale-desktop.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/standalone-remote-uncertainty-stale-desktop.png",
+      "sha256": "6bff7f445f0007a2033f95b05fb6679bda2b965fbc8eca9353254fa15e54750a"
+    },
+    "standalone-remote-uncertainty-stale-mobile-375.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/standalone-remote-uncertainty-stale-mobile-375.png",
+      "sha256": "938fcfd716906b87dfbc739d73db87b917089d8e9a76554cbddb6719ba8c0c37"
+    },
+    "standalone-remote-recovery-found-desktop.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/standalone-remote-recovery-found-desktop.png",
+      "sha256": "e3eb8c60db36a8edb45105e6832588e26d336d825185f21d7cae6dd6dd63b8fd"
+    },
+    "standalone-spec-question-retry-review-blocked-desktop.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/standalone-spec-question-retry-review-blocked-desktop.png",
+      "sha256": "b1b4be2b2de26158b3442537e4c710156f4d66c07d0dab66e819cff93b728472"
+    },
+    "standalone-spec-question-retry-review-blocked-mobile-375.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/standalone-spec-question-retry-review-blocked-mobile-375.png",
+      "sha256": "31c230b0fcd6bf3879aac09da2e98fd15d93567fbe7c556509612ce63f2c6abf"
+    },
+    "standalone-desktop.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/standalone-desktop.png",
+      "sha256": "8a6e1cc03707cc139b95cbb643d243f11959d854a4768c08c0ea37852db8feab"
+    },
+    "standalone-sam-failure-returned-desktop.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/standalone-sam-failure-returned-desktop.png",
+      "sha256": "48a6289833c89c44352e71a2bdbb165247a14cc7179aac361e4c3bb0e907b2cb"
+    },
+    "standalone-metadata-completed-desktop.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/standalone-metadata-completed-desktop.png",
+      "sha256": "027f60e4c840377a7f3ecaac5b3119139c28c7ba2322524bbaa6d8d575f2929d"
+    },
+    "standalone-device-time-60000-desktop.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/standalone-device-time-60000-desktop.png",
+      "sha256": "2f2d8957bd8d8995b51b40f45f22b84ec892773affdb5dc4c9f900b85dbe7a7d"
+    },
+    "standalone-device-time-60000-mobile-375.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/standalone-device-time-60000-mobile-375.png",
+      "sha256": "a7da39d0e8c91b9bfaf37afa113ca1c7b89816561bcffc679d969add73225caf"
+    },
+    "ui-host-browser.json": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/ui-host-browser.json",
+      "sha256": "75445a2b21a9712542fd2222579e0479b90c0ff8ad0b0274927eb57abefa768e"
+    },
+    "host-routing-reuse-local-1440.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/host-routing-reuse-local-1440.png",
+      "sha256": "7e4c9d1340ea5d731f5e1b797c32404bb0c9a35cafcafd3dc5a6bdaa2e9f3800"
+    },
+    "host-routing-exempt-exempt-1440.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/host-routing-exempt-exempt-1440.png",
+      "sha256": "ec8213574456c0165dcb7f8ce8bd86529a26df8bab1813310912ac7db46448c0"
+    },
+    "host-routing-exempt-exempt-375.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/host-routing-exempt-exempt-375.png",
+      "sha256": "f9c6e5f1bc27339ddbe8713b253e476701f0511d6ac4dbae4938bc845ceaf14d"
+    },
+    "host-routing-no-change-closed-1440.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/host-routing-no-change-closed-1440.png",
+      "sha256": "58fba3e6bf53dcf82fc4f95f9a5e94336ba84063b81bca8ebce8e290752200cc"
+    },
+    "host-routing-no-change-closed-375.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/host-routing-no-change-closed-375.png",
+      "sha256": "056f2c657e51883ab60e9e5a9abfdcfc8592afaf0c5e8b8414df2ff148029096"
+    },
+    "host-routing-candidate-blocked-1440.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/host-routing-candidate-blocked-1440.png",
+      "sha256": "0f9b2f5642f983a56b3e6803f47eacb1ca5894a3bef87262b95a17b8d9518b37"
+    },
+    "host-routing-replan-replanned-1440.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/host-routing-replan-replanned-1440.png",
+      "sha256": "b7a14c788375c12e12505fb38100c28e0ac17cea50299bca318e531838b643f0"
+    },
+    "host-spec-question-repeat-end-desktop.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/host-spec-question-repeat-end-desktop.png",
+      "sha256": "42cc2f145558ea3e4302cf89535c6bc0b66608e968eb822564e2bb055ba53016"
+    },
+    "host-remote-uncertainty-stale-desktop.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/host-remote-uncertainty-stale-desktop.png",
+      "sha256": "b2b806cdd190e4267b431c2c47edfe715ddadbbd2faf10957078dbf0e55e2c93"
+    },
+    "host-remote-uncertainty-stale-mobile-375.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/host-remote-uncertainty-stale-mobile-375.png",
+      "sha256": "ef9cc00eec52625791943303faaec5e4cacc1e41e1343f6c97caaba44269565d"
+    },
+    "host-remote-recovery-found-desktop.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/host-remote-recovery-found-desktop.png",
+      "sha256": "77f026f7f3dca76f49011d3aae7fdfcc1449e24bfcf52b1f9b29e6d3f99a3581"
+    },
+    "host-spec-question-retry-review-blocked-desktop.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/host-spec-question-retry-review-blocked-desktop.png",
+      "sha256": "b58fdc5dcc50c8bfe06369e44c6e6a13d705b2441287fa19b01225e89bc454f3"
+    },
+    "host-spec-question-retry-review-blocked-mobile-375.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/host-spec-question-retry-review-blocked-mobile-375.png",
+      "sha256": "c27ff2e3a115d9ec429bd80fd7988e0ff0312fdd334ea0a7ec76d0ecce3193ae"
+    },
+    "host-desktop.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/host-desktop.png",
+      "sha256": "b5004edb5512e6e106162444ad50e9d4a5630e1c2d10b59221ca17785ea08cbb"
+    },
+    "host-sam-failure-returned-desktop.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/host-sam-failure-returned-desktop.png",
+      "sha256": "47bcea40fef2f7bae3dbf2f32c3819d146ae3d0de5418ba2d856fd41b5ddcd32"
+    },
+    "host-metadata-completed-desktop.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/host-metadata-completed-desktop.png",
+      "sha256": "720eb3ddc1c6d5e8f843a52bf2927401983248923ddcc5c7a068d4d349e37684"
+    },
+    "host-device-time-60000-desktop.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/host-device-time-60000-desktop.png",
+      "sha256": "dffc4374e1f5409a263eb49e1d9242cfabbbb098cc0898959da89a31063660fe"
+    },
+    "host-device-time-60000-mobile-375.png": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/host-device-time-60000-mobile-375.png",
+      "sha256": "2c382acce0323c9410c9a8ac54f0ef406d81c9259c37adec9a01aa973fc6ab06"
+    },
+    "ui-catalog.json": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/ui-catalog.json",
+      "sha256": "d8057055df2642f0a60eb2e00e4278cb1def2c58585346fc08eccdc783396543"
+    },
+    "ui-catalog-journal.json": {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/ui-catalog-journal.json",
+      "sha256": "728e2c794df93335a20d1e9701b8fda37518bf801d0cddfb19a85f687e256d5c"
+    }
+  },
+  "verdict": "pass",
+  "buildAssets": {
+    "dist/assets/client-CAHGjawS.js": "5fa7239379911c904db9b9302fd405a3b9e95325a502751ff2e1cb005e6ec769",
+    "dist/assets/ifpmic-BsxJoR8P.js": "86b78b9a378db1f2c1b8b6b10899115d0ebc12cace7036f5973975407d1cde69",
+    "dist/assets/main-CylYjkUS.js": "ddbb9ffd85519b9bebb4689f7cac226a376fbc3cc1cca57dcbadeff28f4dc377",
+    "dist/assets/main-Drfl24f5.css": "5f130778329164918b89101b7ff8ae176d4f44800f424819c3a4add2d2911814",
+    "dist/ifpmic.html": "ed49cd48b5d93c02b5f45d07ff21a264fac8b5806dfddb4e07bc98841027debe",
+    "dist/index.html": "f0c4ef087190c0cfe694cf7cf27837494f3fc22ee4bcc05ee2c14a244056890f"
+  },
+  "pluginAssets": {
+    ".paperclip-lab/ifpmic-plugin/dist/manifest.js": "b97837792de4a4c3134470f8bd775128d734f79ec43d6e3ec8469e591956d01e",
+    ".paperclip-lab/ifpmic-plugin/dist/ui/index.js": "962353365867128aa68076c2ad3fa391337727cd09e8a16a15ee838353418f1c",
+    ".paperclip-lab/ifpmic-plugin/dist/worker.js": "a28019a206135c594bb59a6f60011b6be2fc37a80b1b42bfe1cde55a16dc31ce",
+    ".paperclip-lab/ifpmic-plugin/package.json": "9e5921e12ad8f363c36ff31ec69afc43a132c7b532869249b9c9d78b822836df"
+  },
+  "finishedAt": "2026-10-15T12:43:56.135Z"
+}

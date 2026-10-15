@@ -1,0 +1,21 @@
+{
+  "kind": "routing_ui_initial_browser_diagnostic",
+  "classification": "TC label expectation error; product unchanged",
+  "recorded_at": "2026-10-15T12:41:27.571104+00:00",
+  "report": "workflow-artifacts/verification/V2/ui/standalone-routing-attempt-1.json",
+  "report_sha256": "b55d831c0c0fe19d37aad4fd71bd10ab4ca0aace09f80134088944ac6f72c4ea",
+  "preserved_evidence_directory": "workflow-artifacts/verification/V2/ui/standalone-routing-attempt-1-evidence",
+  "reported_result": "14/15 checks; expected raw performed false instead of visible 시험 수행 false",
+  "correction": "Use the approved human-readable label 시험 수행 and false, and add missing analysis/skip-basis/history/current-authority UI checks before frozen candidate gate.",
+  "source_changes_for_finding": [],
+  "final_acceptance": "Resolved by frozen gate plus independently reviewed same-candidate viewport capture; see routing-ui-review.json",
+  "automatic_gate_visual_review": {
+    "gate": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/gate.json",
+    "verdict": "Automatic gate pass; visual acceptance pending",
+    "finding": "Host fixed navigation/breadcrumb overlays P24 detail in fullPage mobile screenshot. DOM checks and source hashes pass, but mandatory visual evidence is obscured.",
+    "capture": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T12-42-12-951Z/host-routing-exempt-exempt-375.png",
+    "capture_sha256": "f9c6e5f1bc27339ddbe8713b253e476701f0511d6ac4dbae4938bc845ceaf14d",
+    "recovery": "Preserve initial capture and source candidate; add read-only native-host viewport evidence without CSS/DOM hiding, writes or external requests. Recheck exact gate source/build/plugin hashes before and after capture; independent image audit required.",
+    "closure": "Unobscured host P24 viewport evidence passed same-candidate hash/geometry/network checks and independent image audit; original fullPage capture remains preserved."
+  }
+}
