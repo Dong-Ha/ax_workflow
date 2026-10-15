@@ -1,0 +1,33 @@
+{
+  "kind": "independent_mock_routing_static_review",
+  "decision": "approved_source_and_gate_runner_only",
+  "reviewer_agent": "/root/paperclip_ui_extension",
+  "implementer_agent": "/root",
+  "recorded_at": "2026-10-15T12:19:42.516424+00:00",
+  "source_hashes": {
+    "src/ifpmic/routing.mjs": "543ec615fdb405e4a8779e3db92bb0dc8f03d32aa213a81e226da9f8b24463c6",
+    "src/ifpmic/replay.mjs": "de503c6f8e7bea0b1b58427118ad40dcd5997ca2435e9fe9de0f7b4b1af66643",
+    "src/ifpmic/protocols.mjs": "feb64dbc23c18a3659e39d690890e7f522c2119015656d1a734e5d2bf9aae07f",
+    "src/ifpmic/exceptions.mjs": "086c90ef443b3752e5187b86a0f254dcb10934876ee602ec441846366f5c734d",
+    "src/ifpmic/replay.d.mts": "8c7dfe16eedaff817c90e905c277465d6ddfdf970d73fd0fa7f06ebee71ac625",
+    "scripts/verify-ifpmic-routing.mjs": "7bba87e215b657384c6e46ecbcee55404bfaedef21a5895ee14ec55ad873475f",
+    "docs/ifpmic/V2-IMPLEMENTATION.md": "740b31b1e2119c20b42ac49843a936d9aee15daf9d31511dcef0f944837fa8de"
+  },
+  "plan": "../../V2-ROUTING.md",
+  "plan_sha256": "3b78784e620faf2826c17f1a51ad0db36a331cee22759488a74b30197d467ded",
+  "reviewer_commands_run": false,
+  "withdrawn_finding": {
+    "claim": "Missing route context could dereference null in plan_confirmation/no_change",
+    "resolution": "Reviewer rechecked unchanged source: common contextCurrent guard precedes these branches. No source defect; claim withdrawn. Missing-context rejection TC retained."
+  },
+  "pending": [
+    "Independent TC oracle audit",
+    "Frozen candidate unit/build/plugin-build gate",
+    "Final evidence audit"
+  ],
+  "not_approved": [
+    "Full V2",
+    "New routing UI/catalog",
+    "B01-B13 or real AT"
+  ]
+}

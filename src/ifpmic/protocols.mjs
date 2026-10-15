@@ -5,7 +5,7 @@ export function newStepRecord(id, cycle, attempt = 1, state = 'PENDING') {
     gate_candidate_fingerprint: null, gate_rule_version: null, gate_evidence_id: null,
     attempt, execution_id: `mock:${id}:c${cycle}:a${attempt}`, evidence_ids: [],
     failure_evidence_id: null, failure_candidate_fingerprint: null, failure_outcome: null,
-    retry_due_ms: null, infrastructure_error: false,
+    retry_due_ms: null, infrastructure_error: false, skip_basis: null, unchanged_analysis: null, exemption_report: null,
   };
 }
 
@@ -13,7 +13,7 @@ export function mockHumanTaskId(id, cycle, attempt) {
   return `mock:task:${id}:c${cycle}${attempt === 1 ? '' : `:a${attempt}`}`;
 }
 
-export function createObservationProtocols({ result, graph, submissions, transitionAllowed, mockId, policy }) {
+export function createObservationProtocols({ result, graph, submissions, transitionAllowed, mockId, policy, exemptionCurrent = () => false, expectedPlanVersion = () => 'mock:plan:v1' }) {
   const passRoutes = new Map(graph.edges.filter(edge => edge.kind === 'pass').map(edge => [edge.from, edge.to]));
   const gateIds = ['P16', 'P18', 'P20', 'P24'];
   const digestBindings = new Map();
@@ -24,7 +24,7 @@ export function createObservationProtocols({ result, graph, submissions, transit
   const archiveAttempt = (node, step) => result.history.push({ kind: 'attempt', cycle: result.cycle, step_id: node.id, step: snapshot(step) });
   const currentGates = () => gateIds.every(id => {
     const step = result.steps[id];
-    return step.state === 'SUCCEEDED' && step.cycle === result.cycle && step.gate_verdict === 'PASS'
+    return exemptionCurrent(id) || step.state === 'SUCCEEDED' && step.cycle === result.cycle && step.gate_verdict === 'PASS'
       && step.gate_complete && step.gate_candidate_fingerprint === result.candidate_fingerprint
       && step.gate_rule_version === result.rule_version && mockId(step.gate_evidence_id);
   });
@@ -34,7 +34,8 @@ export function createObservationProtocols({ result, graph, submissions, transit
     && result.release.manifest.rule_version === result.rule_version
     && result.release.manifest.attempt === result.steps.X02.attempt
     && result.release.manifest.execution_id === result.steps.X02.execution_id
-    && gateIds.every((id, index) => result.steps[id].gate_evidence_id === result.release.manifest.gate_evidence_ids[index]);
+    && gateIds.every((id, index) => result.steps[id].gate_evidence_id === result.release.manifest.gate_evidence_ids[index]
+      && result.steps[id].gate_verdict === result.release.manifest.gate_dispositions[index]);
   const manifestMatches = payload => releaseCurrent()
     && payload.manifest_id === result.release.manifest.manifest_id
     && payload.digest === result.release.manifest.digest
@@ -171,7 +172,8 @@ export function createObservationProtocols({ result, graph, submissions, transit
       const fields = ['manifest_id', 'digest', 'candidate_fingerprint', 'rule_version', 'destination', 'notes_hash', 'evidence_bundle'];
       if (fields.some(key => !mockId(payload[key]))) return 'invalid_manifest';
       const binding = { cycle: result.cycle, attempt: step.attempt, execution_id: step.execution_id,
-        gate_evidence_ids: gateIds.map(id => result.steps[id].gate_evidence_id) };
+        gate_evidence_ids: gateIds.map(id => result.steps[id].gate_evidence_id),
+        gate_dispositions: gateIds.map(id => result.steps[id].gate_verdict) };
       const signature = JSON.stringify([fields.map(key => payload[key]), binding]);
       if ((digestBindings.has(payload.digest) && digestBindings.get(payload.digest) !== signature)
           || (manifestBindings.has(payload.manifest_id) && manifestBindings.get(payload.manifest_id) !== signature)) return 'manifest_binding_conflict';
@@ -183,7 +185,7 @@ export function createObservationProtocols({ result, graph, submissions, transit
     }
     if (event.type === 'approval') {
       if (node.id !== 'X03' || step.state !== 'WAITING_HUMAN' || payload.actor !== 'mock:human'
-          || payload.task_id !== mockHumanTaskId(node.id, result.cycle, step.attempt) || payload.plan_version !== 'mock:plan:v1'
+          || payload.task_id !== mockHumanTaskId(node.id, result.cycle, step.attempt) || payload.plan_version !== expectedPlanVersion()
           || !mockId(payload.evidence_id) || !manifestMatches(payload)
           || !['approve', 'reject_code', 'reject_design', 'reject_release_metadata'].includes(payload.decision)) return 'invalid_release_approval';
       if (submissions.has(node.id)) return 'human_task_already_submitted';

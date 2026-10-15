@@ -1,5 +1,5 @@
 // Pure synthetic exception observations; never issues queries or commands.
-export function createExceptionProtocols({ result, transitionAllowed, mockId, releaseMatches }) {
+export function createExceptionProtocols({ result, transitionAllowed, mockId, releaseMatches, expectedPlanVersion = () => 'mock:plan:v1' }) {
   const questionIds = new Set();
   const specEvidenceIds = new Set();
   const versions = new Set([result.requirements_version]);
@@ -47,7 +47,7 @@ export function createExceptionProtocols({ result, transitionAllowed, mockId, re
       if (node.id !== 'P03' || step.state !== 'WAITING_HUMAN' || !question || question.resolved
           || !transitionAllowed(step.state, 'READY')) return 'invalid_spec_resolution';
       if (p.actor !== 'mock:human' || p.question_id !== question.question_id || p.task_id !== question.task_id
-          || p.plan_version !== 'mock:plan:v1' || p.candidate_fingerprint !== result.candidate_fingerprint
+          || p.plan_version !== expectedPlanVersion() || p.candidate_fingerprint !== result.candidate_fingerprint
           || p.candidate_fingerprint !== question.candidate_fingerprint
           || p.requirements_version !== question.requirements_version || p.requirements_version !== result.requirements_version
           || !mockId(p.resolved_requirements_version) || versions.has(p.resolved_requirements_version)

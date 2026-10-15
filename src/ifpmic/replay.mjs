@@ -2,6 +2,7 @@ import { buildWorkflowGraph, safeText } from './contract.mjs';
 import canonicalStateContract from '../../docs/ifpmic/design-v1/specs/state-contract.json' with { type: 'json' };
 import canonicalWorkflow from '../../docs/ifpmic/design-v1/specs/workflow.v1.json' with { type: 'json' };
 import { createObservationProtocols, newStepRecord, mockHumanTaskId } from './protocols.mjs';
+import { createRoutingProtocols } from './routing.mjs';
 import { createExceptionProtocols } from './exceptions.mjs';
 export { createScenarioCatalog } from './scenarios.mjs';
 
@@ -93,7 +94,8 @@ const opaqueId = value => typeof value === 'string' && /^[A-Za-z0-9][A-Za-z0-9:.
 const mockEvidence = value => opaqueId(value) && value.startsWith('mock:');
 const eventTypes = new Set(['step', 'agent', 'human', 'measurement', 'device', 'business_failure',
   'route', 'infra_error', 'retry', 'candidate', 'manifest', 'approval', 'receipt', 'notes_failure', 'notes_retry',
-  'spec_unresolved', 'spec_resolution', 'spec_reviewed', 'remote_unknown', 'remote_reconcile']);
+  'spec_unresolved', 'spec_resolution', 'spec_reviewed', 'remote_unknown', 'remote_reconcile',
+  'route_context', 'reuse_confirmation', 'plan_confirmation', 'unchanged_analysis', 'skip', 'exemption_report', 'no_change']);
 const eventFields = new Set(['event_id', 'source_id', 'source_seq', 'type', 'mode', 'job_id',
   'step_id', 'cycle', 'attempt', 'execution_id', 'payload']);
 const payloadFields = {
@@ -107,6 +109,13 @@ const payloadFields = {
   approval: ['actor', 'task_id', 'plan_version', 'evidence_id', 'manifest_id', 'digest', 'candidate_fingerprint', 'decision'],
   receipt: ['manifest_id', 'digest', 'candidate_fingerprint', 'receipt_id', 'observed'],
   notes_failure: ['evidence_id'], notes_retry: ['evidence_id'],
+  route_context: ['profile_id', 'profile_hash', 'profile_kind', 'change_type', 'plan_version', 'candidate_fingerprint', 'requirements_version', 'source_hash', 'test_hash', 'environment_hash', 'baseline_environment_hash', 'input_hashes', 'policy_rule_id', 'policy_approval_id'],
+  reuse_confirmation: ['actor', 'task_id', 'plan_version', 'candidate_fingerprint', 'requirements_version', 'baseline_hash', 'baseline_input_hash', 'current_input_hash', 'reason_id', 'evidence_id'],
+  plan_confirmation: ['actor', 'task_id', 'plan_version', 'candidate_fingerprint', 'requirements_version', 'evidence_id', 'plan_hash', 'reason_id', 'prior_reuse', 'reuse_steps', 'exempt_steps'],
+  unchanged_analysis: ['actor', 'plan_version', 'candidate_fingerprint', 'requirements_version', 'baseline_hash', 'current_hash', 'needs_changes', 'requirements_satisfied', 'evidence_id'],
+  skip: ['evidence_id'],
+  exemption_report: ['actor', 'plan_version', 'candidate_fingerprint', 'requirements_version', 'exemption_evidence_id', 'performed', 'report_id', 'evidence_id'],
+  no_change: ['actor', 'task_id', 'plan_version', 'candidate_fingerprint', 'requirements_version', 'reason_id', 'evidence_id', 'production_evidence_id', 'tests_evidence_id', 'reuse_evidence_id'],
   spec_unresolved: ['question_id', 'candidate_fingerprint', 'requirements_version', 'evidence_id'],
   spec_resolution: ['actor', 'question_id', 'task_id', 'plan_version', 'candidate_fingerprint', 'requirements_version', 'resolved_requirements_version', 'complete', 'evidence_id'],
   spec_reviewed: ['actor', 'candidate_fingerprint', 'requirements_version', 'evidence_id'],
@@ -138,16 +147,20 @@ export function replayScenario(scenario, workflow, stateContract, cursor = scena
     required_revalidation: [], failure_bundle: [],
     wait_reason: '', real_publish_allowed: false,
     requirements_version: 'mock:requirements:v1', spec_review: null, remote_reconciliation: null,
+    route_plan: { context: null, confirmed: null, reuse_confirmations: {} }, no_change: null,
   };
   for (const node of graph.nodes) result.steps[node.id] = newStepRecord(node.id, 1);
   const eventIds = new Map();
   const sequences = new Map();
   const latestSequences = new Map();
   const submissions = new Map();
+  const routing = createRoutingProtocols({ result, graph, submissions, mockId: mockEvidence,
+    transitionAllowed: (from, to) => isAllowedStepTransition(from, to, stateContract) });
   const protocols = createObservationProtocols({ result, graph, submissions,
+    exemptionCurrent: routing.exemptionCurrent, expectedPlanVersion: routing.expectedPlanVersion,
     transitionAllowed: (from, to) => isAllowedStepTransition(from, to, stateContract),
     mockId: mockEvidence, policy: retryPolicy });
-  const exceptions = createExceptionProtocols({ result, mockId: mockEvidence,
+  const exceptions = createExceptionProtocols({ result, mockId: mockEvidence, expectedPlanVersion: routing.expectedPlanVersion,
     transitionAllowed: (from, to) => isAllowedStepTransition(from, to, stateContract),
     releaseMatches: protocols.manifestMatches });
   let quarantined = false;
@@ -166,6 +179,10 @@ export function replayScenario(scenario, workflow, stateContract, cursor = scena
     if (event.step_id !== result.current_step) return 'inactive_step';
     const payload = record(event.payload) ? event.payload : {};
     const node = nodes.get(event.step_id);
+    const routingBlocked = routing.blockingReason(event, node, step);
+    if (routingBlocked) return routingBlocked;
+    const routingResult = routing.apply(event, node, step);
+    if (routingResult !== null) return routingResult;
     const blocked = exceptions.blockingReason(event, node, step);
     if (blocked) return blocked;
     const exceptionResult = exceptions.apply(event, node, step);
@@ -180,12 +197,14 @@ export function replayScenario(scenario, workflow, stateContract, cursor = scena
     if (event.type === 'human') {
       if (node.owner !== 'human' || step.state !== 'WAITING_HUMAN'
           || payload.actor !== 'mock:human' || payload.task_id !== mockHumanTaskId(node.id, result.cycle, step.attempt)
-          || payload.plan_version !== 'mock:plan:v1' || !mockEvidence(payload.evidence_id)) return 'invalid_human_submission';
+          || payload.plan_version !== routing.expectedPlanVersion() || !mockEvidence(payload.evidence_id)) return 'invalid_human_submission';
       if (node.id === 'X03') return 'release_digest_required';
+      const routeGuard = routing.humanGuard(node, payload);
+      if (routeGuard) return routeGuard;
       const decision = payload.decision ?? 'approve';
       if (!['approve', ...(node.id === 'X01' ? ['reject'] : node.id === 'P21' ? ['reject', 'design_change_needed'] : [])].includes(decision)) return 'invalid_human_decision';
       if (submissions.has(node.id)) return 'human_task_already_submitted';
-      submissions.set(node.id, { decision, evidence_id: payload.evidence_id, candidate_fingerprint: result.candidate_fingerprint,
+      submissions.set(node.id, { decision, plan_version: payload.plan_version, evidence_id: payload.evidence_id, candidate_fingerprint: result.candidate_fingerprint,
         cycle: result.cycle, attempt: step.attempt, execution_id: step.execution_id });
       if (!step.evidence_ids.includes(payload.evidence_id)) step.evidence_ids.push(safeText(payload.evidence_id, 240));
       return '';
@@ -229,6 +248,8 @@ export function replayScenario(scenario, workflow, stateContract, cursor = scena
           || submission.cycle !== result.cycle || submission.attempt !== step.attempt)) return 'human_submission_required';
       if (node.owner === 'system' && (step.gate_verdict !== 'PASS' || !step.gate_complete
           || step.gate_candidate_fingerprint !== result.candidate_fingerprint || step.gate_rule_version !== result.rule_version)) return 'gate_pass_required';
+      const routingGuard = routing.successGuard(node, step);
+      if (routingGuard) return routingGuard;
       const exceptionGuard = exceptions.successGuard(node, step);
       if (exceptionGuard) return exceptionGuard;
       const releaseGuard = protocols.successGuard(node);

@@ -1,0 +1,27 @@
+{
+  "kind": "targeted_routing_architecture_review",
+  "reviewer_agent": "/root/metadata_route_design",
+  "reviewer_role": "senior_sol; read-only architecture after worker_luna evidence and main analysis",
+  "recorded_at": "2026-10-15T12:07:23.060031+00:00",
+  "reason_for_escalation": "Original P03-P05 REUSE precedes global X01 approval; coupled SQE exemption crosses mandatory P23. Main needed a consistent explicit mock policy without moving original approvals.",
+  "source_contracts": [
+    "../../design-v1/specs/workflow.v1.json",
+    "../../design-v1/specs/state-contract.json",
+    "../../design-v1/specs/acceptance-cases.json"
+  ],
+  "conclusions": [
+    "Node-local pre-X01 REUSE may be an explicit mock policy; global approval remains at X01 and must include exact earlier skip evidence",
+    "No implicit global approval, retrospective skip mutation or plan replacement; reject/replan uses original new-cycle route",
+    "Joint P22/P24 approval consumed sequentially, mandatory P23 report explicitly states no test performed",
+    "Quality disposition is current complete PASS or explicit bound EXEMPT; manifest must preserve distinction",
+    "NO_CHANGE at P12 SKIPPED/job NO_CHANGE is viable with separate production/TC analysis and human close; no release and terminal guards"
+  ],
+  "remaining_real_policy_decisions": [
+    "Pre-X01 local reuse timing",
+    "SQE report schema for exemption",
+    "Release eligibility with EXEMPT dispositions",
+    "NO_CHANGE terminal placement"
+  ],
+  "scope": "Architecture advice for explicit mock semantics; independent detailed plan/source/TC/fixed candidate approval still required. Real B01 policy requires human decision.",
+  "files_edited": false
+}

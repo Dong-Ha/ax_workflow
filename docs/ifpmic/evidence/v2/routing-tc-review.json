@@ -1,0 +1,34 @@
+{
+  "kind": "independent_routing_test_oracle_review",
+  "decision": "approved_for_frozen_gate",
+  "reviewer_agent": "/root/paperclip_ui_extension",
+  "test_author_agent": "/root/verification_plan",
+  "implementer_agent": "/root",
+  "recorded_at": "2026-10-15T12:27:43.381591+00:00",
+  "plan": "../../V2-ROUTING.md",
+  "plan_sha256": "3b78784e620faf2826c17f1a51ad0db36a331cee22759488a74b30197d467ded",
+  "test": "../../../../tests/ifpmic-routing.test.mjs",
+  "test_sha256": "b1dd6069906ea36f3265a1788b4b5dd766d78f344ca2d231ca8613a4788f5ac6",
+  "test_author_reported_targeted": "15/15 pass",
+  "reviewer_reran_tests": false,
+  "reviewed_boundaries": [
+    "Early local reuse versus global X01 immutable scope and exact prior proofs",
+    "All ten REUSE nodes and separate production/TC analyses",
+    "NEW_HW P10 environment/baseline/input equality and forbidden other reuse",
+    "Pilot/NEW_HW policy refusal, coupled scopes and mandatory SQE unperformed report",
+    "Four EXEMPT dispositions preserved through metadata retry, manifest approval, receipt and END",
+    "Candidate A exemption invalidation and normal candidate B fresh PASS release",
+    "Twelve literal routes/suffixes in existing protocol TC plus P13/P16/P24 and new X01-context integration",
+    "NO_CHANGE human proof, unchanged requirements analyses and current-P12 terminal guards for five event types",
+    "Existing shared replay envelope dedup/source/coordinate boundaries"
+  ],
+  "diagnostics": "routing-attempt-1.json",
+  "pending": [
+    "Final fixed-candidate gate and evidence audit"
+  ],
+  "not_approved": [
+    "New routing UI/catalog",
+    "Full V2",
+    "Real B/AT/runtime operations"
+  ]
+}

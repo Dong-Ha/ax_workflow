@@ -56,7 +56,7 @@
         "REQ-14"
       ],
       "implementation_notes": "V2-IMPLEMENTATION.md",
-      "scope": "Pure mock replay and protocols plus 32-scenario standalone/native Paperclip UI verified as partial increments, including P03 questions/current-attempt review and P25 remote result reconciliation. Remaining protocols/catalog families and full V2 acceptance pending; no real AT completion.",
+      "scope": "Pure mock replay/protocols including reuse/exemption/NO_CHANGE core and existing 32-scenario standalone/native UI verified as partial increments. New routing catalog/UI, remaining protocols and full V2 acceptance pending; no real AT completion.",
       "increments": [
         {
           "id": "mock_replay_core",
@@ -96,6 +96,14 @@
           "evidence": "evidence/v2/exception-ui-verification.json",
           "independent_acceptance": "evidence/v2/exception-ui-review.json",
           "candidate_fingerprint": "1f68feeda7c3fd115bc5e9ae9de881ac7b54d76a35d7d28e3cbb2592e7c27d4b"
+        },
+        {
+          "id": "mock_reuse_exemption_no_change",
+          "status": "verified",
+          "scope": "Evidence-bound mock REUSE/POLICY/COUPLED and human NO_CHANGE core only. New routing UI/catalog and real policies remain pending; partial V2.",
+          "evidence": "evidence/v2/routing-verification.json",
+          "independent_acceptance": "evidence/v2/routing-review.json",
+          "candidate_fingerprint": "83561ca61fbc2626995eb48a9962e9b0b66570b8fba0accb557fa0ec9154be95"
         }
       ]
     },
@@ -314,12 +322,12 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "V2: complete skip/policy-exempt/manual, P22 trial details, child-agent, pause/resume/cancel/no-change protocols and corresponding catalog/UI cases, then full V2 gate. B01-B13 and real AT remain pending.",
+  "next_step": "V2: integrate verified routing cases into catalog/UI and verify standalone/native host; implement manual/P22 trial/child-agent/pause/resume/cancel and remaining catalog families, then full V2 gate. B01-B13 and real AT remain pending.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",
     "Approved Bedrock/Claude runtime profile"
   ],
   "publication_policy": "Only authorized git repository documentation, source and synthetic verification summaries/screenshots; never runtime credentials or application logs.",
-  "updated_at": "2026-10-15T11:52:42.257965+00:00"
+  "updated_at": "2026-10-15T12:29:01.686699+00:00"
 }

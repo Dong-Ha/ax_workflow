@@ -1,0 +1,48 @@
+{
+  "kind": "independent_partial_mock_routing_acceptance",
+  "decision": "accepted_mock_reuse_exemption_no_change",
+  "recorded_at": "2026-10-15T12:29:01.686699+00:00",
+  "implementer_agent": "/root",
+  "test_author_agent": "/root/verification_plan",
+  "reviewer_agent": "/root/paperclip_ui_extension",
+  "reviewer_role": "worker_luna; read-only independent plan/source/TC/evidence review",
+  "plan": "../../V2-ROUTING.md",
+  "plan_sha256": "3b78784e620faf2826c17f1a51ad0db36a331cee22759488a74b30197d467ded",
+  "plan_review": "routing-plan-review.json",
+  "source_review": "routing-source-review.json",
+  "test_review": "routing-tc-review.json",
+  "diagnostic": "routing-attempt-1.json",
+  "candidate_fingerprint": "83561ca61fbc2626995eb48a9962e9b0b66570b8fba0accb557fa0ec9154be95",
+  "report": "routing-verification.json",
+  "report_sha256": "ce2d9c89c5355aad04588fb0f1bccde4baad62b39b0c7d719d7abce41f3d014e",
+  "source_paths_audited": 111,
+  "source_hash_matches": 111,
+  "command_logs_hash_matched": 3,
+  "command_exits_zero": 3,
+  "build_assets_hash_matched": 6,
+  "plugin_assets_hash_matched": 4,
+  "checks": {
+    "unit": "241/241; fail=0, skipped=0",
+    "build": "TypeScript/Vite exit 0",
+    "plugin_build": "exit 0",
+    "source_changed": [],
+    "reviewer_reran_commands": false,
+    "curated_attempt_latest_byte_identical": true
+  },
+  "approved_scope": [
+    "Local pre-X01 reuse proof and immutable item-bound X01 approval",
+    "Role-separated production/TC unchanged analysis and human NO_CHANGE terminal with current-step event blocking",
+    "Policy/coupled EXEMPT distinct from PASS and mandatory SQE unperformed report",
+    "Current disposition-bound mock release, candidate invalidation and mandatory revalidation integration"
+  ],
+  "deferred_verification": {
+    "browser_native_host": "No new routing catalog, React or CSS changes. Approved plan defers new routing display/navigation/viewport verification to the routing UI increment and full V2 gate. Existing 32 fixtures do not use new routing events.",
+    "residual_risk": "New SKIPPED/EXEMPT/NO_CHANGE display and manifest disposition presentation remain unverified in browser."
+  },
+  "not_approved": [
+    "New routing UI/catalog",
+    "Full V2 or remaining manual/trial/child/pause/resume/cancel protocols",
+    "B01-B13, real policy approval or real AT/runtime/device/publisher execution"
+  ],
+  "waivers": []
+}

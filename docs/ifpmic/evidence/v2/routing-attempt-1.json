@@ -1,0 +1,26 @@
+{
+  "kind": "routing_test_oracle_diagnostic",
+  "recorded_at": "2026-10-15T12:24:41.133257+00:00",
+  "classification": "TC expectation error; no product defect",
+  "finding": "X01 rejection starts a new cycle but retains old route_plan snapshot until a new valid route_context. Null snapshot expectation incorrectly treated historical retention as acceptance.",
+  "evidence": "workflow-artifacts/verification/V2/routing/attempt-context-retention.log",
+  "evidence_sha256": "f8d09f6a2957598d5e47f97e8fd1bba07af1b2203ee5a49233d147b544d49320",
+  "correction": "Assert unchanged prior snapshot, historical cycle=1 while current cycle=2, last applied=false and reason=invalid_route_context for reused version. Then assert fresh plan version succeeds after mandatory original revalidation.",
+  "source_changes": [],
+  "test_author": "/root/verification_plan",
+  "implementer_review": "/root",
+  "final_targeted_tests": "15/15 pass; full fixed candidate gate pending",
+  "initial_gate": {
+    "path": "workflow-artifacts/verification/V2/routing/gates/2026-10-15T12-25-36-138Z/gate.json",
+    "sha256": "be26e5165821ec6f371bc76636ed5a5810e2bca058de3d18305a372314249b5f",
+    "verdict": "pass",
+    "source_fingerprint": "62f09580b0ecce1be18c702e9e718b23f5c23dccec94c2378a0f80eea36930c5",
+    "unit_counts": {
+      "tests": 241,
+      "pass": 241,
+      "fail": 0,
+      "skipped": 0
+    },
+    "acceptance": "Not final acceptance: integration review identified inactive-step-only terminal test; current-P12 terminal guard coverage must be added and new frozen gate executed."
+  }
+}

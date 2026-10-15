@@ -61,3 +61,11 @@ TC가 독립적인 25개 끝 상태와 checkpoint oracle, 실제 host/offline br
 `V2-EXCEPTION-UI.md` 계획에 따라 기존 25개 fixture를 유지하고 P03 질문/답변/재시도/추가 질문 및 P25 불명확/복구/장비 격리 7개를 추가한다. 전체 32개와 주요 checkpoint를 탐색하며, 질문 원래 좌표·답변 버전·현재 실행의 검토 좌표 및 원격 동작·순번·결과·증거를 별도 패널로 표시한다. catalog evidence의 `observed_snapshot`은 재생에서 관측한 값이며, TC의 독립 고정 oracle을 대신하지 않는다.
 
 32개 catalog/unit, standalone/isolated native-host의 새 예외 관측과 기존 화면, 375/1440px, 전체 AX 회귀를 같은 고정 후보에서 검증한다. 전체 V2와 B 단계/실제 AT는 여전히 별도다.
+
+## 재사용·면제·무변경 종료 프로토콜 증분
+
+독립 승인된 `V2-ROUTING.md`에 따라 합성 route context, X01 이전 P03–P05의 개별 사람 재사용 확인, X01 전체 계획 승인, P06–P12 재사용 근거, POLICY/COUPLED 면제와 P23 미수행 보고, P11 code-dev·P12 TC의 별도 분석 및 사람 NO_CHANGE 종료를 추가한다. 계획과 근거는 cycle/attempt/execution, 후보와 요구사항 버전에 결속한다. 원본 복귀 경로에서 계산한 필수 재검증 구간은 생략하지 않는다. 후보 변경은 기존 생략 권한을 폐기하면서 정상 신규 PASS 검증 경로를 유지한다.
+
+면제된 gate는 PASS가 아닌 EXEMPT이며 측정 완료를 주장하지 않는다. mock manifest에도 네 gate의 disposition을 보존한다. NO_CHANGE는 P12에서 멈추고 이후 빌드·배포·빈 커밋을 만들지 않는다. 실제 사람 승인·장비·발행 API 호출은 없다. X01 이전 재사용 시점, 면제 시 SQE 보고, EXEMPT 배포 정책, NO_CHANGE 종료 위치는 mock 설계 결정이며 실제 B01 정책 승인과 구분한다.
+
+검증은 별도 TC와 `node scripts/verify-ifpmic-routing.mjs`의 전체 단위/build/plugin-build, 소스 고정 및 독립 수용이다. 이 증분은 React/CSS/기존 32개 카탈로그를 변경하지 않으며 새 routing 화면을 검증했다고 표시하지 않는다. 후속 routing 카탈로그·standalone/native-host 화면, manual/trial/child-agent/pause/resume/cancel과 전체 V2·B01–B13·실제 AT는 계속 필요하다.
