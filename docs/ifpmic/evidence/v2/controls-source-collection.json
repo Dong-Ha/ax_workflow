@@ -1,0 +1,77 @@
+{
+  "kind": "control_contract_source_collection",
+  "recorded_at": "2026-10-15T15:23:28.283510+00:00",
+  "mode": "mock",
+  "source_commit": "d0cd05f",
+  "source_hashes": {
+    "IFPMIC_AX_Design_v1.docx": "18a14876a689beae0599b5d4014bf95db79bef047d0e4ceafa60d9a9417624fc",
+    "docs/ifpmic/design-v1/specs/state-contract.json": "0248e130017043539319c56af854f5388a95d33e7e687902a3438fdff414244a",
+    "docs/ifpmic/design-v1/specs/openapi.v1.json": "2ed780cfa06349b18f5025937e050fd98a5cefa34b552eb836cfaccad416dd7a",
+    "docs/ifpmic/design-v1/specs/data-model.json": "00c84f8a39b1b8959daa8d94b1d67e860d83ad9bdb809065a5cd3b18af07071b",
+    "docs/ifpmic/design-v1/specs/agent-contract.json": "ca6d4bea7abf0fffe7354c482af0d521c3a2e367217a69923a4bfe43fa27ab64",
+    "docs/ifpmic/design-v1/specs/bridge-contract.json": "d9a0deaa745d4078a779a153aad6a889a49b7675dc8ad3688f8b4c641233047d",
+    "docs/ifpmic/design-v1/specs/acceptance-cases.json": "f7163553edc9e8e753965cb8748ab04aac8f68c1a453f567f62284a01b38b0d5",
+    "docs/ifpmic/design-v1/specs/implementation-backlog.json": "115e48568e0464b8e67ef17274dba97b3046a8de902e1cf426d9b70e1528e5d0",
+    "src/ifpmic/replay.mjs": "aa0549b5d715febf2563e1766759e2a79e36641a0a1ad938ba8aae3938370b6c",
+    "src/ifpmic/protocols.mjs": "f8dc1f910cddfa6cafe2e63c8ee2e6d7a17a69f02cddff1a846de8fb8abca758",
+    "src/ifpmic/children.mjs": "4918f1a3d25bc2d4f3d8333c6c0434d86947894af9535e1bfe27fdaaebe134a0",
+    "src/ifpmic/exceptions.mjs": "086c90ef443b3752e5187b86a0f254dcb10934876ee602ec441846366f5c734d",
+    "src/ifpmic/sqe.mjs": "9fce76dc99899516375dae3881e6d5e089caa0aa905afd5c9ab315bb77082dac"
+  },
+  "source_collection_agents": {
+    "original_specification": "/root/paperclip_ui_extension",
+    "code_and_test_impact": "/root/verification_plan",
+    "integration": "/root"
+  },
+  "original_evidence": [
+    {
+      "source": "IFPMIC_AX_Design_v1.docx §7, paragraph246 (all XML p elements)",
+      "requirement": "Pause permits safe completion of in-flight work, blocks next-stage start; resume restores saved wait/step; cancel records finished external effects and blocks successors; job/agent states separate"
+    },
+    {
+      "source": "state-contract.json step_transitions and rules",
+      "requirement": "Exact canonical edges; PAUSED has no WAITING_AGENT/WAITING_RETRY/RUNNING successor; resume_state/resume_step; completed in-flight step may coexist with PAUSED job; reconcile priority"
+    },
+    {
+      "source": "IFPMIC_AX_Design_v1.docx §10 paragraphs301–321; bridge-contract.json",
+      "requirement": "Registered operation identity/profile/artifact/lease/fencing; journal before execution; repeated command only queries; active/unknown expiry remains quarantined; safe boundary before flash cancellation; no automatic rollback"
+    },
+    {
+      "source": "IFPMIC_AX_Design_v1.docx §11–12 paragraphs349–356; openapi.v1.json Control/CommandReceipt/CommandStatus",
+      "requirement": "Strict expected_revision/action/reason, CSRF/Idempotency-Key; durable command/outbox; 202 acceptance distinct from applied/rejected; revision/state check at workflow application; duplicate command_id once"
+    },
+    {
+      "source": "data-model.json commands_outbox",
+      "requirement": "Unique(actor,route,idempotency_key); same key with different body conflicts; ownership comes from authentication, mock local identity is limited to mock mode"
+    },
+    {
+      "source": "IFPMIC_AX_Design_v1.docx §14; state-contract.json",
+      "requirement": "Remote intent/query/receipt; cancellation never erases published state; receipt preserved before terminal transition"
+    },
+    {
+      "source": "acceptance-cases.json AT-16/17/25/27 and implementation-backlog.json B03/B04/B09/B11/B12",
+      "requirement": "Restart redelivery/dedup, late previous-cycle results in history only, cancel in-flight flash/remote without new actions and preserve effects, same-revision one winner"
+    }
+  ],
+  "implementation_impact": [
+    "New strict job-scoped control event dispatch before current-step-only dispatch, without relaxing ordinary event identities",
+    "Preserve aggregate pause/cancel intent across accepted step/child/manual/remote completion; existing step success resets aggregate status unconditionally",
+    "Do not add illegal canonical resume edges or overwrite completed/failed attempts",
+    "Controls cannot bypass infrastructure deadlines/caps, child question/recovery, SQE evidence, human task assignment, quarantine or release receipt guards",
+    "Keep original59 events/checkpoints bytes; revision/control ledger can add projection metadata without requiring fields on old envelopes"
+  ],
+  "unresolved_architecture": [
+    "Orthogonal job intent vs canonical step states and in-flight completion/resume",
+    "Global job revision policy and job-scoped command outcomes after step changes or terminal job",
+    "Typed bound quiescence/bridge lease/remote reconciliation evidence and late results after cancellation",
+    "Scope of controls.retry without resetting limits or skipping existing human recovery"
+  ],
+  "architecture_advice_requested_from": "/root/control_architecture",
+  "approval": false,
+  "implementation_started": false,
+  "actual_AT_status": "not_executed",
+  "limitations": [
+    "No Temporal/outbox restart, real CSRF/SSO/authentication, bridge/device/lease fencing, remote publisher or runtime interruption evidence",
+    "This collection is evidence for planning, not an approved plan or verification acceptance"
+  ]
+}

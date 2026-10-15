@@ -1,0 +1,2149 @@
+{
+  "kind": "immutable_pre_control_catalog_baseline",
+  "mode": "mock",
+  "source_commit": "d0cd05f",
+  "scenario_count": 59,
+  "historical_trace_archive": "docs/ifpmic/evidence/v2/children-ui-catalog-journal.json",
+  "historical_trace_archive_sha256": "a746b47faa2dd08150d05036ddd61d50ec25d52533c0369ba845dbcc317be65c",
+  "scope": "Exact59 synthetic event/checkpoint streams before control protocol; no retrospective runtime or actual AT proof",
+  "scenarios": [
+    {
+      "id": "happy-path",
+      "events_sha256": "e6401c84d43fc8da79cbe16358938e27e4a19f6572033aba0de6cceb2e16c4b5",
+      "checkpoints_sha256": "1f16400665d5ec307a799bc3312bc121d8dcee7bb819f82009c38301b1219819",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "planning",
+          "title": "요구사항과 실행 계획 · MOCK",
+          "cursor": 20
+        },
+        {
+          "id": "development",
+          "title": "개발과 TC 통합 · MOCK",
+          "cursor": 71
+        },
+        {
+          "id": "quality",
+          "title": "품질 판정 완료 · MOCK",
+          "cursor": 115
+        },
+        {
+          "id": "approved",
+          "title": "현재 명세 모의 승인 · MOCK",
+          "cursor": 125
+        },
+        {
+          "id": "published",
+          "title": "모의 영수증 확인 · MOCK",
+          "cursor": 130
+        },
+        {
+          "id": "completed",
+          "title": "모의 전체 완료 · MOCK",
+          "cursor": 134
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 134
+        }
+      ]
+    },
+    {
+      "id": "human-wait",
+      "events_sha256": "0386b603b71174b8c19f035845b7de8e19923dd3cd2704adeb02f25fb7e17abe",
+      "checkpoints_sha256": "2cc86f0da6a9093d30d7460763977ac00dd331e178cc63726e941ad158549b8b",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "wait",
+          "title": "배정된 사람 작업 대기 · MOCK",
+          "cursor": 33
+        },
+        {
+          "id": "agent-completed",
+          "title": "Agent 완료 관측 · MOCK",
+          "cursor": 34
+        },
+        {
+          "id": "blocked",
+          "title": "사람 증거 없이 성공 차단 · MOCK",
+          "cursor": 35
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 35
+        }
+      ]
+    },
+    {
+      "id": "human-wait-oss",
+      "events_sha256": "91619f36f2915d826d6daa2fc022af88515a5480cd02b01a7d48e9629afd298b",
+      "checkpoints_sha256": "6ad5b21f8c901e60441f514e6cd8a202fd15f003b8e1bc0e9b1c85ca6b3b7bed",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "wait",
+          "title": "배정된 사람 작업 대기 · MOCK",
+          "cursor": 98
+        },
+        {
+          "id": "agent-completed",
+          "title": "Agent 완료 관측 · MOCK",
+          "cursor": 99
+        },
+        {
+          "id": "blocked",
+          "title": "사람 증거 없이 성공 차단 · MOCK",
+          "cursor": 100
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 100
+        }
+      ]
+    },
+    {
+      "id": "debug-failure",
+      "events_sha256": "7d7b59cdde59b37a7a1e0d159c0e858bdea2cef47a5eb769fefd27ad14c425a2",
+      "checkpoints_sha256": "de529b3e2f42d7af02f6c98121867e23b56ddc6eb71d56fe906c7c4e6c2cd1c2",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "failed",
+          "title": "P13 실패 증거 · MOCK",
+          "cursor": 66
+        },
+        {
+          "id": "returned",
+          "title": "P11 복귀 · MOCK",
+          "cursor": 67
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 67
+        }
+      ]
+    },
+    {
+      "id": "review-failure",
+      "events_sha256": "07c124d4f4600aae453a7d4ceb6c228dc8d5df5d45e72301b838a9252b6d3bec",
+      "checkpoints_sha256": "3e5f9326eafdb86e469ca9dfebc14bc540ad285b762ffb783888dbf92ae2d0fe",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "failed",
+          "title": "P14 실패 증거 · MOCK",
+          "cursor": 70
+        },
+        {
+          "id": "returned",
+          "title": "P11 복귀 · MOCK",
+          "cursor": 71
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 71
+        }
+      ]
+    },
+    {
+      "id": "sam-failure",
+      "events_sha256": "206102fa72d18d048b4c2ace5ea82f281b64a9646baeba6ebc7d2e92d1c5769e",
+      "checkpoints_sha256": "672f437f2b3f07510bd4f8837bc0aa20426303be5e9cef9bd9d81cc234c33ba4",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "failed",
+          "title": "P16 실패 증거 · MOCK",
+          "cursor": 79
+        },
+        {
+          "id": "returned",
+          "title": "P07 복귀 · MOCK",
+          "cursor": 80
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 80
+        }
+      ]
+    },
+    {
+      "id": "tem-failure",
+      "events_sha256": "4916f289cf226f1cac7bfca80bfb01ea0945259bb14acc947326bf9060f33000",
+      "checkpoints_sha256": "893fb4d28a0407179a498b62a9d3b415982207b6d71681ef6435123446757c0c",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "failed",
+          "title": "P18 실패 증거 · MOCK",
+          "cursor": 87
+        },
+        {
+          "id": "returned",
+          "title": "P11 복귀 · MOCK",
+          "cursor": 88
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 88
+        }
+      ]
+    },
+    {
+      "id": "static-failure",
+      "events_sha256": "5e28db50d3fe1c0c7f9f0ba7d6a4191e31dad8e578abfbcad6b1739e5a751c8e",
+      "checkpoints_sha256": "f1a12fa40fe1e679df476d3ce7798eec0aa3390157e113caea2af1804efc9a3f",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "failed",
+          "title": "P20 실패 증거 · MOCK",
+          "cursor": 95
+        },
+        {
+          "id": "returned",
+          "title": "P11 복귀 · MOCK",
+          "cursor": 96
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 96
+        }
+      ]
+    },
+    {
+      "id": "sqe-failure",
+      "events_sha256": "eace11673ce080ca31efb363b2840057bb559f2b55a4e410a78540432d00e59d",
+      "checkpoints_sha256": "95d959cc749d91cde2bf33a45de84d726e6088aa37f0b294b5dd79f1c379d362",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "failed",
+          "title": "P24 실패 증거 · MOCK",
+          "cursor": 115
+        },
+        {
+          "id": "returned",
+          "title": "P07 복귀 · MOCK",
+          "cursor": 116
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 116
+        }
+      ]
+    },
+    {
+      "id": "oss-failure",
+      "events_sha256": "63340079c3ba7c85f338fca83fac2c8669d1733a900f06d1b6077507a6332023",
+      "checkpoints_sha256": "d30d7c6f4e8983bd3f65c1d16792b41834d7e2166603cc6be7f8403cb7c1adae",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "rejected",
+          "title": "P21 사람 반려 · MOCK",
+          "cursor": 99
+        },
+        {
+          "id": "failed",
+          "title": "P21 실패 증거 · MOCK",
+          "cursor": 100
+        },
+        {
+          "id": "returned",
+          "title": "P11 복귀 · MOCK",
+          "cursor": 101
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 101
+        }
+      ]
+    },
+    {
+      "id": "oss-design-change",
+      "events_sha256": "074018ccb4c50254527a44f64c378c98fbe871b29fc45f026e6391e8d30080b0",
+      "checkpoints_sha256": "c3377f1530cceb5f5c3c5bfcb6236f6b9712a1543f480232f62555ccb9fa4859",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "rejected",
+          "title": "P21 사람 반려 · MOCK",
+          "cursor": 99
+        },
+        {
+          "id": "failed",
+          "title": "P21 실패 증거 · MOCK",
+          "cursor": 100
+        },
+        {
+          "id": "returned",
+          "title": "P07 복귀 · MOCK",
+          "cursor": 101
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 101
+        }
+      ]
+    },
+    {
+      "id": "plan-rejection",
+      "events_sha256": "341ca07cf16adbdeb4a02355d85faa5f5a5775aeb628d29282074964f1a947f9",
+      "checkpoints_sha256": "8723ee745d5e9868e5d218a8038625c152b5375d6c895b30357b75c1b8a7ffb5",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "rejected",
+          "title": "X01 사람 반려 · MOCK",
+          "cursor": 24
+        },
+        {
+          "id": "failed",
+          "title": "X01 실패 증거 · MOCK",
+          "cursor": 25
+        },
+        {
+          "id": "returned",
+          "title": "P02 복귀 · MOCK",
+          "cursor": 26
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 26
+        }
+      ]
+    },
+    {
+      "id": "release-reject-code",
+      "events_sha256": "c18f81be34a698e08fbcdfbc930716bcba26355e831f0739cea8e240af0b93bf",
+      "checkpoints_sha256": "c103b002fdf4c21ca55620a928d5d740b1430a659f3bef68a5df2db614892d4b",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "rejected",
+          "title": "X03 사람 반려 · MOCK",
+          "cursor": 124
+        },
+        {
+          "id": "failed",
+          "title": "X03 실패 증거 · MOCK",
+          "cursor": 125
+        },
+        {
+          "id": "returned",
+          "title": "P11 복귀 · MOCK",
+          "cursor": 126
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 126
+        }
+      ]
+    },
+    {
+      "id": "release-reject-design",
+      "events_sha256": "dcbf2c393a5444f28fa32ecc4a07dba4e5fe1cb1f1de0a62af984fb56123778a",
+      "checkpoints_sha256": "5191a6af159483c7856d3f81ee34ae95685994c123a8222d421fcbdf21f216b3",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "rejected",
+          "title": "X03 사람 반려 · MOCK",
+          "cursor": 124
+        },
+        {
+          "id": "failed",
+          "title": "X03 실패 증거 · MOCK",
+          "cursor": 125
+        },
+        {
+          "id": "returned",
+          "title": "P07 복귀 · MOCK",
+          "cursor": 126
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 126
+        }
+      ]
+    },
+    {
+      "id": "metadata-recovery",
+      "events_sha256": "478ebc5db427886df4544bbb6f3b35a5a5f3f619e6ece9f38e3a6403fe106a7e",
+      "checkpoints_sha256": "b01cb06a6ae4ccb94fcfff5802971e98bc436a9372510d3950fe2c7ddbb00f81",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "rejected",
+          "title": "X03 사람 반려 · MOCK",
+          "cursor": 124
+        },
+        {
+          "id": "returned",
+          "title": "같은 cycle의 자료 재작성 · MOCK",
+          "cursor": 126
+        },
+        {
+          "id": "corrected",
+          "title": "새 명세·digest 관측 · MOCK",
+          "cursor": 131
+        },
+        {
+          "id": "approved",
+          "title": "새 task의 모의 승인 · MOCK",
+          "cursor": 136
+        },
+        {
+          "id": "completed",
+          "title": "영수증 1회로 모의 완료 · MOCK",
+          "cursor": 145
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 145
+        }
+      ]
+    },
+    {
+      "id": "metric-missing",
+      "events_sha256": "2d1cc8aa6576a649170a0981b2a492404f5b65e1c8dd74fc51994325bd7e8194",
+      "checkpoints_sha256": "5f94fa280df1ac9ae088dc2092a955028c3d1a116e0643543f8637f2bd983f94",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "incomplete",
+          "title": "측정 불완전 · MOCK",
+          "cursor": 78
+        },
+        {
+          "id": "blocked",
+          "title": "PASS 근거 부족으로 차단 · MOCK",
+          "cursor": 79
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 79
+        }
+      ]
+    },
+    {
+      "id": "stale-result",
+      "events_sha256": "ea5d5c34b8be94556a0733813faeeead1a39a79ed14acf06dfd5bb1d7c7c057d",
+      "checkpoints_sha256": "7069f77c6714da1c7f5391a54baed834ad0eac284424b6656b1c4c9a6148e725",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "stale",
+          "title": "과거 증거 거절 · MOCK",
+          "cursor": 78
+        },
+        {
+          "id": "blocked",
+          "title": "현재 gate 해제 없음 · MOCK",
+          "cursor": 79
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 79
+        }
+      ]
+    },
+    {
+      "id": "stale-candidate",
+      "events_sha256": "add1ed8841573951c8e959d6f44dacf9e9098b26f0cb8c6c85e20847aeb724e5",
+      "checkpoints_sha256": "7069f77c6714da1c7f5391a54baed834ad0eac284424b6656b1c4c9a6148e725",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "stale",
+          "title": "과거 증거 거절 · MOCK",
+          "cursor": 78
+        },
+        {
+          "id": "blocked",
+          "title": "현재 gate 해제 없음 · MOCK",
+          "cursor": 79
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 79
+        }
+      ]
+    },
+    {
+      "id": "stale-approval",
+      "events_sha256": "b05cf813a8315acabbb892e4bc182bb26625c3d3fd639a5f0ee281bd4ccd0f0a",
+      "checkpoints_sha256": "6ff4be28a8deea3eaa7f7f80837d35cd3243d0ea26a34df5b947287b0a2fb825",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "stale",
+          "title": "현재 명세와 다른 승인 거절 · MOCK",
+          "cursor": 124
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 124
+        }
+      ]
+    },
+    {
+      "id": "duplicate-events",
+      "events_sha256": "d9df4633615d9f760e614b8b242cbb981fc1f0a186195bdedb9475e8d7d11a2a",
+      "checkpoints_sha256": "6b88f80f43c14de1ea409895dd6c53c66f5e47827bda89caab02b072097c8112",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "first",
+          "title": "최초 관측 · MOCK",
+          "cursor": 1
+        },
+        {
+          "id": "duplicates",
+          "title": "중복 3 · 충돌 1 · MOCK",
+          "cursor": 4
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 4
+        }
+      ]
+    },
+    {
+      "id": "retry-limit",
+      "events_sha256": "c8a9e6b7ce1787592ae0dcbf0562a55251d3eb416c091d716b361588bc31243c",
+      "checkpoints_sha256": "adf3b455d15da3bc04b024a7b3b9f102d3277879eeb19ebea2fd9f044637524b",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "wait-first",
+          "title": "10초 대기 · MOCK",
+          "cursor": 66
+        },
+        {
+          "id": "attempt-two",
+          "title": "새 attempt 2 · MOCK",
+          "cursor": 68
+        },
+        {
+          "id": "wait-second",
+          "title": "30초 대기 · MOCK",
+          "cursor": 70
+        },
+        {
+          "id": "limit",
+          "title": "attempt 4 생성 없이 사람 대기 · MOCK",
+          "cursor": 75
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 75
+        }
+      ]
+    },
+    {
+      "id": "cycle-limit",
+      "events_sha256": "a3ab55aa568105d8aa3de4558b0f16facc20b5724c3a170706dd091c318d8402",
+      "checkpoints_sha256": "4ecc5aec0bea9f770926081ff743ad053c0bf4f495ffb0b70e8b3908ce1bb45d",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "return-one",
+          "title": "재작업 1 · MOCK",
+          "cursor": 67
+        },
+        {
+          "id": "return-two",
+          "title": "재작업 2 · MOCK",
+          "cursor": 85
+        },
+        {
+          "id": "return-three",
+          "title": "재작업 3 · MOCK",
+          "cursor": 103
+        },
+        {
+          "id": "limit",
+          "title": "추가 복귀 차단 · MOCK",
+          "cursor": 121
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 121
+        }
+      ]
+    },
+    {
+      "id": "device-boundaries",
+      "events_sha256": "50b0ac72d25be92cb762c675f0ca4cd47e4367a15e7919de148eeed008ea9549",
+      "checkpoints_sha256": "a9607216cad4c35949ae0a750d44666cfba2e9e560c9adf75a82c781275cbaa5",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "time-9999",
+          "title": "9999ms 관측 · MOCK",
+          "cursor": 104
+        },
+        {
+          "id": "time-10000",
+          "title": "10000ms 관측 · MOCK",
+          "cursor": 105
+        },
+        {
+          "id": "time-10001",
+          "title": "10001ms 관측 · MOCK",
+          "cursor": 106
+        },
+        {
+          "id": "time-29999",
+          "title": "29999ms 관측 · MOCK",
+          "cursor": 107
+        },
+        {
+          "id": "time-30000",
+          "title": "30000ms 관측 · MOCK",
+          "cursor": 108
+        },
+        {
+          "id": "time-30001",
+          "title": "30001ms 관측 · MOCK",
+          "cursor": 109
+        },
+        {
+          "id": "time-59999",
+          "title": "59999ms 관측 · MOCK",
+          "cursor": 110
+        },
+        {
+          "id": "time-60000",
+          "title": "60000ms 관측 · MOCK",
+          "cursor": 111
+        },
+        {
+          "id": "time-60001",
+          "title": "60001ms 관측 · MOCK",
+          "cursor": 112
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 112
+        }
+      ]
+    },
+    {
+      "id": "flash-unknown",
+      "events_sha256": "b80e87a29d650d4c08e00814e4fdf7963a8fdf4cf38597e0d436306ecf0a466a",
+      "checkpoints_sha256": "9adcb691e47ff63533a78b5e6bb69b29b168363705ed8202643b999be35fa4c6",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "unknown",
+          "title": "작업 결과 불명확 · MOCK",
+          "cursor": 104
+        },
+        {
+          "id": "idle",
+          "title": "새 idle 관측만으로 격리 해제하지 않음 · MOCK",
+          "cursor": 105
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 105
+        }
+      ]
+    },
+    {
+      "id": "notes-only",
+      "events_sha256": "651884116e8cdbbd75fb0c1e5677782d85e0e4c1d8ab5c435098fd3de6f8c556",
+      "checkpoints_sha256": "22c24a35730bd8cda800ecc798984428d395cf301aeda8487a0816faf7cbf4d1",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "notes-failed",
+          "title": "발행 완료 · 노트 대기 · MOCK",
+          "cursor": 133
+        },
+        {
+          "id": "notes-retry",
+          "title": "노트 새 attempt · MOCK",
+          "cursor": 134
+        },
+        {
+          "id": "completed",
+          "title": "노트만 모의 완료 · MOCK",
+          "cursor": 136
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 136
+        }
+      ]
+    },
+    {
+      "id": "spec-question-wait",
+      "events_sha256": "c7ca579920d81834f42439e60f4498ce795315f602bcff7aedb1286bc21816b5",
+      "checkpoints_sha256": "51122f960f63ef187c4324ae19d0bb7a87634571b5cfad438ebb02cfb6498d36",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "question",
+          "title": "미해결 사양 질문 · MOCK",
+          "cursor": 11
+        },
+        {
+          "id": "blocked",
+          "title": "답변 없는 성공 차단 · MOCK",
+          "cursor": 13
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 13
+        }
+      ]
+    },
+    {
+      "id": "spec-question-resolution",
+      "events_sha256": "5c58f7e5b1b8142cfc09117489f8982c10a046a6cdf7ce257930b9b5dbbfe2bb",
+      "checkpoints_sha256": "02fe972dfa1e5674eafcc285f5b169d10fab0677797949417d10fe16397b57d3",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "question",
+          "title": "미해결 질문 · MOCK",
+          "cursor": 11
+        },
+        {
+          "id": "answered",
+          "title": "답변을 새 요구사항 버전에 반영 · MOCK",
+          "cursor": 12
+        },
+        {
+          "id": "review-blocked",
+          "title": "재검토 없는 성공 차단 · MOCK",
+          "cursor": 14
+        },
+        {
+          "id": "reviewed",
+          "title": "현재 실행의 spec-gen 검토 · MOCK",
+          "cursor": 15
+        },
+        {
+          "id": "continued",
+          "title": "P04 진행 · MOCK",
+          "cursor": 16
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 16
+        }
+      ]
+    },
+    {
+      "id": "spec-question-retry",
+      "events_sha256": "d9bbd56ebd27bfd53c3d8e1998478bd38c21d3df11654879ec6fad5e8eff8e17",
+      "checkpoints_sha256": "b539e3ee89788c0ebff449f5912a2b440eace17ecf118fae257d0e6798953cbf",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "question",
+          "title": "원래 질문 · MOCK",
+          "cursor": 11
+        },
+        {
+          "id": "answered",
+          "title": "답변 버전 보존 · MOCK",
+          "cursor": 12
+        },
+        {
+          "id": "reviewed-first",
+          "title": "attempt 1 검토 · MOCK",
+          "cursor": 14
+        },
+        {
+          "id": "retry-wait",
+          "title": "인프라 재시도 대기 · MOCK",
+          "cursor": 15
+        },
+        {
+          "id": "retried",
+          "title": "attempt 2 · 이전 답변 보존 · MOCK",
+          "cursor": 16
+        },
+        {
+          "id": "review-blocked",
+          "title": "이전 attempt 검토로 성공 차단 · MOCK",
+          "cursor": 18
+        },
+        {
+          "id": "reviewed",
+          "title": "attempt 2 새 검토 · MOCK",
+          "cursor": 19
+        },
+        {
+          "id": "continued",
+          "title": "P04 진행 · MOCK",
+          "cursor": 20
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 20
+        }
+      ]
+    },
+    {
+      "id": "spec-question-repeat",
+      "events_sha256": "be25a867c551a4f80f1ee681ad764f702b52ba36c5d6a7fd5de5755712cc6436",
+      "checkpoints_sha256": "af58700deabd7c7573c5bf74dbd3d7830c8fb697480c15a498bae156a59de004",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "question",
+          "title": "첫 질문 · MOCK",
+          "cursor": 11
+        },
+        {
+          "id": "answered",
+          "title": "첫 답변 v2 · MOCK",
+          "cursor": 12
+        },
+        {
+          "id": "question-two",
+          "title": "새 ordinal의 두 번째 질문 · MOCK",
+          "cursor": 14
+        },
+        {
+          "id": "stale-answer",
+          "title": "이전 질문의 답변 차단 · MOCK",
+          "cursor": 15
+        },
+        {
+          "id": "answered-two",
+          "title": "새 답변 v3 · MOCK",
+          "cursor": 16
+        },
+        {
+          "id": "reviewed",
+          "title": "현재 v3 검토 · MOCK",
+          "cursor": 18
+        },
+        {
+          "id": "continued",
+          "title": "P04 진행 · MOCK",
+          "cursor": 19
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 19
+        }
+      ]
+    },
+    {
+      "id": "remote-uncertainty",
+      "events_sha256": "d10d27e4f8574b2873996c35ce037e0267e19f76051d1b0737e9b80b35ab12c3",
+      "checkpoints_sha256": "4897404ba43c459f145d2677eb3864ca2de2d78efc2e3dbda08056c8b4addedd",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "unknown",
+          "title": "응답 유실 · 재제출 없음 · MOCK",
+          "cursor": 128
+        },
+        {
+          "id": "queried-unknown",
+          "title": "조회 1 · 불명확 · MOCK",
+          "cursor": 129
+        },
+        {
+          "id": "absent",
+          "title": "조회 2 · 미발견 · MOCK",
+          "cursor": 130
+        },
+        {
+          "id": "conflict",
+          "title": "조회 3 · 충돌 · MOCK",
+          "cursor": 131
+        },
+        {
+          "id": "stale",
+          "title": "다른 source의 과거 조회 거절 · MOCK",
+          "cursor": 132
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 132
+        }
+      ]
+    },
+    {
+      "id": "remote-recovery",
+      "events_sha256": "87a0220bae65cfcd224d9eef01f67b3bc66d0ff6130fda39316ee47629d950db",
+      "checkpoints_sha256": "ed4eb7e008a4cd351ac8eb9eaa6c060a9876ad190003a68c41c9816a15f9200b",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "unknown",
+          "title": "원격 결과 조회 대기 · MOCK",
+          "cursor": 128
+        },
+        {
+          "id": "absent",
+          "title": "미발견 · 재제출 없음 · MOCK",
+          "cursor": 129
+        },
+        {
+          "id": "found",
+          "title": "동일 동작 영수증 확인 · 발행 1회 · MOCK",
+          "cursor": 130
+        },
+        {
+          "id": "late",
+          "title": "완료된 단계의 늦은 응답 거절 · MOCK",
+          "cursor": 131
+        },
+        {
+          "id": "completed",
+          "title": "노트까지 모의 완료 · MOCK",
+          "cursor": 135
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 135
+        }
+      ]
+    },
+    {
+      "id": "remote-device-quarantine",
+      "events_sha256": "f135a1b37414f1ca5ca453693eeee379658391253a9710216f86ee47af789038",
+      "checkpoints_sha256": "c32c116646a8963fe6fa97a24251b8de13b1493b77b452e64cb0aa08f183367b",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "unknown",
+          "title": "원격 결과 불명확 · MOCK",
+          "cursor": 128
+        },
+        {
+          "id": "quarantined",
+          "title": "장비 결과도 불명확 · MOCK",
+          "cursor": 129
+        },
+        {
+          "id": "idle",
+          "title": "idle에도 격리 유지 · MOCK",
+          "cursor": 130
+        },
+        {
+          "id": "blocked",
+          "title": "원격 found로 격리 해제 금지 · MOCK",
+          "cursor": 131
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 131
+        }
+      ]
+    },
+    {
+      "id": "routing-reuse",
+      "events_sha256": "8cc109d6224154c1ccb358222e9ac6972ac693633b8ab653348231ea886e68a3",
+      "checkpoints_sha256": "3ef3dcdfa9c833427c9031b8e7126a4cfa664d432abbe4507819146b25cd5337",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "local",
+          "title": "개별 재사용 확인 · 전역 미승인 · MOCK",
+          "cursor": 9
+        },
+        {
+          "id": "early",
+          "title": "선행 문서 재사용 · MOCK",
+          "cursor": 14
+        },
+        {
+          "id": "confirmed",
+          "title": "X01 항목별 계획 승인 · MOCK",
+          "cursor": 20
+        },
+        {
+          "id": "reused",
+          "title": "문서·생산·TC 재사용 · MOCK",
+          "cursor": 29
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 100
+        }
+      ]
+    },
+    {
+      "id": "routing-new-hw",
+      "events_sha256": "d377d29106fe23bffd34d7b8d92186eb7eb7b967cf4fbeb031d85dca618e36ec",
+      "checkpoints_sha256": "3a412d7db52ef45270ddd7f7ad889dc0a209e5938f4ab41fa843965b107e862a",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "early-blocked",
+          "title": "NEW_HW 문서 재사용 차단 · MOCK",
+          "cursor": 9
+        },
+        {
+          "id": "confirmed",
+          "title": "동일 검증 환경만 승인 · MOCK",
+          "cursor": 27
+        },
+        {
+          "id": "reused",
+          "title": "P10 환경 재사용 · MOCK",
+          "cursor": 47
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 47
+        }
+      ]
+    },
+    {
+      "id": "routing-exempt",
+      "events_sha256": "200b4a303b2f5d4cb7e57dbccc5a8a9c9054d63e4dabc4d44170b52bd6c0e3b5",
+      "checkpoints_sha256": "eedfeda1ecb6b77e688f0652d898967b82d5fb43a7d0795b18f64289c1e3fb90",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "confirmed",
+          "title": "사전 정책과 계획 승인 · MOCK",
+          "cursor": 20
+        },
+        {
+          "id": "paired",
+          "title": "수행·판정 공동 면제 · MOCK",
+          "cursor": 39
+        },
+        {
+          "id": "report-blocked",
+          "title": "미수행 보고 없는 성공 차단 · MOCK",
+          "cursor": 48
+        },
+        {
+          "id": "reported",
+          "title": "SQE 시험 미수행 보고 · MOCK",
+          "cursor": 50
+        },
+        {
+          "id": "exempt",
+          "title": "네 품질 처분 EXEMPT · MOCK",
+          "cursor": 51
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 70
+        }
+      ]
+    },
+    {
+      "id": "routing-pilot-denied",
+      "events_sha256": "976a32bd2e97fff53a48affff7f28dd31bb94fd6c50b0d885573887f638962b2",
+      "checkpoints_sha256": "9562339459d644b730cd258620091582fc3a35d32b783b7d6754cd113fb075cc",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "denied",
+          "title": "pilot 면제 승인 거절 · MOCK",
+          "cursor": 19
+        },
+        {
+          "id": "confirmed",
+          "title": "면제 없는 계획 승인 · MOCK",
+          "cursor": 21
+        },
+        {
+          "id": "blocked",
+          "title": "기본 정책 면제 차단 · MOCK",
+          "cursor": 39
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 39
+        }
+      ]
+    },
+    {
+      "id": "routing-no-change",
+      "events_sha256": "db38e90ff457cb2a101b44d9425f6e36e52901ea2d4360e2979735f0bc0982db",
+      "checkpoints_sha256": "1efa205386c3ba4c89d5c24b9588f62f36c9e63a70c554c744b07aedb45eb611",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "production",
+          "title": "생산 분석과 재사용 · MOCK",
+          "cursor": 27
+        },
+        {
+          "id": "analysed",
+          "title": "독립 TC 분석 · MOCK",
+          "cursor": 28
+        },
+        {
+          "id": "closed",
+          "title": "사람 확인 무변경 종료 · MOCK",
+          "cursor": 29
+        },
+        {
+          "id": "terminal",
+          "title": "종료 뒤 관측 차단 · MOCK",
+          "cursor": 30
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 30
+        }
+      ]
+    },
+    {
+      "id": "routing-no-change-denied",
+      "events_sha256": "c88283fa1fb6fb465ab96a32d23fbd05b1ca25ccb37eefccc14df706c24e5bd0",
+      "checkpoints_sha256": "812a51ff8f0f285c037aebfe337229444f9aa90192aa4dee1efe9e42b0d45d15",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "production",
+          "title": "생산 분석과 재사용 · MOCK",
+          "cursor": 27
+        },
+        {
+          "id": "analysed",
+          "title": "독립 TC 분석 · MOCK",
+          "cursor": 28
+        },
+        {
+          "id": "denied",
+          "title": "변경 필요로 종료 차단 · MOCK",
+          "cursor": 29
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 29
+        }
+      ]
+    },
+    {
+      "id": "routing-candidate",
+      "events_sha256": "0ac792af70901a242b3b52eea7199c0b06bfd24df12b9c4aa55d82cd2dbbb13e",
+      "checkpoints_sha256": "170492424e7d5e7f034b02eb422ff4d6024378f24f51ad569914c091143174af",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "confirmed",
+          "title": "후보 A 계획 승인 · MOCK",
+          "cursor": 20
+        },
+        {
+          "id": "changed",
+          "title": "후보 B · 기존 권한 만료 · MOCK",
+          "cursor": 32
+        },
+        {
+          "id": "blocked",
+          "title": "과거 후보 면제 차단 · MOCK",
+          "cursor": 38
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 101
+        }
+      ]
+    },
+    {
+      "id": "routing-replan",
+      "events_sha256": "3bdb6e61ada217fdd3dd7702748e9647aab835dee6e4a01c8acbae186abb4a95",
+      "checkpoints_sha256": "b90b0f808e35f005f6670cd69e202022a94925b419e412b6c70c8ef9a6e921a7",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "rejected",
+          "title": "사람 계획 반려 · MOCK",
+          "cursor": 19
+        },
+        {
+          "id": "rerouted",
+          "title": "새 cycle 계획 대기 · MOCK",
+          "cursor": 20
+        },
+        {
+          "id": "stale",
+          "title": "이전 계획 버전 거절 · MOCK",
+          "cursor": 23
+        },
+        {
+          "id": "replanned",
+          "title": "새 계획과 필수 문서 재검토 완료 · MOCK",
+          "cursor": 43
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 43
+        }
+      ]
+    },
+    {
+      "id": "routing-metadata",
+      "events_sha256": "037c6165ee56cc168123f78c474f1e16f8fa94f80c8817bff68ddde72e6421be",
+      "checkpoints_sha256": "9c638d488533f48135690d936430f11e619cdb4fea4d785e10a5ccd840bd4513",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "exempt",
+          "title": "네 품질 처분 EXEMPT · MOCK",
+          "cursor": 50
+        },
+        {
+          "id": "rejected",
+          "title": "현재 명세 자료 반려 · MOCK",
+          "cursor": 59
+        },
+        {
+          "id": "retried",
+          "title": "같은 cycle 새 자료 attempt · MOCK",
+          "cursor": 61
+        },
+        {
+          "id": "end",
+          "title": "끝 관측 · MOCK",
+          "cursor": 80
+        }
+      ]
+    },
+    {
+      "id": "sqe-manual-pass",
+      "events_sha256": "20a0a28cf94d27da921967f891ddaa8eb932a59e5066d0d79d417ba8f36f19d7",
+      "checkpoints_sha256": "aa7f201c2f4e742693199eef4a9cd28b3611e4fa3bab58d5670906ff877e5728",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "waiting",
+          "title": "waiting · MOCK",
+          "cursor": 104
+        },
+        {
+          "id": "rejected",
+          "title": "rejected · MOCK",
+          "cursor": 105
+        },
+        {
+          "id": "submitted",
+          "title": "submitted · MOCK",
+          "cursor": 106
+        },
+        {
+          "id": "reported",
+          "title": "reported · MOCK",
+          "cursor": 114
+        },
+        {
+          "id": "judged",
+          "title": "judged · MOCK",
+          "cursor": 118
+        },
+        {
+          "id": "end",
+          "title": "end · MOCK",
+          "cursor": 137
+        }
+      ]
+    },
+    {
+      "id": "sqe-manual-fail",
+      "events_sha256": "73ec2422191974487be554f65109261b0c50cd604c57d212744f24a67c1f77c1",
+      "checkpoints_sha256": "e5ab4dd683a95ce4801f59724b18aec34f362371789f7b3ba9f38964c86808d2",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "submitted",
+          "title": "submitted · MOCK",
+          "cursor": 105
+        },
+        {
+          "id": "reported",
+          "title": "reported · MOCK",
+          "cursor": 113
+        },
+        {
+          "id": "judged",
+          "title": "judged · MOCK",
+          "cursor": 116
+        },
+        {
+          "id": "rerouted",
+          "title": "rerouted · MOCK",
+          "cursor": 118
+        },
+        {
+          "id": "end",
+          "title": "end · MOCK",
+          "cursor": 118
+        }
+      ]
+    },
+    {
+      "id": "sqe-incomplete",
+      "events_sha256": "1d17496499b6de25a9bb8858f9a018c4d5890f935a44eec41627b0441afc836a",
+      "checkpoints_sha256": "fd7f944e2a753d7122fef2e9c65fe5276fbed5ae40730760470921ec98660bb6",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "collected",
+          "title": "collected · MOCK",
+          "cursor": 104
+        },
+        {
+          "id": "reported",
+          "title": "reported · MOCK",
+          "cursor": 111
+        },
+        {
+          "id": "blocked",
+          "title": "blocked · MOCK",
+          "cursor": 115
+        },
+        {
+          "id": "end",
+          "title": "end · MOCK",
+          "cursor": 115
+        }
+      ]
+    },
+    {
+      "id": "sqe-parser-error",
+      "events_sha256": "82ed3ddbace544a966ec5eed9fe1bac87ba00a28afccf1fed92a281d44fdf690",
+      "checkpoints_sha256": "fd7f944e2a753d7122fef2e9c65fe5276fbed5ae40730760470921ec98660bb6",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "collected",
+          "title": "collected · MOCK",
+          "cursor": 104
+        },
+        {
+          "id": "reported",
+          "title": "reported · MOCK",
+          "cursor": 111
+        },
+        {
+          "id": "blocked",
+          "title": "blocked · MOCK",
+          "cursor": 115
+        },
+        {
+          "id": "end",
+          "title": "end · MOCK",
+          "cursor": 115
+        }
+      ]
+    },
+    {
+      "id": "sqe-identity-mismatch",
+      "events_sha256": "3c1480ec05fe82bc854a5c0f85208c7a4571cb1d21a872f7d0c3fc95b02596f3",
+      "checkpoints_sha256": "fd7f944e2a753d7122fef2e9c65fe5276fbed5ae40730760470921ec98660bb6",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "collected",
+          "title": "collected · MOCK",
+          "cursor": 104
+        },
+        {
+          "id": "reported",
+          "title": "reported · MOCK",
+          "cursor": 111
+        },
+        {
+          "id": "blocked",
+          "title": "blocked · MOCK",
+          "cursor": 115
+        },
+        {
+          "id": "end",
+          "title": "end · MOCK",
+          "cursor": 115
+        }
+      ]
+    },
+    {
+      "id": "sqe-manual-retry",
+      "events_sha256": "44e3c2302297bbe9f88dc8d55e736514a0bd9551437a39ae81cc5a37c1b154db",
+      "checkpoints_sha256": "2d6475b0874236c2c06958fb3a6574d894936d073c5e5a174984dda9f0a10364",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "waiting",
+          "title": "waiting · MOCK",
+          "cursor": 104
+        },
+        {
+          "id": "submitted",
+          "title": "submitted · MOCK",
+          "cursor": 105
+        },
+        {
+          "id": "backoff",
+          "title": "backoff · MOCK",
+          "cursor": 107
+        },
+        {
+          "id": "retried",
+          "title": "retried · MOCK",
+          "cursor": 108
+        },
+        {
+          "id": "waiting-two",
+          "title": "waiting-two · MOCK",
+          "cursor": 111
+        },
+        {
+          "id": "stale",
+          "title": "stale · MOCK",
+          "cursor": 112
+        },
+        {
+          "id": "submitted-two",
+          "title": "submitted-two · MOCK",
+          "cursor": 113
+        },
+        {
+          "id": "judged",
+          "title": "judged · MOCK",
+          "cursor": 125
+        },
+        {
+          "id": "end",
+          "title": "end · MOCK",
+          "cursor": 144
+        }
+      ]
+    },
+    {
+      "id": "sqe-report-retry",
+      "events_sha256": "89223271c5631ba41bc80eb4afef057e444b7eb3970829160559faafba128ed5",
+      "checkpoints_sha256": "2f2c37470bd8fd47cb65173f779e9dd3fd3cb69286777307f6e3f0e464c4148b",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "reported",
+          "title": "reported · MOCK",
+          "cursor": 110
+        },
+        {
+          "id": "backoff",
+          "title": "backoff · MOCK",
+          "cursor": 111
+        },
+        {
+          "id": "retried",
+          "title": "retried · MOCK",
+          "cursor": 112
+        },
+        {
+          "id": "stale",
+          "title": "stale · MOCK",
+          "cursor": 114
+        },
+        {
+          "id": "reported-two",
+          "title": "reported-two · MOCK",
+          "cursor": 115
+        },
+        {
+          "id": "end",
+          "title": "end · MOCK",
+          "cursor": 139
+        }
+      ]
+    },
+    {
+      "id": "sqe-judgment-retry",
+      "events_sha256": "d79e2c921e22ddbb964a0ed38a203f81b9ebe10a11e4ac373129fa4b85e58b95",
+      "checkpoints_sha256": "c02020f7c93a6cc2c3f72e5a1807fb17f9b452b2a80e8bc0c5877e899bee9c84",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "judged",
+          "title": "judged · MOCK",
+          "cursor": 114
+        },
+        {
+          "id": "backoff",
+          "title": "backoff · MOCK",
+          "cursor": 115
+        },
+        {
+          "id": "retried",
+          "title": "retried · MOCK",
+          "cursor": 116
+        },
+        {
+          "id": "stale",
+          "title": "stale · MOCK",
+          "cursor": 118
+        },
+        {
+          "id": "judged-two",
+          "title": "judged-two · MOCK",
+          "cursor": 119
+        },
+        {
+          "id": "end",
+          "title": "end · MOCK",
+          "cursor": 139
+        }
+      ]
+    },
+    {
+      "id": "sqe-manual-quarantine",
+      "events_sha256": "351755ee1446b4cffc53ea04ebfb4e7a52f6b20109fc27a93e9e8f2a07c8957e",
+      "checkpoints_sha256": "af0d3acc5d30b16b6b17f0f5dd7fdff737c0ec4577d8616d156e90f7ec4f578a",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "waiting",
+          "title": "waiting · MOCK",
+          "cursor": 104
+        },
+        {
+          "id": "quarantined",
+          "title": "quarantined · MOCK",
+          "cursor": 105
+        },
+        {
+          "id": "blocked",
+          "title": "blocked · MOCK",
+          "cursor": 106
+        },
+        {
+          "id": "end",
+          "title": "end · MOCK",
+          "cursor": 106
+        }
+      ]
+    },
+    {
+      "id": "agent-wait",
+      "events_sha256": "8c6565d8014cab7df344c799fb2b3ca9ffc339d44875c671709014ddc9d89b95",
+      "checkpoints_sha256": "266025031237162b88afe1c4d9f63b6bd9231f26aa83b511d14e07807a93b901",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "requested",
+          "title": "requested · MOCK",
+          "cursor": 57
+        },
+        {
+          "id": "waiting",
+          "title": "waiting · MOCK",
+          "cursor": 58
+        },
+        {
+          "id": "blocked",
+          "title": "blocked · MOCK",
+          "cursor": 60
+        },
+        {
+          "id": "end",
+          "title": "end · MOCK",
+          "cursor": 60
+        }
+      ]
+    },
+    {
+      "id": "agent-handoff",
+      "events_sha256": "c82f7be5a788a643604ccc744875945f9d789c91e9c181bad2ad3911e5d64ebb",
+      "checkpoints_sha256": "425c5135af2a2b86d13c07b1b3dbfbbff8797a97ee50cee57e77175617c9ac9a",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "waiting",
+          "title": "waiting · MOCK",
+          "cursor": 58
+        },
+        {
+          "id": "returned",
+          "title": "returned · MOCK",
+          "cursor": 59
+        },
+        {
+          "id": "collected",
+          "title": "collected · MOCK",
+          "cursor": 60
+        },
+        {
+          "id": "conflict",
+          "title": "conflict · MOCK",
+          "cursor": 62
+        },
+        {
+          "id": "integrated",
+          "title": "integrated · MOCK",
+          "cursor": 63
+        },
+        {
+          "id": "passed",
+          "title": "passed · MOCK",
+          "cursor": 65
+        },
+        {
+          "id": "end",
+          "title": "end · MOCK",
+          "cursor": 136
+        }
+      ]
+    },
+    {
+      "id": "agent-child-failure",
+      "events_sha256": "3f30aac67e7a78dc28d531187fd4d9d9785c8f55d67b0743785aae858464f4b3",
+      "checkpoints_sha256": "736331418c660c627ead237d7f421c1e936804a9640d56ed60445848a673a0c5",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "failed",
+          "title": "failed · MOCK",
+          "cursor": 59
+        },
+        {
+          "id": "collected",
+          "title": "collected · MOCK",
+          "cursor": 60
+        },
+        {
+          "id": "backoff",
+          "title": "backoff · MOCK",
+          "cursor": 61
+        },
+        {
+          "id": "retried",
+          "title": "retried · MOCK",
+          "cursor": 62
+        },
+        {
+          "id": "stale",
+          "title": "stale · MOCK",
+          "cursor": 63
+        },
+        {
+          "id": "recovered",
+          "title": "recovered · MOCK",
+          "cursor": 71
+        },
+        {
+          "id": "end",
+          "title": "end · MOCK",
+          "cursor": 142
+        }
+      ]
+    },
+    {
+      "id": "agent-child-question",
+      "events_sha256": "fcdf21779189d5d8c07a62cbe36b0ed06ca8a8b6d03013b6e47d2fa7e6c6eb30",
+      "checkpoints_sha256": "9f8555254b716d75dfcef330e8271fe1368c6126f826af2a059901304dcf7df5",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "question",
+          "title": "question · MOCK",
+          "cursor": 59
+        },
+        {
+          "id": "waiting-human",
+          "title": "waiting-human · MOCK",
+          "cursor": 60
+        },
+        {
+          "id": "rejected",
+          "title": "rejected · MOCK",
+          "cursor": 61
+        },
+        {
+          "id": "answered",
+          "title": "answered · MOCK",
+          "cursor": 62
+        },
+        {
+          "id": "resumed",
+          "title": "resumed · MOCK",
+          "cursor": 66
+        },
+        {
+          "id": "integrated",
+          "title": "integrated · MOCK",
+          "cursor": 69
+        },
+        {
+          "id": "end",
+          "title": "end · MOCK",
+          "cursor": 142
+        }
+      ]
+    },
+    {
+      "id": "agent-child-retry-limit",
+      "events_sha256": "4debb204a321030803aa744545bc310ddadf268491a9481c674f370a76479d74",
+      "checkpoints_sha256": "30791de7577443ee8fd105838854a383548650e857231c97f377f1f04d1726a0",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "backoff-one",
+          "title": "backoff-one · MOCK",
+          "cursor": 61
+        },
+        {
+          "id": "attempt-two",
+          "title": "attempt-two · MOCK",
+          "cursor": 62
+        },
+        {
+          "id": "backoff-two",
+          "title": "backoff-two · MOCK",
+          "cursor": 69
+        },
+        {
+          "id": "attempt-three",
+          "title": "attempt-three · MOCK",
+          "cursor": 70
+        },
+        {
+          "id": "capped",
+          "title": "capped · MOCK",
+          "cursor": 77
+        },
+        {
+          "id": "blocked-four",
+          "title": "blocked-four · MOCK",
+          "cursor": 78
+        },
+        {
+          "id": "end",
+          "title": "end · MOCK",
+          "cursor": 78
+        }
+      ]
+    },
+    {
+      "id": "agent-child-stale-cycle",
+      "events_sha256": "874c994be454e0ba016e67f24d40d2d91ae0455ae80eb2585c86a289cbcb976a",
+      "checkpoints_sha256": "6e1ed9e900e3efc3be9a7eec01c6fc387484cdd2c8a5da424036d2dde08f4572",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "rerouted",
+          "title": "rerouted · MOCK",
+          "cursor": 66
+        },
+        {
+          "id": "waiting",
+          "title": "waiting · MOCK",
+          "cursor": 74
+        },
+        {
+          "id": "stale",
+          "title": "stale · MOCK",
+          "cursor": 75
+        },
+        {
+          "id": "recovered",
+          "title": "recovered · MOCK",
+          "cursor": 79
+        },
+        {
+          "id": "end",
+          "title": "end · MOCK",
+          "cursor": 150
+        }
+      ]
+    },
+    {
+      "id": "agent-child-permissions",
+      "events_sha256": "b8f34bbc5f0efa4894724150f562251d49d93eeeac6825d562ba43f6c4e2c75e",
+      "checkpoints_sha256": "91ecc612051bda4cbc72af1c3fd92c84b5ad112e207f5a4fcb69d5ac4868bdd1",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "denied",
+          "title": "denied · MOCK",
+          "cursor": 58
+        },
+        {
+          "id": "waiting",
+          "title": "waiting · MOCK",
+          "cursor": 60
+        },
+        {
+          "id": "collected",
+          "title": "collected · MOCK",
+          "cursor": 66
+        },
+        {
+          "id": "integration-denied",
+          "title": "integration-denied · MOCK",
+          "cursor": 69
+        },
+        {
+          "id": "integrated",
+          "title": "integrated · MOCK",
+          "cursor": 70
+        },
+        {
+          "id": "end",
+          "title": "end · MOCK",
+          "cursor": 143
+        }
+      ]
+    },
+    {
+      "id": "agent-child-interrupted",
+      "events_sha256": "acd9fa534f96ea054dd14176a1dab635c950d39ba7d47d18983149ce7c060394",
+      "checkpoints_sha256": "059e3fd1f28664e3a5220721fc555928945b82bf41e94e7f5935448f720810a1",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "interrupted",
+          "title": "interrupted · MOCK",
+          "cursor": 59
+        },
+        {
+          "id": "collected",
+          "title": "collected · MOCK",
+          "cursor": 60
+        },
+        {
+          "id": "denied-retry",
+          "title": "denied-retry · MOCK",
+          "cursor": 63
+        },
+        {
+          "id": "end",
+          "title": "end · MOCK",
+          "cursor": 63
+        }
+      ]
+    },
+    {
+      "id": "agent-child-canceled",
+      "events_sha256": "de9a8c812ebdaa19ce2a38e556856713a20a773cac8fa7784f02d6c4ebfcc59d",
+      "checkpoints_sha256": "8418580cdf4628acadc0d9655c1cae5fb771d7a2671e520a1d824914133c88d2",
+      "checkpoints": [
+        {
+          "id": "start",
+          "title": "처음 · MOCK",
+          "cursor": 0
+        },
+        {
+          "id": "canceled",
+          "title": "canceled · MOCK",
+          "cursor": 59
+        },
+        {
+          "id": "collected",
+          "title": "collected · MOCK",
+          "cursor": 60
+        },
+        {
+          "id": "recovery-approved",
+          "title": "recovery-approved · MOCK",
+          "cursor": 61
+        },
+        {
+          "id": "backoff",
+          "title": "backoff · MOCK",
+          "cursor": 64
+        },
+        {
+          "id": "retried",
+          "title": "retried · MOCK",
+          "cursor": 65
+        },
+        {
+          "id": "recovered",
+          "title": "recovered · MOCK",
+          "cursor": 74
+        },
+        {
+          "id": "end",
+          "title": "end · MOCK",
+          "cursor": 145
+        }
+      ]
+    }
+  ]
+}
