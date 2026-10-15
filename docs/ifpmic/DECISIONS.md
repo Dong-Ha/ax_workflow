@@ -24,3 +24,12 @@
 | 검증 중 소스 변경으로 후보 거절 | 첫 후보 검증 중 위 보완을 수행해 source fingerprint 변경 | 변경된 후보를 이전 테스트 결과로 수락하지 않고 새 gate를 수행한다. | 실패 gate를 보존하고 최종 source hash가 동일한 실행만 수락한다. |
 
 실패한 attempt를 삭제하거나 최종 통과 결과로 덮어써 완료 근거를 만들지 않는다. 원본 실행 기록은 Git에서 제외된 `workflow-artifacts/verification/`에 남기고, 커밋에는 합성 검증 결과와 출처 해시를 담은 검토 가능한 증빙을 보존한다. 실제 내부 로그·자격증명은 커밋하지 않는다.
+
+## V2 첫 재생 증분의 검토와 복귀
+
+- REQ-02/05/08/10/12/14: 우선 읽기 전용 관측·좌표·근거 검사를 구현한다. 전체 시나리오와 UI를 완료 처리하지 않으며, 미지원 skip/control/배포는 거절한다. 담당과 잔여 범위는 `V2-IMPLEMENTATION.md`에 기록한다.
+- TC 초안의 PENDING→RUNNING 사건은 원본의 READY 경계를 생략했다. fixture에 READY 관측을 추가했고 실제 전이 기준은 완화하지 않았다. 미등록 필드 수락과 자유 형식 type 출력은 제품 결함으로 수정했다.
+- 첫 고정 후보는 전체 180개 테스트와 build가 통과했으나 독립 검토에서 source sequence 역행, telemetry에 의한 격리 표시 해제, 미지원 reconciliation 제어 수락, 자유 형식 식별자 출력 문제가 발견되어 수락을 보류했다. 해당 후보와 반려 사유는 `evidence/v2/core-attempt-1.json`에 보존한다.
+- 수정은 원본 업무 규칙으로 복귀해 수행한다. source watermark와 clock 역행 거절, 격리 latch, 전용 프로토콜 없는 RECONCILING 거절, 제한된 ID 문법을 추가하고 TC가 각각의 재현 시험을 작성한다. source/candidate가 바뀌므로 이전 통과 결과를 새 후보의 증거로 사용하지 않는다.
+- 장비 연결 상태와 활동 상태를 구분해 보존한다. 시간은 안전한 정수 밀리초로 제한하고 장비 재할당 및 실제 제출 권한은 항상 false로 유지한다. 이는 실제 장비·사람 승인·배포 증거가 아니다.
+- 두 번째 후보도 전체 186개 테스트와 build는 통과했지만, 독립 검토가 workflow 담당·경로 변조와 거절된 높은 sequence에 의한 watermark 오염을 발견해 보류했다. `evidence/v2/core-attempt-2.json`에 보존한다. workflow의 원본 서명을 고정하고 성공적으로 적용한 사건만 watermark를 높이도록 수정했다. 별도 재현 TC 후 소스 독립 검토가 부분 core만 승인했으며 새 고정 후보로 회귀를 다시 수행한다.

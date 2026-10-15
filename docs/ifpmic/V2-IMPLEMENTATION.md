@@ -1,0 +1,29 @@
+# V2 구현 진행 기록
+
+V2 전체 기준은 `V2-SCENARIOS.md`와 `VERIFICATION.md`다. 이 기록은 완료 기준을 축소하지 않고 구현 증분과 남은 작업을 구분한다. 현재 증분은 UI에 연결하기 전의 순수 재생 모델이다.
+
+## 첫 증분: 관측과 통과 근거 분리
+
+대상 요구사항은 REQ-02,05,08,10,12,14다. 구현은 code-dev(`/root`), 테스트 작성은 TC(`/root/verification_plan`), 읽기 전용 독립 검토는 `/root/paperclip_ui_extension`이 맡는다. 원본 계약 파일과 실제 AT ledger를 수정하지 않는다.
+
+`src/ifpmic/replay.mjs`는 `replayScenario(scenario, workflow, stateContract, cursor)`로 앞부분의 사건을 매번 재계산한다. 시나리오는 `{id,title,requirement_ids,events}`이며 cursor는 0부터 사건 수까지의 정수다. 최초 job ID는 `mock:<scenario.id>`, candidate는 `mock:candidate:A`, rule은 `mock:rules:v1`, cycle/attempt는 1이다. 각 단계 execution은 `mock:<step_id>:c1:a1`이다. 이 규칙은 합성 관측의 좌표이며 실환경 식별자 계약이 아니다.
+
+공통 사건 필드는 event_id, source_id, 양의 정수 source_seq, type, mode=`mock`, job_id, step_id, cycle, attempt, execution_id, payload다. 미등록 최상위 필드나 유형별 payload 필드는 사건 전체를 거절한다. ID는 128자 이내의 영문·숫자와 `:._/-`만 허용하며 인증 패턴이 감지되면 거절한다. 잘못된 사건 ID는 `[invalid]`로 표시하고 잘못된 시나리오 ID는 내용 없는 형식 오류로 거절한다. timeline은 식별자·유형·mock 표시·적용 여부·상수 사유만 반환한다. 원시 payload·명령·추론·인증 자료는 반환하지 않는다.
+
+| 유형 | 허용 payload | 현재 통과 조건 |
+|---|---|---|
+| step | state | 원본 인접표 및 현 단계·실행 좌표 일치. SUCCEEDED는 담당별 별도 근거 필요 |
+| agent | status | running/completed/failed 관측만 갱신. 단계·사람 업무·gate 완료를 대신하지 않음 |
+| human | actor, task_id, plan_version, evidence_id | WAITING_HUMAN의 사람 담당 단계, mock:human, 현재 모의 task와 plan, mock 증거 ID |
+| measurement | evidence, verdict | system 담당 RUNNING 단계, 현재 job/step/cycle/attempt/execution/candidate/rule/mock 일치. 불완전 증거는 INCONCLUSIVE |
+| device | mode, now_ms, last_heartbeat_ms, lease_expires_ms, operation_state, profile | 합성 정수 시간과 heartbeat/offline/lease 경계. 실제 할당 권한 없음 |
+
+장비 시간 및 profile threshold는 안전한 정수 밀리초만 받는다. future heartbeat나 잘못된 값은 UNKNOWN·격리로 표시한다. OFFLINE 상태에서도 operation_state를 별도로 보존하여 로컬 작업이 여전히 활동 중일 수 있음을 잃지 않는다. 불명확 작업 또는 활동 중 lease 만료는 RECONCILING이며, 사람 대기 사건으로 전체 격리 상태를 덮어쓸 수 없다. 이후 telemetry가 idle이어도 격리를 유지한다. 격리 해제 프로토콜은 아직 지원하지 않으며 `reassign_allowed`는 항상 false다.
+
+동일 event_id 또는 source_id/source_seq는 한 번만 관측한다. 전달 식별자를 제외한 사건 내용이 달라지면 충돌 수도 증가한다. 새로운 전달 별칭을 붙여 중복 사건을 다시 적용하지 않는다. 중복이 아닌 과거 source sequence도 적용하지 않으며 장비 clock이 뒤로 가는 관측을 거절한다. sequence watermark는 적용한 사건으로만 높이고 거절한 사건은 중복 키만 예약한다. 따라서 잘못된 seq=999 사건 때문에 뒤의 정상 seq=1이 거절되지 않는다. 출력은 재귀적으로 동결하며 입력을 수정하지 않는다. SUCCEEDED 뒤에는 원본 다음 단계 ID만 바뀌고 다음 단계의 실행 상태를 자동 생성하지 않는다. 전이 검사는 전달된 계약과 커밋된 원본 인접표를 함께 확인하여 호출자가 새 전이를 삽입해도 허용하지 않는다. workflow 전체는 모듈 초기화 시 고정한 원본 서명과 비교하므로 담당·경로·정책 변경으로 사람 또는 품질 gate를 우회할 수 없다.
+
+## 검증과 미완료 범위
+
+검증 목적은 잘못된 근거로 단계가 성공하거나 과거 관측이 현재 단계를 해제하는 것을 막는 것이다. TC는 원본의 고정 인접표 전체 조합, 정상·부정 좌표, 사람 제출, 측정 누락, 중복/충돌, cursor 복원, 장비 시간 경계 및 개인정보 제외를 검사한다. 합격 기준은 해당 단위시험 전부 통과, 기존 회귀 및 build 성공, 실행 전후 소스 해시 일치와 독립 검토다. 결과는 `evidence/v2/core-verification.json` 및 별도 검토 기록에 귀속한다. 실패하면 최초 잘못된 전이/fixture로 돌아가 수정하고 영향을 받는 세트와 회귀를 다시 실행한다.
+
+이번 증분으로 전체 V2를 수락하지 않는다. 아직 시나리오 카탈로그, cycle/attempt 이력, 업무 실패 복귀, 자식 agent, 생략 정책, 수동 장비 증거, pause/resume/cancel, digest 승인과 영수증, notes-only/no-change, standalone/native host의 재생 UI 및 전체 V2 gate가 남는다. 전용 근거 프로토콜이 없는 제어·생략은 거절한다. X03 일반 human 제출과 P25 성공도 거절하며 `real_publish_allowed`는 항상 false다. 실제 AT는 미실행 상태를 유지한다.

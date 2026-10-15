@@ -1,0 +1,41 @@
+{
+  "kind": "independent_partial_core_acceptance",
+  "decision": "accepted_partial_mock_replay_core",
+  "implementer_agent": "/root",
+  "test_author_agent": "/root/verification_plan",
+  "reviewer_agent": "/root/paperclip_ui_extension",
+  "reviewer_role": "worker_luna; read-only independent source and evidence review",
+  "recorded_at": "2026-10-15T10:25:57.437586+00:00",
+  "candidate_fingerprint": "f25d331daff75e4bfc01e1bd1a0709bafa298f038993aed9e893eb1f094e4a07",
+  "report": "core-verification.json",
+  "report_sha256": "71af9d417359c7cf979d806b2a98ad978cbba836627df691fd6ece296c294ec3",
+  "source_paths_audited": 66,
+  "source_hash_matches": 66,
+  "reviewed_source_sha256": "2621bc0646f49229e0f5ddadcb51fa395fde89e4150341a1e0873deec4a2e7fb",
+  "checks": {
+    "npm_test": "189/189; no failures or skips",
+    "build": "exit 0",
+    "source_changed": [],
+    "reviewer_reran_tests": false
+  },
+  "resolved_findings": [
+    "Preserve operation_state during bridge offline",
+    "Safe integer synthetic clocks and thresholds",
+    "Reject stale source sequence and device clock",
+    "Latch quarantine until supported reconciliation",
+    "Reject unsupported bare reconciliation control",
+    "Validate opaque identifiers and omit raw fields",
+    "Pin canonical workflow owners, routes and policies",
+    "Rejected events cannot advance accepted source watermark"
+  ],
+  "approved_scope": [
+    "Pure mock replay guards and deterministic observation projection"
+  ],
+  "not_approved": [
+    "Complete V2 scenario catalog and UI",
+    "Rework/retry/skip/control/manual/release protocols",
+    "Full V2 browser/native host acceptance",
+    "Any real AT, execution, deployment or submission"
+  ],
+  "waivers": []
+}

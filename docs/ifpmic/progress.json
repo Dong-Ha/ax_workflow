@@ -46,7 +46,7 @@
     },
     {
       "id": "V2",
-      "status": "not_started",
+      "status": "in_progress",
       "requirements": [
         "REQ-02",
         "REQ-05",
@@ -54,6 +54,17 @@
         "REQ-10",
         "REQ-12",
         "REQ-14"
+      ],
+      "implementation_notes": "V2-IMPLEMENTATION.md",
+      "scope": "First increment: pure mock replay guards and observation projection. Full catalog/UI/return/control/release scenarios and V2 acceptance remain pending.",
+      "increments": [
+        {
+          "id": "mock_replay_core",
+          "status": "verified",
+          "evidence": "evidence/v2/core-verification.json",
+          "independent_acceptance": "evidence/v2/core-review.json",
+          "candidate_fingerprint": "f25d331daff75e4bfc01e1bd1a0709bafa298f038993aed9e893eb1f094e4a07"
+        }
       ]
     },
     {
@@ -271,12 +282,12 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "V2: mock scenarios for waiting, quality failure return paths, cycle/attempt, skip evidence and reconciliation; keep actual AT ledger separate.",
+  "next_step": "V2: implement full scenario catalog, return/retry/skip/control/device/release protocols and standalone/native replay UI; then run complete V2 gate. Keep actual AT ledger separate.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",
     "Approved Bedrock/Claude runtime profile"
   ],
   "publication_policy": "Only authorized git repository documentation, source and synthetic verification summaries/screenshots; never runtime credentials or application logs.",
-  "updated_at": "2026-10-15T10:01:57.863133+00:00"
+  "updated_at": "2026-10-15T10:25:57.437822+00:00"
 }
