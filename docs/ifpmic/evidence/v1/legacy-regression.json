@@ -1,0 +1,60 @@
+{
+  "legacy_browser": {
+    "passed": 23,
+    "failed": 0,
+    "evidence_log_sha256": "a1c97c159052b8318bd84f89fe37a49ae813569b214ddf9b065ed84f5b64eec1"
+  },
+  "navigation": {
+    "verdict": "pass",
+    "cases": [
+      {
+        "name": "deep-desktop",
+        "verdict": "pass",
+        "failureCodes": [],
+        "unexpectedRequestCount": 0,
+        "pageErrorCount": 0,
+        "checkCount": 27
+      },
+      {
+        "name": "deep-mobile",
+        "verdict": "pass",
+        "failureCodes": [],
+        "unexpectedRequestCount": 0,
+        "pageErrorCount": 0,
+        "checkCount": 27
+      },
+      {
+        "name": "next-previous-wrap",
+        "verdict": "pass",
+        "failureCodes": [],
+        "unexpectedRequestCount": 0,
+        "pageErrorCount": 0,
+        "checkCount": 107
+      },
+      {
+        "name": "filter-cursor-reset",
+        "verdict": "pass",
+        "failureCodes": [],
+        "unexpectedRequestCount": 0,
+        "pageErrorCount": 0,
+        "checkCount": 65
+      },
+      {
+        "name": "scope-cursor-reset",
+        "verdict": "pass",
+        "failureCodes": [],
+        "unexpectedRequestCount": 0,
+        "pageErrorCount": 0,
+        "checkCount": 51
+      },
+      {
+        "name": "hidden-selection-retained",
+        "verdict": "pass",
+        "failureCodes": [],
+        "unexpectedRequestCount": 0,
+        "pageErrorCount": 0,
+        "checkCount": 18
+      }
+    ]
+  }
+}

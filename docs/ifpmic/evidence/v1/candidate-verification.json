@@ -1,0 +1,232 @@
+{
+  "kind": "ifpmic_v1_candidate_verification",
+  "scope": "V0 source integrity and V1 visualization only; no real AT completion",
+  "attempt": "2026-10-15T09-59-35-834Z",
+  "startedAt": "2026-10-15T09:59:35.885Z",
+  "sourceHashes": {
+    "IFPMIC_AX_Design_Package_v1.zip": "34946eda4c85fd9706b40e218a233a3fdd5ab0a00b2538778c9b9cf047e19080",
+    "IFPMIC_AX_Design_v1.docx": "18a14876a689beae0599b5d4014bf95db79bef047d0e4ceafa60d9a9417624fc",
+    "docs/ifpmic/PLAN.md": "3b99c7b3629a8e0e6bc41d524329d2a0de27a468ec447a990fa360dcc38aa39d",
+    "docs/ifpmic/VERIFICATION.md": "b0f1e0dbe74f1a6aae5e84218f672fcb42d0db6133e072d66e92d21d2bb1ef98",
+    "docs/ifpmic/design-v1/README.txt": "33ff9f07a74c3e276ac63746340a56e4bbdeca18d2531de24cc978d533283122",
+    "docs/ifpmic/design-v1/qa/design-validation.json": "499d203d19980fac95cb9f9974ace988b54392a0ce968544d220b1a421b49fd4",
+    "docs/ifpmic/design-v1/qa/package-manifest.json": "46fe63988e7cd9312c379761c6023fc5e28e1259770274463ea848eb92960386",
+    "docs/ifpmic/design-v1/qa/visual-review.json": "e4dc7b7e91dd514158dc48688e7e79074c6686298d9395cbf9139158821b8755",
+    "docs/ifpmic/design-v1/specs/acceptance-cases.json": "f7163553edc9e8e753965cb8748ab04aac8f68c1a453f567f62284a01b38b0d5",
+    "docs/ifpmic/design-v1/specs/agent-contract.json": "ca6d4bea7abf0fffe7354c482af0d521c3a2e367217a69923a4bfe43fa27ab64",
+    "docs/ifpmic/design-v1/specs/bridge-contract.json": "d9a0deaa745d4078a779a153aad6a889a49b7675dc8ad3688f8b4c641233047d",
+    "docs/ifpmic/design-v1/specs/data-model.json": "00c84f8a39b1b8959daa8d94b1d67e860d83ad9bdb809065a5cd3b18af07071b",
+    "docs/ifpmic/design-v1/specs/implementation-backlog.json": "115e48568e0464b8e67ef17274dba97b3046a8de902e1cf426d9b70e1528e5d0",
+    "docs/ifpmic/design-v1/specs/openapi.v1.json": "2ed780cfa06349b18f5025937e050fd98a5cefa34b552eb836cfaccad416dd7a",
+    "docs/ifpmic/design-v1/specs/project-profile.example.json": "37301c6ff5c9cae237b6037a3106368cfd07e4582462d52a35dfee39de7839f2",
+    "docs/ifpmic/design-v1/specs/requirements.json": "6e1dc87cdbcaa66ed690ffd13d2d70242dff43410c9f822447bd520719ce249b",
+    "docs/ifpmic/design-v1/specs/sources.json": "c0c6f96c54ba4fd1c7a1bd70b954a7316bebdba86ff681e5a07141c682eeb7ef",
+    "docs/ifpmic/design-v1/specs/state-contract.json": "0248e130017043539319c56af854f5388a95d33e7e687902a3438fdff414244a",
+    "docs/ifpmic/design-v1/specs/workflow.v1.json": "bab40a7abb3929896add1ef2cd074893dd2a7de14d200a5d6cea4b7a77eb0e89",
+    "docs/ifpmic/design-v1/validation-requirements.txt": "756cc9e506ae4ee1a6f6c0507088b5cfc0dc8ba350fb2d2d46f1ffa72033adb6",
+    "docs/ifpmic/design-v1/verify_design.py": "05abad3464f815144bd313257a691194fd0ac96b84a542485260d128c681cedb",
+    "docs/ifpmic/evidence/plan-review.json": "df800e146c9375fa628070d0c4228437f20ec22f1ad4c494904eda90ae042021",
+    "docs/ifpmic/source-manifest.json": "8afba9c1fc16ef3a6565f45576792cad51a1aaab59857d3a28666c71ec43007c",
+    "experiments/paperclip/ax-controller.mjs": "01608575658d8621bf30762e9075b440e7f70abb4586425ef5ca63be2a017561",
+    "experiments/paperclip/ax-local-server.mjs": "4bf7304d0f775f76f7b4dda62935b6c5f6f10d2350ec5c224e3aa4ae7d4c3f82",
+    "experiments/paperclip/ax-release-check.mjs": "33a48b31766ea0159823c374d242f6f5acab21a675e198fed6041da4c33357c4",
+    "experiments/paperclip/ax-stage-agent.mjs": "03b73df876c5b6af6a22f15f770c3e800c3fa247d63dfbf0fcefd5fca62f1f32",
+    "experiments/paperclip/ax-workflow.json": "db0d8a219ffb7e519b728781ac68b9d67dfd586ee9dc50bd8c8e2e9e0cdc8242",
+    "experiments/paperclip/lab.mjs": "05960142972b438ecead717b9b8d9d0fb631dffd801f795fd16b34554d0b32fe",
+    "experiments/paperclip/stage-agent.mjs": "67ce28cba1189675df8c41995ba8d5f3316656cfdc3971b78c828e519dacf8a4",
+    "experiments/paperclip/verify-agent-filter.mjs": "dfd83872952cd645e200964e3c2247259494ffa1a4fb0b2292830c3450c7549c",
+    "experiments/paperclip/verify-agent-navigation.mjs": "8afd698e5e36edff0962fc2f103c1ab23038d597f208d2bd9c83a6a3e22204c2",
+    "experiments/paperclip/verify-agent-topology.mjs": "92df06fefb8fd4c959f3ea7c2f8308b0a8427918ed9b877fa386d89fc277e6f4",
+    "experiments/paperclip/workflow.json": "6ddcb3091d9eb0203f59b3a89fb250795c9e56731af17330c29e9e3dc34e29d1",
+    "ifpmic.html": "24236fa3c43b13c08c9452b5ff6235b4bc567e2a99c0ace4943494e81f587ba9",
+    "index.html": "41d4bc4ea7d8ef8fc575d22072ecf048bb5d764ca796d0374e425786175824c4",
+    "package-lock.json": "c2ba0f8ad9699bb52ebd8647bdaf7fe1ef6b2f93967b94a3f292b412c29159ed",
+    "package.json": "31d3b26bc67edfe0e36db1b89660513be59451c5406a62b878653f1b1cbdb4ce",
+    "plugins/ifpmic-ax/manifest.mjs": "25304d897bd26f2a9475a110acf6e40aca41d91b26eb5c2f1ff0f8d2a96c113d",
+    "plugins/ifpmic-ax/package.json": "9e5921e12ad8f363c36ff31ec69afc43a132c7b532869249b9c9d78b822836df",
+    "plugins/ifpmic-ax/ui.tsx": "dda268570d188f9376f3a1ca96fbf2635f304fbd8f35bdd7f647b3618c0faa2b",
+    "plugins/ifpmic-ax/worker.mjs": "5f33c2266890dbeeb526684335e84f0899ef890bdf6e7652901fdfcc6bee82fa",
+    "scripts/build-ifpmic-plugin.mjs": "4eeb673b5c17f8b9d5e33751a17e7ee700102007f595b083ee2af0fd4fa94c46",
+    "scripts/ifpmic-lab.mjs": "6aff79b57d7dba3708121161ea66308bc4edda07e868a717c92cb97597817562",
+    "scripts/verify-ifpmic-v1.mjs": "764e02810f9919fe5dafbfc3dbb8e31156e3e8772c634f8315da78b1bfdeda52",
+    "server/claude-store.mjs": "c4f6185530eb8377bb16aeae37744edda963be733070b11e6a83d1f164ab768c",
+    "server/index.mjs": "9f462d86df80903570ab9ec110be564586dd89c45a3fd553a59cc6d5d6e56299",
+    "server/opencode-store.mjs": "ab49164a1a3a03b3a91a65866b70a074a8246e143b04510670d1259d6d2026a4",
+    "server/snapshot-store.mjs": "1a71d6dd42b5382a085311f903f82c89e9c53956324bff21aa44c5cdd4ccd3ed",
+    "server/store.mjs": "ec48d788f034305775becfc2497f922c4322a6f6d2c66ebe0cd7f8af465e3733",
+    "src/App.tsx": "8b1bca0ceaeadd764d13bdc220ffa48ea3ad28ac4db3783e74feba719ec5bdba",
+    "src/agent-filter.d.mts": "3bdcb6a01166fd617256c153b88f51eacce13dfee944cfdb09019d4172622339",
+    "src/agent-filter.mjs": "9467ac7f59f09eadb123a5153a92603684293350a3212c7c4d4a5d7fcd71731a",
+    "src/ifpmic/WorkflowPage.tsx": "fc106aea2537e41137a0b946e19fed45c9a8d61649cd749986225cc1cf1296a9",
+    "src/ifpmic/assets.d.ts": "f138ad28ea15f370cfa14b484be92a1e25936e0f6a289d30e4d48043ccf0ced1",
+    "src/ifpmic/contract.d.mts": "a883bc8e64b635d7a8245f720f2bb607151521804dc061c55897b7e93ff2d43f",
+    "src/ifpmic/contract.mjs": "64b8b8237ba88fb4ae7ae8ab38b6ca5882244db3095d1cd4c56413ed914ddfa7",
+    "src/ifpmic/main.tsx": "c592156a4de5082c305ef4dfc61e1f95c94a7a26e0c8567f7e3a301a67de88d1",
+    "src/ifpmic/workflow.css": "c11b3470e974b309741e0653cceb586e3b8c803f10e5a7b098719b68305039d7",
+    "src/main.tsx": "a85c901d00b446ca1bea89b9c224a53d1075c52995933ede6d7ac1d9d2060891",
+    "src/styles.css": "cfba25b6214ad4e82961384c79bf6b7e9402868b7e1ceab41c46e5eac3cd1db9",
+    "tests/agent-filter.browser.mjs": "599db9047851753180925c2b342f729a083354c0eecc7b137fd91abe39b18153",
+    "tests/agent-filter.test.mjs": "3c84a9d93b9f07cd606cc886315c005768a30d601d6e89a164b3ef00986fb78f",
+    "tests/ax-local-server.test.mjs": "7383dc392c4ae529fa7128d3e56639f1161e04927d22e28b0e9ac70e425919d6",
+    "tests/ax-release-check.test.mjs": "7ba056fe8921ea6fe43027316d8d254be7c75d67b08cf57d518c98ff49fe88c3",
+    "tests/ax-stage-agent.test.mjs": "816a06858e7b33f3126f93c76b39d2f369fb51d44301ed3031fa1f529f58bc05",
+    "tests/ax-workflow.test.mjs": "f923e7d7ca35013a792002e374b700be4c754ea57e75751b7cd35e05e1388ede",
+    "tests/claude.test.mjs": "34561c6dd2af9739af21db9da6b6cc1ac28e9aad6289b6287259f3ae7aa6e711",
+    "tests/ifpmic-contract.test.mjs": "04edd2401b26c41a051f4c92a2f6786faab5ddb195e91c795655c7c15255addc",
+    "tests/ifpmic-host.browser.mjs": "a80131f401b69ee9e7a77de07193b342ba4ba599fc2f75bb51e96fe257add7b0",
+    "tests/ifpmic-source-negative.test.mjs": "6ac08b36dccfdb93595a65db31389add302dff8ba6c7d967b41de640db09bd36",
+    "tests/ifpmic-source-upload.mjs": "903e3c8673d2c5a04ed96d887509499ddeddcffa4a17ea786cfef87d6d14a655",
+    "tests/ifpmic.browser.mjs": "96f53b51d89f8911319f37f346e20edd5977d0d75fbaf3d01599127710da3502",
+    "tests/opencode.test.mjs": "f3be87a6c11928a983eb525a68330475d394676f8bd4c2676d0eb5b21d04b3ef",
+    "tests/paperclip.test.mjs": "fab946b54e5568a162d7249b404381e061ee9c4eafd5c48aa48610378e16b316",
+    "tests/store.test.mjs": "950bb3bd50d7a0c227c55765d403e913c4a6d98a5ed668b59dadc33f82e9ba38",
+    "tsconfig.json": "03854d796a684d2bea079bbf4ac7bb9d71cc5830bb429fac7bd5dab71fa5945f",
+    "vite.config.ts": "054ee708c7cee13c62f0af627bae0730cbf83f2df7345906eb092fe0803279c6"
+  },
+  "sourceFingerprint": "a25407b9a867fe04af3bba7a54b0b578131a1ed2c3c848592d004c21a9fb4590",
+  "commands": [
+    {
+      "name": "unit",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "startedAt": "2026-10-15T09:59:35.885Z",
+      "finishedAt": "2026-10-15T09:59:59.218Z",
+      "exitCode": 0,
+      "counts": {
+        "tests": 161,
+        "pass": 161,
+        "fail": 0,
+        "skipped": 0
+      },
+      "log": "workflow-artifacts/verification/V1/gates/2026-10-15T09-59-35-834Z/unit.log",
+      "logSha256": "5fe29c960f53cc4f3ed618b71efea43ff317da8fe692935a9aa02af81fe631c5"
+    },
+    {
+      "name": "build",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "startedAt": "2026-10-15T09:59:59.219Z",
+      "finishedAt": "2026-10-15T10:00:03.091Z",
+      "exitCode": 0,
+      "log": "workflow-artifacts/verification/V1/gates/2026-10-15T09-59-35-834Z/build.log",
+      "logSha256": "22b846e87d8a33f81fa15f4d87a5830074a84f78e4ac32a2897d2a310671dbea"
+    },
+    {
+      "name": "plugin-build",
+      "command": [
+        "npm",
+        "run",
+        "ifpmic:plugin:build"
+      ],
+      "startedAt": "2026-10-15T10:00:03.091Z",
+      "finishedAt": "2026-10-15T10:00:03.513Z",
+      "exitCode": 0,
+      "log": "workflow-artifacts/verification/V1/gates/2026-10-15T09-59-35-834Z/plugin-build.log",
+      "logSha256": "e8264a2643dc26ecfa01fbf7bfa695f449060da8c0c52e4727f8f0fe7f680da8"
+    },
+    {
+      "name": "source-uploads",
+      "command": [
+        "npm",
+        "run",
+        "ifpmic:verify-sources"
+      ],
+      "startedAt": "2026-10-15T10:00:03.513Z",
+      "finishedAt": "2026-10-15T10:00:03.734Z",
+      "exitCode": 0,
+      "log": "workflow-artifacts/verification/V1/gates/2026-10-15T09-59-35-834Z/source-uploads.log",
+      "logSha256": "b492da2b1f01db8326f2198d4eac6b76e77fac56c4deacfafb60398c45da90c4"
+    },
+    {
+      "name": "design-validator",
+      "command": [
+        "python3",
+        "-c",
+        "import pathlib, tempfile, shutil, subprocess\nwith tempfile.TemporaryDirectory(prefix=\"ifpmic-gate-\") as temp:\n target=pathlib.Path(temp)/\"design\"\n shutil.copytree(\"docs/ifpmic/design-v1\",target)\n subprocess.run([\"python3\",str(target/\"verify_design.py\")],check=True)"
+      ],
+      "startedAt": "2026-10-15T10:00:03.734Z",
+      "finishedAt": "2026-10-15T10:00:03.987Z",
+      "exitCode": 0,
+      "log": "workflow-artifacts/verification/V1/gates/2026-10-15T09-59-35-834Z/design-validator.log",
+      "logSha256": "2a781792052f4ea7099623a39c991399958a17abade73349c969b0f19de65c4c"
+    },
+    {
+      "name": "ifpmic-browser",
+      "command": [
+        "npm",
+        "run",
+        "test:ifpmic:browser"
+      ],
+      "startedAt": "2026-10-15T10:00:03.988Z",
+      "finishedAt": "2026-10-15T10:00:07.142Z",
+      "exitCode": 0,
+      "log": "workflow-artifacts/verification/V1/gates/2026-10-15T09-59-35-834Z/ifpmic-browser.log",
+      "logSha256": "0ac428bd021e553ca8f3a293eb2c36382eee7049bd465de45b713ec259b09343"
+    },
+    {
+      "name": "paperclip-host",
+      "command": [
+        "npm",
+        "run",
+        "test:ifpmic:host"
+      ],
+      "startedAt": "2026-10-15T10:00:07.142Z",
+      "finishedAt": "2026-10-15T10:00:10.710Z",
+      "exitCode": 0,
+      "log": "workflow-artifacts/verification/V1/gates/2026-10-15T09-59-35-834Z/paperclip-host.log",
+      "logSha256": "a347f91dc41284fc44742a4d1f590b2f4cecec92a16d29c7bd05eb5a017220c8"
+    },
+    {
+      "name": "legacy-browser",
+      "command": [
+        "npm",
+        "run",
+        "test:browser"
+      ],
+      "startedAt": "2026-10-15T10:00:10.711Z",
+      "finishedAt": "2026-10-15T10:00:42.566Z",
+      "exitCode": 0,
+      "log": "workflow-artifacts/verification/V1/gates/2026-10-15T09-59-35-834Z/legacy-browser.log",
+      "logSha256": "a1c97c159052b8318bd84f89fe37a49ae813569b214ddf9b065ed84f5b64eec1"
+    }
+  ],
+  "reports": {
+    "browser.json": {
+      "path": "workflow-artifacts/verification/V1/gates/2026-10-15T09-59-35-834Z/browser.json",
+      "sha256": "3ee24820c1862f73f01c0ebb114e4dcafb46a360eb646094bdb42ae7076ef1ec"
+    },
+    "host-browser.json": {
+      "path": "workflow-artifacts/verification/V1/gates/2026-10-15T09-59-35-834Z/host-browser.json",
+      "sha256": "9faa4a682b667926a5eabee256f9b46ca5d6642de16b685aa5549246bf3a2189"
+    },
+    "source-upload.json": {
+      "path": "workflow-artifacts/verification/V1/gates/2026-10-15T09-59-35-834Z/source-upload.json",
+      "sha256": "3ef0a07db987088bbb4fcf119c84b22220a082df39ccd3fd318bc176fc2b78a1"
+    },
+    "negative-fixtures.json": {
+      "path": "workflow-artifacts/verification/V1/gates/2026-10-15T09-59-35-834Z/negative-fixtures.json",
+      "sha256": "e3f3643c3173a4005dc87c1a38a76b2d45a0249102d3733902633796f44baf44"
+    }
+  },
+  "verdict": "pass",
+  "buildAssets": {
+    "dist/assets/client-CAHGjawS.js": "5fa7239379911c904db9b9302fd405a3b9e95325a502751ff2e1cb005e6ec769",
+    "dist/assets/ifpmic-C8WaZJ7H.js": "79d94f07f892427367631193aff2a4cf6b614b5569e177af01516f2172df24f3",
+    "dist/assets/main-CylYjkUS.js": "ddbb9ffd85519b9bebb4689f7cac226a376fbc3cc1cca57dcbadeff28f4dc377",
+    "dist/assets/main-Drfl24f5.css": "5f130778329164918b89101b7ff8ae176d4f44800f424819c3a4add2d2911814",
+    "dist/ifpmic.html": "cf3b7950c85e907ef9b6126a890c4a87721e104489bc142fa13bce9ea47c24a7",
+    "dist/index.html": "f0c4ef087190c0cfe694cf7cf27837494f3fc22ee4bcc05ee2c14a244056890f"
+  },
+  "pluginAssets": {
+    ".paperclip-lab/ifpmic-plugin/dist/manifest.js": "b97837792de4a4c3134470f8bd775128d734f79ec43d6e3ec8469e591956d01e",
+    ".paperclip-lab/ifpmic-plugin/dist/ui/index.js": "6a0be4ec0be1335b821f48fd20289d3a5fb63c0293a9f22af39596327856cbe9",
+    ".paperclip-lab/ifpmic-plugin/dist/worker.js": "a28019a206135c594bb59a6f60011b6be2fc37a80b1b42bfe1cde55a16dc31ce",
+    ".paperclip-lab/ifpmic-plugin/package.json": "9e5921e12ad8f363c36ff31ec69afc43a132c7b532869249b9c9d78b822836df"
+  },
+  "finishedAt": "2026-10-15T10:00:42.596Z"
+}

@@ -18,7 +18,13 @@
     "paperclip:ax:status": "node experiments/paperclip/ax-controller.mjs status",
     "paperclip:ax:apply": "node experiments/paperclip/ax-controller.mjs apply",
     "paperclip:ax:serve": "node experiments/paperclip/ax-controller.mjs serve",
-    "test:browser": "node tests/agent-filter.browser.mjs && node experiments/paperclip/verify-agent-navigation.mjs"
+    "test:browser": "node tests/agent-filter.browser.mjs && node experiments/paperclip/verify-agent-navigation.mjs",
+    "ifpmic:plugin:build": "node scripts/build-ifpmic-plugin.mjs",
+    "test:ifpmic:browser": "node tests/ifpmic.browser.mjs",
+    "ifpmic:lab:start": "node scripts/ifpmic-lab.mjs",
+    "ifpmic:verify-sources": "node tests/ifpmic-source-upload.mjs",
+    "test:ifpmic:host": "node tests/ifpmic-host.browser.mjs",
+    "ifpmic:verify:v1": "node scripts/verify-ifpmic-v1.mjs"
   },
   "dependencies": {
     "react": "^19.0.0",
@@ -29,6 +35,7 @@
     "@types/react-dom": "^19.0.0",
     "playwright": "^1.63.0",
     "typescript": "^5.9.0",
-    "vite": "^7.0.0"
+    "vite": "^7.0.0",
+    "esbuild": "^0.28.2"
   }
 }

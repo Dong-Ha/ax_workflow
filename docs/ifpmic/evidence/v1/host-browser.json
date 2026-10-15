@@ -1,0 +1,71 @@
+{
+  "kind": "ifpmic-v1-paperclip-host-browser",
+  "server": "http://127.0.0.1:3100",
+  "checks": [
+    {
+      "name": "isolated local Paperclip server, synthetic company and native UI plugin are ready",
+      "verdict": "pass",
+      "details": {
+        "serverVersion": "2026.1005.0",
+        "deploymentMode": "local_trusted",
+        "issuePrefix": "IFP",
+        "pluginStatus": "ready"
+      }
+    },
+    {
+      "name": "native Paperclip page renders the full workflow with host-scoped styles",
+      "verdict": "pass"
+    },
+    {
+      "name": "native page shows non-node outcomes and linked path navigation",
+      "verdict": "pass"
+    },
+    {
+      "name": "native page search and owner filter preserve expected nodes and counts",
+      "verdict": "pass"
+    },
+    {
+      "name": "native page remains usable at 1440px and 375px with screenshots",
+      "verdict": "pass"
+    },
+    {
+      "name": "host page performs no writes, external network requests or runtime errors",
+      "verdict": "pass"
+    },
+    {
+      "name": "synthetic verification company still has no issues or agents",
+      "verdict": "pass",
+      "details": {
+        "issueCount": 0,
+        "agentCount": 0,
+        "issueCounter": 0
+      }
+    }
+  ],
+  "setupActions": [
+    {
+      "action": "reused_synthetic_company",
+      "name": "IFPMIC AX Verification",
+      "companyId": "d27585f7-287a-46d8-a289-b4b08eeb2e5b"
+    }
+  ],
+  "unexpectedExternalRequests": [],
+  "browserWriteRequests": [],
+  "pageErrors": [],
+  "consoleErrors": [],
+  "evidence": [
+    "host-desktop.png",
+    "host-mobile.png",
+    "host-browser.json"
+  ],
+  "serverVersion": "2026.1005.0",
+  "serverCommit": "c93eb17",
+  "databaseBackupDir": ".paperclip-lab/ifpmic-verification-data/instances/default/data/backups",
+  "plugin": {
+    "pluginKey": "ax.ifpmic-workflow",
+    "status": "ready",
+    "id": "741e5059-86e9-4f84-af0f-a51a64d3f36e"
+  },
+  "routePath": "/IFP/ifpmic-ax",
+  "verdict": "pass"
+}

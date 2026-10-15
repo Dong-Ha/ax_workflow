@@ -1,0 +1,12 @@
+{
+  "name": "@ax/ifpmic-workflow",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Read-only IFPMIC design workflow page for the local Paperclip lab.",
+  "paperclipPlugin": {
+    "manifest": "./dist/manifest.js",
+    "worker": "./dist/worker.js",
+    "ui": "./dist/ui/"
+  }
+}

@@ -1,0 +1,291 @@
+{
+  "kind": "synthetic_verification_attempt_history",
+  "attempts": [
+    {
+      "attempt": "2026-10-15T09-46-06-989Z",
+      "verdict": "fail",
+      "finding": "Source changed during verification; this attempt cannot approve the new candidate",
+      "sourceFingerprint": "1edee8b76324886496d09efe97106dbc64cc97cf0dae7a062b3d94b71c9041a1",
+      "executed_commands": [
+        {
+          "name": "unit",
+          "exitCode": 0
+        },
+        {
+          "name": "build",
+          "exitCode": 0
+        },
+        {
+          "name": "plugin-build",
+          "exitCode": 0
+        },
+        {
+          "name": "source-uploads",
+          "exitCode": 0
+        },
+        {
+          "name": "ifpmic-browser",
+          "exitCode": 0
+        },
+        {
+          "name": "paperclip-host",
+          "exitCode": 0
+        },
+        {
+          "name": "legacy-browser",
+          "exitCode": 0
+        }
+      ]
+    },
+    {
+      "attempt": "2026-10-15T09-48-16-897Z",
+      "verdict": "pass",
+      "finding": null,
+      "sourceFingerprint": "ddf147ca755ccc778542160b2d3ad641997be9367702970a5d22e92c934aaf11",
+      "executed_commands": [
+        {
+          "name": "unit",
+          "exitCode": 0
+        },
+        {
+          "name": "build",
+          "exitCode": 0
+        },
+        {
+          "name": "plugin-build",
+          "exitCode": 0
+        },
+        {
+          "name": "source-uploads",
+          "exitCode": 0
+        },
+        {
+          "name": "ifpmic-browser",
+          "exitCode": 0
+        },
+        {
+          "name": "paperclip-host",
+          "exitCode": 0
+        },
+        {
+          "name": "legacy-browser",
+          "exitCode": 0
+        }
+      ]
+    },
+    {
+      "attempt": "2026-10-15T09-50-07-868Z",
+      "verdict": "pass",
+      "finding": null,
+      "sourceFingerprint": "65a253a357e6cb8341c6e247130a22b943a074f1fc5f715757b462130dc960f0",
+      "executed_commands": [
+        {
+          "name": "unit",
+          "exitCode": 0
+        },
+        {
+          "name": "build",
+          "exitCode": 0
+        },
+        {
+          "name": "plugin-build",
+          "exitCode": 0
+        },
+        {
+          "name": "source-uploads",
+          "exitCode": 0
+        },
+        {
+          "name": "design-validator",
+          "exitCode": 0
+        },
+        {
+          "name": "ifpmic-browser",
+          "exitCode": 0
+        },
+        {
+          "name": "paperclip-host",
+          "exitCode": 0
+        },
+        {
+          "name": "legacy-browser",
+          "exitCode": 0
+        }
+      ]
+    },
+    {
+      "attempt": "2026-10-15T09-55-10-249Z",
+      "verdict": "pass",
+      "finding": null,
+      "sourceFingerprint": "d2543ede287116889a9ab77b3f9081133485129932fea8d7b501338a35bd297c",
+      "executed_commands": [
+        {
+          "name": "unit",
+          "exitCode": 0
+        },
+        {
+          "name": "build",
+          "exitCode": 0
+        },
+        {
+          "name": "plugin-build",
+          "exitCode": 0
+        },
+        {
+          "name": "source-uploads",
+          "exitCode": 0
+        },
+        {
+          "name": "design-validator",
+          "exitCode": 0
+        },
+        {
+          "name": "ifpmic-browser",
+          "exitCode": 0
+        },
+        {
+          "name": "paperclip-host",
+          "exitCode": 0
+        },
+        {
+          "name": "legacy-browser",
+          "exitCode": 0
+        }
+      ]
+    },
+    {
+      "attempt": "2026-10-15T09-59-35-834Z",
+      "verdict": "pass",
+      "finding": null,
+      "sourceFingerprint": "a25407b9a867fe04af3bba7a54b0b578131a1ed2c3c848592d004c21a9fb4590",
+      "executed_commands": [
+        {
+          "name": "unit",
+          "exitCode": 0
+        },
+        {
+          "name": "build",
+          "exitCode": 0
+        },
+        {
+          "name": "plugin-build",
+          "exitCode": 0
+        },
+        {
+          "name": "source-uploads",
+          "exitCode": 0
+        },
+        {
+          "name": "design-validator",
+          "exitCode": 0
+        },
+        {
+          "name": "ifpmic-browser",
+          "exitCode": 0
+        },
+        {
+          "name": "paperclip-host",
+          "exitCode": 0
+        },
+        {
+          "name": "legacy-browser",
+          "exitCode": 0
+        }
+      ]
+    },
+    {
+      "local_evidence": "workflow-artifacts/verification/V1/attempt-1-browser.json",
+      "sha256": "1f3c659796aa3579ded0e269688dd0bf348fb1e16bbabc73b102d58fe78a3f33",
+      "verdict": "fail",
+      "results": [
+        {
+          "name": "Paperclip host route serves the IFPMIC page offline",
+          "verdict": "pass"
+        },
+        {
+          "name": "workflow cards, phases, edges and terminal match the V1 display contract",
+          "verdict": "fail",
+          "finding": "initial selection state P01\n\n'true' !== 'false'\n"
+        },
+        {
+          "name": "selecting a node exposes its public detail fields and requirement links",
+          "verdict": "fail",
+          "finding": "locator.innerText: Timeout 4000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('region', { name: '선택 단계 상세' })\u001b[22m\n"
+        },
+        {
+          "name": "search, owner filtering, result counts and clear operate on the displayed graph",
+          "verdict": "pass"
+        },
+        {
+          "name": "special outcomes and business failure route controls navigate to their target nodes",
+          "verdict": "fail",
+          "finding": "locator.innerText: Timeout 4000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('region', { name: '선택 단계 상세' })\u001b[22m\n"
+        },
+        {
+          "name": "workflow cards support ArrowDown, ArrowUp, Home and End while skipping filtered nodes",
+          "verdict": "fail",
+          "finding": "Expected values to be strictly equal:\n\n'false' !== 'true'\n"
+        },
+        {
+          "name": "desktop and 375px mobile layouts expose core details without page overflow",
+          "verdict": "fail",
+          "finding": "The expression evaluated to a falsy value:\n\n  assert.ok(await detail.isVisible())\n"
+        },
+        {
+          "name": "read-only visualizer sends no API/write requests or external network traffic",
+          "verdict": "pass"
+        }
+      ],
+      "interpretation": {
+        "buildFreshness": "stale: browser run used a dist bundle created before role=\"region\" was added to the source detail panel",
+        "testOracleErrors": [
+          "P01 is selected on initial render, so its expected aria-pressed value was corrected to true",
+          "Arrow navigation wraps among visible nodes; filtered ArrowDown from the last node selects the first visible node"
+        ],
+        "productFinding": "detail landmark region lookup failures are inconclusive against current source until a fresh build is tested; current WorkflowPage.tsx now declares role=\"region\"",
+        "disposition": "preserved as attempt evidence; do not use as current V1 verdict"
+      }
+    },
+    {
+      "local_evidence": "workflow-artifacts/verification/V1/attempt-2-browser.json",
+      "sha256": "02d2fc6ee75eb0743fe920793f0d5e6e05c245456f5e960ba5f352061c2f4a4b",
+      "verdict": "pass",
+      "results": [
+        {
+          "name": "Standalone preview route serves the IFPMIC page offline",
+          "verdict": "pass"
+        },
+        {
+          "name": "workflow cards, phases, edges and terminal match the V1 display contract",
+          "verdict": "pass"
+        },
+        {
+          "name": "selecting a node exposes its public detail fields and requirement links",
+          "verdict": "pass"
+        },
+        {
+          "name": "search, owner filtering, result counts and clear operate on the displayed graph",
+          "verdict": "pass"
+        },
+        {
+          "name": "special outcomes and business failure route controls navigate to their target nodes",
+          "verdict": "pass"
+        },
+        {
+          "name": "workflow cards support ArrowDown, ArrowUp, Home and End while skipping filtered nodes",
+          "verdict": "pass"
+        },
+        {
+          "name": "desktop and 375px mobile layouts expose core details without page overflow",
+          "verdict": "pass"
+        },
+        {
+          "name": "read-only visualizer sends no API/write requests or external network traffic",
+          "verdict": "pass"
+        }
+      ],
+      "interpretation": null
+    }
+  ],
+  "real_acceptance": "not_executed"
+}

@@ -1,0 +1,63 @@
+[
+  {
+    "file": "browser.json",
+    "source": "workflow-artifacts/verification/V1/gates/2026-10-15T09-59-35-834Z/browser.json",
+    "originalSha256": "3ee24820c1862f73f01c0ebb114e4dcafb46a360eb646094bdb42ae7076ef1ec",
+    "publishedSha256": "85c3e57d358e08b4f9a03141bfc91ac6c2b8ddb2e74c9034b87f311966342a95",
+    "transformations": [
+      "Rewrite screenshot references to published relative paths"
+    ]
+  },
+  {
+    "file": "host-browser.json",
+    "source": "workflow-artifacts/verification/V1/gates/2026-10-15T09-59-35-834Z/host-browser.json",
+    "originalSha256": "9faa4a682b667926a5eabee256f9b46ca5d6642de16b685aa5549246bf3a2189",
+    "publishedSha256": "561e344cbbeeb31bc4f47da0b686e2ac50fc05d48949b3dd45b9f13709fff1fa",
+    "transformations": [
+      "Replace absolute local runtime path with repository relative path",
+      "Rewrite screenshot references to published relative paths"
+    ]
+  },
+  {
+    "file": "source-upload.json",
+    "source": "workflow-artifacts/verification/V1/gates/2026-10-15T09-59-35-834Z/source-upload.json",
+    "originalSha256": "3ef0a07db987088bbb4fcf119c84b22220a082df39ccd3fd318bc176fc2b78a1",
+    "publishedSha256": "3ef0a07db987088bbb4fcf119c84b22220a082df39ccd3fd318bc176fc2b78a1",
+    "transformations": []
+  },
+  {
+    "file": "negative-fixtures.json",
+    "source": "workflow-artifacts/verification/V1/gates/2026-10-15T09-59-35-834Z/negative-fixtures.json",
+    "originalSha256": "e3f3643c3173a4005dc87c1a38a76b2d45a0249102d3733902633796f44baf44",
+    "publishedSha256": "e3f3643c3173a4005dc87c1a38a76b2d45a0249102d3733902633796f44baf44",
+    "transformations": []
+  },
+  {
+    "file": "desktop.png",
+    "source": "workflow-artifacts/verification/V1/desktop.png",
+    "originalSha256": "ab4b809a5f40a524a573b2c4267430bc91fb15d62b45c482492ac0dd2c898ffa",
+    "publishedSha256": "ab4b809a5f40a524a573b2c4267430bc91fb15d62b45c482492ac0dd2c898ffa",
+    "transformations": []
+  },
+  {
+    "file": "mobile-375.png",
+    "source": "workflow-artifacts/verification/V1/mobile-375.png",
+    "originalSha256": "f2c70b33c0ac09a5b41479595dd84d3aba7441fd3ed1768a13cc240b83e24f2b",
+    "publishedSha256": "f2c70b33c0ac09a5b41479595dd84d3aba7441fd3ed1768a13cc240b83e24f2b",
+    "transformations": []
+  },
+  {
+    "file": "host-desktop.png",
+    "source": "workflow-artifacts/verification/V1/host-desktop.png",
+    "originalSha256": "3be0de7c82203ff3f9e2784e5f0ac91de3aafee26167deccfcb8e3d7a0cce7a9",
+    "publishedSha256": "3be0de7c82203ff3f9e2784e5f0ac91de3aafee26167deccfcb8e3d7a0cce7a9",
+    "transformations": []
+  },
+  {
+    "file": "host-mobile.png",
+    "source": "workflow-artifacts/verification/V1/host-mobile.png",
+    "originalSha256": "87670b225b9f5140c2b0fc716b04874ee37bbd313625f71bd212ff8a816a2761",
+    "publishedSha256": "87670b225b9f5140c2b0fc716b04874ee37bbd313625f71bd212ff8a816a2761",
+    "transformations": []
+  }
+]

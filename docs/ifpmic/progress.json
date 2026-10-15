@@ -1,0 +1,282 @@
+{
+  "goal_status": "active",
+  "scope": "Full IFPMIC workflow visualization and orchestration plan; V-stage proof does not complete B stages or real acceptance.",
+  "verification_plan": "VERIFICATION.md",
+  "independent_plan_review": "evidence/plan-review.json",
+  "stages": [
+    {
+      "id": "V0",
+      "status": "verified",
+      "requirements": [
+        "REQ-01",
+        "REQ-02",
+        "REQ-03",
+        "REQ-04",
+        "REQ-05",
+        "REQ-06",
+        "REQ-07",
+        "REQ-08",
+        "REQ-09",
+        "REQ-10",
+        "REQ-11",
+        "REQ-12",
+        "REQ-13",
+        "REQ-14",
+        "REQ-15"
+      ],
+      "evidence": "evidence/v1/candidate-verification.json",
+      "independent_acceptance": "evidence/v1/review.json",
+      "candidate_fingerprint": "a25407b9a867fe04af3bba7a54b0b578131a1ed2c3c848592d004c21a9fb4590"
+    },
+    {
+      "id": "V1",
+      "status": "verified",
+      "requirements": [
+        "REQ-01",
+        "REQ-05",
+        "REQ-06",
+        "REQ-10",
+        "REQ-12",
+        "REQ-14"
+      ],
+      "evidence": "evidence/v1/candidate-verification.json",
+      "scope": "Static visualization + native host mount; independent product review passed. No real AT completion.",
+      "independent_acceptance": "evidence/v1/review.json",
+      "candidate_fingerprint": "a25407b9a867fe04af3bba7a54b0b578131a1ed2c3c848592d004c21a9fb4590"
+    },
+    {
+      "id": "V2",
+      "status": "not_started",
+      "requirements": [
+        "REQ-02",
+        "REQ-05",
+        "REQ-08",
+        "REQ-10",
+        "REQ-12",
+        "REQ-14"
+      ]
+    },
+    {
+      "id": "B01",
+      "status": "not_started",
+      "acceptance": [
+        "AT-04",
+        "AT-28"
+      ],
+      "depends_on": [],
+      "requirements": [
+        "REQ-02"
+      ]
+    },
+    {
+      "id": "B02",
+      "status": "not_started",
+      "acceptance": [
+        "AT-21"
+      ],
+      "depends_on": [
+        "B01"
+      ],
+      "requirements": [
+        "REQ-13"
+      ]
+    },
+    {
+      "id": "B03",
+      "status": "not_started",
+      "acceptance": [
+        "AT-05",
+        "AT-16",
+        "AT-29"
+      ],
+      "depends_on": [
+        "B01",
+        "B02"
+      ],
+      "requirements": [
+        "REQ-05",
+        "REQ-14"
+      ]
+    },
+    {
+      "id": "B04",
+      "status": "not_started",
+      "acceptance": [
+        "AT-03",
+        "AT-27"
+      ],
+      "depends_on": [
+        "B02",
+        "B03"
+      ],
+      "requirements": [
+        "REQ-12",
+        "REQ-14"
+      ]
+    },
+    {
+      "id": "B05",
+      "status": "not_started",
+      "acceptance": [
+        "AT-01",
+        "AT-09",
+        "AT-10",
+        "AT-11"
+      ],
+      "depends_on": [
+        "B03",
+        "B04"
+      ],
+      "requirements": [
+        "REQ-01",
+        "REQ-03",
+        "REQ-04",
+        "REQ-05",
+        "REQ-12",
+        "REQ-14",
+        "REQ-15"
+      ]
+    },
+    {
+      "id": "B06",
+      "status": "not_started",
+      "acceptance": [
+        "AT-06",
+        "AT-23"
+      ],
+      "depends_on": [
+        "B03"
+      ],
+      "requirements": [
+        "REQ-06",
+        "REQ-11"
+      ]
+    },
+    {
+      "id": "B07",
+      "status": "not_started",
+      "acceptance": [
+        "AT-02",
+        "AT-07",
+        "AT-30"
+      ],
+      "depends_on": [
+        "B06"
+      ],
+      "requirements": [
+        "REQ-06",
+        "REQ-15"
+      ]
+    },
+    {
+      "id": "B08",
+      "status": "not_started",
+      "acceptance": [
+        "AT-08",
+        "AT-12",
+        "AT-31"
+      ],
+      "depends_on": [
+        "B07"
+      ],
+      "requirements": [
+        "REQ-03"
+      ]
+    },
+    {
+      "id": "B09",
+      "status": "not_started",
+      "acceptance": [
+        "AT-14",
+        "AT-22",
+        "AT-32"
+      ],
+      "depends_on": [
+        "B02",
+        "B03"
+      ],
+      "requirements": [
+        "REQ-07"
+      ]
+    },
+    {
+      "id": "B10",
+      "status": "not_started",
+      "acceptance": [
+        "AT-13",
+        "AT-15"
+      ],
+      "depends_on": [
+        "B08",
+        "B09"
+      ],
+      "requirements": [
+        "REQ-04",
+        "REQ-08"
+      ]
+    },
+    {
+      "id": "B11",
+      "status": "not_started",
+      "acceptance": [
+        "AT-18",
+        "AT-19",
+        "AT-20",
+        "AT-26"
+      ],
+      "depends_on": [
+        "B10"
+      ],
+      "requirements": [
+        "REQ-09",
+        "REQ-10"
+      ]
+    },
+    {
+      "id": "B12",
+      "status": "not_started",
+      "acceptance": [
+        "AT-17",
+        "AT-24",
+        "AT-25",
+        "AT-27"
+      ],
+      "depends_on": [
+        "B04",
+        "B11"
+      ],
+      "requirements": [
+        "REQ-12",
+        "REQ-13",
+        "REQ-14"
+      ]
+    },
+    {
+      "id": "B13",
+      "status": "not_started",
+      "acceptance": [
+        "AT-01",
+        "AT-04",
+        "AT-23"
+      ],
+      "depends_on": [
+        "B12"
+      ],
+      "requirements": [
+        "REQ-01",
+        "REQ-02",
+        "REQ-11"
+      ]
+    }
+  ],
+  "real_acceptance_status": "not_executed",
+  "waivers": [],
+  "next_step": "V2: mock scenarios for waiting, quality failure return paths, cycle/attempt, skip evidence and reconciliation; keep actual AT ledger separate.",
+  "environment_requests": [
+    "IFPMIC source checkout/ref",
+    "Build and KUnit commands",
+    "Approved Bedrock/Claude runtime profile"
+  ],
+  "publication_policy": "Only authorized git repository documentation, source and synthetic verification summaries/screenshots; never runtime credentials or application logs.",
+  "updated_at": "2026-10-15T10:01:57.863133+00:00"
+}

@@ -1,0 +1,82 @@
+{
+  "kind": "independent_stage_evidence_acceptance",
+  "decision": "accepted",
+  "stages": [
+    "V0",
+    "V1"
+  ],
+  "reviewer_agent": "/root/paperclip_ui_extension",
+  "reviewer_role": "worker_luna, independent read-only reviewer; not implementation or test author",
+  "implementation_agent": "/root",
+  "test_author_agent": "/root/verification_plan",
+  "timestamp": "2026-10-15T10:01:57.862823+00:00",
+  "candidate_attempt": "2026-10-15T09-59-35-834Z",
+  "sourceFingerprint": "a25407b9a867fe04af3bba7a54b0b578131a1ed2c3c848592d004c21a9fb4590",
+  "source_paths_recomputed": 78,
+  "source_differences": 0,
+  "evidence_reports_hash_verified": 4,
+  "method": "Read gate logs, source and report bytes; independently recompute hashes. Reviewer did not rerun tests.",
+  "scope": "V0 input integrity and verification-plan criteria; V1 static visualization and actual native Paperclip page mount.",
+  "checks": {
+    "unit": {
+      "passed": 161,
+      "failed": 0,
+      "skipped": 0
+    },
+    "source_upload": {
+      "passed": 2,
+      "imported_files_byte_identical": 17
+    },
+    "source_fixture_cases": {
+      "expected_pass": 1,
+      "expected_rejection": 3,
+      "network_calls": 0
+    },
+    "design_validator": {
+      "passed": 53,
+      "failed": 0
+    },
+    "offline_ifpmic_browser": {
+      "passed": 8,
+      "failed": 0
+    },
+    "paperclip_host_browser": {
+      "passed": 7,
+      "failed": 0
+    },
+    "legacy_ax_browser": {
+      "passed": 23,
+      "failed": 0
+    },
+    "legacy_navigation": {
+      "passed": 6,
+      "failed": 0
+    }
+  },
+  "resolved_findings": [
+    "V0 missing negative fixture evidence",
+    "Inferred requirement links",
+    "Ambiguous 41-transition label",
+    "Host URL and redirect restriction",
+    "Complete source/plan/archive fingerprint coverage"
+  ],
+  "waivers": [],
+  "real_acceptance": "AT-01 through AT-32 remain not_executed",
+  "remaining_stages": [
+    "V2",
+    "B01",
+    "B02",
+    "B03",
+    "B04",
+    "B05",
+    "B06",
+    "B07",
+    "B08",
+    "B09",
+    "B10",
+    "B11",
+    "B12",
+    "B13"
+  ],
+  "publication_recheck": "Independent reviewer recomputed all 78 paths and 4 report hashes after whitespace-only test normalization; acceptance maintained."
+}

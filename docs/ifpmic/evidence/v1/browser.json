@@ -1,0 +1,47 @@
+{
+  "kind": "ifpmic-v1-offline-browser",
+  "route": "/ifpmic.html",
+  "evidence": [
+    "desktop.png",
+    "mobile-375.png"
+  ],
+  "unexpectedExternalRequests": [],
+  "apiRequests": [],
+  "pageErrors": [],
+  "consoleErrors": [],
+  "results": [
+    {
+      "name": "Standalone preview route serves the IFPMIC page offline",
+      "verdict": "pass"
+    },
+    {
+      "name": "workflow cards, phases, edges and terminal match the V1 display contract",
+      "verdict": "pass"
+    },
+    {
+      "name": "selecting a node exposes its public detail fields and requirement links",
+      "verdict": "pass"
+    },
+    {
+      "name": "search, owner filtering, result counts and clear operate on the displayed graph",
+      "verdict": "pass"
+    },
+    {
+      "name": "special outcomes and business failure route controls navigate to their target nodes",
+      "verdict": "pass"
+    },
+    {
+      "name": "workflow cards support ArrowDown, ArrowUp, Home and End while skipping filtered nodes",
+      "verdict": "pass"
+    },
+    {
+      "name": "desktop and 375px mobile layouts expose core details without page overflow",
+      "verdict": "pass"
+    },
+    {
+      "name": "read-only visualizer sends no API/write requests or external network traffic",
+      "verdict": "pass"
+    }
+  ],
+  "verdict": "pass"
+}

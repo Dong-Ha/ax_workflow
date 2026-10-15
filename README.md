@@ -4,6 +4,24 @@
 
 IFPMIC workflow 시각화로 확장하는 방향은 [기준 자료와 이관 계획](./docs/ifpmic/README.md)에 정리했습니다. 현재 AX 자료를 기반으로 Paperclip을 활용하며, 제공된 IFPMIC 설계서와 JSON 계약을 최종 업무 기준으로 사용합니다. 해당 문서에는 Paperclip 조사, 시각화 우선순위와 B01–B13 구현 순서가 포함되어 있습니다.
 
+## IFPMIC 흐름 보기
+
+`npm run build` 후 기존 AX 서버의 **http://127.0.0.1:3000/ifpmic.html**에서 IFPMIC v1의 29개 단계, 6개 구간, 41개 정상·복귀 연결과 단계별 담당·입출력·통과 조건을 확인할 수 있습니다. 단계 검색, 담당 필터, 방향키·Home·End 이동과 상세 경로 이동을 지원합니다. 현재는 읽기 전용 계약 화면이며 실제 작업 상태나 수용시험 완료를 표시하지 않습니다.
+
+Paperclip 안에서는 전용 page 플러그인으로 장착합니다. 플러그인은 `ui.page.register` 권한만 요청합니다. 실행·배포·외부 전송 권한이 없으며, 기존 실험과 분리한 로컬 데이터 디렉터리를 사용합니다.
+
+```sh
+npm run paperclip:install
+npm run ifpmic:plugin:build
+npm run ifpmic:lab:start
+```
+
+마지막 명령은 localhost Paperclip 서버를 시작하고 telemetry와 업데이트 확인을 비활성화합니다. 처음 실행할 때 `.paperclip-lab/ifpmic-verification-data/`에 별도 DB·설정을 만듭니다. 기존 3100 포트의 서버가 있으면 먼저 해당 서버를 정상 종료합니다. 별도 터미널에서 `npm run test:ifpmic:host`를 실행하면 이 격리 서버의 버전과 데이터 경로를 확인한 뒤 로컬 플러그인을 설치하고, 합성 검증 회사의 `/<회사 prefix>/ifpmic-ax` 경로를 검사합니다. 실제 에이전트나 업무 요청은 생성하지 않습니다.
+
+검증은 [단계별 검증 계획](./docs/ifpmic/VERIFICATION.md)의 독립 검토 후 진행합니다. `npm run test:ifpmic:browser`는 빌드된 화면을 네트워크 없이 검사하며, 실제 Paperclip 장착 검증과 구분합니다. `npm run ifpmic:verify-sources`는 루트에 제공한 ZIP·DOCX와 보존 계약의 바이트를 비교합니다. 원본 파일이 없는 checkout에서도 `npm test`는 보존 계약 해시를 검증합니다.
+
+원본 두 파일과 격리 Paperclip 서버가 준비되면 `npm run ifpmic:verify:v1`로 단위·빌드·원본·IFPMIC 화면·실제 Paperclip 장착·기존 AX 화면 회귀를 순서대로 검사합니다. 명령별 결과와 소스/배포 파일 해시를 `workflow-artifacts/verification/V1/gates/<시각>/`에 보존하며, 검증 중 소스가 바뀐 실행은 통과 처리하지 않습니다.
+
 ## 실행
 
 Node.js 24 이상을 사용합니다.

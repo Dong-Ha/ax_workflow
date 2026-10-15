@@ -10,6 +10,8 @@
 
 - [Paperclip 조사와 적용 범위](./PAPERCLIP.md)
 - [시각화와 단계별 이관 계획](./PLAN.md)
+- [단계별 검증 계획](./VERIFICATION.md)과 [독립 검토](./evidence/plan-review.json)
+- [진행 상태](./progress.json)와 [결정·실패 복구 이력](./DECISIONS.md)
 - [원본 설계 계약](./design-v1/README.txt)
 - [자료 해시와 출처](./source-manifest.json)
 
@@ -23,4 +25,4 @@ cp -R docs/ifpmic/design-v1 "$AX_DESIGN_CHECK_DIR/design-v1"
 python3 "$AX_DESIGN_CHECK_DIR/design-v1/verify_design.py"
 ```
 
-2026년 10월 15일 검토에서 정적 설계 검사 53/53이 통과했다. 수용시험 32건은 모두 `not_executed`이며 실제 시스템 통과 결과와 구분한다. 이번 변경은 조사, 계약 보존, 이관 계획까지이며 제품 실행이나 IFPMIC 화면 구현을 완료한 상태는 아니다.
+2026년 10월 15일 검토에서 정적 설계 검사 53/53이 통과했다. 수용시험 32건은 모두 `not_executed`이며 실제 시스템 통과 결과와 구분한다. V1은 Paperclip page 플러그인으로 구현하고 원본·화면·host 장착·기존 AX 회귀를 후보 gate로 검사한다. 단계 완료 여부와 남은 작업은 진행 상태 및 증빙에서 확인한다.

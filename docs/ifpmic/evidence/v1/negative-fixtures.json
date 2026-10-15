@@ -1,0 +1,58 @@
+{
+  "kind": "ifpmic-source-upload-negative-fixtures",
+  "runner": "copied tests/ifpmic-source-upload.mjs executed as a child in isolated temporary roots",
+  "networkCalls": 0,
+  "cases": [
+    {
+      "name": "valid-fixture",
+      "expected": "runner exits 0 and reports pass",
+      "actual": {
+        "exitCode": 0,
+        "verdict": "pass",
+        "checkVerdicts": [
+          "pass",
+          "pass"
+        ],
+        "networkCalls": 0
+      }
+    },
+    {
+      "name": "manifest-hash-mutation",
+      "expected": "runner exits 1 and reports first check fail",
+      "actual": {
+        "exitCode": 1,
+        "verdict": "fail",
+        "checkVerdicts": [
+          "fail"
+        ],
+        "networkCalls": 0
+      }
+    },
+    {
+      "name": "imported-byte-mutation",
+      "expected": "runner exits 1 and reports imported-file check fail",
+      "actual": {
+        "exitCode": 1,
+        "verdict": "fail",
+        "checkVerdicts": [
+          "pass",
+          "fail"
+        ],
+        "networkCalls": 0
+      }
+    },
+    {
+      "name": "missing-imported-file",
+      "expected": "runner exits 1 and reports imported-file check fail",
+      "actual": {
+        "exitCode": 1,
+        "verdict": "fail",
+        "checkVerdicts": [
+          "pass",
+          "fail"
+        ],
+        "networkCalls": 0
+      }
+    }
+  ]
+}
