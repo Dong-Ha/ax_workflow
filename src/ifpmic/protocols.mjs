@@ -5,7 +5,7 @@ export function newStepRecord(id, cycle, attempt = 1, state = 'PENDING') {
     gate_candidate_fingerprint: null, gate_rule_version: null, gate_evidence_id: null,
     attempt, execution_id: `mock:${id}:c${cycle}:a${attempt}`, evidence_ids: [],
     failure_evidence_id: null, failure_candidate_fingerprint: null, failure_outcome: null,
-    retry_due_ms: null, infrastructure_error: false, skip_basis: null, unchanged_analysis: null, exemption_report: null,
+    retry_due_ms: null, infrastructure_error: false, notes_failure: null, skip_basis: null, unchanged_analysis: null, exemption_report: null,
     child_coordination: null, sqe_context: null, sqe_manual_task: null, sqe_result: null, sqe_report: null, sqe_execution_mode: null, gate_sqe_report_evidence_id: null,
   };
 }
@@ -210,11 +210,14 @@ export function createObservationProtocols({ result, graph, submissions, transit
       if (node.id !== 'P26' || step.state !== 'RUNNING' || result.release.publication_count !== 1
           || !result.release.receipt_id || !mockId(payload.evidence_id) || !transitionAllowed(step.state, 'FAILED')) return 'invalid_notes_failure';
       step.state = 'FAILED'; step.evidence_ids.push(payload.evidence_id);
+      step.notes_failure = { evidence_id: payload.evidence_id, cycle: result.cycle, attempt: step.attempt, execution_id: step.execution_id };
       result.status = 'RELEASED_PENDING_NOTES'; result.wait_reason = 'notes_failed';
       return '';
     }
     if (event.type === 'notes_retry') {
       if (node.id !== 'P26' || step.state !== 'FAILED' || result.status !== 'RELEASED_PENDING_NOTES'
+          || !step.notes_failure || step.notes_failure.cycle !== result.cycle
+          || step.notes_failure.attempt !== step.attempt || step.notes_failure.execution_id !== step.execution_id
           || result.release.publication_count !== 1 || !result.release.receipt_id || !mockId(payload.evidence_id)
           || !transitionAllowed('PENDING', 'READY') || !Number.isSafeInteger(step.attempt + 1)) return 'invalid_notes_retry';
       archiveAttempt(node, step);

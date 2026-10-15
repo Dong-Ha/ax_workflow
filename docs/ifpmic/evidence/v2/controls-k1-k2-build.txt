@@ -1,0 +1,16 @@
+
+> ax-agent-observatory@1.0.0 build
+> tsc --noEmit && vite build
+
+vite v7.3.7 building client environment for production...
+transforming...
+✓ 57 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/ifpmic.html                  0.51 kB │ gzip:  0.34 kB
+dist/index.html                   0.61 kB │ gzip:  0.38 kB
+dist/assets/main-Drfl24f5.css    19.65 kB │ gzip:  5.31 kB
+dist/assets/main-CylYjkUS.js     22.43 kB │ gzip:  7.84 kB
+dist/assets/ifpmic-BPPHQ1bw.js  198.63 kB │ gzip: 53.50 kB
+dist/assets/client-CAHGjawS.js  222.57 kB │ gzip: 69.32 kB
+✓ built in 4.56s

@@ -1,0 +1,19 @@
+{
+  "kind": "controls_intermediate_original59_baseline_check",
+  "mode": "mock",
+  "baseline_file": "docs/ifpmic/evidence/v2/controls-baseline-59.json",
+  "baseline_sha256": "ac5b2386b03738b4da8ea1cd93fa0dd1f46961d550d67b77fb35852289a79a78",
+  "scenarios": 59,
+  "events_checkpoints_order": "pass",
+  "historical_archive_sha256": "pass",
+  "archived_checkpoint_status_comparisons": 286,
+  "fields": [
+    "status",
+    "current_step",
+    "cycle",
+    "rework_count",
+    "publication_count"
+  ],
+  "verdict": "pass",
+  "scope": "Existing checkpoints only; exhaustive old-prefix policy differences remain K5."
+}

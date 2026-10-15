@@ -6,6 +6,7 @@ import { createRoutingProtocols } from './routing.mjs';
 import { createSqeProtocols, sqePayloadFields } from './sqe.mjs';
 import { createChildProtocols, childPayloadFields } from './children.mjs';
 import { createExceptionProtocols } from './exceptions.mjs';
+import { createControlProtocols, controlPayloadFields, newControlRecord } from './controls.mjs';
 export { createScenarioCatalog } from './scenarios.mjs';
 
 // Guards for synthetic observations only. No execution, timers, leases or publication.
@@ -97,11 +98,12 @@ const mockEvidence = value => opaqueId(value) && value.startsWith('mock:');
 const eventTypes = new Set(['step', 'agent', 'human', 'measurement', 'device', 'business_failure',
   'route', 'infra_error', 'retry', 'candidate', 'manifest', 'approval', 'receipt', 'notes_failure', 'notes_retry',
   'spec_unresolved', 'spec_resolution', 'spec_reviewed', 'remote_unknown', 'remote_reconcile',
-  'route_context', 'reuse_confirmation', 'plan_confirmation', 'unchanged_analysis', 'skip', 'exemption_report', 'no_change', ...Object.keys(sqePayloadFields), ...Object.keys(childPayloadFields)]);
+  'route_context', 'reuse_confirmation', 'plan_confirmation', 'unchanged_analysis', 'skip', 'exemption_report', 'no_change', ...Object.keys(sqePayloadFields), ...Object.keys(childPayloadFields), ...Object.keys(controlPayloadFields)]);
+const jobEventFields = ['event_id', 'source_id', 'source_seq', 'type', 'mode', 'job_id', 'payload'];
 const eventFields = new Set(['event_id', 'source_id', 'source_seq', 'type', 'mode', 'job_id',
   'step_id', 'cycle', 'attempt', 'execution_id', 'payload']);
 const payloadFields = {
-  ...sqePayloadFields, ...childPayloadFields,
+  ...sqePayloadFields, ...childPayloadFields, ...controlPayloadFields,
   step: ['state'], agent: ['status'], human: ['actor', 'task_id', 'plan_version', 'evidence_id', 'decision'],
   measurement: ['evidence', 'verdict'],
   device: ['mode', 'now_ms', 'last_heartbeat_ms', 'lease_expires_ms', 'operation_state', 'profile'],
@@ -151,6 +153,7 @@ export function replayScenario(scenario, workflow, stateContract, cursor = scena
     wait_reason: '', real_publish_allowed: false,
     requirements_version: 'mock:requirements:v1', spec_review: null, remote_reconciliation: null,
     route_plan: { context: null, confirmed: null, reuse_confirmations: {} }, no_change: null,
+    revision: 0, control: newControlRecord(),
   };
   for (const node of graph.nodes) result.steps[node.id] = newStepRecord(node.id, 1);
   const eventIds = new Map();
@@ -170,20 +173,35 @@ export function replayScenario(scenario, workflow, stateContract, cursor = scena
     releaseMatches: protocols.manifestMatches });
   const children = createChildProtocols({ result, mockId: mockEvidence,
     transitionAllowed: (from, to) => isAllowedStepTransition(from, to, stateContract) });
+  const controls = createControlProtocols({ result, mockId: mockEvidence,
+    delegateRetry: (now, evidence_id) => {
+      const step = result.steps[result.current_step], node = nodes.get(result.current_step);
+      const type = node?.id === 'P26' && step?.notes_failure ? 'notes_retry' : 'retry';
+      return protocols.apply({ type, payload: type === 'retry' ? { now_ms: now } : { evidence_id } }, node, step);
+    } });
   let quarantined = false;
   let latestDeviceTime = -1;
   function apply(event) {
     if (!record(event) || event.mode !== 'mock' || !opaqueId(event.event_id)
         || !opaqueId(event.source_id) || !Number.isSafeInteger(event.source_seq) || event.source_seq < 1) return 'invalid_event';
-    if (Object.keys(event).some(key => !eventFields.has(key))) return 'unknown_event_field';
     if (!eventTypes.has(event.type)) return 'unknown_type';
+    const jobScoped = Object.hasOwn(controlPayloadFields, event.type);
+    if (jobScoped) {
+      if (Object.keys(event).length !== jobEventFields.length || !jobEventFields.every(key => own(event, key))) return 'invalid_job_event_shape';
+    } else if (Object.keys(event).some(key => !eventFields.has(key))) return 'unknown_event_field';
     if (!record(event.payload)) return 'invalid_payload';
     if (Object.keys(event.payload).some(key => !payloadFields[event.type].includes(key))) return 'unknown_payload_field';
+    if (jobScoped) {
+      if (event.job_id !== result.job_id) return 'stale_job';
+      return controls.apply(event);
+    }
     const step = result.steps[event.step_id];
     if (!step || !nodes.has(event.step_id)) return 'unknown_step';
     if (event.job_id !== result.job_id || event.cycle !== result.cycle
         || event.attempt !== step.attempt || event.execution_id !== step.execution_id) return 'stale_execution';
     if (event.step_id !== result.current_step) return 'inactive_step';
+    const admissionBlocked = controls.admissionReason(event);
+    if (admissionBlocked) return admissionBlocked;
     const payload = record(event.payload) ? event.payload : {};
     const node = nodes.get(event.step_id);
     const routingBlocked = routing.blockingReason(event, node, step);
@@ -288,6 +306,9 @@ export function replayScenario(scenario, workflow, stateContract, cursor = scena
     } else if (['WAITING_HUMAN', 'WAITING_DEVICE', 'RECONCILING', 'FAILED'].includes(payload.state)) {
       result.status = payload.state;
       result.wait_reason = payload.state.toLowerCase();
+    } else if (['READY', 'RUNNING'].includes(payload.state)) {
+      result.status = node.id === 'P26' && result.release.publication_count === 1 ? 'RELEASED_PENDING_NOTES' : 'RUNNING';
+      result.wait_reason = '';
     }
     return '';
   }
@@ -312,12 +333,14 @@ export function replayScenario(scenario, workflow, stateContract, cursor = scena
       eventIds.set(event.event_id, signature); sequences.set(sequence, signature);
       staleSequence = event.source_seq < (latestSequences.get(event.source_id) ?? 0);
     }
+    controls.beforeEvent();
     const reason = staleSequence ? 'stale_source_sequence' : apply(event);
     // Rejected data reserves dedup keys but cannot advance the accepted-state watermark.
     if (reason === '' && validKey) latestSequences.set(event.source_id, event.source_seq);
     if (result.device?.quarantined) {
       result.status = 'RECONCILING'; result.wait_reason = 'device_reconciliation_required';
     }
+    controls.afterEvent(reason === '', event);
     const row = {
       event_id: opaqueId(event?.event_id) ? event.event_id : '[invalid]',
       source_id: opaqueId(event?.source_id) ? event.source_id : '[invalid]',

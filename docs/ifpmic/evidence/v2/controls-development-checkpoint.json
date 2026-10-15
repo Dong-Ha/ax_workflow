@@ -1,0 +1,131 @@
+{
+  "kind": "controls_development_checkpoint",
+  "mode": "mock",
+  "recorded_at": "2026-10-15T15:59:25.754604+00:00",
+  "base_commit": "08578d8",
+  "requirements": [
+    "REQ-02",
+    "REQ-05",
+    "REQ-08",
+    "REQ-10",
+    "REQ-12",
+    "REQ-14"
+  ],
+  "scope": "Intermediate K1/K2 command/revision/pause integration and typed notes marker; not K1-K8 controls acceptance or release.",
+  "source_sha256": {
+    "src/ifpmic/controls.mjs": "33cd08cbcd5e9f315b16849c5136f3a062969a3217a1a42dcac31984f1ef58e6",
+    "src/ifpmic/replay.mjs": "0430b4c1d3a3424a37b2db40c057777d816568627b0cddad64dabdc5c5d216a6",
+    "src/ifpmic/protocols.mjs": "69ffe17e5de939c983bcafde1bc5bd3061e5944cdc1de7a1769bb2fb2ebac79e",
+    "src/ifpmic/replay.d.mts": "c1aecb99423595167978ca46b0421ab58ce0ab22a3c35fa0f4fae8017774a8fc",
+    "tests/ifpmic-controls.test.mjs": "9e968ed1bfa2d137166f47caf60208f06b1eccaa6ddc7294cec08c58f278b146",
+    "README.md": "09aa3ad7bad8172deed23eeaf877574f52d9865b15830fcb6f6cc31da38b4a95",
+    "docs/ifpmic/V2-CONTROLS.md": "68bf08efc01b6f5ce924619c2af43dec375b59fc4216af6c27a0f669b44bb40b"
+  },
+  "verification": [
+    {
+      "command": "npm test",
+      "exit_code": 0,
+      "tests": 301,
+      "pass": 301,
+      "fail": 0,
+      "skip": 0,
+      "duration_ms": 49593.715161,
+      "log": "docs/ifpmic/evidence/v2/controls-k1-k2-unit.txt"
+    },
+    {
+      "command": "npm run build",
+      "exit_code": 0,
+      "log": "docs/ifpmic/evidence/v2/controls-k1-k2-build.txt"
+    },
+    {
+      "command": "npm run ifpmic:plugin:build",
+      "exit_code": 0,
+      "log": "docs/ifpmic/evidence/v2/controls-k1-k2-plugin-build.txt"
+    }
+  ],
+  "logs_sha256": {
+    "docs/ifpmic/evidence/v2/controls-k1-k2-unit.txt": "a8929107344de1da424f6810b30859f9b64dc24f4b71306ad0c49877318dcdfc",
+    "docs/ifpmic/evidence/v2/controls-k1-k2-build.txt": "7b58e87e23aac94971772e6575300b4cf7839cc5243422476a575010b0950ea8",
+    "docs/ifpmic/evidence/v2/controls-k1-k2-plugin-build.txt": "e8264a2643dc26ecfa01fbf7bfa695f449060da8c0c52e4727f8f0fe7f680da8"
+  },
+  "TC": {
+    "agent": "/root/verification_plan",
+    "tests": 14,
+    "file": "tests/ifpmic-controls.test.mjs",
+    "file_sha256": "9e968ed1bfa2d137166f47caf60208f06b1eccaa6ddc7294cec08c58f278b146",
+    "coverage": [
+      "receipt-only ingress",
+      "domain-wide revision and one winner",
+      "stale apply after progress/END",
+      "canonical command/idempotency conflicts",
+      "strict job/body shape and ID128/129",
+      "pause/fence/in-flight completion/frontier/resume",
+      "human wait and child question collection",
+      "retry wait preservation",
+      "final P26 END resume"
+    ]
+  },
+  "diagnostics": [
+    {
+      "attempt": 1,
+      "classification": "pre-integration failure",
+      "cause": "Control projection not integrated yet."
+    },
+    {
+      "attempt": 2,
+      "classification": "TC fixture mismatch",
+      "cause": "Resume expected_revision/command observations and question fixture expectations did not reflect accepted domain progress and answer/READY transitions. No passing implementation claim from this attempt."
+    },
+    {
+      "attempt": 3,
+      "classification": "TC fixture mismatch",
+      "cause": "Human wait state expected READY at a prefix still in WAITING_HUMAN; fixed prefix/expected oracle to original rules."
+    },
+    {
+      "attempt": 4,
+      "classification": "initial targeted pass",
+      "tests": 6
+    },
+    {
+      "attempt": 5,
+      "classification": "expanded targeted pass",
+      "tests": 14
+    }
+  ],
+  "diagnostic_log_sha256": {
+    "workflow-artifacts/verification/V2/controls/k1-k2-attempt-1.log": "55edfd1e05742667164c8b6c10079b73cbc15ccee9973063e9384ac79b0d9ef9",
+    "workflow-artifacts/verification/V2/controls/k1-k2-attempt-2.log": "8e4dd235b4a04588895db29dbea8466b0d48b334a38c1d2015e8365e18d036f2",
+    "workflow-artifacts/verification/V2/controls/k1-k2-attempt-3.log": "48188d0b54a8c802e7399d89186e68b1b323f8d1fae265789a18155fd4ae77b7",
+    "workflow-artifacts/verification/V2/controls/k1-k2-attempt-4.log": "7b69bb9a66cef468da747f20e0997a4232026439b60faa645619e52c1e900d05",
+    "workflow-artifacts/verification/V2/controls/k1-k2-attempt-5.log": "48969284b8984b774af935b02a9d63c5d9c895b36edf788ce6e08d51a95292df"
+  },
+  "code_review": {
+    "agent": "/root/controls_plan_review",
+    "initial": "rejected",
+    "findings": [
+      "PAUSED shown before safe fence ack",
+      "Stale WAITING_HUMAN after READY/RUNNING"
+    ],
+    "resolution": "Pre-ack RECONCILING/pause_fence_pending with original wait priority; accepted wait exit updates underlying status; independent re-review found no remaining blocker in this intermediate scope.",
+    "main_additional_finding": "Underlying COMPLETED blocked final paused END resume; moved PAUSED resume eligibility before completed-job rejection and added TC."
+  },
+  "limits": [
+    "No pre/post global source/dist frozen gate claim from this development checkpoint; hashes record post-test candidate sources.",
+    "K3 end/quiescence/cancel completion and bridge/remote events explicitly return control_protocol_not_implemented.",
+    "control.retry notes/infrastructure boundary tests and all remaining K4 coverage still required.",
+    "New15 scenarios/74 catalog, control UI/captures, full K5-K8 eleven-command frozen gate and independent acceptance remain required.",
+    "Original actual AT remains not_executed; no real agent/device/publisher operation."
+  ],
+  "verdict": "intermediate_checks_passed_not_accepted_controls",
+  "baseline_verification": {
+    "path": "docs/ifpmic/evidence/v2/controls-development-baseline.json",
+    "sha256": "8d8297ed610cf6a0bfe93733824ae7b36b3a5160dce9ad2a16c48ae5aa3475a2",
+    "result": "59 exact event/checkpoint/order streams and archive hash;286 archived checkpoint aggregate comparisons pass. Exhaustive prefix diff remains K5."
+  },
+  "independent_evidence_audit": {
+    "agent": "/root/controls_plan_review",
+    "verdict": "pass_intermediate_scope_only",
+    "checks": "Seven source hashes, three result logs, five diagnostic logs, unit301/301, fourteen TC cases, unchanged approved plan pin and incomplete K3-K8 statements verified.",
+    "documentation_scope_note": "README also corrects stale scenario count41 to current59; DECISIONS retains previous K0 context. No final controls acceptance."
+  }
+}

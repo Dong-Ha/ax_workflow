@@ -1,8 +1,14 @@
-export interface MockEvent {
+export interface MockStepEvent {
   event_id: string; source_id: string; source_seq: number; type: string; mode: 'mock';
   job_id: string; step_id: string; cycle: number; attempt: number; execution_id: string;
   payload: Record<string, unknown>;
 }
+export interface MockJobEvent {
+  event_id: string; source_id: string; source_seq: number; type: string; mode: 'mock';
+  job_id: string; payload: Record<string, unknown>;
+  step_id?: never; cycle?: never; attempt?: never; execution_id?: never;
+}
+export type MockEvent = MockStepEvent | MockJobEvent;
 export interface MockScenario {
   id: string; title: string; catalog_version?: string; requirement_ids: readonly string[]; events: readonly MockEvent[];
   checkpoints: readonly { id: string; title: string; cursor: number }[];
@@ -13,6 +19,7 @@ export interface ReplayStep {
   attempt: number; execution_id: string; evidence_ids: readonly string[]; retry_due_ms: number | null;
   failure_evidence_id: string | null; failure_candidate_fingerprint: string | null;
   failure_outcome: string | null; infrastructure_error: boolean;
+  notes_failure: null | { evidence_id: string; cycle: number; attempt: number; execution_id: string };
   child_coordination: MockChildCoordination | null;
   sqe_context: MockSqeContext | null; sqe_manual_task: MockManualTask | null; sqe_result: MockSqeResult | null; sqe_report: MockSqeReport | null;
   sqe_execution_mode: 'bridge_mock' | 'manual' | null; gate_sqe_report_evidence_id: string | null;
@@ -110,6 +117,26 @@ export interface ReplaySnapshot {
   requirements_version: string; spec_review: MockSpecReview | null; remote_reconciliation: MockRemoteReconciliation | null;
   device: ReplayDevice | null; release: ReplayRelease; wait_reason: string; real_publish_allowed: false;
   required_revalidation: readonly string[]; failure_bundle: readonly { step_id: string; cycle: number; attempt: number; evidence_id: string }[];
+  revision: number; control: MockControl;
+}
+export interface MockControlCommand {
+  command_id: string; actor: string; route: string; idempotency_key: string;
+  authorization_ref: string; csrf_ref: string;
+  body: { expected_revision: number; action: 'pause' | 'resume' | 'cancel' | 'retry'; reason: string };
+  status: 'accepted' | 'applied' | 'rejected'; resource_id: string; applied_revision: number | null;
+  error: null | { code: string; message: string; trace_id: string };
+  decision: null | { evidence_id: string; observed_now_ms: number };
+}
+export interface MockControl {
+  phase: null | 'PAUSE_REQUESTED' | 'PAUSED' | 'CANCEL_REQUESTED' | 'QUIESCENT' | 'CANCELED';
+  admission_open: boolean; commands: readonly MockControlCommand[]; applied_command_ids: readonly string[];
+  command_id: string | null; pause_anchor: null | Record<string, unknown>;
+  resume_step: string | null; resume_state: string | null;
+  underlying_status: string; underlying_wait_reason: string; reconciliation_required: boolean;
+  fence: null | Record<string, unknown>; executions: readonly Record<string, unknown>[];
+  pending_request_ids: readonly string[]; execution_ends: readonly Record<string, unknown>[];
+  bridges: readonly Record<string, unknown>[]; remotes: readonly Record<string, unknown>[];
+  facts: readonly Record<string, unknown>[]; boundary: null | Record<string, unknown>;
 }
 export function isAllowedStepTransition(from: unknown, to: unknown, stateContract: unknown): boolean;
 export function evidenceCurrent(evidence: unknown, context: unknown): boolean;
