@@ -49,3 +49,9 @@ TC는 별도 `tests/ifpmic-protocols.test.mjs`에서 고정된 12개 복귀 경�
 TC가 독립적인 25개 끝 상태와 checkpoint oracle, 실제 host/offline browser를 작성한다. 초기 browser 자료의 과거 FAIL 기대값은 현재 cycle의 PENDING과 혼동하지 않도록 정정했고, 과거 실패는 history에서 확인한다. 부모 검토에서 필터가 현재 단계를 숨겼을 때 focus/scroll을 놓치는 결함을 재현했다. layout effect에서 새 DOM을 확인한 뒤 이동하도록 수정하고 실제 focus와 scroller 교차 여부로 재검증한다. 반려 진단은 `evidence/v2/ui-attempt-1.json`에 보존한다.
 
 고정 후보 gate는 `npm run ifpmic:verify:ui`다. 단위/build/plugin/원본/원본 validator/V1 화면 및 실제 host/재생 offline·host/기존 AX 화면을 모두 수행한다. source/build/plugin, 25개 mock fixture·사건 journal, 명령·browser 보고서·desktop/mobile 화면 해시를 보존하고 소스 변경 시 거절한다. 증거는 `evidence/v2/ui-verification.json`과 독립 수용 기록에 연결한다. 이 증분 통과 후에도 skip/manual/trial 상세/자식 Agent/pause/cancel/no-change/P03/P25 전용 프로토콜과 전체 V2 gate 및 B 단계는 남는다.
+
+## 사양 질문·원격 조회 증분
+
+승인된 `V2-EXCEPTIONS.md`에 따라 P03 질문→사람 답변→새 요구사항 버전의 spec-gen 재검토 및 P25 불명확→동일 operation의 최신 원격 receipt 재사용을 추가한다. 사건은 합성이며 실제 질문 서버·원격 조회·제출을 호출하지 않는다. 전용 TC와 전체 단위/build/plugin-build, 소스 고정 및 독립 수용을 거친 뒤 부분 증분으로 기록한다. 검증 명령은 `node scripts/verify-ifpmic-exceptions.mjs`이고 결과는 `workflow-artifacts/verification/V2/exceptions/gates/`에 남긴다.
+
+이번 증분은 새 UI·카탈로그를 추가하지 않으므로 기존 25개 화면 시나리오의 지원 범위를 확장했다고 표시하지 않는다. 새 질문/원격 조회의 화면 연결, 나머지 skip/manual/child/pause/cancel/no-change/P22 trial과 전체 V2 gate는 계속 필요하다.

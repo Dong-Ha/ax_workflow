@@ -1,0 +1,19 @@
+{
+  "kind": "independent_exception_protocol_plan_review",
+  "decision": "approved",
+  "plan": "../../V2-EXCEPTIONS.md",
+  "sha256": "af239ae160b0426f5318d246316f52308b93e30b81768b407e507dac87d1f0a0",
+  "reviewer_agent": "/root/paperclip_ui_extension",
+  "implementer_agent": "/root",
+  "test_author_agent": "/root/verification_plan",
+  "recorded_at": "2026-10-15T11:21:54.108563+00:00",
+  "resolved_findings": [
+    "Fresh never-reused requirements version and spec-gen re-review bound to answered version",
+    "One pending question, ordinal task binding and immutable previous question history",
+    "Plugin bundler included in regression gate",
+    "Operation-local query sequence across sources rejects late results",
+    "Explicit operation/idempotency binding and found-only remote receipt reuse"
+  ],
+  "scope": "Partial V2 mock protocols only; full V2 and real AT pending",
+  "waivers": []
+}

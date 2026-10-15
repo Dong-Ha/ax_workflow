@@ -2,6 +2,7 @@ import { buildWorkflowGraph, safeText } from './contract.mjs';
 import canonicalStateContract from '../../docs/ifpmic/design-v1/specs/state-contract.json' with { type: 'json' };
 import canonicalWorkflow from '../../docs/ifpmic/design-v1/specs/workflow.v1.json' with { type: 'json' };
 import { createObservationProtocols, newStepRecord, mockHumanTaskId } from './protocols.mjs';
+import { createExceptionProtocols } from './exceptions.mjs';
 export { createScenarioCatalog } from './scenarios.mjs';
 
 // Guards for synthetic observations only. No execution, timers, leases or publication.
@@ -91,7 +92,8 @@ const opaqueId = value => typeof value === 'string' && /^[A-Za-z0-9][A-Za-z0-9:.
   && safeText(value) === value;
 const mockEvidence = value => opaqueId(value) && value.startsWith('mock:');
 const eventTypes = new Set(['step', 'agent', 'human', 'measurement', 'device', 'business_failure',
-  'route', 'infra_error', 'retry', 'candidate', 'manifest', 'approval', 'receipt', 'notes_failure', 'notes_retry']);
+  'route', 'infra_error', 'retry', 'candidate', 'manifest', 'approval', 'receipt', 'notes_failure', 'notes_retry',
+  'spec_unresolved', 'spec_resolution', 'spec_reviewed', 'remote_unknown', 'remote_reconcile']);
 const eventFields = new Set(['event_id', 'source_id', 'source_seq', 'type', 'mode', 'job_id',
   'step_id', 'cycle', 'attempt', 'execution_id', 'payload']);
 const payloadFields = {
@@ -105,6 +107,11 @@ const payloadFields = {
   approval: ['actor', 'task_id', 'plan_version', 'evidence_id', 'manifest_id', 'digest', 'candidate_fingerprint', 'decision'],
   receipt: ['manifest_id', 'digest', 'candidate_fingerprint', 'receipt_id', 'observed'],
   notes_failure: ['evidence_id'], notes_retry: ['evidence_id'],
+  spec_unresolved: ['question_id', 'candidate_fingerprint', 'requirements_version', 'evidence_id'],
+  spec_resolution: ['actor', 'question_id', 'task_id', 'plan_version', 'candidate_fingerprint', 'requirements_version', 'resolved_requirements_version', 'complete', 'evidence_id'],
+  spec_reviewed: ['actor', 'candidate_fingerprint', 'requirements_version', 'evidence_id'],
+  remote_unknown: ['manifest_id', 'digest', 'candidate_fingerprint', 'operation_key', 'evidence_id'],
+  remote_reconcile: ['manifest_id', 'digest', 'candidate_fingerprint', 'operation_key', 'evidence_id', 'query_seq', 'outcome', 'receipt_id'],
 };
 
 /** Recompute an observation prefix from scratch. This function cannot execute work. */
@@ -130,6 +137,7 @@ export function replayScenario(scenario, workflow, stateContract, cursor = scena
     device: null, release: { publication_count: 0, approved: false, manifest: null, receipt_id: null, rejection: null },
     required_revalidation: [], failure_bundle: [],
     wait_reason: '', real_publish_allowed: false,
+    requirements_version: 'mock:requirements:v1', spec_review: null, remote_reconciliation: null,
   };
   for (const node of graph.nodes) result.steps[node.id] = newStepRecord(node.id, 1);
   const eventIds = new Map();
@@ -139,6 +147,9 @@ export function replayScenario(scenario, workflow, stateContract, cursor = scena
   const protocols = createObservationProtocols({ result, graph, submissions,
     transitionAllowed: (from, to) => isAllowedStepTransition(from, to, stateContract),
     mockId: mockEvidence, policy: retryPolicy });
+  const exceptions = createExceptionProtocols({ result, mockId: mockEvidence,
+    transitionAllowed: (from, to) => isAllowedStepTransition(from, to, stateContract),
+    releaseMatches: protocols.manifestMatches });
   let quarantined = false;
   let latestDeviceTime = -1;
   function apply(event) {
@@ -155,6 +166,10 @@ export function replayScenario(scenario, workflow, stateContract, cursor = scena
     if (event.step_id !== result.current_step) return 'inactive_step';
     const payload = record(event.payload) ? event.payload : {};
     const node = nodes.get(event.step_id);
+    const blocked = exceptions.blockingReason(event, node, step);
+    if (blocked) return blocked;
+    const exceptionResult = exceptions.apply(event, node, step);
+    if (exceptionResult !== null) return exceptionResult;
     const protocolResult = protocols.apply(event, node, step);
     if (protocolResult !== null) return protocolResult;
     if (event.type === 'agent') {
@@ -214,6 +229,8 @@ export function replayScenario(scenario, workflow, stateContract, cursor = scena
           || submission.cycle !== result.cycle || submission.attempt !== step.attempt)) return 'human_submission_required';
       if (node.owner === 'system' && (step.gate_verdict !== 'PASS' || !step.gate_complete
           || step.gate_candidate_fingerprint !== result.candidate_fingerprint || step.gate_rule_version !== result.rule_version)) return 'gate_pass_required';
+      const exceptionGuard = exceptions.successGuard(node, step);
+      if (exceptionGuard) return exceptionGuard;
       const releaseGuard = protocols.successGuard(node);
       if (releaseGuard) return releaseGuard;
     }

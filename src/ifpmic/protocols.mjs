@@ -227,5 +227,5 @@ export function createObservationProtocols({ result, graph, submissions, transit
     if (node.id === 'P25' && (!releaseCurrent() || !result.release.approved || !result.release.receipt_id)) return 'release_receipt_required';
     return '';
   }
-  return { apply, successGuard };
+  return { apply, successGuard, manifestMatches };
 }

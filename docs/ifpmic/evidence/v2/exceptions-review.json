@@ -1,0 +1,55 @@
+{
+  "kind": "independent_partial_exception_protocol_acceptance",
+  "decision": "accepted_mock_spec_question_remote_reconciliation",
+  "implementer_agent": "/root",
+  "test_author_agent": "/root/verification_plan",
+  "reviewer_agent": "/root/paperclip_ui_extension",
+  "reviewer_role": "worker_luna; read-only independent plan/source/TC/evidence audit",
+  "recorded_at": "2026-10-15T11:31:41.176990+00:00",
+  "plan": "../../V2-EXCEPTIONS.md",
+  "plan_sha256": "9294b6849699940a8782031c6e469404a360cc48214ccb8ca9dafdd1e9cee267",
+  "plan_review": "exceptions-plan-review-2.json",
+  "candidate_fingerprint": "8359e610796e114490b00a3f12a357251de06070a017f3a883a47c8dec1288e2",
+  "report": "exceptions-verification.json",
+  "report_sha256": "b285269874a7fb2f4fc1b2705d3c398c2e6c2690ce8b303a28daefeedddcb1f7",
+  "source_paths_audited": 104,
+  "source_hash_matches": 104,
+  "command_logs_hash_matched": 3,
+  "command_exits_zero": 3,
+  "reviewed_source_sha256": {
+    "src/ifpmic/exceptions.mjs": "93846a22c7a9d4f1142875b17e40388cfa155d4f4a95b47890f8220daea5e955",
+    "src/ifpmic/replay.mjs": "6fb45752d5046f6e2cf83b8598eb7acc0a3b3c04ba06bb25674b8373428e773c",
+    "src/ifpmic/protocols.mjs": "1a264673fb8a3f5a1ccfda73b9dc84fd4afd7336b3e678b899d7c49b7a971fc2",
+    "src/ifpmic/replay.d.mts": "729c74ba94c2d39d0eb8e7025aceda74441d2e1b14bec301432b123cb3ea87d2",
+    "tests/ifpmic-exceptions.test.mjs": "946e08cb84e993bf914f5ddf5b33f41338fea519717e4861bb4216f955a2f902",
+    "scripts/verify-ifpmic-exceptions.mjs": "623c5170fe4941018c4f7e6294cf1f42d612714abb032920ed6eac1f745641e8"
+  },
+  "checks": {
+    "unit": "225/225 (209 existing + 16 exception tests); fail=0, skipped=0",
+    "build": "TypeScript/Vite exit 0",
+    "plugin_build": "exit 0",
+    "source_changed": [],
+    "reviewer_reran_commands": false
+  },
+  "resolved_finding": {
+    "diagnostic": "exceptions-attempt-1.json",
+    "finding": "P03 answer→infra retry could bypass fresh spec review",
+    "closure": "Each attempt requires fresh current-execution review; prior question/answer/review IDs cannot be reused; new evidence restores P04; original answer and prior review history remain intact."
+  },
+  "approved_scope": [
+    "P03 current question/task/requirements version binding, human resolution and spec-gen review",
+    "Current-attempt fresh spec review after infrastructure retry",
+    "P25 same-operation, current-manifest approved remote lookup receipt reuse with source-independent query order",
+    "No automatic re-submission for unknown/absent/conflict, and no device quarantine release"
+  ],
+  "deferred_verification": {
+    "browser_native_host": "Not run: no new catalog or React/CSS/plugin UI changes. Approved E2 plan defers new exception display/navigation and viewport regression to subsequent UI increment and full V2 gate.",
+    "residual_risk": "New exception state presentation and UI navigation remain unverified until that integration."
+  },
+  "not_approved": [
+    "New exception UI/catalog integration",
+    "Full V2 or remaining protocols",
+    "B01-B13 or real AT/runtime/device/publisher execution"
+  ],
+  "waivers": []
+}

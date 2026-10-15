@@ -1,0 +1,29 @@
+{
+  "kind": "pre_freeze_diagnostic_failure",
+  "recorded_at": "2026-10-15T11:26:20.134436+00:00",
+  "finding": "Resolved P03 question loses currentQuestion binding after infrastructure retry; bare new-attempt success wrongly advances to P04.",
+  "expected": "P03 remains RUNNING until a current-attempt/current-version fresh spec review",
+  "actual": "P04",
+  "exit_code": 1,
+  "source_and_log_sha256": {
+    "src/ifpmic/exceptions.mjs": "8d6ddc9cf88151c0054087b4ad2734dbd18988cd1c1f787e44ab69f7555ec7fb",
+    "src/ifpmic/replay.mjs": "6fb45752d5046f6e2cf83b8598eb7acc0a3b3c04ba06bb25674b8373428e773c",
+    "src/ifpmic/protocols.mjs": "1a264673fb8a3f5a1ccfda73b9dc84fd4afd7336b3e678b899d7c49b7a971fc2",
+    "tests/ifpmic-exceptions.test.mjs": "6cde5471196d3b7e3ba82a465adb908c20910ba9805d135c0bae3485b3e9425d",
+    "workflow-artifacts/verification/V2/exceptions/infra-review-bypass-repro.log": "9899dfece6a00a7892547bcbc3e7f0829b7d541ecb01f9de2e95fdac9a0082e9"
+  },
+  "recovery": "Revise per-attempt spec review binding, retain original answer, add negative and successful recovery oracle; rerun E1/E2 and independent E3.",
+  "full_candidate_gate_started": false,
+  "additional_pre_fix_regression": {
+    "log": "workflow-artifacts/verification/V2/exceptions/infra-review-attempt-binding-attempt-2.log",
+    "sha256": "be033d75e2a328b080f7bad5807df2c927c258518b1e31cf205e0c1d19c1e47d",
+    "result": "Two focused tests failed before patch: reproduced bare-success bypass and absent planned review_attempt field."
+  },
+  "exploratory_test_oracle_correction": {
+    "log": "workflow-artifacts/verification/V2/exceptions/infra-review-attempt-binding-attempt-3.log",
+    "sha256": "41a12f1687068cc7e56d7c9acf54fa33eef869c26198a6edd7d34a369d2c37f9",
+    "initial_expectation": "Reject raw question_id as a fresh evidence_id in addition to prior evidence identifiers.",
+    "correction": "The approved contract prohibits reuse of question_evidence_id, resolution_evidence_id and prior review_evidence_id. question_id identifies a question rather than an evidence record. The unsupported extra oracle was removed; all three specified evidence-reuse negatives are retained, followed by fresh-evidence recovery.",
+    "product_change_for_this_oracle": false
+  }
+}

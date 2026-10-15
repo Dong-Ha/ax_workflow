@@ -1,0 +1,18 @@
+{
+  "kind": "independent_exception_protocol_plan_amendment_review",
+  "decision": "approved",
+  "plan": "../../V2-EXCEPTIONS.md",
+  "sha256": "9294b6849699940a8782031c6e469404a360cc48214ccb8ca9dafdd1e9cee267",
+  "previous_approved_plan": "exceptions-plan-reviewed-1.md",
+  "previous_plan_sha256": "af239ae160b0426f5318d246316f52308b93e30b81768b407e507dac87d1f0a0",
+  "reviewer_agent": "/root/paperclip_ui_extension",
+  "recorded_at": "2026-10-15T11:27:06.957837+00:00",
+  "finding": "exceptions-attempt-1.json",
+  "resolution": [
+    "Preserve original answered question and version; require current-attempt fresh review coordinates",
+    "Global separation of question, answer and all review evidence identifiers",
+    "Negative regression then fresh review recovery; preserve prior review history"
+  ],
+  "scope": "Plan amendment approval only; independent source/TC/fixed candidate gate still required",
+  "waivers": []
+}

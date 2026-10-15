@@ -53,3 +53,7 @@
 - 검증 runner는 이전 V1 gate를 유지하고 별도의 `ifpmic:verify:ui`로 확장했다. 원본 자료·기존 회귀·plugin과 실제 host, 25개 mock journal 및 의미 있는 실패/metadata/장비 화면을 같은 소스 후보 해시로 묶는다. 하위 명령별 timeout은 없으므로 실행 상태를 도구 handle로 확인하며, 멈춘 명령을 통과로 치환하지 않는다.
 
 - 2026-10-15: 25개 모의 시나리오/UI 고정 후보의 11개 검증 명령이 모두 종료 코드 0으로 완료됐다. 단위 검사 209/209, 재생 브라우저 standalone 11/11·native host 12/12 통과. 독립 검토자가 소스 97개, 보고서 18개, 명령 로그 11개, 공개 사본 7개의 해시와 후보 동일성을 확인하고 부분 범위를 수용했다. 증빙: `evidence/v2/ui-verification.json`, `evidence/v2/ui-review.json`, `evidence/v2/ui-published-artifacts.json`. 전체 V2·B01–B13·실제 AT는 미완료로 유지한다.
+
+- 2026-10-15: P03 미해결 질문과 P25 원격 결과 불명확 관측을 다음 부분 V2 증분으로 선택했다(`V2-EXCEPTIONS.md`; REQ-02/05/08/10/12/14). 원본의 질문/요구사항 버전 및 원격 조회·영수증 규칙을 보존하며, no-change는 계획·생략 근거와 결합해 후속 설계한다. 새 사건을 기존 25개 화면에 연결하기 전까지 UI 지원 범위를 확장하지 않는다.
+- 독립 검토에서 P03 답변 뒤 infra retry가 질문의 attempt binding을 잃어 검토 없이 성공하는 실제 우회를 확인했다. TC가 실패를 재현하고 `evidence/v2/exceptions-attempt-1.json`에 증거를 남겼다. 승인 계획 보완 후 답변은 원래 실행에 보존하고 검토만 현재 attempt/execution으로 결속한다. 질문·답변·검토 증거 ID를 전역 분리하고, 재시도 후 새 검토로 정상 복구까지 시험한다. 원본 상태표나 retry 한도를 변경하지 않는다.
+- 고정 후보의 전체 단위 225/225 및 build/plugin-build가 통과했다. 독립 검토자가 현재 소스 104개·명령 로그 3개의 해시와 후보 동일성을 확인해 P03/P25 모의 예외 프로토콜을 부분 수용했다(`evidence/v2/exceptions-verification.json`, `evidence/v2/exceptions-review.json`). 새 UI 사건은 미연결이며 browser/native-host 후속 검증, 나머지 V2·B 단계·실제 AT는 미완료다.

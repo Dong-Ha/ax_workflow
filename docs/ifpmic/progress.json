@@ -56,7 +56,7 @@
         "REQ-14"
       ],
       "implementation_notes": "V2-IMPLEMENTATION.md",
-      "scope": "Pure mock replay core, return/retry/candidate/release protocols and 25-scenario catalog/UI verified as partial increments. Remaining protocols and full V2 acceptance pending; no real AT completion.",
+      "scope": "Pure mock replay core, return/retry/release protocols, 25-scenario UI and dedicated P03 question/P25 reconciliation protocols verified as partial increments. Remaining protocols, new exception UI cases and full V2 acceptance pending; no real AT completion.",
       "increments": [
         {
           "id": "mock_replay_core",
@@ -80,6 +80,14 @@
           "evidence": "evidence/v2/ui-verification.json",
           "independent_acceptance": "evidence/v2/ui-review.json",
           "candidate_fingerprint": "805d3d6c65c1bcc283db5c435a19809b3639d476a79970824ee8ec901e245a03"
+        },
+        {
+          "id": "mock_spec_question_remote_reconciliation",
+          "status": "verified",
+          "scope": "P03 answer/version/current-attempt spec review and P25 latest same-operation remote receipt observations. New UI cases not connected; partial V2 only.",
+          "evidence": "evidence/v2/exceptions-verification.json",
+          "independent_acceptance": "evidence/v2/exceptions-review.json",
+          "candidate_fingerprint": "8359e610796e114490b00a3f12a357251de06070a017f3a883a47c8dec1288e2"
         }
       ]
     },
@@ -298,12 +306,12 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "V2: complete skip/policy-exempt/manual, P22 trial details, child-agent, pause/resume/cancel/no-change and non-node P03/P25 protocols and corresponding catalog cases; then full V2 gate. B01-B13 and real AT remain separate and pending.",
+  "next_step": "V2: integrate tested P03 question/P25 reconciliation into scenario catalog and standalone/native host UI; complete skip/policy-exempt/manual, P22 trial details, child-agent, pause/resume/cancel/no-change protocols and remaining catalog cases, then full V2 gate. B01-B13 and real AT remain pending.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",
     "Approved Bedrock/Claude runtime profile"
   ],
   "publication_policy": "Only authorized git repository documentation, source and synthetic verification summaries/screenshots; never runtime credentials or application logs.",
-  "updated_at": "2026-10-15T11:15:00.422972+00:00"
+  "updated_at": "2026-10-15T11:31:00.585928+00:00"
 }
