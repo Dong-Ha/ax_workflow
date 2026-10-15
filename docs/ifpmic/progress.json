@@ -56,7 +56,7 @@
         "REQ-14"
       ],
       "implementation_notes": "V2-IMPLEMENTATION.md",
-      "scope": "Pure mock replay core and return/retry/candidate/release observation protocols verified, including end-to-end metadata-only recovery. Full catalog/UI/remaining protocols and V2 acceptance pending.",
+      "scope": "Pure mock replay core, return/retry/candidate/release protocols and 25-scenario catalog/UI verified as partial increments. Remaining protocols and full V2 acceptance pending; no real AT completion.",
       "increments": [
         {
           "id": "mock_replay_core",
@@ -72,6 +72,14 @@
           "evidence": "evidence/v2/protocol-verification.json",
           "independent_acceptance": "evidence/v2/protocol-review.json",
           "candidate_fingerprint": "3e63b8be9f384081113ee44ec5d69b7d804aee541324b207050414cbc7687f3d"
+        },
+        {
+          "id": "mock_catalog_ui_25",
+          "status": "verified",
+          "scope": "25 synthetic scenarios, standalone and native Paperclip UI; partial V2 only",
+          "evidence": "evidence/v2/ui-verification.json",
+          "independent_acceptance": "evidence/v2/ui-review.json",
+          "candidate_fingerprint": "805d3d6c65c1bcc283db5c435a19809b3639d476a79970824ee8ec901e245a03"
         }
       ]
     },
@@ -290,12 +298,12 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "V2: create scenario catalog and connect tested replay states to standalone/native Paperclip UI; complete skip/manual/child-agent/pause/cancel/no-change and non-node P03/P25 protocols, then full V2 gate. Keep real AT separate.",
+  "next_step": "V2: complete skip/policy-exempt/manual, P22 trial details, child-agent, pause/resume/cancel/no-change and non-node P03/P25 protocols and corresponding catalog cases; then full V2 gate. B01-B13 and real AT remain separate and pending.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",
     "Approved Bedrock/Claude runtime profile"
   ],
   "publication_policy": "Only authorized git repository documentation, source and synthetic verification summaries/screenshots; never runtime credentials or application logs.",
-  "updated_at": "2026-10-15T10:51:28.474065+00:00"
+  "updated_at": "2026-10-15T11:15:00.422972+00:00"
 }

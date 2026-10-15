@@ -24,7 +24,11 @@
     "ifpmic:lab:start": "node scripts/ifpmic-lab.mjs",
     "ifpmic:verify-sources": "node tests/ifpmic-source-upload.mjs",
     "test:ifpmic:host": "node tests/ifpmic-host.browser.mjs",
-    "ifpmic:verify:v1": "node scripts/verify-ifpmic-v1.mjs"
+    "ifpmic:verify:v1": "node scripts/verify-ifpmic-v1.mjs",
+    "test:ifpmic:replay": "node tests/ifpmic-replay.browser.mjs",
+    "test:ifpmic:replay:host": "node tests/ifpmic-replay.browser.mjs --host",
+    "ifpmic:catalog:evidence": "node scripts/ifpmic-catalog-evidence.mjs",
+    "ifpmic:verify:ui": "node scripts/verify-ifpmic-ui.mjs"
   },
   "dependencies": {
     "react": "^19.0.0",

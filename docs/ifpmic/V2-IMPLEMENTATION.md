@@ -41,3 +41,11 @@ TC는 별도 `tests/ifpmic-protocols.test.mjs`에서 고정된 12개 복귀 경�
 단순 복귀 target 검사와 정상 29단계 완주만으로는 반려 뒤 복구를 증명하지 못했다. 200개 테스트와 독립 증거 감사 뒤에도 부모 통합 검토가 X03 자료 반려→X02의 진행 불가를 발견했다. 초기 후보는 `protocol-attempt-2.json`으로 보존하고, TC가 end-to-end 복구 실패를 재현한 뒤 원본과 별도 senior_sol의 좁은 설계 검토로 복귀했다.
 
 보완 규칙은 `V2-PROTOCOLS.md`의 metadata-only 예외와 독립 계획 재검토(`protocol-plan-review-2.json`)를 따른다. 같은 cycle의 품질 결과를 그대로 유지하고 X02/X03만 새 PENDING attempt로 바꾼다. 공유 재작업 한도를 계속 적용하고 이전 승인·manifest·task를 폐기한다. 사람 제출도 실행/attempt에 묶으며 인프라 retry가 기존 제출을 재사용할 수 없다. TC는 반려부터 수정 manifest·새 승인·영수증·노트 완료까지 및 혼합 재시도/한도를 검증한다. 실제 B03/B11 정책과 전체 V2 수용은 여전히 별개다.
+
+## 카탈로그·재생 UI 증분
+
+`V2-UI.md`의 독립 승인된 25개 카탈로그와 checkpoint를 standalone 및 공식 Paperclip page에서 탐색한다. 기본 설계 보기, 시나리오 변경의 cursor/필터 초기화, 관측 앞뒤 이동, 현재 job/단계/Agent/Gate 및 과거 이력의 분리, 명세·승인·영수증과 장비 활동·연결·격리 표시를 제공한다. 모든 사건·증거는 MOCK이며 실제 AT를 완료로 바꾸지 않는다.
+
+TC가 독립적인 25개 끝 상태와 checkpoint oracle, 실제 host/offline browser를 작성한다. 초기 browser 자료의 과거 FAIL 기대값은 현재 cycle의 PENDING과 혼동하지 않도록 정정했고, 과거 실패는 history에서 확인한다. 부모 검토에서 필터가 현재 단계를 숨겼을 때 focus/scroll을 놓치는 결함을 재현했다. layout effect에서 새 DOM을 확인한 뒤 이동하도록 수정하고 실제 focus와 scroller 교차 여부로 재검증한다. 반려 진단은 `evidence/v2/ui-attempt-1.json`에 보존한다.
+
+고정 후보 gate는 `npm run ifpmic:verify:ui`다. 단위/build/plugin/원본/원본 validator/V1 화면 및 실제 host/재생 offline·host/기존 AX 화면을 모두 수행한다. source/build/plugin, 25개 mock fixture·사건 journal, 명령·browser 보고서·desktop/mobile 화면 해시를 보존하고 소스 변경 시 거절한다. 증거는 `evidence/v2/ui-verification.json`과 독립 수용 기록에 연결한다. 이 증분 통과 후에도 skip/manual/trial 상세/자식 Agent/pause/cancel/no-change/P03/P25 전용 프로토콜과 전체 V2 gate 및 B 단계는 남는다.

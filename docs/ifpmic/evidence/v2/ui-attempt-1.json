@@ -1,0 +1,56 @@
+{
+  "kind": "ui_diagnostic_rejection",
+  "scope": "Pre-freeze browser interaction diagnostic, not full V2 gate",
+  "finding": "Filtered target selected before React mounts its DOM ref; focus and viewport navigation missed",
+  "source_sha256": "12661771386bd516229eb857a07a5f251dc28a4c1cc0b6174876a2d6fef765c5",
+  "checks": [
+    {
+      "name": "design view is the default and replay view requires explicit selection",
+      "verdict": "pass"
+    },
+    {
+      "name": "catalog exposes all 25 frozen scenarios and starts each at cursor zero",
+      "verdict": "pass"
+    },
+    {
+      "name": "all 25 scenarios reach their fixed endpoint through the end-observation control",
+      "verdict": "pass"
+    },
+    {
+      "name": "scenario change clears display filters and resets selection and cursor",
+      "verdict": "pass"
+    },
+    {
+      "name": "previous/next/first/last and checkpoint selection move stored prefixes only",
+      "verdict": "pass"
+    },
+    {
+      "name": "observation panel separates mock job, step, agent and gate data and opens current node",
+      "verdict": "pass"
+    },
+    {
+      "name": "metadata recovery and notes checkpoints keep current approval and publication observability",
+      "verdict": "pass"
+    },
+    {
+      "name": "retry, cycle and device telemetry are distinct and never expose allocatable authority",
+      "verdict": "pass"
+    },
+    {
+      "name": "current-stage navigation reveals, focuses and scrolls a node hidden by active filters",
+      "verdict": "fail",
+      "finding": "P22 focus: {\"focused\":false,\"viewport\":{\"left\":33,\"right\":1069},\"node\":{\"left\":1101,\"right\":1311},\"scrollLeft\":168}\n\nfalse !== true\n"
+    },
+    {
+      "name": "1440px and 375px layouts expose replay controls and details without horizontal page overflow",
+      "verdict": "pass"
+    },
+    {
+      "name": "browser replay makes no API writes, external requests or runtime errors",
+      "verdict": "pass"
+    }
+  ],
+  "verdict": "fail",
+  "source_report_sha256": "8312fcb89357583594ae6eab5c67d40b536e8547e7d9f0d668cc9f71428b10ba",
+  "real_acceptance_status": "not_executed"
+}

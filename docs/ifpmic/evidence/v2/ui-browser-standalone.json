@@ -1,0 +1,63 @@
+{
+  "kind": "ifpmic-v2-replay-standalone-offline-browser",
+  "route": "/ifpmic.html",
+  "checks": [
+    {
+      "name": "design view is the default and replay view requires explicit selection",
+      "verdict": "pass"
+    },
+    {
+      "name": "catalog exposes all 25 frozen scenarios and starts each at cursor zero",
+      "verdict": "pass"
+    },
+    {
+      "name": "all 25 scenarios reach their fixed endpoint through the end-observation control",
+      "verdict": "pass"
+    },
+    {
+      "name": "scenario change clears display filters and resets selection and cursor",
+      "verdict": "pass"
+    },
+    {
+      "name": "previous/next/first/last and checkpoint selection move stored prefixes only",
+      "verdict": "pass"
+    },
+    {
+      "name": "observation panel separates mock job, step, agent and gate data and opens current node",
+      "verdict": "pass"
+    },
+    {
+      "name": "metadata recovery and notes checkpoints keep current approval and publication observability",
+      "verdict": "pass"
+    },
+    {
+      "name": "retry, cycle and device telemetry are distinct and never expose allocatable authority",
+      "verdict": "pass"
+    },
+    {
+      "name": "current-stage navigation reveals, focuses and scrolls a node hidden by active filters",
+      "verdict": "pass"
+    },
+    {
+      "name": "1440px and 375px layouts expose replay controls and details without horizontal page overflow",
+      "verdict": "pass"
+    },
+    {
+      "name": "browser replay makes no API writes, external requests or runtime errors",
+      "verdict": "pass"
+    }
+  ],
+  "unexpectedExternalRequests": [],
+  "browserWriteRequests": [],
+  "apiRequests": [],
+  "pageErrors": [],
+  "consoleErrors": [],
+  "evidence": [
+    "workflow-artifacts/verification/V2/ui/standalone-desktop.png",
+    "workflow-artifacts/verification/V2/ui/standalone-sam-failure-returned-desktop.png",
+    "workflow-artifacts/verification/V2/ui/standalone-metadata-completed-desktop.png",
+    "workflow-artifacts/verification/V2/ui/standalone-device-time-60000-desktop.png",
+    "workflow-artifacts/verification/V2/ui/standalone-device-time-60000-mobile-375.png"
+  ],
+  "verdict": "pass"
+}

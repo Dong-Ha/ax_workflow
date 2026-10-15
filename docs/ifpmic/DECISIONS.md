@@ -44,3 +44,12 @@
 - 첫 프로토콜 후보의 199개 테스트와 build는 통과했으나 독립 TC 검토에서 같은 manifest/digest의 다른 cycle 재사용을 직접 거절하는 사례가 부족했다. 구현 기준을 완화하지 않고 별도 부정 TC를 추가한 뒤 새 고정 후보를 검증한다. 초기 통과 결과는 `evidence/v2/protocol-attempt-1.json`에 남기며 최종 수용 증거로 재사용하지 않는다.
 - 200개 통과 후보에 대해 독립 증거 감사는 통과했으나 부모 통합 검토가 metadata 반려 후 완주 불가를 찾아 최종 수용을 보류했다(`protocol-attempt-2.json`). 복귀 target까지의 검사 범위가 원인이므로 end-to-end 복구 TC를 추가해 실패를 먼저 재현했다. 원본 DOCX/workflow 및 별도 senior_sol의 설계 검토로 돌아가 metadata만 같은 cycle의 새 X02/X03 attempt로 처리하는 예외를 정했다. 품질 판정·후보를 승격하거나 상한을 완화하지 않고 기존 공유 재작업 한도를 유지한다. 독립 계획 재검토 후 새 후보로 재검증한다.
 - 보완한 후보는 전체 204개 단위시험, TypeScript/Vite build와 소스 74개 해시 고정을 통과했다. 독립 검토자가 소스·TC·로그·snapshot을 감사해 metadata 복구를 포함한 부분 protocol을 수용했다(`evidence/v2/protocol-review.json`). 전체 V2/실제 AT 완료는 아니다.
+
+## V2 카탈로그·재생 화면 연결
+
+- REQ-02/05/08/10/12/14: 25개 모의 시나리오에 원본의 구현된 7개 업무 실패와 5개 반려 경로를 모두 포함했다. P21의 OSS reject/design_change_needed는 X03의 코드/설계/자료 반려와 각각 구분한다. 미구현 V2 범위는 UI에 명시하고 실제 AT ledger를 변경하지 않는다.
+- 관측 prefix 이동은 순수 snapshot 재계산이다. 현재 cycle 상태와 과거 실패 snapshot을 서로 덮어쓰지 않는다. TC의 초기 과거 FAIL 기대는 현재 PENDING과 혼동한 것이므로 원래 계약대로 oracle을 정정하고 history 검사를 유지했다.
+- 필터가 숨긴 현재 노드로 이동할 때 이전 DOM ref를 조회해 focus/scroll을 놓치는 제품 결함을 재현했다. 새 visibleIds/selectedId의 layout effect에서 대상을 찾도록 수정했다. 시나리오 변경 시 inner board를 처음으로 돌리고 현재 모드 버튼의 반복 클릭은 관측을 초기화하지 않는다. 실제 포커스와 가로 영역 내 노출을 standalone/host에서 검사한다.
+- 검증 runner는 이전 V1 gate를 유지하고 별도의 `ifpmic:verify:ui`로 확장했다. 원본 자료·기존 회귀·plugin과 실제 host, 25개 mock journal 및 의미 있는 실패/metadata/장비 화면을 같은 소스 후보 해시로 묶는다. 하위 명령별 timeout은 없으므로 실행 상태를 도구 handle로 확인하며, 멈춘 명령을 통과로 치환하지 않는다.
+
+- 2026-10-15: 25개 모의 시나리오/UI 고정 후보의 11개 검증 명령이 모두 종료 코드 0으로 완료됐다. 단위 검사 209/209, 재생 브라우저 standalone 11/11·native host 12/12 통과. 독립 검토자가 소스 97개, 보고서 18개, 명령 로그 11개, 공개 사본 7개의 해시와 후보 동일성을 확인하고 부분 범위를 수용했다. 증빙: `evidence/v2/ui-verification.json`, `evidence/v2/ui-review.json`, `evidence/v2/ui-published-artifacts.json`. 전체 V2·B01–B13·실제 AT는 미완료로 유지한다.

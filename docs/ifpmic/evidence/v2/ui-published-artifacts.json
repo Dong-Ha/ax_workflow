@@ -1,0 +1,45 @@
+{
+  "kind": "synthetic_ui_evidence_publication",
+  "gate_sha256": "be7373db6a89f903b928a76fd4bb00dd64abe7b096caf10f26f0da2688273073",
+  "artifacts": [
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T11-09-45-000Z/gate.json",
+      "published": "ui-verification.json",
+      "sha256": "be7373db6a89f903b928a76fd4bb00dd64abe7b096caf10f26f0da2688273073"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T11-09-45-000Z/ui-catalog.json",
+      "published": "ui-catalog.json",
+      "sha256": "d4db6c5f87c6d923445212132d34dfc46ced1485783981689f3be17e6df4cdda"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T11-09-45-000Z/ui-standalone-browser.json",
+      "published": "ui-browser-standalone.json",
+      "sha256": "306bbd8361d10026e67b4a13cdef1ca5f8e8010a5dd10f694a83f0454410fbc4"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T11-09-45-000Z/ui-host-browser.json",
+      "published": "ui-browser-host.json",
+      "sha256": "d561b69e8d903dbf1fe5ef993641ad440460c061334905d027030adebf0d4c76"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T11-09-45-000Z/host-sam-failure-returned-desktop.png",
+      "published": "ui-host-sam-failure.png",
+      "sha256": "b1d3f8e5079a58f2f5dcc45333655fbbcdc456909c52a9e93c0f023b80d86c8e"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T11-09-45-000Z/host-metadata-completed-desktop.png",
+      "published": "ui-host-metadata-completed.png",
+      "sha256": "01866db6bad82762c9f61c0ac52ec62fb2aa664532bcd37ff51af05d065a7bf4"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T11-09-45-000Z/host-device-time-60000-mobile-375.png",
+      "published": "ui-host-device-mobile.png",
+      "sha256": "8b61ff3cb6fdea5771c2f763374e72290c0aa3643cd21745c5e964db6015e20b"
+    }
+  ],
+  "local_only": [
+    "Full synthetic event journal and remaining screenshots/logs are retained at the immutable gate directory and hashed in ui-verification.json."
+  ],
+  "actual_acceptance": "not_executed"
+}

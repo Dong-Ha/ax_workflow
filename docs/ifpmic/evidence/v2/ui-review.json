@@ -1,0 +1,40 @@
+{
+  "kind": "independent_partial_ui_acceptance",
+  "decision": "accepted_25_scenario_mock_catalog_ui_increment",
+  "implementer_agent": "/root",
+  "test_author_agent": "/root/verification_plan",
+  "reviewer_agent": "/root/paperclip_ui_extension",
+  "reviewer_role": "worker_luna; read-only independent plan, source, TC and evidence review",
+  "recorded_at": "2026-10-15T11:15:48.930711+00:00",
+  "candidate_fingerprint": "805d3d6c65c1bcc283db5c435a19809b3639d476a79970824ee8ec901e245a03",
+  "report": "ui-verification.json",
+  "report_sha256": "be7373db6a89f903b928a76fd4bb00dd64abe7b096caf10f26f0da2688273073",
+  "source_paths_audited": 97,
+  "source_hash_matches": 97,
+  "reports_hash_matched": 18,
+  "command_logs_hash_matched": 11,
+  "command_exits_zero": 11,
+  "publication_manifest_sha256": "d4b24f1fa12684ff76d8b96993427ff8f8aa382e8851e8e249cec949c408b477",
+  "published_files_hash_matched": 7,
+  "checks": {
+    "unit": "209/209; zero failures or skips",
+    "standalone_replay_browser": "11/11",
+    "native_host_replay_browser": "12/12",
+    "source_identity_matches_prior_review": true,
+    "source_changed": [],
+    "journal_hash_matches_catalog_manifest": true,
+    "browser_writes_external_requests_runtime_errors": 0,
+    "reviewer_reran_commands": false
+  },
+  "approved_scope": [
+    "25 synthetic mock scenarios and checkpoint navigation",
+    "Standalone and native Paperclip visualization, current/history separation, failure returns, metadata recovery, retry and device boundary observations",
+    "V0/V1 and existing AX regression at this fixed candidate"
+  ],
+  "not_approved": [
+    "Full V2 completion or remaining protocol/catalog families",
+    "B01-B13 or actual acceptance tests",
+    "Real runtime/device/publisher execution or publication"
+  ],
+  "waivers": []
+}

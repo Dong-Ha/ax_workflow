@@ -2,6 +2,7 @@ import { buildWorkflowGraph, safeText } from './contract.mjs';
 import canonicalStateContract from '../../docs/ifpmic/design-v1/specs/state-contract.json' with { type: 'json' };
 import canonicalWorkflow from '../../docs/ifpmic/design-v1/specs/workflow.v1.json' with { type: 'json' };
 import { createObservationProtocols, newStepRecord, mockHumanTaskId } from './protocols.mjs';
+export { createScenarioCatalog } from './scenarios.mjs';
 
 // Guards for synthetic observations only. No execution, timers, leases or publication.
 const stepStates = new Set([
