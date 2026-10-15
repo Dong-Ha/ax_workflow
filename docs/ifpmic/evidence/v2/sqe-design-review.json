@@ -1,0 +1,18 @@
+{
+  "kind": "targeted_mandatory_sqe_architecture_review",
+  "reviewer_agent": "/root/metadata_route_design",
+  "reviewer_role": "senior_sol; read-only advice after worker_luna source evidence and main analysis",
+  "recorded_at": "2026-10-15T13:01:56.010048+00:00",
+  "reason_for_escalation": "Mandatory proof enforcement versus opt-in compatibility affects all accepted catalog/protocol paths; generic P22/P23 completion and P24 complete flag currently lack SQE proof.",
+  "conclusions": [
+    "Mandatory P22/P23 success and P24 measurement/success guards for every nonexempt path; opt-in leaves bypass",
+    "Keep historical baselines and ledgers immutable; migrate current catalog explicitly",
+    "Insert separately sourced explicit mock SQE proof events to preserve original event IDs, envelopes and source sequence; never infer new trial proof from old PASS",
+    "P22 current-attempt result collection, P23 current report bound to result, P24 current full-case decision/report/candidate binding",
+    "P22 retry needs new context/result, P23 retry reuses valid P22 result but needs new report, P24 retry needs new judgment bound to current report",
+    "Fixed versioned mock case registry prevents event-defined omission; two cases are synthetic choice rather than original minimum",
+    "Manual evidence cannot claim automated execution or clear quarantine; physical policy remains B-stage work"
+  ],
+  "files_edited": false,
+  "scope": "Architecture advice only; detailed plan/source/TC/evidence acceptance pending"
+}
