@@ -9,7 +9,8 @@ import { createScenarioCatalog, replayScenario } from '../src/ifpmic/replay.mjs'
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const directory = resolve(root, 'workflow-artifacts/verification/V2/ui');
 const sha256 = value => createHash('sha256').update(value).digest('hex');
-const summary = value => ({ catalog_version: 'mock:ifpmic:children:v1', mode: value.mode, status: value.status, current_step: value.current_step,
+const summary = (value, catalogVersion) => ({ catalog_version: catalogVersion, mode: value.mode,
+  ...(catalogVersion === 'mock:ifpmic:controls:v1' ? { revision: value.revision, replay_policy_version: value.replay_policy_version, control: value.control } : {}), status: value.status, current_step: value.current_step,
   cycle: value.cycle, rework_count: value.rework_count, publication_count: value.release.publication_count,
   duplicate_count: value.duplicate_count, conflict_count: value.conflict_count, real_publish_allowed: value.real_publish_allowed,
   requirements_version: value.requirements_version,
@@ -48,7 +49,7 @@ const summary = value => ({ catalog_version: 'mock:ifpmic:children:v1', mode: va
     query_seq: value.remote_reconciliation.query_seq, outcome: value.remote_reconciliation.outcome } : null });
 await mkdir(directory, { recursive: true });
 const catalog = createScenarioCatalog(workflow, states);
-const manifest = { kind: 'mock_catalog_manifest', catalog_version: 'mock:ifpmic:children:v1', mode: 'mock', scenario_count: catalog.length,
+const manifest = { kind: 'mock_catalog_manifest', catalog_version: 'mock:ifpmic:controls:v1', mode: 'mock', scenario_count: catalog.length,
   scope: 'Partial V2 catalog and UI; remaining protocols/full V2/real AT are not accepted', scenarios: [] };
 const journals = [];
 const baseline = JSON.parse(await readFile(resolve(root, 'docs/ifpmic/evidence/v2/sqe-baseline-41.json'), 'utf8'));
@@ -99,17 +100,17 @@ for (const scenario of catalog) {
     journal.push({ cursor, event_id: scenario.events[cursor - 1].event_id,
       applied: snapshot.timeline.length > previous.timeline.length && row.applied,
       reason: snapshot.timeline.length === previous.timeline.length ? 'duplicate_event' : row.reason,
-      ...summary(snapshot) });
+      ...summary(snapshot, scenario.catalog_version) });
     previous = snapshot;
   }
   if (childOriginal && !previous.timeline.filter(row => row.source_id === 'mock:child-catalog').every(row => row.applied)) throw new Error(`Rejected authored child proof: ${scenario.id}`);
   journals.push({ id: scenario.id, catalog_version: scenario.catalog_version, mode: 'mock', events: scenario.events, journal });
   manifest.scenarios.push({ id: scenario.id, catalog_version: scenario.catalog_version, title: scenario.title, requirement_ids: scenario.requirement_ids,
     event_count: scenario.events.length, fixture_sha256: sha256(JSON.stringify(scenario.events)),
-    final: summary(previous), checkpoints: scenario.checkpoints.map(point => ({ ...point,
-      observed_snapshot: summary(replayScenario(scenario, workflow, states, point.cursor)) })) });
+    final: summary(previous, scenario.catalog_version), checkpoints: scenario.checkpoints.map(point => ({ ...point,
+      observed_snapshot: summary(replayScenario(scenario, workflow, states, point.cursor), scenario.catalog_version) })) });
 }
-if (childMigration.scenarios.length !== 50 || catalog.length !== 59) throw new Error('Expected preserved50/new9 child catalog');
+if (childMigration.scenarios.length !== 50 || catalog.length !== 74) throw new Error('Expected preserved50/child9/control15 catalog');
 await writeFile(resolve(directory, 'children-migration.json'), JSON.stringify(childMigration, null, 2) + '\n');
 await writeFile(resolve(directory, 'sqe-migration.json'), JSON.stringify(migration, null, 2) + '\n');
 const bytes = JSON.stringify(journals, null, 2) + '\n';

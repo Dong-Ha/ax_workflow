@@ -1,6 +1,6 @@
 # V2 job 제어·안전 경계·부작용 관측 및 검증 계획
 
-상태: **K0 계획 후보**. 승인 여부는 `evidence/v2/controls-plan-review.json`의 정확한 문서 SHA와 독립 판정으로 확인한다. 이 계획 자체는 제품 구현이나 검증 통과 증거가 아니다. 1차 K0에서 발견한 계약 차이를 아래에 수정했으며, 수정안의 K0 독립 승인을 확인한 뒤 구현한다.
+상태: **K0 계획 후보**. 승인 여부는 `evidence/v2/controls-plan-review.json`과 후속 `evidence/v2/controls-catalog-plan-clarification.json`의 문서 SHA·독립 판정으로 확인한다. 이 계획 자체는 제품 구현이나 검증 통과 증거가 아니다. 1차 K0에서 발견한 계약 차이를 아래에 수정했으며, 수정안의 K0 독립 승인을 확인한 뒤 구현한다.
 
 REQ-02/05/06/08/10/11/12/13/14 및 원본 AT-03/05/14/16/17/20/24/25/26/27/29의 **합성 관측 모델**이다. Paperclip은 원본 IFPMIC 업무를 실행·관리·감독하는 상위 계층이다. 원본 29노드·역할·품질 판정·사람 승인·복귀 경로를 바꾸지 않는다. 실제 AT는 `not_executed`를 유지한다. code-dev(main)는 구현·통합, TC는 독립 테스트 작성·실행, 별도 reviewer는 계획·소스·증거를 검토한다. K0 독립 승인 전에 제품 구현을 시작하지 않는다.
 
@@ -129,7 +129,7 @@ Receipt의 실제 효과 관측·publication count와 P25/P26 단계 진행을 �
 | pause-final | paused: P26현재실행; finished: P26SUCCEEDED·END·jobPAUSED/pub1; resumed: 재실행없이완료 | END/COMPLETED/pub1 |
 | cancel-child | requested: P12기존child실행/RECONCILING; returned: patch결과만보존; blocked: 통합/성공금지; quiescent: child/parent종료+fence; canceled | P12/CANCELED/pub0·patch보존 |
 | cancel-flash-unknown | registered: 정확command/lease/fence; unknown: 격리; requested: 취소의도/종료아님; rejected: 잘못된identity·idle·earlyboundary차단; reconciled: 정확terminal/safequery; released: lock/lease근거; canceled | P22/CANCELED/pub0·reassignfalse |
-| cancel-remote-late-receipt | intent: 현재manifest/operation; requested: 취소중unknown; receipt: 동일op효과만count1/P26시작0; quiescent; canceled; late: 알려진동일receipt이력만/step불변 | P25/CANCELED/pub1·P26PENDING |
+| cancel-remote-late-receipt | intent: 현재manifest/operation; requested: 취소중unknown; receipt: 동일op효과만count1/P26시작0; quiescent; canceled; late: 알려진동일receipt이력만/step불변 | P25/CANCELED/pub1·P26CANCELED(시작 없음) |
 | cancel-pending-dispatch | pending: P12요청만/exec없음; requested; blocked: assignment·무drain종료차단; drained: dispatcher미전송/회수근거; canceled | P12/CANCELED/pub0·가짜child없음 |
 | cancel-released-notes | failed: 실제typednotes_failure/pub1; requested; canceled: P26FAILED보존; blocked: retry/P25재제출금지 | P26FAILED·jobCANCELED/pub1 |
 | control-notes-retry | failed: typednotes_failure; accepted: 재시도접수만; retried: 전용guard로P26a2READY·receipt동일; completed | END/COMPLETED/P26a2/pub1 |

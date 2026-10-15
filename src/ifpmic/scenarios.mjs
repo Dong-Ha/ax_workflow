@@ -1,3 +1,4 @@
+import { createControlScenarios } from './control-scenarios.mjs';
 import { createChildScenarios } from './child-scenarios.mjs';
 import { enrichChildCatalog } from './child-catalog.mjs';
 import { replayScenario } from './replay.mjs';
@@ -266,5 +267,6 @@ export function createScenarioCatalog(workflow, stateContract) {
   });
   const existing = enrichSqeCatalog([...catalog, ...createRoutingScenarios(workflow)]);
   const migrated = enrichChildCatalog([...existing, ...createSqeUiScenarios(existing.find(item => item.id === 'happy-path'))]);
-  return freeze([...migrated, ...createChildScenarios(migrated.find(item => item.id === 'happy-path'))]);
+  const legacy = [...migrated, ...createChildScenarios(migrated.find(item => item.id === 'happy-path'))];
+  return freeze([...legacy, ...createControlScenarios(legacy.find(item => item.id === 'happy-path'))]);
 }

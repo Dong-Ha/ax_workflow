@@ -9,7 +9,7 @@ import { replayScenario } from '../src/ifpmic/replay.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const specs = path.join(root, 'docs/ifpmic/design-v1/specs');
-const [workflow, stateContract, priorCatalogEvidence, routingUiBaseline, sqeBaseline, sqeUiBaselineText, childrenBaseline] = await Promise.all([
+const [workflow, stateContract, priorCatalogEvidence, routingUiBaseline, sqeBaseline, sqeUiBaselineText, childrenBaseline, controlsBaseline, controlsBaselineText] = await Promise.all([
   readFile(path.join(specs, 'workflow.v1.json'), 'utf8').then(JSON.parse),
   readFile(path.join(specs, 'state-contract.json'), 'utf8').then(JSON.parse),
   readFile(path.join(root, 'docs/ifpmic/evidence/v2/ui-catalog.json'), 'utf8').then(JSON.parse),
@@ -17,6 +17,8 @@ const [workflow, stateContract, priorCatalogEvidence, routingUiBaseline, sqeBase
   readFile(path.join(root, 'docs/ifpmic/evidence/v2/sqe-baseline-41.json'), 'utf8').then(JSON.parse),
   readFile(path.join(root, 'docs/ifpmic/evidence/v2/sqe-ui-baseline-41.json'), 'utf8'),
   readFile(path.join(root, 'docs/ifpmic/evidence/v2/children-baseline-50.json'), 'utf8').then(JSON.parse),
+  readFile(path.join(root, 'docs/ifpmic/evidence/v2/controls-baseline-59.json'), 'utf8').then(JSON.parse),
+  readFile(path.join(root, 'docs/ifpmic/evidence/v2/controls-baseline-59.json'), 'utf8'),
 ]);
 const sqeUiBaseline = JSON.parse(sqeUiBaselineText);
 
@@ -400,16 +402,32 @@ function assertRoutingCheckpoint(result, expected, scenarioId, checkpointId) {
   if (expected.gateDispositions !== undefined) assert.deepEqual(result.release.manifest?.gate_dispositions, expected.gateDispositions, `${label}/manifest gate dispositions`);
 }
 
-test('fixed catalog inventory and original-scenario checkpoint values match literal oracle', () => {
+test('original 59-scenario inventory and historical checkpoints remain the unchanged catalog prefix', async () => {
   const originalWorkflow = structuredClone(workflow);
   const originalContract = structuredClone(stateContract);
   const catalog = createScenarioCatalog(workflow, stateContract);
-  assert.deepEqual(catalog.map(item => item.id), expectedScenarioIds, 'the original 50 ordered scenarios remain the unchanged prefix before the nine appended child cases');
-  assert.equal(catalog.length, 59);
+  assert.deepEqual(catalog.slice(0, 59).map(item => item.id), expectedScenarioIds,
+    'the original 59 ordered scenarios remain the unchanged prefix before the appended controls cases');
   assert.deepEqual(workflow, originalWorkflow);
   assert.deepEqual(stateContract, originalContract);
   assert.ok(deepFrozen(catalog), 'catalog, scenarios, events, payloads and checkpoints are deeply frozen');
   assert.deepEqual(createScenarioCatalog(workflow, stateContract), catalog, 'catalog construction is deterministic');
+
+  assert.equal(createHash('sha256').update(controlsBaselineText).digest('hex'),
+    'ac5b2386b03738b4da8ea1cd93fa0dd1f46961d550d67b77fb35852289a79a78',
+    'the approved immutable pre-control 59-scenario baseline bytes stay pinned');
+  assert.equal(controlsBaseline.scenario_count, 59);
+  assert.deepEqual(catalog.slice(0, 59).map(item => item.id), controlsBaseline.scenarios.map(item => item.id));
+  const historicalTrace = await readFile(path.join(root, controlsBaseline.historical_trace_archive));
+  assert.equal(createHash('sha256').update(historicalTrace).digest('hex'), controlsBaseline.historical_trace_archive_sha256,
+    'the complete accepted pre-control trace archive stays byte-pinned');
+  for (const [index, scenario] of catalog.slice(0, 59).entries()) {
+    const baseline = controlsBaseline.scenarios[index];
+    assert.equal(createHash('sha256').update(JSON.stringify(scenario.events)).digest('hex'), baseline.events_sha256,
+      `${scenario.id} original 59 event bytes remain unchanged`);
+    assert.equal(createHash('sha256').update(JSON.stringify(scenario.checkpoints)).digest('hex'), baseline.checkpoints_sha256,
+      `${scenario.id} original 59 checkpoint order/cursors remain unchanged`);
+  }
 
   for (const scenario of catalog.slice(0, 50)) {
     assert.equal(scenario.title.length > 0, true, scenario.id);

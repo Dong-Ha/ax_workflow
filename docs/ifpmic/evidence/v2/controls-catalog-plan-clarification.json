@@ -1,0 +1,28 @@
+{
+  "kind": "controls_catalog_plan_clarification",
+  "base_plan_sha256": "68bf08efc01b6f5ce924619c2af43dec375b59fc4216af6c27a0f669b44bb40b",
+  "revised_plan_sha256": "bc83ef3c7bf30262d45f96b5c7800a3541a7e3d48fae32defa465d77ce2f91de",
+  "reason": "The remote-cancel endpoint table said P26PENDING, conflicting with the already-approved exhaustive cancellation matrix requiring all future PENDING steps to become CANCELED.",
+  "decision": "Keep existing canonical cancellation behavior: future P26 becomes CANCELED without ever dispatching. Receipt/publication count remain preserved. This changes only the inconsistent scenario endpoint oracle, not runtime code or original source contracts.",
+  "original_basis": "design-v1/specs/state-contract.json PENDING→CANCELED plus V2-CONTROLS current-cycle cancellation matrix; existing K3 tests already preserve this rule.",
+  "changes": [
+    "Header references this follow-up exact-SHA independent review",
+    "cancel-remote-late-receipt endpoint P26PENDING→P26CANCELED (no start)"
+  ],
+  "review_status": "approved",
+  "implementation_scope": "Review before new control-catalog scenarios; no change to existing 59 events/checkpoints, original docs, or actual AT status.",
+  "independent_reviews": [
+    {
+      "reviewer": "controls_cancel_review",
+      "verdict": "approved",
+      "plan_sha256": "bc83ef3c7bf30262d45f96b5c7800a3541a7e3d48fae32defa465d77ce2f91de",
+      "basis": "Future PENDING cancellation matrix and P26 no dispatch preserve publication count."
+    },
+    {
+      "reviewer": "verification_plan",
+      "verdict": "approved",
+      "plan_sha256": "bc83ef3c7bf30262d45f96b5c7800a3541a7e3d48fae32defa465d77ce2f91de",
+      "basis": "Section 92 and K3 cancellation agree; original 59 source and oracle scope unchanged."
+    }
+  ]
+}

@@ -86,6 +86,21 @@ const scenarioOracle = {
   'agent-child-permissions': { current: 'END', status: 'COMPLETED', cycle: 1 },
   'agent-child-interrupted': { current: 'P12', status: 'WAITING_HUMAN', cycle: 1 },
   'agent-child-canceled': { current: 'END', status: 'COMPLETED', cycle: 1 },
+  'control-command-lifecycle': { current: 'END', status: 'COMPLETED', cycle: 1 },
+  'control-command-conflicts': { current: 'P07', status: 'WAITING_HUMAN', cycle: 1 },
+  'control-apply-after-progress': { current: 'P02', status: 'RUNNING', cycle: 1 },
+  'pause-human': { current: 'END', status: 'COMPLETED', cycle: 1 },
+  'pause-child': { current: 'END', status: 'COMPLETED', cycle: 1 },
+  'pause-manual-sqe': { current: 'END', status: 'COMPLETED', cycle: 1 },
+  'pause-device-wait': { current: 'P22', status: 'WAITING_DEVICE', cycle: 1 },
+  'pause-retry': { current: 'END', status: 'COMPLETED', cycle: 1 },
+  'pause-final': { current: 'END', status: 'COMPLETED', cycle: 1 },
+  'cancel-child': { current: 'P12', status: 'CANCELED', cycle: 1 },
+  'cancel-flash-unknown': { current: 'P22', status: 'CANCELED', cycle: 1 },
+  'cancel-remote-late-receipt': { current: 'P25', status: 'CANCELED', cycle: 1 },
+  'cancel-pending-dispatch': { current: 'P12', status: 'CANCELED', cycle: 1 },
+  'cancel-released-notes': { current: 'P26', status: 'CANCELED', cycle: 1 },
+  'control-notes-retry': { current: 'END', status: 'COMPLETED', cycle: 1 },
 };
 
 let browser;
@@ -277,7 +292,7 @@ try {
     assert.ok((await replayPanel().innerText()).includes('MOCK'));
   });
 
-  await record('catalog exposes all 59 frozen scenarios and starts each at cursor zero', async () => {
+  await record('catalog exposes all 74 scenarios and starts each at cursor zero', async () => {
     const expectedIds = Object.keys(scenarioOracle);
     const options = await scenarioSelect().locator('option').evaluateAll(items => items.map(item => item.value).filter(Boolean));
     assert.deepEqual([...options].sort(), [...expectedIds].sort());
@@ -289,7 +304,7 @@ try {
     }
   });
 
-  await record('all 59 scenarios reach their fixed endpoint through the end-observation control', async () => {
+  await record('all 74 scenarios reach their fixed endpoint through the end-observation control', async () => {
     for (const [id, expected] of Object.entries(scenarioOracle)) {
       await selectScenario(id);
       await replayPanel().getByRole('button', { name: '끝 관측', exact: true }).click();

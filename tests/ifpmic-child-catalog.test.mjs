@@ -110,10 +110,10 @@ const attemptOracle = {
 test('catalog migrates exactly nine independently specified child scenarios after the fixed 50-case prefix', () => {
   const catalog = createScenarioCatalog(workflow, stateContract);
   assert.equal(baseline50.scenario_count, 50);
-  assert.equal(catalog.length, 59);
+  assert.equal(catalog.length, 74);
   assert.deepEqual(catalog.slice(0, 50).map(item => item.id), baseline50.scenarios.map(item => item.id));
-  assert.deepEqual(catalog.slice(50).map(item => item.id), childIds);
-  for (const item of catalog.slice(50)) {
+  assert.deepEqual(catalog.slice(50, 59).map(item => item.id), childIds);
+  for (const item of catalog.slice(50, 59)) {
     assert.equal(item.catalog_version, 'mock:ifpmic:children:v1');
     assert.deepEqual(item.requirement_ids, childRequirementIds);
     assert.deepEqual(item.checkpoints.map(checkpoint => checkpoint.id), pointIds(Object.keys(oracle[item.id]).filter(id => id !== 'end')));
@@ -161,7 +161,7 @@ test('each child endpoint and every checkpoint matches literal status, cycle, P1
 
 test('child scenario observations are uniquely sequenced mock events and opaque IDs do not expose source material', () => {
   const catalog = createScenarioCatalog(workflow, stateContract);
-  for (const scenario of catalog.slice(50)) {
+  for (const scenario of catalog.slice(50, 59)) {
     const authored = scenario.events.filter(event => event.source_id === 'mock:child-examples');
     assert.ok(authored.length > 0, `${scenario.id} has explicit child events`);
     assert.ok(authored.every(event => event.mode === 'mock'), `${scenario.id} events are mock only`);
