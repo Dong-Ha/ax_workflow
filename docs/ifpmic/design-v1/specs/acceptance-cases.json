@@ -1,0 +1,258 @@
+[
+  {
+    "id": "AT-01",
+    "name": "기본 완주",
+    "given": "모든 필수 입력과 도구가 준비됨",
+    "when": "요청 실행 및 최종 승인",
+    "then": "P01부터 P26 완료, 원격 영수증 및 최종 노트 보존",
+    "status": "not_executed"
+  },
+  {
+    "id": "AT-02",
+    "name": "오류 경로 증거",
+    "given": "실제 오류 반환 계약과 TC 기대값 정의",
+    "when": "정상 및 읽기 실패 TC 실행",
+    "then": "실패 읽기의 값 미사용과 계약 준수 증거; 단말 회귀와 구분",
+    "status": "not_executed"
+  },
+  {
+    "id": "AT-03",
+    "name": "웹 재연결",
+    "given": "실행 중 SSE 연결 종료",
+    "when": "Last-Event-ID로 재연결",
+    "then": "누락 이벤트 복구 및 중복 표시 없음; snapshot revision 유지",
+    "status": "not_executed"
+  },
+  {
+    "id": "AT-04",
+    "name": "단계 생략",
+    "given": "동일 baseline의 설계 재사용",
+    "when": "X01에서 승인",
+    "then": "SKIPPED와 근거 보존; 신규 HW는 문서 생략 불가",
+    "status": "not_executed"
+  },
+  {
+    "id": "AT-05",
+    "name": "사람 단계",
+    "given": "P07 또는 P21 진입",
+    "when": "에이전트가 완료 선언",
+    "then": "사람 제출 없이 다음 단계 불가; 내 작업함 생성",
+    "status": "not_executed"
+  },
+  {
+    "id": "AT-06",
+    "name": "TC 소유권",
+    "given": "tc 세션 실행",
+    "when": "제품 코드 수정 시도",
+    "then": "수정 권한 제한 또는 패치 검사 거절; code-dev 통합 기록",
+    "status": "not_executed"
+  },
+  {
+    "id": "AT-07",
+    "name": "후보 변경",
+    "given": "기존 커밋 A의 모든 측정 통과",
+    "when": "코드 변경으로 후보 B 생성",
+    "then": "A 결과와 승인은 B의 gate를 열지 못함",
+    "status": "not_executed"
+  },
+  {
+    "id": "AT-08",
+    "name": "측정과 파싱",
+    "given": "SAM 도구 exit=0이나 결과 누락",
+    "when": "gate 평가",
+    "then": "ERROR 또는 INCONCLUSIVE; PASS로 처리하지 않음",
+    "status": "not_executed"
+  },
+  {
+    "id": "AT-09",
+    "name": "SAM 실패",
+    "given": "P16 FAIL",
+    "when": "다음 단계 결정",
+    "then": "P07 사람 작업 재개, P08-P16 필수 재평가",
+    "status": "not_executed"
+  },
+  {
+    "id": "AT-10",
+    "name": "TEM 및 정적분석 실패",
+    "given": "P18 또는 P20 FAIL",
+    "when": "재작업",
+    "then": "P11 복귀 후 P13 및 후속 품질 재검증",
+    "status": "not_executed"
+  },
+  {
+    "id": "AT-11",
+    "name": "SQE 실패",
+    "given": "P22 시험 완료 결과 FAIL",
+    "when": "보고서 발행 및 판정",
+    "then": "P23 보고서 열람 가능; P24에서 P07 복귀",
+    "status": "not_executed"
+  },
+  {
+    "id": "AT-12",
+    "name": "인프라 장애",
+    "given": "도구 실행 실패 또는 Bedrock 제한",
+    "when": "재시도 한도 소진",
+    "then": "품질 FAIL과 구분; 담당자 알림; 미완료 증거는 gate 통과 불가",
+    "status": "not_executed"
+  },
+  {
+    "id": "AT-13",
+    "name": "단말 후보 일치",
+    "given": "다운로드 이미지 해시 확인",
+    "when": "부팅 식별값이 다른 빌드",
+    "then": "INCONCLUSIVE 및 배포 차단",
+    "status": "not_executed"
+  },
+  {
+    "id": "AT-14",
+    "name": "플래싱 응답 유실",
+    "given": "flash 시작 후 bridge 통신 단절",
+    "when": "재연결 및 임대 만료",
+    "then": "RECONCILING; 자동 재플래시 및 다른 요청의 단말 점유 금지",
+    "status": "not_executed"
+  },
+  {
+    "id": "AT-15",
+    "name": "수동 검증",
+    "given": "수동 모드로 전환",
+    "when": "사용자가 대상 이미지와 결과 제출",
+    "then": "증거·수행자 기록 후 규칙 판정; 자동 실행으로 표시하지 않음",
+    "status": "not_executed"
+  },
+  {
+    "id": "AT-16",
+    "name": "서버 장애",
+    "given": "명령 수락 후 outbox 전달 전 서버 종료",
+    "when": "재시작",
+    "then": "command_id로 재전달·중복 제거; 작업 유실 없음",
+    "status": "not_executed"
+  },
+  {
+    "id": "AT-17",
+    "name": "지연 결과",
+    "given": "cycle 1 실행이 종료된 후 cycle 2 시작",
+    "when": "cycle 1 결과 도착",
+    "then": "이전 기록으로 보관; 현재 상태 변경 없음",
+    "status": "not_executed"
+  },
+  {
+    "id": "AT-18",
+    "name": "오래된 승인",
+    "given": "배포 승인 후 후보 또는 대상 변경",
+    "when": "배포 실행",
+    "then": "digest 불일치로 차단 및 재승인",
+    "status": "not_executed"
+  },
+  {
+    "id": "AT-19",
+    "name": "배포 경로",
+    "given": "같은 검증 후보를 각 모드로 실증",
+    "when": "승인 후 제출",
+    "then": "team은 태그, 공용은 리뷰 변경 PR 또는 지정 커밋까지만 수행",
+    "status": "not_executed"
+  },
+  {
+    "id": "AT-20",
+    "name": "배포 중복",
+    "given": "원격 제출 성공 후 응답 유실",
+    "when": "재시도 요청",
+    "then": "기존 branch Change-Id PR tag 조회; 중복 생성 없음",
+    "status": "not_executed"
+  },
+  {
+    "id": "AT-21",
+    "name": "사용자 격리",
+    "given": "A와 B 작업 동시 실행",
+    "when": "A가 B의 작업·로그·이미지·장비 조회",
+    "then": "서버 권한 검사로 거절; 파일 경로 및 세션 분리",
+    "status": "not_executed"
+  },
+  {
+    "id": "AT-22",
+    "name": "장비 경합",
+    "given": "두 작업이 같은 단말 요청",
+    "when": "동시 임대 요청",
+    "then": "하나만 성공; 나머지는 WAITING_DEVICE",
+    "status": "not_executed"
+  },
+  {
+    "id": "AT-23",
+    "name": "실행기 제한",
+    "given": "승인된 모델 및 도구 프로파일",
+    "when": "외부 제공자 또는 임의 업로드 시도",
+    "then": "허용된 경로만 사용; 로그에서 비밀값 제거",
+    "status": "not_executed"
+  },
+  {
+    "id": "AT-24",
+    "name": "반복 한도",
+    "given": "동일 gate의 세 번 재작업 실패",
+    "when": "추가 재작업 요청",
+    "then": "WAITING_HUMAN 및 실패 묶음; 임의 기준 완화 없음",
+    "status": "not_executed"
+  },
+  {
+    "id": "AT-25",
+    "name": "취소 경합",
+    "given": "flash 또는 remote push 진행 중",
+    "when": "cancel 요청",
+    "then": "새 동작 중지; 기존 부작용 확인 후 CANCELED; 원격 결과 보존",
+    "status": "not_executed"
+  },
+  {
+    "id": "AT-26",
+    "name": "릴리즈 노트 실패",
+    "given": "P25 성공 P26 실패",
+    "when": "노트 재처리",
+    "then": "P25 재실행 없이 노트만 완료; 상태 RELEASED_PENDING_NOTES",
+    "status": "not_executed"
+  },
+  {
+    "id": "AT-27",
+    "name": "승인 동시 처리",
+    "given": "동일 revision의 승인과 반려",
+    "when": "두 요청 동시 도착",
+    "then": "하나만 유효; 다른 요청 409 또는 rejected command",
+    "status": "not_executed"
+  },
+  {
+    "id": "AT-28",
+    "name": "모의와 실제 구분",
+    "given": "mock profile로 전체 PASS",
+    "when": "real release 요청",
+    "then": "mock 증거로 real 배포 금지",
+    "status": "not_executed"
+  },
+  {
+    "id": "AT-29",
+    "name": "워크플로우 업그레이드",
+    "given": "v1 실행이 사람 대기",
+    "when": "v2 배포 후 재개",
+    "then": "v1 정의로 재개; 호환 worker 유지 또는 명시적 migration",
+    "status": "not_executed"
+  },
+  {
+    "id": "AT-30",
+    "name": "수정 불필요",
+    "given": "기존 코드 및 TC가 요구사항 충족",
+    "when": "분석 및 사람 확인",
+    "then": "변경 없음으로 종료 가능; 빈 커밋·가짜 버전 생성 없음",
+    "status": "not_executed"
+  },
+  {
+    "id": "AT-31",
+    "name": "정책 개정",
+    "given": "승인 전 품질 규칙 버전 변경",
+    "when": "정책 재검토",
+    "then": "자동 기존 PASS 승계 없음; 영향 gate 재평가 및 승인 갱신",
+    "status": "not_executed"
+  },
+  {
+    "id": "AT-32",
+    "name": "bootloader 식별",
+    "given": "adb serial과 fastboot serial이 다름",
+    "when": "전환 후 device 선택",
+    "then": "등록된 매핑으로만 선택; 복수 또는 불명확 시 사람 대기",
+    "status": "not_executed"
+  }
+]

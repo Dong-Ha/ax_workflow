@@ -1,0 +1,96 @@
+{
+  "step_transitions": {
+    "PENDING": [
+      "READY",
+      "SKIPPED",
+      "CANCELED"
+    ],
+    "READY": [
+      "RUNNING",
+      "WAITING_HUMAN",
+      "WAITING_DEVICE",
+      "PAUSED",
+      "CANCELED"
+    ],
+    "RUNNING": [
+      "SUCCEEDED",
+      "FAILED",
+      "WAITING_HUMAN",
+      "WAITING_AGENT",
+      "WAITING_DEVICE",
+      "WAITING_RETRY",
+      "RECONCILING",
+      "PAUSE_REQUESTED",
+      "CANCEL_REQUESTED"
+    ],
+    "WAITING_AGENT": [
+      "RUNNING",
+      "FAILED",
+      "WAITING_HUMAN",
+      "PAUSE_REQUESTED",
+      "CANCEL_REQUESTED"
+    ],
+    "WAITING_HUMAN": [
+      "READY",
+      "SUCCEEDED",
+      "FAILED",
+      "PAUSED",
+      "CANCELED"
+    ],
+    "WAITING_DEVICE": [
+      "READY",
+      "RECONCILING",
+      "PAUSED",
+      "CANCELED"
+    ],
+    "WAITING_RETRY": [
+      "READY",
+      "WAITING_HUMAN",
+      "PAUSED",
+      "CANCELED"
+    ],
+    "RECONCILING": [
+      "SUCCEEDED",
+      "FAILED",
+      "WAITING_HUMAN",
+      "WAITING_DEVICE",
+      "CANCELED"
+    ],
+    "PAUSE_REQUESTED": [
+      "PAUSED",
+      "SUCCEEDED",
+      "FAILED",
+      "RECONCILING",
+      "CANCEL_REQUESTED"
+    ],
+    "PAUSED": [
+      "READY",
+      "WAITING_HUMAN",
+      "WAITING_DEVICE",
+      "CANCELED"
+    ],
+    "CANCEL_REQUESTED": [
+      "CANCELED",
+      "RECONCILING"
+    ],
+    "SUCCEEDED": [
+      "SUPERSEDED"
+    ],
+    "FAILED": [
+      "SUPERSEDED"
+    ],
+    "SKIPPED": [
+      "SUPERSEDED"
+    ],
+    "CANCELED": [],
+    "SUPERSEDED": []
+  },
+  "rules": [
+    "A failed node remains FAILED; retry creates a new attempt. New business cycle does not rewrite old records.",
+    "WAITING_HUMAN may succeed only with assigned human submission; permission prompt and human business task share notification UX but have different task kinds.",
+    "Pause takes effect at safe boundary; record resume_state and resume_step to restore wait or invoke a new attempt. Completed in-flight work may succeed while job remains paused.",
+    "Canceled workflow cannot erase already-published remote state; reconcile and retain receipt.",
+    "job states: DRAFT QUEUED RUNNING WAITING_HUMAN WAITING_DEVICE PAUSED RECONCILING FAILED CANCELED NO_CHANGE RELEASED_PENDING_NOTES COMPLETED",
+    "Aggregate job state prioritizes RECONCILING then human/device wait; UI also shows each active step to avoid losing parallel child status."
+  ]
+}

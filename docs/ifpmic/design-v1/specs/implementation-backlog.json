@@ -1,0 +1,185 @@
+[
+  {
+    "id": "B01",
+    "title": "계약 및 프로파일",
+    "owner": "BE",
+    "depends_on": [],
+    "deliverables": "workflow registry, validators, immutable profile snapshot",
+    "acceptance": [
+      "AT-04",
+      "AT-28"
+    ]
+  },
+  {
+    "id": "B02",
+    "title": "인증 및 요청 저장",
+    "owner": "BE",
+    "depends_on": [
+      "B01"
+    ],
+    "deliverables": "사용자 범위 API, DB, 요청별 작업 공간",
+    "acceptance": [
+      "AT-21"
+    ]
+  },
+  {
+    "id": "B03",
+    "title": "워크플로우 실행",
+    "owner": "BE",
+    "depends_on": [
+      "B01",
+      "B02"
+    ],
+    "deliverables": "Temporal workflow, outbox, 사람 대기, version pin",
+    "acceptance": [
+      "AT-05",
+      "AT-16",
+      "AT-29"
+    ]
+  },
+  {
+    "id": "B04",
+    "title": "이벤트 및 웹 기본",
+    "owner": "FE/BE",
+    "depends_on": [
+      "B02",
+      "B03"
+    ],
+    "deliverables": "4개 화면, SSE 복구, 알림함",
+    "acceptance": [
+      "AT-03",
+      "AT-27"
+    ]
+  },
+  {
+    "id": "B05",
+    "title": "모의 완주",
+    "owner": "QA",
+    "depends_on": [
+      "B03",
+      "B04"
+    ],
+    "deliverables": "실패 주입 mock adapters 및 기본 경로",
+    "acceptance": [
+      "AT-01",
+      "AT-09",
+      "AT-10",
+      "AT-11"
+    ]
+  },
+  {
+    "id": "B06",
+    "title": "Claude Code 연결",
+    "owner": "BE",
+    "depends_on": [
+      "B03"
+    ],
+    "deliverables": "사내 Bedrock 프로파일, stream adapter, role restrictions",
+    "acceptance": [
+      "AT-06",
+      "AT-23"
+    ]
+  },
+  {
+    "id": "B07",
+    "title": "개발 및 빌드",
+    "owner": "Kernel/BE",
+    "depends_on": [
+      "B06"
+    ],
+    "deliverables": "patch handoff, candidate manifest, KUnit 및 build wrappers",
+    "acceptance": [
+      "AT-02",
+      "AT-07",
+      "AT-30"
+    ]
+  },
+  {
+    "id": "B08",
+    "title": "품질 프로그램 연결",
+    "owner": "BE/품질 담당",
+    "depends_on": [
+      "B07"
+    ],
+    "deliverables": "SAM TEM 정적분석 parser 및 OSS human task",
+    "acceptance": [
+      "AT-08",
+      "AT-12",
+      "AT-31"
+    ]
+  },
+  {
+    "id": "B09",
+    "title": "Windows bridge",
+    "owner": "Windows/BE",
+    "depends_on": [
+      "B02",
+      "B03"
+    ],
+    "deliverables": "enrollment, journal, device lease, profile execution",
+    "acceptance": [
+      "AT-14",
+      "AT-22",
+      "AT-32"
+    ]
+  },
+  {
+    "id": "B10",
+    "title": "SQE 및 수동 대체",
+    "owner": "Kernel/BE",
+    "depends_on": [
+      "B08",
+      "B09"
+    ],
+    "deliverables": "boot identity, script result, human fallback",
+    "acceptance": [
+      "AT-13",
+      "AT-15"
+    ]
+  },
+  {
+    "id": "B11",
+    "title": "승인 및 배포",
+    "owner": "BE",
+    "depends_on": [
+      "B10"
+    ],
+    "deliverables": "digest approval, 각 publisher, receipt reconciliation",
+    "acceptance": [
+      "AT-18",
+      "AT-19",
+      "AT-20",
+      "AT-26"
+    ]
+  },
+  {
+    "id": "B12",
+    "title": "운영 수용",
+    "owner": "QA/운영",
+    "depends_on": [
+      "B04",
+      "B11"
+    ],
+    "deliverables": "restart/cancel/load/backup drills, acceptance report",
+    "acceptance": [
+      "AT-17",
+      "AT-24",
+      "AT-25",
+      "AT-27"
+    ]
+  },
+  {
+    "id": "B13",
+    "title": "OpenCode 연결 및 신규 HW",
+    "owner": "BE/Kernel",
+    "depends_on": [
+      "B12"
+    ],
+    "deliverables": "runtime compatibility fixtures, NEW_HW route",
+    "acceptance": [
+      "AT-01",
+      "AT-04",
+      "AT-23"
+    ]
+  }
+]

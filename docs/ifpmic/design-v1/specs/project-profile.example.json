@@ -1,0 +1,73 @@
+{
+  "schema_version": "1.0.0",
+  "project_id": "ifpmic-pilot",
+  "mode": "mock",
+  "enabled": false,
+  "source": {
+    "repository_ref": "CONFIGURE",
+    "base_ref": "CONFIGURE",
+    "driver_paths": [],
+    "test_paths": []
+  },
+  "runtimes": {
+    "primary": "claude-code",
+    "secondary": "opencode",
+    "provider_profile_ref": "APPROVED_BEDROCK_PROFILE",
+    "model_id": "CONFIGURE",
+    "versions": {
+      "claude_code": "PIN_AFTER_COMPATIBILITY_TEST",
+      "opencode": "PIN_AFTER_COMPATIBILITY_TEST"
+    }
+  },
+  "build": {
+    "profile_ref": "CONFIGURE",
+    "toolchain_digest": "CONFIGURE",
+    "kernel_config_digest": "CONFIGURE",
+    "timeout_minutes": 120,
+    "artifact_patterns": []
+  },
+  "quality": {
+    "sam": {
+      "program_ref": "CONFIGURE",
+      "parser_version": "CONFIGURE",
+      "rule_version": "CONFIGURE",
+      "thresholds_ref": "INTERNAL_EXISTING_RULES"
+    },
+    "tem": {
+      "program_ref": "CONFIGURE",
+      "parser_version": "CONFIGURE",
+      "rule_version": "CONFIGURE",
+      "thresholds_ref": "INTERNAL_EXISTING_RULES"
+    },
+    "static": {
+      "program_ref": "CONFIGURE",
+      "parser_version": "CONFIGURE",
+      "rule_version": "CONFIGURE",
+      "thresholds_ref": "INTERNAL_EXISTING_RULES"
+    }
+  },
+  "device": {
+    "bridge_id": "CONFIGURE",
+    "device_id": "CONFIGURE",
+    "adb_serial": "CONFIGURE",
+    "fastboot_serial": "CONFIGURE",
+    "board_id": "CONFIGURE",
+    "flash_profile_ref": "CONFIGURE",
+    "boot_identity_method": "CONFIGURE",
+    "sqe_script_ref": "CONFIGURE",
+    "sqe_expected_cases": []
+  },
+  "release": {
+    "mode": "team_github_tag",
+    "repository_ref": "CONFIGURE",
+    "target_ref": "CONFIGURE",
+    "version": "CONFIGURE",
+    "reviewers": []
+  },
+  "approval": {
+    "plan_required": true,
+    "release_required": true,
+    "require_distinct_approver": false
+  },
+  "validation": "real mode blocked until all CONFIGURE values resolved and profile smoke checks pass; mock evidence cannot unlock real release"
+}

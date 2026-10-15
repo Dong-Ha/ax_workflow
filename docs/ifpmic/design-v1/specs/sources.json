@@ -1,0 +1,79 @@
+[
+  {
+    "id": "S01",
+    "title": "사용자 원본",
+    "url": "에이전트 흐름_261008_213807.docx 및 2026년 10월 9일 대화 확정 사항",
+    "use": "local source",
+    "checked": "2026-10-09"
+  },
+  {
+    "id": "S02",
+    "title": "Claude Code programmatic execution",
+    "url": "https://code.claude.com/docs/en/headless",
+    "use": "비대화형 실행 및 구조화 출력",
+    "checked": "2026-10-09"
+  },
+  {
+    "id": "S03",
+    "title": "Claude Code Bedrock",
+    "url": "https://code.claude.com/docs/en/amazon-bedrock",
+    "use": "승인된 Bedrock 연결",
+    "checked": "2026-10-09"
+  },
+  {
+    "id": "S04",
+    "title": "OpenCode Server",
+    "url": "https://opencode.ai/docs/server/",
+    "use": "API 및 이벤트 스트림",
+    "checked": "2026-10-09"
+  },
+  {
+    "id": "S05",
+    "title": "OpenCode providers",
+    "url": "https://opencode.ai/docs/ko/providers/",
+    "use": "Bedrock 제공자 구성",
+    "checked": "2026-10-09"
+  },
+  {
+    "id": "S06",
+    "title": "Temporal self-hosted",
+    "url": "https://docs.temporal.io/self-hosted-guide",
+    "use": "사내 서비스 배치",
+    "checked": "2026-10-09"
+  },
+  {
+    "id": "S07",
+    "title": "Temporal message passing",
+    "url": "https://docs.temporal.io/encyclopedia/workflow-message-passing",
+    "use": "사람 완료 및 승인 메시지",
+    "checked": "2026-10-09"
+  },
+  {
+    "id": "S08",
+    "title": "Temporal architecture",
+    "url": "https://github.com/temporalio/temporal/blob/main/docs/architecture/README.md",
+    "use": "워크플로우 결정성과 activity 부작용",
+    "checked": "2026-10-09"
+  },
+  {
+    "id": "S09",
+    "title": "ADB manual",
+    "url": "https://android.googlesource.com/platform/packages/modules/adb/+/refs/heads/main/docs/user/adb.1.md",
+    "use": "명시적인 단말 선택",
+    "checked": "2026-10-09"
+  },
+  {
+    "id": "S10",
+    "title": "KUnit",
+    "url": "https://docs.kernel.org/dev-tools/kunit/index.html",
+    "use": "커널 단위시험",
+    "checked": "2026-10-09"
+  },
+  {
+    "id": "S11",
+    "title": "FastAPI deployment",
+    "url": "https://fastapi.tiangolo.com/deployment/server-workers/",
+    "use": "API 프로세스 배치 참고",
+    "checked": "2026-10-09"
+  }
+]

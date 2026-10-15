@@ -2,6 +2,8 @@
 
 현재 PC의 Codex, Claude Code, OpenCode 기록에서 프로젝트 대화와 하위 에이전트의 상태, 위임 관계, 작업 요청, 완료 응답을 확인하는 로컬 대시보드입니다. 한국어 관제실 화면이며 추가 모델 호출이 없습니다.
 
+IFPMIC workflow 시각화로 확장하는 방향은 [기준 자료와 이관 계획](./docs/ifpmic/README.md)에 정리했습니다. 현재 AX 자료를 기반으로 Paperclip을 활용하며, 제공된 IFPMIC 설계서와 JSON 계약을 최종 업무 기준으로 사용합니다. 해당 문서에는 Paperclip 조사, 시각화 우선순위와 B01–B13 구현 순서가 포함되어 있습니다.
+
 ## 실행
 
 Node.js 24 이상을 사용합니다.

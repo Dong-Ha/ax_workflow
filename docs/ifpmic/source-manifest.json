@@ -1,0 +1,55 @@
+{
+  "source_version": "IFPMIC AX Design v1",
+  "source_files": {
+    "zip": {
+      "path": "IFPMIC_AX_Design_Package_v1.zip",
+      "sha256": "34946eda4c85fd9706b40e218a233a3fdd5ab0a00b2538778c9b9cf047e19080"
+    },
+    "docx": {
+      "path": "IFPMIC_AX_Design_v1.docx",
+      "sha256": "18a14876a689beae0599b5d4014bf95db79bef047d0e4ceafa60d9a9417624fc",
+      "zip_member": "IFPMIC_AX_Design_v1/IFPMIC_AX_Design_v1.docx",
+      "zip_member_sha256": "18a14876a689beae0599b5d4014bf95db79bef047d0e4ceafa60d9a9417624fc",
+      "matches_zip_member": true
+    }
+  },
+  "zip_member_paths": [
+    "IFPMIC_AX_Design_v1/README.txt",
+    "IFPMIC_AX_Design_v1/verify_design.py",
+    "IFPMIC_AX_Design_v1/validation-requirements.txt",
+    "IFPMIC_AX_Design_v1/specs/acceptance-cases.json",
+    "IFPMIC_AX_Design_v1/specs/agent-contract.json",
+    "IFPMIC_AX_Design_v1/specs/bridge-contract.json",
+    "IFPMIC_AX_Design_v1/specs/data-model.json",
+    "IFPMIC_AX_Design_v1/specs/implementation-backlog.json",
+    "IFPMIC_AX_Design_v1/specs/openapi.v1.json",
+    "IFPMIC_AX_Design_v1/specs/project-profile.example.json",
+    "IFPMIC_AX_Design_v1/specs/requirements.json",
+    "IFPMIC_AX_Design_v1/specs/sources.json",
+    "IFPMIC_AX_Design_v1/specs/state-contract.json",
+    "IFPMIC_AX_Design_v1/specs/workflow.v1.json",
+    "IFPMIC_AX_Design_v1/qa/design-validation.json",
+    "IFPMIC_AX_Design_v1/qa/visual-review.json",
+    "IFPMIC_AX_Design_v1/qa/package-manifest.json"
+  ],
+  "imported_files": {
+    "README.txt": "33ff9f07a74c3e276ac63746340a56e4bbdeca18d2531de24cc978d533283122",
+    "verify_design.py": "05abad3464f815144bd313257a691194fd0ac96b84a542485260d128c681cedb",
+    "validation-requirements.txt": "756cc9e506ae4ee1a6f6c0507088b5cfc0dc8ba350fb2d2d46f1ffa72033adb6",
+    "specs/acceptance-cases.json": "f7163553edc9e8e753965cb8748ab04aac8f68c1a453f567f62284a01b38b0d5",
+    "specs/agent-contract.json": "ca6d4bea7abf0fffe7354c482af0d521c3a2e367217a69923a4bfe43fa27ab64",
+    "specs/bridge-contract.json": "d9a0deaa745d4078a779a153aad6a889a49b7675dc8ad3688f8b4c641233047d",
+    "specs/data-model.json": "00c84f8a39b1b8959daa8d94b1d67e860d83ad9bdb809065a5cd3b18af07071b",
+    "specs/implementation-backlog.json": "115e48568e0464b8e67ef17274dba97b3046a8de902e1cf426d9b70e1528e5d0",
+    "specs/openapi.v1.json": "2ed780cfa06349b18f5025937e050fd98a5cefa34b552eb836cfaccad416dd7a",
+    "specs/project-profile.example.json": "37301c6ff5c9cae237b6037a3106368cfd07e4582462d52a35dfee39de7839f2",
+    "specs/requirements.json": "6e1dc87cdbcaa66ed690ffd13d2d70242dff43410c9f822447bd520719ce249b",
+    "specs/sources.json": "c0c6f96c54ba4fd1c7a1bd70b954a7316bebdba86ff681e5a07141c682eeb7ef",
+    "specs/state-contract.json": "0248e130017043539319c56af854f5388a95d33e7e687902a3438fdff414244a",
+    "specs/workflow.v1.json": "bab40a7abb3929896add1ef2cd074893dd2a7de14d200a5d6cea4b7a77eb0e89",
+    "qa/design-validation.json": "499d203d19980fac95cb9f9974ace988b54392a0ce968544d220b1a421b49fd4",
+    "qa/visual-review.json": "e4dc7b7e91dd514158dc48688e7e79074c6686298d9395cbf9139158821b8755",
+    "qa/package-manifest.json": "46fe63988e7cd9312c379761c6023fc5e28e1259770274463ea848eb92960386"
+  },
+  "contract_status": "Design contract and validation artifacts only; not an executable service."
+}

@@ -1,0 +1,116 @@
+{
+  "version": "1.0.0",
+  "entities": [
+    {
+      "name": "users",
+      "fields": "user_id, identity_subject, display_name",
+      "invariants": "SSO subject unique; local pilot identity is limited to mock mode"
+    },
+    {
+      "name": "projects",
+      "fields": "project_id, member_roles, profile_versions",
+      "invariants": "Only approved project profile revisions executable"
+    },
+    {
+      "name": "jobs",
+      "fields": "job_id, owner_id, project_id, workflow_id, status, revision, cycle",
+      "invariants": "owner from authentication, never request payload"
+    },
+    {
+      "name": "step_runs",
+      "fields": "step_run_id, job_id, step_id, cycle, attempt, state, execution_id",
+      "invariants": "UNIQUE(job_id, step_id, cycle, attempt); prior attempts immutable"
+    },
+    {
+      "name": "execution_plans",
+      "fields": "job_id, plan_version, node_actions, reasons, baseline_refs",
+      "invariants": "Plan changes produce new immutable versions"
+    },
+    {
+      "name": "candidate_manifests",
+      "fields": "candidate_id, job_id, source_commit, config_hash, toolchain_hash, image_hash",
+      "invariants": "fingerprint=SHA256(canonical manifest); immutable"
+    },
+    {
+      "name": "artifacts",
+      "fields": "artifact_id, job_id, kind, sha256, size, uri, mode, candidate_id",
+      "invariants": "No path from browser used as arbitrary filesystem path"
+    },
+    {
+      "name": "trace_links",
+      "fields": "requirement_id, feature_id, srs_id, sdd_id, code_ref, tc_id, result_id",
+      "invariants": "Many-to-many links; referenced artifacts versioned"
+    },
+    {
+      "name": "human_tasks",
+      "fields": "task_id, job_id, step_run_id, assignee_id, outcome, evidence_ids",
+      "invariants": "One effective completion per task/version"
+    },
+    {
+      "name": "gate_results",
+      "fields": "gate_id, step_run_id, candidate_id, verdict, rule_version, evidence_ids",
+      "invariants": "PASS/FAIL/ERROR/INCONCLUSIVE/EXEMPT distinguished"
+    },
+    {
+      "name": "release_manifests",
+      "fields": "manifest_id, job_id, digest, candidate_id, destination, notes_hash",
+      "invariants": "Destination and evidence bundle included in digest"
+    },
+    {
+      "name": "approvals",
+      "fields": "approval_id, manifest_id, approver_id, decision, command_id",
+      "invariants": "Approval bound to manifest; revoked or stale never usable"
+    },
+    {
+      "name": "release_actions",
+      "fields": "action_id, manifest_id, kind, idempotency_key, state, remote_ref",
+      "invariants": "UNIQUE(destination,idempotency_key); unknown -> reconcile"
+    },
+    {
+      "name": "bridge_devices",
+      "fields": "device_id, owner_id, bridge_id, serial_map, board_id, state",
+      "invariants": "One registered identity maps ADB/fastboot modes"
+    },
+    {
+      "name": "device_leases",
+      "fields": "device_id, lease_id, job_id, fencing_token, expires_at, state",
+      "invariants": "Unique active lease per device; unknown quarantined"
+    },
+    {
+      "name": "device_commands",
+      "fields": "command_id, lease_id, action, profile_hash, state, result_ref",
+      "invariants": "UNIQUE(command_id); monotonically accepted result sequence"
+    },
+    {
+      "name": "events",
+      "fields": "event_id, job_id, step_run_id, source_id, source_seq, type, payload",
+      "invariants": "UNIQUE(source_id,source_seq); per-job monotonic event cursor"
+    },
+    {
+      "name": "commands_outbox",
+      "fields": "command_id, scope, payload_hash, status, expected_revision",
+      "invariants": "UNIQUE(actor,route,idempotency_key); same key different body ->409"
+    },
+    {
+      "name": "notifications",
+      "fields": "notification_id, task_id, recipient_id, kind, read_at",
+      "invariants": "UNIQUE(task_id,recipient_id,kind,reminder_window)"
+    }
+  ],
+  "consistency": "Temporal is authoritative for process transitions. PostgreSQL stores command inbox/outbox, immutable evidence and query projections. Workflow transitions project through idempotent activities. API 202 is not final success.",
+  "authorization": "Every query/download checks project membership and job ownership/delegated role. Internal workers/bridge tokens additionally scoped to assignments.",
+  "indexes": [
+    "jobs(owner_id,status,created_at)",
+    "step_runs(job_id,cycle,step_id)",
+    "events(job_id,event_id)",
+    "human_tasks(assignee_id,status)",
+    "commands_outbox(status,created_at)",
+    "device_commands(lease_id,state)"
+  ],
+  "transactions": [
+    "Submit command and outbox record atomically",
+    "Claim device with row lock and increment fencing token",
+    "Persist artifact only after hash/size verified",
+    "Record release receipt before advancing final state"
+  ]
+}

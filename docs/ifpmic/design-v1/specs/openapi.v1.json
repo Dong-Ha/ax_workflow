@@ -1,0 +1,2321 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "IFPMIC AX Control API",
+    "version": "1.0.0",
+    "description": "Design contract. /api and /bridge are authenticated internal services. Accepted commands are durable, not completed operations. Read-only and control APIs never expose model credentials."
+  },
+  "servers": [
+    {
+      "url": "https://ax.internal.example",
+      "description": "Replace with approved internal hostname"
+    }
+  ],
+  "security": [
+    {
+      "UserSession": []
+    }
+  ],
+  "paths": {
+    "/api/v1/jobs": {
+      "post": {
+        "operationId": "post_api_v1_jobs",
+        "summary": "요청 생성",
+        "description": "",
+        "responses": {
+          "202": {
+            "description": "Accepted durable command",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandReceipt"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Ownership or role mismatch"
+          },
+          "409": {
+            "description": "Revision/idempotency conflict"
+          },
+          "422": {
+            "description": "Invalid schema or state"
+          }
+        },
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateJob"
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "get_api_v1_jobs",
+        "summary": "내 작업 목록",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobList"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Ownership or role mismatch"
+          },
+          "409": {
+            "description": "Revision/idempotency conflict"
+          },
+          "422": {
+            "description": "Invalid schema or state"
+          }
+        },
+        "parameters": [
+          {
+            "name": "cursor",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 25
+            }
+          }
+        ]
+      }
+    },
+    "/api/v1/jobs/{job_id}": {
+      "get": {
+        "operationId": "get_api_v1_jobs_job_id",
+        "summary": "작업 snapshot",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Snapshot"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Ownership or role mismatch"
+          },
+          "409": {
+            "description": "Revision/idempotency conflict"
+          },
+          "422": {
+            "description": "Invalid schema or state"
+          }
+        },
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v1/jobs/{job_id}/plan-decision": {
+      "post": {
+        "operationId": "post_api_v1_jobs_job_id_plan_decision",
+        "summary": "실행 경로 확정",
+        "description": "",
+        "responses": {
+          "202": {
+            "description": "Accepted durable command",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandReceipt"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Ownership or role mismatch"
+          },
+          "409": {
+            "description": "Revision/idempotency conflict"
+          },
+          "422": {
+            "description": "Invalid schema or state"
+          }
+        },
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlanDecision"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/jobs/{job_id}/human-submissions": {
+      "post": {
+        "operationId": "post_api_v1_jobs_job_id_human_submissions",
+        "summary": "사람 작업 결과 제출",
+        "description": "",
+        "responses": {
+          "202": {
+            "description": "Accepted durable command",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandReceipt"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Ownership or role mismatch"
+          },
+          "409": {
+            "description": "Revision/idempotency conflict"
+          },
+          "422": {
+            "description": "Invalid schema or state"
+          }
+        },
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HumanSubmission"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/jobs/{job_id}/controls": {
+      "post": {
+        "operationId": "post_api_v1_jobs_job_id_controls",
+        "summary": "중지 재개 취소 재시도",
+        "description": "",
+        "responses": {
+          "202": {
+            "description": "Accepted durable command",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandReceipt"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Ownership or role mismatch"
+          },
+          "409": {
+            "description": "Revision/idempotency conflict"
+          },
+          "422": {
+            "description": "Invalid schema or state"
+          }
+        },
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Control"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/jobs/{job_id}/release-manifest": {
+      "get": {
+        "operationId": "get_api_v1_jobs_job_id_release_manifest",
+        "summary": "현재 배포 승인 대상",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReleaseManifest"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Ownership or role mismatch"
+          },
+          "409": {
+            "description": "Revision/idempotency conflict"
+          },
+          "422": {
+            "description": "Invalid schema or state"
+          }
+        },
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v1/jobs/{job_id}/approval": {
+      "post": {
+        "operationId": "post_api_v1_jobs_job_id_approval",
+        "summary": "배포 승인 또는 반려",
+        "description": "",
+        "responses": {
+          "202": {
+            "description": "Accepted durable command",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandReceipt"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Ownership or role mismatch"
+          },
+          "409": {
+            "description": "Revision/idempotency conflict"
+          },
+          "422": {
+            "description": "Invalid schema or state"
+          }
+        },
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApprovalDecision"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/commands/{command_id}": {
+      "get": {
+        "operationId": "get_api_v1_commands_command_id",
+        "summary": "명령의 실제 반영 결과",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandStatus"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Ownership or role mismatch"
+          },
+          "409": {
+            "description": "Revision/idempotency conflict"
+          },
+          "422": {
+            "description": "Invalid schema or state"
+          }
+        },
+        "parameters": [
+          {
+            "name": "command_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v1/jobs/{job_id}/events": {
+      "get": {
+        "operationId": "get_api_v1_jobs_job_id_events",
+        "summary": "SSE 이벤트 재생",
+        "description": "SSE id=event_id; data=Event JSON. Last-Event-ID resumes durable cursor. Expired cursor responds 410 and client reloads snapshot.",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/event-stream": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Ownership or role mismatch"
+          },
+          "409": {
+            "description": "Revision/idempotency conflict"
+          },
+          "422": {
+            "description": "Invalid schema or state"
+          },
+          "410": {
+            "description": "Cursor expired; load fresh snapshot"
+          }
+        },
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Last-Event-ID",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v1/artifacts": {
+      "post": {
+        "operationId": "post_api_v1_artifacts",
+        "summary": "업로드 메타데이터 등록",
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArtifactTransfer"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Ownership or role mismatch"
+          },
+          "409": {
+            "description": "Revision/idempotency conflict"
+          },
+          "422": {
+            "description": "Invalid schema or state"
+          }
+        },
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Required for UserSession; ignored for scoped service bearer authentication."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ArtifactRegistration"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "UserSession": []
+          },
+          {
+            "BridgeToken": []
+          },
+          {
+            "WorkerToken": []
+          }
+        ]
+      }
+    },
+    "/api/v1/artifacts/{artifact_id}/content": {
+      "put": {
+        "operationId": "put_api_v1_artifacts_artifact_id_content",
+        "summary": "승인된 파일 바이트 업로드",
+        "description": "Server validates owner, size and SHA256; incomplete object never becomes available.",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Artifact"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Ownership or role mismatch"
+          },
+          "409": {
+            "description": "Revision/idempotency conflict"
+          },
+          "422": {
+            "description": "Invalid schema or state"
+          }
+        },
+        "parameters": [
+          {
+            "name": "artifact_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Required for UserSession; ignored for scoped service bearer authentication."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/octet-stream": {
+              "schema": {
+                "type": "string",
+                "format": "binary"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "UserSession": []
+          },
+          {
+            "BridgeToken": []
+          },
+          {
+            "WorkerToken": []
+          }
+        ]
+      },
+      "get": {
+        "operationId": "get_api_v1_artifacts_artifact_id_content",
+        "summary": "권한 확인 후 파일 스트리밍",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Ownership or role mismatch"
+          },
+          "409": {
+            "description": "Revision/idempotency conflict"
+          },
+          "422": {
+            "description": "Invalid schema or state"
+          }
+        },
+        "parameters": [
+          {
+            "name": "artifact_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "UserSession": []
+          },
+          {
+            "BridgeToken": []
+          },
+          {
+            "WorkerToken": []
+          }
+        ]
+      }
+    },
+    "/api/v1/notifications": {
+      "get": {
+        "operationId": "get_api_v1_notifications",
+        "summary": "내 작업 알림 목록",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotificationList"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Ownership or role mismatch"
+          },
+          "409": {
+            "description": "Revision/idempotency conflict"
+          },
+          "422": {
+            "description": "Invalid schema or state"
+          }
+        },
+        "parameters": [
+          {
+            "name": "cursor",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 25
+            }
+          }
+        ]
+      }
+    },
+    "/api/v1/notifications/{notification_id}/read": {
+      "post": {
+        "operationId": "post_api_v1_notifications_notification_id_read",
+        "summary": "알림 읽음",
+        "description": "",
+        "responses": {
+          "202": {
+            "description": "Accepted durable command",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandReceipt"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Ownership or role mismatch"
+          },
+          "409": {
+            "description": "Revision/idempotency conflict"
+          },
+          "422": {
+            "description": "Invalid schema or state"
+          }
+        },
+        "parameters": [
+          {
+            "name": "notification_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v1/bridge-enrollment-tokens": {
+      "post": {
+        "operationId": "post_api_v1_bridge_enrollment_tokens",
+        "summary": "PC 등록 토큰 생성",
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnrollmentTokenResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Ownership or role mismatch"
+          },
+          "409": {
+            "description": "Revision/idempotency conflict"
+          },
+          "422": {
+            "description": "Invalid schema or state"
+          }
+        },
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EnrollmentToken"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/bridge/v1/enroll": {
+      "post": {
+        "operationId": "post_bridge_v1_enroll",
+        "summary": "PC 등록",
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BridgeCredentials"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Ownership or role mismatch"
+          },
+          "409": {
+            "description": "Revision/idempotency conflict"
+          },
+          "422": {
+            "description": "Invalid schema or state"
+          }
+        },
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Enrollment"
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/bridge/v1/refresh": {
+      "post": {
+        "operationId": "post_bridge_v1_refresh",
+        "summary": "PC 인증 갱신",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BridgeCredentials"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Ownership or role mismatch"
+          },
+          "409": {
+            "description": "Revision/idempotency conflict"
+          },
+          "422": {
+            "description": "Invalid schema or state"
+          }
+        },
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Refresh"
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/bridge/v1/heartbeat": {
+      "post": {
+        "operationId": "post_bridge_v1_heartbeat",
+        "summary": "PC 및 장비 상태 보고",
+        "description": "",
+        "responses": {
+          "202": {
+            "description": "Accepted durable command",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandReceipt"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Ownership or role mismatch"
+          },
+          "409": {
+            "description": "Revision/idempotency conflict"
+          },
+          "422": {
+            "description": "Invalid schema or state"
+          }
+        },
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Heartbeat"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BridgeToken": []
+          }
+        ]
+      }
+    },
+    "/bridge/v1/commands": {
+      "get": {
+        "operationId": "get_bridge_v1_commands",
+        "summary": "PC가 명령 대기열 조회",
+        "description": "Authenticated bridge scope; long poll up to 25 seconds; same command may be redelivered until ACK.",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BridgeCommandList"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Ownership or role mismatch"
+          },
+          "409": {
+            "description": "Revision/idempotency conflict"
+          },
+          "422": {
+            "description": "Invalid schema or state"
+          }
+        },
+        "security": [
+          {
+            "BridgeToken": []
+          }
+        ]
+      }
+    },
+    "/bridge/v1/commands/{command_id}/events": {
+      "post": {
+        "operationId": "post_bridge_v1_commands_command_id_events",
+        "summary": "명령 실행 결과 보고",
+        "description": "",
+        "responses": {
+          "202": {
+            "description": "Accepted durable command",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandReceipt"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Ownership or role mismatch"
+          },
+          "409": {
+            "description": "Revision/idempotency conflict"
+          },
+          "422": {
+            "description": "Invalid schema or state"
+          }
+        },
+        "parameters": [
+          {
+            "name": "command_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BridgeEvent"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BridgeToken": []
+          }
+        ]
+      }
+    },
+    "/internal/v1/runtime-events": {
+      "post": {
+        "operationId": "post_internal_v1_runtime_events",
+        "summary": "에이전트 실행 이벤트",
+        "description": "",
+        "responses": {
+          "202": {
+            "description": "Accepted durable command",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandReceipt"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Ownership or role mismatch"
+          },
+          "409": {
+            "description": "Revision/idempotency conflict"
+          },
+          "422": {
+            "description": "Invalid schema or state"
+          }
+        },
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RuntimeEvent"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "WorkerToken": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "UserSession": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "ax_session"
+      },
+      "BridgeToken": {
+        "type": "http",
+        "scheme": "bearer"
+      },
+      "WorkerToken": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "trace_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "message",
+          "trace_id"
+        ]
+      },
+      "CommandReceipt": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "command_id": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "accepted",
+              "applied",
+              "rejected"
+            ]
+          },
+          "resource_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "command_id",
+          "status",
+          "resource_id"
+        ]
+      },
+      "CreateJob": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "project_id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "request_text": {
+            "type": "string"
+          },
+          "change_type": {
+            "type": "string",
+            "enum": [
+              "NEW_HW",
+              "FEATURE",
+              "BUGFIX"
+            ]
+          },
+          "base_ref": {
+            "type": "string"
+          },
+          "input_artifact_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "profile_version": {
+            "type": "string"
+          },
+          "release_mode": {
+            "type": "string",
+            "enum": [
+              "team_github_tag",
+              "shared_gerrit_change",
+              "shared_github_pr",
+              "shared_github_commit"
+            ]
+          }
+        },
+        "required": [
+          "project_id",
+          "title",
+          "request_text",
+          "change_type",
+          "base_ref",
+          "input_artifact_ids",
+          "profile_version",
+          "release_mode"
+        ]
+      },
+      "Job": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "job_id": {
+            "type": "string"
+          },
+          "owner_id": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "cycle": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "workflow_version": {
+            "type": "string"
+          },
+          "current_step_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "candidate_fingerprint": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "profile_version": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "job_id",
+          "owner_id",
+          "status",
+          "revision",
+          "cycle",
+          "workflow_version",
+          "current_step_ids",
+          "candidate_fingerprint",
+          "profile_version"
+        ]
+      },
+      "JobList": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Job"
+            }
+          },
+          "next_cursor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "items",
+          "next_cursor"
+        ]
+      },
+      "Snapshot": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "job": {
+            "$ref": "#/components/schemas/Job"
+          },
+          "steps": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "step_id": {
+                  "type": "string"
+                },
+                "cycle": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "attempt": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "state": {
+                  "type": "string"
+                },
+                "detail": {
+                  "type": "string"
+                },
+                "artifact_ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "step_id",
+                "cycle",
+                "attempt",
+                "state",
+                "detail",
+                "artifact_ids"
+              ]
+            }
+          },
+          "last_event_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "job",
+          "steps",
+          "last_event_id"
+        ]
+      },
+      "PlanDecision": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "expected_revision": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "plan_version": {
+            "type": "string"
+          },
+          "decision": {
+            "type": "string",
+            "enum": [
+              "approve",
+              "reject"
+            ]
+          },
+          "reason": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "expected_revision",
+          "plan_version",
+          "decision",
+          "reason"
+        ]
+      },
+      "HumanSubmission": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "expected_revision": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "task_id": {
+            "type": "string"
+          },
+          "outcome": {
+            "type": "string",
+            "enum": [
+              "complete",
+              "reject",
+              "needs_design",
+              "manual_result"
+            ]
+          },
+          "artifact_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "comment": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "expected_revision",
+          "task_id",
+          "outcome",
+          "artifact_ids",
+          "comment"
+        ]
+      },
+      "Control": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "expected_revision": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "action": {
+            "type": "string",
+            "enum": [
+              "pause",
+              "resume",
+              "cancel",
+              "retry"
+            ]
+          },
+          "reason": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "expected_revision",
+          "action",
+          "reason"
+        ]
+      },
+      "ApprovalDecision": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "expected_revision": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "manifest_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "decision": {
+            "type": "string",
+            "enum": [
+              "approve",
+              "reject"
+            ]
+          },
+          "reason": {
+            "type": "string"
+          },
+          "reject_target": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "P07",
+              "P11",
+              "X02",
+              null
+            ]
+          }
+        },
+        "required": [
+          "expected_revision",
+          "manifest_sha256",
+          "decision",
+          "reason",
+          "reject_target"
+        ]
+      },
+      "Event": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "event_id": {
+            "type": "string"
+          },
+          "job_id": {
+            "type": "string"
+          },
+          "step_id": {
+            "type": "string"
+          },
+          "cycle": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "attempt": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "type": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "actor_id": {
+            "type": "string"
+          },
+          "correlation_id": {
+            "type": "string"
+          },
+          "payload": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        },
+        "required": [
+          "event_id",
+          "job_id",
+          "step_id",
+          "cycle",
+          "attempt",
+          "type",
+          "timestamp",
+          "actor_id",
+          "correlation_id",
+          "payload"
+        ]
+      },
+      "Artifact": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "artifact_id": {
+            "type": "string"
+          },
+          "job_id": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "size_bytes": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "candidate_fingerprint": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "mock",
+              "real"
+            ]
+          }
+        },
+        "required": [
+          "artifact_id",
+          "job_id",
+          "kind",
+          "sha256",
+          "size_bytes",
+          "candidate_fingerprint",
+          "mode"
+        ]
+      },
+      "ArtifactRegistration": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "job_id": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string"
+          },
+          "filename": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "size_bytes": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "job_id",
+          "kind",
+          "filename",
+          "sha256",
+          "size_bytes"
+        ]
+      },
+      "ArtifactTransfer": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "artifact_id": {
+            "type": "string"
+          },
+          "upload_path": {
+            "type": "string"
+          },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "artifact_id",
+          "upload_path",
+          "expires_at"
+        ]
+      },
+      "CommandStatus": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "command_id": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "accepted",
+              "applied",
+              "rejected"
+            ]
+          },
+          "applied_revision": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "error": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Error"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "command_id",
+          "status",
+          "applied_revision",
+          "error"
+        ]
+      },
+      "Enrollment": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "token": {
+            "type": "string"
+          },
+          "machine_label": {
+            "type": "string"
+          },
+          "bridge_version": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "token",
+          "machine_label",
+          "bridge_version"
+        ]
+      },
+      "BridgeCredentials": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "bridge_id": {
+            "type": "string"
+          },
+          "access_token": {
+            "type": "string"
+          },
+          "refresh_token": {
+            "type": "string"
+          },
+          "expires_in": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "bridge_id",
+          "access_token",
+          "refresh_token",
+          "expires_in"
+        ]
+      },
+      "EnrollmentToken": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "machine_label": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "machine_label"
+        ]
+      },
+      "EnrollmentTokenResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "token": {
+            "type": "string"
+          },
+          "expires_in": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "token",
+          "expires_in"
+        ]
+      },
+      "Refresh": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "refresh_token": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "refresh_token"
+        ]
+      },
+      "Heartbeat": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "bridge_id": {
+            "type": "string"
+          },
+          "sequence": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "active_command_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "devices": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "device_id": {
+                  "type": "string"
+                },
+                "adb_serial": {
+                  "type": "string"
+                },
+                "fastboot_serial": {
+                  "type": "string"
+                },
+                "mode": {
+                  "type": "string"
+                },
+                "local_lock": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "device_id",
+                "adb_serial",
+                "fastboot_serial",
+                "mode",
+                "local_lock"
+              ]
+            }
+          }
+        },
+        "required": [
+          "bridge_id",
+          "sequence",
+          "active_command_ids",
+          "devices"
+        ]
+      },
+      "BridgeCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "command_id": {
+            "type": "string"
+          },
+          "job_id": {
+            "type": "string"
+          },
+          "step_id": {
+            "type": "string"
+          },
+          "cycle": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "attempt": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "bridge_id": {
+            "type": "string"
+          },
+          "device_id": {
+            "type": "string"
+          },
+          "lease_id": {
+            "type": "string"
+          },
+          "fencing_token": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "action": {
+            "type": "string"
+          },
+          "profile_ref": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "profile_version": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "artifact_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "artifact_sha256": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "deadline": {
+            "type": "string"
+          },
+          "idempotency_key": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "command_id",
+          "job_id",
+          "step_id",
+          "cycle",
+          "attempt",
+          "bridge_id",
+          "device_id",
+          "lease_id",
+          "fencing_token",
+          "action",
+          "profile_ref",
+          "profile_version",
+          "artifact_id",
+          "artifact_sha256",
+          "deadline",
+          "idempotency_key"
+        ],
+        "description": "Fields unrelated to the action are null. fetch_artifact and flash_profile require non-null artifact identifiers and SHA256; profile actions require profile version. The server and bridge both validate action-specific prerequisites."
+      },
+      "BridgeCommandList": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BridgeCommand"
+            }
+          }
+        },
+        "required": [
+          "items"
+        ]
+      },
+      "BridgeEvent": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "command_id": {
+            "type": "string"
+          },
+          "sequence": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "QUEUED",
+              "ACKED",
+              "RUNNING",
+              "SUCCEEDED",
+              "FAILED",
+              "UNKNOWN",
+              "CANCELED"
+            ]
+          },
+          "fencing_token": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "observed_mode": {
+            "type": "string"
+          },
+          "device_identity": {
+            "type": "string"
+          },
+          "exit_code": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "artifact_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "image_identity": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "command_id",
+          "sequence",
+          "state",
+          "fencing_token",
+          "observed_mode",
+          "device_identity",
+          "exit_code",
+          "artifact_ids",
+          "image_identity"
+        ]
+      },
+      "RuntimeEvent": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "execution_id": {
+            "type": "string"
+          },
+          "job_id": {
+            "type": "string"
+          },
+          "step_id": {
+            "type": "string"
+          },
+          "cycle": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "attempt": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "sequence": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "started",
+              "progress",
+              "tool_started",
+              "tool_finished",
+              "artifact_created",
+              "needs_human",
+              "completed",
+              "failed",
+              "heartbeat"
+            ]
+          },
+          "summary": {
+            "type": "string"
+          },
+          "artifact_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "execution_id",
+          "job_id",
+          "step_id",
+          "cycle",
+          "attempt",
+          "sequence",
+          "type",
+          "summary",
+          "artifact_ids"
+        ]
+      },
+      "Notification": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "notification_id": {
+            "type": "string"
+          },
+          "job_id": {
+            "type": "string"
+          },
+          "task_id": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string"
+          },
+          "read": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "notification_id",
+          "job_id",
+          "task_id",
+          "kind",
+          "read"
+        ]
+      },
+      "NotificationList": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Notification"
+            }
+          },
+          "next_cursor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "items",
+          "next_cursor"
+        ]
+      },
+      "ReleaseManifest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "job_id": {
+            "type": "string"
+          },
+          "candidate_fingerprint": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "source_commit": {
+            "type": "string"
+          },
+          "image_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "validation_bundle_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "profile_version": {
+            "type": "string"
+          },
+          "policy_version": {
+            "type": "string"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "team_github_tag",
+              "shared_gerrit_change",
+              "shared_github_pr",
+              "shared_github_commit"
+            ]
+          },
+          "repository_id": {
+            "type": "string"
+          },
+          "target_ref": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          },
+          "notes_draft_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "manifest_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        },
+        "required": [
+          "job_id",
+          "candidate_fingerprint",
+          "source_commit",
+          "image_sha256",
+          "validation_bundle_sha256",
+          "profile_version",
+          "policy_version",
+          "mode",
+          "repository_id",
+          "target_ref",
+          "version",
+          "notes_draft_sha256",
+          "manifest_sha256"
+        ]
+      }
+    }
+  }
+}

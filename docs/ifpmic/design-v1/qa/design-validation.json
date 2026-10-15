@@ -1,0 +1,286 @@
+{
+  "kind": "static_design_validation",
+  "not_production_acceptance": true,
+  "checks": [
+    {
+      "name": "unique_nodes",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "all_original_steps_present",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "known_roles",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "valid_on_pass",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "valid_on_business_fail",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "success_path_reaches_end",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "success_path_covers_all_nodes",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "human_boundaries_preserved",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "tc_scope_preserved",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "sam_failure_returns_design",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "tem_and_static_failure_return_development",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "sqe_report_before_gate",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "sqe_failure_returns_design",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "release_notes_original_order",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "approval_dominates_release",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "approval_cannot_skip",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "final_manifest_precedes_approval",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "P16_rework_path",
+      "passed": true,
+      "detail": "P07,P08,P09,P10,P11,P12,P13,P14,P15,P16"
+    },
+    {
+      "name": "P18_rework_path",
+      "passed": true,
+      "detail": "P11,P12,P13,P14,P15,P16,P17,P18"
+    },
+    {
+      "name": "P20_rework_path",
+      "passed": true,
+      "detail": "P11,P12,P13,P14,P15,P16,P17,P18,P19,P20"
+    },
+    {
+      "name": "P24_rework_path",
+      "passed": true,
+      "detail": "P07,P08,P09,P10,P11,P12,P13,P14,P15,P16,P17,P18,P19,P20,P21,P22,P23,P24"
+    },
+    {
+      "name": "all_step_states_defined",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "state_targets_exist",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "canceled_is_terminal",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "unknown_side_effect_reconciles",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "side_effects_not_blindly_retried",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "api_refs_resolve",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "api_unique_operation_ids",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "api_writes_idempotent",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "approval_payload_binds_manifest",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "human_payload_revision_guard",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "job_owner_not_client_supplied",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "sse_recovery_contract",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "json_schema_meta_validation",
+      "passed": true,
+      "detail": "28 component schemas"
+    },
+    {
+      "name": "all_user_requirements_map_to_acceptance",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "acceptance_not_mislabeled_passed",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "B01_dependencies",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "B02_dependencies",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "B03_dependencies",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "B04_dependencies",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "B05_dependencies",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "B06_dependencies",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "B07_dependencies",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "B08_dependencies",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "B09_dependencies",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "B10_dependencies",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "B11_dependencies",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "B12_dependencies",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "B13_dependencies",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "backlog_test_links_valid",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "example_profile_not_live",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "bridge_command_has_identity_and_fence",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "release_mode_consistency",
+      "passed": true,
+      "detail": ""
+    }
+  ],
+  "summary": {
+    "passed": 53,
+    "total": 53,
+    "failed": []
+  },
+  "inventory": {
+    "original_nodes": 26,
+    "extension_nodes": 3,
+    "requirements": 15,
+    "acceptance_cases": 32,
+    "api_paths": 20,
+    "api_operations": 22,
+    "component_schemas": 28,
+    "backlog_items": 13
+  }
+}

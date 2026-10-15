@@ -1,0 +1,137 @@
+{
+  "version": "1.0.0",
+  "functions": [
+    "start(task)->execution_id",
+    "events(execution_id,cursor)->event_stream",
+    "status(execution_id)",
+    "interrupt(execution_id)",
+    "resume(task,checkpoint)->execution_id",
+    "collect(execution_id)->TaskResult"
+  ],
+  "task_fields": [
+    "job_id",
+    "step_id",
+    "cycle",
+    "attempt",
+    "role",
+    "candidate_fingerprint",
+    "workspace_id",
+    "input_artifact_ids",
+    "expected_output_schema",
+    "runtime_profile_ref",
+    "allowed_tools",
+    "writable_paths",
+    "timeout_seconds",
+    "budget_limit",
+    "trace_id"
+  ],
+  "result_fields": [
+    "execution_id",
+    "job_id",
+    "step_id",
+    "cycle",
+    "attempt",
+    "status",
+    "summary",
+    "artifact_ids",
+    "changed_paths",
+    "evidence_ids",
+    "questions",
+    "failure_class"
+  ],
+  "result_status": [
+    "completed",
+    "needs_human",
+    "failed",
+    "canceled",
+    "interrupted"
+  ],
+  "rule": "completed is an agent execution outcome, never a quality gate PASS",
+  "roles": {
+    "spec-gen": {
+      "writes": [
+        "requirements",
+        "feature_list",
+        "srs",
+        "impact_report"
+      ],
+      "cannot": [
+        "source_code",
+        "quality_rules",
+        "release"
+      ]
+    },
+    "tc": {
+      "writes": [
+        "tc_design",
+        "test_patch"
+      ],
+      "cannot": [
+        "production_source",
+        "acceptance_thresholds",
+        "release"
+      ],
+      "note": "UT design belongs to test authoring per original document; code-dev controls development-stage invocation and integration."
+    },
+    "code-dev": {
+      "writes": [
+        "production_patch",
+        "integration_commit",
+        "review_report"
+      ],
+      "cannot": [
+        "quality_rules",
+        "release"
+      ],
+      "children": [
+        "tc"
+      ],
+      "review": "fresh read-only session, remediation returns P11"
+    },
+    "arch-runner": {
+      "writes": [
+        "measurement_report"
+      ],
+      "cannot": [
+        "measured_source",
+        "thresholds",
+        "release"
+      ],
+      "exec": "registered tool wrapper only"
+    },
+    "sqe": {
+      "writes": [
+        "sqe_report"
+      ],
+      "cannot": [
+        "device_arbitrary_shell",
+        "source_patch",
+        "release"
+      ],
+      "exec": "bridge device actions or manual evidence"
+    },
+    "report": {
+      "writes": [
+        "release_draft",
+        "release_manifest",
+        "release_notes"
+      ],
+      "cannot": [
+        "source_patch",
+        "approval"
+      ],
+      "exec": "publisher service requires approval digest; no push credential in LLM process"
+    }
+  },
+  "concurrency": "One writer per workspace; TC uses isolated test worktree and patch handoff; code-dev integration serializes.",
+  "prompt_outline": [
+    "role_and_scope",
+    "requirement_ids",
+    "input_artifact_refs_and_hashes",
+    "allowed_and_forbidden_paths",
+    "expected_outputs",
+    "evidence_required",
+    "question_and_failure_protocol"
+  ],
+  "data_policy": "Do not log or show hidden reasoning; expose tool events, observable actions, evidence and concise progress summaries."
+}
