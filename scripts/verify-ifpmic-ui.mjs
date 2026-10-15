@@ -15,12 +15,12 @@ async function files(directory) {
 }
 async function snapshot() {
   const paths = (await Promise.all(['src', 'server', 'tests', 'scripts', 'plugins', 'docs/ifpmic/design-v1'].map(files))).flat();
-  paths.push('docs/ifpmic/V2-SQE-UI.md', 'docs/ifpmic/evidence/v2/sqe-ui-baseline-41.json', 'docs/ifpmic/evidence/v2/sqe-ui-plan-review.json', 'docs/ifpmic/V2-SQE.md', 'docs/ifpmic/evidence/v2/sqe-baseline-41.json', 'docs/ifpmic/evidence/v2/sqe-plan-review.json', 'docs/ifpmic/evidence/v2/sqe-design-review.json', 'docs/ifpmic/V2-ROUTING-UI.md', 'docs/ifpmic/evidence/v2/routing-ui-baseline-32.json', 'docs/ifpmic/evidence/v2/routing-ui-plan-review.json', 'docs/ifpmic/V2-ROUTING.md', 'docs/ifpmic/evidence/v2/routing-plan-review.json', 'docs/ifpmic/V2-EXCEPTION-UI-CAPTURE.md', 'docs/ifpmic/evidence/v2/exception-ui-capture-review.json', 'docs/ifpmic/evidence/v2/ui-catalog.json', 'docs/ifpmic/V2-EXCEPTION-UI.md', 'docs/ifpmic/V2-EXCEPTIONS.md', 'docs/ifpmic/evidence/v2/exception-ui-plan-review.json', 'docs/ifpmic/evidence/v2/exceptions-plan-review-2.json', 'README.md', 'docs/ifpmic/V2-UI.md', 'docs/ifpmic/V2-SCENARIOS.md', 'docs/ifpmic/V2-PROTOCOLS.md', 'docs/ifpmic/V2-IMPLEMENTATION.md', 'docs/ifpmic/evidence/v2/ui-plan-review.json', 'package.json', 'package-lock.json', 'vite.config.ts', 'tsconfig.json', 'index.html', 'ifpmic.html', 'docs/ifpmic/PLAN.md', 'docs/ifpmic/VERIFICATION.md', 'docs/ifpmic/evidence/plan-review.json', 'docs/ifpmic/source-manifest.json', 'IFPMIC_AX_Design_Package_v1.zip', 'IFPMIC_AX_Design_v1.docx');
+  paths.push('docs/ifpmic/V2-CHILDREN.md', 'docs/ifpmic/evidence/v2/children-baseline-50.json', 'docs/ifpmic/evidence/v2/children-plan-review.json', 'docs/ifpmic/evidence/v2/children-design-review.json', 'docs/ifpmic/V2-SQE-UI.md', 'docs/ifpmic/evidence/v2/sqe-ui-baseline-41.json', 'docs/ifpmic/evidence/v2/sqe-ui-plan-review.json', 'docs/ifpmic/V2-SQE.md', 'docs/ifpmic/evidence/v2/sqe-baseline-41.json', 'docs/ifpmic/evidence/v2/sqe-plan-review.json', 'docs/ifpmic/evidence/v2/sqe-design-review.json', 'docs/ifpmic/V2-ROUTING-UI.md', 'docs/ifpmic/evidence/v2/routing-ui-baseline-32.json', 'docs/ifpmic/evidence/v2/routing-ui-plan-review.json', 'docs/ifpmic/V2-ROUTING.md', 'docs/ifpmic/evidence/v2/routing-plan-review.json', 'docs/ifpmic/V2-EXCEPTION-UI-CAPTURE.md', 'docs/ifpmic/evidence/v2/exception-ui-capture-review.json', 'docs/ifpmic/evidence/v2/ui-catalog.json', 'docs/ifpmic/V2-EXCEPTION-UI.md', 'docs/ifpmic/V2-EXCEPTIONS.md', 'docs/ifpmic/evidence/v2/exception-ui-plan-review.json', 'docs/ifpmic/evidence/v2/exceptions-plan-review-2.json', 'README.md', 'docs/ifpmic/V2-UI.md', 'docs/ifpmic/V2-SCENARIOS.md', 'docs/ifpmic/V2-PROTOCOLS.md', 'docs/ifpmic/V2-IMPLEMENTATION.md', 'docs/ifpmic/evidence/v2/ui-plan-review.json', 'package.json', 'package-lock.json', 'vite.config.ts', 'tsconfig.json', 'index.html', 'ifpmic.html', 'docs/ifpmic/PLAN.md', 'docs/ifpmic/VERIFICATION.md', 'docs/ifpmic/evidence/plan-review.json', 'docs/ifpmic/source-manifest.json', 'IFPMIC_AX_Design_Package_v1.zip', 'IFPMIC_AX_Design_v1.docx');
   for (const name of await readdir(join(root, 'experiments/paperclip'))) if (/\.(mjs|json)$/.test(name)) paths.push(join('experiments/paperclip', name));
   return Object.fromEntries(await Promise.all([...new Set(paths)].sort().map(async path => [path, sha256(await readFile(join(root, path)))])));
 }
 const before = await snapshot();
-const report = { kind: 'ifpmic_v2_partial_ui_candidate_verification', scope: 'SQE manual/result/report/judgment UI with immutable41 plus nine new scenarios and V0/V1/AX regression; partial V2 only, no real AT completion', attempt, startedAt: new Date().toISOString(), sourceHashes: before, sourceFingerprint: sha256(JSON.stringify(before)), commands: [], reports: {}, verdict: 'running' };
+const report = { kind: 'ifpmic_v2_partial_ui_candidate_verification', scope: 'P12 child execution and integration observations with preserved50 plus nine new scenarios and V0/V1/AX regression; partial V2 only, no real AT completion', attempt, startedAt: new Date().toISOString(), sourceHashes: before, sourceFingerprint: sha256(JSON.stringify(before)), commands: [], reports: {}, verdict: 'running' };
 async function run(name, command, args) {
   const log = join(directory, `${name}.log`);
   const startedAt = new Date().toISOString();
@@ -81,11 +81,11 @@ try {
     await writeFile(join(directory, name), bytes);
     report.reports[name] = { path: relative(root, join(directory, name)), sha256: sha256(bytes) };
   }
-  for (const name of ['standalone-browser.json', 'host-browser.json', 'catalog.json', 'catalog-journal.json', 'sqe-migration.json']) {
+  for (const name of ['standalone-browser.json', 'host-browser.json', 'catalog.json', 'catalog-journal.json', 'sqe-migration.json', 'children-migration.json']) {
     const bytes = await readFile(join(root, 'workflow-artifacts/verification/V2/ui', name));
     const value = JSON.parse(bytes);
     if (name.includes('browser') && value.verdict !== 'pass') throw new Error(`${name} did not pass`);
-    if (name === 'catalog.json' && (value.scenario_count !== 50 || value.mode !== 'mock')) throw new Error('Catalog manifest incomplete');
+    if (name === 'catalog.json' && (value.scenario_count !== 59 || value.mode !== 'mock')) throw new Error('Catalog manifest incomplete');
     await writeFile(join(directory, `ui-${name}`), bytes);
     report.reports[`ui-${name}`] = { path: relative(root, join(directory, `ui-${name}`)), sha256: sha256(bytes) };
     if (name.includes('browser')) for (const screenshot of value.evidence || []) {

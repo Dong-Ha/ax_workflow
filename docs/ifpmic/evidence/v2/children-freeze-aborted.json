@@ -1,0 +1,29 @@
+{
+  "kind": "children_freeze_aborted_before_acceptance",
+  "recorded_at": "2026-10-15T15:08:09.976922+00:00",
+  "reason": "Staged diff check found one extra blank line at new TC helper EOF; parent command used sequential separators and accidentally started gate despite diff-check failure. Stopped only verified gate process group 217014 before changing the helper. No acceptance result.",
+  "helper": "tests/helpers/ifpmic-children.mjs",
+  "before_sha256": "42eef79a7fabf0cb2f39c020bc7702a35bc2130626fbb16ce5ece27c6f66d2c9",
+  "after_sha256": "df781d36d845521c06c2b847e745a7c9c88516c932255432ca7ac8a13e24722f",
+  "change": "EOF whitespace only; no logic/assertion change",
+  "reverification": "New frozen complete 11-command gate required",
+  "partial_logs": [
+    {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-07-37-928Z/build.log",
+      "sha256": "3c7cb3e563b7590c84a8fd8a3d0bd0fcabc01b133f3c8a380027f6c7e2330f53"
+    },
+    {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-07-37-928Z/plugin-build.log",
+      "sha256": "e8264a2643dc26ecfa01fbf7bfa695f449060da8c0c52e4727f8f0fe7f680da8"
+    },
+    {
+      "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-07-37-928Z/unit.log",
+      "sha256": "7e1a27b00ce603005ea95dfa940d284b708bb5b864e7ea76750be8829eccde0f"
+    }
+  ],
+  "partial_passes_observed_before_stop": [
+    "unit",
+    "build",
+    "plugin-build"
+  ]
+}

@@ -52,6 +52,59 @@ function humanWaitEvents(seq, step_id) {
   ];
 }
 
+function literalP12ChildProofs() {
+  const parent = {
+    coordinator_task_id: 'mock:replay:parent-task:c1:a1',
+    coordinator_execution_id: 'mock:replay:parent-exec:c1:a1',
+    candidate_fingerprint: 'mock:candidate:A', requirements_version: 'mock:requirements:v1',
+  };
+  const requestId = 'mock:replay:request:c1:a1';
+  const taskId = 'mock:replay:task:c1:a1';
+  const childExecution = 'mock:replay:child-exec:c1:a1';
+  const production = 'mock:replay:production:c1:a1';
+  const patch = 'mock:replay:patch:c1:a1';
+  const resultEvidence = 'mock:replay:result-proof:c1:a1';
+  return [
+    ['p12_coordinator', {
+      actor: 'mock:system', role: 'code-dev', purpose: 'p12_coordination', ...parent,
+      p11_execution_id: 'mock:P11:c1:a1', code_artifact_id: 'mock:replay:code:c1:a1', production_hash: production,
+      tc_design_artifact_id: 'mock:replay:design:c1:a1', workspace_id: 'mock:replay:integration-ws:c1:a1',
+      write_scope: 'tests_integration_only', runtime_profile_ref: 'mock:runtime:code-dev-coordinator:v1',
+      evidence_id: 'mock:replay:coordinator-proof:c1:a1',
+    }],
+    ['child_request', {
+      actor: 'mock:code-dev', ...parent, request_id: requestId, child_task_id: taskId,
+      ordinal: 1, child_role: 'tc', workspace_id: 'mock:replay:tc-ws:c1:a1', write_scope: 'tests_only',
+      runtime_profile_ref: 'mock:runtime:tc:v1', output_schema_ref: 'mock:schema:tc-patch:v1',
+      code_artifact_id: 'mock:replay:code:c1:a1', tc_design_artifact_id: 'mock:replay:design:c1:a1',
+      prior_child_execution_id: null, checkpoint_artifact_id: null, answer_evidence_id: null, answer_artifact_id: null,
+      evidence_id: 'mock:replay:request-proof:c1:a1',
+    }],
+    ['child_assignment', {
+      actor: 'mock:system', ...parent, request_id: requestId, child_task_id: taskId,
+      child_execution_id: childExecution, workspace_id: 'mock:replay:tc-ws:c1:a1',
+      evidence_id: 'mock:replay:assignment-proof:c1:a1',
+    }],
+    ['child_result', {
+      actor: 'mock:tc', ...parent, request_id: requestId, child_task_id: taskId, child_execution_id: childExecution,
+      workspace_id: 'mock:replay:tc-ws:c1:a1', status: 'completed', output_schema_ref: 'mock:schema:tc-patch:v1',
+      patch_artifact_id: patch, changed_path_refs: ['mock:path:tests:unit'], production_hash: production,
+      question_id: null, checkpoint_artifact_id: null, failure_class: null, started_at_ms: 1000, finished_at_ms: 2000,
+      evidence_id: resultEvidence,
+    }],
+    ['child_collect', {
+      actor: 'mock:code-dev', ...parent, child_execution_id: childExecution, result_evidence_id: resultEvidence,
+      evidence_id: 'mock:replay:collect-proof:c1:a1',
+    }],
+    ['child_integrated', {
+      actor: 'mock:code-dev', ...parent, child_execution_id: childExecution, result_evidence_id: resultEvidence,
+      patch_artifact_id: patch, production_hash_before: production, production_hash_after: production,
+      changed_path_refs: ['mock:path:tests:unit'], expectations_changed: false, outcome: 'integrated',
+      integration_artifact_id: 'mock:replay:integration-proof:c1:a1', evidence_id: 'mock:replay:integrated-proof:c1:a1',
+    }],
+  ];
+}
+
 function deepFrozen(value, seen = new Set()) {
   if (value === null || typeof value !== 'object' || seen.has(value)) return true;
   seen.add(value);
@@ -166,6 +219,11 @@ test('system quality success requires current complete PASS measurement evidence
     const owner = rawWorkflow.nodes.find(node => node.id === step_id).owner;
     if (owner === 'human') {
       events.push(...humanWaitEvents(++seq, step_id)); seq += 4;
+    } else if (step_id === 'P12') {
+      events.push(event(++seq, 'step', step_id, { payload: { state: 'READY' } }));
+      events.push(event(++seq, 'step', step_id, { payload: { state: 'RUNNING' } }));
+      for (const [type, payload] of literalP12ChildProofs()) events.push(event(++seq, type, step_id, { payload }));
+      events.push(event(++seq, 'step', step_id, { payload: { state: 'SUCCEEDED' } }));
     } else {
       events.push(...stepEvents(++seq, step_id)); seq += 2;
     }

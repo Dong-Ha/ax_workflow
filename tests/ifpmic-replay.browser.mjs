@@ -19,6 +19,7 @@ const report = {
   captureAdjustments: [],
   geometryMethod: 'Target full bounding box must fit the viewport and each overflow-clipping ancestor. The 4x4 hit grid counts only the target or its descendants; hits on ancestors are rejected.',
   sqeCaptureGeometry: [],
+  childCaptureGeometry: [],
   apiRequests: [],
   pageErrors: [],
   consoleErrors: [],
@@ -76,6 +77,15 @@ const scenarioOracle = {
   'sqe-report-retry': { current: 'END', status: 'COMPLETED', cycle: 1 },
   'sqe-judgment-retry': { current: 'END', status: 'COMPLETED', cycle: 1 },
   'sqe-manual-quarantine': { current: 'P22', status: 'RECONCILING', cycle: 1 },
+  'agent-wait': { current: 'P12', status: 'RUNNING', cycle: 1 },
+  'agent-handoff': { current: 'END', status: 'COMPLETED', cycle: 1 },
+  'agent-child-failure': { current: 'END', status: 'COMPLETED', cycle: 1 },
+  'agent-child-question': { current: 'END', status: 'COMPLETED', cycle: 1 },
+  'agent-child-retry-limit': { current: 'P12', status: 'WAITING_HUMAN', cycle: 1 },
+  'agent-child-stale-cycle': { current: 'END', status: 'COMPLETED', cycle: 2, rework: 1 },
+  'agent-child-permissions': { current: 'END', status: 'COMPLETED', cycle: 1 },
+  'agent-child-interrupted': { current: 'P12', status: 'WAITING_HUMAN', cycle: 1 },
+  'agent-child-canceled': { current: 'END', status: 'COMPLETED', cycle: 1 },
 };
 
 let browser;
@@ -267,7 +277,7 @@ try {
     assert.ok((await replayPanel().innerText()).includes('MOCK'));
   });
 
-  await record('catalog exposes all 50 frozen scenarios and starts each at cursor zero', async () => {
+  await record('catalog exposes all 59 frozen scenarios and starts each at cursor zero', async () => {
     const expectedIds = Object.keys(scenarioOracle);
     const options = await scenarioSelect().locator('option').evaluateAll(items => items.map(item => item.value).filter(Boolean));
     assert.deepEqual([...options].sort(), [...expectedIds].sort());
@@ -279,7 +289,7 @@ try {
     }
   });
 
-  await record('all 50 scenarios reach their fixed endpoint through the end-observation control', async () => {
+  await record('all 59 scenarios reach their fixed endpoint through the end-observation control', async () => {
     for (const [id, expected] of Object.entries(scenarioOracle)) {
       await selectScenario(id);
       await replayPanel().getByRole('button', { name: '끝 관측', exact: true }).click();
@@ -1063,6 +1073,200 @@ try {
     await assertSummary({ current: 'P01', status: 'RUNNING', cycle: 1 });
     assert.equal(await panel().count(), 0, 'scenario reset clears SQE observation');
     assert.ok((await history().innerText()).includes('이 관측까지 과거 이력 없음'), 'scenario reset clears SQE history');
+  });
+
+  await record('child coordinator and TC execution remain separate, bound, and legible across all nine fixed checkpoints', async () => {
+    const childPanel = () => page.getByRole('region', { name: '자식 TC 실행 모의 관측', exact: true });
+    const selectedChild = () => page.getByTestId('ifpmic-child-step-detail');
+    const childHistory = () => page.getByTestId('ifpmic-child-history');
+    const captureChild = async (name, width, detail) => {
+      const height = width === 375 ? 1800 : 1440;
+      await page.setViewportSize({ width, height });
+      const groupSpecs = [
+        ['binding', 'ifpmic-child-binding', 'P12 부모·자식 식별'],
+        ['result', 'ifpmic-child-result', 'P12 쓰기 범위와 결과'],
+        ['integration', 'ifpmic-child-integration', 'P12 질문·복구·통합'],
+      ];
+      assert.equal(await detail.count(), 1, `${name} detail exists`);
+      for (const [groupName, testId, accessibleName] of groupSpecs) {
+        const target = detail.getByTestId(testId);
+        assert.equal(await target.count(), 1, `${name} contains ${testId}`);
+        assert.equal(await target.getAttribute('aria-label'), accessibleName);
+        await target.evaluate(element => element.scrollIntoView({ block: 'center', inline: 'nearest' }));
+        const view = await target.evaluate(element => {
+        const r = element.getBoundingClientRect();
+        const rect = { left: r.left, top: r.top, right: r.right, bottom: r.bottom, width: r.width, height: r.height };
+        const viewport = { width: innerWidth, height: innerHeight };
+        const points = [];
+        for (let row = 1; row <= 4; row++) for (let col = 1; col <= 4; col++) {
+          const x = r.left + r.width * col / 5, y = r.top + r.height * row / 5;
+          const hit = document.elementFromPoint(x, y);
+          points.push({ x, y, insideTargetOrDescendant: Boolean(hit && (hit === element || element.contains(hit))) });
+        }
+        const overlaps = [];
+        for (const candidate of document.querySelectorAll('*')) {
+          if (candidate === element || element.contains(candidate) || candidate.contains(element)) continue;
+          const style = getComputedStyle(candidate);
+          if (!['fixed', 'sticky'].includes(style.position) || style.display === 'none' || style.visibility === 'hidden' || Number(style.opacity) === 0) continue;
+          const b = candidate.getBoundingClientRect();
+          if (b.width <= 0 || b.height <= 0) continue;
+          const intersection = { left: Math.max(r.left, b.left), top: Math.max(r.top, b.top),
+            right: Math.min(r.right, b.right), bottom: Math.min(r.bottom, b.bottom) };
+          if (intersection.right > intersection.left && intersection.bottom > intersection.top) overlaps.push({
+            selector: candidate.id ? `#${candidate.id}` : candidate.getAttribute('data-testid') ? `[data-testid="${candidate.getAttribute('data-testid')}"]` : candidate.tagName.toLowerCase(),
+            position: style.position, intersection,
+          });
+        }
+        const clippingAncestors = [];
+        for (let ancestor = element.parentElement; ancestor; ancestor = ancestor.parentElement) {
+          const style = getComputedStyle(ancestor), clipsX = ['hidden', 'auto', 'scroll', 'clip'].includes(style.overflowX),
+            clipsY = ['hidden', 'auto', 'scroll', 'clip'].includes(style.overflowY);
+          if (!clipsX && !clipsY) continue;
+          const a = ancestor.getBoundingClientRect();
+          const box = { left: a.left + ancestor.clientLeft, top: a.top + ancestor.clientTop,
+            right: a.left + ancestor.clientLeft + ancestor.clientWidth,
+            bottom: a.top + ancestor.clientTop + ancestor.clientHeight };
+          clippingAncestors.push({ selector: ancestor.id ? `#${ancestor.id}` : ancestor.classList?.length ? `${ancestor.tagName.toLowerCase()}.${[...ancestor.classList].join('.')}` : ancestor.tagName.toLowerCase(),
+            overflowX: style.overflowX, overflowY: style.overflowY,
+            fitsX: !clipsX || (r.left >= box.left && r.right <= box.right),
+            fitsY: !clipsY || (r.top >= box.top && r.bottom <= box.bottom) });
+        }
+        return { rect, viewport, points, overlaps, clippingAncestors,
+          fullyVisible: r.width > 0 && r.height > 0 && r.left >= 0 && r.top >= 0 && r.right <= innerWidth && r.bottom <= innerHeight };
+      });
+      assert.equal(view.fullyVisible, true, `${name} fully fits viewport: ${JSON.stringify(view)}`);
+      assert.ok(view.points.every(point => point.insideTargetOrDescendant), `${name} 4x4 target hit grid: ${JSON.stringify(view.points)}`);
+      assert.deepEqual(view.overlaps, [], `${name} fixed/sticky overlaps: ${JSON.stringify(view.overlaps)}`);
+      assert.ok(view.clippingAncestors.every(ancestor => ancestor.fitsX && ancestor.fitsY), `${name} overflow clips: ${JSON.stringify(view.clippingAncestors)}`);
+      assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true, `${name} no page overflow`);
+        const filename = `${hostMode ? 'host' : 'standalone'}-child-${name}-${groupName}-${width}.png`;
+        await page.screenshot({ path: path.join(evidenceDir, filename), fullPage: false });
+        report.evidence.push(`workflow-artifacts/verification/V2/ui/${filename}`);
+        report.childCaptureGeometry.push({ name, group: groupName, width, height, target: testId, accessibleName, screenshot: `workflow-artifacts/verification/V2/ui/${filename}`, fullPage: false, ...view });
+      }
+    };
+    const go = async (id, checkpoint) => { await selectScenario(id); await moveCheckpoint(checkpoint); };
+    const selectP12 = async () => { await card('P12').click(); assert.equal(await selectedChild().count(), 1); return selectedChild(); };
+    const assertChildPanel = async ({ coordinator, child, ordinal, integration }) => {
+      const panel = childPanel();
+      await panel.waitFor();
+      assert.equal(await panel.getAttribute('data-coordinator-status'), coordinator);
+      assert.equal(await panel.getAttribute('data-child-status'), child);
+      assert.equal(await panel.getAttribute('data-request-ordinal'), ordinal === null ? '' : String(ordinal));
+      assert.equal(await panel.getAttribute('data-integration-status'), integration);
+      const body = await panel.innerText();
+      for (const label of ['부모 coordinator', 'TC 자식 실행', '명시 부모 관계', '통합 근거']) {
+        assert.ok(body.includes(label), `child panel includes ${label}`);
+      }
+      assert.ok(body.includes('품질 판정과 실제 실행 권한은 별도'), 'child completion is explicitly separate from quality and real authority');
+      assert.equal(await panel.locator('a').count(), 0, 'mock artifact refs are not links');
+      return panel;
+    };
+
+    await go('agent-wait', 'waiting');
+    await assertSummary({ current: 'P12', status: 'RUNNING', cycle: 1 });
+    let panel = await assertChildPanel({ coordinator: 'WAITING_AGENT', child: 'running', ordinal: 1, integration: '없음' });
+    let detail = await selectP12();
+    assert.equal(await detail.getAttribute('data-step-id'), 'P12');
+    assert.equal(await detail.getAttribute('data-cycle'), '1');
+    assert.equal(await detail.getAttribute('data-attempt'), '1');
+    assert.ok((await detail.innerText()).includes('mock:P12:c1:a1'));
+    assert.ok((await detail.innerText()).includes('mock:agent-wait:ch:integration-ws:c1:a1'));
+    assert.ok((await detail.innerText()).includes('쓰기 범위 · 합성 선언'));
+    await captureChild('agent-wait-waiting', 1440, detail);
+
+    await go('agent-handoff', 'returned');
+    await assertSummary({ current: 'P12', status: 'RUNNING', cycle: 1 });
+    panel = await assertChildPanel({ coordinator: 'WAITING_AGENT', child: 'completed', ordinal: 1, integration: '없음' });
+    detail = await selectP12();
+    assert.ok((await detail.innerText()).includes('mock:path:tests:unit'));
+    await captureChild('agent-handoff-returned', 1440, detail);
+    await moveCheckpoint('integrated');
+    panel = await assertChildPanel({ coordinator: 'COMPLETED', child: 'completed', ordinal: 1, integration: 'integrated' });
+    await assertSummary({ current: 'P12', status: 'RUNNING', cycle: 1 });
+    detail = await selectP12();
+    assert.ok((await detail.innerText()).includes('통합 근거'));
+    await captureChild('agent-handoff-integrated', 1440, detail);
+
+    await go('agent-child-question', 'waiting-human');
+    panel = await assertChildPanel({ coordinator: 'WAITING_HUMAN', child: 'needs_human', ordinal: 1, integration: '없음' });
+    assert.ok((await panel.innerText()).includes('사람 복구 승인 필요') === false, 'question is distinct from recovery-required cancellation');
+    detail = await selectP12();
+    assert.ok((await detail.innerText()).includes('agent_question') || (await detail.innerText()).includes('mock:child-human:'));
+    await captureChild('agent-question-waiting-human', 375, detail);
+    await moveCheckpoint('resumed');
+    panel = await assertChildPanel({ coordinator: 'WAITING_AGENT', child: 'running', ordinal: 2, integration: '없음' });
+    detail = await selectP12();
+    assert.equal(await detail.getAttribute('data-ordinal'), '2');
+    const oldQuestion = childHistory().first();
+    assert.equal(await oldQuestion.count(), 1, 'the earlier ordinal remains archived separately');
+    assert.equal(await oldQuestion.getAttribute('data-ordinal'), '1');
+    assert.equal(await oldQuestion.getAttribute('data-result-status'), 'needs_human');
+    assert.ok((await oldQuestion.innerText()).includes('과거 · 현재 권한 아님'));
+    await captureChild('agent-question-resumed', 1440, detail);
+
+    await go('agent-child-failure', 'retried');
+    await assertSummary({ current: 'P12', status: 'RUNNING', cycle: 1 });
+    assert.equal(await childPanel().count(), 0, 'fresh READY attempt has no child assignment yet');
+    assert.ok(await card('P12').getAttribute('data-state') === 'READY');
+    await page.getByRole('button', { name: '이력 영역 펼치기', exact: true }).click();
+    const oldFailure = childHistory().first();
+    assert.equal(await oldFailure.getAttribute('data-attempt'), '1');
+    assert.equal(await oldFailure.getAttribute('data-result-status'), 'failed');
+    await captureChild('agent-failure-retried-history', 375, oldFailure);
+    await moveCheckpoint('recovered');
+    await assertSummary({ current: 'P13', status: 'RUNNING', cycle: 1 });
+    await card('P12').click();
+    detail = page.locator('[data-testid="ifpmic-child-step-detail"][data-attempt="2"]');
+    assert.equal(await detail.getAttribute('data-attempt'), '2');
+    assert.equal(await detail.getAttribute('data-result-status'), 'completed');
+    assert.ok((await detail.innerText()).includes('integrated'));
+    await captureChild('agent-failure-recovered', 375, detail);
+
+    await go('agent-child-permissions', 'integration-denied');
+    panel = await assertChildPanel({ coordinator: 'RUNNING', child: 'completed', ordinal: 1, integration: '없음' });
+    detail = await selectP12();
+    assert.ok((await detail.innerText()).includes('production hash'));
+    assert.ok((await detail.innerText()).includes('없음'));
+    await captureChild('agent-permissions-integration-denied', 1440, detail);
+
+    await go('agent-child-stale-cycle', 'stale');
+    await assertSummary({ current: 'P12', status: 'RUNNING', cycle: 2, rework: 1 });
+    panel = await assertChildPanel({ coordinator: 'WAITING_AGENT', child: 'running', ordinal: 1, integration: '없음' });
+    detail = await selectP12();
+    await page.getByRole('button', { name: '이력 영역 펼치기', exact: true }).click();
+    const staleArchived = childHistory().first();
+    assert.equal(await staleArchived.getAttribute('data-cycle'), '1');
+    assert.equal(await staleArchived.getAttribute('data-result-status'), 'completed');
+    assert.equal(await detail.getAttribute('data-cycle'), '2');
+    await captureChild('agent-stale-cycle-current', 1440, detail);
+    await captureChild('agent-stale-cycle-history', 1440, staleArchived);
+
+    await go('agent-child-retry-limit', 'capped');
+    await assertSummary({ current: 'P12', status: 'WAITING_HUMAN', cycle: 1 });
+    panel = await assertChildPanel({ coordinator: 'FAILED', child: 'failed', ordinal: 1, integration: '없음' });
+    assert.ok((await panel.innerText()).includes('재시도 상한 · 사람 검토 필요'));
+    detail = await selectP12();
+    assert.equal(await detail.getAttribute('data-attempt'), '3');
+    await captureChild('agent-retry-limit-capped', 1440, detail);
+
+    await go('agent-child-interrupted', 'denied-retry');
+    panel = await assertChildPanel({ coordinator: 'WAITING_HUMAN', child: 'interrupted', ordinal: 1, integration: '없음' });
+    assert.ok((await panel.innerText()).includes('사람 복구 승인 필요'));
+    await go('agent-child-canceled', 'recovery-approved');
+    panel = await assertChildPanel({ coordinator: 'WAITING_HUMAN', child: 'canceled', ordinal: 1, integration: '없음' });
+    const approvedRecoveryText = await panel.innerText();
+    assert.ok(approvedRecoveryText.includes('사람 복구 승인 기록됨'));
+    assert.equal(approvedRecoveryText.includes('사람 복구 승인 필요'), false,
+      'an accepted retry approval is displayed as recorded rather than still pending');
+
+    await selectScenario('agent-wait');
+    assert.equal(await replayPanel().locator('output').innerText().then(text => /관측\s*0\s*\//.test(text)), true,
+      'scenario switch returns to cursor zero');
+    assert.equal(await childPanel().count(), 0, 'scenario switch clears current child projection');
+    assert.equal(await page.getByTestId('ifpmic-child-history').count(), 0, 'scenario switch clears child history projection');
+    assert.deepEqual(report.browserWriteRequests, [], 'child mock workflows issue no API writes');
+    assert.deepEqual(report.apiRequests, [], 'child mock workflows make no API requests');
   });
 
   await record('question review-blocked checkpoint remains legible at 1440px and 375px', async () => {

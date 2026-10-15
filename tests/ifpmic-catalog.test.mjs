@@ -9,22 +9,57 @@ import { replayScenario } from '../src/ifpmic/replay.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const specs = path.join(root, 'docs/ifpmic/design-v1/specs');
-const [workflow, stateContract, priorCatalogEvidence, routingUiBaseline, sqeBaseline, sqeUiBaselineText] = await Promise.all([
+const [workflow, stateContract, priorCatalogEvidence, routingUiBaseline, sqeBaseline, sqeUiBaselineText, childrenBaseline] = await Promise.all([
   readFile(path.join(specs, 'workflow.v1.json'), 'utf8').then(JSON.parse),
   readFile(path.join(specs, 'state-contract.json'), 'utf8').then(JSON.parse),
   readFile(path.join(root, 'docs/ifpmic/evidence/v2/ui-catalog.json'), 'utf8').then(JSON.parse),
   readFile(path.join(root, 'docs/ifpmic/evidence/v2/routing-ui-baseline-32.json'), 'utf8').then(JSON.parse),
   readFile(path.join(root, 'docs/ifpmic/evidence/v2/sqe-baseline-41.json'), 'utf8').then(JSON.parse),
   readFile(path.join(root, 'docs/ifpmic/evidence/v2/sqe-ui-baseline-41.json'), 'utf8'),
+  readFile(path.join(root, 'docs/ifpmic/evidence/v2/children-baseline-50.json'), 'utf8').then(JSON.parse),
 ]);
 const sqeUiBaseline = JSON.parse(sqeUiBaselineText);
 
 const originalCatalogView = scenario => {
-  const events = scenario.events.filter(event => event.source_id !== 'mock:sqe-catalog');
+  const events = scenario.events.filter(event => !['mock:sqe-catalog', 'mock:child-catalog'].includes(event.source_id));
   const checkpoints = scenario.checkpoints.map(point => ({ ...point,
-    cursor: scenario.events.slice(0, point.cursor).filter(event => event.source_id !== 'mock:sqe-catalog').length }));
+    cursor: scenario.events.slice(0, point.cursor).filter(event => !['mock:sqe-catalog', 'mock:child-catalog'].includes(event.source_id)).length }));
   return { events, checkpoints };
 };
+
+// The children baseline is the exact catalog immediately before child-event
+// insertion, so preserve SQE records while stripping only child-catalog rows.
+const preChildrenCatalogView = scenario => {
+  const events = scenario.events.filter(event => event.source_id !== 'mock:child-catalog');
+  const checkpoints = scenario.checkpoints.map(point => ({ ...point,
+    cursor: scenario.events.slice(0, point.cursor).filter(event => event.source_id !== 'mock:child-catalog').length }));
+  return { events, checkpoints };
+};
+
+const childEventTypes = ['p12_coordinator', 'child_request', 'child_assignment', 'child_result', 'child_collect', 'child_integrated'];
+const noChildExecutionScenarios = new Set([
+  'human-wait', 'plan-rejection', 'duplicate-events', 'spec-question-wait', 'spec-question-resolution',
+  'spec-question-retry', 'spec-question-repeat', 'routing-reuse', 'routing-new-hw', 'routing-exempt',
+  'routing-pilot-denied', 'routing-no-change', 'routing-no-change-denied', 'routing-candidate',
+  'routing-replan', 'routing-metadata',
+]);
+function literalChildAnchorCount(scenarioId) {
+  if (scenarioId === 'cycle-limit') return 4;
+  return noChildExecutionScenarios.has(scenarioId) ? 0 : 1;
+}
+function expectedChildInsertions(originalEvents) {
+  const expected = [];
+  let candidate_fingerprint = 'mock:candidate:A';
+  let requirements_version = 'mock:requirements:v1';
+  for (const anchor of originalEvents) {
+    if (anchor.type === 'candidate') candidate_fingerprint = anchor.payload.candidate_fingerprint;
+    if (anchor.type === 'spec_resolution' && anchor.payload.complete === true) requirements_version = anchor.payload.resolved_requirements_version;
+    if (anchor.type === 'step' && anchor.step_id === 'P12' && anchor.payload.state === 'RUNNING') {
+      for (const [offset, type] of childEventTypes.entries()) expected.push({ type, anchor, offset, candidate_fingerprint, requirements_version });
+    }
+  }
+  return expected;
+}
 
 const expectedScenarioIds = [
   'happy-path', 'human-wait', 'human-wait-oss', 'debug-failure', 'review-failure',
@@ -38,6 +73,8 @@ const expectedScenarioIds = [
   'routing-no-change', 'routing-no-change-denied', 'routing-candidate', 'routing-replan', 'routing-metadata',
   'sqe-manual-pass', 'sqe-manual-fail', 'sqe-incomplete', 'sqe-parser-error', 'sqe-identity-mismatch',
   'sqe-manual-retry', 'sqe-report-retry', 'sqe-judgment-retry', 'sqe-manual-quarantine',
+  'agent-wait', 'agent-handoff', 'agent-child-failure', 'agent-child-question', 'agent-child-retry-limit',
+  'agent-child-stale-cycle', 'agent-child-permissions', 'agent-child-interrupted', 'agent-child-canceled',
 ];
 const migratedScenarioIds = expectedScenarioIds.slice(0, 41);
 const sqeUiScenarioIds = [
@@ -363,18 +400,18 @@ function assertRoutingCheckpoint(result, expected, scenarioId, checkpointId) {
   if (expected.gateDispositions !== undefined) assert.deepEqual(result.release.manifest?.gate_dispositions, expected.gateDispositions, `${label}/manifest gate dispositions`);
 }
 
-test('fixed 41-scenario mock catalog inventory, frozen values and checkpoint IDs match literal oracle', () => {
+test('fixed catalog inventory and original-scenario checkpoint values match literal oracle', () => {
   const originalWorkflow = structuredClone(workflow);
   const originalContract = structuredClone(stateContract);
   const catalog = createScenarioCatalog(workflow, stateContract);
-  assert.deepEqual(catalog.map(item => item.id), expectedScenarioIds, 'the original 41 ordered scenarios remain the unchanged prefix before the nine appended cases');
-  assert.equal(catalog.length, 50);
+  assert.deepEqual(catalog.map(item => item.id), expectedScenarioIds, 'the original 50 ordered scenarios remain the unchanged prefix before the nine appended child cases');
+  assert.equal(catalog.length, 59);
   assert.deepEqual(workflow, originalWorkflow);
   assert.deepEqual(stateContract, originalContract);
   assert.ok(deepFrozen(catalog), 'catalog, scenarios, events, payloads and checkpoints are deeply frozen');
   assert.deepEqual(createScenarioCatalog(workflow, stateContract), catalog, 'catalog construction is deterministic');
 
-  for (const scenario of catalog) {
+  for (const scenario of catalog.slice(0, 50)) {
     assert.equal(scenario.title.length > 0, true, scenario.id);
     assert.ok(scenario.requirement_ids.length > 0, scenario.id);
     assert.ok(Array.isArray(scenario.events), scenario.id);
@@ -435,7 +472,7 @@ test('fixed 41-scenario mock catalog inventory, frozen values and checkpoint IDs
     assert.equal(inserted.length, sqeProofCountOracle[scenario.id], `${scenario.id} has its fixed expected inserted proof count`);
     assert.ok(inserted.every(event => ['sqe_context', 'sqe_result', 'sqe_report'].includes(event.type)),
       `${scenario.id} migration adds only allowlisted SQE proof event types`);
-    assert.ok(scenario.events.filter(event => event.source_id !== 'mock:sqe-catalog').every(event => {
+    assert.ok(scenario.events.filter(event => !['mock:sqe-catalog', 'mock:child-catalog'].includes(event.source_id)).every(event => {
       const originalIndex = normalized.events.indexOf(event);
       return originalIndex >= 0;
     }), `${scenario.id} preserves every original event object in order`);
@@ -482,7 +519,7 @@ test('fixed 41-scenario mock catalog inventory, frozen values and checkpoint IDs
       assert.equal(row.applied, true, `${scenario.id}/${event.type} is current usable evidence, not stale/inactive residue`);
     }
   }
-  for (const scenario of catalog.slice(41)) {
+  for (const scenario of catalog.slice(41, 50)) {
     assert.ok(sqeUiScenarioIds.includes(scenario.id), `${scenario.id} belongs to the nine-case SQE UI extension`);
     assert.ok(!baseline41.has(scenario.id), `${scenario.id} is not misrepresented as an original-41 baseline fixture`);
     const authored = scenario.events.filter(event => event.source_id === 'mock:sqe-ui');
@@ -507,20 +544,90 @@ test('fixed 41-scenario mock catalog inventory, frozen values and checkpoint IDs
   for (const scenario of catalog.slice(0, 41)) {
     const baseline = uiBaseline41.get(scenario.id);
     assert.ok(baseline, `${scenario.id} belongs to the immutable pre-UI 41 baseline`);
-    assert.equal(createHash('sha256').update(JSON.stringify(scenario.events)).digest('hex'), baseline.events_sha256,
+    const normalized = preChildrenCatalogView(scenario);
+    assert.equal(createHash('sha256').update(JSON.stringify(normalized.events)).digest('hex'), baseline.events_sha256,
       `${scenario.id} raw event fixture exactly matches commit 2d6319f without SQE normalization`);
-    assert.deepEqual(scenario.checkpoints, baseline.checkpoints,
-      `${scenario.id} raw checkpoint list/cursors exactly match commit 2d6319f`);
-    assert.equal(createHash('sha256').update(JSON.stringify(scenario.checkpoints)).digest('hex'), baseline.checkpoints_sha256,
+    assert.deepEqual(normalized.checkpoints, baseline.checkpoints,
+      `${scenario.id} checkpoint list/cursors restore commit 2d6319f before child insertion`);
+    assert.equal(createHash('sha256').update(JSON.stringify(normalized.checkpoints)).digest('hex'), baseline.checkpoints_sha256,
       `${scenario.id} raw checkpoint SHA matches commit 2d6319f`);
   }
   assert.deepEqual(workflow, originalWorkflow, 'catalog builder did not mutate workflow input');
   assert.deepEqual(stateContract, originalContract, 'catalog builder did not mutate state contract input');
 });
 
-test('all fixed scenario endpoints match independent status, route, attempt, evidence and publication oracle', () => {
+test('child catalog migration preserves the fixed 50-scenario baseline and applies six proofs at every P12 execution anchor', async () => {
   const catalog = createScenarioCatalog(workflow, stateContract);
-  for (const scenario of catalog) {
+  assert.equal(childrenBaseline.kind, 'immutable_pre_child_protocol_catalog_baseline');
+  assert.equal(childrenBaseline.scenario_count, 50);
+  assert.equal(childrenBaseline.scenarios.length, 50);
+  assert.deepEqual(catalog.slice(0, 50).map(item => item.id), childrenBaseline.scenarios.map(item => item.id),
+    'the exact original 50 scenario IDs and order remain the prefix');
+  const archive = await readFile(path.join(root, childrenBaseline.historical_trace_archive));
+  assert.equal(createHash('sha256').update(archive).digest('hex'), childrenBaseline.historical_trace_archive_sha256,
+    'the immutable historical trace archive is byte-pinned');
+
+  for (const scenario of catalog.slice(0, 50)) {
+    const baseline = childrenBaseline.scenarios.find(item => item.id === scenario.id);
+    assert.ok(baseline, `${scenario.id} is in the frozen pre-child baseline`);
+    const restored = preChildrenCatalogView(scenario);
+    assert.equal(createHash('sha256').update(JSON.stringify(restored.events)).digest('hex'), baseline.events_sha256,
+      `${scenario.id} restores exact pre-child event bytes by removing only child-catalog events`);
+    assert.deepEqual(restored.checkpoints, baseline.checkpoints,
+      `${scenario.id} restores every original checkpoint ID/title/order/cursor`);
+    assert.equal(createHash('sha256').update(JSON.stringify(restored.checkpoints)).digest('hex'), baseline.checkpoints_sha256,
+      `${scenario.id} restores the pre-child checkpoint hash`);
+
+    const anchors = expectedChildInsertions(restored.events);
+    const inserted = scenario.events.filter(event => event.source_id === 'mock:child-catalog');
+    assert.equal(anchors.length / childEventTypes.length, literalChildAnchorCount(scenario.id), `${scenario.id} has the fixed original P12 RUNNING anchor count`);
+    assert.equal(inserted.length, anchors.length, `${scenario.id} has exactly six inserted proofs per original P12 RUNNING anchor`);
+    assert.equal(inserted.length % childEventTypes.length, 0, `${scenario.id} child insertions form complete six-event groups`);
+    const byIndex = inserted.map(event => ({ event, index: scenario.events.indexOf(event) })).sort((a, b) => a.index - b.index);
+    assert.deepEqual(byIndex.map(row => row.event.type), anchors.map(row => row.type),
+      `${scenario.id} child proof types follow the literal six-event protocol order`);
+    for (const [index, { event, index: eventIndex }] of byIndex.entries()) {
+      const expected = anchors[index];
+      const anchorIndex = scenario.events.indexOf(expected.anchor);
+      assert.equal(eventIndex, anchorIndex + 1 + expected.offset, `${scenario.id}/${event.type} immediately follows its P12 RUNNING anchor in protocol order`);
+      for (const field of ['mode', 'job_id', 'step_id', 'cycle', 'attempt', 'execution_id']) {
+        assert.equal(event[field], field === 'mode' ? 'mock' : expected.anchor[field], `${scenario.id}/${event.type} binds anchor ${field}`);
+      }
+      assert.equal(event.source_id, 'mock:child-catalog');
+      assert.equal(event.event_id, `mock:${scenario.id}:child-event:${index + 1}`);
+      assert.equal(event.source_seq, index + 1, `${scenario.id} child source sequence is fixed and contiguous`);
+      assert.equal(event.payload.candidate_fingerprint, expected.candidate_fingerprint);
+      assert.equal(event.payload.requirements_version, expected.requirements_version);
+    }
+
+    for (let offset = 0; offset < inserted.length; offset += childEventTypes.length) {
+      const group = inserted.slice(offset, offset + childEventTypes.length);
+      const [coordinator, request, assignment, childResult, collection, integration] = group;
+      const c = coordinator.payload, q = request.payload, a = assignment.payload, r = childResult.payload;
+      assert.equal(q.coordinator_task_id, c.coordinator_task_id);
+      assert.equal(q.coordinator_execution_id, c.coordinator_execution_id);
+      assert.equal(a.request_id, q.request_id);
+      assert.equal(a.child_task_id, q.child_task_id);
+      assert.equal(r.child_execution_id, a.child_execution_id);
+      assert.equal(collection.payload.child_execution_id, a.child_execution_id);
+      assert.equal(collection.payload.result_evidence_id, r.evidence_id);
+      assert.equal(integration.payload.result_evidence_id, r.evidence_id);
+      assert.equal(integration.payload.patch_artifact_id, r.patch_artifact_id);
+      assert.equal(r.status, 'completed');
+    }
+
+    const replayed = replayScenario(scenario, workflow, stateContract);
+    for (const event of inserted) {
+      const row = replayed.timeline.find(item => item.event_id === event.event_id);
+      assert.ok(row, `${scenario.id}/${event.type} has a replay journal row`);
+      assert.equal(row.applied, true, `${scenario.id}/${event.type} is accepted evidence at its inserted prefix`);
+    }
+  }
+});
+
+test('the original 50 fixed scenario endpoints match their independent status, route, attempt, evidence and publication oracle', () => {
+  const catalog = createScenarioCatalog(workflow, stateContract);
+  for (const scenario of catalog.slice(0, 50)) {
     const before = structuredClone(scenario);
     const result = replayScenario(scenario, workflow, stateContract);
     assert.deepEqual(scenario, before, `${scenario.id} replay leaves catalog fixture unchanged`);

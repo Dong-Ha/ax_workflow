@@ -4,6 +4,7 @@ import canonicalWorkflow from '../../docs/ifpmic/design-v1/specs/workflow.v1.jso
 import { createObservationProtocols, newStepRecord, mockHumanTaskId } from './protocols.mjs';
 import { createRoutingProtocols } from './routing.mjs';
 import { createSqeProtocols, sqePayloadFields } from './sqe.mjs';
+import { createChildProtocols, childPayloadFields } from './children.mjs';
 import { createExceptionProtocols } from './exceptions.mjs';
 export { createScenarioCatalog } from './scenarios.mjs';
 
@@ -96,11 +97,11 @@ const mockEvidence = value => opaqueId(value) && value.startsWith('mock:');
 const eventTypes = new Set(['step', 'agent', 'human', 'measurement', 'device', 'business_failure',
   'route', 'infra_error', 'retry', 'candidate', 'manifest', 'approval', 'receipt', 'notes_failure', 'notes_retry',
   'spec_unresolved', 'spec_resolution', 'spec_reviewed', 'remote_unknown', 'remote_reconcile',
-  'route_context', 'reuse_confirmation', 'plan_confirmation', 'unchanged_analysis', 'skip', 'exemption_report', 'no_change', ...Object.keys(sqePayloadFields)]);
+  'route_context', 'reuse_confirmation', 'plan_confirmation', 'unchanged_analysis', 'skip', 'exemption_report', 'no_change', ...Object.keys(sqePayloadFields), ...Object.keys(childPayloadFields)]);
 const eventFields = new Set(['event_id', 'source_id', 'source_seq', 'type', 'mode', 'job_id',
   'step_id', 'cycle', 'attempt', 'execution_id', 'payload']);
 const payloadFields = {
-  ...sqePayloadFields,
+  ...sqePayloadFields, ...childPayloadFields,
   step: ['state'], agent: ['status'], human: ['actor', 'task_id', 'plan_version', 'evidence_id', 'decision'],
   measurement: ['evidence', 'verdict'],
   device: ['mode', 'now_ms', 'last_heartbeat_ms', 'lease_expires_ms', 'operation_state', 'profile'],
@@ -167,6 +168,8 @@ export function replayScenario(scenario, workflow, stateContract, cursor = scena
   const exceptions = createExceptionProtocols({ result, mockId: mockEvidence, expectedPlanVersion: routing.expectedPlanVersion,
     transitionAllowed: (from, to) => isAllowedStepTransition(from, to, stateContract),
     releaseMatches: protocols.manifestMatches });
+  const children = createChildProtocols({ result, mockId: mockEvidence,
+    transitionAllowed: (from, to) => isAllowedStepTransition(from, to, stateContract) });
   let quarantined = false;
   let latestDeviceTime = -1;
   function apply(event) {
@@ -187,6 +190,10 @@ export function replayScenario(scenario, workflow, stateContract, cursor = scena
     if (routingBlocked) return routingBlocked;
     const routingResult = routing.apply(event, node, step);
     if (routingResult !== null) return routingResult;
+    const childBlocked = children.blockingReason(event, node, step);
+    if (childBlocked) return childBlocked;
+    const childResult = children.apply(event, node, step);
+    if (childResult !== null) return childResult;
     const sqeBlocked = sqe.blockingReason(event, node, step);
     if (sqeBlocked) return sqeBlocked;
     const sqeResult = sqe.apply(event, node, step);
@@ -196,7 +203,10 @@ export function replayScenario(scenario, workflow, stateContract, cursor = scena
     const exceptionResult = exceptions.apply(event, node, step);
     if (exceptionResult !== null) return exceptionResult;
     const protocolResult = protocols.apply(event, node, step);
-    if (protocolResult !== null) return protocolResult;
+    if (protocolResult !== null) {
+      if (protocolResult === '' && event.type === 'infra_error' && node.id === 'P12') children.afterInfrastructureError(step);
+      return protocolResult;
+    }
     if (event.type === 'agent') {
       if (!['running', 'completed', 'failed'].includes(payload.status)) return 'invalid_agent_status';
       step.agent_status = payload.status;
@@ -258,6 +268,8 @@ export function replayScenario(scenario, workflow, stateContract, cursor = scena
           || step.gate_candidate_fingerprint !== result.candidate_fingerprint || step.gate_rule_version !== result.rule_version)) return 'gate_pass_required';
       const routingGuard = routing.successGuard(node, step);
       if (routingGuard) return routingGuard;
+      const childGuard = children.successGuard(node, step);
+      if (childGuard) return childGuard;
       const sqeGuard = sqe.successGuard(node);
       if (sqeGuard) return sqeGuard;
       const exceptionGuard = exceptions.successGuard(node, step);
@@ -266,6 +278,7 @@ export function replayScenario(scenario, workflow, stateContract, cursor = scena
       if (releaseGuard) return releaseGuard;
     }
     step.state = payload.state;
+    if (node.id === 'P12') children.afterStep(step, payload.state);
     if (payload.state === 'SUCCEEDED') {
       result.current_step = routes.get(node.id);
       result.status = result.current_step === 'END' ? 'COMPLETED' : 'RUNNING';

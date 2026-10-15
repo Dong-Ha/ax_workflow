@@ -1,0 +1,407 @@
+{
+  "kind": "published_synthetic_child_artifacts",
+  "gate_sha256": "5d4ce1a0c64a59c983dfbd62ddbcaeb832234fb8b55afc72a7dc2a96c5f7afe2",
+  "gate_fingerprint": "1a8b1315e17d28fe67df077813e81d652fbf5bc073da9a67e5fbea7657da4a40",
+  "artifacts": [
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/sqe-unit-observations.json",
+      "path": "docs/ifpmic/evidence/v2/children-sqe-unit-observations.json",
+      "sha256": "bd25096e1f2e94a218c28aa87e71fcd23b405eaa9723afd830567ca2ec65ab83"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/browser.json",
+      "path": "docs/ifpmic/evidence/v2/children-browser.json",
+      "sha256": "3ee24820c1862f73f01c0ebb114e4dcafb46a360eb646094bdb42ae7076ef1ec"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/host-browser.json",
+      "path": "docs/ifpmic/evidence/v2/children-host-browser.json",
+      "sha256": "ae1e7d93c4cd8b2465631742d76b0a40d4ca24b1fefa90e5a96314889dd5e320"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/source-upload.json",
+      "path": "docs/ifpmic/evidence/v2/children-source-upload.json",
+      "sha256": "3ef0a07db987088bbb4fcf119c84b22220a082df39ccd3fd318bc176fc2b78a1"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/negative-fixtures.json",
+      "path": "docs/ifpmic/evidence/v2/children-negative-fixtures.json",
+      "sha256": "e3f3643c3173a4005dc87c1a38a76b2d45a0249102d3733902633796f44baf44"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/ui-standalone-browser.json",
+      "path": "docs/ifpmic/evidence/v2/children-ui-standalone-browser.json",
+      "sha256": "86043e8b6baee81a61fbb482dbe901717acdfb415796fcdfb0dac3dc4b610891"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/standalone-child-agent-wait-waiting-binding-1440.png",
+      "path": "docs/ifpmic/evidence/v2/children-standalone-child-agent-wait-waiting-binding-1440.png",
+      "sha256": "cdb4dabd9275eca61b08f0cb61abe2aaa76393fc200aba1aae5a8ce62244c35d"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/standalone-child-agent-wait-waiting-result-1440.png",
+      "path": "docs/ifpmic/evidence/v2/children-standalone-child-agent-wait-waiting-result-1440.png",
+      "sha256": "c6153b768a1d679219b7a1ee3b60e4a8b433b139b2bebc69fc336aa9f0d176ea"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/standalone-child-agent-wait-waiting-integration-1440.png",
+      "path": "docs/ifpmic/evidence/v2/children-standalone-child-agent-wait-waiting-integration-1440.png",
+      "sha256": "12dfc4f495c6a2d98137174150360976a48d9aea13491cab98040df7042220c0"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/standalone-child-agent-handoff-returned-binding-1440.png",
+      "path": "docs/ifpmic/evidence/v2/children-standalone-child-agent-handoff-returned-binding-1440.png",
+      "sha256": "b4ce1a99cf146f7c08a15a176aa480d6438ea27646474f38fe3ecb02ced1b447"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/standalone-child-agent-handoff-returned-result-1440.png",
+      "path": "docs/ifpmic/evidence/v2/children-standalone-child-agent-handoff-returned-result-1440.png",
+      "sha256": "2568b8ce8086a679c2df47a9ee123b3e1c2a0d7034682621a80a2f61242359d6"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/standalone-child-agent-handoff-returned-integration-1440.png",
+      "path": "docs/ifpmic/evidence/v2/children-standalone-child-agent-handoff-returned-integration-1440.png",
+      "sha256": "024f16c7a190f88c4766d283f9e4fb04f5d96af6f407000a1f18d5fc69b4d222"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/standalone-child-agent-handoff-integrated-binding-1440.png",
+      "path": "docs/ifpmic/evidence/v2/children-standalone-child-agent-handoff-integrated-binding-1440.png",
+      "sha256": "e41eba7b9fb7cbed8b592c6d402d428e47af455241c85cbd6dc24035319ee0a0"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/standalone-child-agent-handoff-integrated-result-1440.png",
+      "path": "docs/ifpmic/evidence/v2/children-standalone-child-agent-handoff-integrated-result-1440.png",
+      "sha256": "1f50959d5eb190df41d34b6989f85d49eaf401ce566ee0eb823456bc601712ee"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/standalone-child-agent-handoff-integrated-integration-1440.png",
+      "path": "docs/ifpmic/evidence/v2/children-standalone-child-agent-handoff-integrated-integration-1440.png",
+      "sha256": "f273f7056acaa7299e49c68e61ae2070df5aa622150b466496ba16612528cf4c"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/standalone-child-agent-question-waiting-human-binding-375.png",
+      "path": "docs/ifpmic/evidence/v2/children-standalone-child-agent-question-waiting-human-binding-375.png",
+      "sha256": "f4037643f03a364aa3bd1d67f44522c6e2a5bd2691069235705178504948adb9"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/standalone-child-agent-question-waiting-human-result-375.png",
+      "path": "docs/ifpmic/evidence/v2/children-standalone-child-agent-question-waiting-human-result-375.png",
+      "sha256": "0a5bfc7d4e597de0c6f1238be842dc4aecb989abb6b31f1916d52c5cce1986f2"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/standalone-child-agent-question-waiting-human-integration-375.png",
+      "path": "docs/ifpmic/evidence/v2/children-standalone-child-agent-question-waiting-human-integration-375.png",
+      "sha256": "f7cae54e2607da3d34acc370c03e751804f6c59013ecc0e5b6b080ed1185131f"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/standalone-child-agent-question-resumed-binding-1440.png",
+      "path": "docs/ifpmic/evidence/v2/children-standalone-child-agent-question-resumed-binding-1440.png",
+      "sha256": "0669ae7557e2dc6ce8c08b7e484243375f289566d4c2045f830d4653f778d689"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/standalone-child-agent-question-resumed-result-1440.png",
+      "path": "docs/ifpmic/evidence/v2/children-standalone-child-agent-question-resumed-result-1440.png",
+      "sha256": "2abb64cbd4da3bfe00c3224d338a188b0837f65b30c0246bf9bc7687df080443"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/standalone-child-agent-question-resumed-integration-1440.png",
+      "path": "docs/ifpmic/evidence/v2/children-standalone-child-agent-question-resumed-integration-1440.png",
+      "sha256": "2c297a08ce1dd6bd357a850f39010539cc0c2c16173065cd2f0a2ec3729044fe"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/standalone-child-agent-failure-retried-history-binding-375.png",
+      "path": "docs/ifpmic/evidence/v2/children-standalone-child-agent-failure-retried-history-binding-375.png",
+      "sha256": "a9d68994e95d2220f7297f211d9151c0adeb72b13b4b780efb23b4a068241845"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/standalone-child-agent-failure-retried-history-result-375.png",
+      "path": "docs/ifpmic/evidence/v2/children-standalone-child-agent-failure-retried-history-result-375.png",
+      "sha256": "25d0b476b2094b9e8d7ef1a257cdb4194661c538b903e543e0f07bc7c7c65cd4"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/standalone-child-agent-failure-retried-history-integration-375.png",
+      "path": "docs/ifpmic/evidence/v2/children-standalone-child-agent-failure-retried-history-integration-375.png",
+      "sha256": "8c1b328414a74b1aadb8671e9b9f03d6ca65355ce08ae93c68697ad9a0526d61"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/standalone-child-agent-failure-recovered-binding-375.png",
+      "path": "docs/ifpmic/evidence/v2/children-standalone-child-agent-failure-recovered-binding-375.png",
+      "sha256": "595912475045cb57f65eb4ed3b663290e724a121036915f302e60e869a5c8dc2"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/standalone-child-agent-failure-recovered-result-375.png",
+      "path": "docs/ifpmic/evidence/v2/children-standalone-child-agent-failure-recovered-result-375.png",
+      "sha256": "65578978c4e1b3eecdb09db5f9a26ccbb7eeda756e0343146da72e5e2ab60794"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/standalone-child-agent-failure-recovered-integration-375.png",
+      "path": "docs/ifpmic/evidence/v2/children-standalone-child-agent-failure-recovered-integration-375.png",
+      "sha256": "d341c0a2eb663848944f867bc3945270c26829911e455da2f266d12ed8dfebd0"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/standalone-child-agent-permissions-integration-denied-binding-1440.png",
+      "path": "docs/ifpmic/evidence/v2/children-standalone-child-agent-permissions-integration-denied-binding-1440.png",
+      "sha256": "9dcb4dc8286d397600a7a9ee985dab2f74b4adb2f143967d6e1e19909e0fc40f"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/standalone-child-agent-permissions-integration-denied-result-1440.png",
+      "path": "docs/ifpmic/evidence/v2/children-standalone-child-agent-permissions-integration-denied-result-1440.png",
+      "sha256": "ad6fc554116c4e7fa1ac78e2cb3d3407238e87ed01d272b92a4b2af84e246cfb"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/standalone-child-agent-permissions-integration-denied-integration-1440.png",
+      "path": "docs/ifpmic/evidence/v2/children-standalone-child-agent-permissions-integration-denied-integration-1440.png",
+      "sha256": "5596d33fa71c3f4be7c226c200649de71dbf326e0ac1e541790568eb5d1557a6"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/standalone-child-agent-stale-cycle-current-binding-1440.png",
+      "path": "docs/ifpmic/evidence/v2/children-standalone-child-agent-stale-cycle-current-binding-1440.png",
+      "sha256": "960baa5810a5b817ede1b85853a303e373b33bc38f03bbd8e8ce0d6a320b810c"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/standalone-child-agent-stale-cycle-current-result-1440.png",
+      "path": "docs/ifpmic/evidence/v2/children-standalone-child-agent-stale-cycle-current-result-1440.png",
+      "sha256": "9fef80b539d41c99194630e8cce037609e28f3fa312c4258b5b7e8dd83023676"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/standalone-child-agent-stale-cycle-current-integration-1440.png",
+      "path": "docs/ifpmic/evidence/v2/children-standalone-child-agent-stale-cycle-current-integration-1440.png",
+      "sha256": "af79c60e8833380876abdda49d7cac150c99db1eaf8579fe60bbcbd4a7b4b961"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/standalone-child-agent-stale-cycle-history-binding-1440.png",
+      "path": "docs/ifpmic/evidence/v2/children-standalone-child-agent-stale-cycle-history-binding-1440.png",
+      "sha256": "a5410b102e7e2536358518788bc7a9d50e9885630835729ab2265ec3b6a36095"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/standalone-child-agent-stale-cycle-history-result-1440.png",
+      "path": "docs/ifpmic/evidence/v2/children-standalone-child-agent-stale-cycle-history-result-1440.png",
+      "sha256": "d94b400bed80a046912c8cce24d22b9efce93a728a09054ede3c32a3cb130d51"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/standalone-child-agent-stale-cycle-history-integration-1440.png",
+      "path": "docs/ifpmic/evidence/v2/children-standalone-child-agent-stale-cycle-history-integration-1440.png",
+      "sha256": "96c91a6bcdfa05c9072be98512cc7ee2651f01ee8cf480f362ad8550c28f6c34"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/standalone-child-agent-retry-limit-capped-binding-1440.png",
+      "path": "docs/ifpmic/evidence/v2/children-standalone-child-agent-retry-limit-capped-binding-1440.png",
+      "sha256": "f29fac504f6bfdc154387f7f122807a29fdfa80907408a30f8e3de3259780511"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/standalone-child-agent-retry-limit-capped-result-1440.png",
+      "path": "docs/ifpmic/evidence/v2/children-standalone-child-agent-retry-limit-capped-result-1440.png",
+      "sha256": "793a0e039c68eace2802689f0ef87c1943fd58e9ae2c3e8ea81afc67e433e46b"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/standalone-child-agent-retry-limit-capped-integration-1440.png",
+      "path": "docs/ifpmic/evidence/v2/children-standalone-child-agent-retry-limit-capped-integration-1440.png",
+      "sha256": "8de6069da2d4605ca5e8f067109857842cbe5de95b7066813ac90c7e6c4a03e2"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/ui-host-browser.json",
+      "path": "docs/ifpmic/evidence/v2/children-ui-host-browser.json",
+      "sha256": "d7bc683c6680c0d70b03f0c9250c3a32a4072b15175c5b92d32a451453346cb5"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/host-child-agent-wait-waiting-binding-1440.png",
+      "path": "docs/ifpmic/evidence/v2/children-host-child-agent-wait-waiting-binding-1440.png",
+      "sha256": "9b18ee9f405d4de4e20bbe5c1f169e344a00a896116116bc18cc3acbcf92330b"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/host-child-agent-wait-waiting-result-1440.png",
+      "path": "docs/ifpmic/evidence/v2/children-host-child-agent-wait-waiting-result-1440.png",
+      "sha256": "e22b7436124fa417db108b9f21cc80ba6ca903a1480288034c17beaad93b427c"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/host-child-agent-wait-waiting-integration-1440.png",
+      "path": "docs/ifpmic/evidence/v2/children-host-child-agent-wait-waiting-integration-1440.png",
+      "sha256": "4b7f411c1a182c1adcbcd7e51533016aa40c98dd3d3f7f42d748d274aaba90b1"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/host-child-agent-handoff-returned-binding-1440.png",
+      "path": "docs/ifpmic/evidence/v2/children-host-child-agent-handoff-returned-binding-1440.png",
+      "sha256": "23bd5bb00c4a43a816d1ca25e8eed22fc823e9d0e2b9e6825ad6a0d97c80c903"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/host-child-agent-handoff-returned-result-1440.png",
+      "path": "docs/ifpmic/evidence/v2/children-host-child-agent-handoff-returned-result-1440.png",
+      "sha256": "49a081f75b3a4388877c109f353a63261e88d0cdd9284e37c9e39aa3aa4b8fb7"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/host-child-agent-handoff-returned-integration-1440.png",
+      "path": "docs/ifpmic/evidence/v2/children-host-child-agent-handoff-returned-integration-1440.png",
+      "sha256": "691102d3c724ac842635a0d656578535ea8caf8bf8661d1f4027f8ef8ff5b92b"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/host-child-agent-handoff-integrated-binding-1440.png",
+      "path": "docs/ifpmic/evidence/v2/children-host-child-agent-handoff-integrated-binding-1440.png",
+      "sha256": "2b2b986bb99e6cd41ccfe9ddbc998f723e5c91e4853f696e7c1de8188fcfcbbb"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/host-child-agent-handoff-integrated-result-1440.png",
+      "path": "docs/ifpmic/evidence/v2/children-host-child-agent-handoff-integrated-result-1440.png",
+      "sha256": "c5efea0781092daee8e7eacdbdc849b839eb37cb7eeb2933ce1d65aa20726940"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/host-child-agent-handoff-integrated-integration-1440.png",
+      "path": "docs/ifpmic/evidence/v2/children-host-child-agent-handoff-integrated-integration-1440.png",
+      "sha256": "bdfc5b855ed3627e5fe6d5bd7a4a7811d0a7ee5a2297748412406a8bd7454905"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/host-child-agent-question-waiting-human-binding-375.png",
+      "path": "docs/ifpmic/evidence/v2/children-host-child-agent-question-waiting-human-binding-375.png",
+      "sha256": "cc16fb618632b8b8c6e0e081fd920064c62ac0259792f247624d624a75da94ca"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/host-child-agent-question-waiting-human-result-375.png",
+      "path": "docs/ifpmic/evidence/v2/children-host-child-agent-question-waiting-human-result-375.png",
+      "sha256": "76a6bf72ba6646538a1dc99ca96bb8da512fdee99894a345c44caaa9c7134985"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/host-child-agent-question-waiting-human-integration-375.png",
+      "path": "docs/ifpmic/evidence/v2/children-host-child-agent-question-waiting-human-integration-375.png",
+      "sha256": "767fc69709f1d6a2dbdffbf5c9113efdcdb2f3f58bbd2d576abc58eb0f437155"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/host-child-agent-question-resumed-binding-1440.png",
+      "path": "docs/ifpmic/evidence/v2/children-host-child-agent-question-resumed-binding-1440.png",
+      "sha256": "eb46393bf62d700c89dbb96212fd7463229ba16b680ae7deed0e84c52ce0857f"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/host-child-agent-question-resumed-result-1440.png",
+      "path": "docs/ifpmic/evidence/v2/children-host-child-agent-question-resumed-result-1440.png",
+      "sha256": "933dcd247c9cbec3344f3f9570048d1af6b3a1d0fb1ed9cba7b3ee6d568c2475"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/host-child-agent-question-resumed-integration-1440.png",
+      "path": "docs/ifpmic/evidence/v2/children-host-child-agent-question-resumed-integration-1440.png",
+      "sha256": "6f00ca0af08fc56c35324591a089493aa6e5341e1e73ca29d64c78ef8ac9cff2"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/host-child-agent-failure-retried-history-binding-375.png",
+      "path": "docs/ifpmic/evidence/v2/children-host-child-agent-failure-retried-history-binding-375.png",
+      "sha256": "b8534c7be1972b6d92d43408009a8e88bb0c8c513f4253056c793dbf0622f528"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/host-child-agent-failure-retried-history-result-375.png",
+      "path": "docs/ifpmic/evidence/v2/children-host-child-agent-failure-retried-history-result-375.png",
+      "sha256": "d104aaffba385ec8998f9a7655b626ad559f52af63150897c1681e7f55a677c0"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/host-child-agent-failure-retried-history-integration-375.png",
+      "path": "docs/ifpmic/evidence/v2/children-host-child-agent-failure-retried-history-integration-375.png",
+      "sha256": "bc112f0561ccb9560481ccb0874bf66a694f3d136cedafc8e5a6da69ebaa6024"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/host-child-agent-failure-recovered-binding-375.png",
+      "path": "docs/ifpmic/evidence/v2/children-host-child-agent-failure-recovered-binding-375.png",
+      "sha256": "7cc3f8257af934567392b09d18b323595a39dccae84ed6dd119d12fffe634de0"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/host-child-agent-failure-recovered-result-375.png",
+      "path": "docs/ifpmic/evidence/v2/children-host-child-agent-failure-recovered-result-375.png",
+      "sha256": "c003f1e1d0ca166a20d558aebf0183716e8f8227f60f848d770dfcd6181066c5"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/host-child-agent-failure-recovered-integration-375.png",
+      "path": "docs/ifpmic/evidence/v2/children-host-child-agent-failure-recovered-integration-375.png",
+      "sha256": "197ac02dc66fed71c77a699d6e8709f756a466febcf482d538fb2f966424886a"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/host-child-agent-permissions-integration-denied-binding-1440.png",
+      "path": "docs/ifpmic/evidence/v2/children-host-child-agent-permissions-integration-denied-binding-1440.png",
+      "sha256": "a2bdf617a470a4b3d1edd65b9553d613459685decd56c35738ef2ba8151092de"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/host-child-agent-permissions-integration-denied-result-1440.png",
+      "path": "docs/ifpmic/evidence/v2/children-host-child-agent-permissions-integration-denied-result-1440.png",
+      "sha256": "823931a0cc491557892eb258868b7b78b5c43ea3cdbfd0c05fea1fa3ff132332"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/host-child-agent-permissions-integration-denied-integration-1440.png",
+      "path": "docs/ifpmic/evidence/v2/children-host-child-agent-permissions-integration-denied-integration-1440.png",
+      "sha256": "450608d85fcf7d03cbac089bb233eab74dd8a4005a88b3152549cbd35c572652"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/host-child-agent-stale-cycle-current-binding-1440.png",
+      "path": "docs/ifpmic/evidence/v2/children-host-child-agent-stale-cycle-current-binding-1440.png",
+      "sha256": "701eca660d021f318952e07122af735f70daa0d685587d09c7c0d2011a5d4eb2"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/host-child-agent-stale-cycle-current-result-1440.png",
+      "path": "docs/ifpmic/evidence/v2/children-host-child-agent-stale-cycle-current-result-1440.png",
+      "sha256": "80f13b76ba81a204935492edfcae3229dc808e18291b0c2283e5f54d633a09bb"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/host-child-agent-stale-cycle-current-integration-1440.png",
+      "path": "docs/ifpmic/evidence/v2/children-host-child-agent-stale-cycle-current-integration-1440.png",
+      "sha256": "06ac0c971424e16a651f2c8f69645320ccf1985932cdf3df3c8317a2870aed3e"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/host-child-agent-stale-cycle-history-binding-1440.png",
+      "path": "docs/ifpmic/evidence/v2/children-host-child-agent-stale-cycle-history-binding-1440.png",
+      "sha256": "0096971e41d503490068566cd5cec3de02051b1e84d1e20927d76994056896bb"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/host-child-agent-stale-cycle-history-result-1440.png",
+      "path": "docs/ifpmic/evidence/v2/children-host-child-agent-stale-cycle-history-result-1440.png",
+      "sha256": "edbfa341ae47a6464051d2221ac44c5c7de004f1b1e1af8547f9be1402043369"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/host-child-agent-stale-cycle-history-integration-1440.png",
+      "path": "docs/ifpmic/evidence/v2/children-host-child-agent-stale-cycle-history-integration-1440.png",
+      "sha256": "c57cf86225b8cbe154c9d2bfbb5d6d39cdb6251569790a94f868430f5bc1870d"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/host-child-agent-retry-limit-capped-binding-1440.png",
+      "path": "docs/ifpmic/evidence/v2/children-host-child-agent-retry-limit-capped-binding-1440.png",
+      "sha256": "8bd97479c3b44e770e7bda0cf3b8507160a8dc70613b850cbfc1e25766e4f392"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/host-child-agent-retry-limit-capped-result-1440.png",
+      "path": "docs/ifpmic/evidence/v2/children-host-child-agent-retry-limit-capped-result-1440.png",
+      "sha256": "ee6e163635649fb6764779482f698029ba199695319161c30ce6fcbefb55b6b9"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/host-child-agent-retry-limit-capped-integration-1440.png",
+      "path": "docs/ifpmic/evidence/v2/children-host-child-agent-retry-limit-capped-integration-1440.png",
+      "sha256": "63dfa279f8d994cf275e015f11da9edb34b15705d534d49724533fedc60668ac"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/ui-catalog.json",
+      "path": "docs/ifpmic/evidence/v2/children-ui-catalog.json",
+      "sha256": "0ad3cc02ab7c369c362e0720720c86ff915aa6f40ff8e33e1abe0c3350fcfdcf"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/ui-catalog-journal.json",
+      "path": "docs/ifpmic/evidence/v2/children-ui-catalog-journal.json",
+      "sha256": "a746b47faa2dd08150d05036ddd61d50ec25d52533c0369ba845dbcc317be65c"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/ui-sqe-migration.json",
+      "path": "docs/ifpmic/evidence/v2/children-ui-sqe-migration.json",
+      "sha256": "8adcfcb7591e949db1d1356aab3cc4a2ed96244b86eea747ccdcebadf2adc311"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T15-08-24-775Z/ui-children-migration.json",
+      "path": "docs/ifpmic/evidence/v2/children-ui-children-migration.json",
+      "sha256": "e6bb4e4337a5fa57cc807f7064f5141e782570a40b6fa431bd326d121cc329d0"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/children-routing-capture-supplement/report.json",
+      "path": "docs/ifpmic/evidence/v2/children-routing-mobile-capture.json",
+      "sha256": "553dfeef92c0eaa52f1fc9c3098a1a519f0e081255eec04ad53e8ad2f558d2ff"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/children-routing-capture-supplement/capture.mjs",
+      "path": "docs/ifpmic/evidence/v2/children-routing-mobile-capture-script.txt",
+      "sha256": "d6785d27d6ba4a348429f8cc1822c624eca9105bede0ba558cef419cc9f140bc"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/children-routing-capture-supplement/routing-exempt-p24-detail-375-1800.png",
+      "path": "docs/ifpmic/evidence/v2/children-routing-host-p24-detail-375-1800.png",
+      "sha256": "44be53ff2d2cc8f49a363258feb2e10f731d8569cb83b7d7c8e9c2a3ceb5d593"
+    }
+  ]
+}

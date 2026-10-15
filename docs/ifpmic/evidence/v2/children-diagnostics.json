@@ -1,0 +1,55 @@
+{
+  "kind": "children_pre_freeze_diagnostics",
+  "recorded_at": "2026-10-15T14:52:57.240130+00:00",
+  "acceptance": false,
+  "candidate_source_snapshot": null,
+  "limitation": "Pre-freeze diagnostics only; initial sources not pinned, logs cannot approve current candidate",
+  "findings": [
+    "P12 generic-only legacy fixtures no longer reach downstream steps; TC must add independent typed lifecycle proofs while preserving original assertions",
+    "TypeScript ES target lacks readonly-array .at; UI uses indexed access without changing target",
+    "Plan requires failure/canceled/stale-cycle recovered checkpoint at P13 after distinct success; product marker and TC literal oracle aligned to the approved plan",
+    "Independent source review found pending recovery text after accepted human approval; UI now distinguishes approval recorded, recovery pending and infrastructure cap human review; browser TC checks the distinction",
+    "Main and independent TC review requested concrete C2 schema/time/ID reuse/source sequencing/derived task ID boundary coverage before final freeze; schema field-list assertions alone do not prove runtime rejection",
+    "Strict standalone viewport capture rejected handoff integrated details: 1495px target exceeded 1440px viewport. Preserve failed report; split long UI details into semantic identity/result/integration groups and capture relevant groups separately without loosening geometry rules.",
+    "Valid nonreuse P12 completion followed by P13 candidate A→B preserves prior P12 proof. Source review found it displayed as current authority; shared current binding predicate now marks mismatches as historical and independent SSR regression validates the combined prefix without adding a 60th scenario."
+  ],
+  "logs": [
+    {
+      "path": "workflow-artifacts/verification/V2/children/core-initial-unit.log",
+      "sha256": "cc7d9ce62f5d5dbef7efdb405e4921e739ec8be2288d7a55fba260da94d38e69"
+    },
+    {
+      "path": "workflow-artifacts/verification/V2/children/core-unit-2.log",
+      "sha256": "0e2e4d60d480c2185f08e73b9d85475460ff7d50582d392c1d3206e40dcf5281"
+    },
+    {
+      "path": "workflow-artifacts/verification/V2/children/ui-initial-build.log",
+      "sha256": "b6457882995277f65237cda4931f19f296939122b1de1d3cf26d8dfaf57626ce"
+    },
+    {
+      "path": "workflow-artifacts/verification/V2/children/new9-initial.log",
+      "sha256": "c9b5ef0480cdae084a2ec53c6933f73923102e28ae194ce8ea84d0f0cb26577a"
+    },
+    {
+      "path": "workflow-artifacts/verification/V2/children/first-child-catalog-unit.log",
+      "sha256": "e72026cab234653e63afb4f2f653c9e335968e7d74cb2f4eb3cf71fc0962265e"
+    },
+    {
+      "path": "workflow-artifacts/verification/V2/children/children-current-unit-3.log",
+      "sha256": "fa4c8b6a0bf1abe518daebe16832df44b4c80b9e591d3e7b31d7b51c5abee907"
+    },
+    {
+      "path": "workflow-artifacts/verification/V2/children/browser-attempt-1/standalone-browser.json",
+      "sha256": "b1a4a9890665747c72cdb421bf60b5c20e35592f2806316c68355437965a9078"
+    },
+    {
+      "path": "workflow-artifacts/verification/V2/children/standalone-before-candidate-ui-fix.json",
+      "sha256": "732bb922695853338de99b9694f51a45801debba7d9d973c5d30970d0d2e9b54"
+    },
+    {
+      "path": "workflow-artifacts/verification/V2/children/standalone-before-recovered-oracle-fix.json",
+      "sha256": "732bb922695853338de99b9694f51a45801debba7d9d973c5d30970d0d2e9b54"
+    }
+  ],
+  "reverification": "Independent source/TC review, full frozen 11-command gate and actual browser/capture audit required before partial acceptance"
+}

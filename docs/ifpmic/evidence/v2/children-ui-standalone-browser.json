@@ -1,0 +1,4002 @@
+{
+  "kind": "ifpmic-v2-replay-standalone-offline-browser",
+  "route": "/ifpmic.html",
+  "checks": [
+    {
+      "name": "design view is the default and replay view requires explicit selection",
+      "verdict": "pass"
+    },
+    {
+      "name": "catalog exposes all 59 frozen scenarios and starts each at cursor zero",
+      "verdict": "pass"
+    },
+    {
+      "name": "all 59 scenarios reach their fixed endpoint through the end-observation control",
+      "verdict": "pass"
+    },
+    {
+      "name": "routing scenarios expose reuse, exemption, terminal, candidate and replan authority checkpoints",
+      "verdict": "pass"
+    },
+    {
+      "name": "scenario change clears display filters and resets selection and cursor",
+      "verdict": "pass"
+    },
+    {
+      "name": "previous/next/first/last and checkpoint selection move stored prefixes only",
+      "verdict": "pass"
+    },
+    {
+      "name": "observation panel separates mock job, step, agent and gate data and opens current node",
+      "verdict": "pass"
+    },
+    {
+      "name": "metadata recovery and notes checkpoints keep current approval and publication observability",
+      "verdict": "pass"
+    },
+    {
+      "name": "retry, cycle and device telemetry are distinct and never expose allocatable authority",
+      "verdict": "pass"
+    },
+    {
+      "name": "current-stage navigation reveals, focuses and scrolls a node hidden by active filters",
+      "verdict": "pass"
+    },
+    {
+      "name": "question panels distinguish durable answer, current-attempt review and archived review history",
+      "verdict": "pass"
+    },
+    {
+      "name": "remote panel shows stale-query rejection, one found receipt and quarantine independently",
+      "verdict": "pass"
+    },
+    {
+      "name": "SQE manual, report and judgment checkpoints remain separate across retries and history",
+      "verdict": "pass"
+    },
+    {
+      "name": "child coordinator and TC execution remain separate, bound, and legible across all nine fixed checkpoints",
+      "verdict": "pass"
+    },
+    {
+      "name": "question review-blocked checkpoint remains legible at 1440px and 375px",
+      "verdict": "pass"
+    },
+    {
+      "name": "1440px and 375px layouts expose replay controls and details without horizontal page overflow",
+      "verdict": "pass"
+    },
+    {
+      "name": "browser replay makes no API writes, external requests or runtime errors",
+      "verdict": "pass"
+    }
+  ],
+  "unexpectedExternalRequests": [],
+  "browserWriteRequests": [],
+  "captureAdjustments": [],
+  "geometryMethod": "Target full bounding box must fit the viewport and each overflow-clipping ancestor. The 4x4 hit grid counts only the target or its descendants; hits on ancestors are rejected.",
+  "sqeCaptureGeometry": [
+    {
+      "name": "manual-waiting",
+      "width": 1440,
+      "height": 1000,
+      "target": "ifpmic-sqe-step-detail",
+      "rect": {
+        "left": 1121,
+        "top": 36,
+        "right": 1375,
+        "bottom": 964.78125,
+        "width": 254,
+        "height": 928.78125
+      },
+      "hit_grid": {
+        "samples": 16,
+        "inside_target_or_descendant": 16
+      },
+      "fixed_sticky_overlaps": [],
+      "overflow_clipping_ancestors": []
+    },
+    {
+      "name": "manual-submitted",
+      "width": 375,
+      "height": 1800,
+      "target": "ifpmic-sqe-step-detail",
+      "rect": {
+        "left": 42,
+        "top": 152.796875,
+        "right": 333,
+        "bottom": 1647.828125,
+        "width": 291,
+        "height": 1495.03125
+      },
+      "hit_grid": {
+        "samples": 16,
+        "inside_target_or_descendant": 16
+      },
+      "fixed_sticky_overlaps": [],
+      "overflow_clipping_ancestors": []
+    },
+    {
+      "name": "manual-submitted-target",
+      "width": 375,
+      "height": 1800,
+      "target": "SQE 시험 대상",
+      "rect": {
+        "left": 42,
+        "top": 726.671875,
+        "right": 333,
+        "bottom": 1074.03125,
+        "width": 291,
+        "height": 347.359375
+      },
+      "hit_grid": {
+        "samples": 16,
+        "inside_target_or_descendant": 16
+      },
+      "fixed_sticky_overlaps": [],
+      "overflow_clipping_ancestors": []
+    },
+    {
+      "name": "manual-submitted-assignment",
+      "width": 375,
+      "height": 1800,
+      "target": "SQE 수동 배정",
+      "rect": {
+        "left": 42,
+        "top": 785.03125,
+        "right": 333,
+        "bottom": 1015.421875,
+        "width": 291,
+        "height": 230.390625
+      },
+      "hit_grid": {
+        "samples": 16,
+        "inside_target_or_descendant": 16
+      },
+      "fixed_sticky_overlaps": [],
+      "overflow_clipping_ancestors": []
+    },
+    {
+      "name": "manual-submitted-result",
+      "width": 375,
+      "height": 1800,
+      "target": "SQE 수집 결과",
+      "rect": {
+        "left": 42,
+        "top": 560.421875,
+        "right": 333,
+        "bottom": 1239.734375,
+        "width": 291,
+        "height": 679.3125
+      },
+      "hit_grid": {
+        "samples": 16,
+        "inside_target_or_descendant": 16
+      },
+      "fixed_sticky_overlaps": [],
+      "overflow_clipping_ancestors": []
+    },
+    {
+      "name": "manual-judged",
+      "width": 1440,
+      "height": 1000,
+      "target": "ifpmic-sqe-step-detail",
+      "rect": {
+        "left": 1121,
+        "top": 309.40625,
+        "right": 1375,
+        "bottom": 690.125,
+        "width": 254,
+        "height": 380.71875
+      },
+      "hit_grid": {
+        "samples": 16,
+        "inside_target_or_descendant": 16
+      },
+      "fixed_sticky_overlaps": [],
+      "overflow_clipping_ancestors": []
+    },
+    {
+      "name": "manual-fail-rerouted-history",
+      "width": 1440,
+      "height": 1000,
+      "target": "ifpmic-sqe-history",
+      "rect": {
+        "left": 757,
+        "top": 346.1875,
+        "right": 1374,
+        "bottom": 654.078125,
+        "width": 617,
+        "height": 307.890625
+      },
+      "hit_grid": {
+        "samples": 16,
+        "inside_target_or_descendant": 16
+      },
+      "fixed_sticky_overlaps": [],
+      "overflow_clipping_ancestors": []
+    },
+    {
+      "name": "incomplete-blocked",
+      "width": 1440,
+      "height": 1000,
+      "target": "SQE 수집 결과",
+      "rect": {
+        "left": 1121,
+        "top": 113.421875,
+        "right": 1375,
+        "bottom": 885.703125,
+        "width": 254,
+        "height": 772.28125
+      },
+      "hit_grid": {
+        "samples": 16,
+        "inside_target_or_descendant": 16
+      },
+      "fixed_sticky_overlaps": [],
+      "overflow_clipping_ancestors": []
+    },
+    {
+      "name": "manual-retry-waiting-two",
+      "width": 375,
+      "height": 1800,
+      "target": "SQE 수동 배정",
+      "rect": {
+        "left": 42,
+        "top": 805.671875,
+        "right": 333,
+        "bottom": 1036.0625,
+        "width": 291,
+        "height": 230.390625
+      },
+      "hit_grid": {
+        "samples": 16,
+        "inside_target_or_descendant": 16
+      },
+      "fixed_sticky_overlaps": [],
+      "overflow_clipping_ancestors": []
+    },
+    {
+      "name": "manual-retry-compact-history-negative-diagnostic",
+      "width": 375,
+      "target": "SQE 수집 결과",
+      "expected_clipped": true,
+      "overflow_clipping_ancestors": [
+        {
+          "selector": "#ifpmic-replay-history",
+          "overflowY": "auto",
+          "clip_top": -1331.078125,
+          "clip_bottom": -1131.078125,
+          "target_top": -421.5625,
+          "target_bottom": 281.34375,
+          "fitsY": false
+        }
+      ]
+    },
+    {
+      "name": "manual-retry-a1-history",
+      "width": 375,
+      "height": 1800,
+      "target": "SQE 수동 배정",
+      "rect": {
+        "left": 56,
+        "top": 785.046875,
+        "right": 337,
+        "bottom": 1015.4375,
+        "width": 281,
+        "height": 230.390625
+      },
+      "hit_grid": {
+        "samples": 16,
+        "inside_target_or_descendant": 16
+      },
+      "fixed_sticky_overlaps": [],
+      "overflow_clipping_ancestors": []
+    },
+    {
+      "name": "manual-retry-a1-result-history",
+      "width": 375,
+      "height": 1800,
+      "target": "SQE 수집 결과",
+      "rect": {
+        "left": 56,
+        "top": 548.4375,
+        "right": 337,
+        "bottom": 1251.34375,
+        "width": 281,
+        "height": 702.90625
+      },
+      "hit_grid": {
+        "samples": 16,
+        "inside_target_or_descendant": 16
+      },
+      "fixed_sticky_overlaps": [],
+      "overflow_clipping_ancestors": []
+    },
+    {
+      "name": "report-retry-current",
+      "width": 1440,
+      "height": 1000,
+      "target": "ifpmic-sqe-step-detail",
+      "rect": {
+        "left": 1121,
+        "top": 219.09375,
+        "right": 1375,
+        "bottom": 781.015625,
+        "width": 254,
+        "height": 561.921875
+      },
+      "hit_grid": {
+        "samples": 16,
+        "inside_target_or_descendant": 16
+      },
+      "fixed_sticky_overlaps": [],
+      "overflow_clipping_ancestors": []
+    },
+    {
+      "name": "judgment-retry-stale-history",
+      "width": 1440,
+      "height": 1000,
+      "target": "ifpmic-sqe-step-detail",
+      "rect": {
+        "left": 1121,
+        "top": 328.6875,
+        "right": 1375,
+        "bottom": 672.21875,
+        "width": 254,
+        "height": 343.53125
+      },
+      "hit_grid": {
+        "samples": 16,
+        "inside_target_or_descendant": 16
+      },
+      "fixed_sticky_overlaps": [],
+      "overflow_clipping_ancestors": []
+    },
+    {
+      "name": "judgment-retry-a1-history",
+      "width": 1440,
+      "height": 1000,
+      "target": "ifpmic-sqe-history",
+      "rect": {
+        "left": 757,
+        "top": 346.546875,
+        "right": 1374,
+        "bottom": 654.4375,
+        "width": 617,
+        "height": 307.890625
+      },
+      "hit_grid": {
+        "samples": 16,
+        "inside_target_or_descendant": 16
+      },
+      "fixed_sticky_overlaps": [],
+      "overflow_clipping_ancestors": []
+    },
+    {
+      "name": "manual-quarantine-blocked",
+      "width": 1440,
+      "height": 1000,
+      "target": "ifpmic-sqe-step-detail",
+      "rect": {
+        "left": 1121,
+        "top": 26.140625,
+        "right": 1375,
+        "bottom": 973.515625,
+        "width": 254,
+        "height": 947.375
+      },
+      "hit_grid": {
+        "samples": 16,
+        "inside_target_or_descendant": 16
+      },
+      "fixed_sticky_overlaps": [],
+      "overflow_clipping_ancestors": []
+    }
+  ],
+  "childCaptureGeometry": [
+    {
+      "name": "agent-wait-waiting",
+      "group": "binding",
+      "width": 1440,
+      "height": 1440,
+      "target": "ifpmic-child-binding",
+      "accessibleName": "P12 부모·자식 식별",
+      "screenshot": "workflow-artifacts/verification/V2/ui/standalone-child-agent-wait-waiting-binding-1440.png",
+      "fullPage": false,
+      "rect": {
+        "left": 1121,
+        "top": 400.28125,
+        "right": 1375,
+        "bottom": 1039.140625,
+        "width": 254,
+        "height": 638.859375
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 1440
+      },
+      "points": [
+        {
+          "x": 1171.8,
+          "y": 528.053125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 528.053125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 528.053125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 528.053125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 655.825,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 655.825,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 655.825,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 655.825,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 783.596875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 783.596875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 783.596875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 783.596875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 911.36875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 911.36875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 911.36875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 911.36875,
+          "insideTargetOrDescendant": true
+        }
+      ],
+      "overlaps": [],
+      "clippingAncestors": [],
+      "fullyVisible": true
+    },
+    {
+      "name": "agent-wait-waiting",
+      "group": "result",
+      "width": 1440,
+      "height": 1440,
+      "target": "ifpmic-child-result",
+      "accessibleName": "P12 쓰기 범위와 결과",
+      "screenshot": "workflow-artifacts/verification/V2/ui/standalone-child-agent-wait-waiting-result-1440.png",
+      "fullPage": false,
+      "rect": {
+        "left": 1121,
+        "top": 521.140625,
+        "right": 1375,
+        "bottom": 918.875,
+        "width": 254,
+        "height": 397.734375
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 1440
+      },
+      "points": [
+        {
+          "x": 1171.8,
+          "y": 600.6875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 600.6875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 600.6875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 600.6875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 680.234375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 680.234375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 680.234375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 680.234375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 759.78125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 759.78125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 759.78125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 759.78125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 839.328125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 839.328125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 839.328125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 839.328125,
+          "insideTargetOrDescendant": true
+        }
+      ],
+      "overlaps": [],
+      "clippingAncestors": [],
+      "fullyVisible": true
+    },
+    {
+      "name": "agent-wait-waiting",
+      "group": "integration",
+      "width": 1440,
+      "height": 1440,
+      "target": "ifpmic-child-integration",
+      "accessibleName": "P12 질문·복구·통합",
+      "screenshot": "workflow-artifacts/verification/V2/ui/standalone-child-agent-wait-waiting-integration-1440.png",
+      "fullPage": false,
+      "rect": {
+        "left": 1121,
+        "top": 623.875,
+        "right": 1375,
+        "bottom": 817.078125,
+        "width": 254,
+        "height": 193.203125
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 1440
+      },
+      "points": [
+        {
+          "x": 1171.8,
+          "y": 662.515625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 662.515625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 662.515625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 662.515625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 701.15625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 701.15625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 701.15625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 701.15625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 739.796875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 739.796875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 739.796875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 739.796875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 778.4375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 778.4375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 778.4375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 778.4375,
+          "insideTargetOrDescendant": true
+        }
+      ],
+      "overlaps": [],
+      "clippingAncestors": [],
+      "fullyVisible": true
+    },
+    {
+      "name": "agent-handoff-returned",
+      "group": "binding",
+      "width": 1440,
+      "height": 1440,
+      "target": "ifpmic-child-binding",
+      "accessibleName": "P12 부모·자식 식별",
+      "screenshot": "workflow-artifacts/verification/V2/ui/standalone-child-agent-handoff-returned-binding-1440.png",
+      "fullPage": false,
+      "rect": {
+        "left": 1121,
+        "top": 372.28125,
+        "right": 1375,
+        "bottom": 1066.921875,
+        "width": 254,
+        "height": 694.640625
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 1440
+      },
+      "points": [
+        {
+          "x": 1171.8,
+          "y": 511.209375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 511.209375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 511.209375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 511.209375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 650.1375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 650.1375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 650.1375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 650.1375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 789.065625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 789.065625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 789.065625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 789.065625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 927.99375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 927.99375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 927.99375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 927.99375,
+          "insideTargetOrDescendant": true
+        }
+      ],
+      "overlaps": [],
+      "clippingAncestors": [],
+      "fullyVisible": true
+    },
+    {
+      "name": "agent-handoff-returned",
+      "group": "result",
+      "width": 1440,
+      "height": 1440,
+      "target": "ifpmic-child-result",
+      "accessibleName": "P12 쓰기 범위와 결과",
+      "screenshot": "workflow-artifacts/verification/V2/ui/standalone-child-agent-handoff-returned-result-1440.png",
+      "fullPage": false,
+      "rect": {
+        "left": 1121,
+        "top": 464.921875,
+        "right": 1375,
+        "bottom": 974.21875,
+        "width": 254,
+        "height": 509.296875
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 1440
+      },
+      "points": [
+        {
+          "x": 1171.8,
+          "y": 566.78125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 566.78125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 566.78125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 566.78125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 668.640625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 668.640625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 668.640625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 668.640625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 770.5,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 770.5,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 770.5,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 770.5,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 872.359375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 872.359375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 872.359375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 872.359375,
+          "insideTargetOrDescendant": true
+        }
+      ],
+      "overlaps": [],
+      "clippingAncestors": [],
+      "fullyVisible": true
+    },
+    {
+      "name": "agent-handoff-returned",
+      "group": "integration",
+      "width": 1440,
+      "height": 1440,
+      "target": "ifpmic-child-integration",
+      "accessibleName": "P12 질문·복구·통합",
+      "screenshot": "workflow-artifacts/verification/V2/ui/standalone-child-agent-handoff-returned-integration-1440.png",
+      "fullPage": false,
+      "rect": {
+        "left": 1121,
+        "top": 623.21875,
+        "right": 1375,
+        "bottom": 816.421875,
+        "width": 254,
+        "height": 193.203125
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 1440
+      },
+      "points": [
+        {
+          "x": 1171.8,
+          "y": 661.859375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 661.859375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 661.859375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 661.859375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 700.5,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 700.5,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 700.5,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 700.5,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 739.140625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 739.140625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 739.140625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 739.140625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 777.78125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 777.78125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 777.78125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 777.78125,
+          "insideTargetOrDescendant": true
+        }
+      ],
+      "overlaps": [],
+      "clippingAncestors": [],
+      "fullyVisible": true
+    },
+    {
+      "name": "agent-handoff-integrated",
+      "group": "binding",
+      "width": 1440,
+      "height": 1440,
+      "target": "ifpmic-child-binding",
+      "accessibleName": "P12 부모·자식 식별",
+      "screenshot": "workflow-artifacts/verification/V2/ui/standalone-child-agent-handoff-integrated-binding-1440.png",
+      "fullPage": false,
+      "rect": {
+        "left": 1121,
+        "top": 372.6875,
+        "right": 1375,
+        "bottom": 1067.328125,
+        "width": 254,
+        "height": 694.640625
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 1440
+      },
+      "points": [
+        {
+          "x": 1171.8,
+          "y": 511.615625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 511.615625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 511.615625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 511.615625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 650.54375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 650.54375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 650.54375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 650.54375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 789.471875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 789.471875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 789.471875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 789.471875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 928.4,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 928.4,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 928.4,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 928.4,
+          "insideTargetOrDescendant": true
+        }
+      ],
+      "overlaps": [],
+      "clippingAncestors": [],
+      "fullyVisible": true
+    },
+    {
+      "name": "agent-handoff-integrated",
+      "group": "result",
+      "width": 1440,
+      "height": 1440,
+      "target": "ifpmic-child-result",
+      "accessibleName": "P12 쓰기 범위와 결과",
+      "screenshot": "workflow-artifacts/verification/V2/ui/standalone-child-agent-handoff-integrated-result-1440.png",
+      "fullPage": false,
+      "rect": {
+        "left": 1121,
+        "top": 446.328125,
+        "right": 1375,
+        "bottom": 992.8125,
+        "width": 254,
+        "height": 546.484375
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 1440
+      },
+      "points": [
+        {
+          "x": 1171.8,
+          "y": 555.625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 555.625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 555.625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 555.625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 664.921875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 664.921875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 664.921875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 664.921875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 774.21875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 774.21875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 774.21875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 774.21875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 883.515625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 883.515625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 883.515625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 883.515625,
+          "insideTargetOrDescendant": true
+        }
+      ],
+      "overlaps": [],
+      "clippingAncestors": [],
+      "fullyVisible": true
+    },
+    {
+      "name": "agent-handoff-integrated",
+      "group": "integration",
+      "width": 1440,
+      "height": 1440,
+      "target": "ifpmic-child-integration",
+      "accessibleName": "P12 질문·복구·통합",
+      "screenshot": "workflow-artifacts/verification/V2/ui/standalone-child-agent-handoff-integrated-integration-1440.png",
+      "fullPage": false,
+      "rect": {
+        "left": 1121,
+        "top": 558.8125,
+        "right": 1375,
+        "bottom": 882.171875,
+        "width": 254,
+        "height": 323.359375
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 1440
+      },
+      "points": [
+        {
+          "x": 1171.8,
+          "y": 623.484375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 623.484375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 623.484375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 623.484375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 688.15625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 688.15625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 688.15625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 688.15625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 752.828125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 752.828125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 752.828125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 752.828125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 817.5,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 817.5,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 817.5,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 817.5,
+          "insideTargetOrDescendant": true
+        }
+      ],
+      "overlaps": [],
+      "clippingAncestors": [],
+      "fullyVisible": true
+    },
+    {
+      "name": "agent-question-waiting-human",
+      "group": "binding",
+      "width": 375,
+      "height": 1800,
+      "target": "ifpmic-child-binding",
+      "accessibleName": "P12 부모·자식 식별",
+      "screenshot": "workflow-artifacts/verification/V2/ui/standalone-child-agent-question-waiting-human-binding-375.png",
+      "fullPage": false,
+      "rect": {
+        "left": 42,
+        "top": 636.328125,
+        "right": 333,
+        "bottom": 1163.625,
+        "width": 291,
+        "height": 527.296875
+      },
+      "viewport": {
+        "width": 375,
+        "height": 1800
+      },
+      "points": [
+        {
+          "x": 100.2,
+          "y": 741.7875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 158.4,
+          "y": 741.7875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 216.6,
+          "y": 741.7875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 274.8,
+          "y": 741.7875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 100.2,
+          "y": 847.246875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 158.4,
+          "y": 847.246875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 216.6,
+          "y": 847.246875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 274.8,
+          "y": 847.246875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 100.2,
+          "y": 952.70625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 158.4,
+          "y": 952.70625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 216.6,
+          "y": 952.70625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 274.8,
+          "y": 952.70625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 100.2,
+          "y": 1058.165625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 158.4,
+          "y": 1058.165625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 216.6,
+          "y": 1058.165625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 274.8,
+          "y": 1058.165625,
+          "insideTargetOrDescendant": true
+        }
+      ],
+      "overlaps": [],
+      "clippingAncestors": [],
+      "fullyVisible": true
+    },
+    {
+      "name": "agent-question-waiting-human",
+      "group": "result",
+      "width": 375,
+      "height": 1800,
+      "target": "ifpmic-child-result",
+      "accessibleName": "P12 쓰기 범위와 결과",
+      "screenshot": "workflow-artifacts/verification/V2/ui/standalone-child-agent-question-waiting-human-result-375.png",
+      "fullPage": false,
+      "rect": {
+        "left": 42,
+        "top": 701.625,
+        "right": 333,
+        "bottom": 1099.359375,
+        "width": 291,
+        "height": 397.734375
+      },
+      "viewport": {
+        "width": 375,
+        "height": 1800
+      },
+      "points": [
+        {
+          "x": 100.2,
+          "y": 781.171875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 158.4,
+          "y": 781.171875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 216.6,
+          "y": 781.171875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 274.8,
+          "y": 781.171875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 100.2,
+          "y": 860.71875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 158.4,
+          "y": 860.71875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 216.6,
+          "y": 860.71875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 274.8,
+          "y": 860.71875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 100.2,
+          "y": 940.265625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 158.4,
+          "y": 940.265625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 216.6,
+          "y": 940.265625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 274.8,
+          "y": 940.265625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 100.2,
+          "y": 1019.8125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 158.4,
+          "y": 1019.8125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 216.6,
+          "y": 1019.8125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 274.8,
+          "y": 1019.8125,
+          "insideTargetOrDescendant": true
+        }
+      ],
+      "overlaps": [],
+      "clippingAncestors": [],
+      "fullyVisible": true
+    },
+    {
+      "name": "agent-question-waiting-human",
+      "group": "integration",
+      "width": 375,
+      "height": 1800,
+      "target": "ifpmic-child-integration",
+      "accessibleName": "P12 질문·복구·통합",
+      "screenshot": "workflow-artifacts/verification/V2/ui/standalone-child-agent-question-waiting-human-integration-375.png",
+      "fullPage": false,
+      "rect": {
+        "left": 42,
+        "top": 749.359375,
+        "right": 333,
+        "bottom": 1051.03125,
+        "width": 291,
+        "height": 301.671875
+      },
+      "viewport": {
+        "width": 375,
+        "height": 1800
+      },
+      "points": [
+        {
+          "x": 100.2,
+          "y": 809.69375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 158.4,
+          "y": 809.69375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 216.6,
+          "y": 809.69375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 274.8,
+          "y": 809.69375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 100.2,
+          "y": 870.028125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 158.4,
+          "y": 870.028125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 216.6,
+          "y": 870.028125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 274.8,
+          "y": 870.028125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 100.2,
+          "y": 930.3625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 158.4,
+          "y": 930.3625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 216.6,
+          "y": 930.3625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 274.8,
+          "y": 930.3625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 100.2,
+          "y": 990.696875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 158.4,
+          "y": 990.696875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 216.6,
+          "y": 990.696875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 274.8,
+          "y": 990.696875,
+          "insideTargetOrDescendant": true
+        }
+      ],
+      "overlaps": [],
+      "clippingAncestors": [],
+      "fullyVisible": true
+    },
+    {
+      "name": "agent-question-resumed",
+      "group": "binding",
+      "width": 1440,
+      "height": 1440,
+      "target": "ifpmic-child-binding",
+      "accessibleName": "P12 부모·자식 식별",
+      "screenshot": "workflow-artifacts/verification/V2/ui/standalone-child-agent-question-resumed-binding-1440.png",
+      "fullPage": false,
+      "rect": {
+        "left": 1121,
+        "top": 354.15625,
+        "right": 1375,
+        "bottom": 1085.984375,
+        "width": 254,
+        "height": 731.828125
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 1440
+      },
+      "points": [
+        {
+          "x": 1171.8,
+          "y": 500.521875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 500.521875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 500.521875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 500.521875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 646.8875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 646.8875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 646.8875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 646.8875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 793.253125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 793.253125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 793.253125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 793.253125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 939.61875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 939.61875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 939.61875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 939.61875,
+          "insideTargetOrDescendant": true
+        }
+      ],
+      "overlaps": [],
+      "clippingAncestors": [],
+      "fullyVisible": true
+    },
+    {
+      "name": "agent-question-resumed",
+      "group": "result",
+      "width": 1440,
+      "height": 1440,
+      "target": "ifpmic-child-result",
+      "accessibleName": "P12 쓰기 범위와 결과",
+      "screenshot": "workflow-artifacts/verification/V2/ui/standalone-child-agent-question-resumed-result-1440.png",
+      "fullPage": false,
+      "rect": {
+        "left": 1121,
+        "top": 511.984375,
+        "right": 1375,
+        "bottom": 928.3125,
+        "width": 254,
+        "height": 416.328125
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 1440
+      },
+      "points": [
+        {
+          "x": 1171.8,
+          "y": 595.25,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 595.25,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 595.25,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 595.25,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 678.515625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 678.515625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 678.515625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 678.515625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 761.78125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 761.78125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 761.78125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 761.78125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 845.046875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 845.046875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 845.046875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 845.046875,
+          "insideTargetOrDescendant": true
+        }
+      ],
+      "overlaps": [],
+      "clippingAncestors": [],
+      "fullyVisible": true
+    },
+    {
+      "name": "agent-question-resumed",
+      "group": "integration",
+      "width": 1440,
+      "height": 1440,
+      "target": "ifpmic-child-integration",
+      "accessibleName": "P12 질문·복구·통합",
+      "screenshot": "workflow-artifacts/verification/V2/ui/standalone-child-agent-question-resumed-integration-1440.png",
+      "fullPage": false,
+      "rect": {
+        "left": 1121,
+        "top": 595.3125,
+        "right": 1375,
+        "bottom": 844.296875,
+        "width": 254,
+        "height": 248.984375
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 1440
+      },
+      "points": [
+        {
+          "x": 1171.8,
+          "y": 645.109375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 645.109375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 645.109375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 645.109375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 694.90625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 694.90625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 694.90625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 694.90625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 744.703125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 744.703125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 744.703125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 744.703125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 794.5,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 794.5,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 794.5,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 794.5,
+          "insideTargetOrDescendant": true
+        }
+      ],
+      "overlaps": [],
+      "clippingAncestors": [],
+      "fullyVisible": true
+    },
+    {
+      "name": "agent-failure-retried-history",
+      "group": "binding",
+      "width": 375,
+      "height": 1800,
+      "target": "ifpmic-child-binding",
+      "accessibleName": "P12 부모·자식 식별",
+      "screenshot": "workflow-artifacts/verification/V2/ui/standalone-child-agent-failure-retried-history-binding-375.png",
+      "fullPage": false,
+      "rect": {
+        "left": 56,
+        "top": 626.703125,
+        "right": 337,
+        "bottom": 1172.59375,
+        "width": 281,
+        "height": 545.890625
+      },
+      "viewport": {
+        "width": 375,
+        "height": 1800
+      },
+      "points": [
+        {
+          "x": 112.2,
+          "y": 735.88125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 168.4,
+          "y": 735.88125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 224.6,
+          "y": 735.88125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 280.8,
+          "y": 735.88125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 112.2,
+          "y": 845.059375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 168.4,
+          "y": 845.059375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 224.6,
+          "y": 845.059375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 280.8,
+          "y": 845.059375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 112.2,
+          "y": 954.2375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 168.4,
+          "y": 954.2375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 224.6,
+          "y": 954.2375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 280.8,
+          "y": 954.2375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 112.2,
+          "y": 1063.415625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 168.4,
+          "y": 1063.415625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 224.6,
+          "y": 1063.415625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 280.8,
+          "y": 1063.415625,
+          "insideTargetOrDescendant": true
+        }
+      ],
+      "overlaps": [],
+      "clippingAncestors": [],
+      "fullyVisible": true
+    },
+    {
+      "name": "agent-failure-retried-history",
+      "group": "result",
+      "width": 375,
+      "height": 1800,
+      "target": "ifpmic-child-result",
+      "accessibleName": "P12 쓰기 범위와 결과",
+      "screenshot": "workflow-artifacts/verification/V2/ui/standalone-child-agent-failure-retried-history-result-375.png",
+      "fullPage": false,
+      "rect": {
+        "left": 56,
+        "top": 710.59375,
+        "right": 337,
+        "bottom": 1089.734375,
+        "width": 281,
+        "height": 379.140625
+      },
+      "viewport": {
+        "width": 375,
+        "height": 1800
+      },
+      "points": [
+        {
+          "x": 112.2,
+          "y": 786.421875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 168.4,
+          "y": 786.421875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 224.6,
+          "y": 786.421875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 280.8,
+          "y": 786.421875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 112.2,
+          "y": 862.25,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 168.4,
+          "y": 862.25,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 224.6,
+          "y": 862.25,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 280.8,
+          "y": 862.25,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 112.2,
+          "y": 938.078125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 168.4,
+          "y": 938.078125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 224.6,
+          "y": 938.078125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 280.8,
+          "y": 938.078125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 112.2,
+          "y": 1013.90625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 168.4,
+          "y": 1013.90625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 224.6,
+          "y": 1013.90625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 280.8,
+          "y": 1013.90625,
+          "insideTargetOrDescendant": true
+        }
+      ],
+      "overlaps": [],
+      "clippingAncestors": [],
+      "fullyVisible": true
+    },
+    {
+      "name": "agent-failure-retried-history",
+      "group": "integration",
+      "width": 375,
+      "height": 1800,
+      "target": "ifpmic-child-integration",
+      "accessibleName": "P12 질문·복구·통합",
+      "screenshot": "workflow-artifacts/verification/V2/ui/standalone-child-agent-failure-retried-history-integration-375.png",
+      "fullPage": false,
+      "rect": {
+        "left": 56,
+        "top": 795.734375,
+        "right": 337,
+        "bottom": 1004.4375,
+        "width": 281,
+        "height": 208.703125
+      },
+      "viewport": {
+        "width": 375,
+        "height": 1800
+      },
+      "points": [
+        {
+          "x": 112.2,
+          "y": 837.475,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 168.4,
+          "y": 837.475,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 224.6,
+          "y": 837.475,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 280.8,
+          "y": 837.475,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 112.2,
+          "y": 879.215625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 168.4,
+          "y": 879.215625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 224.6,
+          "y": 879.215625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 280.8,
+          "y": 879.215625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 112.2,
+          "y": 920.95625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 168.4,
+          "y": 920.95625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 224.6,
+          "y": 920.95625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 280.8,
+          "y": 920.95625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 112.2,
+          "y": 962.696875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 168.4,
+          "y": 962.696875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 224.6,
+          "y": 962.696875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 280.8,
+          "y": 962.696875,
+          "insideTargetOrDescendant": true
+        }
+      ],
+      "overlaps": [],
+      "clippingAncestors": [],
+      "fullyVisible": true
+    },
+    {
+      "name": "agent-failure-recovered",
+      "group": "binding",
+      "width": 375,
+      "height": 1800,
+      "target": "ifpmic-child-binding",
+      "accessibleName": "P12 부모·자식 식별",
+      "screenshot": "workflow-artifacts/verification/V2/ui/standalone-child-agent-failure-recovered-binding-375.png",
+      "fullPage": false,
+      "rect": {
+        "left": 42,
+        "top": 636.59375,
+        "right": 333,
+        "bottom": 1163.890625,
+        "width": 291,
+        "height": 527.296875
+      },
+      "viewport": {
+        "width": 375,
+        "height": 1800
+      },
+      "points": [
+        {
+          "x": 100.2,
+          "y": 742.053125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 158.4,
+          "y": 742.053125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 216.6,
+          "y": 742.053125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 274.8,
+          "y": 742.053125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 100.2,
+          "y": 847.5125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 158.4,
+          "y": 847.5125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 216.6,
+          "y": 847.5125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 274.8,
+          "y": 847.5125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 100.2,
+          "y": 952.971875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 158.4,
+          "y": 952.971875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 216.6,
+          "y": 952.971875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 274.8,
+          "y": 952.971875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 100.2,
+          "y": 1058.43125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 158.4,
+          "y": 1058.43125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 216.6,
+          "y": 1058.43125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 274.8,
+          "y": 1058.43125,
+          "insideTargetOrDescendant": true
+        }
+      ],
+      "overlaps": [],
+      "clippingAncestors": [],
+      "fullyVisible": true
+    },
+    {
+      "name": "agent-failure-recovered",
+      "group": "result",
+      "width": 375,
+      "height": 1800,
+      "target": "ifpmic-child-result",
+      "accessibleName": "P12 쓰기 범위와 결과",
+      "screenshot": "workflow-artifacts/verification/V2/ui/standalone-child-agent-failure-recovered-result-375.png",
+      "fullPage": false,
+      "rect": {
+        "left": 42,
+        "top": 710.890625,
+        "right": 333,
+        "bottom": 1090.03125,
+        "width": 291,
+        "height": 379.140625
+      },
+      "viewport": {
+        "width": 375,
+        "height": 1800
+      },
+      "points": [
+        {
+          "x": 100.2,
+          "y": 786.71875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 158.4,
+          "y": 786.71875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 216.6,
+          "y": 786.71875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 274.8,
+          "y": 786.71875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 100.2,
+          "y": 862.546875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 158.4,
+          "y": 862.546875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 216.6,
+          "y": 862.546875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 274.8,
+          "y": 862.546875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 100.2,
+          "y": 938.375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 158.4,
+          "y": 938.375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 216.6,
+          "y": 938.375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 274.8,
+          "y": 938.375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 100.2,
+          "y": 1014.203125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 158.4,
+          "y": 1014.203125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 216.6,
+          "y": 1014.203125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 274.8,
+          "y": 1014.203125,
+          "insideTargetOrDescendant": true
+        }
+      ],
+      "overlaps": [],
+      "clippingAncestors": [],
+      "fullyVisible": true
+    },
+    {
+      "name": "agent-failure-recovered",
+      "group": "integration",
+      "width": 375,
+      "height": 1800,
+      "target": "ifpmic-child-integration",
+      "accessibleName": "P12 질문·복구·통합",
+      "screenshot": "workflow-artifacts/verification/V2/ui/standalone-child-agent-failure-recovered-integration-375.png",
+      "fullPage": false,
+      "rect": {
+        "left": 42,
+        "top": 758.03125,
+        "right": 333,
+        "bottom": 1041.109375,
+        "width": 291,
+        "height": 283.078125
+      },
+      "viewport": {
+        "width": 375,
+        "height": 1800
+      },
+      "points": [
+        {
+          "x": 100.2,
+          "y": 814.646875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 158.4,
+          "y": 814.646875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 216.6,
+          "y": 814.646875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 274.8,
+          "y": 814.646875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 100.2,
+          "y": 871.2625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 158.4,
+          "y": 871.2625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 216.6,
+          "y": 871.2625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 274.8,
+          "y": 871.2625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 100.2,
+          "y": 927.878125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 158.4,
+          "y": 927.878125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 216.6,
+          "y": 927.878125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 274.8,
+          "y": 927.878125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 100.2,
+          "y": 984.49375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 158.4,
+          "y": 984.49375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 216.6,
+          "y": 984.49375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 274.8,
+          "y": 984.49375,
+          "insideTargetOrDescendant": true
+        }
+      ],
+      "overlaps": [],
+      "clippingAncestors": [],
+      "fullyVisible": true
+    },
+    {
+      "name": "agent-permissions-integration-denied",
+      "group": "binding",
+      "width": 1440,
+      "height": 1440,
+      "target": "ifpmic-child-binding",
+      "accessibleName": "P12 부모·자식 식별",
+      "screenshot": "workflow-artifacts/verification/V2/ui/standalone-child-agent-permissions-integration-denied-binding-1440.png",
+      "fullPage": false,
+      "rect": {
+        "left": 1121,
+        "top": 344.46875,
+        "right": 1375,
+        "bottom": 1094.890625,
+        "width": 254,
+        "height": 750.421875
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 1440
+      },
+      "points": [
+        {
+          "x": 1171.8,
+          "y": 494.553125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 494.553125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 494.553125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 494.553125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 644.6375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 644.6375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 644.6375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 644.6375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 794.721875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 794.721875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 794.721875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 794.721875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 944.80625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 944.80625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 944.80625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 944.80625,
+          "insideTargetOrDescendant": true
+        }
+      ],
+      "overlaps": [],
+      "clippingAncestors": [],
+      "fullyVisible": true
+    },
+    {
+      "name": "agent-permissions-integration-denied",
+      "group": "result",
+      "width": 1440,
+      "height": 1440,
+      "target": "ifpmic-child-result",
+      "accessibleName": "P12 쓰기 범위와 결과",
+      "screenshot": "workflow-artifacts/verification/V2/ui/standalone-child-agent-permissions-integration-denied-result-1440.png",
+      "fullPage": false,
+      "rect": {
+        "left": 1121,
+        "top": 446.890625,
+        "right": 1375,
+        "bottom": 993.375,
+        "width": 254,
+        "height": 546.484375
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 1440
+      },
+      "points": [
+        {
+          "x": 1171.8,
+          "y": 556.1875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 556.1875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 556.1875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 556.1875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 665.484375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 665.484375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 665.484375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 665.484375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 774.78125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 774.78125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 774.78125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 774.78125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 884.078125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 884.078125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 884.078125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 884.078125,
+          "insideTargetOrDescendant": true
+        }
+      ],
+      "overlaps": [],
+      "clippingAncestors": [],
+      "fullyVisible": true
+    },
+    {
+      "name": "agent-permissions-integration-denied",
+      "group": "integration",
+      "width": 1440,
+      "height": 1440,
+      "target": "ifpmic-child-integration",
+      "accessibleName": "P12 질문·복구·통합",
+      "screenshot": "workflow-artifacts/verification/V2/ui/standalone-child-agent-permissions-integration-denied-integration-1440.png",
+      "fullPage": false,
+      "rect": {
+        "left": 1121,
+        "top": 623.375,
+        "right": 1375,
+        "bottom": 816.578125,
+        "width": 254,
+        "height": 193.203125
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 1440
+      },
+      "points": [
+        {
+          "x": 1171.8,
+          "y": 662.015625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 662.015625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 662.015625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 662.015625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 700.65625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 700.65625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 700.65625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 700.65625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 739.296875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 739.296875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 739.296875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 739.296875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 777.9375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 777.9375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 777.9375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 777.9375,
+          "insideTargetOrDescendant": true
+        }
+      ],
+      "overlaps": [],
+      "clippingAncestors": [],
+      "fullyVisible": true
+    },
+    {
+      "name": "agent-stale-cycle-current",
+      "group": "binding",
+      "width": 1440,
+      "height": 1440,
+      "target": "ifpmic-child-binding",
+      "accessibleName": "P12 부모·자식 식별",
+      "screenshot": "workflow-artifacts/verification/V2/ui/standalone-child-agent-stale-cycle-current-binding-1440.png",
+      "fullPage": false,
+      "rect": {
+        "left": 1121,
+        "top": 345.140625,
+        "right": 1375,
+        "bottom": 1095.5625,
+        "width": 254,
+        "height": 750.421875
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 1440
+      },
+      "points": [
+        {
+          "x": 1171.8,
+          "y": 495.225,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 495.225,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 495.225,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 495.225,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 645.309375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 645.309375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 645.309375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 645.309375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 795.39375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 795.39375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 795.39375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 795.39375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 945.478125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 945.478125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 945.478125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 945.478125,
+          "insideTargetOrDescendant": true
+        }
+      ],
+      "overlaps": [],
+      "clippingAncestors": [],
+      "fullyVisible": true
+    },
+    {
+      "name": "agent-stale-cycle-current",
+      "group": "result",
+      "width": 1440,
+      "height": 1440,
+      "target": "ifpmic-child-result",
+      "accessibleName": "P12 쓰기 범위와 결과",
+      "screenshot": "workflow-artifacts/verification/V2/ui/standalone-child-agent-stale-cycle-current-result-1440.png",
+      "fullPage": false,
+      "rect": {
+        "left": 1121,
+        "top": 493.5625,
+        "right": 1375,
+        "bottom": 947.078125,
+        "width": 254,
+        "height": 453.515625
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 1440
+      },
+      "points": [
+        {
+          "x": 1171.8,
+          "y": 584.265625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 584.265625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 584.265625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 584.265625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 674.96875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 674.96875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 674.96875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 674.96875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 765.671875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 765.671875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 765.671875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 765.671875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 856.375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 856.375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 856.375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 856.375,
+          "insideTargetOrDescendant": true
+        }
+      ],
+      "overlaps": [],
+      "clippingAncestors": [],
+      "fullyVisible": true
+    },
+    {
+      "name": "agent-stale-cycle-current",
+      "group": "integration",
+      "width": 1440,
+      "height": 1440,
+      "target": "ifpmic-child-integration",
+      "accessibleName": "P12 질문·복구·통합",
+      "screenshot": "workflow-artifacts/verification/V2/ui/standalone-child-agent-stale-cycle-current-integration-1440.png",
+      "fullPage": false,
+      "rect": {
+        "left": 1121,
+        "top": 623.078125,
+        "right": 1375,
+        "bottom": 816.28125,
+        "width": 254,
+        "height": 193.203125
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 1440
+      },
+      "points": [
+        {
+          "x": 1171.8,
+          "y": 661.71875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 661.71875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 661.71875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 661.71875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 700.359375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 700.359375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 700.359375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 700.359375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 739,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 739,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 739,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 739,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 777.640625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 777.640625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 777.640625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 777.640625,
+          "insideTargetOrDescendant": true
+        }
+      ],
+      "overlaps": [],
+      "clippingAncestors": [],
+      "fullyVisible": true
+    },
+    {
+      "name": "agent-stale-cycle-history",
+      "group": "binding",
+      "width": 1440,
+      "height": 1440,
+      "target": "ifpmic-child-binding",
+      "accessibleName": "P12 부모·자식 식별",
+      "screenshot": "workflow-artifacts/verification/V2/ui/standalone-child-agent-stale-cycle-history-binding-1440.png",
+      "fullPage": false,
+      "rect": {
+        "left": 84,
+        "top": 560.40625,
+        "right": 701,
+        "bottom": 880.078125,
+        "width": 617,
+        "height": 319.671875
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 1440
+      },
+      "points": [
+        {
+          "x": 207.4,
+          "y": 624.340625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 330.8,
+          "y": 624.340625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 454.2,
+          "y": 624.340625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 577.6,
+          "y": 624.340625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 207.4,
+          "y": 688.275,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 330.8,
+          "y": 688.275,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 454.2,
+          "y": 688.275,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 577.6,
+          "y": 688.275,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 207.4,
+          "y": 752.209375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 330.8,
+          "y": 752.209375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 454.2,
+          "y": 752.209375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 577.6,
+          "y": 752.209375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 207.4,
+          "y": 816.14375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 330.8,
+          "y": 816.14375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 454.2,
+          "y": 816.14375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 577.6,
+          "y": 816.14375,
+          "insideTargetOrDescendant": true
+        }
+      ],
+      "overlaps": [],
+      "clippingAncestors": [],
+      "fullyVisible": true
+    },
+    {
+      "name": "agent-stale-cycle-history",
+      "group": "result",
+      "width": 1440,
+      "height": 1440,
+      "target": "ifpmic-child-result",
+      "accessibleName": "P12 쓰기 범위와 결과",
+      "screenshot": "workflow-artifacts/verification/V2/ui/standalone-child-agent-stale-cycle-history-result-1440.png",
+      "fullPage": false,
+      "rect": {
+        "left": 84,
+        "top": 599.078125,
+        "right": 701,
+        "bottom": 841.875,
+        "width": 617,
+        "height": 242.796875
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 1440
+      },
+      "points": [
+        {
+          "x": 207.4,
+          "y": 647.6375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 330.8,
+          "y": 647.6375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 454.2,
+          "y": 647.6375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 577.6,
+          "y": 647.6375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 207.4,
+          "y": 696.196875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 330.8,
+          "y": 696.196875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 454.2,
+          "y": 696.196875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 577.6,
+          "y": 696.196875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 207.4,
+          "y": 744.75625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 330.8,
+          "y": 744.75625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 454.2,
+          "y": 744.75625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 577.6,
+          "y": 744.75625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 207.4,
+          "y": 793.315625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 330.8,
+          "y": 793.315625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 454.2,
+          "y": 793.315625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 577.6,
+          "y": 793.315625,
+          "insideTargetOrDescendant": true
+        }
+      ],
+      "overlaps": [],
+      "clippingAncestors": [],
+      "fullyVisible": true
+    },
+    {
+      "name": "agent-stale-cycle-history",
+      "group": "integration",
+      "width": 1440,
+      "height": 1440,
+      "target": "ifpmic-child-integration",
+      "accessibleName": "P12 질문·복구·통합",
+      "screenshot": "workflow-artifacts/verification/V2/ui/standalone-child-agent-stale-cycle-history-integration-1440.png",
+      "fullPage": false,
+      "rect": {
+        "left": 84,
+        "top": 613.875,
+        "right": 701,
+        "bottom": 825.671875,
+        "width": 617,
+        "height": 211.796875
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 1440
+      },
+      "points": [
+        {
+          "x": 207.4,
+          "y": 656.234375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 330.8,
+          "y": 656.234375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 454.2,
+          "y": 656.234375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 577.6,
+          "y": 656.234375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 207.4,
+          "y": 698.59375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 330.8,
+          "y": 698.59375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 454.2,
+          "y": 698.59375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 577.6,
+          "y": 698.59375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 207.4,
+          "y": 740.953125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 330.8,
+          "y": 740.953125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 454.2,
+          "y": 740.953125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 577.6,
+          "y": 740.953125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 207.4,
+          "y": 783.3125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 330.8,
+          "y": 783.3125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 454.2,
+          "y": 783.3125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 577.6,
+          "y": 783.3125,
+          "insideTargetOrDescendant": true
+        }
+      ],
+      "overlaps": [],
+      "clippingAncestors": [],
+      "fullyVisible": true
+    },
+    {
+      "name": "agent-retry-limit-capped",
+      "group": "binding",
+      "width": 1440,
+      "height": 1440,
+      "target": "ifpmic-child-binding",
+      "accessibleName": "P12 부모·자식 식별",
+      "screenshot": "workflow-artifacts/verification/V2/ui/standalone-child-agent-retry-limit-capped-binding-1440.png",
+      "fullPage": false,
+      "rect": {
+        "left": 1121,
+        "top": 344.75,
+        "right": 1375,
+        "bottom": 1095.171875,
+        "width": 254,
+        "height": 750.421875
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 1440
+      },
+      "points": [
+        {
+          "x": 1171.8,
+          "y": 494.834375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 494.834375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 494.834375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 494.834375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 644.91875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 644.91875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 644.91875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 644.91875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 795.003125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 795.003125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 795.003125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 795.003125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 945.0875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 945.0875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 945.0875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 945.0875,
+          "insideTargetOrDescendant": true
+        }
+      ],
+      "overlaps": [],
+      "clippingAncestors": [],
+      "fullyVisible": true
+    },
+    {
+      "name": "agent-retry-limit-capped",
+      "group": "result",
+      "width": 1440,
+      "height": 1440,
+      "target": "ifpmic-child-result",
+      "accessibleName": "P12 쓰기 범위와 결과",
+      "screenshot": "workflow-artifacts/verification/V2/ui/standalone-child-agent-retry-limit-capped-result-1440.png",
+      "fullPage": false,
+      "rect": {
+        "left": 1121,
+        "top": 447.171875,
+        "right": 1375,
+        "bottom": 993.65625,
+        "width": 254,
+        "height": 546.484375
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 1440
+      },
+      "points": [
+        {
+          "x": 1171.8,
+          "y": 556.46875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 556.46875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 556.46875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 556.46875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 665.765625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 665.765625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 665.765625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 665.765625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 775.0625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 775.0625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 775.0625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 775.0625,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 884.359375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 884.359375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 884.359375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 884.359375,
+          "insideTargetOrDescendant": true
+        }
+      ],
+      "overlaps": [],
+      "clippingAncestors": [],
+      "fullyVisible": true
+    },
+    {
+      "name": "agent-retry-limit-capped",
+      "group": "integration",
+      "width": 1440,
+      "height": 1440,
+      "target": "ifpmic-child-integration",
+      "accessibleName": "P12 질문·복구·통합",
+      "screenshot": "workflow-artifacts/verification/V2/ui/standalone-child-agent-retry-limit-capped-integration-1440.png",
+      "fullPage": false,
+      "rect": {
+        "left": 1121,
+        "top": 623.65625,
+        "right": 1375,
+        "bottom": 816.859375,
+        "width": 254,
+        "height": 193.203125
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 1440
+      },
+      "points": [
+        {
+          "x": 1171.8,
+          "y": 662.296875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 662.296875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 662.296875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 662.296875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 700.9375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 700.9375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 700.9375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 700.9375,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 739.578125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 739.578125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 739.578125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 739.578125,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1171.8,
+          "y": 778.21875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1222.6,
+          "y": 778.21875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1273.4,
+          "y": 778.21875,
+          "insideTargetOrDescendant": true
+        },
+        {
+          "x": 1324.2,
+          "y": 778.21875,
+          "insideTargetOrDescendant": true
+        }
+      ],
+      "overlaps": [],
+      "clippingAncestors": [],
+      "fullyVisible": true
+    }
+  ],
+  "apiRequests": [],
+  "pageErrors": [],
+  "consoleErrors": [],
+  "evidence": [
+    "workflow-artifacts/verification/V2/ui/standalone-routing-reuse-local-1440.png",
+    "workflow-artifacts/verification/V2/ui/standalone-routing-exempt-exempt-1440.png",
+    "workflow-artifacts/verification/V2/ui/standalone-routing-exempt-exempt-375.png",
+    "workflow-artifacts/verification/V2/ui/standalone-routing-no-change-closed-1440.png",
+    "workflow-artifacts/verification/V2/ui/standalone-routing-no-change-closed-375.png",
+    "workflow-artifacts/verification/V2/ui/standalone-routing-candidate-blocked-1440.png",
+    "workflow-artifacts/verification/V2/ui/standalone-routing-replan-replanned-1440.png",
+    "workflow-artifacts/verification/V2/ui/standalone-spec-question-repeat-end-desktop.png",
+    "workflow-artifacts/verification/V2/ui/standalone-remote-uncertainty-stale-desktop.png",
+    "workflow-artifacts/verification/V2/ui/standalone-remote-uncertainty-stale-mobile-375.png",
+    "workflow-artifacts/verification/V2/ui/standalone-remote-recovery-found-desktop.png",
+    "workflow-artifacts/verification/V2/ui/standalone-sqe-manual-waiting-1440.png",
+    "workflow-artifacts/verification/V2/ui/standalone-sqe-manual-submitted-375.png",
+    "workflow-artifacts/verification/V2/ui/standalone-sqe-manual-submitted-target-375.png",
+    "workflow-artifacts/verification/V2/ui/standalone-sqe-manual-submitted-assignment-375.png",
+    "workflow-artifacts/verification/V2/ui/standalone-sqe-manual-submitted-result-375.png",
+    "workflow-artifacts/verification/V2/ui/standalone-sqe-manual-judged-1440.png",
+    "workflow-artifacts/verification/V2/ui/standalone-sqe-manual-fail-rerouted-history-1440.png",
+    "workflow-artifacts/verification/V2/ui/standalone-sqe-incomplete-blocked-1440.png",
+    "workflow-artifacts/verification/V2/ui/standalone-sqe-manual-retry-waiting-two-375.png",
+    "workflow-artifacts/verification/V2/ui/standalone-sqe-manual-retry-a1-history-375.png",
+    "workflow-artifacts/verification/V2/ui/standalone-sqe-manual-retry-a1-result-history-375.png",
+    "workflow-artifacts/verification/V2/ui/standalone-sqe-report-retry-current-1440.png",
+    "workflow-artifacts/verification/V2/ui/standalone-sqe-judgment-retry-stale-history-1440.png",
+    "workflow-artifacts/verification/V2/ui/standalone-sqe-judgment-retry-a1-history-1440.png",
+    "workflow-artifacts/verification/V2/ui/standalone-sqe-manual-quarantine-blocked-1440.png",
+    "workflow-artifacts/verification/V2/ui/standalone-child-agent-wait-waiting-binding-1440.png",
+    "workflow-artifacts/verification/V2/ui/standalone-child-agent-wait-waiting-result-1440.png",
+    "workflow-artifacts/verification/V2/ui/standalone-child-agent-wait-waiting-integration-1440.png",
+    "workflow-artifacts/verification/V2/ui/standalone-child-agent-handoff-returned-binding-1440.png",
+    "workflow-artifacts/verification/V2/ui/standalone-child-agent-handoff-returned-result-1440.png",
+    "workflow-artifacts/verification/V2/ui/standalone-child-agent-handoff-returned-integration-1440.png",
+    "workflow-artifacts/verification/V2/ui/standalone-child-agent-handoff-integrated-binding-1440.png",
+    "workflow-artifacts/verification/V2/ui/standalone-child-agent-handoff-integrated-result-1440.png",
+    "workflow-artifacts/verification/V2/ui/standalone-child-agent-handoff-integrated-integration-1440.png",
+    "workflow-artifacts/verification/V2/ui/standalone-child-agent-question-waiting-human-binding-375.png",
+    "workflow-artifacts/verification/V2/ui/standalone-child-agent-question-waiting-human-result-375.png",
+    "workflow-artifacts/verification/V2/ui/standalone-child-agent-question-waiting-human-integration-375.png",
+    "workflow-artifacts/verification/V2/ui/standalone-child-agent-question-resumed-binding-1440.png",
+    "workflow-artifacts/verification/V2/ui/standalone-child-agent-question-resumed-result-1440.png",
+    "workflow-artifacts/verification/V2/ui/standalone-child-agent-question-resumed-integration-1440.png",
+    "workflow-artifacts/verification/V2/ui/standalone-child-agent-failure-retried-history-binding-375.png",
+    "workflow-artifacts/verification/V2/ui/standalone-child-agent-failure-retried-history-result-375.png",
+    "workflow-artifacts/verification/V2/ui/standalone-child-agent-failure-retried-history-integration-375.png",
+    "workflow-artifacts/verification/V2/ui/standalone-child-agent-failure-recovered-binding-375.png",
+    "workflow-artifacts/verification/V2/ui/standalone-child-agent-failure-recovered-result-375.png",
+    "workflow-artifacts/verification/V2/ui/standalone-child-agent-failure-recovered-integration-375.png",
+    "workflow-artifacts/verification/V2/ui/standalone-child-agent-permissions-integration-denied-binding-1440.png",
+    "workflow-artifacts/verification/V2/ui/standalone-child-agent-permissions-integration-denied-result-1440.png",
+    "workflow-artifacts/verification/V2/ui/standalone-child-agent-permissions-integration-denied-integration-1440.png",
+    "workflow-artifacts/verification/V2/ui/standalone-child-agent-stale-cycle-current-binding-1440.png",
+    "workflow-artifacts/verification/V2/ui/standalone-child-agent-stale-cycle-current-result-1440.png",
+    "workflow-artifacts/verification/V2/ui/standalone-child-agent-stale-cycle-current-integration-1440.png",
+    "workflow-artifacts/verification/V2/ui/standalone-child-agent-stale-cycle-history-binding-1440.png",
+    "workflow-artifacts/verification/V2/ui/standalone-child-agent-stale-cycle-history-result-1440.png",
+    "workflow-artifacts/verification/V2/ui/standalone-child-agent-stale-cycle-history-integration-1440.png",
+    "workflow-artifacts/verification/V2/ui/standalone-child-agent-retry-limit-capped-binding-1440.png",
+    "workflow-artifacts/verification/V2/ui/standalone-child-agent-retry-limit-capped-result-1440.png",
+    "workflow-artifacts/verification/V2/ui/standalone-child-agent-retry-limit-capped-integration-1440.png",
+    "workflow-artifacts/verification/V2/ui/standalone-spec-question-retry-review-blocked-desktop.png",
+    "workflow-artifacts/verification/V2/ui/standalone-spec-question-retry-review-blocked-mobile-375.png",
+    "workflow-artifacts/verification/V2/ui/standalone-desktop.png",
+    "workflow-artifacts/verification/V2/ui/standalone-sam-failure-returned-desktop.png",
+    "workflow-artifacts/verification/V2/ui/standalone-metadata-completed-desktop.png",
+    "workflow-artifacts/verification/V2/ui/standalone-device-time-60000-desktop.png",
+    "workflow-artifacts/verification/V2/ui/standalone-device-time-60000-mobile-375.png"
+  ],
+  "verdict": "pass"
+}

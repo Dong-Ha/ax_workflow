@@ -46,6 +46,63 @@ function harness(id = 'routing-fixture') {
   return { id, events, current, add };
 }
 
+// Fixed local P12 proof for the existing routing integration regression.
+// Keep this independent of the production child-catalog enricher.
+function completeChildP12(h) {
+  const result = h.current();
+  const suffix = `c${result.cycle}:a${result.steps.P12.attempt}`;
+  const parent = {
+    coordinator_task_id: `mock:routing:parent-task:${suffix}`,
+    coordinator_execution_id: `mock:routing:parent-exec:${suffix}`,
+    candidate_fingerprint: result.candidate_fingerprint,
+    requirements_version: result.requirements_version,
+  };
+  const request = `mock:routing:request:${suffix}`;
+  const task = `mock:routing:task:${suffix}`;
+  const childExecution = `mock:routing:child-exec:${suffix}`;
+  const production = `mock:routing:production:${suffix}`;
+  const patch = `mock:routing:patch:${suffix}`;
+  const resultEvidence = `mock:routing:result-proof:${suffix}`;
+  const p11 = result.steps.P11;
+  h.add('p12_coordinator', 'P12', {
+    actor: 'mock:system', role: 'code-dev', purpose: 'p12_coordination', ...parent,
+    p11_execution_id: p11.execution_id, code_artifact_id: `mock:routing:code:${suffix}`,
+    production_hash: production, tc_design_artifact_id: `mock:routing:design:${suffix}`,
+    workspace_id: `mock:routing:integration-ws:${suffix}`, write_scope: 'tests_integration_only',
+    runtime_profile_ref: 'mock:runtime:code-dev-coordinator:v1', evidence_id: `mock:routing:coordinator-proof:${suffix}`,
+  });
+  h.add('child_request', 'P12', {
+    actor: 'mock:code-dev', ...parent, request_id: request, child_task_id: task, ordinal: 1, child_role: 'tc',
+    workspace_id: `mock:routing:tc-ws:${suffix}`, write_scope: 'tests_only', runtime_profile_ref: 'mock:runtime:tc:v1',
+    output_schema_ref: 'mock:schema:tc-patch:v1', code_artifact_id: `mock:routing:code:${suffix}`,
+    tc_design_artifact_id: `mock:routing:design:${suffix}`, prior_child_execution_id: null,
+    checkpoint_artifact_id: null, answer_evidence_id: null, answer_artifact_id: null,
+    evidence_id: `mock:routing:request-proof:${suffix}`,
+  });
+  h.add('child_assignment', 'P12', {
+    actor: 'mock:system', ...parent, request_id: request, child_task_id: task,
+    child_execution_id: childExecution, workspace_id: `mock:routing:tc-ws:${suffix}`,
+    evidence_id: `mock:routing:assignment-proof:${suffix}`,
+  });
+  h.add('child_result', 'P12', {
+    actor: 'mock:tc', ...parent, request_id: request, child_task_id: task, child_execution_id: childExecution,
+    workspace_id: `mock:routing:tc-ws:${suffix}`, status: 'completed', output_schema_ref: 'mock:schema:tc-patch:v1',
+    patch_artifact_id: patch, changed_path_refs: ['mock:path:tests:unit'], production_hash: production,
+    question_id: null, checkpoint_artifact_id: null, failure_class: null,
+    started_at_ms: 1000, finished_at_ms: 2000, evidence_id: resultEvidence,
+  });
+  h.add('child_collect', 'P12', {
+    actor: 'mock:code-dev', ...parent, child_execution_id: childExecution, result_evidence_id: resultEvidence,
+    evidence_id: `mock:routing:collect-proof:${suffix}`,
+  });
+  h.add('child_integrated', 'P12', {
+    actor: 'mock:code-dev', ...parent, child_execution_id: childExecution, result_evidence_id: resultEvidence,
+    patch_artifact_id: patch, production_hash_before: production, production_hash_after: production,
+    changed_path_refs: ['mock:path:tests:unit'], expectations_changed: false, outcome: 'integrated',
+    integration_artifact_id: `mock:routing:integration:${suffix}`, evidence_id: `mock:routing:integrated-proof:${suffix}`,
+  });
+}
+
 function taskId(id, cycle = 1, attempt = 1) {
   return `mock:task:${id}:c${cycle}${attempt === 1 ? '' : `:a${attempt}`}`;
 }
@@ -716,6 +773,7 @@ test('NEW_HW permits only same-environment P10 reuse and rejects early or mismat
   for (const id of ['P11', 'P12']) {
     h.add('step', id, { state: 'READY' });
     h.add('step', id, { state: 'RUNNING' });
+    if (id === 'P12') completeChildP12(h);
     h.add('step', id, { state: 'SUCCEEDED' });
   }
   assert.equal(h.current().current_step, 'P13');

@@ -1,0 +1,25 @@
+{
+  "kind": "ifpmic-original-source-upload-verification",
+  "checks": [
+    {
+      "name": "source manifest and required original attachments are present",
+      "verdict": "pass",
+      "details": {
+        "zipSha256": "34946eda4c85fd9706b40e218a233a3fdd5ab0a00b2538778c9b9cf047e19080",
+        "docxSha256": "18a14876a689beae0599b5d4014bf95db79bef047d0e4ceafa60d9a9417624fc",
+        "archiveEntries": 18,
+        "importedFiles": 17
+      }
+    },
+    {
+      "name": "all imported specification files match archive bytes and manifest hashes",
+      "verdict": "pass",
+      "details": {
+        "comparedFiles": 17,
+        "byteMismatches": 0
+      }
+    }
+  ],
+  "verdict": "pass",
+  "evidence": "workflow-artifacts/verification/V0/source-upload.json"
+}

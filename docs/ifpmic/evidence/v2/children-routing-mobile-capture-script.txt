@@ -1,0 +1,241 @@
+import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
+import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { chromium } from 'playwright';
+
+const here = path.dirname(fileURLToPath(import.meta.url));
+const root = path.resolve(here, '../../../../../');
+const outputDir = here;
+const base = parseAllowedBaseUrl(process.env.IFPMIC_PAPERCLIP_URL || 'http://127.0.0.1:3100');
+const origin = base.origin;
+const reportPath = path.join(outputDir, 'report.json');
+const approvedGateSha256 = '5d4ce1a0c64a59c983dfbd62ddbcaeb832234fb8b55afc72a7dc2a96c5f7afe2';
+const screenshotPath = path.join(outputDir, 'routing-exempt-p24-detail-375-1800.png');
+const report = {
+  kind: 'ifpmic-v2-routing-exempt-mobile-capture-supplement',
+  scope: 'read-only Paperclip native page screenshot; no source/build/plugin mutation',
+  started_at: new Date().toISOString(),
+  host: {},
+  requests: [],
+  unexpected_external_requests: [],
+  blocked_non_get_requests: [],
+  page_errors: [],
+  console_errors: [],
+  assertions: [],
+};
+let browser;
+let context;
+
+function parseAllowedBaseUrl(value) {
+  let url;
+  try { url = new URL(value); } catch { throw new Error('Paperclip URL must be a local HTTP root URL'); }
+  if (url.protocol !== 'http:' || !['127.0.0.1', 'localhost'].includes(url.hostname)
+    || url.username || url.password || url.pathname !== '/' || url.search || url.hash) {
+    throw new Error('Paperclip URL must be loopback HTTP root without credentials, path, query, or fragment');
+  }
+  return url;
+}
+
+const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
+async function hashFile(file) { return sha256(await readFile(file)); }
+async function treeHashes(dir, relative = '') {
+  const entries = await readdir(path.join(dir, relative), { withFileTypes: true });
+  const out = {};
+  for (const entry of entries.sort((a, b) => a.name.localeCompare(b.name))) {
+    const child = path.posix.join(relative, entry.name);
+    if (entry.isDirectory()) Object.assign(out, await treeHashes(dir, child));
+    else if (entry.isFile()) out[child] = await hashFile(path.join(dir, child));
+  }
+  return out;
+}
+async function hashExpectedPaths(expected, label) {
+  const actual = {};
+  for (const relativePath of Object.keys(expected).sort()) {
+    actual[relativePath] = await hashFile(path.join(root, relativePath));
+  }
+  assert.deepEqual(actual, Object.fromEntries(Object.entries(expected).sort(([a], [b]) => a.localeCompare(b))), `${label} hashes match approved gate`);
+  return actual;
+}
+async function fixedArtifacts() {
+  const gatePath = path.join(root, 'workflow-artifacts/verification/V2/ui/latest-gate.json');
+  const gateSha256 = await hashFile(gatePath);
+  assert.equal(gateSha256, approvedGateSha256, 'latest gate is the reviewed immutable candidate');
+  const gate = JSON.parse(await readFile(gatePath, 'utf8'));
+  assert.equal(gate.verdict, 'pass', 'approved gate passed');
+  const sourceHashes = await hashExpectedPaths(gate.sourceHashes, 'source');
+  const sourceFingerprint = sha256(JSON.stringify(sourceHashes));
+  assert.equal(sourceFingerprint, gate.sourceFingerprint, 'recomputed source fingerprint matches approved gate');
+  const buildAssets = await hashExpectedPaths(gate.buildAssets, 'dist build');
+  const pluginAssets = await hashExpectedPaths(gate.pluginAssets, 'native plugin build');
+  const hostReportPath = path.join(root, 'workflow-artifacts/verification/V2/ui/host-browser.json');
+  return {
+    approved_gate_sha256: gateSha256,
+    source_hashes: sourceHashes,
+    source_fingerprint: sourceFingerprint,
+    build_assets: buildAssets,
+    plugin_assets: pluginAssets,
+    host_browser_report_sha256: await hashFile(hostReportPath),
+  };
+}
+
+async function getJson(apiPath) {
+  const response = await fetch(new URL(apiPath, base), {
+    method: 'GET', redirect: 'error', signal: AbortSignal.timeout(15000),
+    headers: { Origin: origin, Accept: 'application/json' },
+  });
+  if (!response.ok) throw new Error(`GET ${apiPath} returned ${response.status}`);
+  return response.json();
+}
+function listFrom(value, key) {
+  if (Array.isArray(value)) return value;
+  if (Array.isArray(value?.[key])) return value[key];
+  throw new Error(`Expected ${key} GET response`);
+}
+async function hostPrerequisites() {
+  const health = await getJson('/api/health');
+  assert.equal(health.version, '2026.1005.0');
+  assert.equal(health.deploymentMode, 'local_trusted');
+  const backupPrefix = `${path.join(root, '.paperclip-lab/ifpmic-verification-data')}${path.sep}`;
+  assert.ok(health.databaseBackup?.backupDir?.startsWith(backupPrefix), 'health points to isolated verification DB');
+  const companies = listFrom(await getJson('/api/companies'), 'companies');
+  const company = companies.find(item => item.name === 'IFPMIC AX Verification');
+  assert.ok(company?.id && company.issuePrefix, 'synthetic verification company is present');
+  const plugins = listFrom(await getJson('/api/plugins'), 'plugins');
+  const plugin = plugins.find(item => item.pluginKey === 'ax.ifpmic-workflow' && item.status === 'ready');
+  assert.ok(plugin?.id, 'native IFPMIC page plugin is ready');
+  report.host = {
+    origin, version: health.version, deployment_mode: health.deploymentMode,
+    backup_dir: health.databaseBackup.backupDir, company_id: company.id,
+    issue_prefix: company.issuePrefix, plugin_id: plugin.id, plugin_key: plugin.pluginKey,
+  };
+  return `/${String(company.issuePrefix).replace(/^\/+|\/+$/g, '')}/ifpmic-ax`;
+}
+
+try {
+  await mkdir(outputDir, { recursive: true });
+  const before = await fixedArtifacts();
+  report.fixed_artifacts_before = before;
+  const routePath = await hostPrerequisites();
+  report.route = routePath;
+
+  browser = await chromium.launch({ headless: true });
+  context = await browser.newContext({ viewport: { width: 375, height: 1800 }, serviceWorkers: 'block' });
+  await context.route('**/*', async route => {
+    const request = route.request();
+    let url;
+    try { url = new URL(request.url()); } catch {
+      report.unexpected_external_requests.push(request.url());
+      await route.abort();
+      return;
+    }
+    if (url.origin !== origin) {
+      report.unexpected_external_requests.push(request.url());
+      await route.abort();
+      return;
+    }
+    if (request.method() !== 'GET') {
+      report.blocked_non_get_requests.push({ method: request.method(), url: request.url() });
+      await route.abort();
+      return;
+    }
+    report.requests.push({ method: 'GET', pathname: url.pathname });
+    await route.continue();
+  });
+  const page = await context.newPage();
+  page.setDefaultTimeout(10000);
+  page.on('pageerror', error => report.page_errors.push(String(error?.message || error)));
+  page.on('console', message => { if (message.type() === 'error') report.console_errors.push(message.text()); });
+  await page.goto(new URL(routePath, base).href, { waitUntil: 'networkidle' });
+
+  await page.getByRole('button', { name: '모의 시나리오', exact: true }).click();
+  await page.getByTestId('ifpmic-node-P01').waitFor({ state: 'visible' });
+  const scenarioSelect = page.getByLabel('모의 시나리오 선택', { exact: true });
+  await scenarioSelect.selectOption('routing-exempt');
+  await page.getByLabel('주요 관측 이동', { exact: true }).selectOption('exempt');
+  const summary = page.getByTestId('ifpmic-replay-summary');
+  assert.equal(await summary.getAttribute('data-current-step'), 'X02');
+  assert.equal(await summary.getAttribute('data-status'), 'RUNNING');
+  assert.equal(await page.getByTestId('ifpmic-node-P24').getAttribute('data-state'), 'SKIPPED');
+  assert.equal(await page.getByTestId('ifpmic-node-P24').getAttribute('data-gate'), 'EXEMPT');
+  await page.getByTestId('ifpmic-node-P24').click();
+  const detail = page.getByTestId('ifpmic-observation-detail');
+  const detailsText = await detail.innerText();
+  for (const text of ['P24', 'EXEMPT', '측정 완료', 'false', 'COUPLED', 'mock:human']) {
+    assert.ok(detailsText.includes(text), `selected P24 detail includes ${text}`);
+  }
+  const target = await detail.boundingBox();
+  assert.ok(target, 'selected detail has a rendered bounding box');
+  await detail.evaluate(element => element.scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'instant' }));
+  await page.waitForTimeout(100);
+  const geometry = await page.evaluate(() => {
+    const element = document.querySelector('[data-testid="ifpmic-observation-detail"]');
+    const rect = element.getBoundingClientRect();
+    const viewport = { width: innerWidth, height: innerHeight };
+    const intersects = (a, b) => a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
+    const overlays = [...document.querySelectorAll('body *')].filter(node => {
+      if (node === element || element.contains(node) || node.contains(element)) return false;
+      const style = getComputedStyle(node);
+      if (!['fixed', 'sticky'].includes(style.position) || style.display === 'none' || style.visibility === 'hidden'
+        || Number(style.opacity) === 0) return false;
+      const overlayRect = node.getBoundingClientRect();
+      return overlayRect.width > 0 && overlayRect.height > 0 && intersects(overlayRect, rect);
+    }).map(node => {
+      const r = node.getBoundingClientRect();
+      return { tag: node.tagName, class_name: String(node.className || '').slice(0, 160),
+        top: r.top, bottom: r.bottom, left: r.left, right: r.right, position: getComputedStyle(node).position };
+    });
+    const hitGrid = [];
+    for (const fy of [0.15, 0.5, 0.85]) for (const fx of [0.15, 0.5, 0.85]) {
+      const x = Math.min(rect.right - 1, Math.max(rect.left + 1, rect.left + rect.width * fx));
+      const y = Math.min(rect.bottom - 1, Math.max(rect.top + 1, rect.top + rect.height * fy));
+      const hit = document.elementFromPoint(x, y);
+      hitGrid.push({ x, y, target_contains_hit: Boolean(hit && element.contains(hit)),
+        hit_tag: hit?.tagName ?? null, hit_class: String(hit?.className || '').slice(0, 120) });
+    }
+    return { target: { top: rect.top, bottom: rect.bottom, left: rect.left, right: rect.right,
+      width: rect.width, height: rect.height }, viewport, intersecting_fixed_or_sticky: overlays, hit_grid: hitGrid,
+      scroll_y: scrollY, document_scroll_width: document.documentElement.scrollWidth };
+  });
+  assert.ok(geometry.target.top >= 0 && geometry.target.bottom <= geometry.viewport.height,
+    'entire selected detail is within mobile viewport after scroll');
+  assert.ok(geometry.target.left >= 0 && geometry.target.right <= geometry.viewport.width,
+    'selected detail is within mobile viewport horizontally');
+  assert.deepEqual(geometry.intersecting_fixed_or_sticky, [], 'selected detail does not intersect visible fixed or sticky overlays');
+  assert.ok(geometry.hit_grid.length === 9 && geometry.hit_grid.every(point => point.target_contains_hit),
+    'viewport hit-test grid is unobstructed across selected detail');
+  assert.ok(geometry.document_scroll_width <= geometry.viewport.width, 'no horizontal page overflow');
+  report.assertions.push('health/version/deployment/isolated-backup/company/plugin GET prerequisites',
+    'routing-exempt/exempt checkpoint X02 with P24 SKIPPED/EXEMPT', 'P24 detail identifies exemption and no measurement',
+    'P24 selected observation detail bounding box fully inside viewport and clear of fixed/sticky sibling overlays by geometry and hit test', 'no horizontal page overflow');
+  report.geometry = geometry;
+  await page.screenshot({ path: screenshotPath, fullPage: false });
+  report.screenshot = { path: path.relative(root, screenshotPath), sha256: await hashFile(screenshotPath), full_page: false,
+    viewport: geometry.viewport, state: { scenario: 'routing-exempt', checkpoint: 'exempt', selected_node: 'P24' } };
+
+  assert.deepEqual(report.blocked_non_get_requests, [], 'browser emitted no write or non-GET request');
+  assert.deepEqual(report.unexpected_external_requests, [], 'browser contacted no external origin');
+  assert.deepEqual(report.page_errors, [], 'no page errors');
+  assert.deepEqual(report.console_errors, [], 'no console errors');
+} catch (error) {
+  report.failure = { message: String(error?.message || error), stack: String(error?.stack || '') };
+} finally {
+  if (context) await context.close().catch(() => {});
+  if (browser) await browser.close().catch(() => {});
+  report.finished_at = new Date().toISOString();
+  report.verdict = report.failure || report.blocked_non_get_requests.length || report.unexpected_external_requests.length
+    || report.page_errors.length || report.console_errors.length ? 'fail' : 'pass';
+  try {
+    report.fixed_artifacts_after = await fixedArtifacts();
+    report.fixed_artifacts_unchanged = JSON.stringify(report.fixed_artifacts_before) === JSON.stringify(report.fixed_artifacts_after);
+    if (!report.fixed_artifacts_unchanged) report.verdict = 'fail';
+  } catch (error) {
+    report.fixed_artifacts_after_error = String(error?.message || error);
+    report.verdict = 'fail';
+  }
+  report.script_sha256 = await hashFile(fileURLToPath(import.meta.url));
+  await writeFile(reportPath, `${JSON.stringify(report, null, 2)}\n`);
+}
+console.log(`Supplemental routing capture: ${report.verdict}; report ${path.relative(root, reportPath)}`);
+if (report.verdict !== 'pass') process.exitCode = 1;

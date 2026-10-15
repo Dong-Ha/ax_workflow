@@ -6,7 +6,7 @@ export function newStepRecord(id, cycle, attempt = 1, state = 'PENDING') {
     attempt, execution_id: `mock:${id}:c${cycle}:a${attempt}`, evidence_ids: [],
     failure_evidence_id: null, failure_candidate_fingerprint: null, failure_outcome: null,
     retry_due_ms: null, infrastructure_error: false, skip_basis: null, unchanged_analysis: null, exemption_report: null,
-    sqe_context: null, sqe_manual_task: null, sqe_result: null, sqe_report: null, sqe_execution_mode: null, gate_sqe_report_evidence_id: null,
+    child_coordination: null, sqe_context: null, sqe_manual_task: null, sqe_result: null, sqe_report: null, sqe_execution_mode: null, gate_sqe_report_evidence_id: null,
   };
 }
 

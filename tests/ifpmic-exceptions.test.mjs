@@ -102,9 +102,50 @@ function addMockSqe(h, id) {
   }
 }
 
+// Keep the release exception fixture on the current P12 contract without
+// deriving proof from the product catalog enricher.
+function addLiteralP12ChildProof(h) {
+  const result = h.current(), step = result.steps.P12;
+  const suffix = `c${result.cycle}:a${step.attempt}`;
+  const parent = { coordinator_task_id: `mock:exceptions:parent-task:${suffix}`,
+    coordinator_execution_id: `mock:exceptions:parent-exec:${suffix}`,
+    candidate_fingerprint: result.candidate_fingerprint, requirements_version: result.requirements_version };
+  const requestId = `mock:exceptions:request:${suffix}`, childTask = `mock:exceptions:task:${suffix}`;
+  const childExecution = `mock:exceptions:child-exec:${suffix}`, production = `mock:exceptions:production:${suffix}`;
+  const patch = `mock:exceptions:patch:${suffix}`, resultEvidence = `mock:exceptions:result-proof:${suffix}`;
+  h.add('p12_coordinator', 'P12', { actor: 'mock:system', role: 'code-dev', purpose: 'p12_coordination', ...parent,
+    p11_execution_id: result.steps.P11.execution_id, code_artifact_id: `mock:exceptions:code:${suffix}`,
+    production_hash: production, tc_design_artifact_id: `mock:exceptions:design:${suffix}`,
+    workspace_id: `mock:exceptions:integration-ws:${suffix}`, write_scope: 'tests_integration_only',
+    runtime_profile_ref: 'mock:runtime:code-dev-coordinator:v1', evidence_id: `mock:exceptions:coordinator-proof:${suffix}` });
+  h.add('child_request', 'P12', { actor: 'mock:code-dev', ...parent, request_id: requestId, child_task_id: childTask,
+    ordinal: 1, child_role: 'tc', workspace_id: `mock:exceptions:tc-ws:${suffix}`, write_scope: 'tests_only',
+    runtime_profile_ref: 'mock:runtime:tc:v1', output_schema_ref: 'mock:schema:tc-patch:v1',
+    code_artifact_id: `mock:exceptions:code:${suffix}`, tc_design_artifact_id: `mock:exceptions:design:${suffix}`,
+    prior_child_execution_id: null, checkpoint_artifact_id: null, answer_evidence_id: null, answer_artifact_id: null,
+    evidence_id: `mock:exceptions:request-proof:${suffix}` });
+  h.add('child_assignment', 'P12', { actor: 'mock:system', ...parent, request_id: requestId, child_task_id: childTask,
+    child_execution_id: childExecution, workspace_id: `mock:exceptions:tc-ws:${suffix}`,
+    evidence_id: `mock:exceptions:assignment-proof:${suffix}` });
+  h.add('child_result', 'P12', { actor: 'mock:tc', ...parent, request_id: requestId, child_task_id: childTask,
+    child_execution_id: childExecution, workspace_id: `mock:exceptions:tc-ws:${suffix}`, status: 'completed',
+    output_schema_ref: 'mock:schema:tc-patch:v1', patch_artifact_id: patch,
+    changed_path_refs: ['mock:path:tests:unit'], production_hash: production,
+    question_id: null, checkpoint_artifact_id: null, failure_class: null,
+    started_at_ms: 1000, finished_at_ms: 2000, evidence_id: resultEvidence });
+  h.add('child_collect', 'P12', { actor: 'mock:code-dev', ...parent, child_execution_id: childExecution,
+    result_evidence_id: resultEvidence, evidence_id: `mock:exceptions:collect-proof:${suffix}` });
+  h.add('child_integrated', 'P12', { actor: 'mock:code-dev', ...parent, child_execution_id: childExecution,
+    result_evidence_id: resultEvidence, patch_artifact_id: patch, production_hash_before: production,
+    production_hash_after: production, changed_path_refs: ['mock:path:tests:unit'], expectations_changed: false,
+    outcome: 'integrated', integration_artifact_id: `mock:exceptions:integration-proof:${suffix}`,
+    evidence_id: `mock:exceptions:integrated-proof:${suffix}` });
+}
+
 function runNormalStep(h, id) {
   h.add('step', id, { state: 'READY' });
   h.add('step', id, { state: 'RUNNING' });
+  if (id === 'P12') addLiteralP12ChildProof(h);
   const node = workflow.nodes.find(item => item.id === id);
   if (id === 'P22' || id === 'P23') {
     addMockSqe(h, id);

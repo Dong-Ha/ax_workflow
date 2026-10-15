@@ -1,0 +1,86 @@
+{
+  "kind": "independent_child_increment_final_review",
+  "decision": "accepted_mock_increment",
+  "recorded_at": "2026-10-15T15:17:54.737057+00:00",
+  "reviewer_agent": "/root/paperclip_ui_extension",
+  "test_author": "/root/verification_plan",
+  "main_integrator": "/root",
+  "plan": "../../V2-CHILDREN.md",
+  "plan_sha256": "a137e47d3fa01e8e6b2da8c3eb8ee8222a213252f87270f5de2aef21fd9a86fe",
+  "gate": "children-verification.json",
+  "gate_sha256": "5d4ce1a0c64a59c983dfbd62ddbcaeb832234fb8b55afc72a7dc2a96c5f7afe2",
+  "source_fingerprint": "1a8b1315e17d28fe67df077813e81d652fbf5bc073da9a67e5fbea7657da4a40",
+  "verified": {
+    "source_files": 144,
+    "reports": 143,
+    "command_logs": 11,
+    "dist_assets": 6,
+    "plugin_assets": 4,
+    "commands_passed": 11,
+    "unit": {
+      "tests": 287,
+      "pass": 287,
+      "fail": 0,
+      "skipped": 0
+    },
+    "standalone_browser": {
+      "passed": 17,
+      "failed": 0,
+      "child_group_captures": 33
+    },
+    "host_browser": {
+      "passed": 18,
+      "failed": 0,
+      "child_group_captures": 33
+    },
+    "original_scenarios_restored": 50,
+    "new_child_scenarios": 9,
+    "inserted_old_catalog_child_proofs": 222,
+    "actual_desktop_images_opened_by_independent_reviewer": 48,
+    "actual_mobile_images_opened_by_main": 18,
+    "published_copies": 80,
+    "hash_mismatches": 0
+  },
+  "published_manifest": "children-published-artifacts.json",
+  "published_manifest_sha256": "9d044fe7a2e32f4b7e8fb6248670f999de8bf15ff6c93ce462910e4651418c21",
+  "main_mobile_review": "children-mobile-image-review.json",
+  "main_mobile_review_sha256": "952673801360719c57611c9df33c8e2cde5d15b7d05dbcc62798a77415fd92c8",
+  "supplement": {
+    "report": "children-routing-mobile-capture.json",
+    "report_sha256": "553dfeef92c0eaa52f1fc9c3098a1a519f0e081255eec04ad53e8ad2f558d2ff",
+    "script_sha256": "d6785d27d6ba4a348429f8cc1822c624eca9105bede0ba558cef419cc9f140bc",
+    "only_change_from_prior_approved_script": "approvedGateSha256 constant",
+    "before_after_unchanged": true,
+    "GET_requests": 80,
+    "fixed_sticky_overlaps": 0,
+    "target_hits": 9,
+    "viewport": {
+      "width": 375,
+      "height": 1800
+    },
+    "actual_image_reviewed_by": [
+      "/root",
+      "/root/paperclip_ui_extension"
+    ]
+  },
+  "findings_resolved": [
+    "Schema/time/ID reuse/source watermark/dedup/derived task ID runtime rejection coverage completed before freeze",
+    "Recovery-approved, recovery-pending and infrastructure cap human review are distinct",
+    "Long child detail split into identity/result/integration semantic groups; strict capture checks retained",
+    "P13 candidate change preserves old P12 proof but labels it historical through shared current-binding predicate; independent SSR regression",
+    "Recovered P12 attempt2 is selected from current completed P12 record at P13; TC targeting error preserved and corrected from plan",
+    "Single trailing newline removed from TC helper; known partial gate stopped and new entire11 gate passed",
+    "Supplement report/script/image added to publication ledger before final acceptance"
+  ],
+  "board_scrolling": "Existing six-lane max-content board uses an explicit internal horizontal scroll viewport; page overflow and child-target clipping checks remain zero",
+  "acceptance_scope": "Synthetic P12 child lifecycle, mandatory integration proof, original50 migration and nine new workflow observations with UI/regression evidence",
+  "not_complete": [
+    "Full V2",
+    "pause/resume/cancel protocol",
+    "B01-B13 actual integration",
+    "Actual agent start/resume/collect/worktree or OS permission checks",
+    "Original actual AT (remain not_executed)",
+    "Actual device/SSO/release submission or final deployment"
+  ],
+  "waivers": []
+}

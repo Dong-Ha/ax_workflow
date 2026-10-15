@@ -20,3 +20,7 @@
 .ifpmic-sqe-detail{border-top:1px solid var(--line);margin-top:14px;padding-top:10px;overflow-wrap:anywhere}.ifpmic-sqe-detail h4{font-size:12px;color:var(--green)}.ifpmic-sqe-detail h5{font-size:11px;color:#adc4e3;margin:16px 0 8px}.ifpmic-sqe-detail ul{font-size:11px;padding-left:18px}.ifpmic-sqe-detail dl>div,.ifpmic-observation>dl>div{display:contents}
 
 .ifpmic-history.expanded{max-height:none;overflow:visible}
+
+.ifpmic-child-detail{border-top:1px solid var(--line);margin-top:14px;padding-top:10px;overflow-wrap:anywhere}.ifpmic-child-detail h4{font-size:12px;color:#adc4e3}
+
+.ifpmic-child-detail h5{font-size:11px;color:#adc4e3;margin:16px 0 8px}

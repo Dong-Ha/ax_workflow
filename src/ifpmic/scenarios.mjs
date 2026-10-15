@@ -1,3 +1,5 @@
+import { createChildScenarios } from './child-scenarios.mjs';
+import { enrichChildCatalog } from './child-catalog.mjs';
 import { replayScenario } from './replay.mjs';
 import { mockHumanTaskId } from './protocols.mjs';
 import { createRoutingScenarios } from './routing-scenarios.mjs';
@@ -263,5 +265,6 @@ export function createScenarioCatalog(workflow, stateContract) {
     f.query('found', 1); f.mark('blocked', '원격 found로 격리 해제 금지');
   });
   const existing = enrichSqeCatalog([...catalog, ...createRoutingScenarios(workflow)]);
-  return freeze([...existing, ...createSqeUiScenarios(existing.find(item => item.id === 'happy-path'))]);
+  const migrated = enrichChildCatalog([...existing, ...createSqeUiScenarios(existing.find(item => item.id === 'happy-path'))]);
+  return freeze([...migrated, ...createChildScenarios(migrated.find(item => item.id === 'happy-path'))]);
 }

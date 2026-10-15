@@ -4,7 +4,7 @@ export interface MockEvent {
   payload: Record<string, unknown>;
 }
 export interface MockScenario {
-  id: string; title: string; requirement_ids: readonly string[]; events: readonly MockEvent[];
+  id: string; title: string; catalog_version?: string; requirement_ids: readonly string[]; events: readonly MockEvent[];
   checkpoints: readonly { id: string; title: string; cursor: number }[];
 }
 export interface ReplayStep {
@@ -13,6 +13,7 @@ export interface ReplayStep {
   attempt: number; execution_id: string; evidence_ids: readonly string[]; retry_due_ms: number | null;
   failure_evidence_id: string | null; failure_candidate_fingerprint: string | null;
   failure_outcome: string | null; infrastructure_error: boolean;
+  child_coordination: MockChildCoordination | null;
   sqe_context: MockSqeContext | null; sqe_manual_task: MockManualTask | null; sqe_result: MockSqeResult | null; sqe_report: MockSqeReport | null;
   sqe_execution_mode: 'bridge_mock' | 'manual' | null; gate_sqe_report_evidence_id: string | null;
   skip_basis: MockSkipBasis | null; unchanged_analysis: MockUnchangedAnalysis | null; exemption_report: MockExemptionReport | null;
@@ -115,3 +116,31 @@ export function evidenceCurrent(evidence: unknown, context: unknown): boolean;
 export function projectDeviceClock(observation: unknown): ReplayDevice;
 export function replayScenario(scenario: MockScenario, workflow: unknown, stateContract: unknown, cursor?: number): ReplaySnapshot;
 export { createScenarioCatalog } from './scenarios.mjs';
+
+export interface MockChildContext {
+  actor: string; role: string; purpose: string; coordinator_task_id: string; coordinator_execution_id: string;
+  candidate_fingerprint: string; requirements_version: string; p11_execution_id: string; code_artifact_id: string;
+  production_hash: string; tc_design_artifact_id: string; workspace_id: string; write_scope: string; runtime_profile_ref: string;
+  evidence_id: string; cycle: number; attempt: number; execution_id: string;
+}
+export interface MockChildRequest {
+  actor: string; coordinator_task_id: string; coordinator_execution_id: string; request_id: string; child_task_id: string;
+  ordinal: number; child_role: string; candidate_fingerprint: string; requirements_version: string; workspace_id: string;
+  write_scope: string; runtime_profile_ref: string; output_schema_ref: string; code_artifact_id: string; tc_design_artifact_id: string;
+  prior_child_execution_id: string | null; checkpoint_artifact_id: string | null; answer_evidence_id: string | null;
+  answer_artifact_id: string | null; evidence_id: string;
+  assignment: null | { child_execution_id: string; evidence_id: string };
+  result: null | { status: string; child_execution_id: string; evidence_id: string; patch_artifact_id: string | null;
+    changed_path_refs: readonly string[]; question_id: string | null; checkpoint_artifact_id: string | null;
+    started_at_ms: number; finished_at_ms: number; failure_class: string | null };
+  collection: null | { evidence_id: string; result_evidence_id: string };
+  answer: null | { evidence_id: string; question_id: string; answer_artifact_id: string; checkpoint_artifact_id: string };
+  recovery: null | { evidence_id: string; action: string; reason_id: string };
+  conflicts: readonly { evidence_id: string; outcome: string }[];
+  integration: null | { evidence_id: string; outcome: string; integration_artifact_id: string };
+}
+export interface MockChildCoordination {
+  context: MockChildContext; status: 'RUNNING' | 'WAITING_AGENT' | 'WAITING_HUMAN' | 'COMPLETED' | 'FAILED';
+  requests: readonly MockChildRequest[];
+  human_task: null | { task_id: string; kind: string; assignee: string; child_execution_id: string };
+}

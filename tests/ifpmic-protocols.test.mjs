@@ -151,6 +151,64 @@ function completeMockSqe(h, step_id, failCase = false) {
   }
 }
 
+// Independent fixed P12 child proof. This deliberately spells out the six
+// protocol observations instead of calling the product catalog enricher.
+function completeMockChild(h) {
+  const result = h.current();
+  const step = result.steps.P12;
+  const suffix = `c${result.cycle}:a${step.attempt}`;
+  const parent = {
+    coordinator_task_id: `mock:protocol:parent-task:${suffix}`,
+    coordinator_execution_id: `mock:protocol:parent-exec:${suffix}`,
+    candidate_fingerprint: result.candidate_fingerprint,
+    requirements_version: result.requirements_version,
+  };
+  const child = {
+    request_id: `mock:protocol:request:${suffix}`,
+    child_task_id: `mock:protocol:task:${suffix}`,
+    child_execution_id: `mock:protocol:child-exec:${suffix}`,
+  };
+  const proof = name => `mock:protocol:${name}:${suffix}`;
+  const p11 = result.steps.P11;
+  h.add('p12_coordinator', 'P12', {
+    actor: 'mock:system', role: 'code-dev', purpose: 'p12_coordination', ...parent,
+    p11_execution_id: p11.execution_id, code_artifact_id: `mock:protocol:code:${suffix}`,
+    production_hash: `mock:protocol:production:${suffix}`, tc_design_artifact_id: `mock:protocol:design:${suffix}`,
+    workspace_id: `mock:protocol:integration-ws:${suffix}`, write_scope: 'tests_integration_only',
+    runtime_profile_ref: 'mock:runtime:code-dev-coordinator:v1', evidence_id: proof('coordinator-proof'),
+  });
+  h.add('child_request', 'P12', {
+    actor: 'mock:code-dev', ...parent, request_id: child.request_id, child_task_id: child.child_task_id,
+    ordinal: 1, child_role: 'tc',
+    workspace_id: `mock:protocol:tc-ws:${suffix}`, write_scope: 'tests_only', runtime_profile_ref: 'mock:runtime:tc:v1',
+    output_schema_ref: 'mock:schema:tc-patch:v1', code_artifact_id: `mock:protocol:code:${suffix}`,
+    tc_design_artifact_id: `mock:protocol:design:${suffix}`, prior_child_execution_id: null,
+    checkpoint_artifact_id: null, answer_evidence_id: null, answer_artifact_id: null, evidence_id: proof('request-proof'),
+  });
+  h.add('child_assignment', 'P12', {
+    actor: 'mock:system', ...parent, ...child, workspace_id: `mock:protocol:tc-ws:${suffix}`,
+    evidence_id: proof('assignment-proof'),
+  });
+  h.add('child_result', 'P12', {
+    actor: 'mock:tc', ...parent, ...child, workspace_id: `mock:protocol:tc-ws:${suffix}`,
+    status: 'completed', output_schema_ref: 'mock:schema:tc-patch:v1', patch_artifact_id: `mock:protocol:patch:${suffix}`,
+    changed_path_refs: ['mock:path:tests:unit'], production_hash: `mock:protocol:production:${suffix}`,
+    question_id: null, checkpoint_artifact_id: null, failure_class: null, started_at_ms: 1000, finished_at_ms: 2000,
+    evidence_id: proof('result-proof'),
+  });
+  h.add('child_collect', 'P12', {
+    actor: 'mock:code-dev', ...parent, child_execution_id: child.child_execution_id,
+    result_evidence_id: proof('result-proof'), evidence_id: proof('collect-proof'),
+  });
+  h.add('child_integrated', 'P12', {
+    actor: 'mock:code-dev', ...parent, child_execution_id: child.child_execution_id,
+    result_evidence_id: proof('result-proof'), patch_artifact_id: `mock:protocol:patch:${suffix}`,
+    production_hash_before: `mock:protocol:production:${suffix}`, production_hash_after: `mock:protocol:production:${suffix}`,
+    changed_path_refs: ['mock:path:tests:unit'], expectations_changed: false, outcome: 'integrated',
+    integration_artifact_id: `mock:protocol:integration:${suffix}`, evidence_id: proof('integrated-proof'),
+  });
+}
+
 function runStep(h, step_id, { sqeFail = false } = {}) {
   const node = workflow.nodes.find(item => item.id === step_id);
   if (node.owner === 'system' && !['P22', 'P23'].includes(step_id)) return systemStep(h, step_id);
@@ -174,6 +232,7 @@ function runStep(h, step_id, { sqeFail = false } = {}) {
   }
   h.add('step', step_id, { state: 'READY' });
   h.add('step', step_id, { state: 'RUNNING' });
+  if (step_id === 'P12') completeMockChild(h);
   if (step_id === 'P22' || step_id === 'P23') completeMockSqe(h, step_id, sqeFail);
   if (step_id === 'X02') h.add('manifest', step_id, manifestPayload(h));
   if (step_id === 'P25') {
@@ -185,7 +244,11 @@ function runStep(h, step_id, { sqeFail = false } = {}) {
       receipt_id: 'mock:receipt:v1', observed: true,
     });
   }
-  return h.add('step', step_id, { state: 'SUCCEEDED' });
+  const completed = h.add('step', step_id, { state: 'SUCCEEDED' });
+  if (step_id === 'P12' && completed.steps.P12.state !== 'SUCCEEDED') {
+    throw new Error(`P12 fixture completion rejected: ${JSON.stringify(completed.timeline.slice(-8))}`);
+  }
+  return completed;
 }
 
 function advanceTo(h, target, runOptions = {}) {

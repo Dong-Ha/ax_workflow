@@ -9,10 +9,21 @@ import { createScenarioCatalog, replayScenario } from '../src/ifpmic/replay.mjs'
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const directory = resolve(root, 'workflow-artifacts/verification/V2/ui');
 const sha256 = value => createHash('sha256').update(value).digest('hex');
-const summary = value => ({ mode: value.mode, status: value.status, current_step: value.current_step,
+const summary = value => ({ catalog_version: 'mock:ifpmic:children:v1', mode: value.mode, status: value.status, current_step: value.current_step,
   cycle: value.cycle, rework_count: value.rework_count, publication_count: value.release.publication_count,
   duplicate_count: value.duplicate_count, conflict_count: value.conflict_count, real_publish_allowed: value.real_publish_allowed,
   requirements_version: value.requirements_version,
+  child: value.steps.P12.child_coordination ? {
+    status: value.steps.P12.child_coordination.status,
+    coordinator_execution_id: value.steps.P12.child_coordination.context.coordinator_execution_id,
+    context_evidence_id: value.steps.P12.child_coordination.context.evidence_id,
+    requests: value.steps.P12.child_coordination.requests.map(r => ({ ordinal: r.ordinal, request_id: r.request_id,
+      child_execution_id: r.assignment?.child_execution_id ?? null, status: r.result?.status ?? (r.assignment ? 'running' : null),
+      result_evidence_id: r.result?.evidence_id ?? null, collection_evidence_id: r.collection?.evidence_id ?? null,
+      answer_evidence_id: r.answer?.evidence_id ?? null, recovery_evidence_id: r.recovery?.evidence_id ?? null,
+      conflict_evidence_ids: r.conflicts.map(p => p.evidence_id), integration_evidence_id: r.integration?.evidence_id ?? null })),
+    human_task: value.steps.P12.child_coordination.human_task,
+  } : null,
   sqe: { execution_mode: value.steps.P22.sqe_execution_mode, context_evidence_id: value.steps.P22.sqe_context?.evidence_id ?? null,
     result_evidence_id: value.steps.P22.sqe_result?.evidence_id ?? null, report_evidence_id: value.steps.P23.sqe_report?.evidence_id ?? null,
     gate_report_evidence_id: value.steps.P24.gate_sqe_report_evidence_id, manifest_report_evidence_id: value.release.manifest?.sqe_report_evidence_id ?? null },
@@ -37,18 +48,43 @@ const summary = value => ({ mode: value.mode, status: value.status, current_step
     query_seq: value.remote_reconciliation.query_seq, outcome: value.remote_reconciliation.outcome } : null });
 await mkdir(directory, { recursive: true });
 const catalog = createScenarioCatalog(workflow, states);
-const manifest = { kind: 'mock_catalog_manifest', mode: 'mock', scenario_count: catalog.length,
+const manifest = { kind: 'mock_catalog_manifest', catalog_version: 'mock:ifpmic:children:v1', mode: 'mock', scenario_count: catalog.length,
   scope: 'Partial V2 catalog and UI; remaining protocols/full V2/real AT are not accepted', scenarios: [] };
 const journals = [];
 const baseline = JSON.parse(await readFile(resolve(root, 'docs/ifpmic/evidence/v2/sqe-baseline-41.json'), 'utf8'));
 const migration = { kind: 'explicit_sqe_proof_catalog_migration', mode: 'mock', source_commit: baseline.source_commit,
   scope: 'New independently authored SQE proof events; original 41 event streams restored by removing only mock:sqe-catalog source', scenarios: [] };
+const childBaseline = JSON.parse(await readFile(resolve(root, 'docs/ifpmic/evidence/v2/children-baseline-50.json'), 'utf8'));
+const childMigration = { kind: 'explicit_child_proof_catalog_migration', mode: 'mock', catalog_version: 'mock:ifpmic:children:v1',
+  source_commit: childBaseline.source_commit, scope: 'New authored synthetic lifecycle; historical traces are not retroactive runtime evidence', scenarios: [] };
+const withoutChild = scenario => ({ ...scenario,
+  events: scenario.events.filter(e => e.source_id !== 'mock:child-catalog'),
+  checkpoints: scenario.checkpoints.map(p => ({ ...p, cursor: scenario.events.slice(0, p.cursor).filter(e => e.source_id !== 'mock:child-catalog').length })) });
+const childTypes = ['p12_coordinator', 'child_request', 'child_assignment', 'child_result', 'child_collect', 'child_integrated'];
 const hashObject = value => sha256(JSON.stringify(value));
 for (const scenario of catalog) {
+  const childOriginal = childBaseline.scenarios.find(row => row.id === scenario.id);
+  const prior = withoutChild(scenario);
+  if (childOriginal) {
+    const childEvents = scenario.events.filter(e => e.source_id === 'mock:child-catalog');
+    const starts = prior.events.filter(e => e.step_id === 'P12' && e.type === 'step' && e.payload.state === 'RUNNING');
+    if (hashObject(prior.events) !== childOriginal.events_sha256 || hashObject(prior.checkpoints) !== childOriginal.checkpoints_sha256
+      || childEvents.length !== starts.length * 6) throw new Error(`Invalid child fixture migration: ${scenario.id}`);
+    for (const anchor of starts) {
+      const index = scenario.events.indexOf(anchor);
+      const proofs = scenario.events.slice(index + 1, index + 7);
+      if (!proofs.every((e, i) => e.source_id === 'mock:child-catalog' && e.type === childTypes[i]
+        && ['job_id', 'step_id', 'cycle', 'attempt', 'execution_id'].every(k => e[k] === anchor[k]))) throw new Error(`Invalid child migration anchor: ${scenario.id}`);
+    }
+    childMigration.scenarios.push({ id: scenario.id, original_events_sha256: childOriginal.events_sha256,
+      restored_events_sha256: hashObject(prior.events), current_events_sha256: hashObject(scenario.events),
+      original_checkpoints_sha256: childOriginal.checkpoints_sha256, restored_checkpoints_sha256: hashObject(prior.checkpoints),
+      current_checkpoints_sha256: hashObject(scenario.checkpoints), inserted_events: childEvents });
+  }
   const original = baseline.scenarios.find(row => row.id === scenario.id);
-  const inserted = scenario.events.filter(event => event.source_id === 'mock:sqe-catalog');
-  const restored = scenario.events.filter(event => event.source_id !== 'mock:sqe-catalog');
-  const restoredPoints = scenario.checkpoints.map(point => ({ ...point, cursor: scenario.events.slice(0, point.cursor).filter(event => event.source_id !== 'mock:sqe-catalog').length }));
+  const inserted = prior.events.filter(event => event.source_id === 'mock:sqe-catalog');
+  const restored = prior.events.filter(event => event.source_id !== 'mock:sqe-catalog');
+  const restoredPoints = prior.checkpoints.map(point => ({ ...point, cursor: prior.events.slice(0, point.cursor).filter(event => event.source_id !== 'mock:sqe-catalog').length }));
   if (original && (hashObject(restored) !== original.events_sha256 || hashObject(restoredPoints) !== original.checkpoints_sha256
     || !inserted.every(event => ['sqe_context', 'sqe_result', 'sqe_report'].includes(event.type)))) throw new Error(`Invalid SQE fixture migration: ${scenario.id}`);
   if (original) migration.scenarios.push({ id: scenario.id, original_events_sha256: original.events_sha256,
@@ -66,12 +102,15 @@ for (const scenario of catalog) {
       ...summary(snapshot) });
     previous = snapshot;
   }
-  journals.push({ id: scenario.id, mode: 'mock', events: scenario.events, journal });
-  manifest.scenarios.push({ id: scenario.id, title: scenario.title, requirement_ids: scenario.requirement_ids,
+  if (childOriginal && !previous.timeline.filter(row => row.source_id === 'mock:child-catalog').every(row => row.applied)) throw new Error(`Rejected authored child proof: ${scenario.id}`);
+  journals.push({ id: scenario.id, catalog_version: scenario.catalog_version, mode: 'mock', events: scenario.events, journal });
+  manifest.scenarios.push({ id: scenario.id, catalog_version: scenario.catalog_version, title: scenario.title, requirement_ids: scenario.requirement_ids,
     event_count: scenario.events.length, fixture_sha256: sha256(JSON.stringify(scenario.events)),
     final: summary(previous), checkpoints: scenario.checkpoints.map(point => ({ ...point,
       observed_snapshot: summary(replayScenario(scenario, workflow, states, point.cursor)) })) });
 }
+if (childMigration.scenarios.length !== 50 || catalog.length !== 59) throw new Error('Expected preserved50/new9 child catalog');
+await writeFile(resolve(directory, 'children-migration.json'), JSON.stringify(childMigration, null, 2) + '\n');
 await writeFile(resolve(directory, 'sqe-migration.json'), JSON.stringify(migration, null, 2) + '\n');
 const bytes = JSON.stringify(journals, null, 2) + '\n';
 await writeFile(resolve(directory, 'catalog-journal.json'), bytes);
