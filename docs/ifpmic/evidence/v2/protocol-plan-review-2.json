@@ -1,0 +1,25 @@
+{
+  "kind": "independent_protocol_plan_revision_review",
+  "decision": "approved_metadata_only_recovery_exception",
+  "author_agent": "/root",
+  "reviewer_agent": "/root/paperclip_ui_extension",
+  "reviewer_role": "worker_luna; read-only independent reviewer",
+  "recorded_at": "2026-10-15T10:47:57.079800+00:00",
+  "plan": "../../V2-PROTOCOLS.md",
+  "reviewed_plan_sha256": "201fb94cd0fb4e862104b66e81afeae38f51e3ef6b69cbd6dccb4961b275f0d2",
+  "previous_review": "protocol-plan-review.json",
+  "previous_plan_snapshot": "protocol-plan-reviewed-1.md",
+  "architecture_review": "metadata-design-review.json",
+  "accepted_rules": [
+    "Current cycle/candidate/rule/quality proof preserved in place, never promoted from old cycle",
+    "Archive X02/X03 attempts and release snapshot; create fresh PENDING attempts and human task",
+    "Keep unpublished P25/P26 untouched; invalidate stale manifest/approval",
+    "Share existing maximum 3 rework requests; metadata increments count without cycle increment",
+    "Infrastructure retry never creates a retry beyond attempt limit, even after metadata attempt numbering advances"
+  ],
+  "not_approved": [
+    "Full V2 or actual AT",
+    "Actual runtime/device/publisher policy"
+  ],
+  "waivers": []
+}

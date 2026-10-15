@@ -33,3 +33,14 @@
 - 수정은 원본 업무 규칙으로 복귀해 수행한다. source watermark와 clock 역행 거절, 격리 latch, 전용 프로토콜 없는 RECONCILING 거절, 제한된 ID 문법을 추가하고 TC가 각각의 재현 시험을 작성한다. source/candidate가 바뀌므로 이전 통과 결과를 새 후보의 증거로 사용하지 않는다.
 - 장비 연결 상태와 활동 상태를 구분해 보존한다. 시간은 안전한 정수 밀리초로 제한하고 장비 재할당 및 실제 제출 권한은 항상 false로 유지한다. 이는 실제 장비·사람 승인·배포 증거가 아니다.
 - 두 번째 후보도 전체 186개 테스트와 build는 통과했지만, 독립 검토가 workflow 담당·경로 변조와 거절된 높은 sequence에 의한 watermark 오염을 발견해 보류했다. `evidence/v2/core-attempt-2.json`에 보존한다. workflow의 원본 서명을 고정하고 성공적으로 적용한 사건만 watermark를 높이도록 수정했다. 별도 재현 TC 후 소스 독립 검토가 부분 core만 승인했으며 새 고정 후보로 회귀를 다시 수행한다.
+
+## V2 복귀·재시도 프로토콜의 구현 단위
+
+- REQ-02/05/08/10/12/14: `V2-PROTOCOLS.md`에서 새 사건 필드, 실패 증거, 고정 복귀 12쌍, attempt/cycle 경계, mock manifest/approval/receipt와 notes-only를 구현 전에 정의하고 독립 계획 검토의 지적을 반영했다. 구현·TC·읽기 전용 검토의 책임은 분리한다.
+- 원본 비노드 결과를 업무 재작업으로 처리하지 않는다. cycle은 초기 1에 추가 재작업 3회만 허용한다. 인프라 오류는 gate FAIL과 다르며 이전 attempt를 덮어쓰지 않고 10초/30초 후 새 READY record를 만든다. 일반 step 사건으로 이전 실패 attempt를 다시 READY로 만들 수 없다.
+- digest는 합성 실행기의 관측 토큰이다. 실제 암호학적 manifest 생성·권한 확인·원격 조회를 구현한 것으로 주장하지 않는다. 관측 토큰은 현재 후보·규칙·증거·cycle·X02 실행에 불변으로 묶고 실제 제출 권한은 false로 유지한다.
+- TC의 SQE 관련 확인은 P22 관측과 P23 보고 뒤 P24 판정을 내리는 순서다. 실제 단말 시험 또는 P22의 원시 trial 결과 포맷 검증은 이번 증거의 범위가 아니며 장비/시나리오 프로토콜과 B09/B10 검증에 남는다.
+- UI·서버·플러그인 진입점을 바꾸지 않은 순수 모듈 증분이므로 이번 후보는 전체 단위 회귀와 build로 확인한다. standalone/native host 화면은 재생 UI 연결 뒤 전체 V2 gate에서 필수로 실행하며 생략 승인이나 완료로 치환하지 않는다.
+- 첫 프로토콜 후보의 199개 테스트와 build는 통과했으나 독립 TC 검토에서 같은 manifest/digest의 다른 cycle 재사용을 직접 거절하는 사례가 부족했다. 구현 기준을 완화하지 않고 별도 부정 TC를 추가한 뒤 새 고정 후보를 검증한다. 초기 통과 결과는 `evidence/v2/protocol-attempt-1.json`에 남기며 최종 수용 증거로 재사용하지 않는다.
+- 200개 통과 후보에 대해 독립 증거 감사는 통과했으나 부모 통합 검토가 metadata 반려 후 완주 불가를 찾아 최종 수용을 보류했다(`protocol-attempt-2.json`). 복귀 target까지의 검사 범위가 원인이므로 end-to-end 복구 TC를 추가해 실패를 먼저 재현했다. 원본 DOCX/workflow 및 별도 senior_sol의 설계 검토로 돌아가 metadata만 같은 cycle의 새 X02/X03 attempt로 처리하는 예외를 정했다. 품질 판정·후보를 승격하거나 상한을 완화하지 않고 기존 공유 재작업 한도를 유지한다. 독립 계획 재검토 후 새 후보로 재검증한다.
+- 보완한 후보는 전체 204개 단위시험, TypeScript/Vite build와 소스 74개 해시 고정을 통과했다. 독립 검토자가 소스·TC·로그·snapshot을 감사해 metadata 복구를 포함한 부분 protocol을 수용했다(`evidence/v2/protocol-review.json`). 전체 V2/실제 AT 완료는 아니다.

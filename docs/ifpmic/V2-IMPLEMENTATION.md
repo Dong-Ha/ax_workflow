@@ -1,6 +1,6 @@
 # V2 구현 진행 기록
 
-V2 전체 기준은 `V2-SCENARIOS.md`와 `VERIFICATION.md`다. 이 기록은 완료 기준을 축소하지 않고 구현 증분과 남은 작업을 구분한다. 현재 증분은 UI에 연결하기 전의 순수 재생 모델이다.
+V2 전체 기준은 `V2-SCENARIOS.md`와 `VERIFICATION.md`다. 이 기록은 완료 기준을 축소하지 않고 구현 증분과 남은 작업을 구분한다. 구현은 UI에 연결하기 전의 순수 재생 모델부터 진행한다.
 
 ## 첫 증분: 관측과 통과 근거 분리
 
@@ -26,4 +26,18 @@ V2 전체 기준은 `V2-SCENARIOS.md`와 `VERIFICATION.md`다. 이 기록은 완
 
 검증 목적은 잘못된 근거로 단계가 성공하거나 과거 관측이 현재 단계를 해제하는 것을 막는 것이다. TC는 원본의 고정 인접표 전체 조합, 정상·부정 좌표, 사람 제출, 측정 누락, 중복/충돌, cursor 복원, 장비 시간 경계 및 개인정보 제외를 검사한다. 합격 기준은 해당 단위시험 전부 통과, 기존 회귀 및 build 성공, 실행 전후 소스 해시 일치와 독립 검토다. 결과는 `evidence/v2/core-verification.json` 및 별도 검토 기록에 귀속한다. 실패하면 최초 잘못된 전이/fixture로 돌아가 수정하고 영향을 받는 세트와 회귀를 다시 실행한다.
 
-이번 증분으로 전체 V2를 수락하지 않는다. 아직 시나리오 카탈로그, cycle/attempt 이력, 업무 실패 복귀, 자식 agent, 생략 정책, 수동 장비 증거, pause/resume/cancel, digest 승인과 영수증, notes-only/no-change, standalone/native host의 재생 UI 및 전체 V2 gate가 남는다. 전용 근거 프로토콜이 없는 제어·생략은 거절한다. X03 일반 human 제출과 P25 성공도 거절하며 `real_publish_allowed`는 항상 false다. 실제 AT는 미실행 상태를 유지한다.
+첫 증분 수락 시 전체 V2는 미완료였다. 당시 잔여 범위는 시나리오 카탈로그, cycle/attempt 이력, 업무 실패 복귀, 자식 agent, 생략 정책, 수동 장비 증거, pause/resume/cancel, digest 승인과 영수증, notes-only/no-change, standalone/native host의 재생 UI 및 전체 V2 gate가 남는다. 전용 근거 프로토콜이 없는 제어·생략은 거절한다. X03 일반 human 제출과 P25 성공도 거절하며 `real_publish_allowed`는 항상 false다. 실제 AT는 미실행 상태를 유지한다.
+
+## 다음 증분: 실패 복귀·재시도·배포 관측
+
+상세 필드와 검증 기준은 `V2-PROTOCOLS.md`, 계획 승인 근거는 `evidence/v2/protocol-plan-review.json`이다. `protocols.mjs`와 replay의 유형별 allowlist는 업무 실패/반려 증거, 새 cycle·attempt snapshot, 원본의 10초/30초 재시도, 후보 무효화, 현재 네 gate의 PASS에 묶인 mock manifest, digest 승인 및 영수증, P26 노트 전용 재시도를 구현한다. 일반 step·agent 관측만으로 이 근거를 만들지 않는다.
+
+manifest digest는 합성 사건에 기록된 불투명 토큰이다. 실제 암호학적 manifest 생성·서명·원격 조회를 구현한 것으로 표시하지 않는다. 토큰과 manifest ID는 candidate/rule/destination/notes/bundle뿐 아니라 cycle/X02 attempt/execution 및 gate evidence ID에 불변으로 묶는다. 실제 작업 승인·발행 권한은 항상 false다.
+
+TC는 별도 `tests/ifpmic-protocols.test.mjs`에서 고정된 12개 복귀 경로, 인프라/notes 이력, 한도와 시간 경계, 잘못된 승인·영수증, 정상 완주 및 과거 후보 차단을 검사한다. 기존 재생·AX 회귀와 build도 새 소스 후보로 수행한다. 수용 증거는 `evidence/v2/protocol-verification.json`과 독립 검토 기록으로 보존하며 전체 V2는 계속 진행 중이다. 다음 잔여 범위는 skip/manual/agent-child/pause/cancel/no-change와 비노드 P03/P25 프로토콜, 카탈로그·재생 UI 및 전체 standalone/native host gate다.
+
+### Metadata-only 복구 결함과 보완
+
+단순 복귀 target 검사와 정상 29단계 완주만으로는 반려 뒤 복구를 증명하지 못했다. 200개 테스트와 독립 증거 감사 뒤에도 부모 통합 검토가 X03 자료 반려→X02의 진행 불가를 발견했다. 초기 후보는 `protocol-attempt-2.json`으로 보존하고, TC가 end-to-end 복구 실패를 재현한 뒤 원본과 별도 senior_sol의 좁은 설계 검토로 복귀했다.
+
+보완 규칙은 `V2-PROTOCOLS.md`의 metadata-only 예외와 독립 계획 재검토(`protocol-plan-review-2.json`)를 따른다. 같은 cycle의 품질 결과를 그대로 유지하고 X02/X03만 새 PENDING attempt로 바꾼다. 공유 재작업 한도를 계속 적용하고 이전 승인·manifest·task를 폐기한다. 사람 제출도 실행/attempt에 묶으며 인프라 retry가 기존 제출을 재사용할 수 없다. TC는 반려부터 수정 manifest·새 승인·영수증·노트 완료까지 및 혼합 재시도/한도를 검증한다. 실제 B03/B11 정책과 전체 V2 수용은 여전히 별개다.

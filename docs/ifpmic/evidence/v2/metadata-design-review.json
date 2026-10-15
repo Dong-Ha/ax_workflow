@@ -1,0 +1,33 @@
+{
+  "kind": "independent_metadata_recovery_architecture_review",
+  "reviewer_agent": "/root/metadata_route_design",
+  "reviewer_role": "senior_sol; read-only narrow architectural review",
+  "recorded_at": "2026-10-15T10:47:57.079800+00:00",
+  "finding": "New cycle clears quality evidence outside X02 return interval and deadlocks metadata-only recovery",
+  "evidence": [
+    {
+      "file": "design-v1/specs/workflow.v1.json",
+      "facts": "X03 has no business-fail edge; reject_release_metadata separately targets X02"
+    },
+    {
+      "file": "design-v1/specs/state-contract.json",
+      "facts": "Failed attempts stay failed; new attempts preserve history"
+    },
+    {
+      "file": "design-v1/specs/data-model.json",
+      "facts": "Immutable step runs identified by job/step/cycle/attempt"
+    },
+    {
+      "file": "IFPMIC_AX_Design_v1.docx (provided local input)",
+      "paragraphs_one_based": [
+        243,
+        258,
+        276
+      ],
+      "facts": "Distinguishes infrastructure attempts/business cycles, revalidates returned interval, requires new cycle when executed assumptions change"
+    }
+  ],
+  "recommendation": "Same-cycle metadata correction with new X02/X03 attempts, intact quality proof, no publication, fresh task and release binding, existing shared rework budget",
+  "residual_uncertainty": "Original sources do not prescribe metadata-specific counters; shared cap is a conservative mock interpretation. Actual B03/B11 policy still requires versioned profile/owner confirmation.",
+  "files_changed_by_reviewer": []
+}

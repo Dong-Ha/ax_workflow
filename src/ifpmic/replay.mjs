@@ -1,6 +1,7 @@
 import { buildWorkflowGraph, safeText } from './contract.mjs';
 import canonicalStateContract from '../../docs/ifpmic/design-v1/specs/state-contract.json' with { type: 'json' };
 import canonicalWorkflow from '../../docs/ifpmic/design-v1/specs/workflow.v1.json' with { type: 'json' };
+import { createObservationProtocols, newStepRecord, mockHumanTaskId } from './protocols.mjs';
 
 // Guards for synthetic observations only. No execution, timers, leases or publication.
 const stepStates = new Set([
@@ -84,16 +85,25 @@ function canonical(value) {
   return JSON.stringify(value);
 }
 const canonicalWorkflowSignature = canonical(canonicalWorkflow);
+const retryPolicy = freeze(structuredClone(canonicalWorkflow.retry_defaults));
 const opaqueId = value => typeof value === 'string' && /^[A-Za-z0-9][A-Za-z0-9:._/-]{0,127}$/.test(value)
   && safeText(value) === value;
 const mockEvidence = value => opaqueId(value) && value.startsWith('mock:');
-const eventTypes = new Set(['step', 'agent', 'human', 'measurement', 'device']);
+const eventTypes = new Set(['step', 'agent', 'human', 'measurement', 'device', 'business_failure',
+  'route', 'infra_error', 'retry', 'candidate', 'manifest', 'approval', 'receipt', 'notes_failure', 'notes_retry']);
 const eventFields = new Set(['event_id', 'source_id', 'source_seq', 'type', 'mode', 'job_id',
   'step_id', 'cycle', 'attempt', 'execution_id', 'payload']);
 const payloadFields = {
-  step: ['state'], agent: ['status'], human: ['actor', 'task_id', 'plan_version', 'evidence_id'],
+  step: ['state'], agent: ['status'], human: ['actor', 'task_id', 'plan_version', 'evidence_id', 'decision'],
   measurement: ['evidence', 'verdict'],
   device: ['mode', 'now_ms', 'last_heartbeat_ms', 'lease_expires_ms', 'operation_state', 'profile'],
+  business_failure: ['candidate_fingerprint', 'evidence_id'],
+  route: ['outcome', 'target', 'candidate_fingerprint', 'evidence_id'],
+  infra_error: ['now_ms', 'operation'], retry: ['now_ms'], candidate: ['candidate_fingerprint'],
+  manifest: ['manifest_id', 'digest', 'candidate_fingerprint', 'rule_version', 'destination', 'notes_hash', 'evidence_bundle'],
+  approval: ['actor', 'task_id', 'plan_version', 'evidence_id', 'manifest_id', 'digest', 'candidate_fingerprint', 'decision'],
+  receipt: ['manifest_id', 'digest', 'candidate_fingerprint', 'receipt_id', 'observed'],
+  notes_failure: ['evidence_id'], notes_retry: ['evidence_id'],
 };
 
 /** Recompute an observation prefix from scratch. This function cannot execute work. */
@@ -116,17 +126,18 @@ export function replayScenario(scenario, workflow, stateContract, cursor = scena
     status: 'RUNNING', cycle: 1, rework_count: 0, candidate_fingerprint: 'mock:candidate:A',
     rule_version: 'mock:rules:v1', current_step: 'P01', steps: {}, history: [],
     timeline: [], ignored: [], duplicate_count: 0, conflict_count: 0,
-    device: null, release: { publication_count: 0, approved: false },
+    device: null, release: { publication_count: 0, approved: false, manifest: null, receipt_id: null, rejection: null },
+    required_revalidation: [], failure_bundle: [],
     wait_reason: '', real_publish_allowed: false,
   };
-  for (const node of graph.nodes) result.steps[node.id] = {
-    state: 'PENDING', agent_status: 'idle', gate_verdict: null,
-    attempt: 1, execution_id: `mock:${node.id}:c1:a1`, evidence_ids: [],
-  };
+  for (const node of graph.nodes) result.steps[node.id] = newStepRecord(node.id, 1);
   const eventIds = new Map();
   const sequences = new Map();
   const latestSequences = new Map();
-  const submissions = new Set();
+  const submissions = new Map();
+  const protocols = createObservationProtocols({ result, graph, submissions,
+    transitionAllowed: (from, to) => isAllowedStepTransition(from, to, stateContract),
+    mockId: mockEvidence, policy: retryPolicy });
   let quarantined = false;
   let latestDeviceTime = -1;
   function apply(event) {
@@ -143,6 +154,8 @@ export function replayScenario(scenario, workflow, stateContract, cursor = scena
     if (event.step_id !== result.current_step) return 'inactive_step';
     const payload = record(event.payload) ? event.payload : {};
     const node = nodes.get(event.step_id);
+    const protocolResult = protocols.apply(event, node, step);
+    if (protocolResult !== null) return protocolResult;
     if (event.type === 'agent') {
       if (!['running', 'completed', 'failed'].includes(payload.status)) return 'invalid_agent_status';
       step.agent_status = payload.status;
@@ -150,11 +163,14 @@ export function replayScenario(scenario, workflow, stateContract, cursor = scena
     }
     if (event.type === 'human') {
       if (node.owner !== 'human' || step.state !== 'WAITING_HUMAN'
-          || payload.actor !== 'mock:human' || payload.task_id !== `mock:task:${node.id}:c${result.cycle}`
+          || payload.actor !== 'mock:human' || payload.task_id !== mockHumanTaskId(node.id, result.cycle, step.attempt)
           || payload.plan_version !== 'mock:plan:v1' || !mockEvidence(payload.evidence_id)) return 'invalid_human_submission';
-      // Release approval requires digest checking in a later increment, never generic submission.
       if (node.id === 'X03') return 'release_digest_required';
-      submissions.add(node.id);
+      const decision = payload.decision ?? 'approve';
+      if (!['approve', ...(node.id === 'X01' ? ['reject'] : node.id === 'P21' ? ['reject', 'design_change_needed'] : [])].includes(decision)) return 'invalid_human_decision';
+      if (submissions.has(node.id)) return 'human_task_already_submitted';
+      submissions.set(node.id, { decision, evidence_id: payload.evidence_id, candidate_fingerprint: result.candidate_fingerprint,
+        cycle: result.cycle, attempt: step.attempt, execution_id: step.execution_id });
       if (!step.evidence_ids.includes(payload.evidence_id)) step.evidence_ids.push(safeText(payload.evidence_id, 240));
       return '';
     }
@@ -167,6 +183,9 @@ export function replayScenario(scenario, workflow, stateContract, cursor = scena
       if (!['PASS', 'FAIL', 'ERROR', 'INCONCLUSIVE'].includes(payload.verdict)) return 'invalid_verdict';
       if (!own(payload.evidence, 'evidence_id') || !mockEvidence(payload.evidence.evidence_id)) return 'missing_evidence';
       step.gate_verdict = own(payload.evidence, 'complete') && payload.evidence.complete === true ? payload.verdict : 'INCONCLUSIVE';
+      step.gate_complete = own(payload.evidence, 'complete') && payload.evidence.complete === true;
+      step.gate_candidate_fingerprint = result.candidate_fingerprint;
+      step.gate_rule_version = result.rule_version; step.gate_evidence_id = payload.evidence.evidence_id;
       if (!step.evidence_ids.includes(payload.evidence.evidence_id)) step.evidence_ids.push(safeText(payload.evidence.evidence_id, 240));
       return '';
     }
@@ -184,19 +203,26 @@ export function replayScenario(scenario, workflow, stateContract, cursor = scena
     }
     if (event.type !== 'step') return 'unknown_type';
     if (!isAllowedStepTransition(step.state, payload.state, stateContract)) return 'illegal_transition';
+    if (step.infrastructure_error && ['READY', 'RUNNING', 'SUCCEEDED'].includes(payload.state)) return 'dedicated_retry_required';
     // Skip, pause, cancel, and reconciliation require their own evidence protocols.
     if (['SKIPPED', 'PAUSED', 'PAUSE_REQUESTED', 'CANCEL_REQUESTED', 'CANCELED', 'SUPERSEDED', 'RECONCILING'].includes(payload.state)) return 'control_evidence_required';
     if (payload.state === 'SUCCEEDED') {
       if (result.status === 'RECONCILING') return 'reconciliation_required';
-      if (node.owner === 'human' && !submissions.has(node.id)) return 'human_submission_required';
-      if (node.owner === 'system' && step.gate_verdict !== 'PASS') return 'gate_pass_required';
-      if (node.id === 'P25') return 'release_approval_required';
+      const submission = submissions.get(node.id);
+      if (node.owner === 'human' && (submission?.decision !== 'approve' || submission.execution_id !== step.execution_id
+          || submission.cycle !== result.cycle || submission.attempt !== step.attempt)) return 'human_submission_required';
+      if (node.owner === 'system' && (step.gate_verdict !== 'PASS' || !step.gate_complete
+          || step.gate_candidate_fingerprint !== result.candidate_fingerprint || step.gate_rule_version !== result.rule_version)) return 'gate_pass_required';
+      const releaseGuard = protocols.successGuard(node);
+      if (releaseGuard) return releaseGuard;
     }
     step.state = payload.state;
     if (payload.state === 'SUCCEEDED') {
       result.current_step = routes.get(node.id);
       result.status = result.current_step === 'END' ? 'COMPLETED' : 'RUNNING';
       result.wait_reason = '';
+      if (node.id === 'P25') result.release.publication_count = 1;
+      if (node.id === 'P26' && result.release.publication_count === 1) result.status = 'COMPLETED';
     } else if (['WAITING_HUMAN', 'WAITING_DEVICE', 'RECONCILING', 'FAILED'].includes(payload.state)) {
       result.status = payload.state;
       result.wait_reason = payload.state.toLowerCase();

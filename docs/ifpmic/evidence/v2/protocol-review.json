@@ -1,0 +1,46 @@
+{
+  "kind": "independent_partial_protocol_acceptance",
+  "decision": "accepted_partial_mock_protocols_including_metadata_recovery",
+  "implementer_agent": "/root",
+  "test_author_agent": "/root/verification_plan",
+  "reviewer_agent": "/root/paperclip_ui_extension",
+  "reviewer_role": "worker_luna; read-only independent source, TC and evidence review",
+  "architecture_reviewer": "/root/metadata_route_design (senior_sol; metadata-only design review)",
+  "recorded_at": "2026-10-15T10:51:28.473755+00:00",
+  "candidate_fingerprint": "3e63b8be9f384081113ee44ec5d69b7d804aee541324b207050414cbc7687f3d",
+  "report": "protocol-verification.json",
+  "report_sha256": "59579c54fd8e93928bfc9a1c3bb50c284df4ae075f7851f740163d873efe2410",
+  "source_paths_audited": 74,
+  "source_hash_matches": 74,
+  "reviewed_source_sha256": {
+    "src/ifpmic/replay.mjs": "0f49d7d10b0b5e134940c650d3befaa96164413cc78ec112f2cd93bd6baf4bec",
+    "src/ifpmic/protocols.mjs": "5cdfc2bce998450404feb44109fcc8543267e988657a22d08bab70a35220b519",
+    "tests/ifpmic-protocols.test.mjs": "78228a52af6de018d3497bc42c646a4feb959bba9c929745b129927413e35b3b"
+  },
+  "checks": {
+    "npm_test": "204/204; zero failures, cancellations or skips",
+    "build": "TypeScript and Vite exit 0",
+    "source_changed": [],
+    "logs_and_snapshots_hashes_match": true,
+    "reviewer_reran_commands": false
+  },
+  "resolved_findings": [
+    "Explicit failure/evidence-bound routes and distinction from non-cycle outcomes",
+    "Immutable infrastructure retry attempts and notes-only receipt preservation",
+    "Cycle/attempt/execution/gate-proof binding for mock manifests with direct cross-cycle negative TC",
+    "Metadata-only X02 recovery end-to-end without clearing current quality evidence or promoting an old cycle",
+    "Shared rework cap, metadata and infrastructure attempt semantics",
+    "Fresh human task and execution-bound submission; stale submission cannot unlock a retried attempt"
+  ],
+  "approved_scope": [
+    "Pure mock business/negative-human return, infrastructure retry and candidate invalidation",
+    "Mock manifest/approval/receipt and notes-only observations",
+    "Metadata-only recovery through corrected manifest, fresh approval, one receipt and final mock completion"
+  ],
+  "not_approved": [
+    "Complete V2 catalog, replay UI or standalone/native host gate",
+    "Remaining skip/manual/device/child-agent/pause/cancel/no-change protocols",
+    "Actual AT, real runtime/device/cryptographic publisher integration or publication"
+  ],
+  "waivers": []
+}
