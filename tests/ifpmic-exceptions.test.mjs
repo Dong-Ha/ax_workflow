@@ -662,13 +662,16 @@ test('P25 requires current approved manifest and strictly newer safe query seque
 test('P25 does not replace an already-observed receipt and exact found duplicates remain idempotent', () => {
   const h = releaseHarness('remote-receipt-idempotency');
   const coords = remoteCoordinates(h);
-  h.add('receipt', 'P25', { manifest_id: coords.manifest_id, digest: coords.digest,
+  const receiptObserved = h.add('receipt', 'P25', { manifest_id: coords.manifest_id, digest: coords.digest,
     candidate_fingerprint: coords.candidate_fingerprint, receipt_id: 'mock:receipt:prior', observed: true });
+  assert.equal(receiptObserved.steps.P25.state, 'RUNNING');
+  assert.equal(receiptObserved.release.receipt_id, 'mock:receipt:prior');
+  assert.equal(receiptObserved.release.publication_count, 1, 'an accepted receipt fact increments the observed publication count immediately');
   h.add('remote_unknown', 'P25', { ...coords, evidence_id: 'mock:evidence:remote-unknown' });
   const conflict = reconcile(h, 'found', 1);
   assert.equal(conflict.steps.P25.state, 'RECONCILING');
   assert.equal(conflict.release.receipt_id, 'mock:receipt:prior');
-  assert.equal(conflict.release.publication_count, 0);
+  assert.equal(conflict.release.publication_count, 1, 'a conflicting provider observation cannot erase an already accepted publication fact');
   const found = reconcile(h, 'found', 2, { receipt_id: 'mock:receipt:prior' });
   assert.equal(found.steps.P25.state, 'SUCCEEDED');
   assert.equal(found.release.receipt_id, 'mock:receipt:prior');

@@ -144,7 +144,7 @@ export function replayScenario(scenario, workflow, stateContract, cursor = scena
   const nodes = new Map(graph.nodes.map(node => [node.id, node]));
   const routes = new Map(graph.edges.filter(edge => edge.kind === 'pass').map(edge => [edge.from, edge.to]));
   const result = {
-    mode: 'mock', scenario_id: scenarioId, job_id: `mock:${scenarioId}`,
+    mode: 'mock', replay_policy_version: 'mock:ifpmic:controls:v1', scenario_id: scenarioId, job_id: `mock:${scenarioId}`,
     status: 'RUNNING', cycle: 1, rework_count: 0, candidate_fingerprint: 'mock:candidate:A',
     rule_version: 'mock:rules:v1', current_step: 'P01', steps: {}, history: [],
     timeline: [], ignored: [], duplicate_count: 0, conflict_count: 0,
@@ -174,12 +174,40 @@ export function replayScenario(scenario, workflow, stateContract, cursor = scena
   const children = createChildProtocols({ result, mockId: mockEvidence,
     transitionAllowed: (from, to) => isAllowedStepTransition(from, to, stateContract) });
   const controls = createControlProtocols({ result, mockId: mockEvidence,
+    transitionAllowed: (from, to) => isAllowedStepTransition(from, to, stateContract),
+    releaseMatches: protocols.manifestMatches,
+    validateLateResult: (event, knownStep) => {
+      const shadow = structuredClone(result), step = structuredClone(knownStep), node = nodes.get(event.step_id);
+      if (!node) return 'unknown_step';
+      shadow.current_step = event.step_id; shadow.cycle = event.cycle; shadow.status = 'RUNNING'; shadow.device = null;
+      shadow.steps[event.step_id] = step;
+      const context = step.child_coordination?.context ?? step.sqe_context;
+      if (context) {
+        shadow.candidate_fingerprint = context.candidate_fingerprint;
+        shadow.requirements_version = context.requirements_version ?? shadow.requirements_version;
+      }
+      const options = { result: shadow, mockId: mockEvidence,
+        transitionAllowed: (from, to) => isAllowedStepTransition(from, to, stateContract) };
+      if (event.type === 'child_result') {
+        const child = step.child_coordination;
+        const index = child?.requests.findIndex(request => request.assignment?.child_execution_id === event.payload.child_execution_id) ?? -1;
+        if (index < 0) return 'unknown_child_execution';
+        child.requests = child.requests.slice(0, index + 1); child.requests[index].result = null;
+        child.status = 'WAITING_AGENT'; step.state = 'WAITING_AGENT';
+        return createChildProtocols(options).apply(event, node, step);
+      }
+      step.state = event.type === 'sqe_result' && step.sqe_manual_task ? 'WAITING_HUMAN' : 'RUNNING';
+      if (event.type === 'sqe_result') {
+        step.sqe_result = null;
+        return createSqeProtocols({ ...options, evidenceCurrent }).apply(event, node, step);
+      }
+      return createObservationProtocols({ ...options, graph, submissions: new Map(), policy: retryPolicy }).apply(event, node, step);
+    },
     delegateRetry: (now, evidence_id) => {
       const step = result.steps[result.current_step], node = nodes.get(result.current_step);
       const type = node?.id === 'P26' && step?.notes_failure ? 'notes_retry' : 'retry';
       return protocols.apply({ type, payload: type === 'retry' ? { now_ms: now } : { evidence_id } }, node, step);
     } });
-  let quarantined = false;
   let latestDeviceTime = -1;
   function apply(event) {
     if (!record(event) || event.mode !== 'mock' || !opaqueId(event.event_id)
@@ -195,6 +223,9 @@ export function replayScenario(scenario, workflow, stateContract, cursor = scena
       if (event.job_id !== result.job_id) return 'stale_job';
       return controls.apply(event);
     }
+    if (event.job_id !== result.job_id) return 'stale_execution';
+    const lateResult = controls.lateStep(event);
+    if (lateResult !== null) return lateResult;
     const step = result.steps[event.step_id];
     if (!step || !nodes.has(event.step_id)) return 'unknown_step';
     if (event.job_id !== result.job_id || event.cycle !== result.cycle
@@ -264,9 +295,8 @@ export function replayScenario(scenario, workflow, stateContract, cursor = scena
       if (timestamp(payload.now_ms) && payload.now_ms < latestDeviceTime) return 'stale_device_clock';
       const observation = projectDeviceClock(payload);
       if (timestamp(payload.now_ms)) latestDeviceTime = payload.now_ms;
-      quarantined ||= observation.quarantined;
-      result.device = { ...observation, quarantined,
-        status: quarantined && observation.status !== 'UNKNOWN' ? 'RECONCILING' : observation.status };
+      result.device = { ...observation };
+      controls.observeDevice(observation);
       if (result.device.quarantined) {
         result.status = 'RECONCILING'; result.wait_reason = 'device_reconciliation_required';
       }

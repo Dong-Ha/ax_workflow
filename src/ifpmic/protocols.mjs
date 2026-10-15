@@ -203,7 +203,8 @@ export function createObservationProtocols({ result, graph, submissions, transit
       if (node.id !== 'P25' || step.state !== 'RUNNING' || !result.release.approved || !manifestMatches(payload)
           || payload.observed !== true || !mockId(payload.receipt_id)) return 'invalid_release_receipt';
       if (result.release.receipt_id || result.release.publication_count !== 0) return 'receipt_already_observed';
-      result.release.receipt_id = payload.receipt_id; step.evidence_ids.push(payload.receipt_id);
+      result.release.receipt_id = payload.receipt_id; result.release.publication_count = 1;
+      step.evidence_ids.push(payload.receipt_id);
       return '';
     }
     if (event.type === 'notes_failure') {

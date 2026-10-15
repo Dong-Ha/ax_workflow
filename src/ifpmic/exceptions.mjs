@@ -95,7 +95,8 @@ export function createExceptionProtocols({ result, transitionAllowed, mockId, re
     if (!Number.isSafeInteger(p.query_seq) || p.query_seq <= remote.query_seq) return 'stale_remote_query';
     if (p.outcome === 'found') {
       if (!mockId(p.receipt_id) || result.release.receipt_id && result.release.receipt_id !== p.receipt_id
-          || result.release.publication_count !== 0 || !transitionAllowed(step.state, 'SUCCEEDED')) return 'invalid_remote_receipt';
+          || result.release.publication_count !== 0 && !(result.release.publication_count === 1 && result.release.receipt_id === p.receipt_id)
+          || !transitionAllowed(step.state, 'SUCCEEDED')) return 'invalid_remote_receipt';
       result.release.receipt_id = p.receipt_id; result.release.publication_count = 1;
       addEvidence(step, p.receipt_id); step.state = 'SUCCEEDED';
       result.current_step = 'P26'; result.status = 'RUNNING'; result.wait_reason = '';

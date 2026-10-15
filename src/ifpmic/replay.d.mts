@@ -106,6 +106,7 @@ export interface MockRemoteReconciliation {
   observations: readonly { outcome: string; evidence_id: string; query_seq: number }[];
 }
 export interface ReplaySnapshot {
+  replay_policy_version: 'mock:ifpmic:controls:v1';
   mode: 'mock'; scenario_id: string; job_id: string; status: string; cycle: number; rework_count: number;
   candidate_fingerprint: string; rule_version: string; current_step: string; steps: Record<string, ReplayStep>;
   history: readonly { kind: string; cycle: number; candidate_fingerprint?: string; step_id?: string;
@@ -134,7 +135,9 @@ export interface MockControl {
   resume_step: string | null; resume_state: string | null;
   underlying_status: string; underlying_wait_reason: string; reconciliation_required: boolean;
   fence: null | Record<string, unknown>; executions: readonly Record<string, unknown>[];
+  known_executions: readonly Record<string, unknown>[];
   pending_request_ids: readonly string[]; execution_ends: readonly Record<string, unknown>[];
+  unscoped_quarantine: boolean; generic_device: ReplayDevice | null;
   bridges: readonly Record<string, unknown>[]; remotes: readonly Record<string, unknown>[];
   facts: readonly Record<string, unknown>[]; boundary: null | Record<string, unknown>;
 }

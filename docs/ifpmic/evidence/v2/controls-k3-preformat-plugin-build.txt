@@ -1,0 +1,5 @@
+
+> ax-agent-observatory@1.0.0 ifpmic:plugin:build
+> node scripts/build-ifpmic-plugin.mjs
+
+IFPMIC plugin built: .paperclip-lab/ifpmic-plugin (SDK 2026.1005.0, page-only capability)

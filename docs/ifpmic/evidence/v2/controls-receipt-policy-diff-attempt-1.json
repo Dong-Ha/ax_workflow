@@ -1,0 +1,953 @@
+{
+  "kind": "controls_receipt_policy_historical_prefix_diff",
+  "status": "pass",
+  "policy": {
+    "old_replay": "accepted receipt leaves publication_count=0 until legacy P25 completion projection",
+    "current_replay": "accepted current P25 receipt sets publication_count=1 immediately",
+    "expected": "For every old accepted-receipt/publication-zero prefix through first old publication-count-one prefix, current replay retains that exact receipt/count=1 and matches old status/current_step/cycle/rework_count."
+  },
+  "scope": {
+    "scenario_count": 59,
+    "all_event_and_checkpoint_stream_bytes_compared": true,
+    "checkpoint_state_fields": [
+      "status",
+      "current_step",
+      "cycle",
+      "rework_count",
+      "publication_count"
+    ],
+    "checkpoint_comparisons": 345,
+    "receipt_affected_prefixes_only": true,
+    "receipt_prefix_comparisons": 34,
+    "entire_nonreceipt_prefix_equivalence_not_claimed": true,
+    "start_checkpoints_included": true
+  },
+  "pins": {
+    "baseline_file": "docs/ifpmic/evidence/v2/controls-baseline-59.json",
+    "baseline_sha256": "ac5b2386b03738b4da8ea1cd93fa0dd1f46961d550d67b77fb35852289a79a78",
+    "historical_archive": "docs/ifpmic/evidence/v2/children-ui-catalog-journal.json",
+    "historical_archive_sha256": "a746b47faa2dd08150d05036ddd61d50ec25d52533c0369ba845dbcc317be65c",
+    "historical_archive_expected_sha256": "a746b47faa2dd08150d05036ddd61d50ec25d52533c0369ba845dbcc317be65c",
+    "candidate_sources": {
+      "src/ifpmic/controls.mjs": "ff59472af5568f0d0fc1b50c462074174a716a1663f25c78fd7fe8b1879ef9e2",
+      "src/ifpmic/replay.mjs": "b0838d2ef55ff7fa76a8b7f335e7a0e7e193b776ce9576246d036fa337caefab",
+      "src/ifpmic/protocols.mjs": "8e8954d8be6557689e18a4c7143476697c0dbfdddb1746c25ac73937cd31726f",
+      "src/ifpmic/exceptions.mjs": "981388a22a54694a7bab2a0ff0aa0b13a9435f41fb7e15b53a3bd12298268020",
+      "src/ifpmic/control-effects.mjs": "cb92e961eb97723fc974baa23ec9232852a14a7d569b92e14e5630ca548a1ec3"
+    }
+  },
+  "counts": {
+    "checks": 438,
+    "pass": 438,
+    "errors": 0,
+    "scenario_stream_errors": 0,
+    "checkpoint_errors": 0,
+    "receipt_interval_errors": 0,
+    "receipt_policy_intervals": 17
+  },
+  "receipt_policy_records": [
+    {
+      "scenario": "happy-path",
+      "receipt_event_id": "mock:happy-path:e120",
+      "receipt_id": "mock:happy-path:receipt",
+      "old_receipt_accepted_prefix": 129,
+      "old_publication_count_one_prefix": 130,
+      "checked_prefix_count": 2,
+      "checked_prefixes": [
+        {
+          "cursor": 129,
+          "old_publication_count": 0,
+          "expected": {
+            "receipt_id": "mock:happy-path:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P25",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "actual": {
+            "receipt_id": "mock:happy-path:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P25",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "pass": true
+        },
+        {
+          "cursor": 130,
+          "old_publication_count": 1,
+          "expected": {
+            "receipt_id": "mock:happy-path:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P26",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "actual": {
+            "receipt_id": "mock:happy-path:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P26",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "metadata-recovery",
+      "receipt_event_id": "mock:metadata-recovery:e131",
+      "receipt_id": "mock:metadata-recovery:receipt",
+      "old_receipt_accepted_prefix": 140,
+      "old_publication_count_one_prefix": 141,
+      "checked_prefix_count": 2,
+      "checked_prefixes": [
+        {
+          "cursor": 140,
+          "old_publication_count": 0,
+          "expected": {
+            "receipt_id": "mock:metadata-recovery:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P25",
+            "cycle": 1,
+            "rework_count": 1
+          },
+          "actual": {
+            "receipt_id": "mock:metadata-recovery:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P25",
+            "cycle": 1,
+            "rework_count": 1
+          },
+          "pass": true
+        },
+        {
+          "cursor": 141,
+          "old_publication_count": 1,
+          "expected": {
+            "receipt_id": "mock:metadata-recovery:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P26",
+            "cycle": 1,
+            "rework_count": 1
+          },
+          "actual": {
+            "receipt_id": "mock:metadata-recovery:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P26",
+            "cycle": 1,
+            "rework_count": 1
+          },
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "notes-only",
+      "receipt_event_id": "mock:notes-only:e120",
+      "receipt_id": "mock:notes-only:receipt",
+      "old_receipt_accepted_prefix": 129,
+      "old_publication_count_one_prefix": 130,
+      "checked_prefix_count": 2,
+      "checked_prefixes": [
+        {
+          "cursor": 129,
+          "old_publication_count": 0,
+          "expected": {
+            "receipt_id": "mock:notes-only:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P25",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "actual": {
+            "receipt_id": "mock:notes-only:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P25",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "pass": true
+        },
+        {
+          "cursor": 130,
+          "old_publication_count": 1,
+          "expected": {
+            "receipt_id": "mock:notes-only:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P26",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "actual": {
+            "receipt_id": "mock:notes-only:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P26",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "routing-reuse",
+      "receipt_event_id": "mock:routing-reuse:e92:c1",
+      "receipt_id": "mock:routing-reuse:receipt:c1",
+      "old_receipt_accepted_prefix": 95,
+      "old_publication_count_one_prefix": 96,
+      "checked_prefix_count": 2,
+      "checked_prefixes": [
+        {
+          "cursor": 95,
+          "old_publication_count": 0,
+          "expected": {
+            "receipt_id": "mock:routing-reuse:receipt:c1",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P25",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "actual": {
+            "receipt_id": "mock:routing-reuse:receipt:c1",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P25",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "pass": true
+        },
+        {
+          "cursor": 96,
+          "old_publication_count": 1,
+          "expected": {
+            "receipt_id": "mock:routing-reuse:receipt:c1",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P26",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "actual": {
+            "receipt_id": "mock:routing-reuse:receipt:c1",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P26",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "routing-exempt",
+      "receipt_event_id": "mock:routing-exempt:e65:c1",
+      "receipt_id": "mock:routing-exempt:receipt:c1",
+      "old_receipt_accepted_prefix": 65,
+      "old_publication_count_one_prefix": 66,
+      "checked_prefix_count": 2,
+      "checked_prefixes": [
+        {
+          "cursor": 65,
+          "old_publication_count": 0,
+          "expected": {
+            "receipt_id": "mock:routing-exempt:receipt:c1",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P25",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "actual": {
+            "receipt_id": "mock:routing-exempt:receipt:c1",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P25",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "pass": true
+        },
+        {
+          "cursor": 66,
+          "old_publication_count": 1,
+          "expected": {
+            "receipt_id": "mock:routing-exempt:receipt:c1",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P26",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "actual": {
+            "receipt_id": "mock:routing-exempt:receipt:c1",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P26",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "routing-candidate",
+      "receipt_event_id": "mock:routing-candidate:e93:c1",
+      "receipt_id": "mock:routing-candidate:receipt:c1",
+      "old_receipt_accepted_prefix": 96,
+      "old_publication_count_one_prefix": 97,
+      "checked_prefix_count": 2,
+      "checked_prefixes": [
+        {
+          "cursor": 96,
+          "old_publication_count": 0,
+          "expected": {
+            "receipt_id": "mock:routing-candidate:receipt:c1",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P25",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "actual": {
+            "receipt_id": "mock:routing-candidate:receipt:c1",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P25",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "pass": true
+        },
+        {
+          "cursor": 97,
+          "old_publication_count": 1,
+          "expected": {
+            "receipt_id": "mock:routing-candidate:receipt:c1",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P26",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "actual": {
+            "receipt_id": "mock:routing-candidate:receipt:c1",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P26",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "routing-metadata",
+      "receipt_event_id": "mock:routing-metadata:e75:c1",
+      "receipt_id": "mock:routing-metadata:receipt:c1",
+      "old_receipt_accepted_prefix": 75,
+      "old_publication_count_one_prefix": 76,
+      "checked_prefix_count": 2,
+      "checked_prefixes": [
+        {
+          "cursor": 75,
+          "old_publication_count": 0,
+          "expected": {
+            "receipt_id": "mock:routing-metadata:receipt:c1",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P25",
+            "cycle": 1,
+            "rework_count": 1
+          },
+          "actual": {
+            "receipt_id": "mock:routing-metadata:receipt:c1",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P25",
+            "cycle": 1,
+            "rework_count": 1
+          },
+          "pass": true
+        },
+        {
+          "cursor": 76,
+          "old_publication_count": 1,
+          "expected": {
+            "receipt_id": "mock:routing-metadata:receipt:c1",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P26",
+            "cycle": 1,
+            "rework_count": 1
+          },
+          "actual": {
+            "receipt_id": "mock:routing-metadata:receipt:c1",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P26",
+            "cycle": 1,
+            "rework_count": 1
+          },
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "sqe-manual-pass",
+      "receipt_event_id": "mock:sqe-manual-pass:e120",
+      "receipt_id": "mock:sqe-manual-pass:receipt",
+      "old_receipt_accepted_prefix": 132,
+      "old_publication_count_one_prefix": 133,
+      "checked_prefix_count": 2,
+      "checked_prefixes": [
+        {
+          "cursor": 132,
+          "old_publication_count": 0,
+          "expected": {
+            "receipt_id": "mock:sqe-manual-pass:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P25",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "actual": {
+            "receipt_id": "mock:sqe-manual-pass:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P25",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "pass": true
+        },
+        {
+          "cursor": 133,
+          "old_publication_count": 1,
+          "expected": {
+            "receipt_id": "mock:sqe-manual-pass:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P26",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "actual": {
+            "receipt_id": "mock:sqe-manual-pass:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P26",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "sqe-manual-retry",
+      "receipt_event_id": "mock:sqe-manual-retry:e120",
+      "receipt_id": "mock:sqe-manual-retry:receipt",
+      "old_receipt_accepted_prefix": 139,
+      "old_publication_count_one_prefix": 140,
+      "checked_prefix_count": 2,
+      "checked_prefixes": [
+        {
+          "cursor": 139,
+          "old_publication_count": 0,
+          "expected": {
+            "receipt_id": "mock:sqe-manual-retry:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P25",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "actual": {
+            "receipt_id": "mock:sqe-manual-retry:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P25",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "pass": true
+        },
+        {
+          "cursor": 140,
+          "old_publication_count": 1,
+          "expected": {
+            "receipt_id": "mock:sqe-manual-retry:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P26",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "actual": {
+            "receipt_id": "mock:sqe-manual-retry:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P26",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "sqe-report-retry",
+      "receipt_event_id": "mock:sqe-report-retry:e120",
+      "receipt_id": "mock:sqe-report-retry:receipt",
+      "old_receipt_accepted_prefix": 134,
+      "old_publication_count_one_prefix": 135,
+      "checked_prefix_count": 2,
+      "checked_prefixes": [
+        {
+          "cursor": 134,
+          "old_publication_count": 0,
+          "expected": {
+            "receipt_id": "mock:sqe-report-retry:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P25",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "actual": {
+            "receipt_id": "mock:sqe-report-retry:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P25",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "pass": true
+        },
+        {
+          "cursor": 135,
+          "old_publication_count": 1,
+          "expected": {
+            "receipt_id": "mock:sqe-report-retry:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P26",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "actual": {
+            "receipt_id": "mock:sqe-report-retry:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P26",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "sqe-judgment-retry",
+      "receipt_event_id": "mock:sqe-judgment-retry:e120",
+      "receipt_id": "mock:sqe-judgment-retry:receipt",
+      "old_receipt_accepted_prefix": 134,
+      "old_publication_count_one_prefix": 135,
+      "checked_prefix_count": 2,
+      "checked_prefixes": [
+        {
+          "cursor": 134,
+          "old_publication_count": 0,
+          "expected": {
+            "receipt_id": "mock:sqe-judgment-retry:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P25",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "actual": {
+            "receipt_id": "mock:sqe-judgment-retry:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P25",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "pass": true
+        },
+        {
+          "cursor": 135,
+          "old_publication_count": 1,
+          "expected": {
+            "receipt_id": "mock:sqe-judgment-retry:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P26",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "actual": {
+            "receipt_id": "mock:sqe-judgment-retry:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P26",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "agent-handoff",
+      "receipt_event_id": "mock:agent-handoff:e120",
+      "receipt_id": "mock:agent-handoff:receipt",
+      "old_receipt_accepted_prefix": 131,
+      "old_publication_count_one_prefix": 132,
+      "checked_prefix_count": 2,
+      "checked_prefixes": [
+        {
+          "cursor": 131,
+          "old_publication_count": 0,
+          "expected": {
+            "receipt_id": "mock:agent-handoff:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P25",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "actual": {
+            "receipt_id": "mock:agent-handoff:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P25",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "pass": true
+        },
+        {
+          "cursor": 132,
+          "old_publication_count": 1,
+          "expected": {
+            "receipt_id": "mock:agent-handoff:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P26",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "actual": {
+            "receipt_id": "mock:agent-handoff:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P26",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "agent-child-failure",
+      "receipt_event_id": "mock:agent-child-failure:e120",
+      "receipt_id": "mock:agent-child-failure:receipt",
+      "old_receipt_accepted_prefix": 137,
+      "old_publication_count_one_prefix": 138,
+      "checked_prefix_count": 2,
+      "checked_prefixes": [
+        {
+          "cursor": 137,
+          "old_publication_count": 0,
+          "expected": {
+            "receipt_id": "mock:agent-child-failure:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P25",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "actual": {
+            "receipt_id": "mock:agent-child-failure:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P25",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "pass": true
+        },
+        {
+          "cursor": 138,
+          "old_publication_count": 1,
+          "expected": {
+            "receipt_id": "mock:agent-child-failure:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P26",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "actual": {
+            "receipt_id": "mock:agent-child-failure:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P26",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "agent-child-question",
+      "receipt_event_id": "mock:agent-child-question:e120",
+      "receipt_id": "mock:agent-child-question:receipt",
+      "old_receipt_accepted_prefix": 137,
+      "old_publication_count_one_prefix": 138,
+      "checked_prefix_count": 2,
+      "checked_prefixes": [
+        {
+          "cursor": 137,
+          "old_publication_count": 0,
+          "expected": {
+            "receipt_id": "mock:agent-child-question:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P25",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "actual": {
+            "receipt_id": "mock:agent-child-question:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P25",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "pass": true
+        },
+        {
+          "cursor": 138,
+          "old_publication_count": 1,
+          "expected": {
+            "receipt_id": "mock:agent-child-question:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P26",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "actual": {
+            "receipt_id": "mock:agent-child-question:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P26",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "agent-child-stale-cycle",
+      "receipt_event_id": "mock:agent-child-stale-cycle:e120",
+      "receipt_id": "mock:agent-child-stale-cycle:receipt",
+      "old_receipt_accepted_prefix": 145,
+      "old_publication_count_one_prefix": 146,
+      "checked_prefix_count": 2,
+      "checked_prefixes": [
+        {
+          "cursor": 145,
+          "old_publication_count": 0,
+          "expected": {
+            "receipt_id": "mock:agent-child-stale-cycle:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P25",
+            "cycle": 2,
+            "rework_count": 1
+          },
+          "actual": {
+            "receipt_id": "mock:agent-child-stale-cycle:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P25",
+            "cycle": 2,
+            "rework_count": 1
+          },
+          "pass": true
+        },
+        {
+          "cursor": 146,
+          "old_publication_count": 1,
+          "expected": {
+            "receipt_id": "mock:agent-child-stale-cycle:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P26",
+            "cycle": 2,
+            "rework_count": 1
+          },
+          "actual": {
+            "receipt_id": "mock:agent-child-stale-cycle:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P26",
+            "cycle": 2,
+            "rework_count": 1
+          },
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "agent-child-permissions",
+      "receipt_event_id": "mock:agent-child-permissions:e120",
+      "receipt_id": "mock:agent-child-permissions:receipt",
+      "old_receipt_accepted_prefix": 138,
+      "old_publication_count_one_prefix": 139,
+      "checked_prefix_count": 2,
+      "checked_prefixes": [
+        {
+          "cursor": 138,
+          "old_publication_count": 0,
+          "expected": {
+            "receipt_id": "mock:agent-child-permissions:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P25",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "actual": {
+            "receipt_id": "mock:agent-child-permissions:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P25",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "pass": true
+        },
+        {
+          "cursor": 139,
+          "old_publication_count": 1,
+          "expected": {
+            "receipt_id": "mock:agent-child-permissions:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P26",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "actual": {
+            "receipt_id": "mock:agent-child-permissions:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P26",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "agent-child-canceled",
+      "receipt_event_id": "mock:agent-child-canceled:e120",
+      "receipt_id": "mock:agent-child-canceled:receipt",
+      "old_receipt_accepted_prefix": 140,
+      "old_publication_count_one_prefix": 141,
+      "checked_prefix_count": 2,
+      "checked_prefixes": [
+        {
+          "cursor": 140,
+          "old_publication_count": 0,
+          "expected": {
+            "receipt_id": "mock:agent-child-canceled:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P25",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "actual": {
+            "receipt_id": "mock:agent-child-canceled:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P25",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "pass": true
+        },
+        {
+          "cursor": 141,
+          "old_publication_count": 1,
+          "expected": {
+            "receipt_id": "mock:agent-child-canceled:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P26",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "actual": {
+            "receipt_id": "mock:agent-child-canceled:receipt",
+            "publication_count": 1,
+            "status": "RUNNING",
+            "current_step": "P26",
+            "cycle": 1,
+            "rework_count": 0
+          },
+          "pass": true
+        }
+      ],
+      "pass": true
+    }
+  ],
+  "checkpoint_differences": [],
+  "checkpoint_start_errors": []
+}

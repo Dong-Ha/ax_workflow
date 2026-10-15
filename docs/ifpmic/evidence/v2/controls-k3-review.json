@@ -1,0 +1,63 @@
+{
+  "kind": "independent_controls_K3_checkpoint_audit",
+  "recorded_at": "2026-10-15T16:27:53.531008+00:00",
+  "mode": "mock",
+  "reviewer": "/root/controls_cancel_review",
+  "checkpoint": "docs/ifpmic/evidence/v2/controls-k3-development-checkpoint.json",
+  "checkpoint_sha256": "e522728b790204a23f3f0fbde270c8795a9a1ca7f8239ecc19881f41ce38f521",
+  "source_pins": 12,
+  "before_after_pins_match": true,
+  "unit": {
+    "tests": 324,
+    "pass": 324,
+    "fail": 0,
+    "skip": 0
+  },
+  "build": "pass",
+  "plugin_build": "pass",
+  "receipt_policy": {
+    "checks": 438,
+    "fixed_checkpoint_states": 345,
+    "original_streams": 59,
+    "compared_receipt_prefixes": 34,
+    "changed_old0_to_new1": 17,
+    "unchanged_old1_to_new1": 17
+  },
+  "findings": [
+    {
+      "issue": "Nullable end ack could survive a newly present typed proof without exact binding",
+      "result": "fixed; exact reference now required, late mismatch reconciles and invalidates barrier"
+    },
+    {
+      "issue": "Identical terminal observation sequence repeat looked inconsistent",
+      "result": "withdrawn; specific approved plan preserves canonical material sequence and reconciliation for identical repeats"
+    },
+    {
+      "issue": "Generic observed active/idle conflated with sticky device quarantine",
+      "result": "fixed and original regression cases retained; generic observation is independent of quarantine latch"
+    }
+  ],
+  "reviewed_limits": [
+    "Twelve inputs and three command results, not full K7 global source/dist/host freeze",
+    "Only receipt-affected prefixes and all fixed checkpoints compared; not every nonreceipt prefix",
+    "K4 boundaries/retry notes, fifteen scenarios/control UI/browser captures, K5-K8 final gate and real B/AT remain required"
+  ],
+  "files_mutated_by_reviewer": [],
+  "actual_AT_status": "not_executed",
+  "verdict": "accepted_intermediate_checkpoint_only",
+  "full_controls_acceptance": false,
+  "goal_complete": false,
+  "formatting_reaudit": {
+    "reviewer": "/root/controls_cancel_review",
+    "verdict": "pass",
+    "recorded_at": "2026-10-15T16:32:26.485625+00:00",
+    "checks": [
+      "Current twelve source pins and all evidence/local diagnostic pins recomputed and matched",
+      "Only two EOF newlines changed; current TC bytes plus one newline reproduce prior SHA exactly",
+      "Final unit attempt3 324/324, fail0/skip0; build3/plugin3 exited0",
+      "Lossless JSON text restores original failed log including trailing whitespace; preformat copies match preserved pins",
+      "Staged diff check passes; incomplete K4/catalog/UI/full gate/actual AT limits retained"
+    ],
+    "scope": "Formatting and evidence re-audit; prior product review remains applicable because product bytes are unchanged. No new whole-product review claim."
+  }
+}

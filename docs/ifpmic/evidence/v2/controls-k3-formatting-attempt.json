@@ -1,0 +1,275 @@
+{
+  "kind": "controls_K3_precommit_formatting_attempt",
+  "status": "superseded_not_final",
+  "reason": "Staged diff check detected EOF blank lines in two new TC files; final source candidate changed, requiring fresh unit/build/plugin and independent audit. Raw failed-unit log contains trailing spaces, so curated copy now uses lossless JSON wrapper.",
+  "source_changes": [
+    {
+      "path": "tests/ifpmic-control-cancel.test.mjs",
+      "before_sha256": "2118c72b4d9d29f5a419d5ebbc1a0f71955cac4754a962c8acddd5f397b18fa9",
+      "after_sha256": "9e0ca791246f7222f5e04cb8c27a0e927a92156489ea24ac2e9c38e39ad98e16",
+      "change": "Remove exactly one EOF blank line; no code or expectation change."
+    },
+    {
+      "path": "tests/ifpmic-control-effects.test.mjs",
+      "before_sha256": "6bcded6f4c4acf49b864761aad2593dd95750f194d73ffdf427698b991a65421",
+      "after_sha256": "2d78bdbfb0923911e8a5675677623b6905bc2155dffed34d6bb494acde2e579e",
+      "change": "Remove exactly one EOF blank line; no code or expectation change."
+    }
+  ],
+  "previous_checkpoint": {
+    "kind": "controls_K3_development_checkpoint",
+    "mode": "mock",
+    "recorded_at": "2026-10-15T16:25:20.661551+00:00",
+    "base_commit": "e7fdc88",
+    "requirements": [
+      "REQ-02",
+      "REQ-05",
+      "REQ-06",
+      "REQ-08",
+      "REQ-10",
+      "REQ-11",
+      "REQ-12",
+      "REQ-13",
+      "REQ-14"
+    ],
+    "scope": "Intermediate K3 cancel/bridge/remote protocol implementation, not final K1-K8 controls acceptance, deployment or actual AT evidence.",
+    "implementation": [
+      "Explicit end acknowledgements bound to admitted logical/coordinator/child execution; exact typed proof references including late arrivals",
+      "Exact pending drain and execution/bridge release/remote terminal sets before QUIESCENT; canonical transitions only before CANCELED",
+      "Late typed child/SQE/notes/infra facts use known execution registry and shadow validation; never reopen canceled or terminal steps",
+      "Pinned synthetic artifact registry and original BridgeCommand16 fields; numeric result times/nullable tuples, identity/lease/fencing and immutable terminal history",
+      "Typed UNKNOWN quarantine can reconcile/release; unscoped generic quarantine remains sticky, with observed operation_state separately retained",
+      "Remote intent/query/terminal and immutable provider history; receipt effect count independent of P25/P26 progression, including late effects after cancel",
+      "Explicit replay_policy_version=mock:ifpmic:controls:v1; original59 catalog events remain at historical catalog version"
+    ],
+    "candidate_source_sha256_before": {
+      "src/ifpmic/controls.mjs": "6e450eedcec82f14f8dff6dee0beaeabf1107109208b86a94899c1a758ed56ec",
+      "src/ifpmic/control-effects.mjs": "10992aa30b30e42b303b51b5345a1c3990a3adfad76541d6961ed69131c5b4fd",
+      "src/ifpmic/replay.mjs": "2788390417a515374c664d79301375a893f85423f06623c1a20f5e7e89de7ca2",
+      "src/ifpmic/protocols.mjs": "8e8954d8be6557689e18a4c7143476697c0dbfdddb1746c25ac73937cd31726f",
+      "src/ifpmic/exceptions.mjs": "981388a22a54694a7bab2a0ff0aa0b13a9435f41fb7e15b53a3bd12298268020",
+      "src/ifpmic/replay.d.mts": "a46d0d0e973dbee9468d84ff286acf34a39a009bd6449e4ee8556906fef5d5ff",
+      "tests/ifpmic-controls.test.mjs": "9e968ed1bfa2d137166f47caf60208f06b1eccaa6ddc7294cec08c58f278b146",
+      "tests/ifpmic-control-cancel.test.mjs": "2118c72b4d9d29f5a419d5ebbc1a0f71955cac4754a962c8acddd5f397b18fa9",
+      "tests/ifpmic-control-effects.test.mjs": "6bcded6f4c4acf49b864761aad2593dd95750f194d73ffdf427698b991a65421",
+      "tests/ifpmic-exceptions.test.mjs": "44864eb0788ef9f4b48bae873de6e49fcc21581f3917e33d1205e631f48f9794",
+      "README.md": "36129852ae50e564c5fb7a0207c7ef164e375412963133d9ad24fadd6f3b295e",
+      "docs/ifpmic/V2-CONTROLS.md": "68bf08efc01b6f5ce924619c2af43dec375b59fc4216af6c27a0f669b44bb40b"
+    },
+    "candidate_source_sha256_after": {
+      "src/ifpmic/controls.mjs": "6e450eedcec82f14f8dff6dee0beaeabf1107109208b86a94899c1a758ed56ec",
+      "src/ifpmic/control-effects.mjs": "10992aa30b30e42b303b51b5345a1c3990a3adfad76541d6961ed69131c5b4fd",
+      "src/ifpmic/replay.mjs": "2788390417a515374c664d79301375a893f85423f06623c1a20f5e7e89de7ca2",
+      "src/ifpmic/protocols.mjs": "8e8954d8be6557689e18a4c7143476697c0dbfdddb1746c25ac73937cd31726f",
+      "src/ifpmic/exceptions.mjs": "981388a22a54694a7bab2a0ff0aa0b13a9435f41fb7e15b53a3bd12298268020",
+      "src/ifpmic/replay.d.mts": "a46d0d0e973dbee9468d84ff286acf34a39a009bd6449e4ee8556906fef5d5ff",
+      "tests/ifpmic-controls.test.mjs": "9e968ed1bfa2d137166f47caf60208f06b1eccaa6ddc7294cec08c58f278b146",
+      "tests/ifpmic-control-cancel.test.mjs": "2118c72b4d9d29f5a419d5ebbc1a0f71955cac4754a962c8acddd5f397b18fa9",
+      "tests/ifpmic-control-effects.test.mjs": "6bcded6f4c4acf49b864761aad2593dd95750f194d73ffdf427698b991a65421",
+      "tests/ifpmic-exceptions.test.mjs": "44864eb0788ef9f4b48bae873de6e49fcc21581f3917e33d1205e631f48f9794",
+      "README.md": "36129852ae50e564c5fb7a0207c7ef164e375412963133d9ad24fadd6f3b295e",
+      "docs/ifpmic/V2-CONTROLS.md": "68bf08efc01b6f5ce924619c2af43dec375b59fc4216af6c27a0f669b44bb40b"
+    },
+    "candidate_source_pins_match": true,
+    "verification": [
+      {
+        "command": "npm test",
+        "exit_code": 0,
+        "tests": 324,
+        "pass": 324,
+        "fail": 0,
+        "skip": 0,
+        "duration_ms": 59151.060534,
+        "log": "docs/ifpmic/evidence/v2/controls-k3-unit.txt"
+      },
+      {
+        "command": "npm run build",
+        "exit_code": 0,
+        "log": "docs/ifpmic/evidence/v2/controls-k3-build.txt"
+      },
+      {
+        "command": "npm run ifpmic:plugin:build",
+        "exit_code": 0,
+        "log": "docs/ifpmic/evidence/v2/controls-k3-plugin-build.txt"
+      }
+    ],
+    "TC": {
+      "agent": "/root/verification_plan",
+      "K1_K2_tests": 14,
+      "K3_cancel_tests": 8,
+      "K3_effects_tests": 15,
+      "focused_total": 37,
+      "legacy_adjustment": "Only the assigned original receipt-idempotency case changed: count1 immediately on observed receipt; keep P25 RUNNING, canonical receipt, conflict rejection and exact duplicate count1.",
+      "prior_cycle_remote_scope": "Direct isolated module fixture only: no canonical workflow path returning from P25 to a prior cycle was found. No invented replay path or actual AT-17 proof."
+    },
+    "historical_comparison": {
+      "path": "docs/ifpmic/evidence/v2/controls-receipt-policy-diff.json",
+      "checks": 438,
+      "errors": 0,
+      "scenario_streams": 59,
+      "fixed_checkpoint_comparisons_including_starts": 345,
+      "receipt_intervals": 17,
+      "receipt_prefix_comparisons": 34,
+      "old_zero_to_candidate_one": 17,
+      "old_one_to_candidate_one": 17,
+      "scope": "All event/checkpoint stream bytes and fixed checkpoint aggregates; receipt-affected prefixes only, not every nonreceipt prefix."
+    },
+    "originals": {
+      "imported_files": 17,
+      "uploads": 2,
+      "hashes": "unchanged"
+    },
+    "diagnostics": [
+      {
+        "source": "worker implementation main review",
+        "issues": [
+          "Accepted effect handler incorrectly returned null",
+          "Result times used ISO instead of planned numeric ms",
+          "Terminal content changes were not fully rejected",
+          "Typed quarantine missing device projection / generic observed state conflated with sticky quarantine",
+          "Remote repeated/new query terminal lineage and no-effect history conflict handling required fixes"
+        ],
+        "action": "Main fixed and TC covers identity/state/terminal/late effects."
+      },
+      {
+        "source": "independent review",
+        "issue": "An end ack with null prior ref could remain valid after typed proof appeared.",
+        "action": "Require exact typed reference for existing ends too; late unbound proof marks reconciliation/invalidation.",
+        "withdrawn_finding": "Identical terminal sequence repeats retain material canonical result by explicit approved plan; no code change."
+      },
+      {
+        "source": "first full unit run",
+        "result": "320/324 pass,4 fail",
+        "product_regression": "Three generic device operation_state values incorrectly overwritten with unknown; restored observed active/idle independently of sticky quarantine. Existing three TC unchanged.",
+        "TC_policy_adjustment": "One legacy count0 expectation updated to approved receipt-fact count1, with immediate RUNNING/count1 assertion."
+      }
+    ],
+    "evidence_sha256": {
+      "docs/ifpmic/evidence/v2/controls-k3-unit.txt": "1dbbf118b9487be5d17a60544a5efbaba0b6b231f5f2efa241aab026e768b312",
+      "docs/ifpmic/evidence/v2/controls-k3-unit-failed-attempt-1.txt": "07fed39e2e9d4ff387ffb8b894b6334da9fe815591e3499447d946a63df3c364",
+      "docs/ifpmic/evidence/v2/controls-k3-build.txt": "ccc08035e74204f5420a933df5f1713796fe1b6b678551e223b3298bb3829bfc",
+      "docs/ifpmic/evidence/v2/controls-k3-plugin-build.txt": "e8264a2643dc26ecfa01fbf7bfa695f449060da8c0c52e4727f8f0fe7f680da8",
+      "docs/ifpmic/evidence/v2/controls-receipt-policy-diff.json": "1f94d11057059c0e49ce408bf1117e8661621f442d9a9985df0238aa5724110c",
+      "docs/ifpmic/evidence/v2/controls-receipt-policy-diff-attempt-1.json": "b2de4b81bda2d6a057f2871fba5f97a47288d7944cf16db05cec8f5b4e825859",
+      "docs/ifpmic/evidence/v2/controls-receipt-policy-diff-attempt-2.json": "8ffbfeb048727bf3d84380465edd5a83342651754ef4cb1e366e0275db42d624"
+    },
+    "local_diagnostic_logs_sha256": {
+      "workflow-artifacts/verification/V2/controls/k3-attempt-1.log": "f947d9a0f9c6e3b0f4d0774fbaf341f3a4a46eb87156e8cc9a031173134c5dcb",
+      "workflow-artifacts/verification/V2/controls/k3-attempt-2.log": "dd02791e014cadceff94900d723cb1bba789136381102022697adecc9a4e3e9e",
+      "workflow-artifacts/verification/V2/controls/k3-attempt-3.log": "4f0d5715e16839f70aa21547083b89c2ebc5810e1b29301bfed34c413462368c",
+      "workflow-artifacts/verification/V2/controls/k3-attempt-4.log": "d1f8ffb9b1aec6b24e270170431efd14b70b21161113ceec4605a7e4b150fe50",
+      "workflow-artifacts/verification/V2/controls/k3-attempt-5.log": "b1b1fe6387d96f8c18f754cbe4991a82d7216a5354401b1efa4e97e1f17ee68b",
+      "workflow-artifacts/verification/V2/controls/k3-attempt-6.log": "b2640a92dfd1988b53eb0bd0127c824f3bfea5cb8596a3e92442385ef44b0d30",
+      "workflow-artifacts/verification/V2/controls/k3-build-attempt-1.log": "94cf7900295ea0eb6a659a8d2aabe5b1e6c04141275b7f0bfadd47d4a06e251a",
+      "workflow-artifacts/verification/V2/controls/k3-build-attempt-2.log": "ccc08035e74204f5420a933df5f1713796fe1b6b678551e223b3298bb3829bfc",
+      "workflow-artifacts/verification/V2/controls/k3-effects-attempt-1.log": "81fab59f75f0bf9579fc9ace43c6e763e6afbee726c95cd87ff2230e101b56bb",
+      "workflow-artifacts/verification/V2/controls/k3-effects-attempt-10.log": "e02f06d5f690735fe1d6716c830e22d20019553bca2cbb4ac1625f51e9a4b51c",
+      "workflow-artifacts/verification/V2/controls/k3-effects-attempt-2.log": "668654dd4e1f6d8e2e09f8cfbc4a4286387177af27e3950291478358cebc2662",
+      "workflow-artifacts/verification/V2/controls/k3-effects-attempt-3.log": "49808a0e958acb1db5eb3d35085a54d44369c57e67f1d0bb6cd0c1dd11762947",
+      "workflow-artifacts/verification/V2/controls/k3-effects-attempt-4.log": "a28fa02027fe5cd8a1b1c6fee00d910e452bb4d5902ce81dc0ccbb73d84cc99d",
+      "workflow-artifacts/verification/V2/controls/k3-effects-attempt-5.log": "d468a75cb3216c999ad2eb6d68fc3fa5528fa1f9cb82522cd01374113158648c",
+      "workflow-artifacts/verification/V2/controls/k3-effects-attempt-6.log": "5a449b6ab510258eccd25c5b516a6e1603190d299de48e799399156b4971920e",
+      "workflow-artifacts/verification/V2/controls/k3-effects-attempt-7.log": "a9d073d588443992eccd4eb7ecf0e0819fd8690f8c15aa5b5bdeacfa44811ba1",
+      "workflow-artifacts/verification/V2/controls/k3-effects-attempt-8.log": "0c7c424a7b6b0e5e56e0d4c701fc3e69e6423b40a800acea15791255fda3c6e5",
+      "workflow-artifacts/verification/V2/controls/k3-effects-attempt-9.log": "ac0b54c5838a02c85e4e5de1a8511a48d317cabe51221bf364d3ae8ba85442ae",
+      "workflow-artifacts/verification/V2/controls/k3-effects-debug.log": "62c8f5487a8e8a4918829531e6eba4580b37f47e369da436bf0e16dafc185c8c",
+      "workflow-artifacts/verification/V2/controls/k3-effects-main-diagnostic.log": "bebeb291d38dd09507df8f0d1e2bdff320116a73c48212bbfd89b6a9bff23462",
+      "workflow-artifacts/verification/V2/controls/k3-exceptions-target-attempt-1.log": "bd0ff9769c5632b48a60e5685b3a5ef58dcd2fac9ccb5e09c678115962424d6c",
+      "workflow-artifacts/verification/V2/controls/k3-integration-regression-1.log": "a33794fbb8153b1eb50edeec53f05498ad19c6496108e8a2cd179af899b7836f",
+      "workflow-artifacts/verification/V2/controls/k3-main-attempt-1.log": "ee0ae0a80d071d405d9540d157d7e8dc9a9ff3e66b4f364bfb1a5dee95ef0d23",
+      "workflow-artifacts/verification/V2/controls/k3-main-attempt-2.log": "39b2c2ad43f6b99d2805fdf291f8740f1f0df38c4c1db9cb86e912dd805b9865",
+      "workflow-artifacts/verification/V2/controls/k3-plugin-build-attempt-1.log": "e8264a2643dc26ecfa01fbf7bfa695f449060da8c0c52e4727f8f0fe7f680da8",
+      "workflow-artifacts/verification/V2/controls/k3-plugin-build-attempt-2.log": "e8264a2643dc26ecfa01fbf7bfa695f449060da8c0c52e4727f8f0fe7f680da8",
+      "workflow-artifacts/verification/V2/controls/k3-receipt-policy-final.log": "325944e96b3fd7cf21fe05ba454357789aa478182d91c150e5c3a6c7f75a85f1",
+      "workflow-artifacts/verification/V2/controls/k3-unit-attempt-1.log": "07fed39e2e9d4ff387ffb8b894b6334da9fe815591e3499447d946a63df3c364",
+      "workflow-artifacts/verification/V2/controls/k3-unit-attempt-2.log": "1dbbf118b9487be5d17a60544a5efbaba0b6b231f5f2efa241aab026e768b312"
+    },
+    "limitations": [
+      "No K7 eleven-command/source-dist-host frozen gate or full controls acceptance claim from these twelve input pins and three commands.",
+      "Remaining K4 all-event shape/time/ID/alias/deepfreeze and infrastructure/notes-only control.retry boundary matrix must be completed.",
+      "Fifteen new catalog scenarios for total74, control UI and standalone/native host capture verification remain required.",
+      "Complete K5-K8 gate, performance, independent source/image/evidence acceptance remain required.",
+      "B01-B13, real permissions/outbox/Temporal/restart, runtime controls, physical locks and publisher/device/quality execution and actual AT remain unverified."
+    ],
+    "actual_AT_status": "not_executed",
+    "controls_complete": false,
+    "full_goal_complete": false,
+    "verdict": "intermediate_checks_passed"
+  },
+  "previous_review": {
+    "kind": "independent_controls_K3_checkpoint_audit",
+    "recorded_at": "2026-10-15T16:27:53.531008+00:00",
+    "mode": "mock",
+    "reviewer": "/root/controls_cancel_review",
+    "checkpoint": "docs/ifpmic/evidence/v2/controls-k3-development-checkpoint.json",
+    "checkpoint_sha256": "159ffa49fd5b8330dd51454b82c75085921ef86f5d336dbaa9ed58b8e92a9857",
+    "source_pins": 12,
+    "before_after_pins_match": true,
+    "unit": {
+      "tests": 324,
+      "pass": 324,
+      "fail": 0,
+      "skip": 0
+    },
+    "build": "pass",
+    "plugin_build": "pass",
+    "receipt_policy": {
+      "checks": 438,
+      "fixed_checkpoint_states": 345,
+      "original_streams": 59,
+      "compared_receipt_prefixes": 34,
+      "changed_old0_to_new1": 17,
+      "unchanged_old1_to_new1": 17
+    },
+    "findings": [
+      {
+        "issue": "Nullable end ack could survive a newly present typed proof without exact binding",
+        "result": "fixed; exact reference now required, late mismatch reconciles and invalidates barrier"
+      },
+      {
+        "issue": "Identical terminal observation sequence repeat looked inconsistent",
+        "result": "withdrawn; specific approved plan preserves canonical material sequence and reconciliation for identical repeats"
+      },
+      {
+        "issue": "Generic observed active/idle conflated with sticky device quarantine",
+        "result": "fixed and original regression cases retained; generic observation is independent of quarantine latch"
+      }
+    ],
+    "reviewed_limits": [
+      "Twelve inputs and three command results, not full K7 global source/dist/host freeze",
+      "Only receipt-affected prefixes and all fixed checkpoints compared; not every nonreceipt prefix",
+      "K4 boundaries/retry notes, fifteen scenarios/control UI/browser captures, K5-K8 final gate and real B/AT remain required"
+    ],
+    "files_mutated_by_reviewer": [],
+    "actual_AT_status": "not_executed",
+    "verdict": "accepted_intermediate_checkpoint_only",
+    "full_controls_acceptance": false,
+    "goal_complete": false
+  },
+  "previous_command_logs": {
+    "workflow-artifacts/verification/V2/controls/k3-unit-attempt-2.log": "1dbbf118b9487be5d17a60544a5efbaba0b6b231f5f2efa241aab026e768b312",
+    "workflow-artifacts/verification/V2/controls/k3-build-attempt-2.log": "ccc08035e74204f5420a933df5f1713796fe1b6b678551e223b3298bb3829bfc",
+    "workflow-artifacts/verification/V2/controls/k3-plugin-build-attempt-2.log": "e8264a2643dc26ecfa01fbf7bfa695f449060da8c0c52e4727f8f0fe7f680da8"
+  },
+  "previous_pass_is_not_final_candidate": true,
+  "recovery": "Preserve all raw attempt logs; remove EOF blank lines only, freeze and rerun all three commands; regenerate pinned reports and independently re-audit.",
+  "previous_published_copies": {
+    "docs/ifpmic/evidence/v2/controls-k3-unit.txt": {
+      "preserved_as": "docs/ifpmic/evidence/v2/controls-k3-preformat-unit.txt",
+      "sha256": "1dbbf118b9487be5d17a60544a5efbaba0b6b231f5f2efa241aab026e768b312"
+    },
+    "docs/ifpmic/evidence/v2/controls-k3-build.txt": {
+      "preserved_as": "docs/ifpmic/evidence/v2/controls-k3-preformat-build.txt",
+      "sha256": "ccc08035e74204f5420a933df5f1713796fe1b6b678551e223b3298bb3829bfc"
+    },
+    "docs/ifpmic/evidence/v2/controls-k3-plugin-build.txt": {
+      "preserved_as": "docs/ifpmic/evidence/v2/controls-k3-preformat-plugin-build.txt",
+      "sha256": "e8264a2643dc26ecfa01fbf7bfa695f449060da8c0c52e4727f8f0fe7f680da8"
+    }
+  },
+  "previous_failed_log_copy": {
+    "original_path": "docs/ifpmic/evidence/v2/controls-k3-unit-failed-attempt-1.txt",
+    "lossless_json_wrapper": "docs/ifpmic/evidence/v2/controls-k3-unit-failed-attempt-1.json",
+    "recovery": "Decode the JSON text field as UTF-8 to restore exactly the original .txt bytes and its recorded SHA256."
+  }
+}
