@@ -1,0 +1,32 @@
+{
+  "kind": "narrow_child_architecture_advice",
+  "recorded_at": "2026-10-15T14:31:44.048406+00:00",
+  "advisor_agent": "/root/child_control_architecture",
+  "advisor_role": "senior_sol",
+  "scope": "P12 coordinator lifetime and mandatory child/proof migration; no implementation or full repo review",
+  "evidence_gathered_by": [
+    "/root/verification_plan",
+    "/root/paperclip_ui_extension",
+    "/root"
+  ],
+  "recommendation": [
+    "P12-specific purpose=p12_coordination code-dev execution; preserve completed P11 and P12.owner=tc",
+    "Coordinator only invokes/collects/integrates test patch; production changes and TC ownership bypass forbidden",
+    "Explicit parent/task/request/assignment/child result/current input/serial integration binding before P12 success",
+    "Mandatory for every reached non-reused P12; generic direct TC completion is not sufficient",
+    "Preserve historical synthetic traces as previous version; new version must explicitly author mock proofs and cannot call them retroactive runtime evidence",
+    "Stable coordinator task identity vs execution IDs; child retries/new executions must not attach to arbitrary new parent",
+    "Failed child retries use new P12 attempt; completed agent does not imply workflow/gate completion"
+  ],
+  "originals": [
+    "design-v1/specs/agent-contract.json",
+    "design-v1/specs/workflow.v1.json",
+    "design-v1/specs/state-contract.json",
+    "IFPMIC_AX_Design_v1.docx §7/§9/§13"
+  ],
+  "implementation_decisions_owned_by_main": [
+    "Detailed mock event schema, typed question/answer/checkpoint continuation, integration conflict proof and visible catalog version are explicit plan extensions requiring independent review",
+    "No actual runtime/worktree/auth/device/publisher execution or real AT approval"
+  ],
+  "waivers": []
+}
