@@ -1,6 +1,7 @@
 import { replayScenario } from './replay.mjs';
 import { mockHumanTaskId } from './protocols.mjs';
 import { createRoutingScenarios } from './routing-scenarios.mjs';
+import { enrichSqeCatalog } from './sqe-catalog.mjs';
 
 const requirements = ['REQ-02', 'REQ-05', 'REQ-08', 'REQ-10', 'REQ-12', 'REQ-14'];
 function freeze(value) {
@@ -260,5 +261,5 @@ export function createScenarioCatalog(workflow, stateContract) {
     f.emit('device', 'P25', { mode: 'mock', now_ms: 10000, last_heartbeat_ms: 10000, lease_expires_ms: 60000, operation_state: 'idle' }); f.mark('idle', 'idle에도 격리 유지');
     f.query('found', 1); f.mark('blocked', '원격 found로 격리 해제 금지');
   });
-  return freeze([...catalog, ...createRoutingScenarios(workflow)]);
+  return freeze(enrichSqeCatalog([...catalog, ...createRoutingScenarios(workflow)]));
 }

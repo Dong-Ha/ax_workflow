@@ -1,0 +1,50 @@
+{
+  "kind": "final_staging_whitespace_candidate_replacement",
+  "recorded_at": "2026-10-15T13:33:14.514867+00:00",
+  "previous_passing_gate": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T13-27-10-441Z/gate.json",
+  "previous_gate_sha256": "3a151b7ef03eb76ea488a35c6faf37f0f4bd6afef7a88c43e09510137e6a256f",
+  "previous_fingerprint": "30ec894cd8de71be8348ac22bb10f6a7194dea1008e42996e9c2e99083ab5080",
+  "change": "Removed exactly one redundant trailing newline at EOF from newly added tests/ifpmic-sqe.test.mjs after git diff --cached --check identified it. Test semantics unchanged. Prior unstaged diff check did not include the untracked file.",
+  "previous_test_sha256": "dab4e87994c32d039a98ae003c0792de5a46bc212e82090551516d35ad10ae16",
+  "replacement_test_sha256": "9683be9b08995d8bbacbb20149faac559245c133fff8cb12fb1d78ada3f87d29",
+  "verification_policy": "Repeat frozen11-command gate and current-candidate supplemental capture; previous pass is retained history, not approval of replacement.",
+  "replacement_first_gate": {
+    "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T13-32-51-094Z/gate.json",
+    "sha256": "f37275af919feb80e0edbdc91c598e1d0ea837cee5115168ae65c6f5c42afc63",
+    "verdict": "fail",
+    "unit_counts": {
+      "tests": 258,
+      "pass": 257,
+      "fail": 1,
+      "skipped": 0
+    },
+    "finding": "Existing unsafe-URL rejection test child exceeded its unchanged 5-second timeout while the complete test suite ran. All SQE tests passed; failed run preserved.",
+    "log": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T13-32-51-094Z/unit.log",
+    "log_sha256": "f6275d8279fc90da8e18292f05b2b2a71b22b2387637ce5b667bfb8fbf956d61"
+  },
+  "targeted_followup": {
+    "command": "node --test --test-name-pattern='Paperclip host runner rejects unsafe base URLs' tests/ifpmic-contract.test.mjs",
+    "exit_code": 0,
+    "tests": 1,
+    "pass": 1,
+    "skipped": 0,
+    "observation": "All six unsafe URL cases passed with original5-second per-child timeout; no implementation/test changes. Terminal result observed; no standalone raw log retained."
+  },
+  "replacement_final_gate": {
+    "path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T13-33-47-779Z/gate.json",
+    "sha256": "fa491fe23fd9c7fc05dfe340250b59c8348268719d7a0d4f8f05b01d6a8b7047",
+    "fingerprint": "3eb5e9df2ac63cb1469151e68dd707d943f0e52f68b8c5c6246135d779862a13",
+    "verdict": "pass",
+    "commands": 11,
+    "unit_counts": {
+      "tests": 258,
+      "pass": 258,
+      "fail": 0,
+      "skipped": 0
+    },
+    "independent_acceptance": "sqe-review.json",
+    "source_difference_from_previous_pass": [
+      "tests/ifpmic-sqe.test.mjs"
+    ]
+  }
+}

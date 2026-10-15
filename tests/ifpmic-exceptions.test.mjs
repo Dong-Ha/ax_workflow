@@ -19,6 +19,9 @@ const fixedOrder = [
   'P22', 'P23', 'P24', 'X02', 'X03', 'P25', 'P26',
 ];
 const operationKey = 'mock:release-action:ifpmic-ax-v1';
+const sqeCases = ['mock:sqe:case:boot', 'mock:sqe:case:function'];
+const sqeProfile = { profile_ref: 'mock:sqe:profile', profile_version: 'mock:sqe:profile:v1',
+  script_version: 'mock:sqe:script:v1', parser_version: 'mock:sqe:parser:v1' };
 
 function harness(id) {
   const events = [];
@@ -75,17 +78,43 @@ function manifestPayload(h) {
   };
 }
 
+function addMockSqe(h, id) {
+  const result = h.current(), p22 = result.steps.P22;
+  const prefix = `mock:${h.id}:sqe:c${result.cycle}:a${p22.attempt}`;
+  if (id === 'P22') {
+    const context = { actor: 'mock:sqe', candidate_fingerprint: result.candidate_fingerprint, ...sqeProfile,
+      rule_version: result.rule_version, device_id: `${prefix}:device`, bridge_id: `${prefix}:bridge`,
+      image_hash: `${prefix}:image`, expected_image_identity: `${prefix}:boot`, evidence_id: `${prefix}:context` };
+    h.add('sqe_context', id, context);
+    h.add('sqe_result', id, { actor: 'mock:sqe', execution_mode: 'bridge_mock', task_id: null, performer_id: 'mock:sqe',
+      candidate_fingerprint: result.candidate_fingerprint, ...sqeProfile, rule_version: result.rule_version,
+      device_id: context.device_id, bridge_id: context.bridge_id, image_hash: context.image_hash,
+      observed_device_id: context.device_id, observed_image_identity: context.expected_image_identity,
+      started_at_ms: 1000, finished_at_ms: 2000, execution_status: 'completed', parser_status: 'complete', exit_code: 0,
+      cases: sqeCases.map(case_id => ({ case_id, outcome: 'PASS' })), stdout_artifact_id: `${prefix}:stdout`,
+      stderr_artifact_id: `${prefix}:stderr`, result_artifact_id: `${prefix}:result-artifact`, evidence_id: `${prefix}:result` });
+  } else {
+    const current = h.current();
+    h.add('sqe_report', id, { actor: 'mock:sqe', candidate_fingerprint: current.candidate_fingerprint,
+      result_evidence_id: current.steps.P22.sqe_result.evidence_id, result_execution_id: current.steps.P22.execution_id,
+      profile_ref: sqeProfile.profile_ref, profile_version: sqeProfile.profile_version,
+      report_artifact_id: `${prefix}:report-artifact`, report_link_id: `${prefix}:report-link`, evidence_id: `${prefix}:report` });
+  }
+}
+
 function runNormalStep(h, id) {
   h.add('step', id, { state: 'READY' });
   h.add('step', id, { state: 'RUNNING' });
   const node = workflow.nodes.find(item => item.id === id);
-  if (node.owner === 'system') {
+  if (id === 'P22' || id === 'P23') {
+    addMockSqe(h, id);
+  } else if (node.owner === 'system') {
     const result = h.current(), step = result.steps[id];
     h.add('measurement', id, { evidence: {
       mode: 'mock', job_id: result.job_id, step_id: id, cycle: result.cycle,
       attempt: step.attempt, execution_id: step.execution_id,
       candidate_fingerprint: result.candidate_fingerprint, rule_version: result.rule_version,
-      evidence_id: `mock:evidence:gate-${id}`, complete: true,
+      evidence_id: `mock:evidence:gate-${id}:c${result.cycle}:a${step.attempt}`, complete: true,
     }, verdict: 'PASS' });
   } else if (node.owner === 'human') {
     if (id === 'X03') {

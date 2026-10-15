@@ -104,3 +104,5 @@ npm run test:browser
 모의 재생 화면 검증은 `npm run test:ifpmic:replay`(offline)와 `npm run test:ifpmic:replay:host`(기존 격리 host, GET-only 준비 확인)로 실행합니다. `npm run ifpmic:verify:ui`는 원본 파일과 격리 host를 전제로 단위·build·plugin·원본 검증·V1/AX 회귀 및 두 재생 browser 검증을 수행하고 소스/빌드/화면/사건 journal 해시를 `workflow-artifacts/verification/V2/ui/gates/`에 고정합니다. [UI 검증 범위](./docs/ifpmic/V2-UI.md)의 후속 프로토콜과 전체 V2/실제 AT 검증은 별도로 남아 있습니다.
 
 재사용·정책 면제·무변경 종료의 합성 사건 형식은 [routing 프로토콜](./docs/ifpmic/V2-ROUTING.md)에 정의합니다. `node scripts/verify-ifpmic-routing.mjs`는 전용 검사를 포함한 전체 단위·build·plugin-build와 소스 해시를 기록합니다. 새 화면 시나리오와 독립 검증 기준은 [routing 화면 계획](./docs/ifpmic/V2-ROUTING-UI.md)에 정의합니다. 실제 정책·장비·배포는 후속 검증 대상입니다.
+
+비면제 SQE의 P22 결과 수집·P23 보고·P24 판정은 [필수 SQE 증거 계획](./docs/ifpmic/V2-SQE.md)에 따라 별도 근거를 요구합니다. 과거 41개 사건은 별도 출처의 합성 SQE 증거만 삽입해 이관하며 원래 사건·checkpoint를 복원해 검증합니다. `npm run ifpmic:verify:ui`는 이관 ledger(`sqe-migration.json`)와 전체 UI 회귀를 기록합니다. 새 수동/시험 전용 화면과 실제 장비·정책·AT는 후속 범위입니다.

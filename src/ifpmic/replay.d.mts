@@ -13,6 +13,8 @@ export interface ReplayStep {
   attempt: number; execution_id: string; evidence_ids: readonly string[]; retry_due_ms: number | null;
   failure_evidence_id: string | null; failure_candidate_fingerprint: string | null;
   failure_outcome: string | null; infrastructure_error: boolean;
+  sqe_context: MockSqeContext | null; sqe_manual_task: MockManualTask | null; sqe_result: MockSqeResult | null; sqe_report: MockSqeReport | null;
+  sqe_execution_mode: 'bridge_mock' | 'manual' | null; gate_sqe_report_evidence_id: string | null;
   skip_basis: MockSkipBasis | null; unchanged_analysis: MockUnchangedAnalysis | null; exemption_report: MockExemptionReport | null;
 }
 export interface ReplayDevice {
@@ -23,7 +25,28 @@ export interface ReplayRelease {
   publication_count: number; approved: boolean; rejection: string | null; receipt_id: string | null;
   manifest: null | { manifest_id: string; digest: string; candidate_fingerprint: string; rule_version: string;
     destination: string; notes_hash: string; evidence_bundle: string; cycle: number; attempt: number;
-    execution_id: string; gate_evidence_ids: readonly string[]; gate_dispositions: readonly string[] };
+    execution_id: string; gate_evidence_ids: readonly string[]; gate_dispositions: readonly string[]; sqe_report_evidence_id: string | null };
+}
+export interface MockSqeContext {
+  actor: string; candidate_fingerprint: string; profile_ref: string; profile_version: string; script_version: string;
+  parser_version: string; rule_version: string; device_id: string; bridge_id: string; image_hash: string;
+  expected_image_identity: string; evidence_id: string; cycle: number; attempt: number; execution_id: string;
+}
+export interface MockManualTask {
+  actor: string; task_id: string; assignee: string; performer_id: string; reason_id: string; requested_at_ms: number;
+  evidence_id: string; candidate_fingerprint: string; cycle: number; attempt: number; execution_id: string;
+}
+export interface MockSqeResult extends Omit<MockSqeContext, 'expected_image_identity'> {
+  execution_mode: 'bridge_mock' | 'manual'; task_id: string | null; performer_id: string;
+  observed_device_id: string; observed_image_identity: string; started_at_ms: number; finished_at_ms: number;
+  execution_status: 'completed' | 'infrastructure_error'; parser_status: 'complete' | 'error'; exit_code: number | null;
+  cases: readonly { case_id: string; outcome: 'PASS' | 'FAIL' | 'ERROR' | 'INCONCLUSIVE' }[];
+  stdout_artifact_id: string; stderr_artifact_id: string; result_artifact_id: string;
+}
+export interface MockSqeReport {
+  actor: string; candidate_fingerprint: string; result_evidence_id: string; result_execution_id: string;
+  profile_ref: string; profile_version: string; report_artifact_id: string; report_link_id: string; evidence_id: string;
+  cycle: number; attempt: number; execution_id: string; execution_mode: 'bridge_mock' | 'manual';
 }
 export interface MockRouteProof {
   actor: string; evidence_id: string; plan_version: string; candidate_fingerprint: string; requirements_version: string;

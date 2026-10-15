@@ -1,0 +1,74 @@
+{
+  "kind": "independent_partial_sqe_core_acceptance",
+  "decision": "accepted_mandatory_mock_sqe_core_catalog_migration_existing_ui_regression",
+  "recorded_at": "2026-10-15T13:37:38.915084+00:00",
+  "implementer_agent": "/root",
+  "test_author_agent": "/root/verification_plan",
+  "reviewer_agent": "/root/paperclip_ui_extension",
+  "reviewer_role": "worker_luna; read-only independent plan/source/TC/gate/image audit",
+  "plan": "../../V2-SQE.md",
+  "plan_sha256": "329f74ac551b57b3ec80337a10f89035c375bf27f3e95e0568f61d8d0ddc07cb",
+  "plan_review": "sqe-plan-review.json",
+  "candidate_fingerprint": "3eb5e9df2ac63cb1469151e68dd707d943f0e52f68b8c5c6246135d779862a13",
+  "report": "sqe-verification.json",
+  "report_sha256": "fa491fe23fd9c7fc05dfe340250b59c8348268719d7a0d4f8f05b01d6a8b7047",
+  "source_hash_matches": 125,
+  "command_exits_zero": 11,
+  "command_logs_hash_matched": 11,
+  "gate_reports_hash_matched": 46,
+  "build_assets_hash_matched": 6,
+  "plugin_assets_hash_matched": 4,
+  "published_artifacts": "sqe-published-artifacts.json",
+  "published_artifact_copies_hash_matched": 23,
+  "checks": {
+    "unit": "258/258; fail=0, skipped=0",
+    "impacted_tc_diagnostic": "69/69",
+    "original_scenarios_restored": 41,
+    "inserted_sqe_proofs_applied": 38,
+    "unit_observation_samples": 6,
+    "standalone_browser": "15/15",
+    "native_host_browser": "16/16",
+    "browser_writes": 0,
+    "external_requests": 0,
+    "page_errors": 0,
+    "console_errors": 0,
+    "source_changed": [],
+    "reviewer_reran_tests": false
+  },
+  "approved_scope": [
+    "Mandatory current context/result/report/derived judgment for every nonexempt SQE path",
+    "Typed manual submission and single-bundle proof, P22/P23/P24 retry boundaries and stale proof rejection verified in unit tests",
+    "Original41 events and checkpoints restored after removing explicit independent-source SQE proofs; old25/32 baselines retained",
+    "Existing41-scenario standalone/native Paperclip UI and AX regression; no new dedicated manual/trial UI claim"
+  ],
+  "reviewed_test_sha256": {
+    "tests/ifpmic-catalog.test.mjs": "74c038309b2a1953a38878a19e741a23c6e34aca8f94163a1c9692f52a803e8a",
+    "tests/ifpmic-sqe.test.mjs": "9683be9b08995d8bbacbb20149faac559245c133fff8cb12fb1d78ada3f87d29"
+  },
+  "diagnostic": "sqe-attempt-1.json",
+  "visual_supplement": {
+    "report": "sqe-mobile-capture.json",
+    "report_sha256": "e20b2f32855b56211bf4192329d2a5a743cd59961e678cdb79b4d93c79c9dbc0",
+    "image": "sqe-host-p24-detail-375-1800.png",
+    "image_sha256": "fceda288e8ef0479fb68fc01cf17583846d3449972904cbbd58554b699e2b7c2",
+    "script_snapshot": "sqe-mobile-capture-script.txt",
+    "script_sha256": "f1ae5300800d6ac8c3a7e55adccfe90878a03f9c9f520330ea8a7e6add3a49f2",
+    "reviewer_opened_image": true,
+    "viewport": {
+      "width": 375,
+      "height": 1800
+    },
+    "browser_get_count": 80,
+    "non_get_requests": 0,
+    "external_requests": 0,
+    "errors": 0,
+    "resolution": "Original obscured host mobile fullPage image preserved. Additional actual viewport screenshot shows P24 detail without fixed/sticky overlay; 9/9 hit points, identical125 source/6 dist/4 plugin hashes before-after. Only approvedGateSha256 differs from prior approved capture script. Capture-only correction; frozen 11-command gate unchanged."
+  },
+  "not_approved": [
+    "New dedicated manual/trial UI or scenario catalog",
+    "Full V2, child-agent, pause/resume/cancel controls",
+    "B01-B13, real policy/profile/device/AT/runtime/publisher execution"
+  ],
+  "waivers": [],
+  "formatting_candidate_history": "sqe-final-formatting-attempt.json"
+}

@@ -6,6 +6,7 @@ export function newStepRecord(id, cycle, attempt = 1, state = 'PENDING') {
     attempt, execution_id: `mock:${id}:c${cycle}:a${attempt}`, evidence_ids: [],
     failure_evidence_id: null, failure_candidate_fingerprint: null, failure_outcome: null,
     retry_due_ms: null, infrastructure_error: false, skip_basis: null, unchanged_analysis: null, exemption_report: null,
+    sqe_context: null, sqe_manual_task: null, sqe_result: null, sqe_report: null, sqe_execution_mode: null, gate_sqe_report_evidence_id: null,
   };
 }
 
@@ -13,7 +14,7 @@ export function mockHumanTaskId(id, cycle, attempt) {
   return `mock:task:${id}:c${cycle}${attempt === 1 ? '' : `:a${attempt}`}`;
 }
 
-export function createObservationProtocols({ result, graph, submissions, transitionAllowed, mockId, policy, exemptionCurrent = () => false, expectedPlanVersion = () => 'mock:plan:v1' }) {
+export function createObservationProtocols({ result, graph, submissions, transitionAllowed, mockId, policy, exemptionCurrent = () => false, sqeGateCurrent = () => false, expectedPlanVersion = () => 'mock:plan:v1' }) {
   const passRoutes = new Map(graph.edges.filter(edge => edge.kind === 'pass').map(edge => [edge.from, edge.to]));
   const gateIds = ['P16', 'P18', 'P20', 'P24'];
   const digestBindings = new Map();
@@ -26,7 +27,7 @@ export function createObservationProtocols({ result, graph, submissions, transit
     const step = result.steps[id];
     return exemptionCurrent(id) || step.state === 'SUCCEEDED' && step.cycle === result.cycle && step.gate_verdict === 'PASS'
       && step.gate_complete && step.gate_candidate_fingerprint === result.candidate_fingerprint
-      && step.gate_rule_version === result.rule_version && mockId(step.gate_evidence_id);
+      && step.gate_rule_version === result.rule_version && mockId(step.gate_evidence_id) && (id !== 'P24' || sqeGateCurrent());
   });
   const releaseCurrent = () => result.release.manifest && currentGates()
     && result.release.manifest.cycle === result.cycle
@@ -34,6 +35,7 @@ export function createObservationProtocols({ result, graph, submissions, transit
     && result.release.manifest.rule_version === result.rule_version
     && result.release.manifest.attempt === result.steps.X02.attempt
     && result.release.manifest.execution_id === result.steps.X02.execution_id
+    && result.release.manifest.sqe_report_evidence_id === result.steps.P24.gate_sqe_report_evidence_id
     && gateIds.every((id, index) => result.steps[id].gate_evidence_id === result.release.manifest.gate_evidence_ids[index]
       && result.steps[id].gate_verdict === result.release.manifest.gate_dispositions[index]);
   const manifestMatches = payload => releaseCurrent()
@@ -173,7 +175,8 @@ export function createObservationProtocols({ result, graph, submissions, transit
       if (fields.some(key => !mockId(payload[key]))) return 'invalid_manifest';
       const binding = { cycle: result.cycle, attempt: step.attempt, execution_id: step.execution_id,
         gate_evidence_ids: gateIds.map(id => result.steps[id].gate_evidence_id),
-        gate_dispositions: gateIds.map(id => result.steps[id].gate_verdict) };
+        gate_dispositions: gateIds.map(id => result.steps[id].gate_verdict),
+        sqe_report_evidence_id: result.steps.P24.gate_sqe_report_evidence_id };
       const signature = JSON.stringify([fields.map(key => payload[key]), binding]);
       if ((digestBindings.has(payload.digest) && digestBindings.get(payload.digest) !== signature)
           || (manifestBindings.has(payload.manifest_id) && manifestBindings.get(payload.manifest_id) !== signature)) return 'manifest_binding_conflict';

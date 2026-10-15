@@ -9,12 +9,20 @@ import { replayScenario } from '../src/ifpmic/replay.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const specs = path.join(root, 'docs/ifpmic/design-v1/specs');
-const [workflow, stateContract, priorCatalogEvidence, routingUiBaseline] = await Promise.all([
+const [workflow, stateContract, priorCatalogEvidence, routingUiBaseline, sqeBaseline] = await Promise.all([
   readFile(path.join(specs, 'workflow.v1.json'), 'utf8').then(JSON.parse),
   readFile(path.join(specs, 'state-contract.json'), 'utf8').then(JSON.parse),
   readFile(path.join(root, 'docs/ifpmic/evidence/v2/ui-catalog.json'), 'utf8').then(JSON.parse),
   readFile(path.join(root, 'docs/ifpmic/evidence/v2/routing-ui-baseline-32.json'), 'utf8').then(JSON.parse),
+  readFile(path.join(root, 'docs/ifpmic/evidence/v2/sqe-baseline-41.json'), 'utf8').then(JSON.parse),
 ]);
+
+const originalCatalogView = scenario => {
+  const events = scenario.events.filter(event => event.source_id !== 'mock:sqe-catalog');
+  const checkpoints = scenario.checkpoints.map(point => ({ ...point,
+    cursor: scenario.events.slice(0, point.cursor).filter(event => event.source_id !== 'mock:sqe-catalog').length }));
+  return { events, checkpoints };
+};
 
 const expectedScenarioIds = [
   'happy-path', 'human-wait', 'human-wait-oss', 'debug-failure', 'review-failure',
@@ -27,6 +35,47 @@ const expectedScenarioIds = [
   'routing-reuse', 'routing-new-hw', 'routing-exempt', 'routing-pilot-denied',
   'routing-no-change', 'routing-no-change-denied', 'routing-candidate', 'routing-replan', 'routing-metadata',
 ];
+const sqeProofCountOracle = {
+  'happy-path': 3, 'human-wait': 0, 'human-wait-oss': 0, 'debug-failure': 0, 'review-failure': 0,
+  'sam-failure': 0, 'tem-failure': 0, 'static-failure': 0, 'sqe-failure': 3, 'oss-failure': 0,
+  'oss-design-change': 0, 'plan-rejection': 0, 'release-reject-code': 3, 'release-reject-design': 3,
+  'metadata-recovery': 3, 'metric-missing': 0, 'stale-result': 0, 'stale-candidate': 0,
+  'stale-approval': 3, 'duplicate-events': 0, 'retry-limit': 0, 'cycle-limit': 0,
+  'device-boundaries': 1, 'flash-unknown': 1, 'notes-only': 3, 'spec-question-wait': 0,
+  'spec-question-resolution': 0, 'spec-question-retry': 0, 'spec-question-repeat': 0,
+  'remote-uncertainty': 3, 'remote-recovery': 3, 'remote-device-quarantine': 3,
+  'routing-reuse': 3, 'routing-new-hw': 0, 'routing-exempt': 0, 'routing-pilot-denied': 0,
+  'routing-no-change': 0, 'routing-no-change-denied': 0, 'routing-candidate': 3,
+  'routing-replan': 0, 'routing-metadata': 0,
+};
+
+function expectedSqeInsertions(originalEvents) {
+  const expected = [];
+  const contexts = new Map();
+  const results = new Map();
+  let candidate = 'mock:candidate:A';
+  for (const anchor of originalEvents) {
+    if (anchor.type === 'candidate') candidate = anchor.payload.candidate_fingerprint;
+    if (anchor.type === 'step' && anchor.step_id === 'P22' && anchor.payload.state === 'RUNNING') {
+      const proof = { type: 'sqe_context', anchor, side: 'after', candidate };
+      contexts.set(`${anchor.cycle}:${anchor.attempt}`, proof);
+      expected.push(proof);
+    }
+    if (anchor.type === 'step' && anchor.step_id === 'P22' && anchor.payload.state === 'SUCCEEDED') {
+      const context = contexts.get(`${anchor.cycle}:${anchor.attempt}`);
+      if (context) {
+        const proof = { type: 'sqe_result', anchor, side: 'before', candidate: context.candidate };
+        results.set(anchor.cycle, proof);
+        expected.push(proof);
+      }
+    }
+    if (anchor.type === 'step' && anchor.step_id === 'P23' && anchor.payload.state === 'SUCCEEDED') {
+      const result = results.get(anchor.cycle);
+      if (result) expected.push({ type: 'sqe_report', anchor, side: 'before', candidate });
+    }
+  }
+  return expected;
+}
 
 // Literal checkpoint oracle from docs/ifpmic/V2-UI.md. start/end are required
 // for every scenario and all other IDs are scenario-local observations.
@@ -315,8 +364,9 @@ test('fixed 41-scenario mock catalog inventory, frozen values and checkpoint IDs
   for (const id of expectedScenarioIds.slice(0, 25)) {
     const scenario = catalog.find(item => item.id === id);
     assert.ok(priorFixtures.has(id), `previous catalog manifest contains ${id}`);
-    assert.equal(createHash('sha256').update(JSON.stringify(scenario.events)).digest('hex'), priorFixtures.get(id),
-      `${id} event fixture bytes remain identical to previously accepted 25-scenario catalog`);
+    const normalized = originalCatalogView(scenario);
+    assert.equal(createHash('sha256').update(JSON.stringify(normalized.events)).digest('hex'), priorFixtures.get(id),
+      `${id} original event bytes restore the previously accepted 25-scenario catalog after removing only SQE insertions`);
   }
   assert.equal(routingUiBaseline.scenario_count, 32);
   assert.equal(routingUiBaseline.scenarios.length, 32);
@@ -324,10 +374,78 @@ test('fixed 41-scenario mock catalog inventory, frozen values and checkpoint IDs
   for (const scenario of catalog.slice(0, 32)) {
     const baseline = baseline32.get(scenario.id);
     assert.ok(baseline, `${scenario.id} exists in frozen 32-scenario baseline`);
-    assert.equal(createHash('sha256').update(JSON.stringify(scenario.events)).digest('hex'), baseline.events_sha256,
+    const normalized = originalCatalogView(scenario);
+    assert.equal(createHash('sha256').update(JSON.stringify(normalized.events)).digest('hex'), baseline.events_sha256,
       `${scenario.id} original event bytes preserved`);
-    assert.equal(createHash('sha256').update(JSON.stringify(scenario.checkpoints)).digest('hex'), baseline.checkpoints_sha256,
+    assert.equal(createHash('sha256').update(JSON.stringify(normalized.checkpoints)).digest('hex'), baseline.checkpoints_sha256,
       `${scenario.id} original checkpoint bytes preserved`);
+  }
+  assert.equal(sqeBaseline.scenario_count, 41);
+  assert.equal(sqeBaseline.scenarios.length, 41);
+  const baseline41 = new Map(sqeBaseline.scenarios.map(item => [item.id, item]));
+  assert.equal(baseline41.size, 41);
+  assert.deepEqual(Object.keys(sqeProofCountOracle).sort(), expectedScenarioIds.slice(0, 41).sort(),
+    'literal insertion-count oracle covers every migrated catalog scenario exactly once');
+  for (const scenario of catalog) {
+    const baseline = baseline41.get(scenario.id);
+    assert.ok(baseline, `${scenario.id} exists in approved pre-SQE baseline`);
+    const normalized = originalCatalogView(scenario);
+    assert.equal(createHash('sha256').update(JSON.stringify(normalized.events)).digest('hex'), baseline.events_sha256,
+      `${scenario.id} original event bytes are restored by removing only typed SQE-catalog source events`);
+    assert.deepEqual(normalized.checkpoints, baseline.checkpoints,
+      `${scenario.id} original checkpoint IDs, titles, ordering and cursors are exactly restored`);
+    assert.equal(createHash('sha256').update(JSON.stringify(normalized.checkpoints)).digest('hex'), baseline.checkpoints_sha256,
+      `${scenario.id} normalized checkpoint hash matches approved baseline`);
+    const inserted = scenario.events.filter(event => event.source_id === 'mock:sqe-catalog');
+    assert.equal(inserted.length, sqeProofCountOracle[scenario.id], `${scenario.id} has its fixed expected inserted proof count`);
+    assert.ok(inserted.every(event => ['sqe_context', 'sqe_result', 'sqe_report'].includes(event.type)),
+      `${scenario.id} migration adds only allowlisted SQE proof event types`);
+    assert.ok(scenario.events.filter(event => event.source_id !== 'mock:sqe-catalog').every(event => {
+      const originalIndex = normalized.events.indexOf(event);
+      return originalIndex >= 0;
+    }), `${scenario.id} preserves every original event object in order`);
+
+    const anchors = expectedSqeInsertions(normalized.events);
+    assert.equal(inserted.length, anchors.length, `${scenario.id} inserted proof count matches original workflow anchors`);
+    const actualByIndex = inserted.map(event => ({ event, index: scenario.events.indexOf(event) })).sort((a, b) => a.index - b.index);
+    assert.deepEqual(actualByIndex.map(({ event }) => event.type), anchors.map(row => row.type),
+      `${scenario.id} SQE proof event order follows P22/P23 anchors`);
+    const evidenceIds = new Set();
+    const artifactIds = new Set();
+    for (const [index, { event, index: eventIndex }] of actualByIndex.entries()) {
+      const expected = anchors[index];
+      const anchorIndex = scenario.events.indexOf(expected.anchor);
+      assert.equal(event.job_id, expected.anchor.job_id, `${scenario.id}/${event.type} keeps source job`);
+      assert.equal(event.step_id, expected.anchor.step_id, `${scenario.id}/${event.type} binds its workflow node`);
+      assert.equal(event.cycle, expected.anchor.cycle, `${scenario.id}/${event.type} binds original cycle`);
+      assert.equal(event.attempt, expected.anchor.attempt, `${scenario.id}/${event.type} binds original attempt`);
+      assert.equal(event.execution_id, expected.anchor.execution_id, `${scenario.id}/${event.type} binds execution`);
+      if (event.type !== 'sqe_context') assert.equal(event.payload.candidate_fingerprint, expected.candidate,
+        `${scenario.id}/${event.type} binds the original candidate`);
+      else assert.equal(event.payload.candidate_fingerprint, expected.candidate,
+        `${scenario.id}/context binds candidate at P22 start`);
+      assert.equal(eventIndex, expected.side === 'after' ? anchorIndex + 1 : anchorIndex - 1,
+        `${scenario.id}/${event.type} is inserted at the exact authored anchor`);
+      assert.ok(event.source_seq > 0 && Number.isSafeInteger(event.source_seq), `${scenario.id} inserted source sequence is valid`);
+      const eId = event.payload.evidence_id;
+      assert.ok(typeof eId === 'string' && !evidenceIds.has(eId), `${scenario.id} proof evidence IDs are unique`);
+      evidenceIds.add(eId);
+      for (const key of ['stdout_artifact_id', 'stderr_artifact_id', 'result_artifact_id', 'report_artifact_id', 'report_link_id']) {
+        const value = event.payload[key];
+        if (value !== undefined) {
+          assert.ok(!artifactIds.has(value), `${scenario.id} artifact ID ${key} is unique`);
+          artifactIds.add(value);
+        }
+      }
+    }
+    assert.ok(inserted.every((event, index) => index === 0 || inserted[index - 1].source_seq < event.source_seq),
+      `${scenario.id} inserted proof source sequence is strictly increasing`);
+    const replayed = replayScenario(scenario, workflow, stateContract);
+    for (const event of inserted) {
+      const row = replayed.timeline.find(item => item.event_id === event.event_id);
+      assert.ok(row, `${scenario.id}/${event.type} is represented in replay timeline`);
+      assert.equal(row.applied, true, `${scenario.id}/${event.type} is current usable evidence, not stale/inactive residue`);
+    }
   }
   assert.deepEqual(workflow, originalWorkflow, 'catalog builder did not mutate workflow input');
   assert.deepEqual(stateContract, originalContract, 'catalog builder did not mutate state contract input');

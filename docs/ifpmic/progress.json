@@ -113,6 +113,15 @@
           "independent_acceptance": "evidence/v2/routing-ui-review.json",
           "visual_supplement": "evidence/v2/routing-ui-mobile-capture.json",
           "candidate_fingerprint": "7c66377c7b19c01f82ce6a7c39a87818910111c3401a5ba8b6535395a828031f"
+        },
+        {
+          "id": "mandatory_mock_sqe_proofs_and_catalog_migration",
+          "status": "verified",
+          "scope": "All nonexempt P22/P23/P24 require typed SQE context/result/report/derived judgment; manual submission/retry unit coverage, original41 events/checkpoints restored by source removal; existing41 UI regression only, no new manual/trial UI or real AT.",
+          "evidence": "evidence/v2/sqe-verification.json",
+          "independent_acceptance": "evidence/v2/sqe-review.json",
+          "candidate_fingerprint": "3eb5e9df2ac63cb1469151e68dd707d943f0e52f68b8c5c6246135d779862a13",
+          "visual_supplement": "evidence/v2/sqe-mobile-capture.json"
         }
       ]
     },
@@ -331,12 +340,12 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "V2: implement manual-device/P22 trial details, child-agent and pause/resume/cancel protocols with independent plans, catalog/UI and full V2 gate. B01-B13 and real AT remain pending.",
+  "next_step": "V2: add manual/trial catalog and dedicated UI under independent plans, then child-agent and pause/resume/cancel protocols and full V2 gate. B01-B13 and real AT remain pending.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",
     "Approved Bedrock/Claude runtime profile"
   ],
   "publication_policy": "Only authorized git repository documentation, source and synthetic verification summaries/screenshots; never runtime credentials or application logs.",
-  "updated_at": "2026-10-15T12:52:50.403373+00:00"
+  "updated_at": "2026-10-15T13:37:38.915814+00:00"
 }

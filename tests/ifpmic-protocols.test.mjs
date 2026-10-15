@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { replayScenario } from '../src/ifpmic/replay.mjs';
+import { mockSqeProfile } from '../src/ifpmic/sqe-profile.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const specs = path.join(root, 'docs/ifpmic/design-v1/specs');
@@ -34,6 +35,7 @@ const nodeOrder = [
   'P11', 'P12', 'P13', 'P14', 'P15', 'P16', 'P17', 'P18', 'P19', 'P20', 'P21',
   'P22', 'P23', 'P24', 'X02', 'X03', 'P25', 'P26',
 ];
+const requiredSqeCases = ['mock:sqe:case:boot', 'mock:sqe:case:function'];
 
 function harness(id = 'protocol-fixture') {
   const events = [];
@@ -62,9 +64,10 @@ function harness(id = 'protocol-fixture') {
   return { id, events, current, add };
 }
 
-function measurementPayload(h, step_id, verdict, evidenceId = `mock:evidence:${step_id}`) {
+function measurementPayload(h, step_id, verdict, evidenceId) {
   const result = h.current();
   const step = result.steps[step_id];
+  evidenceId ??= `mock:evidence:${step_id}:c${result.cycle}:a${step.attempt}`;
   return {
     evidence: {
       mode: 'mock', job_id: result.job_id, step_id, cycle: result.cycle,
@@ -108,9 +111,49 @@ function manifestPayload(h) {
   };
 }
 
-function runStep(h, step_id) {
+function completeMockSqe(h, step_id, failCase = false) {
+  const result = h.current();
+  const step = result.steps.P22;
+  const prefix = `mock:${h.id}:sqe:c${result.cycle}:a${step.attempt}`;
+  const context = {
+    actor: 'mock:sqe', candidate_fingerprint: result.candidate_fingerprint,
+    profile_ref: mockSqeProfile.profile_ref, profile_version: mockSqeProfile.profile_version,
+    script_version: mockSqeProfile.script_version, parser_version: mockSqeProfile.parser_version,
+    rule_version: result.rule_version, device_id: `${prefix}:device`, bridge_id: `${prefix}:bridge`,
+    image_hash: `${prefix}:image`, expected_image_identity: `${prefix}:boot`, evidence_id: `${prefix}:context`,
+  };
+  if (step_id === 'P22') {
+    h.add('sqe_context', 'P22', context);
+    h.add('sqe_result', 'P22', {
+      actor: 'mock:sqe', execution_mode: 'bridge_mock', task_id: null, performer_id: 'mock:sqe',
+      candidate_fingerprint: result.candidate_fingerprint,
+      profile_ref: context.profile_ref, profile_version: context.profile_version,
+      script_version: context.script_version, parser_version: context.parser_version,
+      rule_version: result.rule_version, device_id: context.device_id, bridge_id: context.bridge_id,
+      image_hash: context.image_hash, observed_device_id: context.device_id,
+      observed_image_identity: context.expected_image_identity,
+      started_at_ms: 1000, finished_at_ms: 2000, execution_status: 'completed', parser_status: 'complete',
+      exit_code: failCase ? 1 : 0,
+      cases: requiredSqeCases.map((case_id, index) => ({ case_id, outcome: failCase && index === 1 ? 'FAIL' : 'PASS' })),
+      stdout_artifact_id: `${prefix}:stdout`, stderr_artifact_id: `${prefix}:stderr`,
+      result_artifact_id: `${prefix}:result-artifact`, evidence_id: `${prefix}:result`,
+    });
+  } else {
+    const p22 = result.steps.P22;
+    h.add('sqe_report', 'P23', {
+      actor: 'mock:sqe', candidate_fingerprint: result.candidate_fingerprint,
+      result_evidence_id: p22.sqe_result.evidence_id, result_execution_id: p22.execution_id,
+      profile_ref: mockSqeProfile.profile_ref, profile_version: mockSqeProfile.profile_version,
+      report_artifact_id: `mock:${h.id}:sqe:report-artifact:c${result.cycle}`,
+      report_link_id: `mock:${h.id}:sqe:report-link:c${result.cycle}`,
+      evidence_id: `mock:${h.id}:sqe:report:c${result.cycle}`,
+    });
+  }
+}
+
+function runStep(h, step_id, { sqeFail = false } = {}) {
   const node = workflow.nodes.find(item => item.id === step_id);
-  if (node.owner === 'system') return systemStep(h, step_id);
+  if (node.owner === 'system' && !['P22', 'P23'].includes(step_id)) return systemStep(h, step_id);
   if (node.owner === 'human') {
     if (step_id === 'X03') {
       h.add('step', step_id, { state: 'READY' });
@@ -131,6 +174,7 @@ function runStep(h, step_id) {
   }
   h.add('step', step_id, { state: 'READY' });
   h.add('step', step_id, { state: 'RUNNING' });
+  if (step_id === 'P22' || step_id === 'P23') completeMockSqe(h, step_id, sqeFail);
   if (step_id === 'X02') h.add('manifest', step_id, manifestPayload(h));
   if (step_id === 'P25') {
     const result = h.current();
@@ -144,18 +188,20 @@ function runStep(h, step_id) {
   return h.add('step', step_id, { state: 'SUCCEEDED' });
 }
 
-function advanceTo(h, target) {
-  for (const step_id of nodeOrder) {
+function advanceTo(h, target, runOptions = {}) {
+  const current = h.current().current_step;
+  const start = Math.max(0, nodeOrder.indexOf(current));
+  for (const step_id of nodeOrder.slice(start)) {
     if (step_id === 'END') break;
     if (step_id === target) return h.current();
-    runStep(h, step_id);
+    runStep(h, step_id, runOptions);
   }
   throw new Error(`Fixture builder did not reach ${target}`);
 }
 
 function driveFailure(h, routeCase) {
   const { from, decision, outcome } = routeCase;
-  advanceTo(h, from);
+  advanceTo(h, from, { sqeFail: from === 'P24' });
   if (from === 'P13' || from === 'P14') {
     h.add('step', from, { state: 'READY' });
     h.add('step', from, { state: 'RUNNING' });
@@ -403,6 +449,7 @@ test('unsafe infra operations, invalid clocks, non-monotonic clocks and fourth a
 test('manifest IDs and digests remain bound to a single immutable mock manifest observation', () => {
   const h = harness('manifest-binding');
   advanceTo(h, 'X02');
+  assert.equal(h.current().current_step, 'X02', `fresh recovery reached X02; tail=${JSON.stringify(h.current().timeline.slice(-8))}`);
   h.add('step', 'X02', { state: 'READY' });
   h.add('step', 'X02', { state: 'RUNNING' });
   const manifest = manifestPayload(h);
@@ -558,6 +605,7 @@ test('manifest observation cannot be reused across cycles even when candidate an
   assert.equal(cycle2.release.manifest, null);
 
   advanceTo(h, 'X02');
+  assert.equal(h.current().current_step, 'X02', `fresh recovery reached X02; tail=${JSON.stringify(h.current().timeline.slice(-8))}`);
   h.add('step', 'X02', { state: 'READY' });
   h.add('step', 'X02', { state: 'RUNNING' });
   const reusedOldObservation = h.add('manifest', 'X02', {

@@ -75,3 +75,9 @@ TC가 독립적인 25개 끝 상태와 checkpoint oracle, 실제 host/offline br
 `V2-ROUTING-UI.md`의 독립 승인 후 기존 32개 events/checkpoints 해시를 고정하고 새 routing 시나리오 9개를 추가한다. 별도 합성 fixture 모듈은 replay 결과를 읽어 결정을 만들지 않는다. local 확인과 X01 승인을 분리하고 원래 cycle/후보/승인 실행을 표시하며 현재 권한을 비교한다. 선택 상세는 생략 근거·별도 분석·SQE 미수행 보고와 측정 완료 여부를 표시한다. NO_CHANGE는 사람 확인 뒤에만 전용 패널을 만들고 manifest 처분과 과거 계획/품질 처분을 구분한다.
 
 TC의 41개 literal endpoint/checkpoint oracle, 기존 32개 사건/checkpoint SHA 보존, standalone/native-host 주요 경계와 375/1440px 캡처, 11명령 전체 UI gate 및 독립 증빙 감사로 수용한다. 실제 정책/장비/AT와 전체 V2는 계속 미완료다.
+
+## 필수 SQE 증거와 기존 카탈로그 이관
+
+`V2-SQE.md`의 독립 승인에 따라 모든 비면제 P22/P23/P24에서 현재 결과·보고서·규칙 판정 참조를 요구한다. 고정 합성 profile의 두 필수 사례는 실제 사례 수나 기준이 아니다. P22의 수집 완료는 품질 PASS와 다르고, P23은 실패/불완전 결과도 작업 내 보고서로 남기며 P24가 PASS/FAIL/ERROR/INCONCLUSIVE를 구분한다. manual_request는 사람 대기로 이동하고 배정된 수동 결과를 기록해 READY로 돌아간다. 실제 장비 조작·격리 해제·점유·실행 또는 인증을 구현한 것으로 표시하지 않는다.
+
+기존 41개 원래 사건/체크포인트는 `sqe-baseline-41.json`으로 보존한다. 별도 source의 명시적 SQE proof만 삽입하고 TC가 이를 제거했을 때 원래 SHA와 checkpoint cursor가 복원되는지 검증한다. 과거의 사건 byte 불변 수용을 새 실행의 검증으로 재사용하지 않는다. 전용 수동/시험 unit와 전체 단위/11명령 UI gate를 새로운 고정 후보에서 실행하며, 별도 migration ledger와 보고/manifest 참조를 기록한다. 새 수동/trial panel·시나리오·전용 화면 검증, child/control 및 전체 V2·B/실 AT는 남는다.

@@ -1,0 +1,27 @@
+{
+  "kind": "sqe_source_review_failure_diagnostic",
+  "recorded_at": "2026-10-15T13:12:36.026241+00:00",
+  "reviewer_agent": "/root/paperclip_ui_extension",
+  "classification": "Implementation defect identified before fixed gate",
+  "finding": "Generic step FAILED could terminate P22/P23 without result/report or pending manual-task submission, outside planned infrastructure retry and P24 quality failure routes.",
+  "pre_fix_sqe_sha256": "0f8bc25a7f61f341e7e2090e689cda0f1080f15899dccb34b06b15872898b9d3",
+  "reviewer_reported_reproduction": "P22 RUNNING with sqe_context then raw step FAILED was applied and job became FAILED.",
+  "reproduction_log_limit": "Reviewer read-only replay finding was reported in review messages; no separate pre-fix command log was retained.",
+  "recovery": "Block generic step FAILED at P22/P23/P24; require dedicated infra retry or complete P24 business_failure and original route. Preserve original state contract adjacency.",
+  "regression_requested": [
+    "P22 without/with context, pending manual WAITING_HUMAN, P23 and P24 raw FAILED rejected with unchanged business projection",
+    "Complete current P24 FAIL still takes P07 route"
+  ],
+  "post_fix_validation": "Final frozen 11-command gate passed; 258/258 unit tests with no skips, including independent raw FAILED regression. See sqe-verification.json; final independent acceptance recorded separately.",
+  "test_fixture_diagnostic": {
+    "summary_path": "workflow-artifacts/verification/V2/sqe/tc-attempt-1.json",
+    "summary_sha256": "4108dfb2e9ab130706f9105819d402267aa7107866dea1447652e6d04dbacaaf",
+    "classification": "TC fixture setup errors during mandatory proof migration",
+    "corrections": [
+      "Add required mock: prefix to opaque proof/artifact IDs",
+      "Use current_step when resuming a routed cycle and fresh per-cycle gate evidence IDs",
+      "Author explicit P22 FAIL case before requesting a P24 FAIL observation"
+    ],
+    "raw_log_limit": "Original 12-failure terminal output was not retained; separate summary records observed command/count and evidence limit."
+  }
+}

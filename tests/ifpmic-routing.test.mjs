@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { replayScenario } from '../src/ifpmic/replay.mjs';
+import { mockSqeProfile } from '../src/ifpmic/sqe-profile.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const specs = path.join(root, 'docs/ifpmic/design-v1/specs');
@@ -16,6 +17,7 @@ const reuseIds = ['P03', 'P04', 'P05', 'P06', 'P07', 'P08', 'P09', 'P10', 'P11',
 const policyPairs = [['P15', 'P16'], ['P17', 'P18'], ['P19', 'P20'], ['P22', 'P24']];
 const policyIds = ['P15', 'P17', 'P19', 'P21', 'P22'];
 const gates = ['P16', 'P18', 'P20', 'P24'];
+const requiredSqeCases = ['mock:sqe:case:boot', 'mock:sqe:case:function'];
 
 function harness(id = 'routing-fixture') {
   const events = [];
@@ -244,7 +246,7 @@ function passGate(h, id) {
       mode: 'mock', job_id: result.job_id, step_id: id, cycle: result.cycle,
       attempt: step.attempt, execution_id: step.execution_id,
       candidate_fingerprint: result.candidate_fingerprint, rule_version: result.rule_version,
-      evidence_id: `mock:evidence:${id}:candidate-${result.candidate_fingerprint.slice(-1)}`,
+      evidence_id: `mock:evidence:${id}:candidate-${result.candidate_fingerprint.slice(-1)}:c${result.cycle}:a${step.attempt}`,
       complete: true,
     },
     verdict: 'PASS',
@@ -257,7 +259,7 @@ function failGate(h, id) {
   h.add('step', id, { state: 'RUNNING' });
   const result = h.current();
   const step = result.steps[id];
-  const evidenceId = `mock:evidence:${id}:business-fail`;
+  const evidenceId = `mock:evidence:${id}:business-fail:c${result.cycle}:a${step.attempt}`;
   h.add('measurement', id, {
     evidence: {
       mode: 'mock', job_id: result.job_id, step_id: id, cycle: result.cycle,
@@ -274,6 +276,47 @@ function failGate(h, id) {
     outcome: 'business_fail', target: 'P07',
     candidate_fingerprint: failed.candidate_fingerprint,
     evidence_id: failed.steps[id].failure_evidence_id,
+  });
+}
+
+function collectSqeResult(h, failCase = false) {
+  const result = h.current();
+  const step = result.steps.P22;
+  const prefix = `mock:${h.id}:sqe:c${result.cycle}:a${step.attempt}`;
+  const context = {
+    actor: 'mock:sqe', candidate_fingerprint: result.candidate_fingerprint,
+    profile_ref: mockSqeProfile.profile_ref, profile_version: mockSqeProfile.profile_version,
+    script_version: mockSqeProfile.script_version, parser_version: mockSqeProfile.parser_version,
+    rule_version: result.rule_version, device_id: `${prefix}:device`, bridge_id: `${prefix}:bridge`,
+    image_hash: `${prefix}:image`, expected_image_identity: `${prefix}:boot`, evidence_id: `${prefix}:context`,
+  };
+  h.add('sqe_context', 'P22', context);
+  h.add('sqe_result', 'P22', {
+    actor: 'mock:sqe', execution_mode: 'bridge_mock', task_id: null, performer_id: 'mock:sqe',
+    candidate_fingerprint: result.candidate_fingerprint,
+    profile_ref: context.profile_ref, profile_version: context.profile_version,
+    script_version: context.script_version, parser_version: context.parser_version,
+    rule_version: result.rule_version, device_id: context.device_id, bridge_id: context.bridge_id,
+    image_hash: context.image_hash, observed_device_id: context.device_id,
+    observed_image_identity: context.expected_image_identity,
+    started_at_ms: 1000, finished_at_ms: 2000, execution_status: 'completed', parser_status: 'complete',
+    exit_code: failCase ? 1 : 0,
+    cases: requiredSqeCases.map((case_id, index) => ({ case_id, outcome: failCase && index === 1 ? 'FAIL' : 'PASS' })),
+    stdout_artifact_id: `${prefix}:stdout`, stderr_artifact_id: `${prefix}:stderr`,
+    result_artifact_id: `${prefix}:result-artifact`, evidence_id: `${prefix}:result`,
+  });
+}
+
+function publishSqeReport(h) {
+  const result = h.current();
+  const p22 = result.steps.P22;
+  h.add('sqe_report', 'P23', {
+    actor: 'mock:sqe', candidate_fingerprint: result.candidate_fingerprint,
+    result_evidence_id: p22.sqe_result.evidence_id, result_execution_id: p22.execution_id,
+    profile_ref: mockSqeProfile.profile_ref, profile_version: mockSqeProfile.profile_version,
+    report_artifact_id: `mock:${h.id}:sqe:report-artifact:c${result.cycle}`,
+    report_link_id: `mock:${h.id}:sqe:report-link:c${result.cycle}`,
+    evidence_id: `mock:${h.id}:sqe:report:c${result.cycle}`,
   });
 }
 
@@ -298,6 +341,8 @@ function completeAfterQuality(h, planVersion = 'mock:plan:v1') {
   for (const id of ['P22', 'P23']) {
     h.add('step', id, { state: 'READY' });
     h.add('step', id, { state: 'RUNNING' });
+    if (id === 'P22') collectSqeResult(h);
+    else publishSqeReport(h);
     h.add('step', id, { state: 'SUCCEEDED' });
   }
   passGate(h, 'P24');
@@ -890,6 +935,8 @@ test('P16 and P24 failures force a fresh P07 suffix and reject the prior global 
       for (const id of ['P22', 'P23']) {
         h.add('step', id, { state: 'READY' });
         h.add('step', id, { state: 'RUNNING' });
+        if (id === 'P22') collectSqeResult(h, true);
+        else publishSqeReport(h);
         h.add('step', id, { state: 'SUCCEEDED' });
       }
       routed = failGate(h, 'P24');

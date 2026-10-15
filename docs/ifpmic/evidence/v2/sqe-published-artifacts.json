@@ -1,0 +1,121 @@
+{
+  "kind": "published_synthetic_sqe_core_artifacts",
+  "gate_fingerprint": "3eb5e9df2ac63cb1469151e68dd707d943f0e52f68b8c5c6246135d779862a13",
+  "artifacts": [
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T13-33-47-779Z/sqe-unit-observations.json",
+      "path": "docs/ifpmic/evidence/v2/sqe-unit-observations.json",
+      "sha256": "8c7be81b5ebd830e5cf8971dabc78e51a999d97c9c4072d5e340d89bd8c96b97"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T13-33-47-779Z/ui-standalone-browser.json",
+      "path": "docs/ifpmic/evidence/v2/sqe-ui-standalone-browser.json",
+      "sha256": "853b51d24dd4259fbcb07dc6a580f5d6aa2022baba4578ed532f83ca6f60d0fd"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T13-33-47-779Z/standalone-routing-reuse-local-1440.png",
+      "path": "docs/ifpmic/evidence/v2/sqe-standalone-routing-reuse-local-1440.png",
+      "sha256": "42ed1f7f812894005ea33b98e9ef58914b2cbccda5e8d9bf31ca70ad24a36440"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T13-33-47-779Z/standalone-routing-exempt-exempt-1440.png",
+      "path": "docs/ifpmic/evidence/v2/sqe-standalone-routing-exempt-exempt-1440.png",
+      "sha256": "310aa415af0fc326d61ef5d759f6f0dbe807063c4e729791cac38ac50f0a71f0"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T13-33-47-779Z/standalone-routing-exempt-exempt-375.png",
+      "path": "docs/ifpmic/evidence/v2/sqe-standalone-routing-exempt-exempt-375.png",
+      "sha256": "ea880414ebc1e1501255d1fffde1c7c7caaa72cb2c19c105bac81b04808c3a7d"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T13-33-47-779Z/standalone-routing-no-change-closed-1440.png",
+      "path": "docs/ifpmic/evidence/v2/sqe-standalone-routing-no-change-closed-1440.png",
+      "sha256": "ba59f416ee693701da70d69e811b54f757dbbd70b145b6318a04cabf54a2c2e8"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T13-33-47-779Z/standalone-routing-no-change-closed-375.png",
+      "path": "docs/ifpmic/evidence/v2/sqe-standalone-routing-no-change-closed-375.png",
+      "sha256": "3eacec228200a5dbf40e842aa4845c5a8d04a7434249edd5555f7680d5d2912b"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T13-33-47-779Z/standalone-routing-candidate-blocked-1440.png",
+      "path": "docs/ifpmic/evidence/v2/sqe-standalone-routing-candidate-blocked-1440.png",
+      "sha256": "622ac34c67f1f202e2cdb10593f0f008c809b5758cea57003a2a5de2a3198c8e"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T13-33-47-779Z/standalone-routing-replan-replanned-1440.png",
+      "path": "docs/ifpmic/evidence/v2/sqe-standalone-routing-replan-replanned-1440.png",
+      "sha256": "18f6d6060f0eadb5f0f375c693cdb736b1e45e6b3365e28022a5547bf8023182"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T13-33-47-779Z/ui-host-browser.json",
+      "path": "docs/ifpmic/evidence/v2/sqe-ui-host-browser.json",
+      "sha256": "75445a2b21a9712542fd2222579e0479b90c0ff8ad0b0274927eb57abefa768e"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T13-33-47-779Z/host-routing-reuse-local-1440.png",
+      "path": "docs/ifpmic/evidence/v2/sqe-host-routing-reuse-local-1440.png",
+      "sha256": "6a68f84b9b58786bf819d4b322c172642166c2f6d41841ddae7f3f7b94e975a5"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T13-33-47-779Z/host-routing-exempt-exempt-1440.png",
+      "path": "docs/ifpmic/evidence/v2/sqe-host-routing-exempt-exempt-1440.png",
+      "sha256": "c526ab58fe2b065e544d2bca530c0c5194073f6bfa194f54006a1f9fa61392c1"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T13-33-47-779Z/host-routing-exempt-exempt-375.png",
+      "path": "docs/ifpmic/evidence/v2/sqe-host-routing-exempt-exempt-375.png",
+      "sha256": "f5565d08608ef77fad5cd38923bf3c48f6b9a497cb20960f436264deded1132a"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T13-33-47-779Z/host-routing-no-change-closed-1440.png",
+      "path": "docs/ifpmic/evidence/v2/sqe-host-routing-no-change-closed-1440.png",
+      "sha256": "b7966a82b6346b6ebfbcb57ffd3049d67640ce83f810dbe5534bf4b383f06611"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T13-33-47-779Z/host-routing-no-change-closed-375.png",
+      "path": "docs/ifpmic/evidence/v2/sqe-host-routing-no-change-closed-375.png",
+      "sha256": "3f5a7b2a59626db00852d0d625b3168c8ba39a859b227a7a84221620b8bff5cf"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T13-33-47-779Z/host-routing-candidate-blocked-1440.png",
+      "path": "docs/ifpmic/evidence/v2/sqe-host-routing-candidate-blocked-1440.png",
+      "sha256": "0052e194c53558ddfe3fa75f7ced4d171cbcb2291e6d8a26bf79eceb2f2b7b9c"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T13-33-47-779Z/host-routing-replan-replanned-1440.png",
+      "path": "docs/ifpmic/evidence/v2/sqe-host-routing-replan-replanned-1440.png",
+      "sha256": "b7a14c788375c12e12505fb38100c28e0ac17cea50299bca318e531838b643f0"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T13-33-47-779Z/ui-catalog.json",
+      "path": "docs/ifpmic/evidence/v2/sqe-ui-catalog.json",
+      "sha256": "e2d6e50cbe100b3602ddc2ddf68a9e172df6356ea3a0ea8305877885f9398064"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T13-33-47-779Z/ui-catalog-journal.json",
+      "path": "docs/ifpmic/evidence/v2/sqe-ui-catalog-journal.json",
+      "sha256": "9771aebeab4c5d1cbfa975abb12d82383f479e62884076399a7dba2f23146dec"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T13-33-47-779Z/ui-sqe-migration.json",
+      "path": "docs/ifpmic/evidence/v2/sqe-migration.json",
+      "sha256": "fc8a72eb819bfc5a4494e400b7a0c999327b98a8459c11475c4f4fc061c62114"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/sqe-capture-supplement/report.json",
+      "path": "docs/ifpmic/evidence/v2/sqe-mobile-capture.json",
+      "sha256": "e20b2f32855b56211bf4192329d2a5a743cd59961e678cdb79b4d93c79c9dbc0"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/sqe-capture-supplement/capture.mjs",
+      "path": "docs/ifpmic/evidence/v2/sqe-mobile-capture-script.txt",
+      "sha256": "f1ae5300800d6ac8c3a7e55adccfe90878a03f9c9f520330ea8a7e6add3a49f2"
+    },
+    {
+      "source": "workflow-artifacts/verification/V2/ui/sqe-capture-supplement/routing-exempt-p24-detail-375-1800.png",
+      "path": "docs/ifpmic/evidence/v2/sqe-host-p24-detail-375-1800.png",
+      "sha256": "fceda288e8ef0479fb68fc01cf17583846d3449972904cbbd58554b699e2b7c2"
+    }
+  ]
+}
