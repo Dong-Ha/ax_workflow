@@ -1,0 +1,85 @@
+{
+  "kind": "independent_controls_K0_plan_review",
+  "mode": "mock",
+  "recorded_at": "2026-10-15T15:47:55.348574+00:00",
+  "source_commit": "488d265",
+  "requirements": [
+    "REQ-02",
+    "REQ-05",
+    "REQ-06",
+    "REQ-08",
+    "REQ-10",
+    "REQ-11",
+    "REQ-12",
+    "REQ-13",
+    "REQ-14"
+  ],
+  "reviewed_file_sha256": {
+    "docs/ifpmic/V2-CONTROLS.md": "68bf08efc01b6f5ce924619c2af43dec375b59fc4216af6c27a0f669b44bb40b",
+    "docs/ifpmic/evidence/v2/controls-baseline-59.json": "ac5b2386b03738b4da8ea1cd93fa0dd1f46961d550d67b77fb35852289a79a78",
+    "docs/ifpmic/evidence/v2/controls-source-collection.json": "cb168ae5b724246522939c1ddc30a7857679c9e7848341b3779790b4b9565166",
+    "docs/ifpmic/evidence/v2/controls-design-review.json": "f358ae612b49112ad1d7ed5ab51e6ba1ee7fd4426069a2cc8563a32e82ef34e4",
+    "docs/ifpmic/evidence/v2/controls-artifact-registry.json": "d21fe891b822d383560f02d26e67c2a9c8319323409f3ed84ff6ce37f2bf36c5",
+    "docs/ifpmic/evidence/v2/controls-planning-verification.json": "57a76b8e73a86c34643cfe1af48ad6cc295314d6484895ff5c18f77e314393b5"
+  },
+  "reviewers": [
+    {
+      "agent": "/root/controls_plan_review",
+      "role": "independent plan reviewer",
+      "verdict": "approved",
+      "exact_plan_sha256": "68bf08efc01b6f5ce924619c2af43dec375b59fc4216af6c27a0f669b44bb40b",
+      "evidence": "Verified original API shape and cancel edges, artifact normalization and one immutable literal row/seven negatives; independently recomputed fixture digest and unchanged59 baseline."
+    },
+    {
+      "agent": "/root/verification_plan",
+      "role": "TC independent preflight",
+      "verdict": "approved",
+      "exact_plan_sha256": "68bf08efc01b6f5ce924619c2af43dec375b59fc4216af6c27a0f669b44bb40b",
+      "evidence": "Confirmed literal nullable/state, status/identity/admitted sets, revision and late-result oracle; independently recomputed 100-byte fixture SHA and registry/plan pins."
+    }
+  ],
+  "mock_fixture_sha256": "38a3b557f6c86100a0180fd612c57332aa650ee4cf43abe5e1674726c2bf165b",
+  "verification_plan_review": {
+    "stages": "K0-K8",
+    "each_stage": [
+      "purpose",
+      "target",
+      "method",
+      "responsible_agent",
+      "pass_criteria",
+      "expected_result",
+      "evidence",
+      "recovery_and_reverification"
+    ],
+    "coverage": [
+      "normal",
+      "exception",
+      "boundary",
+      "regression"
+    ],
+    "impact": "Global job-scope dispatch, revision and status/admission affect every reducer; entire 11-command gate mandatory for implementation, plus standalone/native host captures.",
+    "TC_responsibility": "Independent literal tests; code-dev implements/integrates. SAM/TEM/SQE/human approval boundaries preserved."
+  },
+  "verification": {
+    "planning_report": "docs/ifpmic/evidence/v2/controls-planning-verification.json",
+    "unchanged_catalog_regression": "12/12 pass; no skips",
+    "baseline": "59 exact event/checkpoint/order streams plus prior archive hash",
+    "original_sources": "13 current source hashes,17 imports,2 uploads unchanged"
+  },
+  "authorization_scope": "K0 plan approved; implementation may proceed through K1-K8 with independent TC and frozen final gate. No product acceptance or actual runtime/device/publisher action authorized by this record.",
+  "implementation_started": false,
+  "actual_AT_status": "not_executed",
+  "full_V2_complete": false,
+  "verdict": "approved_K0_only",
+  "remaining": [
+    "Implement all13 event contracts/admission/revision/retry/effect ledgers",
+    "Add15 literal scenarios for74 total and all UI observation/captures",
+    "K1-K8 unit/build/plugin/browser/gate and independent product acceptance",
+    "B01-B13 and all actual AT remain required; no source-status updates from mock evidence"
+  ],
+  "record_audit": {
+    "agent": "/root/controls_plan_review",
+    "verdict": "pass",
+    "scope": "Recomputed all six pinned file hashes; confirmed both exact-plan approvals and preserved rejection history; verified DECISIONS and verification scope do not claim implementation/full gate/actual AT completion."
+  }
+}

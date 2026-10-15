@@ -1,0 +1,28 @@
+{
+  "kind": "controls_K0_baseline_and_document_validation",
+  "mode": "mock",
+  "recorded_at": "2026-10-15T15:47:20.263Z",
+  "checks": {
+    "baseline_scenarios": 59,
+    "events_checkpoints_order": "pass",
+    "historical_archive_sha256": "pass",
+    "source_hashes": 13,
+    "imported_files": 17,
+    "original_uploads": 2
+  },
+  "regression": {
+    "command": "node --test tests/ifpmic-catalog.test.mjs tests/ifpmic-child-catalog.test.mjs",
+    "exit_code": 0,
+    "tests": 12,
+    "pass": 12,
+    "fail": 0,
+    "skip": 0,
+    "duration_ms": 4104.588409
+  },
+  "scope": "Documentation-only K0 planning and unchanged previous catalog; not control implementation or full V2/actual AT verification",
+  "broader_checks": {
+    "full_unit_build_plugin_browser_gate": "not_run",
+    "reason": "Only planning/evidence documents changed; no product, test, dependency or runner changes. Mandatory full 11-command gate remains K7 after controls implementation."
+  },
+  "verdict": "pass"
+}

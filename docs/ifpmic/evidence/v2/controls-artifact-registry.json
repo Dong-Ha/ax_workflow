@@ -1,0 +1,61 @@
+{
+  "kind": "controls_mock_artifact_registry_literal_oracle",
+  "version": "mock:ifpmic:controls:artifacts:v1",
+  "mode": "mock",
+  "rows": [
+    {
+      "candidate_fingerprint": "mock:cancel-flash-unknown:candidate:c1",
+      "image_hash_ref": "mock:cancel-flash-unknown:image:c1",
+      "image_sha256": "38a3b557f6c86100a0180fd612c57332aa650ee4cf43abe5e1674726c2bf165b",
+      "artifact_id": "mock:artifact:image:38a3b557f6c86100a0180fd612c57332aa650ee4cf43abe5e1674726c2bf165b",
+      "expected_image_identity": "mock:cancel-flash-unknown:boot:c1",
+      "device_id": "mock:cancel-flash-unknown:device",
+      "bridge_id": "mock:cancel-flash-unknown:bridge"
+    }
+  ],
+  "negative_cases": [
+    {
+      "id": "unknown-alias",
+      "field": "image_hash_ref",
+      "value": "mock:unknown:image:c1",
+      "expected": "reject_registry_binding"
+    },
+    {
+      "id": "other-candidate-same-alias",
+      "field": "candidate_fingerprint",
+      "value": "mock:cancel-flash-unknown:candidate:c2",
+      "expected": "reject_registry_binding"
+    },
+    {
+      "id": "wrong-artifact",
+      "field": "artifact_id",
+      "value": "mock:artifact:wrong-image",
+      "expected": "reject_registry_binding"
+    },
+    {
+      "id": "wrong-digest",
+      "field": "image_sha256",
+      "value": "0000000000000000000000000000000000000000000000000000000000000000",
+      "expected": "reject_registry_binding"
+    },
+    {
+      "id": "wrong-device",
+      "field": "device_id",
+      "value": "mock:other:device",
+      "expected": "reject_registry_binding"
+    },
+    {
+      "id": "wrong-bridge",
+      "field": "bridge_id",
+      "value": "mock:other:bridge",
+      "expected": "reject_registry_binding"
+    },
+    {
+      "id": "wrong-boot",
+      "field": "expected_image_identity",
+      "value": "mock:other:boot",
+      "expected": "reject_registry_binding"
+    }
+  ],
+  "scope": "Pinned synthetic bytes and aliases only; no actual firmware/artifact publication or device execution evidence."
+}

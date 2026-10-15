@@ -1,0 +1,62 @@
+{
+  "kind": "controls_architecture_advice_and_plan_diagnostics",
+  "mode": "mock",
+  "recorded_at": "2026-10-15T15:44:38.791738+00:00",
+  "source_commit": "488d265",
+  "first_draft_sha256": "dc02a64928cd8befcff7837d6fb1ac61bab44285f1516b518875a9ba1571c5c4",
+  "architecture_advisor": "/root/control_architecture",
+  "advisor_scope": "read-only narrow architecture advice after two Luna source collections; not implementation approval",
+  "architecture_advice": [
+    "Separate canonical step states, job control intent/frontier, and admitted execution/effect ledger; do not invent resume/cancel edges.",
+    "Pause admits only same-execution in-flight facts; collection can project an existing result/task but cannot integrate or dispatch.",
+    "Cancel needs explicit quiescence/fence/drain; preserve SUCCEEDED/FAILED steps; late facts use ledger, not old step success handlers.",
+    "Central fixed domain DTO comparison is acceptable for mock revision; cover rejected atomicity and long-trace performance.",
+    "control.retry must delegate both existing infrastructure deadlines/cap and typed P26 notes-only failure guards; do not infer notes failure from publication count.",
+    "Bind bridge identity before UNKNOWN; no retroactive clear of unscoped quarantine; remote receipt effects are distinct from P25 success."
+  ],
+  "first_reviews": [
+    {
+      "reviewer": "/root/verification_plan",
+      "role": "TC preflight",
+      "result": "rejected",
+      "blocking_findings": [
+        "Bridge nullable/state matrix missing",
+        "Execution-end identity/status mapping incomplete",
+        "Cancel closed sets and empty cases undefined",
+        "Fresh effectless cancel revision ambiguous",
+        "Late conflict/terminal policy ambiguous"
+      ]
+    },
+    {
+      "reviewer": "/root/controls_plan_review",
+      "role": "independent plan reviewer",
+      "result": "rejected",
+      "blocking_findings": [
+        "Original BridgeCommand deadline is string, artifact SHA/action prerequisites must be retained",
+        "Bridge nullable/state matrix missing",
+        "Cancel status-by-status edges and terminal conflict policy undefined",
+        "Receipt/status projection and actor-route-key equivalence undefined",
+        "Pause child human-task creation and resume per underlying state undefined"
+      ]
+    }
+  ],
+  "recovery": "Revise K0 plan before product/test implementation; independently re-review exact revised SHA; keep failed first review evidence.",
+  "product_implementation_started": false,
+  "implementation_approval": false,
+  "actual_AT_status": "not_executed",
+  "subsequent_diagnostics": [
+    {
+      "plan_sha256": "4a644a92cd07a73f37f2e435e141f0e363785c4960634578822a155c9cf2ffd7",
+      "TC": "approved",
+      "independent_reviewer": "rejected",
+      "finding": "Flash artifact ID incorrectly reused opaque image alias and had an unbound fixed SHA; require a distinct candidate-bound registry."
+    },
+    {
+      "plan_sha256": "7a6ed758c26ac6369dcb8abe14f5098dded4993487ce3062e4247588e3f13ae1",
+      "TC": "rejected",
+      "independent_reviewer": "approved",
+      "finding": "Registry normalization recipe alone lacks concrete pre-pinned literal rows for independent TC; add reviewed row and negative substitutions."
+    }
+  ],
+  "resolution": "Exact final plan and literal registry separately approved by both TC and independent reviewer in controls-plan-review.json; no product implementation yet."
+}
