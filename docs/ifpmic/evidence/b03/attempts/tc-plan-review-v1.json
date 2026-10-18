@@ -1,0 +1,77 @@
+{
+  "kind": "ifpmic.b03.tc-plan-review.v1",
+  "status": "approved_for_H0_and_H1_only_pending_independent_review",
+  "reviewer_role": "TC plan reviewer; this is not final implementation acceptance",
+  "reviewed_plan": {
+    "path": "docs/ifpmic/B03-WORKFLOW.md",
+    "sha256": "e7f2b47ee0ed55777143601e2c5900ea7b667b09a663fffb2e71ed35fb3dd84e"
+  },
+  "inputs": {
+    "docs/ifpmic/evidence/b03/source-collection.json": "ba88a0c2b1d4412ff1f8bec84e516fc62b7786662ea7c0715db670336f2a7675",
+    "docs/ifpmic/evidence/b03/tc-risk-matrix.json": "369ef9d3d28935f000fab4aff560945104575d661ba4991b57eb33ed20c8624b",
+    "docs/ifpmic/evidence/b03/dependency-candidate-metadata.json": "bbc72a2c76438478c366744b11a91604d53e0a1e31f6dc5887e2b1ec80a92ef0",
+    "docs/ifpmic/evidence/b03/protocol-advice.json": "ab6221cf292b85b857aae16dc9cb5e60d6570d098bbcf494b6e0176ec9ade2da",
+    "docs/ifpmic/design-v1/specs/openapi.v1.json": "2ed780cfa06349b18f5025937e050fd98a5cefa34b552eb836cfaccad416dd7a",
+    "docs/ifpmic/design-v1/specs/workflow.v1.json": "bab40a7abb3929896add1ef2cd074893dd2a7de14d200a5d6cea4b7a77eb0e89",
+    "docs/ifpmic/design-v1/specs/state-contract.json": "0248e130017043539319c56af854f5388a95d33e7e687902a3438fdff414244a",
+    "docs/ifpmic/evidence/b03/attempts/plan-v1.md": "7667aadc484bd8a9b2631ec801eacf2937b00b6c6f73762c9f41f24609912f4c"
+  },
+  "decision": "The reviewed plan is adequate to proceed through the H0 review gate and, after both required same-SHA reviews, the bounded H1 dependency/runtime qualification only. It does not authorize H2/H3/H4 product or test implementation. Their exact-SHA implementation contracts and TC ledgers must be independently reviewed before those stages begin.",
+  "findings": [
+    {
+      "topic": "Original scope and acceptance trace",
+      "result": "pass",
+      "evidence": "The plan preserves B03 deliverables and maps AT-05 human waits, AT-16 command_id redelivery after pre-delivery server failure, and AT-29 v1 compatibility during a v2 deployment. It keeps these cases not executed until their real approved verification is run."
+    },
+    {
+      "topic": "Human task outcome closure",
+      "result": "pass_after_revision",
+      "evidence": "The plan uses the original HumanSubmission schema and distinguishes its defined HTTP route from the currently absent FastAPI handler. It fixes P07 to complete-only because original P07 has no business-fail target or reject special outcome; P07 reject/needs_design/manual_result fail closed before consumption. P21 maps only complete/reject/needs_design to the original targets; manual_result is rejected. X01/X03 approvals remain on dedicated contracts."
+    },
+    {
+      "topic": "Outbox, Temporal and commit authority",
+      "result": "pass_for_staged_protocol_work",
+      "evidence": "The plan separates accepted, dispatched and applied; makes Temporal the process-transition authority; requires same-command idempotency and reconciliation of uncertain starts; keeps projection transactions idempotent; and reserves exact roles, SQL predicates and error tables for H2 review."
+    },
+    {
+      "topic": "Crash, history retention and duplicate start boundary",
+      "result": "pass_for_H1/H2_contract_followup",
+      "evidence": "The final plan bounds uncertain-start retries by verified namespace retention, prohibits reusing known/closed execution IDs, requires a persisted run_id fence, and quarantines expired or missing history rather than starting blindly. H1/H2 must prove the actual CLI/server retention and negative cases before implementation acceptance."
+    },
+    {
+      "topic": "Workflow version compatibility",
+      "result": "pass_for_H5_contract_followup",
+      "evidence": "The plan distinguishes B01 workflow_id from schema_version, keeps v1 workers/queues pinned, uses a distinct v2 test build/queue, prohibits silent old-history fallback, and requires real history replay rather than Replayer-only evidence for runtime routing."
+    },
+    {
+      "topic": "B01/B02 and B04 boundaries",
+      "result": "pass",
+      "evidence": "B01 registry identity, G4 command semantics, G5 workspace READY, least-privilege roles and current authorization are preserved. The plan explicitly distinguishes original OpenAPI human/plan/notification routes from missing current handlers, and keeps B04 UI/SSE/artifacts separate. Workspace READY and HTTP 202 are not execution success."
+    },
+    {
+      "topic": "Stage and implementation gate separation",
+      "result": "pass_with_scope_limit",
+      "evidence": "H0 allows only reviewed plan/TC staging; H1 is limited to hash-verified SDK/CLI qualification and persistent local Temporal runtime checks. H2/H3/H4 detailed contracts and TC ledgers must receive same-SHA dual review before code/tests. H6 retains fresh G1-G5 plus targeted/full Node regressions and build checks; original AT completion is not inferred."
+    }
+  ],
+  "conditions_and_remaining_review": [
+    "A separate reviewer must approve this exact plan SHA before H1 downloads, installation or Temporal runtime work.",
+    "H1 must verify actual pinned SDK/CLI APIs, persistent server history across restart, process cleanup, namespace retention/reuse policy, and that Temporal's own persistence is separate from IFPMIC PostgreSQL.",
+    "H2 must freeze exact migration, dispatcher claim/ack, least-privilege role, revision, event/projection and uncertain-start oracles with a new same-SHA TC review before implementation.",
+    "H3 must freeze an independent literal matrix for all 29 nodes, route outcomes, evidence, retries, cycles, skips, reconciliation and side-effect idempotency before implementation.",
+    "H4 must freeze exact per-task outcome/evidence/authorization mappings, task/notification transaction, artifact fixtures, stale revision and duplicate-submit behavior before implementation.",
+    "H5 needs a version-retention/retirement decision and a real deployment-routing verification; this review does not approve automatic upgrade or migration."
+  ],
+  "acceptance_boundary": {
+    "AT-05": "not_executed",
+    "AT-16": "not_executed",
+    "AT-29": "not_executed",
+    "B03": "not_implemented_by_this_review",
+    "original_AT_01_to_AT_32": "not executed by this plan review",
+    "external_or_production_acceptance": "not included"
+  },
+  "execution": {
+    "tests_or_services_run": false,
+    "read_only_validation": "Reviewed the exact plan SHA against the corrected B03 source collection, TC risk matrix, original OpenAPI/workflow/state contracts, dependency metadata and protocol advice. No code, tests, dependencies, database migration or Temporal service were run or changed."
+  }
+}

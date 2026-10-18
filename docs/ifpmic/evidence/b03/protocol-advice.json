@@ -1,0 +1,176 @@
+{
+  "kind": "ifpmic.b03.protocol-advice.v1",
+  "status": "architecture_advice_not_approved_plan_or_implementation",
+  "scope": "Focused local read-only review of supplied B03 source collection/TC risk matrix and current persistence/DTO contracts. This record neither executes tests/services nor proves any original AT.",
+  "source_pins": {
+    "docs/ifpmic/evidence/b03/source-collection.json": "ba88a0c2b1d4412ff1f8bec84e516fc62b7786662ea7c0715db670336f2a7675",
+    "docs/ifpmic/evidence/b03/tc-risk-matrix.json": "369ef9d3d28935f000fab4aff560945104575d661ba4991b57eb33ed20c8624b",
+    "docs/ifpmic/evidence/b03/temporal-primary-references.json": "8d9aeb931a6bb9ee45bf6b9dcabbd79fd723d381e6448db85b58ea168a28557a",
+    "services/ifpmic_api/jobs.py": "bc682d6ea83ef6545b3105b2a9e8e4df75273445ebca1f8193219010bcea79b4",
+    "services/ifpmic_api/workspace.py": "ad3e29f27ee20bc82eff9afcf51d9bb5ef6374d50b69bcf8fa508d81ecb60f67",
+    "services/ifpmic_api/migrations/001_initial.sql": "cf0437a5f32e1589e4ea821afbb2ef2480d780a276667880aa9a08a0f4c77f12",
+    "services/ifpmic_api/errors.py": "374b49dc97c616d8e4c9432d997d5c9bd9b4a542f236f451a3e43ae92d16e967",
+    "docs/ifpmic/design-v1/specs/workflow.v1.json": "bab40a7abb3929896add1ef2cd074893dd2a7de14d200a5d6cea4b7a77eb0e89",
+    "docs/ifpmic/design-v1/specs/state-contract.json": "0248e130017043539319c56af854f5388a95d33e7e687902a3438fdff414244a",
+    "docs/ifpmic/design-v1/specs/data-model.json": "00c84f8a39b1b8959daa8d94b1d67e860d83ad9bdb809065a5cd3b18af07071b",
+    "docs/ifpmic/design-v1/specs/openapi.v1.json": "2ed780cfa06349b18f5025937e050fd98a5cefa34b552eb836cfaccad416dd7a"
+  },
+  "findings": [
+    {
+      "id": "AUTHORITY",
+      "finding": "Use one Temporal workflow as the serial process-decision owner per job. PostgreSQL activities enforce authorization, immutable evidence and conditional projection; neither dispatcher, workspace worker, API nor Paperclip selects or independently applies process transitions. A workflow proposes a transition; its idempotent projection activity atomically commits the authorized result and returns that same result on retry. The workflow must await this result before proposing the next state."
+    },
+    {
+      "id": "NO_DISTRIBUTED_TX",
+      "finding": "A PG outbox lease fences local claim/ack writes only; it cannot revoke an RPC already accepted by Temporal. No PG transaction/row lock may span Temporal client I/O. Remote safety requires stable identity, immutable input binding, reconciliation and command dedupe in addition to lease fencing."
+    },
+    {
+      "id": "SCHEMA_BLOCKER",
+      "finding": "Current commands.job_id is UNIQUE and route permits only POST /api/v1/jobs. Multiple human/control commands require a reviewed migration. Current list/snapshot joins every command and decodes create-payload profile_version; widening commands without an explicit create-command join duplicates jobs or parses a HumanSubmission as a create payload. snapshot() also deliberately rejects all non-DRAFT/revision-zero rows."
+    },
+    {
+      "id": "RETRY_RECEIPT",
+      "finding": "After projection transaction commits, a worker can die before Temporal records the activity result. Retry must return the original transition receipt before rechecking now-revoked membership, expired eligibility, task consumption or expected_revision. Otherwise one committed effect can be reinterpreted as rejected and fork workflow history from its projection."
+    },
+    {
+      "id": "REUSE_RETENTION",
+      "finding": "Reject-duplicate start policy is insufficient as a permanent invariant after server history retention/deletion. Keep a durable never-reused job/workflow binding independent of Temporal history. Missing history for an existing binding is reconciliation/operator recovery, never permission to create another execution."
+    }
+  ],
+  "recommended_protocol": {
+    "identity": {
+      "workflow_id": "Use a namespace/environment-qualified stable value derived only from immutable project_id/job_id, e.g. ifpmic:<environment>:<project-key>:<job-uuid>; do not include retry count, dispatcher generation, current deployment or command_id in ways that create another workflow for the same job. Store canonical derivation and uniqueness scope in PG.",
+      "binding": "Immutable execution binding: job_id, Temporal namespace, workflow ID, original create_command_id, pinned registry/snapshot/content hash, worker bundle ID/type/task queue, immutable canonical start_input_sha256. Bind the first authorized run_id exactly once via compare-and-set; all later projection calls match it. No continue-as-new/reset/migration is implicit in B03.",
+      "start_input": "Prefer nonsecret IDs and immutable content hashes; command bodies/evidence remain in scoped PG/storage and are loaded through activities. Never put session cookies, tokens, raw prompt/tool I/O or unrestricted source into Temporal history. Workflow input hash covers all behavior-controlling immutable fields.",
+      "conflict": "Select SDK/server-supported explicit already-running conflict and completed-run reuse policies in the approved pinned SDK contract. Existing-run discovery is not sufficient: reconcile workflow ID/type/version/hash and binding; a collision/mismatch is quarantined and never adopted. Do not assume a mutable search attribute proves immutable input.",
+      "retention_and_run_fence": "Persist first admitted run_id before any business effect and require it for every projection/effect admission. Once a run is admitted, missing Temporal history is quarantine/operator recovery, never automatic new start. A provably first-start reservation or recent uncertain start may retry only with reviewed server retention/query guarantees and same immutable ID/input. A never-reused PG binding is permanent even when server history expires. Do not claim all-time physical start uniqueness solely from reject-duplicate SDK policy; after retained history loss the application run fence must still prevent any second effective execution. Historical deletion/reset requires explicit recovery policy."
+    },
+    "durable_ingress": [
+      "Authenticate and authorize API requests with existing CSRF/origin/idempotency rules. Preserve exact original request DTOs and 202 receipt semantics.",
+      "Create route keeps atomic job + create command + outbox + workspace intent; later human submission atomically inserts only its command/outbox (and any immutable submission evidence), never another workspace intent/job. Keep one unique create-command relation per job after lifting all-command uniqueness.",
+      "Accepted command input/actor/route/hash are immutable. expected_revision is part of human payload/hash. Replaying an already accepted same-body request returns its original receipt, even after application; GET command exposes the later outcome."
+    ],
+    "dispatch_order": [
+      "In a short PG transaction claim one due pending/uncertain delivery with FOR UPDATE SKIP LOCKED; increment bounded generation, issue fresh claim token, set DB-clock lease and attempt metadata; copy immutable envelope; commit. No job/process transition occurs here.",
+      "Outside PG transaction start the stable workflow or send a command signal/update to its already-bound run. For human commands, do not start a fresh workflow. Prefer one reviewed delivery primitive; an ordinary signal is transport acknowledgement only, while an Update result still requires durable PG application receipt.",
+      "On confirmed receipt, ack delivery in a fresh PG transaction using command_id + generation + token + still-valid lease. Stale owner cannot ack or overwrite newer attempt state. Store remote run/transport identity separately from business command status. If command already applied/rejected, delivery bookkeeping may reconcile from its durable receipt.",
+      "On timeout/disconnect/worker death, retain accepted command and uncertain/pending delivery. Reconcile exact workflow/run identity/history or replay the same deduped command; never convert an observation timeout to business rejection or allocate a new workflow ID.",
+      "Finite retry/backoff may escalate an operational delivery incident but cannot silently abandon an accepted command. Malformed/identity-conflicting inputs quarantine for explicit repair; do not invent a process FAILED state from a dispatcher exception."
+    ],
+    "workflow_command_order": [
+      "Keep one serialized command-processing loop; signal/update handlers enqueue durable command identities without racing await-containing transition handlers. Stable command_id dedupe survives handler retries and process replay.",
+      "Load canonical command identity through an activity and validate its project/job/route/hash against binding. Signals are notifications, not trusted actor claims. A signal with an arbitrary body cannot replace the durable inbox.",
+      "Require workspace READY only as a prerequisite to initial activation; it does not apply the command. Prepare a stable activation transition_id and predecessor revision, then await its projection activity.",
+      "For every proposal use a deterministic transition_id, exact expected predecessor revision, pinned workflow ID/content, cycle/step_run/attempt/execution identity and full proposed payload digest. Retries reuse these exact values. Never increment attempt/revision merely because an RPC is retried.",
+      "Only after committed application receipt may workflow perform the next approved adapter action or consume the next logical transition. A permanent projection invariant mismatch halts/reconciles; it is not a reason to bypass CAS or edit DB state manually."
+    ],
+    "projection_transaction": [
+      "Begin short transaction; look up prior receipt by transition_id first. If present, compare exact stored payload digest and binding and return original application/rejection result; mismatched reuse is an invariant violation.",
+      "Acquire project authorization guard before job/task rows, consistent with existing acceptance/revocation ordering. Avoid lock inversion with operator membership UPDATE triggers; use the existing guard/NOWAIT/retry discipline rather than waiting back on membership while holding the guard. Read DB clock after locks.",
+      "Validate bound namespace/workflow/run/epoch, current job predecessor revision and cycle/step/task identity; revalidate current actor membership/capability, profile eligibility/revocation, assignment and evidence references appropriate to this effect. Do not depend on an expired browser session as a durable execution credential; define business authorization lifetime explicitly.",
+      "Atomically write projection delta, immutable event/receipt, one-effective task consumption/creation, notification intent when in scope, and applied/rejected command result. One successful business transition advances the job revision once; exact rejected-command revision/error semantics must be fixed before test authoring.",
+      "Commit before returning. If commit outcome is unknown, retry/read by the exact transition_id; never manufacture a new transition. After commit, a later revocation does not retroactively alter this historical result; it prevents subsequent unauthorized effects.",
+      "PG constraints/functions may reject invalid proposals, but must not invent next-node routing or launch work. Temporal determines next state from the committed receipt under the pinned definition."
+    ],
+    "human_tasks": {
+      "binding": "One immutable task version is bound to job, step_run, cycle, attempt, pinned workflow content and evidence/candidate context; assignee is an explicit authorized human identity. Owner assignment can be a documented initial policy, never inferred from an agent role. Reassignment creates auditable version/invalidation behavior.",
+      "api": "Implement original POST /api/v1/jobs/{job_id}/human-submissions and exact required expected_revision/task_id/outcome/artifact_ids/comment DTO. API authorization checks current membership/job authority/task assignment; activation rechecks under the guard. Idempotency includes the entire body. Task ID alone is not authority.",
+      "consume": "Temporal serializes competing submissions. The authorized projection activity consumes exactly one still-current task version and binds it to the durable command; wrong actor/stale revision/stale cycle/old task cannot advance. A replay of the same committed transition returns its stored result even if the task is now consumed.",
+      "outcomes": "Pin a per-step allowed-outcome matrix before tests: P07 complete -> P08; P21 complete -> P22, reject -> P11, needs_design -> P07. Unsupported P07 reject/needs_design/manual_result must be explicit validation/rejection behavior, not invented routing. manual_result requires a separately specified manual/device task contract. X01 plan approval and X03 release approval retain their dedicated original DTO/approval contracts; a generic human submission cannot bypass them.",
+      "waits": "Create WAITING_HUMAN projection + task (+ scoped notification intent if included) atomically before exposing worklist. Agent completed never supplies human evidence or quality PASS. Durable worklist retrieval/authorization is required for AT-05; B04 may own visual UI/SSE/reminder delivery, but B03 cannot claim work-item creation solely from an internal boolean.",
+      "evidence": "Check artifact project/job/owner or approved delegation, available state, immutable content hash, candidate/step context and required artifact kinds before consumption. Current artifacts table lacks the full original metadata; explicitly migrate/define or leave that proof unachieved. Sanitize public comment/text; retain no unsafe raw payload in projections."
+    },
+    "version_routing": {
+      "minimal_strategy": "For the first approved local protocol, pin each immutable workflow implementation bundle to a dedicated workflow type and task queue incorporating its content/build identity, and admit only matching workers to it. Route all its activities to the same compatible bundle queue or separately pinned activity queues. v2 uses a distinct queue/type; never replace v1 code behind the v1 queue.",
+      "pin_scope": "Registry workflow_id/content hash, executable workflow code, command DTO/reducer semantics, activities and their dependencies must be compatible; schema_version=1.0.0 alone proves none of these. Persist task queue/build mapping in job binding.",
+      "old_workers": "Keep v1 workers/replay-capable build available while any bound v1 execution is nonterminal and for the defined recovery/replay retention period. Temporary absence leaves workflow waiting, not reassigned to v2. Retirement needs a positive zero-active/recovery decision, not a deploy timestamp.",
+      "verification": "With real owned Temporal history, reach a v1 human wait, stop/restart workers, deploy a distinct v2 worker, resume the v1 task and prove v1 route/build/queue/history; replay retained v1 history with pinned v1 implementation. Replayer-only evidence cannot prove runtime deployment routing. Current production schema/catalog allow only ifpmic-sw-v1; a synthetic v2 test deployment is not authorization to activate v2 for real jobs.",
+      "deferred": "If using Temporal Worker Versioning instead, approve the exact installed SDK/server API, pinned-versus-auto-upgrade behavior, activity routing and retention policy first. No implicit migration/reset/continue-as-new in this minimal protocol; each later requires a versioned explicit contract."
+    },
+    "permissions": {
+      "runtime_api": "Retain no UPDATE of job process state/command outcome/outbox delivery; add only reviewed ingress INSERT/SELECT or narrowly scoped functions. Extend membership/task capabilities explicitly, since current CHECK allows only request.create. Do not equate request.create or job.read delegation with human approval.",
+      "dispatcher": "May claim/ack its outbox fields and read minimum envelopes/bindings; may use scoped Temporal start/signal credentials. It cannot write job status, command applied/rejected, task outcomes or fabricate project authority.",
+      "projection_worker": "Separate role scoped to validated projection function/table columns, binding and task/event writes; cannot alter immutable command inputs, grant membership/eligibility, change snapshots, or arbitrarily relink jobs. Exact EXECUTE grants and schema/function search_path hardening need negative SQL tests.",
+      "workspace_worker": "Preserve accepted G5 filesystem/intent permissions and fencing. It never advances job state.",
+      "trust_boundary": "PG cannot independently prove a caller is a real Temporal activity from caller-supplied workflow/run IDs alone. Bind authenticated worker credentials/configuration to the projection role and verify assignment scope; test cross-job/cross-run denial. Do not present arbitrary string equality or same-runtime-role access as cryptographic Temporal authority. Schema owner/database superuser remains privileged and outside runtime guarantees."
+    },
+    "revision_and_rejection_policy": {
+      "status": "Concrete policy aligned with the root draft at this review; exact SQL/error oracles still require H2 approval.",
+      "initial_state": "Existing accepted create leaves DRAFT/revision0/cycle0 with no active steps. Runtime ingress receipt always remains accepted on replay.",
+      "create_application": "After workspace prerequisite and guarded current authorization succeed, the single activation projection atomically sets job QUEUED/revision1/cycle0, records command applied/applied_revision1/error NULL, and writes immutable activation receipt. Initial P01 activation is a subsequent explicit transition; do not silently combine unknown step execution with HTTP acceptance.",
+      "create_rejection": "For a definitive business admission failure (current membership/capability or profile eligibility revoked/ineligible), workflow requests one guarded rejection receipt: retain job DRAFT/revision0/cycle0/current_step_ids empty, command rejected/applied_revision NULL/fixed public error. No step attempt or adapter execution occurs. This rejected command is permanently non-dispatchable/non-resurrectable even if authority returns; a new authorized create needs a new idempotency identity/job. The retained DRAFT job is historical rejected admission, not pending runnable work. Failure to write this receipt due to DB outage remains unknown/pending, not locally fabricated rejection.",
+      "not_rejection": "Workspace not ready/ERROR requiring explicit G5 recovery, DB/Temporal outage, RPC timeout, unknown commit/start outcome or stale dispatcher lease are operational wait/reconciliation, not definitive create rejection. Leave accepted until a durable workflow decision; preserve operational incident/retry evidence separately.",
+      "successful_transition": "Every actual projected business state change, including task creation/consumption and initial activation, advances one job revision exactly once with expected predecessor CAS. An aggregate change plus its child step/task/event writes is one atomic transition/revision, not several observer-generated increments.",
+      "human_application": "A valid human command with submitted expected_revision matching current job revision and live matching task version consumes it and applies its step/business-route outcome in one transition r -> r+1; command applied/applied_revision r+1. complete/reject/needs_design are business outcomes; P21 reject may be an applied human command even though the step is FAILED and next cycle routes P11.",
+      "human_rejection": "An accepted command later found unauthorized/stale/task-consumed/wrong-kind obtains immutable rejected command receipt, applied_revision NULL and a fixed reviewed error, without changing job revision, consuming task or opening a cycle. Rejection audit identity is separate from state-transition revision. An ingress 409/422 before command insertion is distinct and creates no accepted receipt.",
+      "receipt_rules": "Already committed command outcome and transition receipt are immutable. Same transition ID and payload returns stored result before checking new current authority/state. Same ID/different payload is a collision incident. Internal predecessor mismatch inconsistent with the workflow own expected projection is reconciliation/invariant failure; do not treat it as an ordinary stale browser submission.",
+      "task_revision": "Task version/cycle/attempt is immutable; submitted expected_revision represents the current job snapshot. Do not assume task creation revision must forever equal current job revision if parallel/unrelated transitions are possible; require still-current task version plus strict current job revision at application. H3/H4 must define resulting concurrent-task UX explicitly.",
+      "locks": "Existing project authorization guard -> job/binding row -> task/receipt rows in a published consistent order; receipt fast path may read an immutable matching committed receipt without authority relocking, but competing first writers require unique/CAS and re-read. Membership row NOWAIT avoids operator-trigger lock inversion. Read fresh DB clock after lock acquisition. Keep all external RPC outside."
+    }
+  },
+  "critical_races_and_recovery": [
+    {
+      "race": "Authority revoked after dispatch check but before workflow activation",
+      "resolution": "Dispatch check is advisory only; guarded projection activation is authorization linearization point. If revocation commits first, reject without executing adapter effects. If activation commits first, later revocation blocks future effects according to the explicit policy."
+    },
+    {
+      "race": "Old dispatcher returns after lease expires/new dispatcher has sent",
+      "resolution": "Generation/token/DB-clock fence blocks old local ack; stable workflow identity plus command dedupe handles remote duplication. Never use lease expiry as proof remote start did not occur."
+    },
+    {
+      "race": "Projection committed; Temporal activity result lost; actor/task/eligibility changes before retry",
+      "resolution": "Read immutable receipt before current-state checks; return identical prior outcome and do not increment revision/consume task twice."
+    },
+    {
+      "race": "Two accepted human commands target same task/revision",
+      "resolution": "Workflow serialized processing plus guarded task/revision CAS commits one; other receives reviewed stale/conflict rejection, while replay of winner preserves receipt."
+    },
+    {
+      "race": "Old cycle/attempt activity result arrives after new work",
+      "resolution": "Stable transition identity + exact predecessor/cycle/step_run/attempt/execution binding. Do not infer currentness from job ID or last_event timestamp."
+    },
+    {
+      "race": "Workflow state changed in history but PG projection unavailable",
+      "resolution": "Workflow awaits retry/reconciliation of its same projection activity; do not schedule next external side effect from speculative state. Query projection can remain stale and must not claim uncommitted application."
+    },
+    {
+      "race": "Temporal state/history unavailable after start timeout",
+      "resolution": "Keep unknown outcome and accepted command; probe/reconcile same binding. Durable binding prevents a second execution after retention/history loss. Operator recovery must be explicit."
+    },
+    {
+      "race": "v2 deployment while v1 is waiting",
+      "resolution": "Old execution queue/type/build remains pinned; v2 worker cannot poll old queue. Exact task and workflow content pins survive restart. No silently newer reducer/activity implementation."
+    }
+  ],
+  "preapproval_decisions_required": [
+    "Explicit execution-binding schema, workflow-ID canonical derivation, immutable hash domain, first-run binding and prohibited reset/reuse/continue-as-new behavior.",
+    "Exact pinned Temporal SDK/server dependency and local test topology; no implicit binary downloads; production database topology acceptance remains distinct from local dev-server persistence.",
+    "Migration removing all-command job uniqueness/route restriction while preserving one create command, constrained create-payload joins, non-DRAFT snapshot DTO, and source-of-truth projection revision/event policy.",
+    "Outbox claim/uncertainty/backoff/quarantine schema and separate transport-ack versus business-command outcome; exact stale/poison handling and lifecycle retention.",
+    "Transition receipt/ledger schema with payload collision checks, expected predecessor CAS, deterministic rejection outcome, and crash-after-commit return-before-reauthorize behavior.",
+    "Human task assignment/capabilities/task version/outcome matrix/evidence/worklist boundary and original X01/X03 dedicated approval preservation; define REQ-05 coverage for all human-owned nodes, not merely P07/P21.",
+    "Guarded authorization linearization/lifetime at activation and later side-effect admission, least-privilege role/function grants, worker identity scope; no external-effect cancellation promise from DB revocation.",
+    "v1/v2 queue/build routing and retirement policy; exact replay and live rollout oracle with genuine owned Temporal durable history.",
+    "TC independent normal/exception/boundary/regression oracle including every named crash point, stale claim/run/transition/task races, unauthorized SQL writes, and current B01/G4/G5 behavior. Pure mocks cannot prove AT-16/29.",
+    "Real adapter boundaries: no implicit PASS from agent completed, no automatic reuse/exemption, no SAM/TEM/SQE conflation, no real device/publication actions without approved contracts and human approval.",
+    "Create-command foreign key/backfill must establish route=POST /api/v1/jobs, not only command_id/job_id existence; preserve runtime least privilege and enforce wrong-route relinking denial. The current proposed composite FK alone cannot express route semantics."
+  ],
+  "acceptance_boundary": {
+    "B03": "not_implemented_or_verified_by_this_advice",
+    "AT-05": "not_executed",
+    "AT-16": "not_executed",
+    "AT-29": "not_executed",
+    "original_design": "Unchanged. Paperclip remains upper orchestration/supervision; Temporal alone owns workflow decisions. Code-dev coordinates implementation/integration, TC authors tests, human/SAM/TEM/SQE roles retain original responsibilities.",
+    "remaining_uncertainty": "Advice fixes architectural ordering and highlights required decisions. Exact SDK API behavior, executable schema, worker security integration, rejection revision/error DTOs and full business-node adapters still require an independently reviewed implementation/test plan and actual evidence."
+  },
+  "draft_plan_review": {
+    "path": "docs/ifpmic/B03-WORKFLOW.md",
+    "sha256_at_review": "7667aadc484bd8a9b2631ec801eacf2937b00b6c6f73762c9f41f24609912f4c",
+    "finding": "Draft aligns on original role boundaries, durable outbox, serial workflow authority, immutable queue/build pin, actual local Temporal evidence and H2/H3/H4 exact-contract gates. H0 may approve staged planning only if unresolved SQL/oracles remain explicit blockers to their implementation; H0 does not authorize guessing H2 semantics.",
+    "required_amendments": [
+      "Retain the newly specified create-command constrained joins, non-DRAFT snapshots, serial workflow proposals, receipt-before-authority and DRAFT0 rejected admission policy; implement only after H2 exact-contract review.",
+      "Define durable never-reuse binding/run fencing beyond Temporal history retention; NotFound on a previously admitted binding must quarantine. Bound any uncertain-first-start retry by explicit retention assumptions.",
+      "Extend task capabilities/assignment/evidence validation with exact SQL and task-kind oracles in H2/H4, including current membership constraints and per-step approval boundaries."
+    ]
+  }
+}

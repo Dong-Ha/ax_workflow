@@ -1,0 +1,186 @@
+{
+  "kind": "ifpmic.b03.tc-risk-matrix.v1",
+  "status": "preimplementation_test_risk_matrix_not_approved_test_plan",
+  "requirements": [
+    "B03",
+    "REQ-05",
+    "REQ-14",
+    "AT-05",
+    "AT-16",
+    "AT-29"
+  ],
+  "source_collection": {
+    "path": "docs/ifpmic/evidence/b03/source-collection.json",
+    "sha256": "ba88a0c2b1d4412ff1f8bec84e516fc62b7786662ea7c0715db670336f2a7675"
+  },
+  "purpose": "Identify the minimum independent verification evidence needed before implementing B03's durable workflow execution, outbox delivery, human waits, and version compatibility. Preserve the complete original B03/AT scope without converting open design choices into assumed behavior.",
+  "scope_and_ownership": {
+    "target": "B01 immutable workflow registry plus B02 real PostgreSQL command/outbox persistence, a Temporal execution service, current authorized API projections, and synthetic agent/human adapters. The test environment must distinguish Temporal authority from the Paperclip UI and the G5 filesystem worker.",
+    "tc_owner": "TC authors independent literal test fixtures/oracles and evidence; code-dev/main owns product implementation and integration; a separate reviewer reviews the plan and evidence. Human submissions in AT-05 must be represented by the authenticated human/task contract once defined, not by agent completion.",
+    "scope_limit": "Source collection and risk matrix only. No Temporal runtime, external service, tests, or original acceptance case has been executed by this record.",
+    "agent_roles": "The original agent contract defines code-dev, TC, arch-runner, SQE and report responsibilities. SAM/TEM/static-analysis are worker/validation roles; they are not interchangeable with a human approver or a generic Temporal worker."
+  },
+  "test_groups": [
+    {
+      "id": "B03-NORMAL-START",
+      "requirement_trace": [
+        "B03",
+        "AT-16"
+      ],
+      "class": [
+        "normal",
+        "regression"
+      ],
+      "purpose": "Prove accepted durable commands cross the outbox boundary into one pinned workflow execution without confusing HTTP acceptance with execution.",
+      "target": "POST /api/v1/jobs -> command/outbox/workspace-intent transaction -> outbox dispatcher -> Temporal start -> command/job projection and authorized GETs.",
+      "method": "Use real PostgreSQL and the approved Temporal test/runtime environment. Submit an exact valid request with an independent fixed B01 profile/workflow fixture. Inspect the original command receipt, durable outbox record, workflow identity/start input, and database projections at each protocol boundary. Repeat delivery of the same command_id, restart dispatcher, and read job/command through authenticated routes.",
+      "owner": "TC test author; code-dev implements; independent reviewer verifies the fixed oracle.",
+      "pass_criteria": "Exactly one logical workflow start is associated with the original command_id; the command remains accepted until an explicit durable application/rejection under the approved command contract; outbox delivery acknowledgement is recorded separately and cannot itself be treated as application; idempotent replay returns the same receipt/workflow association; no second job or workflow is created. Workspace READY alone never applies a command. Exact projection values and legal transitions must be fixed in the reviewed B03 contract before tests are written.",
+      "expected_result": "The workflow engine is authoritative for process transitions; PostgreSQL retains durable command/outbox and query projection. The job uses B01 workflow identity ifpmic-sw-v1 and a version-pinned execution definition.",
+      "evidence": "Private DB snapshots/transaction identifiers, test-engine history or equivalent deterministic execution trace, command/job GET DTOs, exact command invocations, source hashes, and an evidence ledger mapping every assertion to original contract fields.",
+      "failure_recovery": "Preserve the original DB and Temporal test history privately. Diagnose transaction, dispatch, start, idempotency, or projection boundaries separately. Any semantic change requires a reviewed new candidate and rerun of affected B01/B02 regressions plus B03.",
+      "unresolved_oracle": "The source does not specify outbox claim/lease/ack columns, command applied_revision increment rules, Temporal workflow ID formula, or exact status/error DTO mapping. Do not invent those expected values before the B03 implementation contract is approved."
+    },
+    {
+      "id": "B03-CRASH-REDISPATCH",
+      "requirement_trace": [
+        "B03",
+        "AT-16"
+      ],
+      "class": [
+        "exception",
+        "boundary",
+        "concurrency",
+        "regression"
+      ],
+      "purpose": "Demonstrate no command loss or duplicate execution when the API or dispatcher fails at either side of the external workflow-start acknowledgement.",
+      "target": "Crash points after API transaction commit/before outbox delivery; after dispatcher claim/before Temporal start; after Temporal accepts start/before local acknowledgement; after acknowledgement/before projection response; restart and same-command redelivery.",
+      "method": "Inject deterministic process termination/faults at each separately named durable boundary. Restart only the owned test API/dispatcher/Temporal processes. Reconcile by the exact immutable command_id and query workflow history before retrying uncertain starts. Use independent process IDs and durable history; do not infer that a timeout means start failed.",
+      "owner": "TC authors failure harness; code-dev owns dispatcher/engine integration; independent reviewer audits process ownership and replay oracle.",
+      "pass_criteria": "After every restart, the command is recoverable by command_id, no accepted command disappears, at most one effective workflow exists, and an unknown start outcome is reconciled before another start. The same start input/version remains pinned. A retry does not create a second semantic command or change the original accepted receipt.",
+      "expected_result": "AT-16's literal requirement is durable redelivery and duplicate elimination by command_id; it does not specify internal retry timings or claim-state names.",
+      "evidence": "Per-crash-point before/after DB rows, dispatcher process lifecycle, Temporal history and workflow IDs, unique command/workflow counts, retry/reconciliation decisions, and retained private logs with canary scan.",
+      "failure_recovery": "Keep the exact fault point and process evidence. Do not blindly retry an uncertain remote start. Repair reconciliation/idempotency, then rerun the crash point and all normal-start/atomicity cases.",
+      "unresolved_oracle": "The design does not define leases, backoff, poison-message behavior, claim fencing, or how to query a start accepted remotely but not locally acknowledged. These require reviewed protocol decisions."
+    },
+    {
+      "id": "B03-HUMAN-P07-P21",
+      "requirement_trace": [
+        "B03",
+        "REQ-05",
+        "REQ-14",
+        "AT-05"
+      ],
+      "class": [
+        "normal",
+        "exception",
+        "boundary",
+        "regression"
+      ],
+      "purpose": "Prove an agent's completed execution is not enough to pass a human-owned step and that a persistent assigned human task is created and resumed correctly.",
+      "target": "P07 (human-owned, successful path P08) and P21 (human-owned, success P22, business failure P11, design_change_needed P07); workflow states WAITING_HUMAN/READY/SUCCEEDED and human-task persistence/API boundary. Original OpenAPI defines POST /api/v1/jobs/{job_id}/human-submissions (HumanSubmission).",
+      "method": "Drive an agent result with status completed at P07/P21. Verify the workflow blocks in human wait and a durable task appears in the authenticated assignee's worklist. Probe missing, wrong actor, wrong task, duplicate, stale cycle/attempt/version, and conflicting human decisions only after the precise task/submission schema is reviewed. Restart engine/service while waiting, then submit a valid HumanSubmission body (`expected_revision`, `task_id`, `outcome`, `artifact_ids`, `comment`) and verify only the contract-defined next step.",
+      "owner": "TC authors API/engine harness; code-dev integrates; actual human approval is represented only by a synthetic authenticated test actor and is not delegated to agent roles.",
+      "pass_criteria": "No agent completion advances P07/P21 without matching human evidence. The pending task survives restart and is visible only to its authorized actor. A valid submission consumes one task/version once and follows the fixed route; stale or duplicate proof cannot advance the current workflow.",
+      "expected_result": "AT-05 requires a human task and prevents agent-only completion. P07 and P21 have distinct routes and evidence; P21 permits a fixed business failure route to P11 and design_change_needed to P07.",
+      "evidence": "Temporal wait history, task database row and authorized/forbidden API DTOs, exact human submission identity/evidence references, before/after step projection, and restart trace.",
+      "failure_recovery": "Preserve wait/task snapshots. Correct assignment, persistence, authorization, duplicate-submit, or route behavior without synthesizing a human response. Rerun both P07 and P21 plus the AT-05 negative path.",
+      "unresolved_oracle": "The original OpenAPI does define POST /api/v1/jobs/{job_id}/human-submissions and a HumanSubmission schema with required expected_revision, task_id, outcome, artifact_ids and comment. The current FastAPI app has no handler. The data model also names human_tasks and notifications, but does not specify the task-row/assignee resolution, assignment authorization rules, exact outcome-to-P07/P21 transition mapping, or notification event/delivery semantics. B04 owns web/SSE/notification work; the B03/B04 plan must define the boundary without inventing schema fields."
+    },
+    {
+      "id": "B03-VERSION-COMPATIBILITY",
+      "requirement_trace": [
+        "B03",
+        "AT-29"
+      ],
+      "class": [
+        "normal",
+        "boundary",
+        "regression"
+      ],
+      "purpose": "Prove an in-flight v1 workflow waiting for a human resumes with v1 semantics after a v2 definition is deployed, or follows an explicitly approved migration.",
+      "target": "B01 immutable registry (`workflow_id=ifpmic-sw-v1`, `schema_version=1.0.0`), Temporal history/versioning API and worker deployment behavior for an existing P07/P21 human wait.",
+      "method": "Start a workflow under a fixed v1 registry/source fingerprint, drive it to durable WAITING_HUMAN, then introduce a distinct v2 definition/worker build in the controlled test environment. Restart/replay the original history and submit its matching human task. Assert execution either remains on v1-compatible code or uses a specifically reviewed migration record; compare the next transition with the v1 literal workflow fixture.",
+      "owner": "TC authors independent v1/v2 fixtures; code-dev implements version strategy; independent reviewer verifies history and code identity.",
+      "pass_criteria": "The old execution never silently adopts changed v2 transitions or task evidence. It resumes on the pinned v1 behavior, or an explicit migration is durable, versioned, auditable and conforms to a separately approved migration oracle. New jobs may use v2 only under the reviewed activation policy.",
+      "expected_result": "AT-29 explicitly requires v1 semantics on resume, compatible worker retention, or an explicit migration. B01 separates immutable workflow_id from the schema/document format version.",
+      "evidence": "V1/v2 content hashes, Temporal workflow history/replay result, worker build/version identities, persisted task and workflow pin, and before/after projection.",
+      "failure_recovery": "Retain old worker and execution history; do not rewrite or rebase the existing workflow to the new definition. Resolve compatibility policy and rerun old-history replay and new-job selection.",
+      "unresolved_oracle": "No Temporal Worker Versioning/Build ID policy, workflow type-to-workflow_id map, compatibility retention duration, migration record schema, or old-worker retirement rule is specified."
+    },
+    {
+      "id": "B03-PROJECTION-AUTH-REGRESSION",
+      "requirement_trace": [
+        "B03",
+        "AT-05",
+        "AT-16",
+        "AT-29",
+        "REQ-13"
+      ],
+      "class": [
+        "boundary",
+        "regression",
+        "privacy"
+      ],
+      "purpose": "Ensure a new execution authority does not weaken existing auth, idempotency, immutable command, workflow pin, workspace, or safe projection properties.",
+      "target": "G4 `JobService.create/replay/command`, G5 `WorkspaceService` and authenticated job/command endpoints; new worker/dispatcher DB role, events/projection changes and workflow start inputs.",
+      "method": "Re-run accepted G4/G5 regressions against the B03 candidate. Assert API-owned command inputs remain immutable; worker identity is scoped; direct SQL/API callers cannot forge applied status or workflow transitions; unauthorized users cannot read another job/task; raw prompt/tool/provider secrets are not projected; workspace READY remains distinct from workflow execution. Verify GET command changes only after a durable defined engine outcome.",
+      "owner": "TC authors regression and role tests; code-dev owns migrations/service; independent reviewer audits no-authority leakage.",
+      "pass_criteria": "The original accepted receipt remains traceable; owner/project/session and scoped worker authorization remain enforced; no API 202 or workspace READY is treated as applied/executed; projections are derived from authoritative persisted/Temporal state and do not expose hidden reasoning, raw commands, credentials, or unredacted tool I/O.",
+      "expected_result": "B03 adds an execution layer while preserving B01/B02 boundaries and the original OpenAPI semantics.",
+      "evidence": "Fresh G4/G5 test IDs and fingerprints, DB grants, authorized/unauthorized DTO comparisons, source/payload redaction checks, job-command-workspace relationship counts.",
+      "failure_recovery": "Do not accept B03 with a G4/G5 regression. Restore safe projections/role boundaries, run affected suites, then repeat B03 crash/human/version tests.",
+      "unresolved_oracle": "The current schema intentionally denies runtime updates to jobs, commands and outbox. B03 needs a reviewed least-privilege worker/Temporal projection migration; exact actor/worker credential and event projection fields are not yet defined."
+    }
+  ],
+  "cross_cutting_normal_exception_boundary_regression": {
+    "normal": "One accepted command starts once, uses the immutable workflow pin, exposes a durable authorized projection, and pauses at human-owned nodes until valid human evidence is submitted.",
+    "exception": "API/dispatcher/Temporal process crash, timeout, duplicate delivery/start, DB rollback, remote-accepted/local-unknown start, worker restart, duplicate human submission, and version deployment while waiting.",
+    "boundary": "Commit versus dispatch/start/ack/projection cut points; exact authorized actor/task and cycle/attempt/version; P07/P21 state routes; v1 history replay when v2 code is present; command receipt remains accepted until an explicit durable result.",
+    "regression": "B01 source/workflow content hashes, G4 transactional four-row command group and permissions, G5 workspace preparation/lease/recovery, API owner/session scope, and prohibition on reading hidden execution data."
+  },
+  "open_questions_for_approved_b03_plan": [
+    "Define which persistent store owns Temporal event history versus IFPMIC business projections, and how Temporal IDs bind to command_id, job_id, project_id and workflow_id.",
+    "Specify outbox state/claim/lease/fencing/ack fields, dispatch transaction boundaries, backoff, visibility timeout, poison-command handling and at-most-one effective Temporal start reconciliation.",
+    "Specify the least-privilege Temporal/worker database role and idempotent projection activities; current runtime grants explicitly cannot apply commands/outbox or change job status.",
+    "Define exact command application/rejection state transitions, expected_revision behavior and `applied_revision` increments without changing POST 202 acceptance semantics.",
+    "Define human task storage, assignment, authentication/authorization, submission endpoint, one-effective-completion rule and interaction with B04 notifications/events.",
+    "Define version pin mapping from B01 `workflow_id` to Temporal workflow type/version/build; specify v1 worker compatibility and explicit migration semantics before testing AT-29.",
+    "Choose deterministic test support for external start accepted before acknowledgement is lost; a local fake that does not model durable Temporal history cannot alone prove AT-16."
+  ],
+  "acceptance_status": {
+    "AT-05": "not_executed; current G4/G5 evidence does not create operational human work items",
+    "AT-16": "not_executed; current outbox remains pending and no dispatcher exists",
+    "AT-29": "not_executed; B01 pins static registry content but no Temporal running history/version compatibility exists",
+    "B03": "not_implemented_in_current_local_service",
+    "B04_and_later": "separate backlog scope; event/SSE and notification delivery must not be claimed through this matrix",
+    "original_AT_01_to_AT_32": "remain not_executed until individually run against their approved acceptance contracts"
+  },
+  "evidence_and_recovery_policy": {
+    "evidence_path": "Future reviewed B03 test ledger and private per-attempt database/Temporal/process records; do not place raw credentials, prompts, tool input/output or unrestricted service logs in public evidence.",
+    "failure_handling": "Preserve failing source bytes, DB lifecycle, workflow history and exact crash point. A failed or timed-out remote start is an unknown outcome to reconcile, never an automatic blind retry.",
+    "scope_change": "Any change to workflow version semantics, human submission contract, outbox acknowledgment policy or command status projection requires a new reviewed contract and affected G4/G5 regression reruns."
+  },
+  "original_openapi_contract": {
+    "human_submission": {
+      "path": "POST /api/v1/jobs/{job_id}/human-submissions",
+      "operation_id": "post_api_v1_jobs_job_id_human_submissions",
+      "request_schema": "#/components/schemas/HumanSubmission",
+      "required_fields": [
+        "expected_revision",
+        "task_id",
+        "outcome",
+        "artifact_ids",
+        "comment"
+      ],
+      "outcome_enum": [
+        "complete",
+        "reject",
+        "needs_design",
+        "manual_result"
+      ],
+      "response": "202 CommandReceipt; acceptance remains distinct from completed work",
+      "implementation_status": "Defined in original OpenAPI, but no handler is present in current services/ifpmic_api/app.py"
+    }
+  }
+}

@@ -1,0 +1,186 @@
+{
+  "kind": "ifpmic.b03.dependency-candidate-metadata.v1",
+  "collected_at": "2026-10-18T19:31:46Z",
+  "status": "candidate_metadata_only_not_dependency_lock_or_runtime_approval",
+  "local_baseline": {
+    "python": "3.12.3",
+    "platform": "Linux x86_64 (WSL2)",
+    "requirements_in": {
+      "path": "services/ifpmic_api/requirements.in",
+      "sha256": "9d1622218da6e1cfe55b1f22db7bd771f421e54176653e00168e726d73272a00",
+      "direct_runtime_pins": {
+        "fastapi": "0.144.0",
+        "uvicorn": "0.54.0",
+        "psycopg[binary]": "3.3.6",
+        "authlib": "1.9.1",
+        "httpx2": "2.13.1"
+      }
+    },
+    "requirements_test_in": {
+      "path": "services/ifpmic_api/requirements-test.in",
+      "sha256": "738049ca9fcfa198dc9919ebc10d0b877c77c910414f620b68780d0b7195c52e",
+      "direct_test_pins": {
+        "pytest": "9.1.1",
+        "httpx": "0.28.1"
+      }
+    },
+    "requirements_lock": {
+      "path": "services/ifpmic_api/requirements.lock",
+      "sha256": "6c8c950820a8c3ae9dea250e4080bc9dab09db17663e3d50118c5ac29211357e",
+      "relevant_existing_pins": {
+        "typing-extensions": "4.16.0",
+        "opentelemetry-api": "1.45.1",
+        "pydantic": "2.14.1",
+        "httpx": "0.28.1",
+        "httpx2": "2.13.1"
+      },
+      "does_not_yet_contain": [
+        "temporalio",
+        "grpcio",
+        "nexus-rpc",
+        "protobuf",
+        "types-protobuf"
+      ]
+    },
+    "temporal_primary_reference_collection": {
+      "path": "docs/ifpmic/evidence/b03/temporal-primary-references.json",
+      "sha256": "8d9aeb931a6bb9ee45bf6b9dcabbd79fd723d381e6448db85b58ea168a28557a"
+    }
+  },
+  "python_sdk_candidate": {
+    "distribution": "temporalio",
+    "version": "1.34.0",
+    "selected_installation": "base distribution only; no optional extras selected",
+    "pypi_release_metadata": {
+      "url": "https://pypi.org/pypi/temporalio/1.34.0/json",
+      "response_sha256": "36c15112b06be4679fa18259de9d27b14761da32708f383db6c8be1f145a14b1",
+      "fetched_at": "2026-10-18T19:31:17.798136Z",
+      "requires_python": ">=3.10",
+      "release_uploads": {
+        "cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl": {
+          "filename": "temporalio-1.34.0-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+          "sha256": "540761f738bdfe5cb5bd7240b659e116a0b5094b94282aef09b8d8c2d66e9c52",
+          "size": 14457183,
+          "uploaded_at": "2026-09-30T20:22:44.215092Z",
+          "yanked": false
+        },
+        "source_distribution": {
+          "filename": "temporalio-1.34.0.tar.gz",
+          "sha256": "6453cb20e18df485e16578b22c82a9c4bcb1cf7eedd94147dfd373551d80f5b6",
+          "size": 3163890,
+          "uploaded_at": "2026-09-30T20:22:56.056658Z",
+          "yanked": false
+        }
+      }
+    },
+    "published_dependency_constraints": [
+      "nexus-rpc==1.4.0",
+      "protobuf>=3.20,<8.0.0",
+      "types-protobuf>=3.20,<8.0.0",
+      "typing-extensions>=4.2.0,<5",
+      "grpcio>=1.48.2,<2 only when the optional grpc extra is selected"
+    ],
+    "candidate_base_lock_targets_for_resolution": {
+      "nexus-rpc": "1.4.0",
+      "protobuf": "7.36.2",
+      "types-protobuf": "7.35.1.20260906",
+      "typing-extensions": "retain existing 4.16.0"
+    },
+    "candidate_addition_metadata": {
+      "grpcio_1.84.0": {
+        "metadata_url": "https://pypi.org/pypi/grpcio/1.84.0/json",
+        "metadata_response_sha256": "e54cb0f9d951acddc0c6bad36d87dbe4ae81281d5eb5964004d71c67eea2c8ca",
+        "wheel_filename": "grpcio-1.84.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+        "wheel_sha256": "b44f0a0fc7bc6677d38cc80bca1a32814ce6c8f200fb8b3c1a61c9d77eaefbf3",
+        "wheel_size": 7156115,
+        "requires_python": ">=3.10",
+        "requires_typing_extensions": "~=4.12"
+      },
+      "protobuf_7.36.2": {
+        "metadata_url": "https://pypi.org/pypi/protobuf/7.36.2/json",
+        "metadata_response_sha256": "090d6bb0e21b26299221770a798ec48c5d45dc4d71a374b44b5e0e7c3a7c47f1",
+        "wheel_filename": "protobuf-7.36.2-cp310-abi3-manylinux2014_x86_64.whl",
+        "wheel_sha256": "89f23aa53c24553a2416fd4fd1ec06f74fa42b14b546d8883128813f775bbfd2",
+        "wheel_size": 343223,
+        "requires_python": ">=3.10"
+      },
+      "types_protobuf_7.35.1.20260906": {
+        "metadata_url": "https://pypi.org/pypi/types-protobuf/7.35.1.20260906/json",
+        "metadata_response_sha256": "01a928b6378a0986356d783f62f5b876b37818d076672cd10c0bf5c37a59f0c4",
+        "wheel_filename": "types_protobuf-7.35.1.20260906-py3-none-any.whl",
+        "wheel_sha256": "5155e48569e0dabff303fdf578db96cd31ea9a4a63b18018a4ceac6b0ae17462",
+        "wheel_size": 86419,
+        "requires_python": ">=3.10"
+      },
+      "nexus_rpc_1.4.0": {
+        "metadata_url": "https://pypi.org/pypi/nexus-rpc/1.4.0/json",
+        "metadata_response_sha256": "aa0f1982253430579ac2fd519a9e59a5df9e4cc622e815eff4d9f09fb0ca592a",
+        "wheel_filename": "nexus_rpc-1.4.0-py3-none-any.whl",
+        "wheel_sha256": "14c953d3519113f8ccec533a9efdb6b10c28afef75d11cdd6d422640c40b3a49",
+        "wheel_size": 29645,
+        "requires_python": ">=3.10",
+        "requires_typing_extensions": ">=4.12.2"
+      }
+    },
+    "optional_grpc_extra": {
+      "selected": false,
+      "dependency": "grpcio>=1.48.2,<2",
+      "candidate_if_later_required": "grpcio==1.84.0",
+      "reason_unselected": "PyPI metadata classifies grpcio as an optional `grpc` extra. The base SDK distribution does not declare grpcio; no reviewed requirement establishes that this optional Python gRPC binding is needed for the planned Temporal client/worker path.",
+      "candidate_metadata_key": "candidate_addition_metadata.grpcio_1.84.0"
+    },
+    "compatibility_assessment": {
+      "python": "Published SDK and selected dependency metadata support Python >=3.10; the Python 3.12 target qualifies.",
+      "platform": "The SDK and protobuf use CPython abi3 manylinux2014 x86_64 wheels; grpcio has a cp312 manylinux2014 x86_64 wheel, matching the target architecture.",
+      "existing_lock": "The current typing-extensions==4.16.0 satisfies the published SDK and nexus-rpc bounds. The base SDK candidate adds nexus-rpc, protobuf and types-protobuf; the optional grpcio candidate is unselected. The proposed base package versions satisfy the SDK's published ranges. They are absent from the current lock and must be resolved and hash-locked as a new candidate before use.",
+      "unverified": "No dependency resolver, installation, import, SDK API test, CLI binary test, or Temporal server execution was run. Compatibility with all existing transitive pins is a candidate assessment, not a proven lock resolution."
+    }
+  },
+  "local_dev_server_cli_candidate": {
+    "distribution": "Temporal CLI release archive",
+    "version": "1.9.1",
+    "platform": "linux/amd64",
+    "github_release": {
+      "url": "https://github.com/temporalio/cli/releases/tag/v1.9.1",
+      "api_metadata_url": "https://api.github.com/repos/temporalio/cli/releases/tags/v1.9.1",
+      "api_response_sha256": "5e841542540cf522763a085cfa2aa335c7bf236fa9d2c418531992fe445b3049",
+      "fetched_at": "2026-10-18T19:31:46.341368Z",
+      "published_at": "2026-09-14T21:33:35Z",
+      "prerelease": false,
+      "draft": false,
+      "tag_commit": "not recorded in this collection"
+    },
+    "binary_archive": {
+      "filename": "temporal_cli_1.9.1_linux_amd64.tar.gz",
+      "url": "https://github.com/temporalio/cli/releases/download/v1.9.1/temporal_cli_1.9.1_linux_amd64.tar.gz",
+      "size": 45298806,
+      "sha256": "09a0326a51db84d02735e53542b9ebd8c4758daf47482a9ab0abce15844e60d5",
+      "official_release_asset_digest": "sha256:09a0326a51db84d02735e53542b9ebd8c4758daf47482a9ab0abce15844e60d5"
+    },
+    "checksum_manifest": {
+      "url": "https://github.com/temporalio/cli/releases/download/v1.9.1/checksums.txt",
+      "size": 836,
+      "sha256": "cc22cb0df0a9bab358500dce212616e8622b0649df68317d9858867d7dc69bd2",
+      "matching_line": "09a0326a51db84d02735e53542b9ebd8c4758daf47482a9ab0abce15844e60d5  temporal_cli_1.9.1_linux_amd64.tar.gz"
+    },
+    "use_boundary": "Candidate for an explicitly preprovisioned local test server binary. The official Python testing docs/API support a preexisting CLI path; do not allow implicit downloads during tests. The dev server is SQLite-backed and remains test infrastructure, separate from the IFPMIC PostgreSQL database. This candidate is not production Temporal or topology acceptance."
+  },
+  "official_sources": [
+    "https://pypi.org/pypi/temporalio/1.34.0/json",
+    "https://pypi.org/pypi/grpcio/1.84.0/json",
+    "https://pypi.org/pypi/protobuf/7.36.2/json",
+    "https://pypi.org/pypi/types-protobuf/7.35.1.20260906/json",
+    "https://pypi.org/pypi/nexus-rpc/1.4.0/json",
+    "https://api.github.com/repos/temporalio/cli/releases/tags/v1.9.1",
+    "https://github.com/temporalio/cli/releases/download/v1.9.1/checksums.txt",
+    "https://github.com/temporalio/documentation/blob/main/docs/develop/python/best-practices/testing-suite.mdx",
+    "https://python.temporal.io/temporalio.testing.WorkflowEnvironment.html",
+    "https://python.temporal.io/temporalio.worker.Replayer.html"
+  ],
+  "collection_limits": [
+    "Only public release metadata and the small textual CLI checksum manifest were fetched; no package wheel, source archive, executable binary, or local source/log was transmitted or downloaded.",
+    "This record proposes versions and file hashes only. It does not alter requirements.in, requirements.lock, or any product/test code.",
+    "A fresh dependency resolution against the existing 32 locked Python distributions, approved new lock review, Python 3.12 install/import test, CLI archive provisioning and SHA verification, and explicit-path SDK dev-server smoke test remain required before B03 implementation can rely on these candidates.",
+    "Temporal CLI dev-server persistence does not replace PostgreSQL and cannot establish production server compatibility."
+  ]
+}

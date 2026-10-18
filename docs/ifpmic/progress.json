@@ -310,7 +310,7 @@
     },
     {
       "id": "B03",
-      "status": "not_started",
+      "status": "in_progress",
       "acceptance": [
         "AT-05",
         "AT-16",
@@ -325,13 +325,32 @@
         "REQ-14"
       ],
       "preparation": {
-        "status": "source_collection_complete",
-        "scope": "Original requirements/current code and public Temporal references collected. Implementation not started; dependency/tool selection and independently reviewed implementation/test plan are still required.",
+        "status": "plan_independently_reviewed",
         "evidence": [
           "evidence/b03/source-collection.json",
-          "evidence/b03/temporal-primary-references.json"
+          "evidence/b03/tc-risk-matrix.json",
+          "evidence/b03/dependency-candidate-metadata.json",
+          "evidence/b03/protocol-advice.json"
         ]
-      }
+      },
+      "plan": "B03-WORKFLOW.md",
+      "scope": "H0 implementation/verification planning independently accepted on the same SHA. H1 pinned SDK/CLI lock and local persistent Temporal qualification is next and not executed. H2-H4 code/tests require their separately reviewed detailed contracts first. No B03 implementation or original AT acceptance claimed.",
+      "increments": [
+        {
+          "id": "h0_preimplementation_plan",
+          "status": "verified",
+          "scope": "Plan approval only; dual same-SHA reviews permit H1 qualification, not B03 completion.",
+          "evidence": "evidence/b03/plan-acceptance.json",
+          "independent_acceptance": "evidence/b03/plan-review.json",
+          "tc_plan_review": "evidence/b03/tc-plan-review.json",
+          "plan_sha256": "38fdd875bc76047ed1e3e46c850277fea1a3d1f825662a13b1c21154925f25ff"
+        },
+        {
+          "id": "h1_temporal_toolchain_qualification",
+          "status": "not_started",
+          "scope": "Resolve/lock base SDK additions against 32 existing constraints, verify CLI hash and actual APIs, durable history/restart/retention/cleanup before later implementation."
+        }
+      ]
     },
     {
       "id": "B04",
@@ -506,12 +525,12 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "B03: resolve collected Temporal/outbox/human-wait/version-policy questions, select pinned local test topology, and independently review the implementation and TC verification plans before code, test, dependency or runtime changes. Full B02 environment/AT-21 and original32 AT remain pending.",
+  "next_step": "B03 H1: qualify the pinned base Temporal SDK and CLI in isolation against the accepted H0 plan, using reviewed TC tests and private lifecycle/history evidence. Do not implement H2/H3/H4 before their detailed contracts and TC ledger reviews. Full B02 environment/AT21, B03 implementation and original32 acceptance cases remain incomplete.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",
     "Approved Bedrock/Claude runtime profile"
   ],
   "publication_policy": "Only authorized git repository documentation, source and synthetic verification summaries/screenshots; never runtime credentials or application logs.",
-  "updated_at": "2026-10-18T19:29:52.716287+00:00"
+  "updated_at": "2026-10-18T19:38:53.655041+00:00"
 }

@@ -1,0 +1,111 @@
+{
+  "kind": "ifpmic.b03.h0.preimplementation-plan-acceptance.v1",
+  "recorded_at": "2026-10-18T19:38:53.673959+00:00",
+  "goal_status": "active",
+  "accepted_stage": "H0 only",
+  "plan": {
+    "path": "docs/ifpmic/B03-WORKFLOW.md",
+    "sha256": "38fdd875bc76047ed1e3e46c850277fea1a3d1f825662a13b1c21154925f25ff"
+  },
+  "independent_reviews": [
+    {
+      "path": "docs/ifpmic/evidence/b03/plan-review.json",
+      "sha256": "2aa73a16dad9adca54e0b9f2a3d3fa668a48d589a70be0cdfcbc5487f5b50fb6"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b03/tc-plan-review.json",
+      "sha256": "6936b813585a0aa27094dbb922518bc16495f793f4d9eb06a3ebb77a6e46ec0b"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "docs/ifpmic/evidence/b03/source-collection.json",
+      "sha256": "ba88a0c2b1d4412ff1f8bec84e516fc62b7786662ea7c0715db670336f2a7675"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b03/tc-risk-matrix.json",
+      "sha256": "369ef9d3d28935f000fab4aff560945104575d661ba4991b57eb33ed20c8624b"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b03/dependency-candidate-metadata.json",
+      "sha256": "bbc72a2c76438478c366744b11a91604d53e0a1e31f6dc5887e2b1ec80a92ef0"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b03/temporal-primary-references.json",
+      "sha256": "8d9aeb931a6bb9ee45bf6b9dcabbd79fd723d381e6448db85b58ea168a28557a"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b03/protocol-advice.json",
+      "sha256": "ab6221cf292b85b857aae16dc9cb5e60d6570d098bbcf494b6e0176ec9ade2da"
+    }
+  ],
+  "review_history": [
+    {
+      "path": "docs/ifpmic/evidence/b03/attempts/dependency-candidate-metadata-v1.json",
+      "sha256": "b1f65dcaf9afbd4252ca0bdda5b0f4ac78a182eb40685eebe431918f2ca6f052"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b03/attempts/plan-v1.md",
+      "sha256": "7667aadc484bd8a9b2631ec801eacf2937b00b6c6f73762c9f41f24609912f4c"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b03/attempts/plan-v2.md",
+      "sha256": "e7f2b47ee0ed55777143601e2c5900ea7b667b09a663fffb2e71ed35fb3dd84e"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b03/attempts/tc-plan-review-v1.json",
+      "sha256": "df166244b456f95c8e9ab85646951590c82b947340cc407b1113096e4477e0d3"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b03/attempts/tc-risk-matrix-v1.json",
+      "sha256": "74fc11475c6e25cea42195e49ca80a66bc1c5eacf23a9a5d2926a2c8166bd2bb"
+    }
+  ],
+  "resolved_findings": [
+    "Corrected TC stale source pin and original-OpenAPI-defined versus current-unimplemented human-submission distinction.",
+    "Optional grpc dependency remains unselected; base SDK only is the H1 candidate.",
+    "Preserved create-command uniqueness/reference, route-constrained joins and non-DRAFT job projections for H2 review.",
+    "Separated outbox transport acknowledgement from Temporal-authoritative business application; receipt replay precedes new authority evaluation.",
+    "Added never-reused binding, first-admitted-run fence, bounded retention-dependent uncertainty and no automatic run replacement.",
+    "Closed P07/P21 unsupported human outcomes and explicit REQ14 P16-to-P07/P08-P16 regression while full AT09 stays in B05."
+  ],
+  "authorization": "Both exact-SHA reviews are now present. H1 isolated lock/hash/API/server qualification and its TC test authoring may proceed. H2/H3/H4 product/test code and migrations require separately approved detailed contracts and TC ledgers.",
+  "verification_performed": [
+    "All reviewer source pins and JSON schemas parsed locally.",
+    "Original captured G6 product/test/runner/plan/lock bytes unchanged; only permitted derivative progress metadata differs.",
+    "Original AT01-AT32 retained not_executed; no new test/service/binary/install execution is asserted."
+  ],
+  "progress_reconciliation": {
+    "path": "docs/ifpmic/progress.json",
+    "before_sha256": "6e074371362bb2d7e0ce9a0d3b5926f54530b797fe416b91a585ff01366664df",
+    "after_sha256": "5de38c445202a0c47e927051c6fc819d4b55c852596df40f1a53785550bf5b11",
+    "changed_semantic_paths": [
+      "stages[B03].status",
+      "stages[B03].plan",
+      "stages[B03].scope",
+      "stages[B03].preparation",
+      "stages[B03].increments",
+      "next_step",
+      "updated_at"
+    ],
+    "g6_captured_entries": 352,
+    "unchanged_captured_entries": 351,
+    "changed_captured_paths": [
+      "docs/ifpmic/progress.json"
+    ]
+  },
+  "not_performed": [
+    "Dependency resolution/installation or binary download/execution",
+    "Temporal/PostgreSQL startup or migration",
+    "Product/test/runner changes",
+    "H1-H7 execution or original acceptance tests",
+    "Real deployment/device/external submission"
+  ],
+  "remaining_conditions": [
+    "A separate TC plan review must approve this exact plan SHA before H1 begins.",
+    "H1 must resolve and hash-lock the selected SDK base dependencies against the current lock, verify/install the exact CLI archive in an isolated path, use an explicit CLI path with implicit download disabled, and prove local persistent Temporal history across restart without changing the IFPMIC PostgreSQL role.",
+    "H2, H3 and H4 implementation/tests require their own detailed exact-SHA contract and TC review before code or migrations. H2 must close the authenticated worker/projection authority boundary described above.",
+    "The plan authorizes no corporate OIDC, Paperclip database, production Temporal, deployment, external submission, device control, real agent/quality role execution, or original acceptance suite completion. AT-05/16/29 and AT-09 remain unexecuted until their full approved integration evidence exists."
+  ],
+  "next_required_action": "H1 actual toolchain and persistent local Temporal qualification; capture before/after source, exact commands, dependency/binary hashes and lifecycle/history evidence, preserve failures and independently review results."
+}

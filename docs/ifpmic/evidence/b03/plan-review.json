@@ -1,0 +1,49 @@
+{
+  "kind": "ifpmic.b03.independent-plan-review.v1",
+  "reviewer_role": "independent plan reviewer",
+  "reviewed_plan": {
+    "path": "docs/ifpmic/B03-WORKFLOW.md",
+    "sha256": "38fdd875bc76047ed1e3e46c850277fea1a3d1f825662a13b1c21154925f25ff"
+  },
+  "decision": "approve_plan",
+  "approval": true,
+  "scope": "Approve the exact plan for H0 only after the separate TC review approves the same SHA. That dual review permits H1 dependency/CLI setup, test authoring and local-server verification only. H2-H4 product and test implementation remain blocked until each detailed contract and TC ledger has its own same-SHA independent reviews. This approval is not implementation, installation, service, migration, B03 acceptance, production approval, or original acceptance-case approval.",
+  "source_pins": {
+    "docs/ifpmic/B03-WORKFLOW.md": "38fdd875bc76047ed1e3e46c850277fea1a3d1f825662a13b1c21154925f25ff",
+    "docs/ifpmic/evidence/b03/attempts/plan-v2.md": "e7f2b47ee0ed55777143601e2c5900ea7b667b09a663fffb2e71ed35fb3dd84e",
+    "docs/ifpmic/evidence/b03/source-collection.json": "ba88a0c2b1d4412ff1f8bec84e516fc62b7786662ea7c0715db670336f2a7675",
+    "docs/ifpmic/evidence/b03/tc-risk-matrix.json": "369ef9d3d28935f000fab4aff560945104575d661ba4991b57eb33ed20c8624b",
+    "docs/ifpmic/evidence/b03/dependency-candidate-metadata.json": "bbc72a2c76438478c366744b11a91604d53e0a1e31f6dc5887e2b1ec80a92ef0",
+    "docs/ifpmic/evidence/b03/temporal-primary-references.json": "8d9aeb931a6bb9ee45bf6b9dcabbd79fd723d381e6448db85b58ea168a28557a",
+    "docs/ifpmic/evidence/b03/protocol-advice.json": "ab6221cf292b85b857aae16dc9cb5e60d6570d098bbcf494b6e0176ec9ade2da",
+    "docs/ifpmic/design-v1/specs/implementation-backlog.json": "115e48568e0464b8e67ef17274dba97b3046a8de902e1cf426d9b70e1528e5d0",
+    "docs/ifpmic/design-v1/specs/requirements.json": "6e1dc87cdbcaa66ed690ffd13d2d70242dff43410c9f822447bd520719ce249b",
+    "docs/ifpmic/design-v1/specs/acceptance-cases.json": "f7163553edc9e8e753965cb8748ab04aac8f68c1a453f567f62284a01b38b0d5",
+    "docs/ifpmic/design-v1/specs/workflow.v1.json": "bab40a7abb3929896add1ef2cd074893dd2a7de14d200a5d6cea4b7a77eb0e89",
+    "docs/ifpmic/design-v1/specs/state-contract.json": "0248e130017043539319c56af854f5388a95d33e7e687902a3438fdff414244a",
+    "docs/ifpmic/design-v1/specs/data-model.json": "00c84f8a39b1b8959daa8d94b1d67e860d83ad9bdb809065a5cd3b18af07071b",
+    "docs/ifpmic/design-v1/specs/openapi.v1.json": "2ed780cfa06349b18f5025937e050fd98a5cefa34b552eb836cfaccad416dd7a",
+    "docs/ifpmic/B01-PROFILES.md": "8c22f1ceaf1d0f3ca1cf7113a829d7e4441df1fb5ebebdbe48a9d71c1e20d7a8",
+    "docs/ifpmic/B02-IDENTITY.md": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a",
+    "services/ifpmic_api/requirements.lock": "6c8c950820a8c3ae9dea250e4080bc9dab09db17663e3d50118c5ac29211357e"
+  },
+  "scope_review": {
+    "backlog_and_requirements": "PASS. The original B03 deliverable is Temporal workflow, outbox, human wait and version pin, with backlog acceptance AT-05/16/29. REQ-05 directly maps to AT-05. The amended plan maps REQ-14's P16 FAIL route to a new-cycle P07 human review and mandatory P08-P16 re-evaluation, and expressly keeps full integrated AT-09 acceptance in B05; this preserves the requirement without claiming B03 completes AT-09.",
+    "original_architecture": "PASS. Paperclip remains the upper UI/management layer, FastAPI/PostgreSQL remain ingress and durable business persistence, Temporal is the sole process-transition authority, and existing AX remains localhost GET-only. The local Temporal CLI SQLite dev database is clearly separate from IFPMIC PostgreSQL. No production topology or connected-role execution is claimed.",
+    "workflow_and_versioning": "PASS. The 29-node literal transition matrix, pass/fail/special/skip policy, cycle/attempt separation and human ownership are preserved. B01 workflow_id/schema_version are not confused with executable build identity. The plan pins immutable binding, queue/type/build and first run_id; prevents run replacement by continue-as-new or workflow retry absent a future reviewed binding/fence contract; reconciles uncertain starts and retained history without blind new starts.",
+    "outbox_and_idempotency": "PASS. PostgreSQL claim/ack fencing is scoped to local outbox writes; network I/O occurs outside the transaction. Accepted receipts, stable command identity, immutable inputs, remote-start uncertainty and projection receipt replay are separated. Dispatcher acknowledgement is not command application, and API 202/workspace READY cannot mark work applied.",
+    "schema_and_api": "PASS. The plan preserves migrations 001/002, requires a new reviewed migration for multiple human commands, and pins a create-command relation/FK so list/snapshot/profile lookup cannot mistake human command payloads for CreateJob data. HumanSubmission keeps the original required DTO fields and enums; notification and plan-decision routes are scoped without claiming B04 web/SSE/artifact delivery.",
+    "human_authority_and_evidence": "PASS. Agent completion is not human completion or quality PASS. P07/P21 route outcomes, task assignment, current membership/authority, stale revision, artifact references, idempotency and one-effective-consumption rules are explicit; unsupported outcome/task-kind combinations fail closed. Raw comments/artifact contents and credentials are excluded from Temporal history/public evidence.",
+    "permissions_and_followup_gate": "PASS WITH H2 CONDITION. API, dispatcher, projection and workspace roles are separated and grants are not authorized in this H0 decision. Protocol advice correctly notes that caller-supplied workflow/run IDs alone cannot prove a genuine Temporal activity. Before any H2 implementation, its separately reviewed contract must bind projection access to an authenticated worker credential/configuration, enforce job/run scope, and include negative cross-job/cross-run tests; same-role or string-equality claims must not be described as cryptographic Temporal identity.",
+    "dependency_and_h1": "PASS WITH H1 VERIFICATION. The metadata candidate selects base temporalio==1.34.0 only; grpcio remains an unselected optional extra. Candidate wheel/CLI hashes and Python/platform metadata are pinned, while the exact lock resolution against the existing 32 distributions is explicitly unproven and required in H1 before install/use. Implicit server downloads are prohibited, and CLI dev-server SQLite cannot replace PostgreSQL or prove production behavior.",
+    "verification_and_recovery": "PASS. H0-H7 have a purpose, target, method/owner, pass criteria, evidence and recovery. H2/H3/H4 contract plus TC-ledger same-SHA reviews precede implementation; H6 exact inventory/source/dependency/output checks and conditional UI omission are independently reviewed before runner use; H7 is an independent audit. H1-H5 cannot replace real PostgreSQL/Temporal with fakes for the persistence/restart evidence. Failure evidence is retained privately and semantic changes require affected regressions."
+  },
+  "remaining_conditions": [
+    "A separate TC plan review must approve this exact plan SHA before H1 begins.",
+    "H1 must resolve and hash-lock the selected SDK base dependencies against the current lock, verify/install the exact CLI archive in an isolated path, use an explicit CLI path with implicit download disabled, and prove local persistent Temporal history across restart without changing the IFPMIC PostgreSQL role.",
+    "H2, H3 and H4 implementation/tests require their own detailed exact-SHA contract and TC review before code or migrations. H2 must close the authenticated worker/projection authority boundary described above.",
+    "The plan authorizes no corporate OIDC, Paperclip database, production Temporal, deployment, external submission, device control, real agent/quality role execution, or original acceptance suite completion. AT-05/16/29 and AT-09 remain unexecuted until their full approved integration evidence exists."
+  ],
+  "verification_performed": "Read-only exact-SHA review of the B03 plan and pinned original backlog, requirements, acceptance cases, workflow/state/data model/OpenAPI, B01/B02 contracts, source collection, TC risk matrix, dependency metadata, and protocol advice. No products/tests were edited or run; no dependencies, binaries, services, databases or network operations were executed for this plan review.",
+  "reviewer_verdict": "Approve the exact B03 plan SHA for H0, with the explicit staged limits above. This permits H1 only after the independent TC review approves the same SHA. It does not approve B03 implementation, tests, dependency installation, server execution or acceptance by itself."
+}
