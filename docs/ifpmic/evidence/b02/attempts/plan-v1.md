@@ -1,0 +1,84 @@
+# B02 인증 요청 저장 작업 공간 구현 및 검증 계획
+
+상태는 구현 전 검토 후보다. `evidence/b02/plan-review.json`과 `tc-plan-review.json`이 같은 문서 SHA를 승인하기 전 제품 코드·테스트 코드·의존성 설치·DB 초기화를 시작하지 않는다. 원본 근거는 `source-collection.json`, Paperclip 경계는 `paperclip-auth-collection.json`, 기술 판단은 `architecture-advice.json`, 시험 위험은 `tc-risk-matrix.json`에 연결한다.
+
+B02는 원본 backlog의 사용자 범위 API, PostgreSQL 요청 저장, 요청별 작업 공간을 구현한다. REQ-13과 AT-21이 직접 기준이며 REQ-02/05/11/12/14의 프로파일·실행·내부 자원·관측 경계를 보존한다. B01의 Node 구현을 이유로 원본 FastAPI·PostgreSQL·Temporal 구조를 바꾸지 않는다. Paperclip은 상위 관리 화면이고 IFPMIC API가 사용자·프로젝트·job 권한을 판정한다. 기존 AX `server/`의 localhost GET-only API, 원본 기록·인증 파일·설정과 설계 계약 17개는 보존한다.
+
+이번 후보는 실제 PostgreSQL과 OIDC 프로토콜을 사용한 로컬 수용을 목표로 한다. 실제 사내 SSO 등록·TLS·프로젝트 권한·운영 DB/backup 승인과 B03 Temporal 실행은 별도 수용이다. AT-21의 job·log·image·device 동시 격리 전체를 유지하며, B04/B09의 실제 endpoint가 연결되기 전 원본 AT-21을 완료로 바꾸지 않는다. 구현되지 않은 경로의 거절이나 synthetic fixture를 전체 AT 증거로 대신하지 않는다.
+
+## 책임과 변경 경계
+
+Code-dev/main은 `services/ifpmic_api/`의 FastAPI app, 인증·repository·SQL migrations·workspace reconciler, 신규 고정 Node bridge와 실행·검증 scripts, Python 환경 manifest/lock, README를 소유한다. TC Luna는 `tests/ifpmic_api/`의 독립 fixture·protocol provider·SQL/HTTP/process/fault 검사와 case ledger를 소유한다. 별도 reviewer는 계획과 고정 후보 증거를 검토하며 제품·테스트를 대신 작성하지 않는다. SAM/TEM/SQE, publisher, 장비 명령과 실제 Agent 실행은 호출하지 않는다.
+
+의존성 후보는 Python3.12, FastAPI0.144.0, Uvicorn0.54.0, psycopg[binary]3.3.6, Authlib1.9.1, HTTPX2 2.13.1이다. 시험에는 pytest9.1.1과 HTTPX0.28.1을 사용한다. 공식 metadata를 확인했으나 이 조합의 설치·API 호환성은 G1 검증 대상이다. 승인 뒤 격리 venv에 전체 전이 의존성을 버전·배포 hash로 고정하고, FastAPI standard/telemetry exporter extra는 추가하지 않는다. resolved dependency가 후보와 충돌하면 조용히 버전을 바꾸지 않고 근거·계획을 수정해 재검토한다. 시스템 Python/기존 Paperclip runtime을 변경하지 않는다.
+
+## 인증과 권한 계약
+
+인증은 별도의 IFPMIC OIDC authorization-code + PKCE S256 흐름이다. 사내 승인 issuer/client/redirect URI/허용 UI origin을 설정으로 받으며 요청이나 token의 임의 URL을 신뢰하지 않는다. Authlib의 검증을 사용하고 state를 브라우저 시작 세션에 결속하여 5분 내 단 한 번 소비한다. nonce, PKCE, 서명 알고리즘 허용목록, issuer/audience/azp/exp/nbf를 확인한다. IdP 요청은 설정한 HTTPS origin에만 허용하고 redirect·환경 proxy를 통한 우회를 막는다. 실서비스 설정이 없으면 real 시작은 실패한다. 로컬 protocol issuer는 명시적 mock 설정·loopback에서만 허용하고 production fallback을 두지 않는다.
+
+새 구현 경로 `GET /auth/login`, `GET /auth/callback`, `POST /auth/logout`, `GET /api/v1/session`은 원본 OpenAPI에 없는 인증 보완 계약이다. callback URL과 완료 후 UI 이동 URL은 고정 설정이며 사용자 return URL을 받지 않는다. issuer와 subject의 쌍을 유일 identity로 저장하고 email/display_name으로 합치지 않는다. 세션은 opaque random32bytes 이상, DB에는 token hash, 절대8시간/idle30분 만료와 폐기를 저장한다. 로그인 때 세션을 회전하고 logout은 해당 세션을 폐기한다. `ax_session`은 원본 이름을 유지하고 host-only, Path=/, HttpOnly, SameSite=Lax, real에서는 Secure다. 수명은 구현 기본 정책이며 사내 승인 정책이라고 주장하지 않는다.
+
+`GET /api/v1/session`의 응답은 정확히 `{user_id,csrf_token,mode}`이며 Cache-Control:no-store다. OAuth/ID/access token과 session token은 DTO·브라우저 storage·로그에 반환하지 않는다. CSRF nonce는 전용 세션 응답과 `X-CSRF-Token`에만 사용한다. 사용자 쓰기 및 logout은 세션에 결속한 synchronizer CSRF와 정확한 허용 Origin을 모두 요구한다. CORS credentials는 origin 목록에만 허용하고 wildcard를 쓰지 않는다. 인증 cookie/CSRF/Origin 헤더 중복도 거절한다. Paperclip `userId`/companyId/owner_id 헤더와 action params, `local-board`, worker/bridge bearer는 사람 세션의 대체 수단이 아니다.
+
+서버가 소유자를 인증된 user_id로 지정한다. 프로젝트 membership이 active이고, job 소유자이거나 해당 job/action의 명시적 delegation이 있어야 읽을 수 있다. 초기 membership capability는 `request.create`이며 요청 생성·자기 작업 읽기만 허용한다. 별도 `job.read` delegation은 한 job의 읽기만 허용하며 생성·수정·승인·다른 job/device 권한을 주지 않는다. delegation의 expiry/revocation과 membership을 매번 확인한다. 프로젝트/회사/운영 관리자는 이 권한을 자동 상속하지 않는다. grant와 profile eligibility의 provisioning은 사용자 API가 아닌 별도 operator 경로이며, 사내 승인 근거 없는 real grant를 자동 생성하지 않는다. 향후 승인·worker·bridge action은 별도 계약으로 추가한다.
+
+목록·직접 URL·command·artifact·event·device 연결은 동일한 프로젝트와 job 범위 판정을 사용한다. 없는 자원과 금지 자원의 상세는 동일한403으로 처리하여 ID 존재를 노출하지 않는다. list는 접근 가능한 항목만 반환한다. 권한 검사는 API 앞단 한 번만 수행하지 않고 repository 조회에도 범위를 전달한다. DB 역할이 단일 service role인 점을 사용자별 DB 격리라고 주장하지 않는다.
+
+## B01 스냅샷 연결
+
+신규 private Node subprocess bridge만 검증된 `readSnapshot`/`getWorkflow`와 Node `versionKey`를 재사용한다. 기존 path 기반 CLI는 그대로 보존한다. executable/script/store root는 서버 설정으로 고정하고 shell을 사용하지 않는다. stdin은 정확히 `{protocol:"ifpmic.snapshot-bridge.v1",operation:"read_snapshot",project_id,profile_version}`이며 다른 operation/key/path/root 선택을 거절한다. 동시 child 최대4개, 대기 최대16개, child deadline10초를 적용하고 초과·실패 시 kill/reap한다. 이 값은 운영 한계이며 벤치마크 수용이라고 주장하지 않는다.
+
+성공 stdout은 정확히 `{protocol:"ifpmic.snapshot-bridge.v1",record_base64,record_bytes_sha256,version_key}` 한 줄이다. record는 B01의 canonical(record)+LF 원본 최대2MiB, stdout 최대3MiB, stderr 최대4KiB다. Python 요청은 ensure_ascii=True이며 stdin 한도는6MiB+4KiB로 한다. astral 문자가 JSON escape로 세 배 커지는 경우도 수용한다. Python은 strict base64·길이·원본 bytes hash·expected project/version/workflow·필드 type을 검사하고 bytes를 BYTEA에 저장한다. Python에서 B01 canonicalization/profile hash를 다시 계산하지 않는다. 실패는 `{error:{code}}` 고정 응답이며 private stdout/stderr·profile 원문은 HTTP·로그·artifact에 내보내지 않는다.
+
+profile_version은 Node-derived 64hex version_key로 색인하고, 표시 label은 lossless ASCII-escaped JSON string으로 저장한다. B01이 허용하는 lone UTF-16 surrogate/astral version을 정규화하거나 손상으로 분류하지 않는다. profile 본문은 JSONB로 변환하지 않으며 HTTP JSON 응답도 ensure_ascii=True로 직렬화한다. project_id는 서버에 미리 provision한 Unicode scalar string이다. project_id의 lone surrogate는 B02 경계에서422 INVALID_REQUEST로 거절하되 기존 B01 record 자체가 손상됐다고 표시하지 않는다.
+
+operator가 검증된 snapshot bytes와 별도의 eligibility 근거를 immutable catalog에 provision한다. ordinary CreateJob은 profile JSON·승인 boolean을 받지 않는다. enabled/configuration/mode/운영 eligibility가 알려진 부적격이면422 PROFILE_INELIGIBLE이다. 동일 project/version key의 기존 bytes를 바꾸지 않는다. 테스트 fixture의 mock eligibility는 synthetic setup이며 real 승인 근거가 아니다. 수락 뒤 eligibility가 폐기되어도 원래 receipt를 변경하거나 자동 적용하지 않는다. B03 활성화 시 current eligibility·workspace READY를 재검사하고 P10 smoke 및 X03 release 승인도 별도로 집행한다.
+
+## PostgreSQL 요청 수락
+
+원본 `POST/GET /api/v1/jobs`, `GET /api/v1/jobs/{job_id}`, `GET /api/v1/commands/{command_id}`를 구현한다. CreateJob/Job/JobList/CommandReceipt/CommandStatus/Error의 필드와 release enum은 원본 그대로 사용한다. Job 응답에 project_id/title을 임의 추가하지 않으며 향후 UI metadata 확장은 별도 명시한다. CreateJob에 owner_id나 추가 key가 있으면 거절한다. body 최대8MiB, 중첩64, 중복 JSON key·불완전 UTF-8·추가 필드를 거절한다. schema string은 비어 있지 않고 identifier에는 C0/DEL을 허용하지 않는다. request_text는 개행·탭을 허용하되 NUL을 거절한다. 모든 문자열과 배열 순서는 정규화하지 않는다. input_artifact_ids는 해당 사용자의 동일 project 소속이며 이미 검증·available인 artifact만 허용하고 아직 없는 artifact를 만들어 통과시키지 않는다. artifact 업로드 경로 자체는 후속이다.
+
+Idempotency-Key는1..128 printable ASCII의 단일 헤더다. 정규 route `POST /api/v1/jobs`와 stable actor_id/key에 UNIQUE를 둔다. command body digest는 버전 태그를 붙인 검증된 CreateJob의 semantic JSON을 Python ensure_ascii=True/sort_keys/compact 직렬화해 계산하며 B01 snapshot digest와 구분한다. unknown fields·body 순서·재로그인으로 의미가 바뀌지 않는다. 동일 key/다른 body는409이고, 동일 body는 원래 receipt를 반환한다. replay도 현재 membership/소유권을 재검사하며 historical acceptance로만 취급한다. 기존 receipt 조회를 profile file의 재검증·현재 eligibility 재승인에 의존시키지 않는다.
+
+새 수락은 immutable 검증 snapshot을 capture한 뒤 한 DB transaction에서 current membership/eligibility를 잠그고 DRAFT job(revision0,cycle0,current_step_ids=[],candidate_fingerprint=null), accepted command, pending outbox, RESERVED workspace intent를 함께 삽입한다. 동시 insert의 winner/loser를 DB unique constraint로 판정하고 loser는 저장된 body hash를 비교한다. membership을 FOR UPDATE로 잠가 revocation과 수락을 선형화하고 grant 변경도 같은 row lock을 사용한다. FK로 actor/project/snapshot/job/command/workspace 관계를 결속한다. commit 후에만202 `{command_id,status:"accepted",resource_id}`를 반환한다. commit 응답 유실은 rollback으로 추정하지 않고503 COMMIT_UNCERTAIN이며 같은 key retry로 결과를 확인한다.
+
+B02의 DRAFT는 초기 저장 상태다. workspace reconciler는 job/revision/command를 applied·QUEUED·RUNNING으로 바꾸지 않는다. B03 Temporal만 프로세스를 전이하고 outbox를 멱등 소비한다. 실행기가 아직 없다는 이유로 accepted를 applied로 바꾸거나 outbox를 버리지 않는다. GET commands는 원본 DTO의 accepted/applied_revision=null/error=null을 유지한다.
+
+리스트 pagination은 추가 구현 계약으로 limit1..100(default20), cursor를 받는다. cursor는 `(created_at,job_id)` 순서의 opaque authenticated token이고 actor·필터에 결속한다. caller가 owner/filter를 바꿔 다른 사용자의 cursor를 사용할 수 없다. 권한이 사라진 항목은 다음 페이지에서도 숨긴다. trace_id는 서버 UUID이고 Error는 `{code,message,trace_id}`이며 message는 code와 같은 고정 문구다. 기본 FastAPI validation/error body와 OS/SQL/IdP/bridge 예외 원문을 반환하지 않는다.
+
+고정 분류는401 AUTH_REQUIRED,403 FORBIDDEN/CSRF_INVALID/ORIGIN_FORBIDDEN,409 IDEMPOTENCY_CONFLICT/PROFILE_VERSION_CONFLICT,422 INVALID_REQUEST/REQUEST_TOO_LARGE/PROFILE_INELIGIBLE,503 DEPENDENCY_UNAVAILABLE/COMMIT_UNCERTAIN이다. 인증 callback의 invalid state/token/nonce/code도 AUTH_REQUIRED이고 IdP 통신 실패는 DEPENDENCY_UNAVAILABLE다. UI가 API의 성공을 workflow 완료로 표시하지 않도록202와 DRAFT/accepted를 보존한다.
+
+## 작업 공간과 DB 운영 경계
+
+기존 root 아래 DB-generated UUID job_id로만 workspace를 만든다. 경로는 요청·title·owner/profile label에서 만들지 않는다. intent는 RESERVED→PROVISIONING→READY/ERROR이며 claim generation/token으로 DB 완료를 fence한다. 여러 reconciler가 SQL row claim을 사용한다. lease token 자체를 실제 Agent 단일 writer 보장이라고 표시하지 않는다. 실행 writer/worktree 관리는 B03/B07의 별도 조건이다.
+
+workspace와 source/tc/artifacts 하위 디렉토리는0700이고 marker는 `{format:"ifpmic.workspace.v1",job_id,workspace_token}`이다. stable token은 SQL intent에 먼저 저장한다. marker를 완전히 write+file fsync+close한 뒤 create-once publish하며 directory와 parent sync가 끝나야 READY를 commit한다. no-follow directory/regular marker·identity·내용·mode를 검증하고 symlink/다른 marker/예상 밖 내용은 ERROR로 남긴다. marker 없는 directory는 같은 intent/서비스 owner/mode0700이며 완전히 비어 있을 때만 이어서 provision하고, 그 외에는 보존하여 수동 조사 대상으로 둔다. 알 수 없는 내용을 재귀 삭제하거나 채택하지 않는다. fs 완료 후 READY commit 전 crash는 같은 marker 검증·sync로 복구하고, SQL commit 직후 crash는 intent scan으로 복구한다. stale reconciler는 DB READY를 commit할 수 없고 stable layout 외의 수정·삭제는 하지 않는다.
+
+DB는 migration owner와 비소유 runtime role을 분리한다. runtime은 non-superuser/NOBYPASSRLS이며 schema CREATE·CREATEDB·CREATEROLE·ownership 변경을 허용하지 않는다. immutable snapshot bytes/소유자 컬럼은 ordinary UPDATE 대상이 아니다. parameterized SQL, migration lock/version, rollback을 사용한다. 이번 계획은 application-scoped repository를 최소 강제로 사용하며 RLS를 구현했다고 주장하지 않는다. RLS를 추가하면 별도 정책·non-owner/connection reuse 검사를 재승인한다.
+
+실험 PG는 수집한 PostgreSQL18.1 binary로 별도 임시 data/socket/port/roles를 만들고 start/stop/kill을 검증한다. 실제 Paperclip DB·설정은 사용하지 않는다. 바이너리가 있음을 cluster 시작 성공이나 운영 DB 수용으로 대신하지 않는다. production DSN·SSO secret·허용 hostname·storage root·역할은 승인된 환경 참조가 필요하다.
+
+## 테스트 인터페이스와 단계별 검증
+
+Python factory는 `create_app(settings, *, db_factory, oidc_transport, bridge_runner, filesystem, clock, fault_hook)`로 테스트 의존성을 주입한다. 생략 시 승인 설정의 실제 구현을 사용하고 import로 서버·DB를 시작하지 않는다. 실제 API와 PostgreSQL 경합 검사를 기본으로 하며 내부 policy만 mock한 검사를 전체 수용으로 세지 않는다. fault_hook은 테스트 전용 객체이고 환경변수·HTTP flag로 활성화할 수 없다. hook 지점은 session commit, job/command/outbox/intent insert 전후, SQL commit 전/후·HTTP response 전, workspace mkdir/marker publish/directory sync/READY commit 전후다. Node child 입출력/timeout과 실제 OIDC transport도 독립 failure seam으로 검사한다.
+
+| 단계 | 목적과 대상 | 방법과 담당 Agent | 합격 기준과 예상 결과 | 증빙 | 실패 시 복구와 재검증 |
+|---|---|---|---|---|---|
+| G0 | 원본 요구·구현/시험 계획 | Luna source collection, main 통합, senior 좁은 조언, 독립 reviewer와 TC의 정확 SHA 검토 | 권한/route/프로파일/원자성·후속 AT 범위 일치, 같은 SHA 승인2건 | source/advice/risk matrix/plan reviews | 모호한 정책·oracle은 구현 전 수정·재승인; 반려 계획 보존 |
+| G1 | 격리 도구·고정 dependency·DB migration | main venv/hash lock; TC 실제 PG18.1 fresh init/start/stop와 owner/runtime 계정으로 migration·rerun·금지 DDL 검사 | 실제 PostgreSQL 사용, binary/lock hash 고정, 기존 Paperclip 데이터 변경0, runtime 권한 범위 충족 | toolchain/lock/binary hashes, migration SQL·실행 로그 | 서비스가 살아 있으면 같은 handle 확인 후 정리; 준비 실패를 SQLite로 우회하지 않고 원인 해결·G1 재검증 |
+| G2 | B01 private bridge·교차 언어 경계 | TC real Node+Python 고정 golden record, key order/숫자/astral/lone surrogate/2MiB, 잘못된 frame/base64/hash/identity/bundle/operation, stdout/stderr 한도·timeout·queue | 저장 raw bytes/hash 불변, label lossless, no shell/path 선택, child kill/reap, 민감 출력0 | literal vectors, BYTEA byte 비교, subprocess ledger | bridge/protocol로 복귀; 기존48 B01 + 관련 bridge 전체 재검증; 의미 변경이면 계획 재승인 |
+| G3 | OIDC·세션·CSRF 정상/예외/경계 | TC 실제 protocol fixture와 두 브라우저/HTTP client, wrong issuer/aud/azp/alg/key/nonce/state/PKCE·expiry/replay·network/redirect·rotation/logout·Origin/CORS·header spoof 검사 | 검증된 issuer/sub만 user, token/세션 분리, 권한 헤더 우회0, 유효 session+CSRF+Origin만 쓰기, provider secret 노출0 | private synthetic protocol ledger, sanitized HTTP transcripts·cookie flags·clock cases | auth/session 정책으로 복귀; 첫 실패 보존 후 모든 G3와 영향 G4/G6 재검증; 실제 SSO 미제공은 별도 미수용 |
+| G4 | 권한·DB 원자성·idempotency·pagination | TC 실제 FastAPI/PG와 독립 process, A/B/member/delegate/revoked cross-project, 동일/다른 key/body 경합, 매 insert rollback·commit-response loss·restart·cursor 변경 | owner는 auth에서만, job/outbox/intent 한 묶음, duplicate0, 409 충돌, accepted≠applied, 재시도 원 receipt, 직접 URL/목록 누출0 | SQL role/row counts·transaction/fault ledger·HTTP DTO/오류 oracle | repository/transaction으로 복귀; G4 전체와 auth·workspace 영향 재검증; 초기 실패자료 보존 |
+| G5 | 실제 작업 공간 격리·복구 | TC 두 reconciler와 실제 FS, mkdir/marker/link/sync/READY 전후 kill, missing/wrong marker/symlink/orphan·권한·stale claim·부족 공간 | READY 전 durable 검증, 다른 job 경로 공유0·overwrite0, accepted 보존, retry/restart 복구, 알 수 없는 내용 삭제0 | UUID 경로·marker hash/mode·process exit·claim/fault ledger | ERROR/잔여 파일 보존, 해당 intent/claim 단계로 복귀; G5 전체 및 G4 crash 경계 재검증 |
+| G6 | 고정 후보·기존 AX/IFPMIC 영향 회귀 | main before→targeted pytest/Node→전체 Node387이상→build/plugin→원본 hashes→after; TC/독립 reviewer 원본 API schema·수용 경계 대조 | fail/skip0, 원본17/ZIP/DOCX 불변, 소스/plan/lock 중간 변경0; UI 생략 조건 또는 확대 검사 충족 | gate/logs/counts/source+output hashes, route별 AT21 matrix | source 변경/timeout/byte 차이는 새 후보; 영향 재평가 후 관련 단계 및 G6 재검증 |
+| G7 | 독립 최종 감사·기록 | 별도 reviewer raw logs/archive/current source와 requirements matrix 확인, main commit/push | G0–G6 실증과 부분 수용, 전체 B02/AT21/32AT 완료 과장0, 공개 증거에 인증·원시 profile/log 없음 | final review/verification manifest·commit/push | 반려 단계 복귀·실패 보존·증거 갱신 후 재검증 |
+
+G6는 accepted B01 commit `1fa94b5c1b478468347c5afa5c0565fe0fae03c2`와 gate SHA `597c3ada698cd20ff9c93a318e1177fe55e43e68844d08a6c56281cf940cb2c6`, accepted controls commit `3e1136cef116753cf063dfb1725306b4b451aa80`와 gate SHA `ceb5e97c8411e225c9e450ad1f2ff692f0c2bffd7b19595c52929a7b4392fcdc`를 기준으로 한다. 구현 전 relevant source inventory와10 build/plugin 산출물의 pin을 수집하고 대상 Node/Python/SQL/plan/lock/test/runner 파일을 고정한다. 전체 Node 단위 command는 기존120초에 근접했으므로 G6의 command 한도는 사전 결정한180초, 개별 protocol/fault test는30초, 전체 Python integration command는300초다. 관측 대기는60초 이하로 나누며 timeout을 종료로 오인해 살아 있는 프로세스를 중복 시작하지 않는다.
+
+UI/browser 기존11-command gate 생략은 src/server/plugins/UI build script·설정의 목록/bytes, 기존 Node dependency resolution,10 UI/plugin 출력 모두 accepted controls 기준과 같고 새 backend가 frontend에 연결되지 않을 때만 가능하다. README/새 backend manifests/Node private bridge와 새 시험은 별도 diff로 기록한다. 하나라도 UI 의미·bundle·catalog·상태 해석에 영향을 주면 해당 browser/host/AX 회귀를 추가하고, 시각화 의미가 바뀌면 기존 전체11 gate로 확대한다. 생략해도 native UI에서 실서비스 인증·조작을 아직 수용하지 못한 위험은 남긴다. OIDC/PG/bridge/workspace/API 검사는 생략하지 않는다.
+
+## 후속 수용과 기술 근거
+
+G7의 부분 수용 후에도 실제 사내 OIDC/TLS/proxy·프로젝트 권한/eligibility provisioning·운영 DB/backup/workspace 정책은 환경 수용으로 남긴다. B03의 Temporal 활성화/outbox 소비, B04 실제 웹/SSE/artifact/로그 연결, B09 장비 연결과 AT-21 전체 행, B05 및 B06–B13/나머지32AT를 계속 추적한다. 이 계획으로 실제 배포·외부 제출·장비 조작을 승인하지 않는다.
+
+기술 기준은 [원본 데이터 모델](./design-v1/specs/data-model.json), [OpenAPI](./design-v1/specs/openapi.v1.json), [OIDC Core](https://openid.net/specs/openid-connect-core-1_0.html), [OAuth 보안 관행](https://www.rfc-editor.org/rfc/rfc9700.html), [Authlib FastAPI](https://docs.authlib.org/en/stable/oauth2/client/web/fastapi.html), [Psycopg transactions](https://www.psycopg.org/psycopg3/docs/basic/transactions.html), [PostgreSQL RLS](https://www.postgresql.org/docs/current/ddl-rowsecurity.html), [FastAPI CORS](https://fastapi.tiangolo.com/tutorial/cors/)다. 구현 기본 정책과 원본에 명시된 계약을 구분하고 실제 설치·동작 증거로 호환성을 검증한다.

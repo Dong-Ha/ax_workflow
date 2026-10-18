@@ -1,0 +1,136 @@
+{
+  "kind": "ifpmic_b02_architecture_advice",
+  "date": "2026-10-18",
+  "reviewer_role": "senior_sol",
+  "decision": "proceed_to_implementation_plan_with_explicit_boundaries",
+  "scope": "Architecture advice only. No product code, tests, dependencies, services or existing database changed. Full B01-B13 and AT-01 through AT-32 scope remains active.",
+  "source_pins": {
+    "docs/ifpmic/evidence/b02/source-collection.json": "da6fdce28078167517b5ee94336bddb81775d1dad91b41181c894acde2f2437a",
+    "docs/ifpmic/evidence/b02/paperclip-auth-collection.json": "5255b7f5e529ec9de4114f8a31750aec34a4cc6673b6197ee9fe08f2381f4bfe",
+    "docs/ifpmic/evidence/b02/technical-sources.json": "8ae934679291efc06c21d0c2f63bb5c5ea3b2c9adeb4c7208596886c8ebbaa40",
+    "docs/ifpmic/PLAN.md": "3b99c7b3629a8e0e6bc41d524329d2a0de27a468ec447a990fa360dcc38aa39d",
+    "docs/ifpmic/B01-PROFILES.md": "8c22f1ceaf1d0f3ca1cf7113a829d7e4441df1fb5ebebdbe48a9d71c1e20d7a8",
+    "runtime/ifpmic/index.mjs": "4bf311e4c456843240b3c7f6eae58ee45480e6b4e14e958dc92825c4140dda39",
+    "runtime/ifpmic/profile.mjs": "2277163d940aed1b8c0c16a2da09f412e777800a2cb907cde5919799481028dd",
+    "runtime/ifpmic/snapshot.mjs": "9bbfdcaf483167c931f0b6e0a453697cd8ea92f3b12f33ab30ffa0b2dd52b789",
+    "runtime/ifpmic/store.mjs": "0f532d26504b1975b61b8e67c87225c29d4d576115ed81d2314ecb6ae359477e",
+    "docs/ifpmic/design-v1/specs/implementation-backlog.json": "115e48568e0464b8e67ef17274dba97b3046a8de902e1cf426d9b70e1528e5d0",
+    "docs/ifpmic/design-v1/specs/openapi.v1.json": "2ed780cfa06349b18f5025937e050fd98a5cefa34b552eb836cfaccad416dd7a",
+    "docs/ifpmic/design-v1/specs/data-model.json": "00c84f8a39b1b8959daa8d94b1d67e860d83ad9bdb809065a5cd3b18af07071b",
+    "docs/ifpmic/design-v1/specs/state-contract.json": "0248e130017043539319c56af854f5388a95d33e7e687902a3438fdff414244a",
+    "docs/ifpmic/design-v1/specs/acceptance-cases.json": "f7163553edc9e8e753965cb8748ab04aac8f68c1a453f567f62284a01b38b0d5"
+  },
+  "decisions": [
+    {
+      "id": "B02-ARCH-01",
+      "topic": "Authentication and Paperclip integration",
+      "decision": "Keep a separate FastAPI IFPMIC service. Use a configured OIDC authorization-code client with PKCE S256, then issue the existing-contract ax_session cookie backed by PostgreSQL sessions. Paperclip remains the UI/management host.",
+      "required_boundaries": [
+        "Paperclip browser userId/companyId, ordinary headers, performAction parameters and local_trusted local-board are not external IFPMIC credentials. The evidenced host actor RPC has no evidenced assertion exchange for this service. Do not introduce a custom JWT trust protocol to bridge this gap.",
+        "Configure issuer, client registration, exact redirect URI, allowed UI origins and proxy trust explicitly. Use established OIDC validation; require state bound to the initiating browser, single-use expiring login transaction, nonce, PKCE verifier, signature and issuer/audience/azp/time checks. Do not discover arbitrary request-supplied issuers or trust token-supplied key URLs.",
+        "Identify users by the unique issuer/subject pair, encoded unambiguously if retaining the original identity_subject column. Never merge users by display name/email or infer IFPMIC membership from Paperclip company membership.",
+        "Use opaque high-entropy session tokens with server-side expiry/revocation and hashes at rest; rotate at login. Cookie: Secure, HttpOnly, host-only, Path=/, SameSite=Lax for the chosen top-level GET callback. Keep OAuth tokens and session values out of UI storage, API DTOs and logs.",
+        "User mutations require session-bound synchronizer CSRF tokens and an allowed Origin, including logout. Credentialed CORS uses exact origins. Prefer same-site deployment and direct browser requests using the IFPMIC session; cross-site third-party cookie behavior is a deployment issue, not permission to weaken checks.",
+        "Production startup fails closed without real OIDC configuration. Protocol fixtures may use an explicitly isolated mock issuer and synthetic users, with no mock identity fallback enabled in production. This exercises the implemented OIDC flow, not real corporate SSO acceptance."
+      ]
+    },
+    {
+      "id": "B02-ARCH-02",
+      "topic": "B01 interoperability",
+      "decision": "Use a new fixed, private Node subprocess bridge that reuses the verified B01 library, rather than rewriting FastAPI in Node or porting B01 canonicalization to Python. The existing path-based/hash-only CLI is not this bridge.",
+      "required_boundaries": [
+        "Allow only a versioned read_snapshot JSON-stdin operation with exact keys project_id/profile_version. Use fixed trusted Node executable/script paths, no shell, a server-configured store root, bounded stdin/stdout/stderr, a deadline, concurrency limits, kill and reap on failure, and fixed error codes. Requests cannot select executable, module, root or arbitrary path.",
+        "Delegate source/bundle/schema/identity/digest/canonical-byte verification to readSnapshot. Success framing is {protocol,record_base64,record_bytes_sha256,version_key}; version_key is produced by the Node implementation. A 2MiB record fits a 3MiB stdout cap after base64 framing. Encode Python request JSON with ensure_ascii=True so lone surrogates survive transport; allow 6MiB plus 4KiB stdin because legal non-BMP version labels can expand threefold from canonical UTF8. Do not apply the 1MiB profile-text limit to this different protocol.",
+        "Python checks framing, strict base64, raw byte length and SHA256, expected identity/workflow and metadata types; it stores the exact verified record in BYTEA. It must not reconstruct B01 profile/snapshot hashes by reserializing parsed Python objects. Record bytes, profile data and bridge stderr are private and never HTTP/log/artifact responses.",
+        "Resolve/import trusted configured snapshots before the command transaction; inside the transaction bind the captured snapshot ID and immutable revision record. Ordinary CreateJob callers cannot upload a snapshot or mint approval by selecting a label. Existing DB snapshot bytes cannot be updated in place.",
+        "A cross-language port would require independent golden vectors for JS UTF-16 key order, string escaping, number serialization, parser boundaries and all source-bundle pins; it duplicates the current authority and is unnecessary for B02. Offline trusted import is useful provisioning, but by itself is not a reusable runtime verification boundary."
+      ]
+    },
+    {
+      "id": "B02-ARCH-03",
+      "topic": "Lossless profile labels and approval",
+      "decision": "Preserve legal B01 profile-version labels losslessly: store profile_version_json as an ASCII-escaped JSON string, index by the Node-derived fixed-size version key/snapshot ID, and retain opaque profile bytes. Keep project IDs server-provisioned Unicode scalar strings.",
+      "required_boundaries": [
+        "B01 accepts lone UTF-16 surrogates in JSON strings; PostgreSQL UTF8 TEXT/JSONB cannot represent them directly. Do not put the entire parsed profile in JSONB. Python ensure_ascii=True encoding of the label and response DTOs preserves astral characters and lone surrogates without normalizing them. A multi-megabyte label must not be indexed as a PostgreSQL B-tree text key.",
+        "Store approval/eligibility as separate audited authority bound to project and snapshot ID, not profile JSON or import success. No ordinary request can self-approve. Trusted provisioning of mock-only fixture approval is test setup, not real approval evidence.",
+        "A disabled or unapproved snapshot never becomes executable. Imported draft snapshots may remain in the catalog. Reject known ineligible create requests clearly; if eligibility is revoked after acceptance, the command stays accepted/DRAFT until the later authoritative consumer resolves it. Recheck current eligibility before activation regardless of acceptance-time validation.",
+        "Configured real values still do not prove P10 smoke validation or release approval. Snapshot immutability and project approval do not replace these later operational gates."
+      ]
+    },
+    {
+      "id": "B02-ARCH-04",
+      "topic": "PostgreSQL command acceptance",
+      "decision": "One transaction performs current authorization and inserts the DRAFT job, immutable snapshot binding, accepted create command, pending outbox row and RESERVED workspace intent. Return 202 only after commit.",
+      "required_boundaries": [
+        "DRAFT revision=0, cycle=0, current_step_ids=[], candidate_fingerprint=null is valid bootstrap persistence in the original state vocabulary. It is not an execution transition. B02 provisioning changes only workspace metadata; it cannot mark the command applied or job QUEUED/RUNNING. Temporal remains the B03 transition authority.",
+        "Use a database UNIQUE(actor_id, normalized_route, idempotency_key) constraint and a digest of the validated semantic command including target identity. Actor is the stable authenticated user, not the current session token. Concurrent insert losers select the committed existing record and compare payload digests: equal returns the original receipt, unequal is 409. Do not use a read-then-insert check without the constraint.",
+        "Reauthorize a replay before returning its receipt. Treat it as historical acceptance, not a second command: no duplicate job, workspace or outbox. Profile revocation after acceptance blocks dispatch rather than changing the immutable original receipt.",
+        "Use foreign keys and fixed-size identities to bind command/job/project/snapshot/workspace associations. Lock the relevant membership/authorization row through commit if revocation must be linearized against acceptance; FOR KEY SHARE alone does not prevent non-key role updates.",
+        "Commit-response loss is uncertain to the client; retry with the same key resolves it. Never assume a connection error proves rollback. Pending outbox survives process restart. B03 later consumes at least once with stable command/workflow identity and deduplication; B02 must not fake a dispatcher success."
+      ]
+    },
+    {
+      "id": "B02-ARCH-05",
+      "topic": "Workspace crash consistency",
+      "decision": "Allocate filesystem workspaces asynchronously from durable intents after SQL acceptance. Use database-generated UUID paths beneath a configured owner-controlled root; no request path is used.",
+      "required_boundaries": [
+        "Track RESERVED -> PROVISIONING -> READY/ERROR with a retryable claim/generation. Multiple reconcilers claim intents transactionally. A claim token fences DB completion; it does not by itself stop an old filesystem writer or establish the B03 single-executor invariant.",
+        "Create mode-0700 directories and a durable ownership marker bound to job ID and a stable DB-reserved workspace token. Verify no-follow regular directory/marker identity and contents on retries. Sync marker, directory and parent entries before committing READY. No marker, conflicting marker, symlink or unexpected contents may be interpreted as READY.",
+        "A crash between mkdir and marker leaves a reconciliation case. Document an explicit recovery rule: complete a provably empty service-owned provisioning directory under its existing intent, or quarantine/report it for reconciliation. Do not silently adopt arbitrary contents, recursively delete an unknown workspace or mark missing-marker storage ready.",
+        "Crash after filesystem completion but before READY is repaired by verification and sync, not duplicate allocation. Crash after DB commit before any filesystem action is recovered by scanning intents, not by depending on the vanished HTTP request.",
+        "B03 must check READY plus marker identity and current profile eligibility before starting execution. Workspace failure is separately observable and retryable; B02 cannot turn it into a fabricated workflow result. Accepted jobs and orphan evidence are not deleted to simulate an atomic SQL/filesystem transaction."
+      ]
+    },
+    {
+      "id": "B02-ARCH-06",
+      "topic": "Authorization and database roles",
+      "decision": "Use explicit application-scoped repository queries as the minimum B02 enforcement mechanism, backed by constraints and a restricted runtime role. Do not claim that PostgreSQL privileges alone provide per-user isolation when all users share one application role.",
+      "required_boundaries": [
+        "Every resource query requires active project membership AND job ownership or an explicit resource/action delegation. A project member or company administrator is not automatically another job's owner. Deny absent, expired, revoked, cross-project or wrong-action delegation. Creation derives owner from authentication only.",
+        "Apply the same join/predicate to lists, detail, command status, logs/events, artifact metadata/bytes, image URLs and device/job associations. Artifact or device IDs alone cannot authorize access. Delegation targets are server-resolved and cannot escape their job/project. Do not expose filesystem paths, credentials, raw traces or raw profiles.",
+        "Separate migration owner and runtime roles. Runtime is non-owner, non-superuser, NOBYPASSRLS, without CREATE/CREATEDB/CREATEROLE or schema ownership; grant only needed objects/columns. Immutable snapshots and ownership columns are not ordinarily updatable. Use parameterized SQL, short transactions, rollback on error and a migration lock/version table.",
+        "RLS is optional additional defense, not a substitute for these predicates. If selected, test using the actual non-owner role, transaction-local actor settings, policy joins and pooled-connection reuse. Owners/superusers can bypass policies; tests run only as postgres would give misleading assurance. Do not assert RLS is enforced merely because policies exist."
+      ]
+    },
+    {
+      "id": "B02-ARCH-07",
+      "topic": "Real PostgreSQL verification",
+      "decision": "Use actual PostgreSQL transactions and independent connections/processes. The collected nested PostgreSQL 18.1 binaries are a possible test toolchain, not permission to use the Paperclip database or proof of database provisioning.",
+      "required_boundaries": [
+        "Initialize an isolated temporary cluster, data directory, socket/port and dedicated test roles; record binary versions/hashes and bounded start/stop cleanup. Do not mutate Paperclip data/configuration. Production migration/backup/TLS acceptance remains separate.",
+        "Exercise fresh migration, migration rerun, constrained runtime privileges, concurrent identical/different idempotency requests, authorization revocation races, transaction rollback at each insert boundary, commit-response loss, service restart and outbox persistence.",
+        "Exercise concurrent independent workspace reconcilers and process death before mkdir, before/after marker publication and before/after READY commit. Inspect actual directory identities, permissions and isolation rather than substituting a fake filesystem."
+      ]
+    },
+    {
+      "id": "B02-ARCH-08",
+      "topic": "Completion claims",
+      "decision": "Implement the full B02 identity/database/workspace boundary and its real-protocol tests. Keep later execution endpoints and acceptance cases explicitly pending until their actual behavior exists.",
+      "required_boundaries": [
+        "B02 session/job/workspace evidence cannot alone close original AT-21, which includes concurrent cross-user job/log/image/device reads through direct URLs. Retain a route-by-route matrix with actual tests where endpoints exist and named pending B04/B09 dependencies where they do not.",
+        "Do not create permissive stubs, return applied for queued commands, label synthetic actor tests corporate SSO acceptance, or mark the B01-B13/32-case goal complete. A securely rejected unimplemented endpoint also does not prove the eventual route's isolation."
+      ]
+    }
+  ],
+  "negative_test_matrix": {
+    "oidc": ["missing/mismatched/expired/replayed state", "state copied to another browser", "wrong nonce or PKCE verifier", "code reuse", "wrong issuer/audience/azp or disallowed signature algorithm", "expired/not-yet-valid token", "unknown/rotated signing key", "malicious issuer/key/redirect URLs", "same email with different issuer/sub remains distinct"],
+    "sessions_and_csrf": ["missing/expired/revoked/fixed session", "logout invalidates only the intended session", "missing/wrong/other-session CSRF token", "untrusted or missing mutation Origin", "credentialed CORS preflight from unauthorized origin", "forged identity/owner/company headers or body fields", "simultaneous A/B sessions do not share identity or CSRF"],
+    "authorization": ["A requests B list/detail/command/log/event/image/artifact-byte/device resource", "valid resource with wrong job/project association", "project member without owner/delegation", "revoked membership or expired/wrong-action delegation", "admin visibility without approval authority", "service/bridge credentials used as human sessions"],
+    "bridge_and_unicode": ["corrupt/wrong-identity/wrong-workflow snapshot", "unexpected protocol/keys/exit or malformed/oversized output", "timeout/stderr sentinel/child exit", "arbitrary root/path/op attempts", "astral characters and lone-surrogate profile-version labels round-trip", "near-limit label and exactly 2MiB record", "opaque lone-surrogate profile leaf never enters JSONB", "raw bytes stable across import/restart and no raw data in HTTP/errors/logs"],
+    "durability": ["same-key equal-body and different-body races across processes", "rollback after every acceptance insert", "commit acknowledged by DB but HTTP response lost", "restart with pending outbox/workspace intents", "workspace marker conflict or symlink", "late stale reconciler cannot mark an incompatible generation READY", "disabled/unapproved/revoked/mock profile cannot activate real execution"]
+  },
+  "technical_sources": [
+    { "url": "https://openid.net/specs/openid-connect-core-1_0.html", "use": "Code flow, ID token validation and issuer/subject identity semantics." },
+    { "url": "https://www.rfc-editor.org/rfc/rfc9700.html", "use": "Current OAuth security practice, PKCE and redirect/token protections." },
+    { "url": "https://docs.authlib.org/en/stable/oauth2/client/web/starlette.html", "use": "Supported Starlette/FastAPI integration seam; package API/version compatibility still needs targeted verification." },
+    { "url": "https://www.postgresql.org/docs/current/ddl-rowsecurity.html", "use": "RLS default deny and owner/superuser bypass limitations." }
+  ],
+  "remaining_uncertainty": [
+    "Corporate OIDC registration, approved TLS origin and trusted proxy settings were not supplied; fixture protocol success cannot establish their operational acceptance.",
+    "Exact project-role/delegation policy and profile-approval provisioning authority must be written in the implementation plan; they are not inferable from Paperclip roles.",
+    "The embedded PostgreSQL candidate still needs isolated init/start/stop and runtime-role smoke verification; no service was started for this advice.",
+    "No code implements the proposed bridge or B02 transactions yet. These are concrete recommendations, not implementation evidence."
+  ],
+  "acceptance_cases_executed": false,
+  "product_files_changed": false
+}

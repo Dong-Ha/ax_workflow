@@ -1,0 +1,39 @@
+{
+  "kind": "b02_independent_tc_plan_review_v3",
+  "reviewer_role": "independent TC plan reviewer",
+  "reviewed_plan": {
+    "path": "docs/ifpmic/B02-IDENTITY.md",
+    "sha256": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a"
+  },
+  "decision": "approve_tc_plan",
+  "scope": "Read-only review of the v3 logging/privacy delta, carrying forward the independent v2 TC-plan approval for the unchanged B02 contracts. This is TC-plan approval only; the separate plan-review-v3 record remains required before implementation.",
+  "prior_tc_plan_approval": {
+    "path": "docs/ifpmic/evidence/b02/tc-plan-review-v2.json",
+    "sha256": "fa8eb9c05f7605ebd87d289347997c61b46f39de40f32278ca38c63717b39a3e",
+    "carried_forward": true
+  },
+  "delta_review": {
+    "logging_boundary": {
+      "result": "pass",
+      "oracle": "The plan disables Uvicorn access logs and prohibits request-line/query/body/header logging middleware and HTTP client debug logging. Tests can submit distinct synthetic canaries in successful, failed, expired and replayed callback query parameters, then search the actual service stdout, stderr and application logs for every canary. Assertions can also check that the allowlisted audit output contains only static event/code and server-generated trace/job/command identifiers, and no Location, cookie, Authorization, CSRF or raw callback exception values.",
+      "basis": "B02-IDENTITY.md authentication/session logging paragraph and G3 verification row explicitly enumerate protected fields, process log surfaces, callback outcomes, and the canary-absence evidence."
+    },
+    "privacy_and_evidence_scope": {
+      "result": "pass",
+      "oracle": "Canaries are synthetic and must not be written into public evidence. The evidence may record canary labels and pass/fail counts, not the values themselves. Reverse-proxy query redaction remains a separate operational acceptance item; local service logs do not prove proxy behavior."
+    },
+    "prior_contracts": {
+      "result": "pass",
+      "basis": "The v3 delta preserves the v2-pinned DTO/error/role/lifetime/Unicode/digest/workflow-version/eligibility/transaction/workspace contracts and their testability. No original AT-21 scope is narrowed; synthetic callback evidence remains distinct from real corporate SSO."
+    }
+  },
+  "material_blockers": [],
+  "implementation_gate": {
+    "tc_plan_approved": true,
+    "product_implementation_approved_by_this_record": false,
+    "separate_plan_review_required": true,
+    "required_plan_review_path": "docs/ifpmic/evidence/b02/plan-review-v3.json",
+    "reason": "Both independent reviewers must approve this exact v3 plan SHA before implementation begins."
+  },
+  "reviewer_verdict": "Approve the v3 independent TC plan for SHA f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a. The added callback log-protection contract has a concrete process-output canary oracle and preserves the v2 approval. This does not approve product implementation by itself or establish reverse-proxy redaction, real SSO, production approval, or AT-21 acceptance."
+}

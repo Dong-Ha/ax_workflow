@@ -1,0 +1,78 @@
+{
+  "kind": "b02_g0_preimplementation_plan_acceptance",
+  "recorded_at": "2026-10-18T14:58:27.678847+00:00",
+  "goal_status": "active",
+  "accepted_stage": "G0 only",
+  "plan": {
+    "path": "docs/ifpmic/B02-IDENTITY.md",
+    "sha256": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a"
+  },
+  "independent_reviews": [
+    {
+      "path": "docs/ifpmic/evidence/b02/plan-review-v3.json",
+      "sha256": "fa9a273001c214a7cb39802ed86f4f968f9899a84a5be75d61b1483aa5694cef"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/tc-plan-review-v3.json",
+      "sha256": "c41bf370859a4a6a61d1e1bdaa005b07e4311d2b73c1bca5b1c49540a16fb0df"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "docs/ifpmic/evidence/b02/source-collection.json",
+      "sha256": "da6fdce28078167517b5ee94336bddb81775d1dad91b41181c894acde2f2437a"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/paperclip-auth-collection.json",
+      "sha256": "5255b7f5e529ec9de4114f8a31750aec34a4cc6673b6197ee9fe08f2381f4bfe"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/technical-sources.json",
+      "sha256": "8ae934679291efc06c21d0c2f63bb5c5ea3b2c9adeb4c7208596886c8ebbaa40"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/architecture-advice.json",
+      "sha256": "d125f5cbd05698eaf0e810b9677cea1db1514aff967eb0672964a33d4433bff9"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/tc-risk-matrix.json",
+      "sha256": "3bd978e2cbe7773f02e0ed94e820c6c2430d742c899721a6070764be96e1b5d6"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/dependency-candidate-metadata.json",
+      "sha256": "d51c739c7f8e01413039e6d152f11c9f39d0a203128e2c4c23e96bb5e0c38fc2"
+    }
+  ],
+  "historical_review_targets": [
+    {
+      "sha256": "e4efc9c93af668b4f2db6bbad091720a5465ea789616b7a9b06dbc9e19933692",
+      "preserved_path": "docs/ifpmic/evidence/b02/attempts/plan-v1.md"
+    },
+    {
+      "sha256": "6bfabb6794b5656a48ebfc1d40e3f007aea3769a19e49a1747ec38b8dd15487a",
+      "preserved_path": "docs/ifpmic/evidence/b02/attempts/plan-v2.md"
+    }
+  ],
+  "resolved_findings": [
+    "Workflow version explicitly maps the verified snapshot workflow_id registry reference; schema version stays format.",
+    "Eligibility catalog, operator authority and mock-only local grants are explicit; real issuance remains fail-closed pending approved authority.",
+    "Complete accepted CreateJob semantic payload persists across restart as escaped ASCII JSON; digest does not replace stored input.",
+    "Lone-surrogate and astral labels/free fields remain lossless; PostgreSQL scalar identifiers have an explicit boundary.",
+    "CSRF derivation, stable issuance, session rotation and token-hash-only persistence are testable.",
+    "Callback authorization code/state/error_description and request-query logs are protected with a real-service canary absence test."
+  ],
+  "validation_performed": [
+    "Current plan exact SHA and both independent approval decisions matched.",
+    "All four historical review targets match exact preserved plan copies.",
+    "New evidence JSON parses; source pins were checked by collectors/reviewers and main.",
+    "git diff whitespace review; no product code or dependency/service mutation."
+  ],
+  "not_performed": [
+    "B02 product or TC test implementation",
+    "Python dependency installation/compatibility",
+    "PostgreSQL cluster initialization/migrations",
+    "Actual OIDC/session/API/workspace execution",
+    "Corporate SSO/deployment or original AT21 acceptance"
+  ],
+  "next_required_action": "G1: create isolated Python/hash-locked environment and isolated actual PostgreSQL test cluster; validate migrations/runtime privileges before service implementation proceeds through G2-G7."
+}

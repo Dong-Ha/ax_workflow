@@ -1,0 +1,61 @@
+{
+  "kind": "ifpmic_b02_independent_plan_review_v3",
+  "reviewer_role": "independent plan reviewer",
+  "reviewed_plan": {
+    "path": "docs/ifpmic/B02-IDENTITY.md",
+    "sha256": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a"
+  },
+  "decision": "approve_plan",
+  "approval": true,
+  "scope": "Exact-SHA review of the v3 logging/privacy correction against the previously reviewed B02 plan and original source/evidence pins. Approval is for implementation and independent test authoring only; it is not acceptance, deployment, SSO, PostgreSQL production, B03, or AT-21 completion approval.",
+  "source_pins": {
+    "docs/ifpmic/B02-IDENTITY.md": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a",
+    "docs/ifpmic/evidence/b02/attempts/plan-v2.md": "6bfabb6794b5656a48ebfc1d40e3f007aea3769a19e49a1747ec38b8dd15487a",
+    "docs/ifpmic/evidence/b02/plan-review-v2.json": "034b9b7376824bea98d7e7325b6d8a2501ab9bce5257d80f54c9c8d07daec640",
+    "docs/ifpmic/evidence/b02/source-collection.json": "da6fdce28078167517b5ee94336bddb81775d1dad91b41181c894acde2f2437a",
+    "docs/ifpmic/evidence/b02/paperclip-auth-collection.json": "5255b7f5e529ec9de4114f8a31750aec34a4cc6673b6197ee9fe08f2381f4bfe",
+    "docs/ifpmic/evidence/b02/architecture-advice.json": "d125f5cbd05698eaf0e810b9677cea1db1514aff967eb0672964a33d4433bff9",
+    "docs/ifpmic/evidence/b02/tc-risk-matrix.json": "3bd978e2cbe7773f02e0ed94e820c6c2430d742c899721a6070764be96e1b5d6",
+    "docs/ifpmic/evidence/b02/technical-sources.json": "8ae934679291efc06c21d0c2f63bb5c5ea3b2c9adeb4c7208596886c8ebbaa40",
+    "docs/ifpmic/evidence/b02/dependency-candidate-metadata.json": "d51c739c7f8e01413039e6d152f11c9f39d0a203128e2c4c23e96bb5e0c38fc2",
+    "docs/ifpmic/design-v1/specs/implementation-backlog.json": "115e48568e0464b8e67ef17274dba97b3046a8de902e1cf426d9b70e1528e5d0",
+    "docs/ifpmic/design-v1/specs/requirements.json": "6e1dc87cdbcaa66ed690ffd13d2d70242dff43410c9f822447bd520719ce249b",
+    "docs/ifpmic/design-v1/specs/acceptance-cases.json": "f7163553edc9e8e753965cb8748ab04aac8f68c1a453f567f62284a01b38b0d5",
+    "docs/ifpmic/design-v1/specs/openapi.v1.json": "2ed780cfa06349b18f5025937e050fd98a5cefa34b552eb836cfaccad416dd7a",
+    "docs/ifpmic/design-v1/specs/data-model.json": "00c84f8a39b1b8959daa8d94b1d67e860d83ad9bdb809065a5cd3b18af07071b",
+    "docs/ifpmic/design-v1/specs/workflow.v1.json": "bab40a7abb3929896add1ef2cd074893dd2a7de14d200a5d6cea4b7a77eb0e89",
+    "docs/ifpmic/design-v1/specs/state-contract.json": "0248e130017043539319c56af854f5388a95d33e7e687902a3438fdff414244a",
+    "docs/ifpmic/design-v1/specs/project-profile.example.json": "37301c6ff5c9cae237b6037a3106368cfd07e4582462d52a35dfee39de7839f2",
+    "docs/ifpmic/design-v1/specs/sources.json": "c0c6f96c54ba4fd1c7a1bd70b954a7316bebdba86ff681e5a07141c682eeb7ef",
+    "docs/ifpmic/design-v1/README.txt": "33ff9f07a74c3e276ac63746340a56e4bbdeca18d2531de24cc978d533283122",
+    "IFPMIC_AX_Design_v1.docx": "18a14876a689beae0599b5d4014bf95db79bef047d0e4ceafa60d9a9417624fc",
+    "docs/ifpmic/PLAN.md": "3b99c7b3629a8e0e6bc41d524329d2a0de27a468ec447a990fa360dcc38aa39d",
+    "docs/ifpmic/B01-PROFILES.md": "8c22f1ceaf1d0f3ca1cf7113a829d7e4441df1fb5ebebdbe48a9d71c1e20d7a8",
+    "runtime/ifpmic/index.mjs": "4bf311e4c456843240b3c7f6eae58ee45480e6b4e14e958dc92825c4140dda39",
+    "runtime/ifpmic/snapshot.mjs": "9bbfdcaf483167c931f0b6e0a453697cd8ea92f3b12f33ab30ffa0b2dd52b789",
+    "runtime/ifpmic/store.mjs": "0f532d26504b1975b61b8e67c87225c29d4d576115ed81d2314ecb6ae359477e",
+    "server/index.mjs": "9f462d86df80903570ab9ec110be564586dd89c45a3fd553a59cc6d5d6e56299"
+  },
+  "delta_review": {
+    "previous_blocker": "B02-PLAN-06: OIDC callback authorization code/state could appear in request/access logs.",
+    "resolution": "PASS. Uvicorn access_log is fixed false; HTTP request-line/query/body/header and HTTP client debug logging are disabled; callback code/state/error_description and session/CSRF material are covered by a static audit allowlist that permits only static event/code, server trace_id, and internal job/command identifiers. Raw redirect location, cookies, Authorization, CSRF, and callback exception details are excluded.",
+    "independent_test": "PASS. G3 now exercises successful, failed, expired, and replayed callbacks with synthetic code/state/error_description canaries and checks service stdout/stderr and application logs for their absence. Test canaries are not published as evidence values.",
+    "proxy_boundary": "PASS. Reverse-proxy query redaction remains a separate operational acceptance item; local application evidence is not represented as proxy proof.",
+    "other_delta": "No material change to the previously approved-by-review B02 contracts or phase matrix was found."
+  },
+  "scope_review_carryforward": {
+    "original_b02": "PASS: user-scoped FastAPI API, PostgreSQL request persistence, per-request workspace; original FastAPI/PostgreSQL/Temporal boundary; AX remains localhost GET-only; Paperclip remains upper UI/management, not user-identity authority.",
+    "authorization_and_at21": "PASS WITH EXPLICIT PENDING ACCEPTANCE: authenticated owner, project membership and explicit delegation are checked; job/log/image/device isolation remains full AT-21 scope; mock routes/fixtures cannot count as the actual AT-21 acceptance, which waits for real integrated endpoints and independent user sessions.",
+    "workflow_mapping": "PASS: Job.workflow_version uses verified snapshot.payload.workflow.workflow_id (registry identity ifpmic-sw-v1); schema_version is format version, and bundle/source/state/agent hashes remain separately pinned.",
+    "eligibility": "PASS FOR LOCAL IMPLEMENTATION: immutable catalog/provenance/revocation and operator roles/import/mock-grant boundaries are pinned; absent approved authority, real grant issuance stays fail-closed and synthetic fixtures are not real approval.",
+    "request_storage_and_unicode": "PASS: all semantic CreateJob fields persist as ASCII-escaped JSON TEXT across restart; digest formula is explicit; free strings are lossless without normalization, while structured project/artifact identifiers have explicit validation.",
+    "csrf": "PASS: domain-separated HMAC issuance over canonical session cookie is stable across session reads/restart and rotates with the opaque session; token is not stored or logged.",
+    "atomicity_workspace": "PASS: accepted DRAFT, command, outbox, snapshot binding and RESERVED workspace intent are atomic; response follows commit; uncertainty/retry, READY fencing and crash-consistent workspace states are testable; B03 retains workflow transitions.",
+    "verification_plan": "PASS: G0-G7 define phase purpose, method/agent, pass criteria, evidence and failure recovery. The 180-second Node gate has a stated rationale and bounded subtest/integration timeouts. The 11-command UI gate omission is conditional on exact source/dependency/output equality and no frontend connection, with semantic changes requiring more regression."
+  },
+  "remaining_gates": [
+    "G1/G3 must establish the exact pinned Python dependency resolution, installation hashes, Authlib API compatibility, and OIDC fixture behavior before relying on them; no package was installed or service started in this review.",
+    "Real corporate SSO, approved hostname/TLS/proxy settings (including proxy query redaction), project grants, production DB/backup/storage policy, B03 Temporal, and real AT-21 integration remain external acceptance prerequisites."
+  ],
+  "reviewer_verdict": "Approve B02 implementation and independent test authoring against exact SHA f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a. This does not claim that any implementation/test has passed or that production environment or AT-21 acceptance is complete."
+}

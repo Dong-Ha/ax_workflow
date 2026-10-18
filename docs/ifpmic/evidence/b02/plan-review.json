@@ -1,0 +1,88 @@
+{
+  "kind": "ifpmic_b02_independent_plan_review",
+  "reviewer_role": "independent plan reviewer",
+  "reviewed_plan": {
+    "path": "docs/ifpmic/B02-IDENTITY.md",
+    "sha256": "e4efc9c93af668b4f2db6bbad091720a5465ea789616b7a9b06dbc9e19933692"
+  },
+  "decision": "request_revision",
+  "approval": false,
+  "review_scope": "Read-only verification of the pinned B02 implementation/verification plan against the original B02 sources, Paperclip boundary evidence, architecture advice, and TC risk evidence. No code, tests, dependency installation, or services were changed or run.",
+  "source_pins": {
+    "docs/ifpmic/evidence/b02/source-collection.json": "da6fdce28078167517b5ee94336bddb81775d1dad91b41181c894acde2f2437a",
+    "docs/ifpmic/evidence/b02/paperclip-auth-collection.json": "5255b7f5e529ec9de4114f8a31750aec34a4cc6673b6197ee9fe08f2381f4bfe",
+    "docs/ifpmic/evidence/b02/architecture-advice.json": "d125f5cbd05698eaf0e810b9677cea1db1514aff967eb0672964a33d4433bff9",
+    "docs/ifpmic/evidence/b02/tc-risk-matrix.json": "3bd978e2cbe7773f02e0ed94e820c6c2430d742c899721a6070764be96e1b5d6",
+    "docs/ifpmic/evidence/b02/technical-sources.json": "8ae934679291efc06c21d0c2f63bb5c5ea3b2c9adeb4c7208596886c8ebbaa40",
+    "docs/ifpmic/design-v1/specs/implementation-backlog.json": "115e48568e0464b8e67ef17274dba97b3046a8de902e1cf426d9b70e1528e5d0",
+    "docs/ifpmic/design-v1/specs/requirements.json": "6e1dc87cdbcaa66ed690ffd13d2d70242dff43410c9f822447bd520719ce249b",
+    "docs/ifpmic/design-v1/specs/acceptance-cases.json": "f7163553edc9e8e753965cb8748ab04aac8f68c1a453f567f62284a01b38b0d5",
+    "docs/ifpmic/design-v1/specs/openapi.v1.json": "2ed780cfa06349b18f5025937e050fd98a5cefa34b552eb836cfaccad416dd7a",
+    "docs/ifpmic/design-v1/specs/data-model.json": "00c84f8a39b1b8959daa8d94b1d67e860d83ad9bdb809065a5cd3b18af07071b",
+    "docs/ifpmic/design-v1/specs/workflow.v1.json": "bab40a7abb3929896add1ef2cd074893dd2a7de14d200a5d6cea4b7a77eb0e89",
+    "docs/ifpmic/design-v1/specs/state-contract.json": "0248e130017043539319c56af854f5388a95d33e7e687902a3438fdff414244a",
+    "docs/ifpmic/design-v1/specs/project-profile.example.json": "37301c6ff5c9cae237b6037a3106368cfd07e4582462d52a35dfee39de7839f2",
+    "docs/ifpmic/design-v1/specs/sources.json": "c0c6f96c54ba4fd1c7a1bd70b954a7316bebdba86ff681e5a07141c682eeb7ef",
+    "IFPMIC_AX_Design_v1.docx": "18a14876a689beae0599b5d4014bf95db79bef047d0e4ceafa60d9a9417624fc",
+    "docs/ifpmic/PLAN.md": "3b99c7b3629a8e0e6bc41d524329d2a0de27a468ec447a990fa360dcc38aa39d",
+    "docs/ifpmic/B01-PROFILES.md": "8c22f1ceaf1d0f3ca1cf7113a829d7e4441df1fb5ebebdbe48a9d71c1e20d7a8",
+    "runtime/ifpmic/index.mjs": "4bf311e4c456843240b3c7f6eae58ee45480e6b4e14e958dc92825c4140dda39",
+    "runtime/ifpmic/snapshot.mjs": "9bbfdcaf483167c931f0b6e0a453697cd8ea92f3b12f33ab30ffa0b2dd52b789",
+    "runtime/ifpmic/store.mjs": "0f532d26504b1975b61b8e67c87225c29d4d576115ed81d2314ecb6ae359477e",
+    "server/index.mjs": "9f462d86df80903570ab9ec110be564586dd89c45a3fd553a59cc6d5d6e56299"
+  },
+  "verified_coverage": {
+    "original_scope": "PASS. The plan preserves B02 user-scoped API, PostgreSQL request persistence, and per-request workspace; keeps original FastAPI/PostgreSQL/Temporal architecture and existing AX localhost read-only API; Paperclip remains upper UI/management and does not supply trusted IFPMIC identity. B03 Temporal activation remains separate.",
+    "at21_boundary": "PASS WITH EXPLICIT LIMIT. It does not narrow AT-21. It requires job/log/image/device isolation in original acceptance, says current B02 synthetic endpoints/fixtures are not full AT-21 evidence, and leaves full acceptance pending actual API integration with B04/B09 and real independent user sessions.",
+    "auth_csrf_authorization": "PASS. OIDC code+PKCE, issuer-bound identity, opaque hashed/revocable sessions, ax_session cookie, session-bound CSRF plus allowed Origin, no Paperclip actor/user/company headers, project membership/job ownership/delegation checks on repository reads, and no admin auto-inheritance are testable and aligned with the reviewed architecture advice.",
+    "bridge_bytes_unicode": "PASS. Fixed private Node bridge with exact operation frame and configured executable/store, no shell/path selection, bounds/deadline/kill/reap, strict frame/base64/hash/identity validation, exact bytes in BYTEA, no Python reserialization, escaped lossless profile labels, and separate rejection of invalid project ID surrogate are specified. No replacement of B01 or profile JSONB conversion is proposed.",
+    "transaction_and_workspace": "PASS. DRAFT accepted job, command, outbox, immutable snapshot binding, and RESERVED workspace intent are inserted atomically; 202 follows commit; ambiguous commit retries use idempotency; B02 does not mark command applied or transition job to queued/running. Workspace intent states, create-once marker, fsync, fencing, crash recovery, and fail-closed unknown contents are sufficiently described for test authoring.",
+    "phases_and_evidence": "PASS. G0-G7 each define purpose, method/owner, pass criteria, evidence and recovery/retest. PostgreSQL/process/filesystem fault tests use real isolated components, not SQLite or in-memory stand-ins. G6 changes the overall Node gate limit from 120s to a fixed 180s with rationale and smaller per-test caps.",
+    "ui_gate": "PASS CONDITIONAL. Existing 11-command browser/UI gate may be skipped only after exact source/dependency inventory and ten outputs match accepted controls pins and new backend remains unconnected; any UI semantic/output change expands browser regression, with full 11 gate for visualization meaning changes. Backend-specific auth/DB/bridge/workspace/API tests are never skipped."
+  },
+  "blocking_findings": [
+    {
+      "id": "B02-PLAN-01",
+      "title": "Required Job.workflow_version has no creation mapping",
+      "evidence": "Original OpenAPI Job requires workflow_version. CreateJob has no workflow_id/workflow_version field. The original data model stores workflow_id, while B01 snapshot content has workflow_id and schema_version; the approved B01 plan does not define a separate semantic workflow_version. B02 plan captures DRAFT and claims original Job DTO fidelity, but never specifies the value/source/mapping for workflow_version. Its bridge's expected workflow check does not resolve this response field.",
+      "required_resolution": "State the mapping explicitly: Job.workflow_version is sourced from the verified snapshot workflow registry identity (snapshot.workflow.workflow_id, currently ifpmic-sw-v1); snapshot schema_version remains the snapshot format version, and bundle pins remain separate. Add a literal test oracle for Job DTO plus immutable DB value. Do not infer this in implementation."
+    },
+    {
+      "id": "B02-PLAN-02",
+      "title": "Profile eligibility catalog provisioning contract is underspecified",
+      "evidence": "The plan requires an immutable catalog entry containing verified snapshot bytes plus separate eligibility evidence, makes current eligibility part of the serialized CreateJob transaction, defines PROFILE_INELIGIBLE, and says real grant/eligibility provisioning is outside the user API. It does not define the machine-readable eligibility record/provenance, which profile identity/content it binds, which eligibility conditions are authoritative, who may provision/revoke it, or how any supported operator path is constrained. Synthetic DB fixture setup cannot independently test these invariants, while selecting a boolean/schema in code would invent a trust contract.",
+      "required_resolution": "Pin the minimal immutable catalog and provisioning authority contract (including snapshot/project/version binding, evidence/provenance, eligibility/revocation semantics, and a testable operator provisioning seam or explicitly defined pre-provisioned fixture boundary). Keep real approval/environment values external and do not treat synthetic eligibility as real acceptance."
+    },
+    {
+      "id": "B02-PLAN-03",
+      "title": "Accepted CreateJob request fields are not explicitly persisted",
+      "evidence": "B02 is request storage and CreateJob includes title, request_text, change_type, base_ref, input_artifact_ids, profile_version and release_mode. The transaction paragraph enumerates a DRAFT job with status/revision/cycle/current_step_ids/candidate_fingerprint, snapshot binding, command, outbox and workspace intent, but does not state which accepted CreateJob fields are durably retained for later B03 consumption. The command body digest alone is not recoverable request data, and the original data-model jobs field list does not supply these request fields.",
+      "required_resolution": "Specify the durable location and immutable semantics for every accepted CreateJob field, demonstrate that an accepted receipt survives process restart with the request available to its intended consumer, and include an independent persistence/restart oracle. Preserve raw text without silent normalization."
+    },
+    {
+      "id": "B02-PLAN-04",
+      "title": "CreateJob lone-surrogate string storage policy is undefined",
+      "evidence": "The plan explicitly preserves B01 profile-version labels losslessly and uses ensure_ascii=True for request-body digesting, but only explicitly rejects lone surrogates for provisioned project_id. CreateJob contains multiple other strings. PostgreSQL UTF-8 text cannot directly store unpaired UTF-16 surrogate code points; the plan also says strings are not normalized and does not define a rejecting boundary or an escaped binary/string representation for the complete retained request.",
+      "required_resolution": "Pin an explicit policy for lone surrogates across all CreateJob strings and the durable request representation (including any canonical/escaped bytes and response round-trip expectations), then add independent positive/negative storage and restart tests. Do not silently normalize or choose JSONB for data that must remain lossless."
+    },
+    {
+      "id": "B02-PLAN-05",
+      "title": "Session-bound CSRF token issuance and persistence are not specified",
+      "evidence": "The plan requires GET /api/v1/session to return csrf_token and requires synchronizer validation bound to the session, but does not define token entropy/format, generation or rotation, session association/storage/hash strategy, or comparison/consumption behavior. The independent reviewer therefore cannot derive a fixed oracle for token issuance/refresh, session rotation, or storage-at-rest tests from the plan.",
+      "required_resolution": "Specify a deterministic-to-test, secret-safe issuance and validation contract tied to the opaque session (including rotation and storage-at-rest behavior), without putting token values in logs or persistent public evidence; then pin corresponding independent tests."
+    }
+  ],
+  "nonblocking_gates_and_risks": [
+    {
+      "id": "B02-PLAN-NB-01",
+      "title": "Authlib/HTTP client candidate compatibility must remain a gate",
+      "assessment": "The plan identifies exact candidate Python package versions and says official metadata was checked, but explicitly defers install/resolution/API compatibility to G1 and OIDC flow validation to G3. That is a suitable pre-implementation gate if those checks fail closed and no package drift is accepted without plan revision. No package was installed during this review."
+    },
+    {
+      "id": "B02-PLAN-NB-02",
+      "title": "External real-environment values are intentionally deferred",
+      "assessment": "Corporate issuer/client/redirect/origin, TLS/proxy, real project grants, operational database/backups and workspace roots remain external acceptance prerequisites, not synthetic implementation values. The plan says real startup fails without required OIDC configuration and does not claim local fixture tests as real SSO or AT-21."
+    }
+  ],
+  "reviewer_verdict": "Do not start B02 code, test implementation, dependency installation, or database initialization against SHA e4efc9c93af668b4f2db6bbad091720a5465ea789616b7a9b06dbc9e19933692. Resolve the five blocking contract gaps, update the plan and request a new exact-SHA review."
+}

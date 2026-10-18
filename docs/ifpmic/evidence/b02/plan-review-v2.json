@@ -1,0 +1,84 @@
+{
+  "kind": "ifpmic_b02_independent_plan_review_v2",
+  "reviewer_role": "independent plan reviewer",
+  "reviewed_plan": {
+    "path": "docs/ifpmic/B02-IDENTITY.md",
+    "sha256": "6bfabb6794b5656a48ebfc1d40e3f007aea3769a19e49a1747ec38b8dd15487a"
+  },
+  "decision": "request_revision",
+  "approval": false,
+  "scope": "Re-review of v2 against the unchanged original source collection, Paperclip identity boundary, architecture advice and TC risk evidence. This is not product/test approval. No code, tests, dependencies, DB, or services were changed or run.",
+  "source_pins": {
+    "docs/ifpmic/evidence/b02/source-collection.json": "da6fdce28078167517b5ee94336bddb81775d1dad91b41181c894acde2f2437a",
+    "docs/ifpmic/evidence/b02/paperclip-auth-collection.json": "5255b7f5e529ec9de4114f8a31750aec34a4cc6673b6197ee9fe08f2381f4bfe",
+    "docs/ifpmic/evidence/b02/architecture-advice.json": "d125f5cbd05698eaf0e810b9677cea1db1514aff967eb0672964a33d4433bff9",
+    "docs/ifpmic/evidence/b02/tc-risk-matrix.json": "3bd978e2cbe7773f02e0ed94e820c6c2430d742c899721a6070764be96e1b5d6",
+    "docs/ifpmic/evidence/b02/technical-sources.json": "8ae934679291efc06c21d0c2f63bb5c5ea3b2c9adeb4c7208596886c8ebbaa40",
+    "docs/ifpmic/design-v1/specs/implementation-backlog.json": "115e48568e0464b8e67ef17274dba97b3046a8de902e1cf426d9b70e1528e5d0",
+    "docs/ifpmic/design-v1/specs/requirements.json": "6e1dc87cdbcaa66ed690ffd13d2d70242dff43410c9f822447bd520719ce249b",
+    "docs/ifpmic/design-v1/specs/acceptance-cases.json": "f7163553edc9e8e753965cb8748ab04aac8f68c1a453f567f62284a01b38b0d5",
+    "docs/ifpmic/design-v1/specs/openapi.v1.json": "2ed780cfa06349b18f5025937e050fd98a5cefa34b552eb836cfaccad416dd7a",
+    "docs/ifpmic/design-v1/specs/data-model.json": "00c84f8a39b1b8959daa8d94b1d67e860d83ad9bdb809065a5cd3b18af07071b",
+    "docs/ifpmic/design-v1/specs/workflow.v1.json": "bab40a7abb3929896add1ef2cd074893dd2a7de14d200a5d6cea4b7a77eb0e89",
+    "docs/ifpmic/design-v1/specs/state-contract.json": "0248e130017043539319c56af854f5388a95d33e7e687902a3438fdff414244a",
+    "docs/ifpmic/design-v1/specs/project-profile.example.json": "37301c6ff5c9cae237b6037a3106368cfd07e4582462d52a35dfee39de7839f2",
+    "docs/ifpmic/design-v1/specs/sources.json": "c0c6f96c54ba4fd1c7a1bd70b954a7316bebdba86ff681e5a07141c682eeb7ef",
+    "docs/ifpmic/design-v1/README.txt": "33ff9f07a74c3e276ac63746340a56e4bbdeca18d2531de24cc978d533283122",
+    "IFPMIC_AX_Design_v1.docx": "18a14876a689beae0599b5d4014bf95db79bef047d0e4ceafa60d9a9417624fc",
+    "docs/ifpmic/PLAN.md": "3b99c7b3629a8e0e6bc41d524329d2a0de27a468ec447a990fa360dcc38aa39d",
+    "docs/ifpmic/B01-PROFILES.md": "8c22f1ceaf1d0f3ca1cf7113a829d7e4441df1fb5ebebdbe48a9d71c1e20d7a8",
+    "runtime/ifpmic/index.mjs": "4bf311e4c456843240b3c7f6eae58ee45480e6b4e14e958dc92825c4140dda39",
+    "runtime/ifpmic/snapshot.mjs": "9bbfdcaf483167c931f0b6e0a453697cd8ea92f3b12f33ab30ffa0b2dd52b789",
+    "runtime/ifpmic/store.mjs": "0f532d26504b1975b61b8e67c87225c29d4d576115ed81d2314ecb6ae359477e",
+    "server/index.mjs": "9f462d86df80903570ab9ec110be564586dd89c45a3fd553a59cc6d5d6e56299"
+  },
+  "v1_findings": [
+    {
+      "id": "B02-PLAN-01",
+      "status": "resolved",
+      "evidence": "Job.workflow_version now derives only from verified snapshot.payload.workflow.workflow_id, with registry ID ifpmic-sw-v1; schema_version remains format version and source/state/agent/bundle SHA pins remain separate."
+    },
+    {
+      "id": "B02-PLAN-02",
+      "status": "resolved_for_local_implementation; real issuance explicitly deferred",
+      "evidence": "The plan pins catalog fields and uniqueness/FKs, append-only eligibility and revocation records, eligibility conditions, separate operator DB role, import-profile and mock-only grant/revoke commands, fail-closed absence of real-grant issuance, and synthetic DB fixtures as non-approval evidence."
+    },
+    {
+      "id": "B02-PLAN-03",
+      "status": "resolved",
+      "evidence": "Every semantic CreateJob field is stored as ensure_ascii/sorted/compact ASCII JSON TEXT command_payload_json; it is consumed after restart, with a fixed semantic body-digest formula and restart oracle."
+    },
+    {
+      "id": "B02-PLAN-04",
+      "status": "resolved",
+      "evidence": "Free text labels are retained losslessly through ASCII-escaped JSON TEXT; project_id is explicitly Unicode scalar and artifact IDs are server identifiers; behavior is non-normalizing and restart-testable."
+    },
+    {
+      "id": "B02-PLAN-05",
+      "status": "resolved",
+      "evidence": "CSRF derivation is fixed as domain-separated HMAC-SHA256 over the canonical session cookie, stable across session GET/restart, with a private provisioned key, no DB persistence of the CSRF token, and rotation bound to session rotation. G3 adds the stable/restart test."
+    }
+  ],
+  "coverage_review": {
+    "original_b02_scope": "PASS. Retains user-scoped FastAPI API, PostgreSQL request storage and per-request workspace; preserves the original API schema and approved source architecture, keeps AX localhost/read-only, and keeps Paperclip as management/UI rather than identity authority.",
+    "authorization_and_at21": "PASS WITH EXPLICIT PARTIAL-ACCEPTANCE BOUNDARY. The plan retains authenticated owner assignment, active project membership, explicit job delegation, repository-scoped checks, and AT-21 negative isolation across job/log/image/device. It expressly does not claim AT-21 complete from synthetic or missing routes; real independent-user integration remains pending B04/B09.",
+    "bridge_unicode_bytes": "PASS. Fixed private Node bridge delegates validation to B01 and stores verified raw canonical bytes as BYTEA; label strings use lossless escaped text; limits, framing, hashes, identity checks and privacy are testable.",
+    "atomicity_and_workspace": "PASS. DRAFT plus accepted command, outbox, snapshot binding and RESERVED workspace intent are one commit; receipt follows commit and uncertain-commit retry is specified. Workspace state, marker publication, fsync, claim fencing, restart and failure behavior are explicit and leave workflow transitions to B03 Temporal.",
+    "phases_agents_oracles_recovery": "PASS. G0-G7 specify purpose, method/agent, pass criteria, evidence and failure recovery. Real PostgreSQL, protocol fixture and actual temporary filesystem/process tests are required; mock-only database acceptance is excluded.",
+    "regression_gate": "PASS. The Node full-gate timeout is raised to a fixed 180s with rationale, while per-test and Python integration deadlines remain bounded. UI/browser gate omission is conditional on exact unchanged source/dependency/output comparison against accepted controls and no frontend connection; semantic change expands or restores the gate.",
+    "dependency_and_authlib_gate": "PASS AS A GATE, NOT AS VERIFIED COMPATIBILITY. Exact package candidates are pinned; install, resolution, hash locking and API compatibility are explicit G1 preconditions, and unexpected version conflicts require plan revision. No claim of installed or working Authlib integration is made."
+  },
+  "blocking_findings": [
+    {
+      "id": "B02-PLAN-06",
+      "title": "OIDC callback authorization code/state are not protected from request/access logs",
+      "evidence": "The plan adds GET /auth/callback carrying OAuth code and state in its query. It prohibits OAuth/ID/access tokens and session tokens in logs, but does not include authorization code, state, nonce, callback query strings, or request-line access logging in that prohibition. The selected Uvicorn deployment can have access logging; a default request-line logger may record the callback query. The G3 privacy criteria cover provider secrets and sanitized transcripts but do not explicitly test that logs contain no callback code/state.",
+      "required_resolution": "Specify that all callback credentials (authorization code, state and any token-bearing query values) and session/CSRF values are redacted from access/application/error logs, or disable query-bearing access logging for these routes. Add a fixed synthetic canary test that exercises callback success/failure and scans captured logs to prove the canary values are absent. Do not publish the canary values."
+    }
+  ],
+  "nonblocking_observations": [
+    "Eligibility is now implementable for mock catalog fixtures and fail-closed for real profiles without approved authority. Real eligibility issuance remains explicitly outside this local candidate, which is correctly described as an environment acceptance prerequisite.",
+    "Authlib/FastAPI and HTTP client API compatibility remains unverified until G1 by design; plan requires an isolated pinned environment and no silent dependency substitution."
+  ],
+  "reviewer_verdict": "Do not begin implementation against this exact SHA yet. V2 resolves all five v1 findings and otherwise provides a testable full-scope B02 plan, but revise the auth logging/privacy contract and its G3 canary oracle, then request an exact-SHA review."
+}

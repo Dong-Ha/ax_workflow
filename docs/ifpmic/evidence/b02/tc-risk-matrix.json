@@ -1,0 +1,189 @@
+{
+  "kind": "ifpmic_b02_preimplementation_tc_risk_matrix",
+  "status": "advisory only; does not approve an unwritten implementation plan or claim B02/AT-21 acceptance",
+  "sources": [
+    {
+      "path": "docs/ifpmic/evidence/b02/source-collection.json",
+      "sha256": "da6fdce28078167517b5ee94336bddb81775d1dad91b41181c894acde2f2437a",
+      "scope": "DOCX/API/data model/backlog/source manifest extraction and B02 contract summary"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/paperclip-auth-collection.json",
+      "sha256": "5255b7f5e529ec9de4114f8a31750aec34a4cc6673b6197ee9fe08f2381f4bfe",
+      "scope": "Pinned Paperclip npm package and plugin actor/auth boundary; no SSO or B02 live identity integration verified"
+    },
+    {
+      "path": "docs/ifpmic/design-v1/specs/requirements.json",
+      "sha256": "6e1dc87cdbcaa66ed690ffd13d2d70242dff43410c9f822447bd520719ce249b",
+      "locator": "/12 (REQ-13): personal work isolation and multi-user support"
+    },
+    {
+      "path": "docs/ifpmic/design-v1/specs/acceptance-cases.json",
+      "sha256": "f7163553edc9e8e753965cb8748ab04aac8f68c1a453f567f62284a01b38b0d5",
+      "locator": "/20 (AT-21): simultaneous A/B work; A's direct reads of B's job/log/image/device are denied; paths and sessions remain separated; source status not_executed"
+    },
+    {
+      "path": "docs/ifpmic/design-v1/specs/openapi.v1.json",
+      "sha256": "2ed780cfa06349b18f5025937e050fd98a5cefa34b552eb836cfaccad416dd7a",
+      "locator": "UserSession cookie ax_session; CSRF and idempotency on user writes; job, command, artifact, notification, and bridge routes"
+    },
+    {
+      "path": "docs/ifpmic/design-v1/specs/data-model.json",
+      "sha256": "00c84f8a39b1b8959daa8d94b1d67e860d83ad9bdb809065a5cd3b18af07071b",
+      "locator": "/authorization, /consistency, /transactions and job/project/workspace/artifact entities"
+    },
+    {
+      "path": "docs/ifpmic/design-v1/specs/implementation-backlog.json",
+      "sha256": "115e48568e0464b8e67ef17274dba97b3046a8de902e1cf426d9b70e1528e5d0",
+      "locator": "/1 B02 and /2 B03 separation"
+    }
+  ],
+  "known_original_oracles": {
+    "REQ-13": "Per-person independent work and multi-user isolation; ownership/workspace isolation is the design description.",
+    "AT-21": {
+      "given": "A and B jobs running concurrently",
+      "when": "A requests B job, logs, image/artifact and device data, including direct resource URLs",
+      "then": "Server authorization rejects access; paths and sessions stay separate",
+      "source_status": "not_executed"
+    },
+    "identity": "CreateJob has no owner_id input; owner is derived from authenticated identity. SSO subject is unique. Local pilot identity is mock-only.",
+    "authorization": "Queries/downloads require project membership plus job ownership or explicitly delegated role. Admin operational visibility is not approval authority. Paperclip company membership alone does not authorize a particular IFPMIC job.",
+    "writes": "User writes use ax_session plus CSRF and Idempotency-Key. Accepted command/job/outbox write is atomic; HTTP 202 means accepted, not applied. Same key with different body and stale revision conflict.",
+    "status_scope": "The source names common 401/403/409/422 categories and generic Error DTO but does not fully fix route-specific error codes, enumeration behavior, or every endpoint status. TC must assert exact status/body only after the implementation plan pins them.",
+    "workspace": "Per-request/job workspace and output paths; one writer per workspace; separate worker/publisher identities. B03 owns Temporal transitions/outbox processing and restart recovery; B02 still owns the authenticated request/database boundary and atomic handoff."
+  },
+  "proposed_architecture_under_review": {
+    "direction": "Separate FastAPI + PostgreSQL IFPMIC API; independent IFPMIC OIDC authorization-code + PKCE login and ax_session/CSRF; no trust in Paperclip UI-supplied identity headers or local-board identity. Node private JSON-stdin bridge calls B01 readSnapshot and returns exact canonical record as base64 plus raw SHA256 for persistence as BYTEA. SQL atomically persists accepted job/DRAFT, command and outbox plus workspace intent. A separate reconciler provisions workspace. Temporal remains B03 process authority.",
+    "status": "Parent-provided architecture direction is still being written and is not an approved executable plan. Items below are TC design risks and proposed test oracles, not authorization to implement or to change the source contract.",
+    "interop_risk": "B01 snapshot canonicalization is JavaScript UTF-16 key ordering and permits opaque lone UTF-16 surrogate strings; a Python re-canonicalization would risk different bytes. Preserve the snapshot bytes across the private bridge and independently check base64 decode plus raw-byte SHA rather than reproducing canonicalization in Python."
+  },
+  "risk_matrix": [
+    {
+      "id": "AUTH-01",
+      "area": "OIDC callback and session establishment",
+      "plan_oracle_needed": "Pin issuer, audience/client ID, redirect URI, state/nonce one-time use, PKCE S256 verifier binding, clock leeway, token signature/JWKS key rotation and the exact session-cookie contract. The actual internal provider and approved client are absent from the reviewed local source set.",
+      "normal": ["Independent A and B test identities complete code + PKCE through a deterministic local OIDC provider fixture and receive distinct server sessions."],
+      "negative": ["Reject wrong issuer, audience, redirect URI, signature/key, nonce, state, verifier, reused code/state, missing code, and provider error callback."],
+      "boundary": ["Expired and not-yet-valid token/session; clock leeway edge; key rotation with old/new key; missing optional claims; duplicate identity_subject."],
+      "race_fault": ["Two simultaneous callbacks for the same state/code: at most one session; provider/JWKS timeout or DB session-write failure leaves no authenticated partial session."],
+      "privacy_regression": ["Cookie has only plan-approved flags; token/code/verifier/secret never appears in body, logs, exception, trace or browser storage. Missing/revoked/expired ax_session gives unauthenticated behavior."],
+      "evidence_limit": "Provider fixture coverage is not real corporate SSO acceptance."
+    },
+    {
+      "id": "AUTH-02",
+      "area": "CSRF, origins and identity spoofing",
+      "plan_oracle_needed": "Define token issuance/validation, session binding, same-origin policy and whether unsafe requests require Origin/Referer in addition to X-CSRF-Token. The original says CSRF is required but does not define the algorithm or cookie flags.",
+      "normal": ["Valid session-bound CSRF token authorizes one permitted mutation; GET-only reads do not mutate state."],
+      "negative": ["Reject missing, invalid, expired, cross-session or replayed CSRF; untrusted Origin/Referer; spoofed X-User-ID/X-Actor-ID/X-Company-ID/X-Role and body owner_id."],
+      "boundary": ["Token rotation and session renewal/revocation; safe versus unsafe methods; absent Origin for non-browser trusted auth must follow a separately pinned rule."],
+      "regression": ["Paperclip useHostContext().userId and local_trusted's synthetic local-board never become IFPMIC authenticated subjects; UI params and Paperclip company scope cannot override OIDC identity."],
+      "evidence_limit": "Do not treat a host-supplied actorContext copied into ordinary HTTP headers as signed identity."
+    },
+    {
+      "id": "AUTHZ-01",
+      "area": "Project role, job owner and delegation policy",
+      "plan_oracle_needed": "Pin the project role set and owner/delegate matrix, admin capabilities, role precedence, and existence-enumeration response policy before testing exact outcomes.",
+      "normal": ["Authenticated project member can list/read only resources permitted to that role; job owner can access own job and artifacts; explicitly delegated role receives only its authorized scope."],
+      "negative": ["Nonmember, same-company member without job ownership, different project member, arbitrary user, and project/company ID substitution cannot access another user's job."],
+      "boundary": ["Viewer/read-only role; revoked membership; deleted/inactive user; role change while session/job is open; job owner removed from project; admin with operational visibility but no approval role."],
+      "direct_resource": ["Try known B IDs on job, log, image/artifact and device endpoints, including direct content URL and guessed command/download URL; assert denial and zero protected bytes/metadata leakage."],
+      "invariant": "For every endpoint, authenticated subject is server derived. Authorization is checked on each query and download, not inherited from list visibility or prior page load."
+    },
+    {
+      "id": "JOB-01",
+      "area": "CreateJob, schema and immutable B01 profile selection",
+      "plan_oracle_needed": "Pin field constraints and exact API errors for missing project/profile/workflow references. owner_id must not be accepted as authoritative input.",
+      "normal": ["Valid request with authorized project/profile produces owner from current auth subject and a unique job identity; resulting snapshot equals B01's canonical stored bytes."],
+      "negative": ["Reject supplied owner_id/created_by/identity_subject override, invalid schema, unknown project/profile version, disabled real configuration, profile mismatch and unauthorized input artifact."],
+      "boundary": ["Unicode including lone surrogate opaque strings; exact maximum request/body/profile sizes; empty, control, nested, duplicate/unknown JSON keys; request cancellation during validation."],
+      "regression": ["No Python canonicalization or normalization changes Node B01 bytes. Bridge output is strictly framed JSON on stdin/stdout, base64 decodes to pinned record bytes, SHA256 matches raw bytes; malformed JSON, extra stdout, nonzero exit, timeout and oversized output fail closed without returning profile text."],
+      "privacy": ["B01 profile may contain sensitive operational references; raw profile/payload is never logged or echoed in API errors."
+      ]
+    },
+    {
+      "id": "DB-01",
+      "area": "PostgreSQL transactions, idempotency and accepted command boundary",
+      "plan_oracle_needed": "Fix transaction boundary, unique constraints, revision increment rule, retry response semantics and outbox publication state. Use real PostgreSQL for transaction/locking/role assertions; SQLite is not an adequate substitute.",
+      "normal": ["One valid request commits the job/DRAFT, command inbox row, idempotency identity, outbox row and workspace intent atomically; HTTP 202 receipt means accepted, not executed."],
+      "negative": ["Same idempotency key with changed body conflicts; stale revision conflicts; unauthorized request creates zero durable rows."],
+      "boundary": ["Concurrent identical requests from same actor coalesce to one accepted command; same key from a different actor or with different body cannot alias ownership; distinct keys obey any agreed duplicate-job policy."],
+      "failure_injection": ["Fail before transaction, after each insert, before commit, at commit, and after DB commit before HTTP acknowledgment. Rollback leaves no partial job/command/outbox; ambiguous postcommit retry returns the original receipt and never duplicates job or outbox."],
+      "database_role": ["Run authorization tests with actual least-privilege PostgreSQL application roles and transaction-scoped context. If RLS is part of design, prove context cannot be set by caller data and reset does not leak across pooled connections."],
+      "regression": ["No SQLite-only green test is counted as PostgreSQL isolation/transaction acceptance."
+      ]
+    },
+    {
+      "id": "WS-01",
+      "area": "Per-job workspace intent and provisioning/reconciliation",
+      "plan_oracle_needed": "Pin ownership of workspace creation/cleanup, final path layout, permissions, idempotent reconciliation and API-visible readiness. Separate intent persistence from the later provisioning actor.",
+      "normal": ["Distinct concurrent jobs receive distinct canonical roots and sessions; their reads/writes cannot cross; one writer per workspace invariant is preserved."],
+      "negative": ["Reject traversal, absolute path injection, symlink escape, pre-existing foreign directory, path collision, unauthorized workspace read and caller-supplied root."],
+      "boundary": ["Concurrent identical provisioning intent is idempotent; two different jobs cannot claim one workspace; owner/membership revocation does not disclose a path."],
+      "failure_injection": ["Crash after SQL intent before mkdir; after directory creation before readiness record; after readiness record before response; permission/space failure; cleanup failure. Reconciler converges without claiming incomplete workspace ready and orphan cleanup never removes another job's directory."],
+      "filesystem": ["Exercise actual temporary filesystem permission modes, symlink and canonical-path checks; do not rely solely on mocked paths."],
+      "AT21_relation": "A and B's actual paths and execution sessions remain distinct under concurrent operation."
+    },
+    {
+      "id": "ART-01",
+      "area": "Job logs, images/artifacts and device information",
+      "plan_oracle_needed": "Pin metadata/list/content route mapping and whether unauthorized resources return 403 or non-enumerating 404. Distinguish artifact metadata registration from byte upload/availability; no B02 test may claim real device execution.",
+      "normal": ["Owner/delegated reader obtains only allowed metadata and bytes after artifact is available."],
+      "negative": ["A requests B's log, image metadata, raw bytes and device projection using UI links, API IDs and direct URLs; all are denied with zero protected body bytes. Foreign worker/bridge token cannot read user artifact outside assigned scope."],
+      "boundary": ["Not-yet-uploaded, quarantined, hash-mismatch, deleted, oversized, stale signed URL, URL reused after membership revocation; permission rechecked at download time."],
+      "fault": ["Interrupted byte stream, partial write, DB metadata/byte-store mismatch, hash verification failure; artifact never transitions to available before byte receipt and validation."],
+      "AT21_relation": "Device-read denial is tested with a fixed non-operational fixture/endpoint boundary; real hardware remains outside B02 mock evidence."
+    },
+    {
+      "id": "COMPAT-01",
+      "area": "Existing AX and Paperclip integration boundaries",
+      "plan_oracle_needed": "Pin the separate FastAPI host boundary, exact allowed Paperclip UI origin and identity exchange before any live UI call is enabled.",
+      "regression": ["AX `server/index.mjs` remains localhost-only and GET-only; old transcript APIs expose no IFPMIC writes or credentials. Paperclip local_trusted identity is not used as user identity; company/project membership cannot replace IFPMIC job ownership."],
+      "normal": ["The integration uses a documented trusted identity protocol between the Paperclip-hosted UI/worker and IFPMIC API; browser sends no authoritative actor headers."],
+      "negative": ["Direct cross-origin request, forged Paperclip userId/companyId, missing bearer/session, wrong issuer/audience and replayed assertion fail before data access."],
+      "privacy": ["No transcript, raw commands, tool input/output, credential, or unrelated Paperclip API data is copied into IFPMIC job/profile responses or logs."],
+      "evidence_limit": "No current plugin action handler, authenticated Paperclip deployment, or approved SSO provider is locally configured."
+    }
+  ],
+  "testability_and_evidence": {
+    "fixed_independent_oracles": [
+      "Pin source contract hashes and test expected auth subject, ownership, project membership, job/resource IDs, status class and row-count invariants as literals; do not derive expectations from the implementation's auth/SQL helper.",
+      "Use two distinct fixed OIDC fixture subjects A/B and a deterministic fake provider/JWKS; keep tokens synthetic and never write real secrets to fixtures/logs.",
+      "Use an independent B01 bridge oracle: known profile fixture, expected exact canonical record byte sequence/base64 and SHA; do not ask Python serializer for expected bytes.",
+      "For DB races/faults, assert durable rows and re-read after process restart or new connection; in-memory mocks alone cannot prove database atomicity or uniqueness.",
+      "For workspace isolation, assert actual canonical roots, owner permissions, symlink denial and separate sentinels on disk; do not assert only response fields."
+    ],
+    "essential_failure_injection_seams": [
+      "Deterministic session clock/revocation and OIDC callback/provider/JWKS response fixture.",
+      "Private Node JSON-stdin bridge subprocess with controlled input/output/exit/timeout and no-network sandbox; stdin is the only profile transfer path and stderr/stdout are validated separately.",
+      "Database failpoints around BEGIN/insert/commit/ack and two-connection barrier for idempotency races, while running against actual PostgreSQL and the actual app role.",
+      "Workspace provision/reconcile failpoints at intent, mkdir, permissions, ready marker, response, cleanup; use isolated temp roots and no existing user data.",
+      "Artifact byte-store failure/hash/size and direct-download authorization interception."
+    ],
+    "evidence_requirements": [
+      "Separate fixture/unit tests from end-to-end AT-21. AT-21 remains not_executed until two independent authenticated users concurrently use the actual API, and user A's direct job/log/image/device reads are rejected while filesystem paths and sessions are demonstrably distinct.",
+      "Record exact DB engine/version, configured role, source/profile hashes, command result and sanitized response summaries. Never include cookies, auth codes, tokens, DSNs, raw profile bytes, or user secrets.",
+      "If local PostgreSQL embedded binaries are used for isolated tests, label them test-cluster evidence; they do not establish approved production PostgreSQL provisioning or deployment.",
+      "No plan review, simulated OIDC fixture, mock DB, synthetic artifact, or simulated device result can be reported as original AT-21 completion."
+    ]
+  },
+  "blocked_vs_testable": {
+    "locally_testable_after_plan_and_dependency_approval": [
+      "FastAPI unit/route tests using fixed OIDC/CSRF fixtures and synthetic A/B subjects.",
+      "Private B01 bridge contract and raw-byte/hash/UTF-16-surrogate transport tests.",
+      "Isolated temporary PostgreSQL integration/concurrency/rollback tests; bundled PostgreSQL 18.1 binaries are present, but no cluster exists yet.",
+      "Temporary filesystem workspace/symlink/permission/fault tests and direct resource authorization tests with synthetic job data."
+    ],
+    "blocked_or_not_claimable_without_real_environment": [
+      "Corporate SSO issuer/client/redirect registration and real session expiry/revocation behavior.",
+      "Approved internal TLS hostname/reverse proxy, production PostgreSQL service/roles/backups and production secret-management configuration.",
+      "Actual Temporal service integration (B03), production workspace volume/security policy, artifact storage service, and real device data source.",
+      "Original AT-21 acceptance using real independent user sessions and the integrated deployed API."
+    ],
+    "never_substitute": ["local_trusted synthetic Paperclip actor", "Paperclip company membership alone", "userId/companyId custom headers", "SQLite for PostgreSQL transaction/role acceptance", "mock OIDC or fixtures as real SSO/AT-21", "synthetic device data as actual device access acceptance"]
+  },
+  "limitations": [
+    "No B02 executable plan has been approved yet; tests must be reconciled to the approved plan before implementation rather than treating this matrix as a spec.",
+    "The original API leaves role names, detailed field validation, some HTTP status/error behavior, CSRF algorithm/cookie attributes, workspace readiness semantics and exact unique constraints underspecified. These must be explicitly pinned without changing REQ-13/AT-21 scope.",
+    "This risk matrix does not choose an OIDC provider, invent a role model, approve database schema/row-level security, or claim that any service is installed or operational."
+  ]
+}

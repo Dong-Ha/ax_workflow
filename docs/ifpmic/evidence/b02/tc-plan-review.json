@@ -1,0 +1,86 @@
+{
+  "kind": "b02_independent_tc_plan_review",
+  "reviewer_role": "independent TC plan reviewer",
+  "reviewed_plan": {
+    "path": "docs/ifpmic/B02-IDENTITY.md",
+    "sha256": "e4efc9c93af668b4f2db6bbad091720a5465ea789616b7a9b06dbc9e19933692"
+  },
+  "decision": "request_plan_revision",
+  "scope": "Independent preimplementation review for testability, fixed behavioral oracles, original-source preservation, and evidence limits. This record approves the test plan only; the separate plan-review record is still required before implementation.",
+  "source_pins_reviewed": {
+    "docs/ifpmic/evidence/b02/source-collection.json": "da6fdce28078167517b5ee94336bddb81775d1dad91b41181c894acde2f2437a",
+    "docs/ifpmic/evidence/b02/paperclip-auth-collection.json": "5255b7f5e529ec9de4114f8a31750aec34a4cc6673b6197ee9fe08f2381f4bfe",
+    "docs/ifpmic/evidence/b02/architecture-advice.json": "d125f5cbd05698eaf0e810b9677cea1db1514aff967eb0672964a33d4433bff9",
+    "docs/ifpmic/evidence/b02/tc-risk-matrix.json": "3bd978e2cbe7773f02e0ed94e820c6c2430d742c899721a6070764be96e1b5d6"
+  },
+  "review": {
+    "original_scope_and_source_fidelity": {
+      "result": "pass",
+      "basis": [
+        "The plan retains B02's FastAPI/PostgreSQL user API, command/outbox acceptance, and per-request workspace scope, with B03 Temporal as a separate transition authority.",
+        "It preserves original DTOs and the ax_session boundary, identifies the added login/session routes and pagination as implementation additions, and explicitly keeps the entire AT-21 job/log/image/device direct-resource matrix pending until the later endpoints exist.",
+        "Paperclip identity and company membership are not promoted to IFPMIC authority; synthetic provider, workspace, and profile fixtures are explicitly not real SSO, approval, or AT-21 evidence."
+      ]
+    },
+    "fixed_test_oracles_and_normal_exception_boundary_regression_coverage": {
+      "result": "pass",
+      "basis": [
+        "The plan fixes subject identity, session and CSRF lifetime, cookie attributes, routes, DTOs, status/error codes, request limits, idempotency behavior, DRAFT/accepted semantics, and resource authorization policy sufficiently for independent literal HTTP/DB assertions.",
+        "G2 provides byte-level B01 bridge checks for exact framing, record hash, identity, Unicode/lone-surrogate transport, limits, timeout, and private-data non-disclosure without asking Python to reproduce the JavaScript canonicalizer.",
+        "G3/G4 specify wrong/replayed OIDC state, nonce and PKCE, identity spoofing, expiry/revocation, membership/delegation, cross-user reads, idempotency races, transaction rollback, commit uncertainty, and pagination scope cases.",
+        "G5 names concrete filesystem crash/fault points, real directory/marker checks, symlink and unexpected-content rejection, stale-claim behavior, and recovery expectations.",
+        "The app factory and private fault hooks provide test seams while requiring actual PostgreSQL, independent connections/processes, and actual temporary filesystem checks for acceptance evidence."
+      ]
+    },
+    "environment_and_scope_gates": {
+      "result": "pass",
+      "basis": [
+        "The 180-second G6 command limit has an explicit prior 120-second runtime rationale; shorter protocol/fault and Python command limits remain separately stated.",
+        "The UI/browser gate omission rule is conditional on unchanged UI/build/plugin/dependency outputs and no frontend integration; backend identity, PostgreSQL, bridge, and workspace tests are never omitted.",
+        "Real corporate OIDC, production TLS/proxy, production database/backups, workspace policy, Temporal, B04/B09, and all unexecuted ATs remain clearly outside the synthetic local acceptance claim."
+      ]
+    }
+  },
+  "nonblocking_test_execution_constraints": [
+    {
+      "topic": "Operator provisioning",
+      "constraint": "Provisioning remains outside the user-facing CreateJob API and production eligibility/grant authority remains an environment acceptance item. Tests may use explicit isolated PostgreSQL fixtures for active membership, job ownership/delegation, and profile eligibility, but must assert the plan's fixed authorization behavior and must not imply that a real operator provisioning interface or approval source was delivered."
+    },
+    {
+      "topic": "OIDC validation",
+      "constraint": "Use the configured synthetic issuer/client/redirect as the independent fixture oracle. Assert callback state is browser-bound, single-use within five minutes; nonce, PKCE S256, issuer, audience/client, azp when present/required by the configured provider, signature algorithm/key, exp and nbf failures are rejected. Concurrent/replayed consumption must not create more than one authenticated session. Fixture success is not corporate SSO acceptance."
+    },
+    {
+      "topic": "Opaque pagination cursor",
+      "constraint": "Assert stable `(created_at, job_id)` continuation, tamper rejection, actor/filter binding, and per-page reauthorization without pinning a private token encoding. Invalid cursor input should use the plan's fixed INVALID_REQUEST contract; no cross-user cursor may reveal a protected row."
+    },
+    {
+      "topic": "Post-commit and filesystem evidence",
+      "constraint": "For commit-response loss and workspace crash tests, preserve the original failure attempt and re-read with a new connection/process. A 202/accepted receipt is never counted as applied or workspace READY; synthetic recovery is not B03 dispatch or AT-21 completion."
+    }
+  ],
+  "material_blockers": [
+    {
+      "id": "B02-TC-01",
+      "topic": "Required Job.workflow_version persistence",
+      "evidence": "docs/ifpmic/design-v1/specs/openapi.v1.json#/components/schemas/Job requires workflow_version. docs/ifpmic/B01-PROFILES.md states that Job.workflow_version maps to the immutable registry ID and identifies the registry workflow_id as ifpmic-sw-v1. The B02 DRAFT insert tuple at PostgreSQL request acceptance lists revision, cycle, current_step_ids, and candidate_fingerprint but omits workflow_version and its binding.",
+      "why_material": "A successful CreateJob cannot produce a complete original Job DTO without this required value, and the independently expected registry binding cannot be tested from the current plan. Treating schema_version or profile_version as workflow_version would violate the adjacent B01 contract.",
+      "required_plan_resolution": "Pin the initial and returned Job.workflow_version to the exact B01 immutable registry ID (ifpmic-sw-v1), distinguish it from profile_version and schema_version, and add a literal API/DB assertion for the value."
+    },
+    {
+      "id": "B02-TC-02",
+      "topic": "Unicode validity for persisted CreateJob strings",
+      "evidence": "The plan rejects lone-surrogate project_id values and separately defines lossless ASCII-escaped storage for B01 profile_version, but CreateJob also accepts title, request_text, and base_ref strings and persists command/job-related data in PostgreSQL. PostgreSQL UTF8 text cannot store lone UTF-16 surrogates. The current per-field rules do not specify whether such values are rejected or preserved.",
+      "why_material": "A valid JSON body can encode a lone surrogate with an escape. Without a pinned policy, the same input may become an uncaught database encoding failure, be silently changed, or be inconsistently accepted by API and digest code; TC has no independent status/round-trip oracle.",
+      "required_plan_resolution": "For every user-controlled string persisted as PostgreSQL text, either reject non-Unicode-scalar strings as INVALID_REQUEST before transaction start or define lossless escaped storage and response behavior. Preserve ordinary astral characters and do not normalize. Add escaped-lone-surrogate and astral-string tests for the chosen rule."
+    }
+  ],
+  "implementation_gate": {
+    "tc_plan_approved": false,
+    "product_implementation_approved_by_this_record": false,
+    "separate_plan_review_required": true,
+    "required_plan_review_path": "docs/ifpmic/evidence/b02/plan-review.json",
+    "reason": "This exact plan SHA has unresolved test-oracle blockers; revise and obtain both independent reviews against the new exact SHA before implementation."
+  },
+  "reviewer_verdict": "Do not approve implementation against SHA e4efc9c93af668b4f2db6bbad091720a5465ea789616b7a9b06dbc9e19933692 until the required Job.workflow_version binding and PostgreSQL-safe handling of CreateJob strings are pinned. Re-review the revised exact SHA; no product or test implementation is approved by this record."
+}

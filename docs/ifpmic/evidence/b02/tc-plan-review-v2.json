@@ -1,0 +1,67 @@
+{
+  "kind": "b02_independent_tc_plan_review_v2",
+  "reviewer_role": "independent TC plan reviewer",
+  "reviewed_plan": {
+    "path": "docs/ifpmic/B02-IDENTITY.md",
+    "sha256": "6bfabb6794b5656a48ebfc1d40e3f007aea3769a19e49a1747ec38b8dd15487a"
+  },
+  "decision": "approve_tc_plan",
+  "scope": "Read-only re-review of the revised exact plan SHA, focusing on the five v1 blockers and whether G0-G7 have independent, executable test oracles. This approves the TC plan only; product/test implementation remains gated on the separate v2 plan review.",
+  "source_pins_reviewed": {
+    "docs/ifpmic/evidence/b02/source-collection.json": "da6fdce28078167517b5ee94336bddb81775d1dad91b41181c894acde2f2437a",
+    "docs/ifpmic/evidence/b02/paperclip-auth-collection.json": "5255b7f5e529ec9de4114f8a31750aec34a4cc6673b6197ee9fe08f2381f4bfe",
+    "docs/ifpmic/evidence/b02/architecture-advice.json": "d125f5cbd05698eaf0e810b9677cea1db1514aff967eb0672964a33d4433bff9",
+    "docs/ifpmic/evidence/b02/tc-risk-matrix.json": "3bd978e2cbe7773f02e0ed94e820c6c2430d742c899721a6070764be96e1b5d6",
+    "docs/ifpmic/evidence/b02/plan-review.json": "34d0a5e67e5727c6c08464e2cbc5b84026bde1d4642659d3fceab45a402ce69e",
+    "docs/ifpmic/evidence/b02/tc-plan-review.json": "58c83b707bfd5abdad751c6db3391f5af828db85c841939ce100b9ccf7564d30"
+  },
+  "v1_blocker_resolution": [
+    {
+      "id": "B02-PLAN-01",
+      "result": "resolved",
+      "oracle": "The Job DTO and initial DRAFT persist `workflow_version = snapshot.payload.workflow.workflow_id`; the plan fixes the B01 registry ID as `ifpmic-sw-v1`, explicitly distinguishes it from schema_version and profile_version, and requires a literal DTO/DB oracle."
+    },
+    {
+      "id": "B02-PLAN-02",
+      "result": "resolved for the scoped B02 test contract",
+      "oracle": "Catalog fields, snapshot identity/byte uniqueness, append-only eligibility and revocation records, current validity checks, operator-only DB privileges, current_user audit attribution, mock-only CLI grant path, and fail-closed absence of real grant issuance are specified. Synthetic real-grant rows are explicitly test fixtures and cannot be counted as real authority."
+    },
+    {
+      "id": "B02-PLAN-03",
+      "result": "resolved",
+      "oracle": "Every CreateJob semantic field is retained in immutable ASCII `command_payload_json`; the plan pins the exact version-tagged digest formula and requires independent post-restart payload recovery checks. Digest-only storage is explicitly insufficient."
+    },
+    {
+      "id": "B02-PLAN-04",
+      "result": "resolved",
+      "oracle": "Project IDs are Unicode scalar identifiers; title/request_text/base_ref/profile_version preserve astral and lone-surrogate strings through ensure_ascii=True semantic JSON persisted as ASCII TEXT, with no raw surrogate sent to PostgreSQL UTF-8. Tests can independently assert exact semantic round-trip and digest."
+    },
+    {
+      "id": "B02-PLAN-05",
+      "result": "resolved",
+      "oracle": "CSRF is fixed as base64url-no-padding HMAC-SHA256 over the domain-tagged canonical ax_session value using a provisioned private key. It is stable across GETs/restart, changes with session rotation, does not require storing the session token in plaintext, and uses a distinct cursor domain."
+    }
+  ],
+  "testability_review": {
+    "original_contract_fidelity": "pass",
+    "normal_negative_boundary_regression_oracles": "pass",
+    "oidc_and_session": "pass: configured protocol fixture, single-use browser-bound state, nonce/PKCE/issuer/audience/azp/signature/time rejection, rotation/logout, stable CSRF and cross-session rejection are independently observable without treating the fixture as corporate SSO",
+    "authorization_and_operator_boundary": "pass: user routes cannot provision owner, membership, delegation, snapshot or approval; isolated PostgreSQL fixtures and the constrained mock-only operator path provide deterministic authorization tests; real grants remain fail-closed pending external authority",
+    "bridge_and_unicode": "pass: raw B01 bytes remain independently pinned and stored; profile labels and user request strings have distinct, explicit lossless storage rules; no Python re-canonicalization is used",
+    "postgresql_atomicity_and_workspace_faults": "pass: real isolated PostgreSQL connections/processes and real temporary filesystem are required for races, rollback, commit uncertainty, reconciler crash windows, marker/symlink/mode checks; mocks are limited to injected boundaries, not acceptance substitutes",
+    "scope_and_claims": "pass: G0-G7 include evidence/recovery and keep B03, B04/B09, all remaining acceptance cases, production environment prerequisites, and full AT-21 explicitly outstanding"
+  },
+  "remaining_nonblocking_limits": [
+    "Corporate OIDC registration, production issuer/client/redirect, approved TLS/proxy, real project-role authority, production PostgreSQL/backups, and workspace/storage policy are not supplied by the repository. The plan correctly keeps them as external environment acceptance and requires real startup to fail closed without configuration.",
+    "Synthetic OIDC, database fixtures, and local mock profile eligibility validate implemented boundaries only; they cannot close real SSO, real provisioning, B03, B04/B09, or original AT-21."
+  ],
+  "material_blockers": [],
+  "implementation_gate": {
+    "tc_plan_approved": true,
+    "product_implementation_approved_by_this_record": false,
+    "separate_plan_review_required": true,
+    "required_plan_review_path": "docs/ifpmic/evidence/b02/plan-review-v2.json",
+    "reason": "The revised plan requires both independent reviewers to approve this same exact SHA before implementation starts."
+  },
+  "reviewer_verdict": "Approve the independent TC plan for SHA 6bfabb6794b5656a48ebfc1d40e3f007aea3769a19e49a1747ec38b8dd15487a. The five v1 blockers are resolved with independently testable contracts. This review does not authorize implementation on its own or claim real SSO, production approval, or AT-21 acceptance."
+}
