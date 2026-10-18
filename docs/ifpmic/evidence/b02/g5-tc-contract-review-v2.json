@@ -1,0 +1,80 @@
+{
+  "kind": "ifpmic.b02.g5.tc-contract-review.v2",
+  "decision": "approved_for_independent_TC_authoring",
+  "reviewed_contract": {
+    "path": "docs/ifpmic/evidence/b02/g5-implementation-contract-v2.json",
+    "sha256": "cdbda5b333e0227f7804255d8d430968eec22d89657708fa8c109dea83f73b8b"
+  },
+  "prior_review": {
+    "path": "docs/ifpmic/evidence/b02/g5-tc-contract-review.json",
+    "decision": "approved_v1_before_independent_reviewer_rejection; superseded for authoring by the exact v2 contract",
+    "v1_contract_sha256": "dcf2266d6e87318ea23224442f8a17163f8e7136c0a8e7ddd0ad89d3cc6e6100"
+  },
+  "inputs_verified": {
+    "governing_plan_sha256": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a",
+    "source_collection_sha256": "58a5632cbeabb5b30e58fbb7548224fa381e3976a04dad68fbb970c59a84ec16",
+    "workspace_protocol_advice_sha256": "2ca51031ada512c932dd1e89497a110013a702201b7d0d7d9bf9a2fb493342f6",
+    "v1_tc_risk_matrix_sha256": "08919062de208239a735b4a3b5e6b3b395c1c90588d1da5da8cb9c1244d57de2"
+  },
+  "review_scope": [
+    "Changed claim selection and malformed persisted-state handling",
+    "Targeted READY lookup ordering and no-filesystem semantics",
+    "Original-document build-output child directory",
+    "Filesystem paths, marker, error and crash oracles inherited from v1",
+    "Original G5/AT-21 boundary and evidence limitations"
+  ],
+  "findings": [
+    {
+      "id": "V1-BLOCKER-CLAIM-STATE",
+      "result": "resolved",
+      "detail": "A PROVISIONING row is reclaimable only when all required claim fields are well-formed and its non-NULL expiry is at or before the database clock. Missing token/expiry, generation zero, or a contradictory error field is selected as an invariant fault, changed to ERROR/WORKSPACE_INVALID_STATE with claim fields cleared and no filesystem mutation. It is not silently interpreted as an expired lease. Invalid RESERVED state is also checked under the row lock. Generation overflow has a fixed no-FS error path. These cases have literal row-state/generation/error expectations."
+    },
+    {
+      "id": "V1-BLOCKER-BUILD-DIRECTORY",
+      "result": "resolved",
+      "detail": "The fixed initial layout now contains exactly source, tc, artifacts, and build at mode 0700. The build child is tied to original DOCX paragraph 217 and future B07 use; its presence, empty initial state, sync ordering, and preservation are directly testable. The v1 three-child wording is historical and explicitly superseded; no original DTO or acceptance source is changed."
+    },
+    {
+      "id": "V2-READY-PREFLIGHT",
+      "result": "resolved",
+      "detail": "A targeted READY lookup is DB-only and precedes filesystem validation. A valid READY target returns already_ready without reading or mutating workspace files, preserving future B03/B07 contents; malformed targeted READY returns the fixed invariant error without filesystem access or row mutation. A missing root for direct service use returns invalid_request/WORKSPACE_INVALID_REQUEST with null job_id and no DB/filesystem operation. Potential claims still undergo global root preflight before any claim, so unsafe root leaves intents unclaimed."
+    },
+    {
+      "id": "ORPHAN-WITHOUT-INTENT",
+      "result": "preserved",
+      "detail": "An orphan UUID directory without a matching database intent is ignored and left intact. The contract does not invent a workspace row or claim that such a filesystem-only orphan can be marked ERROR."
+    },
+    {
+      "id": "OTHER-G5-ORACLES",
+      "result": "testable",
+      "detail": "V1's fixed root/path policy, exact marker bytes/mode, no-follow component walk, create-once hard-link publication, temp-file ownership, fsync sequence, error mapping, retry-error, signal handling, crash table, hook inventory, claim fencing, and G4 immutability requirements remain explicit in v2. Required real-PG, real-FS and independent-process coverage is retained; mocked-only evidence is not acceptance."
+    }
+  ],
+  "testability_assessment": {
+    "independent_oracles": [
+      "Literal request/result DTO/status/error/exit vectors and missing-root/direct-service behavior",
+      "RESERVED/PROVISIONING/READY/ERROR invariants, expiry equality, valid reclaim, malformed-state failure, generation overflow and no-FS branches",
+      "Exact UUID-only path, four-child layout including build, marker bytes and 0700/0600 modes",
+      "Filesystem syscall order and fresh-PG state around all approved fault hooks and crash points",
+      "Two independent process claim/fence races and stable-token create-once behavior",
+      "G4 accepted job, accepted command, pending outbox, profile bytes and receipt remain unchanged",
+      "Root-preflight failure leaves intents unclaimed; no-intent orphan is preserved and does not fabricate a DB error row",
+      "Targeted READY response is proven DB-only by an injected filesystem that fails if touched, with future output sentinel preservation"
+    ],
+    "required_real_evidence": [
+      "Real isolated PostgreSQL and a disposable POSIX filesystem with actual mode/lstat/link/fsync behavior",
+      "Actual worker subprocesses for crash/restart, lease expiry, signal shutdown and log/privacy checks",
+      "Per-hook failure/recovery plus G4/G1-G3/B01 fixed regressions on the frozen candidate"
+    ],
+    "residual_contract_note": "The configuration setting still says workspace_root=None disables workspace operations, while the direct service preflight now pins invalid_request/WORKSPACE_INVALID_REQUEST for a missing root. This is sufficiently clarified for tests: no DB or filesystem access and null job_id; it does not block authoring."
+  },
+  "scope_guard": {
+    "contract_original17_files_unchanged": true,
+    "workspace_slice_only": true,
+    "full_AT_21_complete": false,
+    "Temporal_or_Agent_execution": false,
+    "production_storage_or_power_loss_claim": false,
+    "statement": "G5 evidence is limited to local workspace provisioning/recovery. It cannot be counted as completion of job/log/image/device/session isolation, B03/B07 writer enforcement, production storage acceptance or original AT-21."
+  },
+  "remaining_blockers": []
+}

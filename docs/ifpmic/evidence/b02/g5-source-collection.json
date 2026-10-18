@@ -1,0 +1,323 @@
+{
+  "kind": "ifpmic.b02.g5.source-collection.v1",
+  "purpose": "Read-only source collection for a G5 workspace/recovery contract. This records original requirements, accepted B02 boundaries, current implementation hooks and unresolved implementation policy; it is not a product or test plan approval.",
+  "original_uploads_current_bytes": {
+    "docx": {
+      "path": "IFPMIC_AX_Design_v1.docx",
+      "sha256": "18a14876a689beae0599b5d4014bf95db79bef047d0e4ceafa60d9a9417624fc"
+    },
+    "design_package_zip": {
+      "path": "IFPMIC_AX_Design_Package_v1.zip",
+      "sha256": "34946eda4c85fd9706b40e218a233a3fdd5ab0a00b2538778c9b9cf047e19080"
+    },
+    "existing_source_verification": {
+      "path": "docs/ifpmic/evidence/v1/source-upload.json",
+      "sha256": "3ef0a07db987088bbb4fcf119c84b22220a082df39ccd3fd318bc176fc2b78a1",
+      "recorded_result": "The original package has 18 entries, 17 imported files; the recorded archive/DOCX hashes match the current files, and all 17 imported specification files were verified byte-identical to archive bytes with zero mismatches.",
+      "note": "Hashes above were computed from the current upload bytes. No original upload was edited or staged."
+    }
+  },
+  "source_pins": {
+    "original_design_v1": {
+      "docs/ifpmic/design-v1/specs/requirements.json": "6e1dc87cdbcaa66ed690ffd13d2d70242dff43410c9f822447bd520719ce249b",
+      "docs/ifpmic/design-v1/specs/acceptance-cases.json": "f7163553edc9e8e753965cb8748ab04aac8f68c1a453f567f62284a01b38b0d5",
+      "docs/ifpmic/design-v1/specs/implementation-backlog.json": "115e48568e0464b8e67ef17274dba97b3046a8de902e1cf426d9b70e1528e5d0",
+      "docs/ifpmic/design-v1/specs/openapi.v1.json": "2ed780cfa06349b18f5025937e050fd98a5cefa34b552eb836cfaccad416dd7a",
+      "docs/ifpmic/design-v1/specs/data-model.json": "00c84f8a39b1b8959daa8d94b1d67e860d83ad9bdb809065a5cd3b18af07071b",
+      "docs/ifpmic/design-v1/specs/workflow.v1.json": "bab40a7abb3929896add1ef2cd074893dd2a7de14d200a5d6cea4b7a77eb0e89",
+      "docs/ifpmic/design-v1/specs/state-contract.json": "0248e130017043539319c56af854f5388a95d33e7e687902a3438fdff414244a",
+      "docs/ifpmic/design-v1/specs/agent-contract.json": "ca6d4bea7abf0fffe7354c482af0d521c3a2e367217a69923a4bfe43fa27ab64",
+      "docs/ifpmic/design-v1/specs/project-profile.example.json": "37301c6ff5c9cae237b6037a3106368cfd07e4582462d52a35dfee39de7839f2",
+      "docs/ifpmic/design-v1/specs/sources.json": "c0c6f96c54ba4fd1c7a1bd70b954a7316bebdba86ff681e5a07141c682eeb7ef",
+      "docs/ifpmic/source-manifest.json": "8afba9c1fc16ef3a6565f45576792cad51a1aaab59857d3a28666c71ec43007c"
+    },
+    "current_b02": {
+      "docs/ifpmic/B02-IDENTITY.md": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a",
+      "services/ifpmic_api/app.py": "291e46d0dd41ab4464fa95f1fd695f25cf2387be4d59ab37e31f553ea90219e5",
+      "services/ifpmic_api/jobs.py": "bc682d6ea83ef6545b3105b2a9e8e4df75273445ebca1f8193219010bcea79b4",
+      "services/ifpmic_api/request_contract.py": "ad88f756ce4bf526bb3c2d89dab64765bcfc42ab7f8b2832dcb012b271e07fe0",
+      "services/ifpmic_api/settings.py": "5d69621a8c1ff63c059527713e69a2675dab7a766897e0a50d926f5c86d3e266",
+      "services/ifpmic_api/authority.py": "c1f8c91985f119b6435fc175cf21cc350c54ef2ba47959c4526bb22e6afa6734",
+      "services/ifpmic_api/migrations/001_initial.sql": "cf0437a5f32e1589e4ea821afbb2ef2480d780a276667880aa9a08a0f4c77f12",
+      "services/ifpmic_api/migrations/002_auth_retention.sql": "95c01f06eb586e0c1067f04672edfed8e0a11215752ad859ac9e4744da5a504e"
+    }
+  },
+  "original_contract_anchors": {
+    "requirements": [
+      {
+        "source": "docs/ifpmic/design-v1/specs/requirements.json",
+        "locator": "/12",
+        "anchor": "REQ-13: 개인별 독립 작업 및 다중 사용자; ownership workspace isolation; AT-21."
+      },
+      {
+        "source": "docs/ifpmic/design-v1/specs/requirements.json",
+        "locator": "/4",
+        "anchor": "REQ-05 preserves human-owned steps; AT-05."
+      },
+      {
+        "source": "docs/ifpmic/design-v1/specs/requirements.json",
+        "locator": "/9",
+        "anchor": "REQ-10 requires a human check immediately before release; X03 approval digest; AT-18."
+      },
+      {
+        "source": "docs/ifpmic/design-v1/specs/requirements.json",
+        "locator": "/13",
+        "anchor": "REQ-14 requires human notification and return along a defined failure path; AT-09."
+      }
+    ],
+    "acceptance_and_backlog": [
+      {
+        "source": "docs/ifpmic/design-v1/specs/acceptance-cases.json",
+        "locator": "lines 163-168",
+        "anchor": "AT-21: simultaneous A/B jobs; A must be denied access to B's job, logs, images and device; server authorization plus file-path and session separation. Original status remains not_executed."
+      },
+      {
+        "source": "docs/ifpmic/design-v1/specs/implementation-backlog.json",
+        "locator": "lines 14-23",
+        "anchor": "B02 includes user-scoped API, database and per-request workspace; AT-21."
+      },
+      {
+        "source": "docs/ifpmic/design-v1/specs/implementation-backlog.json",
+        "locator": "lines 26-38",
+        "anchor": "B03 separately owns Temporal workflow, outbox consumption, human waits and workflow version pin; B03 is not part of G5 workspace provisioning."
+      }
+    ],
+    "original_docx_paragraphs": {
+      "source": "IFPMIC_AX_Design_v1.docx",
+      "xml_locator": "word/document.xml paragraph sequence extracted in memory; table rows counted in document order",
+      "paragraphs": [
+        {
+          "index": 13,
+          "topic": "Web supports individual/multi-user tasks, request input, status, results, approvals and controls."
+        },
+        {
+          "index": 18,
+          "topic": "Workflow service owns work stages and human waits; TC reservation/status/authorization are server-mediated."
+        },
+        {
+          "index": 22,
+          "topic": "Temporal manages human waits, timers, failure recovery and resume after restart."
+        },
+        {
+          "index": 32,
+          "topic": "Temporal is chosen for long human waits/recovery; it does not guarantee exactly-once external side effects, which require deduplication and state inspection."
+        },
+        {
+          "index": 84,
+          "topic": "X02 prepares notes and release manifest; X03 human approval; after approval, substantive content changes require another review; P26 failure must not repeat release."
+        },
+        {
+          "index": 89,
+          "topic": "WAITING_HUMAN includes document submission, question, route confirmation, permission confirmation and release confirmation."
+        },
+        {
+          "index": 92,
+          "topic": "RECONCILING means an external result is uncertain and must be checked against actual process/device/remote state."
+        },
+        {
+          "index": 97,
+          "topic": "Infrastructure retry default is three total attempts with 10s/30s backoff; business rework is at most three cycles before human decision; project profile may tune limits."
+        },
+        {
+          "index": 98,
+          "topic": "Lost response during flash/push/PR/tag is not blindly retried; inspect journal/remote result, otherwise route to RECONCILING and a human."
+        },
+        {
+          "index": 100,
+          "topic": "Results carry job/step/cycle/attempt/execution identity; stale attempts remain historical and cannot unlock the current gate."
+        },
+        {
+          "index": 128,
+          "topic": "Role prompts specify allowed paths, but isolation must also use OS accounts, workspace and credential scope plus patch checks."
+        },
+        {
+          "index": 148,
+          "topic": "Flash profile explicitly lists partitions, slots, prerequisites and recovery procedure; AI cannot infer unlock/wipe/relock."
+        },
+        {
+          "index": 149,
+          "topic": "After PC restart or interrupted command, inspect current mode and use project recovery procedure or human task; do not promise automatic rollback."
+        },
+        {
+          "index": 161,
+          "topic": "API writes command and outbox atomically; dispatcher forwards command_id; workflow checks revision/state and deduplicates."
+        },
+        {
+          "index": 162,
+          "topic": "HTTP 202 means durable acceptance, not completion; retries deduplicate and stale revision/body conflicts."
+        },
+        {
+          "index": 164,
+          "topic": "Artifact metadata precedes bytes; size/hash validation precedes availability; downloads recheck authorization; displayed logs are secret-redacted."
+        },
+        {
+          "index": 168,
+          "topic": "Original route table includes plan decision, human submissions, controls, release manifest, approval and events beyond current G4 routes."
+        },
+        {
+          "index": 192,
+          "topic": "Human inbox covers assigned steps/questions/permissions/device work/retry limits; UI permits submission or retry."
+        },
+        {
+          "index": 203,
+          "topic": "Release approval binds a manifest digest containing commit, image, validation bundle, rule/profile versions, repository/target/mode/version and notes hash."
+        },
+        {
+          "index": 210,
+          "topic": "Publisher rechecks current manifest, approval, permission and remote target; changed target/rebase requires new candidate and validation/approval."
+        },
+        {
+          "index": 211,
+          "topic": "External publish is intent → execution → remote query → stored receipt; retry queries previous result first."
+        },
+        {
+          "index": 217,
+          "topic": "Each job has isolated workspace and build output; only one writer per workspace; worker and publisher accounts are separate."
+        },
+        {
+          "index": 228,
+          "topic": "Operational recovery backs up business DB, Temporal persistence, artifact volume and configuration versions together; RPO/RTO remain internal operational decisions."
+        }
+      ]
+    },
+    "data_and_state_contracts": [
+      {
+        "source": "docs/ifpmic/design-v1/specs/data-model.json",
+        "locator": "lines 15-37, 45-67, 85-114",
+        "anchor": "Owner comes from authentication; attempts are immutable; plans/manifests immutable; artifact URI is not a browser-provided path; human task has one effective completion/version; approval is bound to manifest and stale/revoked approval is unusable; release action idempotency is by destination and key, unknown status requires reconciliation; Temporal is authoritative while PostgreSQL stores inbox/outbox/projections; 202 is not final success; command+outbox atomic; artifact hash/size verified before persistence; receipt before final state."
+      },
+      {
+        "source": "docs/ifpmic/design-v1/specs/workflow.v1.json",
+        "locator": "lines 414-472",
+        "anchor": "Skip/reuse requires evidence and is not PASS; failures start a new cycle; approvals bind to release digest; no same-workspace concurrent writers; old-cycle results never unlock current cycle; side effects are not blindly replayed; default retry ceilings appear at lines 434-449."
+      },
+      {
+        "source": "docs/ifpmic/design-v1/specs/state-contract.json",
+        "locator": "lines 2-95",
+        "anchor": "A failed step stays FAILED and retry creates a new attempt; pause records resume state/step; cancellation preserves already-published remote state and reconciles; aggregate state must retain active child-step detail."
+      },
+      {
+        "source": "docs/ifpmic/design-v1/specs/agent-contract.json",
+        "locator": "lines 1-130",
+        "anchor": "Task includes workspace id and writable paths; one writer/workspace; role scope is reinforced by OS account/workspace/credential separation; agent completion is not a quality gate PASS."
+      },
+      {
+        "source": "docs/ifpmic/design-v1/specs/project-profile.example.json",
+        "locator": "lines 60-72",
+        "anchor": "Profile contains release mode/repository/target/version/reviewers and approval flags; example permits non-distinct approver; mock evidence cannot authorize real release."
+      }
+    ],
+    "api_contract": {
+      "source": "docs/ifpmic/design-v1/specs/openapi.v1.json",
+      "sha256": "2ed780cfa06349b18f5025937e050fd98a5cefa34b552eb836cfaccad416dd7a",
+      "anchors": [
+        "lines 20-125: jobs POST and list; list default 25 and max 100",
+        "lines 127-160: per-job snapshot path",
+        "lines 369-475: release-manifest GET and digest-bound approval POST",
+        "lines 1445-1500: Snapshot DTO consists of job, steps, last_event_id; no workspace path or workspace control field",
+        "lines 1596-1637: approval includes expected_revision, manifest_sha256, approve/reject, reason, reject_target",
+        "lines 2248-2318: release manifest digest inputs"
+      ],
+      "boundary": "OpenAPI defines additional future APIs but they are not current G4 routes; a G5 filesystem reconciler should not expand the user DTO or invent a new approval route without a separate API contract."
+    }
+  },
+  "current_b02_state": {
+    "plan": {
+      "path": "docs/ifpmic/B02-IDENTITY.md",
+      "sha256": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a",
+      "anchors": [
+        "lines 5-7: retain FastAPI/PostgreSQL/Temporal, AT-21 job/log/image/device isolation; real SSO/TLS/project permissions and B03 are separate acceptance",
+        "lines 45-49: accepted request binds immutable profile/workflow version and atomically inserts initial DRAFT job, accepted command, pending outbox and RESERVED workspace intent; G5 must not advance job/command or consume outbox",
+        "lines 55-63: workspace intended root and UUID job directory, RESERVED→PROVISIONING→READY/ERROR claim fence, stable marker, no-follow checks, conservative residue preservation and restart recovery; runtime/service boundary",
+        "lines 67, 76: filesystem fault seam and G5 two-reconciler/process/FS crash matrix"
+      ]
+    },
+    "code_and_schema": [
+      {
+        "source": "services/ifpmic_api/settings.py",
+        "sha256": "5d69621a8c1ff63c059527713e69a2675dab7a766897e0a50d926f5c86d3e266",
+        "locator": "lines 32-52",
+        "finding": "Settings has mode, DB/OIDC/security settings and optional Node/profile store paths; no workspace root or workspace owner/mode policy setting exists."
+      },
+      {
+        "source": "services/ifpmic_api/app.py",
+        "sha256": "291e46d0dd41ab4464fa95f1fd695f25cf2387be4d59ab37e31f553ea90219e5",
+        "locator": "lines 122-157, 215-237",
+        "finding": "create_app accepts filesystem but only assigns app.state.filesystem; JobService is constructed without it. Routes currently cover auth/session, job create/list/snapshot and command status only; there is no workspace reconciler startup or workspace route."
+      },
+      {
+        "source": "services/ifpmic_api/jobs.py",
+        "sha256": "bc682d6ea83ef6545b3105b2a9e8e4df75273445ebca1f8193219010bcea79b4",
+        "locator": "lines 28-34, 140-206, 233-249",
+        "finding": "JobService has no filesystem dependency. Create inserts a workspace intent in the same transaction as job/command/outbox, relying on SQL defaults. Job Snapshot only returns pristine DRAFT plus empty steps and last_event_id; no workspace state is exposed."
+      },
+      {
+        "source": "services/ifpmic_api/migrations/001_initial.sql",
+        "sha256": "cf0437a5f32e1589e4ea821afbb2ef2480d780a276667880aa9a08a0f4c77f12",
+        "locator": "lines 165-175, 197-217",
+        "finding": "workspace_intents already has job_id, command_id, DB-generated stable workspace_token, RESERVED/PROVISIONING/READY/ERROR, generation, claim_token, claim_expires_at and error_code, with FK to the accepted command. Runtime has SELECT and column-limited UPDATE for intent state/claim/error columns; operator can SELECT. Current schema does not record a filesystem path or marker digest."
+      },
+      {
+        "source": "services/ifpmic_api/migrations/002_auth_retention.sql",
+        "sha256": "95c01f06eb586e0c1067f04672edfed8e0a11215752ad859ac9e4744da5a504e",
+        "locator": "entire migration",
+        "finding": "Auth retention migration; no workspace table or filesystem policy change."
+      }
+    ],
+    "search_result": "The only current service references to filesystem are the create_app parameter and app.state assignment; there is no workspace/reconcile/marker implementation. Workspace references in the implementation are the atomic intent insert and SQL schema."
+  },
+  "original_policy_vs_g5_scope": {
+    "g5_should_deliver": [
+      "A filesystem workspace isolated by server-created job UUID under one fixed trusted root; never derive a path from request/title/user/profile text and never accept a browser path.",
+      "Create and verify the contract's private directory layout with owner/mode checks and an identity marker bound to job_id and the already-persisted stable workspace_token.",
+      "A bounded multi-reconciler claim/fencing protocol and restart/idempotent recovery that never promotes READY before durable file and directory sync plus matching live claim.",
+      "Conservative error handling: symlink, mismatched identity/token, unexpected content, ownership/mode violations, filesystem failures and ambiguous residue remain visible as ERROR/manual investigation; unknown data is not recursively deleted or adopted.",
+      "Independent actual-filesystem and process-fault evidence for collision/race, crash boundaries, stale claims, permissions and recovery; retain pending accepted command/outbox and pristine DRAFT job."
+    ],
+    "must_stay_separate": [
+      "B03 owns Temporal execution, outbox consumption, job/command transitions, agent/worker execution, workflow step records and actual single-writer worktree enforcement.",
+      "B04 owns connected web/SSE/event presentation and notification inbox; G5 must not claim that job/log/image/device HTTP isolation is fully accepted.",
+      "B09 owns device registration, lease and bridge behavior; B11 owns release manifests, digest approvals, publisher credentials and remote reconciliation.",
+      "AT-21 remains incomplete until job, logs, images, device, file-path and session isolation are all exercised through their actual endpoints/resources; a workspace-only G5 pass cannot mark the original case passed.",
+      "Operational storage-root approval, production owner/service account, filesystem/mount behavior, backup/restore, capacity, retention, RPO/RTO and production deployment remain environment acceptance, not synthetic local G5 proof."
+    ],
+    "approval_boundary": "The original workflow's X01 path-plan decision and X03 release-manifest approval are workflow/human gates; the latter binds to the current manifest digest. Workspace reservation/provisioning is not an approval and must not turn an ordinary accepted CreateJob into release, profile-eligibility or publisher authority."
+  },
+  "supplemental_contract_questions": [
+    {
+      "id": "G5-ROOT-POLICY",
+      "question": "What exact fixed workspace root is configured, how is it pre-provisioned/validated, and which service UID/GID, mount and root mode are trusted? Startup and every path operation need a symlink-safe boundary; no request field may choose it.",
+      "why": "Current Settings has no root field; existing plan says an existing root but does not identify configuration source or owner policy."
+    },
+    {
+      "id": "G5-LAYOUT-MARKER",
+      "question": "Pin the exact relative layout and exact marker encoding/bytes/hash/mode, including safe create-once algorithm and no-follow descriptor-relative checks. Specify how READY paths are treated once B03 legitimately writes into source/tc/artifacts.",
+      "why": "Plan names source/tc/artifacts and a marker object, but exact serialization/publication operations and the boundary between allowed future outputs and corrupt unexpected contents need a testable oracle."
+    },
+    {
+      "id": "G5-CLAIM-FENCE",
+      "question": "Pin lease expiry clock, claim query/locking, generation/token increments, heartbeat or no-heartbeat model, expiry reclaim, and conditional final UPDATE. Define what a stale live reconciler may still do to disk and prove it cannot commit READY or overwrite/remove a valid workspace.",
+      "why": "SQL has generation/token/expiry columns, while current implementation has no claim algorithm; filesystem effects cannot be transactionally fenced by SQL alone."
+    },
+    {
+      "id": "G5-RETRY-ERROR",
+      "question": "Define retry sources/transitions from ERROR or expired PROVISIONING, fixed error-code mapping, whether READY is revalidated, and what exact empty/matching-marker residue may be resumed. Specify when manual intervention is required.",
+      "why": "The intended state names and recovery principle exist, but retry transition eligibility and the rule for safely recognizing partially completed files are not pinned."
+    },
+    {
+      "id": "G5-FS-SEAM",
+      "question": "Define injected filesystem operation semantics and hooks for mkdir/open-with-no-follow/write/fsync/close/link-or-equivalent/publish/directory-fsync/parent-fsync and process kill boundaries; specify expected behavior after each injected failure.",
+      "why": "Plan requires independent failures around mkdir, marker publication, sync and READY commit, but there is no implemented filesystem API or operation-level oracle."
+    },
+    {
+      "id": "G5-RESOURCE-LIMITS",
+      "question": "Define deterministic handling for ENOSPC, read/write/sync errors, excessive unexpected entries and path/marker size, while preserving unknown files and accepted DB state.",
+      "why": "Plan calls out insufficient space and no deletion/adoption but gives no bounded directory/marker resource limits or fixed error result."
+    }
+  ],
+  "limitations": [
+    "Original DOCX paragraph indexes are locators into the local document XML order, not claims of visible Word page or line numbers.",
+    "This collection does not inspect production storage configuration, deployment account, database secrets, or private workspace contents; no services or network were used."
+  ],
+  "execution_status": "Read-only document/code inspection and SHA-256 hashing. No code, tests, dependencies, services, database, original uploads or private exports were changed."
+}

@@ -1,0 +1,216 @@
+{
+  "kind": "ifpmic.b02.g5.workspace-protocol-advice.v1",
+  "status": "architectural_advice_for_main_decision_not_implementation_contract_or_acceptance",
+  "scope": "G5 workspace intent reconciliation only; no product/test changes, deployment, Agent/device execution or G4 acceptance-state changes.",
+  "findings": [
+    "A named temporary marker inside the UUID job directory is incompatible with automatic recovery of a crash during marker writing: it leaves a nonempty markerless directory that the approved plan correctly forbids adopting.",
+    "Use a fresh private named staging file directly under the existing service-owned workspace root, outside every UUID directory. Full write, file fsync and close precede a no-overwrite hard-link publication into the job directory. Crashed staging files then cannot make a markerless job directory nonempty.",
+    "SQL generation/token/expiry fencing protects database state transitions. It cannot atomically revoke filesystem syscalls already in progress. Filesystem operations must therefore remain safe when an old worker resumes: publish the same stable marker create-once, create only the fixed missing layout, and never replace, repair or remove shared objects.",
+    "The existing workspace_intents columns and runtime column grants can implement claims, fenced completion and explicit ERROR retry without a migration or new dependency.",
+    "A process kill tests restart behavior and syscall ordering. It does not prove physical power-loss durability, filesystem implementations, controller behavior or production storage acceptance."
+  ],
+  "evidence": [
+    {
+      "path": "docs/ifpmic/B02-IDENTITY.md",
+      "location": "작업 공간과 DB 운영 경계; G5 row",
+      "facts": "DB UUID paths; stable token before filesystem work; full write/fsync/close before create-once marker publication; directory/parent sync before READY; only empty owner-0700 markerless remnants may be resumed; unknown contents preserved; stale claim cannot complete DB state."
+    },
+    {
+      "path": "services/ifpmic_api/migrations/001_initial.sql",
+      "location": "workspace_intents definition and runtime grants",
+      "facts": "Stable job_id/workspace_token and RESERVED/PROVISIONING/READY/ERROR exist. generation, claim_token, claim_expires_at and error_code exist. Runtime can SELECT and UPDATE only the specified mutable intent fields; no product-state or stable-identity update is needed."
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g5-tc-risk-matrix.json",
+      "location": "G5-02 through G5-07 and unresolved_contract_questions",
+      "facts": "Independent TC requests exact crash ordering, root/no-follow handling, marker mode, stale-worker fencing and ERROR retry policy before tests become contractual."
+    }
+  ],
+  "recommendation": {
+    "selected_option": "root-level private named staging file plus fd-relative no-overwrite hard link",
+    "alternatives_not_selected": [
+      {
+        "option": "Linux O_TMPFILE plus linkat AT_EMPTY_PATH or procfs descriptor publication",
+        "reason": "Useful on a separately approved Linux-specific adapter, but introduces filesystem support, capability/procfs and direct linkat binding questions that Python os.link does not need for the named-file option. Do not add ctypes, a dependency or privilege solely for G5."
+      },
+      {
+        "option": "build a staged directory and atomically publish the whole workspace",
+        "reason": "Needs an explicit no-replace directory-rename primitive and ownership/recovery rules for unfinished staged directories. Ordinary os.rename can replace an existing empty target directory on Unix. This is more contract surface than needed."
+      }
+    ],
+    "proposed_decisions_for_contract": {
+      "root": "An explicitly configured existing absolute root, opened once through no-follow directory descriptors. The worker never creates, chmods or adopts the configured root.",
+      "job_component": "Canonical lowercase hyphenated UUID obtained from the persisted intent job_id, never from request/title/owner/profile strings.",
+      "marker_name": ".ifpmic-workspace.json",
+      "marker_mode": "0600",
+      "directory_mode": "0700 for job/source/tc/artifacts",
+      "marker_bytes": "One fixed compact sorted-key ASCII JSON serialization, keys format/job_id/workspace_token, followed by one LF, no extra keys, UUIDs in canonical form. Exact bounded byte equality with locally generated expected bytes rejects duplicate keys, malformed JSON and alternate identity.",
+      "staging_name": "Fresh unpredictable .ifpmic-marker-stage-<job UUID>-<random UUID> basename, created O_CREAT|O_EXCL|O_NOFOLLOW|O_CLOEXEC under the root at 0600. It contains no claim token, auth value, label or profile data.",
+      "marker_hardlinks": "Do not require st_nlink == 1. A process may die after publication before removing its root-stage alias. Validate regular type, service UID, exact 0600 mode, bounded exact bytes and descriptor/path identity. A retained private stage alias is not a second workspace or authority to modify the marker.",
+      "startup_mode": "Standalone explicit local worker with once/run/retry-error commands; a run loop must be bounded/configurable and stop cleanly. Optional workspace_root configuration and app.state.workspaces may expose lazy dependency wiring; construction/import must perform no filesystem I/O, and API import/lifespan/acceptance must not automatically launch a G5 reconciler. B03 will require READY before execution."
+    },
+    "root_and_identity_guards": [
+      "Preflight root configuration before claiming any row. Reject relative paths, dot/dot-dot traversal and symlink components. Walk the absolute path from an anchored directory descriptor with O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC and verify descriptor/path st_dev/st_ino identity. Do not use resolve() as a security check.",
+      "The root must have service effective UID and exact 0700 permission bits, no special bits. Required directories must meet the same UID/mode policy; marker/stage must be regular files at 0600. Unsafe preexisting entries are preserved, never chmod/chown repaired. Set a restrictive worker-process umask before threads, or verify that creation yields the required owner permission bits; do not change a shared API process umask.",
+      "Ancestors must be trusted against rename by another unprivileged UID. A root/service-owned non-group/other-writable chain suffices; a root-owned sticky temporary parent may be allowed explicitly for disposable tests. Merely opening an arbitrary writable parent without this trust assumption does not secure the configured pathname.",
+      "All job/child/marker operations use fixed single basenames and dir_fd; open directories no-follow. First no-follow stat the existing marker and reject every nonregular type without opening a device/FIFO. Then open O_RDONLY|O_NONBLOCK|O_NOFOLLOW|O_CLOEXEC, fstat before reading and compare descriptor/path identity. O_NONBLOCK also bounds a FIFO substitution race. Read only expected_length+1 bytes and require exact equality.",
+      "Check job and child st_dev against root and check path-descriptor identity again before READY. Privileged mount changes and malicious same-UID concurrent replacements are outside this threat model; same-device checks do not detect every bind mount. Reject unsupported link/fsync behavior rather than silently weakening publication.",
+      "Before a marker exists, the job directory must be completely empty. If a concurrent worker may have published between the missing-marker check and enumeration, recheck the marker before declaring a nonempty markerless conflict. Do not classify another worker's valid marker-first progression as unknown residue.",
+      "After a matching marker exists during PROVISIONING, accept only the fixed top-level marker/source/tc/artifacts names and a subset of the three required child directories while provisioning is incomplete. Unknown entries and invalid children cause preserved ERROR. For this pre-execution G5 phase, require preexisting children to be empty; later executable-workspace policy belongs to B03.",
+      "A root entry without a matching persisted intent is never adopted or deleted. The ordinary intent-driven worker need not enumerate unrelated root entries. An optional read-only inventory can report an orphan for manual inspection, but cannot update a nonexistent intent to ERROR."
+    ],
+    "publication_steps": [
+      {
+        "step": 1,
+        "action": "Commit a fresh SQL claim for RESERVED or expired PROVISIONING; capture immutable job_id/workspace_token plus new generation/token. Confirm uncertain claim commits through a fresh connection before any filesystem mutation."
+      },
+      {
+        "step": 2,
+        "action": "Create the UUID job directory at 0700 if absent, then open/verify it relative to root. If it exists, verify owner/mode/identity and either a matching marker or complete emptiness. No child directory is created before a valid marker exists."
+      },
+      {
+        "step": 3,
+        "action": "If marker is missing, exclusively create a fresh 0600 root-stage file, record its st_dev/st_ino, loop on os.write until every expected byte is written, fsync the file and close successfully. Do not publish on short/failed write, fsync or close. Never reopen it for writing after this point."
+      },
+      {
+        "step": 4,
+        "action": "Recheck the current claim and root/job identities. Verify that the root-stage path remains the recorded regular inode with expected UID/mode/bytes. Publish os.link(stage_basename, marker_basename, src_dir_fd=root_fd, dst_dir_fd=job_fd, follow_symlinks=False). There is no replace/rename/unlink of an existing marker."
+      },
+      {
+        "step": 5,
+        "action": "On link success, verify published marker identity/content. On EEXIST, open no-follow and validate the winner's exact stable marker; a matching winner is successful convergence, a mismatch is preserved ERROR. An ambiguous link error may be resolved only by read-only validation of an actually present matching marker; absence or mismatch is never treated as successful publication."
+      },
+      {
+        "step": 6,
+        "action": "With a valid marker in place, create only missing source/tc/artifacts at 0700, accepting EEXIST only after complete type/UID/mode/identity/empty-content validation. Validate the complete fixed layout and reject every unexpected top-level entry."
+      },
+      {
+        "step": 7,
+        "action": "Optionally unlink only this invocation's exact root-stage inode after a no-follow dev/ino check. Never search for or reuse old stages. This cleanup may also run after claim loss because it removes only this invocation's private temporary name; it never unlinks the job marker. If identity is uncertain or cleanup fails, preserve it."
+      },
+      {
+        "step": 8,
+        "action": "Open and fsync the validated marker again on recovery, then close; fsync each required child directory, the UUID job directory, and finally its parent root. Require successful synchronization of all required descriptors. Root is the workspace's parent; its own parent need not be synced because worker does not create/replace root. Revalidate anchored root/job identities and the claim before completion."
+      },
+      {
+        "step": 9,
+        "action": "In a short transaction CAS PROVISIONING to READY using job_id, exact generation and token, and claim_expires_at > clock_timestamp(). Clear claim token/expiry/error and commit. A zero-row update means claim lost; no completion/error overwrite or shared cleanup follows. Never mutate job/command/outbox/snapshot rows."
+      }
+    ],
+    "sql_claim_and_fencing": {
+      "acquisition": "Use a short SELECT ... FOR UPDATE SKIP LOCKED plus UPDATE ... RETURNING transaction, or equivalent single writable CTE. Eligible normal scan rows are state='RESERVED' or state='PROVISIONING' with a non-null expired lease. Increment generation and replace token/expiry, set PROVISIONING and clear error. Commit before opening/creating job data. NULL/malformed PROVISIONING claims are an invariant fault, not evidence of lease expiry.",
+      "clock": "Use PostgreSQL clock_timestamp() both to compute claim_expires_at and in renewal/completion/error predicates, with a bounded configured lease of 1..300 seconds, default 60. Do not compare Python wall clock or transaction-start now()/CURRENT_TIMESTAMP against a live lease. A deterministic TC can expire synthetic claims through SQL; injecting only the Python clock does not alter PostgreSQL time.",
+      "completion_predicate": "WHERE job_id = %s AND state = 'PROVISIONING' AND generation = %s AND claim_token = %s AND claim_expires_at > clock_timestamp()",
+      "renewal": "Optional renewal uses the same predicate and retains generation/token. It cannot resurrect an already expired claim. Failure or zero-row result stops further shared work; the worker may close descriptors and remove only its own verified staging name.",
+      "lease_linearization": "The locked conditional completion UPDATE is the completion linearization point. The database cannot promise that wall-clock lease expiry will not pass before COMMIT returns. A second claimant cannot successfully take that row while the completion transaction holds the row lock, and READY excludes later acquisition. Tests should assert no superseded generation commits, rather than a physically instantaneous lease-at-ack guarantee.",
+      "stale_worker": "Check ownership before shared mutations and before completion. A pause immediately after a check can still allow one stale filesystem syscall. Because stable token never changes, stale link/mkdir operations are create-once and additive; they cannot overwrite or delete the winner. Once a worker observes claim loss, only descriptor closure and its own exact staging-name cleanup remain allowed. Do not claim this provides an Agent/worktree single-writer lease.",
+      "commit_uncertainty": "On uncertain claim/READY/ERROR commit, discard the broken connection and read the intent afresh. READY with matching immutable identity is completed DB state; another generation/token is lost ownership; a still-live exact own claim permits read-only validation and a fresh fenced attempt; an expired own claim requires a new claim. If DB cannot be read, stop without assuming rollback or changing filesystem."
+    },
+    "crash_and_retry_matrix": [
+      {
+        "boundary": "Before claim commit / claim acknowledgement lost",
+        "residue": "No filesystem work is authorized until persisted ownership is confirmed.",
+        "next_action": "Fresh SQL read resolves commit; otherwise stop. A committed abandoned claim is reclaimed after expiry."
+      },
+      {
+        "boundary": "After UUID mkdir, before root-stage creation",
+        "residue": "Absent or completely empty owner-0700 UUID directory.",
+        "next_action": "Expired PROVISIONING is reclaimed; validate empty directory and resume marker creation."
+      },
+      {
+        "boundary": "During stage write/fsync/close, or after close before link",
+        "residue": "Empty UUID directory plus possibly incomplete/complete private root-stage file.",
+        "next_action": "Preserve every dead-process stage. A new claim uses a new exclusive stage, never adopts the old stage and can resume the empty UUID directory."
+      },
+      {
+        "boundary": "After create-once marker link, before any/all child mkdir",
+        "residue": "Matching marker and a subset of fixed empty children; a root-stage hard-link alias may remain.",
+        "next_action": "New claimant validates stable marker and allowed subset, completes missing children, then repeats all required syncs. No marker overwrite or stage cleanup by discovery."
+      },
+      {
+        "boundary": "During child/marker/job/root fsync or before READY UPDATE",
+        "residue": "Valid but not yet trusted-durable layout; SQL remains PROVISIONING unless an explicitly caught error was committed.",
+        "next_action": "After expiry, validate and repeat file/child/job/root syncs, then fenced READY. A fresh process kill alone does not demonstrate which writes survived physical power loss."
+      },
+      {
+        "boundary": "After durable filesystem work, before READY commit",
+        "residue": "Complete matching layout; intent may remain PROVISIONING.",
+        "next_action": "Fresh claimant validates and resyncs the existing layout and completes its own generation. It does not recreate marker or treat G4 acceptance as failed."
+      },
+      {
+        "boundary": "READY commit succeeded, process died before acknowledgement",
+        "residue": "READY row and matching workspace; own stage alias may remain.",
+        "next_action": "Normal scan skips READY and returns an already-ready result for an explicit target; no writes, marker recreation, recursive rescan or content cleanup."
+      },
+      {
+        "boundary": "Caught ENOSPC/EIO/permission/unsupported-link-or-fsync failure",
+        "residue": "Any verified partial state is retained; accepted job/command/outbox remain unchanged.",
+        "next_action": "Current live claimant records a fixed sanitized ERROR by the same fence. Normal scans never retry ERROR. Operator fixes environment and explicitly requests retry for that exact job; the same conservative validation runs again. If ERROR commit fails or claim is lost, stop; PROVISIONING may later expire."
+      },
+      {
+        "boundary": "Wrong/symlink/missing marker with nonempty directory, unknown entry, unsafe mode or identity",
+        "residue": "All existing entries and targets are preserved.",
+        "next_action": "Fenced ERROR/manual inspection. Explicit retry authorizes validation and monotone creation only; it does not authorize deleting unknown contents, chmod/chown repair, replacing markers or accepting a nonempty markerless directory."
+      }
+    ],
+    "error_and_ready_policy": {
+      "normal_scan": "Only RESERVED and valid expired PROVISIONING are claimable. READY and ERROR are not periodically rewritten or repaired.",
+      "explicit_error_retry": "A local explicit retry-error <persisted UUID> may conditionally reset exactly that ERROR row to RESERVED, clearing error and old claim fields, with a generation/state comparison so concurrent reset is one winner. It performs no filesystem cleanup and changes no stable identity. The normal claim path then increments generation and creates a new token. No broad automatic reset or HTTP route is needed; unresolved conflicts safely return to ERROR.",
+      "ready_readonly": "Ordinary READY handling performs no filesystem mutation or recursive content inventory and does not reject later B03 artifact/source contents. A separately requested read-only health audit may check required structure, UID/modes and marker; failure is a fixed unhealthy result requiring manual/B03 policy, not automatic resurrection or an unfenced READY-to-ERROR rewrite.",
+      "root_failure": "Invalid/unavailable configured root is worker preflight/configuration failure. Refuse the run before claiming rows; do not mark every pending intent ERROR for a global root mistake.",
+      "errors": "Use fixed sanitized worker error codes chosen in the implementation contract. Do not publish path, exception, SQL, token or raw filesystem content. Claim loss is a distinct no-op outcome, not permission to write ERROR over the current claimant."
+    }
+  },
+  "risks_and_edge_cases": [
+    "Preserved crash-stage files can accumulate and consume root space. G5 deliberately has no automatic scavenger; any future garbage collection needs a separately specified proof of ownership and lifecycle. No filename alone proves safe deletion.",
+    "No same-UID malicious writer or privileged mount/namespace adversary is supported during atomic operations. fd-relative access and identity checks still protect against preexisting symlinks, wrong types and ordinary concurrency. Broader attacker guarantees require a stronger OS isolation design.",
+    "A valid matching marker may retain a hard-link alias. Requiring nlink=1, recursively deleting root-stage remnants, or adopting them by their names would break recovery or preservation guarantees.",
+    "With two workers, EEXIST and changing partial allowed-layout observations are normal. Recheck the marker around a markerless/nonempty observation, and validate EEXIST winners before converting any race into ERROR.",
+    "A truly absent-intent orphan cannot have an intent ERROR row. Preserve and optionally report it; do not invent a database row to make a test oracle pass.",
+    "An operator retry is intentionally conservative. A nonempty markerless job directory remains blocked even if an old staging file elsewhere looks plausible. Only external manual investigation can resolve such unknown data; G5 cannot self-repair it.",
+    "Filesystem fsync/link semantics must be supported by the selected deployment filesystem. Local successful syscall/fault tests do not establish NFS/overlay/network-storage guarantees or power-failure persistence."
+  ],
+  "sources": [
+    {
+      "title": "Python 3.12 os module",
+      "url": "https://docs.python.org/3.12/library/os.html",
+      "supports": "Descriptor-relative file APIs, link with src_dir_fd/dst_dir_fd/follow_symlinks, open flags and fsync are available without a new package. Actual platform support still needs a startup check.",
+      "relationship": "Primary CPython API documentation; protocol composition is this advice's inference."
+    },
+    {
+      "title": "Linux man-pages link(2)",
+      "url": "https://man7.org/linux/man-pages/man2/link.2.html",
+      "supports": "Hard-link destination already existing yields EEXIST; linkat can avoid source symlink following; cross-mount links fail. AT_EMPTY_PATH uses capability requirements, with procfs descriptor publication as an alternative.",
+      "relationship": "Primary Linux man-pages project documentation."
+    },
+    {
+      "title": "Linux man-pages fsync(2)",
+      "url": "https://man7.org/linux/man-pages/man2/fsync.2.html",
+      "supports": "File synchronization alone does not ensure containing directory-entry persistence; explicit directory fsync is required. fsync errors must be handled.",
+      "relationship": "Primary Linux man-pages project documentation; child/job/root sequencing is protocol inference."
+    },
+    {
+      "title": "Linux man-pages open(2)",
+      "url": "https://man7.org/linux/man-pages/man2/open.2.html",
+      "supports": "O_EXCL/O_CREAT creation, O_DIRECTORY, O_NOFOLLOW, O_NONBLOCK and O_CLOEXEC provide the required primitive controls. O_NOFOLLOW applies to the final component, hence ancestor descriptor traversal.",
+      "relationship": "Primary Linux man-pages project documentation."
+    },
+    {
+      "title": "PostgreSQL 18 date/time functions",
+      "url": "https://www.postgresql.org/docs/18/functions-datetime.html",
+      "supports": "clock_timestamp is current wall-clock time and can change within a statement; now/CURRENT_TIMESTAMP use transaction-start time.",
+      "relationship": "Primary PostgreSQL documentation."
+    },
+    {
+      "title": "PostgreSQL 18 SELECT locking clauses",
+      "url": "https://www.postgresql.org/docs/18/sql-select.html",
+      "supports": "FOR UPDATE with SKIP LOCKED is suitable for queue-style consumers that skip already locked candidate rows. It does not itself supply application lease ownership or filesystem fencing.",
+      "relationship": "Primary PostgreSQL documentation; generation/token CAS is protocol inference."
+    }
+  ],
+  "remaining_uncertainty": [
+    "Main must approve and publish the supplemental implementation contract, including marker name/bytes/mode, exact worker CLI and error codes, filesystem adapter operations and fault-hook names. This advice is not that approval.",
+    "TC must independently implement literal SQL/byte/tree oracles and barrier-controlled two-process crash schedules against the pinned real PostgreSQL and disposable filesystem, including retained stage aliases, markerless observation races and stale ERROR/READY attempts.",
+    "Root/path/device trust assumptions and supported local filesystem must be recorded for the actual execution environment. No production root, deployment environment or future B03 content/writer contract is established here."
+  ]
+}

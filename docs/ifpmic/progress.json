@@ -250,6 +250,15 @@
             "errors": 0,
             "skipped": 0
           }
+        },
+        {
+          "id": "g5_workspace_reconciliation",
+          "status": "in_progress",
+          "contract": "evidence/b02/g5-implementation-contract-v2.json",
+          "independent_plan_review": "evidence/b02/g5-contract-review-v2.json",
+          "tc_plan_review": "evidence/b02/g5-tc-contract-review-v2.json",
+          "verification_plan": "evidence/b02/g5-tc-risk-matrix.json",
+          "scope": "Preimplementation contract dual-approved; real workspace isolation/publication/recovery/claim fencing implementation and independent tests pending. No G5 acceptance claimed."
         }
       ]
     },
@@ -450,5 +459,5 @@
     "Approved Bedrock/Claude runtime profile"
   ],
   "publication_policy": "Only authorized git repository documentation, source and synthetic verification summaries/screenshots; never runtime credentials or application logs.",
-  "updated_at": "2026-10-18T17:34:04.478217+00:00"
+  "updated_at": "2026-10-18T17:46:16.339130+00:00"
 }

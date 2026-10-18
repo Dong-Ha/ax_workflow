@@ -1,0 +1,120 @@
+{
+  "kind": "ifpmic.b02.g5.tc-risk-matrix.v1",
+  "status": "preimplementation_risk_matrix_contract_review_pending",
+  "traceability": {
+    "requirements": ["REQ-13"],
+    "acceptance_cases": ["AT-21"],
+    "plan": "docs/ifpmic/B02-IDENTITY.md",
+    "plan_refs": ["G5 row", "작업 공간과 DB 운영 경계", "fault_hook workspace hook inventory"],
+    "original_sources": [
+      "docs/ifpmic/design-v1/specs/acceptance-cases.json: AT-21 사용자 격리",
+      "docs/ifpmic/design-v1/specs/requirements.json: REQ-13 ownership workspace isolation",
+      "docs/ifpmic/design-v1/specs/agent-contract.json: one writer per workspace"
+    ],
+    "acceptance_limit": "Synthetic local PostgreSQL and disposable real filesystem checks can establish G5 behavior only for the tested configuration. They do not complete AT-21 job/log/image/device isolation, production storage/backup policy, B03 execution, or the remaining original acceptance cases."
+  },
+  "case_groups": [
+    {
+      "id": "G5-01-path-and-isolation",
+      "purpose": "Prove a newly accepted job receives an isolated workspace derived only from the database job UUID.",
+      "target": "Real temporary workspace root, accepted G4 job, RESERVED workspace intent, and owner/project authorization boundary.",
+      "method": "Create two jobs for separate synthetic users/projects on a disposable real filesystem. Reconcile both; compare canonical UUID-contained paths, directories and inode/device identities. Try request title, profile label, owner and project strings containing traversal or separator characters and verify they never influence workspace paths. Check intended layout directories at 0700 and accepted job/command/outbox/intent remains unchanged except the allowed workspace-intent fields.",
+      "TC responsibility": "TC authors literal path/mode/identity oracles and real-FS integration/process tests; Code-dev owns reconciler and fault seams; independent reviewer audits candidate and evidence.",
+      "pass criteria": "Only database-generated job UUID determines path; each job has a distinct root and child directories; all required directories are 0700; no cross-job path/inode sharing or overwrite; accepted command remains accepted and unapplied, job remains DRAFT.",
+      "expected result": "Two independent READY workspaces with separate job-bound markers and no change to G4 acceptance semantics.",
+      "evidence": "Private test root path, SQL before/after DTO projection, directory mode/stat/inode records, marker hashes and process results under private 0700/0600 artifacts. Never publish profile bytes, session values or production paths.",
+      "recovery and scope impact": "Preserve both roots and DB rows. Correct path derivation/authorization/layout, then rerun G5-01 and G4 path/atomicity regressions. No recursive cleanup may be used to make this case pass."
+    },
+    {
+      "id": "G5-02-marker-durable-publication",
+      "purpose": "Verify the marker is durable and create-once before READY becomes visible.",
+      "target": "Intent token/state, marker file and temporary file operations, workspace and parent directory synchronization, final READY transaction.",
+      "method": "On a real disposable filesystem, check exact UTF-8 marker object {format,job_id,workspace_token}; inject faults at mkdir, marker write, file fsync, close, create-once link/publish, workspace directory sync, parent sync and READY commit. At each boundary query intent and job through a fresh DB connection and inspect filesystem state without following links.",
+      "TC responsibility": "TC owns independent fault schedule and expected durable-state matrix; Code-dev implements filesystem adapter/reconciler; independent reviewer audits ordering and claims.",
+      "pass criteria": "READY is committed only after exact marker bytes are fully written, file-fsynced, closed, create-once published and both required directories synced. Before that point intent is not READY. A failed pre-commit attempt preserves accepted job/command/outbox and does not expose a false READY.",
+      "expected result": "Each injected boundary yields the planned RESERVED/PROVISIONING/ERROR or READY state consistent with observed durable filesystem facts; no accepted record is rolled back or marked applied.",
+      "evidence": "Hook name, operation order, state snapshots from a fresh connection, marker byte hash, directory synchronization observations and process exit, all with synthetic identifiers.",
+      "recovery and scope impact": "Keep partial files for inspection. Fix the failing ordering/reconciliation boundary and rerun the complete G5-02 matrix plus G4 commit-boundary tests. A mocked filesystem-only pass cannot substitute for the real-FS cases."
+    },
+    {
+      "id": "G5-03-no-follow-and-marker-validation",
+      "purpose": "Reject symlinks, wrong marker objects, wrong identities, unexpected file types and unsafe directory modes without following or adopting them.",
+      "target": "Workspace root and each path component, workspace/source/tc/artifacts directories, marker path and existing contents.",
+      "method": "Using disposable real-FS fixtures, vary a symlink at root/intermediate/workspace/child/marker, regular-file versus directory mismatches, wrong marker format/job_id/token, malformed/duplicate marker bytes, permission mismatch, and unexpected entries. Include an outside sentinel behind each symlink and verify it is untouched. Probe no-follow open/stat behavior and the fixed error/state outcome.",
+      "TC responsibility": "TC supplies adversarial filesystem fixtures and literal marker expectation; Code-dev owns no-follow handling and static error mapping; independent reviewer checks no unsafe cleanup path.",
+      "pass criteria": "Every unsafe or mismatched object fails closed to the contract's fixed ERROR/manual-inspection state. No symlink target is read or modified, no unexpected content is deleted or adopted, and no READY is reported.",
+      "expected result": "Existing object tree and outside sentinels remain byte-for-byte and inode-identical; intent records safe error without leaking OS exception text.",
+      "evidence": "Before/after tree inventory, lstat metadata, sentinel hashes, intent/job/command state and fixed public error code. Paths are synthetic and stored privately.",
+      "recovery and scope impact": "Do not repair or remove adversarial contents during the test. Preserve the root, classify error versus oracle ambiguity, correct implementation, then rerun G5-03 and all recovery cases."
+    },
+    {
+      "id": "G5-04-empty-unmarked-recovery-and-orphans",
+      "purpose": "Separate safe recovery of an interrupted empty directory from unknown or orphaned contents that require inspection.",
+      "target": "Same-intent service-owned mode-0700 empty directory; missing marker; unexpected entry; directory associated with another/missing intent.",
+      "method": "Create controlled crash remnants for (a) same intent, matching service ownership/mode and completely empty directory, (b) same intent with any file/subdirectory, (c) marker missing but other identity mismatch, and (d) orphan directory without matching intent. Restart reconciler and inspect every path and database row.",
+      "TC responsibility": "TC owns independent remnant fixtures and preservation oracle; Code-dev owns conservative recovery; independent reviewer audits adoption/deletion semantics.",
+      "pass criteria": "Only case (a) may continue provisioning. All other cases are preserved and moved to fixed ERROR/manual-inspection handling; no recursive delete, implicit ownership adoption, READY or DRAFT/job/outbox mutation occurs.",
+      "expected result": "Safe empty remnant converges idempotently; unknown and orphaned remnants remain unchanged for manual investigation.",
+      "evidence": "Synthetic DB intent linkage, root tree inventory/hash/modes before and after, exact reconciler result and retry count.",
+      "recovery and scope impact": "Preserve all remnants. Any cleanup needed for test teardown must be explicit fixture-owned removal after assertions, never production reconciler behavior. Rerun G5-04 and crash recovery."
+    },
+    {
+      "id": "G5-05-two-reconciler-claim-fence",
+      "purpose": "Prove two independent reconcilers cannot concurrently publish or commit READY from stale claims.",
+      "target": "Real PostgreSQL workspace_intents row claim generation/token/expiry, actual filesystem, two independent worker processes.",
+      "method": "Pause reconciler A after claim and at filesystem/fault-hook boundaries; start reconciler B against the same intent. Exercise active lease denial, expiry/reclaim with increased generation/new token, A resuming after B claims, and two jobs claimed concurrently. Use barrier-controlled independent processes and fresh SQL reads.",
+      "TC responsibility": "TC creates process/barrier schedule and literal winner/fence oracle; Code-dev owns claims/reconciler; independent reviewer verifies concurrency evidence.",
+      "pass criteria": "At most one current generation/token may commit intent state; stale A cannot set READY/ERROR over B or publish over an existing create-once marker. Distinct jobs remain isolated; no two active reconcilers claim one generation.",
+      "expected result": "A stale worker's late completion is rejected; current worker validates marker and can converge to READY. Job remains DRAFT and command accepted throughout.",
+      "evidence": "Process IDs/exit statuses, claim generation/token equality represented by redacted equality flags, operation barriers, DB state transitions and filesystem marker identity. No raw tokens published.",
+      "recovery and scope impact": "Retain process logs and intent rows. Fix claim fencing/locking, then rerun G5-05, G5 crash boundaries and G4 concurrency tests. Lease evidence is not a claim of single-writer protection for future Agent/worktree execution."
+    },
+    {
+      "id": "G5-06-restart-and-crash-recovery",
+      "purpose": "Recover safely from process termination before/after durable filesystem publication and SQL commit.",
+      "target": "Actual reconciler subprocess, workspace-intent SQL transaction, marker and directory-sync sequence.",
+      "method": "Kill a reconciler at each approved hook around mkdir, marker temp/write/fsync/close/publish, directory/parent sync and READY commit. Restart with the same service owner/root and reconcile from persisted intent. Include process death after SQL commit before acknowledgement and repeated restart/reconcile idempotence.",
+      "TC responsibility": "TC owns kill schedule, restart harness and fixed post-recovery matrix; Code-dev owns lifecycle behavior and fault seams; independent reviewer audits termination and durable evidence.",
+      "pass criteria": "Before filesystem durability, no false READY; after marker/directory durability but before SQL commit, matching state is verified/synced and can be completed; after READY commit, scan observes READY without duplicate marker or mutation. Accepted G4 job/command/outbox survives all cases.",
+      "expected result": "Each crash point converges to READY only when marker and sync requirements are satisfied, or to preserved ERROR/manual review when state is ambiguous.",
+      "evidence": "Per-hook child exit/signal, fresh process restart record, SQL state before/after, exact marker hash/mode and directory inventory. Store raw subprocess output privately with secret scan.",
+      "recovery and scope impact": "Preserve crash root and rows; never erase a failing remnant to obtain green. Fix only the identified boundary then rerun G5-06, G5-02 and G4 commit/uncertainty regression."
+    },
+    {
+      "id": "G5-07-storage-failure-and-commit-uncertainty",
+      "purpose": "Ensure space exhaustion and uncertain READY commit leave accepted work and filesystem evidence safely recoverable.",
+      "target": "Filesystem operations returning ENOSPC and READY SQL commit/ack fault boundaries.",
+      "method": "Inject ENOSPC independently at directory creation, marker write, fsync and link/publish through the approved syscall seam while asserting real-FS state. Separately inject SQL failure before READY commit and response loss after actual READY commit; reopen connection and reconcile from durable rows.",
+      "TC responsibility": "TC defines bounded deterministic fault vectors and row/tree oracle; Code-dev owns fixed error mapping and recovery; independent reviewer checks no hidden cleanup.",
+      "pass criteria": "ENOSPC never yields READY and does not alter G4 job acceptance state; precommit SQL failure remains non-READY; postcommit uncertainty is resolved by rereading intent and validating marker, not assuming rollback or repeating destructive operations.",
+      "expected result": "Fixed ERROR or recoverable PROVISIONING state with all unknown data preserved; eventual READY only after successful durable checks.",
+      "evidence": "Injected operation/code, fresh DB state, disk-tree hashes and same-intent retry outcome. Clearly label syscall and DB acknowledgement faults as controlled injection, not physical disk-full or network fault proof.",
+      "recovery and scope impact": "Retain failed partial state and accepted command. Retry only after assertions; rerun G5-07 plus crash/restart and G4 acceptance tests. No real production-storage exhaustion claim."
+    },
+    {
+      "id": "G5-08-no-destructive-reconcile-and-G4-regression",
+      "purpose": "Guard against reconciliation changing unrelated user data, accepted work, artifacts or workflow state.",
+      "target": "Workspace root plus existing accepted jobs, commands, outbox, intents, profile snapshots, artifacts and job detail/list APIs.",
+      "method": "Place unrelated sentinel files and another job's tree under the disposable root; trigger failed marker, stale claim, orphan, ENOSPC and repeated reconciliation. Snapshot G4 rows, original profile bytes, accepted receipt, command/outbox state and API detail/list before/after using fresh connections.",
+      "TC responsibility": "TC owns exact immutable regression projections and sentinel hashes; Code-dev owns reconciler; independent reviewer checks scope boundaries.",
+      "pass criteria": "No recursive deletion or overwrite; no cross-job access; no snapshot/profile mutation; accepted command remains accepted/unapplied, job stays DRAFT, outbox is pending and receipt remains identical; no workspace result is misreported as workflow execution.",
+      "expected result": "Only the matching workspace intent changes within its permitted claim/state/error fields; all unrelated rows and bytes remain identical.",
+      "evidence": "Before/after canonical SQL/API projections and file hashes/modes for synthetic data; no profile plaintext or real user identifiers.",
+      "recovery and scope impact": "Any unrelated change blocks G5. Preserve the entire disposable root and database snapshot, repair scoping, then rerun G5-08, G4 atomicity/replay and profile immutability regressions."
+    }
+  ],
+  "unresolved_contract_questions": [
+    "The exact filesystem-adapter API, process entry point, fixed error-code mapping and hook names/order must be fixed in the supplemental implementation contract before TC code is authored.",
+    "The plan specifies workspace and child directory mode 0700 but does not specify the marker file mode; tests must not invent an exact marker mode before contract approval.",
+    "The disposable root setup contract must state how the root and parent are opened/validated without following links, and how service ownership is represented in tests without changing host-wide ownership.",
+    "The precise ERROR retry/operator-reset policy and SQL state for every crash boundary need a fixed table. Tests can assert no false READY and preservation now, but must not infer automatic retry from the high-level plan.",
+    "The no-follow guarantee should define whether it covers each ancestor component and mount/device boundary, not only the final workspace and marker paths.",
+    "Real ENOSPC and real storage-device durability are environment-dependent. A syscall fault seam can test policy, but cannot be described as physical capacity or power-loss validation."
+  ],
+  "out_of_scope_and_limits": [
+    "No Agent, Temporal, publisher, device command, SAM/TEM/SQE execution or workspace writer/worktree operation is launched.",
+    "This matrix does not complete original AT-21's job/log/image/device cross-user isolation. It covers the workspace filesystem portion only.",
+    "A disposable local PostgreSQL and filesystem are required for meaningful acceptance; in-memory repository or mocked filesystem alone is diagnostic evidence only.",
+    "Production workspace root, backup/restore, quota, filesystem type, mount flags, TLS/SSO and operational cleanup approvals remain separate environment acceptance."
+  ]
+}

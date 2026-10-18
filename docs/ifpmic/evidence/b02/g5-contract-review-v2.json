@@ -1,0 +1,93 @@
+{
+  "kind": "ifpmic.b02.g5.contract-review.v2",
+  "decision": "approved_for_independent_test_authoring_and_implementation",
+  "reviewed_contract": {
+    "path": "docs/ifpmic/evidence/b02/g5-implementation-contract-v2.json",
+    "sha256": "cdbda5b333e0227f7804255d8d430968eec22d89657708fa8c109dea83f73b8b"
+  },
+  "source_pins": {
+    "governing_b02_plan": {
+      "path": "docs/ifpmic/B02-IDENTITY.md",
+      "sha256": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a"
+    },
+    "source_collection": {
+      "path": "docs/ifpmic/evidence/b02/g5-source-collection.json",
+      "sha256": "58a5632cbeabb5b30e58fbb7548224fa381e3976a04dad68fbb970c59a84ec16"
+    },
+    "protocol_advice": {
+      "path": "docs/ifpmic/evidence/b02/g5-workspace-protocol-advice.json",
+      "sha256": "2ca51031ada512c932dd1e89497a110013a702201b7d0d7d9bf9a2fb493342f6"
+    },
+    "tc_risk_matrix": {
+      "path": "docs/ifpmic/evidence/b02/g5-tc-risk-matrix.json",
+      "sha256": "08919062de208239a735b4a3b5e6b3b395c1c90588d1da5da8cb9c1244d57de2"
+    },
+    "original_docx_current_bytes": {
+      "path": "IFPMIC_AX_Design_v1.docx",
+      "sha256": "18a14876a689beae0599b5d4014bf95db79bef047d0e4ceafa60d9a9417624fc",
+      "locator": "paragraph 217"
+    },
+    "original_design_package_current_bytes": {
+      "path": "IFPMIC_AX_Design_Package_v1.zip",
+      "sha256": "34946eda4c85fd9706b40e218a233a3fdd5ab0a00b2538778c9b9cf047e19080"
+    },
+    "original_requirements": {
+      "path": "docs/ifpmic/design-v1/specs/requirements.json",
+      "sha256": "6e1dc87cdbcaa66ed690ffd13d2d70242dff43410c9f822447bd520719ce249b"
+    },
+    "original_acceptance": {
+      "path": "docs/ifpmic/design-v1/specs/acceptance-cases.json",
+      "sha256": "f7163553edc9e8e753965cb8748ab04aac8f68c1a453f567f62284a01b38b0d5"
+    },
+    "original_backlog": {
+      "path": "docs/ifpmic/design-v1/specs/implementation-backlog.json",
+      "sha256": "115e48568e0464b8e67ef17274dba97b3046a8de902e1cf426d9b70e1528e5d0"
+    },
+    "original_workflow": {
+      "path": "docs/ifpmic/design-v1/specs/workflow.v1.json",
+      "sha256": "bab40a7abb3929896add1ef2cd074893dd2a7de14d200a5d6cea4b7a77eb0e89"
+    },
+    "original_agent_contract": {
+      "path": "docs/ifpmic/design-v1/specs/agent-contract.json",
+      "sha256": "ca6d4bea7abf0fffe7354c482af0d521c3a2e367217a69923a4bfe43fa27ab64"
+    },
+    "original_data_model": {
+      "path": "docs/ifpmic/design-v1/specs/data-model.json",
+      "sha256": "00c84f8a39b1b8959daa8d94b1d67e860d83ad9bdb809065a5cd3b18af07071b"
+    },
+    "v1_review_preserved": {
+      "path": "docs/ifpmic/evidence/b02/g5-contract-review.json",
+      "sha256": "2d0c7279b258e851d3c3970705665068647d06bfe8e5fa9d4258fba0fc242f18",
+      "decision": "reject_pending_preimplementation_clarifications"
+    }
+  },
+  "resolution_of_v1_blockers": [
+    {
+      "id": "G5-C1-CLAIM-STATE-INVARIANT",
+      "status": "resolved",
+      "evidence": "The v2 contract defines distinct RESERVED, PROVISIONING, READY and ERROR invariants; only a complete expired PROVISIONING claim is reclaimable. Malformed candidate rows are marked ERROR/WORKSPACE_INVALID_STATE under row lock with claim fields cleared and no filesystem effects. It covers generation overflow and makes malformed READY a DB-only error. The required verification vectors include malformed state combinations."
+    },
+    {
+      "id": "G5-C2-BUILD-OUTPUT-BOUNDARY",
+      "status": "resolved",
+      "evidence": "The fixed initial layout now includes the fourth, empty 0700 child directory build. The contract traces this to original DOCX paragraph 217 and binds B07 to this per-job path for future build/writer controls. Verification includes the original per-job build directory."
+    }
+  ],
+  "independent_assessment": {
+    "scope_and_privacy": "The contract remains a bounded G5 DB-backed workspace provisioner. It preserves the no-new-HTTP-route and no-auto-worker boundary; B03/B07/B11 execution, one-writer, publisher and approval controls remain separate. It does not claim full AT-21 or production storage guarantees.",
+    "claim_and_recovery": "Targeted READY lookup is DB-only and precedes filesystem preflight. Potential claims preflight the root before claim mutation. Fresh row-locked state/expiry checks, generation/token fencing, error handling, explicit retry, and create-once filesystem operations provide independently testable state transitions.",
+    "filesystem_protocol": "The v2 layout, exact marker, named root-stage inode, fsync/close-before-hardlink ordering, no-replace semantics, limited own-temp cleanup, remnant preservation, and required directory sync sequence are consistent with the pinned protocol advice and original workspace requirement.",
+    "implementability": "The contract specifies settings, service/CLI boundaries, fixed DTO and errors, DB connection authority, fault hooks, crash cases, and acceptance evidence sufficiently for independent test authoring and implementation. Original migrations and existing API contracts remain unchanged."
+  },
+  "remaining_risks": [
+    "The required Linux/CPython/POSIX process and syscall tests cannot establish physical power-loss durability or production filesystem guarantees; the contract correctly limits its claim.",
+    "The lease fences database transitions, not filesystem operations already in progress and not future Agent/worktree single-writer behavior; B03/B07 must enforce that before execution.",
+    "This approval covers the exact supplemental contract only. It is not code review, test acceptance, production-root provisioning approval, or completion of AT-21."
+  ],
+  "review_execution": {
+    "mode": "read_only",
+    "product_or_test_code_reviewed": false,
+    "tests_or_services_run": false,
+    "contract_modified": false
+  }
+}

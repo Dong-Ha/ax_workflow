@@ -1,0 +1,92 @@
+{
+  "kind": "ifpmic.b02.g5.tc-contract-review.v1",
+  "decision": "approved_for_independent_TC_authoring",
+  "reviewed_contract": {
+    "path": "docs/ifpmic/evidence/b02/g5-implementation-contract.json",
+    "sha256": "dcf2266d6e87318ea23224442f8a17163f8e7136c0a8e7ddd0ad89d3cc6e6100"
+  },
+  "inputs_verified": {
+    "governing_plan": {
+      "path": "docs/ifpmic/B02-IDENTITY.md",
+      "sha256": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a"
+    },
+    "tc_risk_matrix": {
+      "path": "docs/ifpmic/evidence/b02/g5-tc-risk-matrix.json",
+      "sha256": "08919062de208239a735b4a3b5e6b3b395c1c90588d1da5da8cb9c1244d57de2"
+    },
+    "source_collection": {
+      "path": "docs/ifpmic/evidence/b02/g5-source-collection.json",
+      "sha256": "58a5632cbeabb5b30e58fbb7548224fa381e3976a04dad68fbb970c59a84ec16"
+    },
+    "protocol_advice": {
+      "path": "docs/ifpmic/evidence/b02/g5-workspace-protocol-advice.json",
+      "sha256": "2ca51031ada512c932dd1e89497a110013a702201b7d0d7d9bf9a2fb493342f6"
+    }
+  },
+  "review_scope": [
+    "Workspace root and job path security",
+    "Exact marker/layout and create-once publication",
+    "Claim generation/token fencing and two-reconciler races",
+    "Crash/restart, retry-error, ENOSPC and commit-uncertainty semantics",
+    "CLI/process lifecycle and privacy",
+    "Preservation of G4 accepted DRAFT/command/outbox and original AT-21 scope"
+  ],
+  "findings": [
+    {
+      "id": "TC-ORACLE-01",
+      "result": "resolved",
+      "detail": "The supplemental contract fixes settings bounds, worker argv/stdin/result/exit DTO, filesystem root/open policy, exact layout and marker bytes/mode, no-follow traversal, marker staging/link publication, operation ordering, fixed errors, DB claim/complete/failure/retry transitions, expiry equality, crash recovery cases and named fault hooks. A TC can assert outputs and durable DB/FS states without reading production logic to generate its oracle."
+    },
+    {
+      "id": "TC-ORACLE-02",
+      "result": "resolved",
+      "detail": "The contract explicitly preserves the high-risk root-preflight rule: an unsafe/unavailable global root fails with null job_id before claiming any intent, so intents remain unchanged and are not marked ERROR. An orphan UUID directory with no intent is ignored and preserved; there is no nonexistent row to mark ERROR. Tests can independently assert these cases."
+    },
+    {
+      "id": "TC-ORACLE-03",
+      "result": "resolved",
+      "detail": "The DB claim is committed before filesystem operations; completion and failure lock the row then use a separate conditional update bound to job, generation, token and live lease. A stale reconciler may only perform stable create-once layout work and invocation-owned temporary cleanup; it may not commit state, replace a marker, or delete unknown data. The expiry comparison and acknowledgement ambiguity have fixed observable behavior."
+    },
+    {
+      "id": "TC-ORACLE-04",
+      "result": "resolved",
+      "detail": "The contract distinguishes active claims, expired claims, ERROR retry, READY no-op and unknown remnants. Empty same-intent directories may be resumed; unexpected entries are preserved and become unsafe. It does not authorize recursive deletion, implicit adoption, chmod repair or job workflow advancement."
+    },
+    {
+      "id": "TC-ORACLE-05",
+      "result": "resolved",
+      "detail": "Filesystem error mappings, ENOSPC/EDQUOT handling, subprocess command DTOs, signal shutdown, modes, marker exact bytes, private evidence and controlled-fault limitations are specified sufficiently for local real-PG/real-FS tests. The contract expressly disclaims physical power-loss, production NFS/mount, and real storage-capacity proof."
+    },
+    {
+      "id": "TC-ORACLE-06",
+      "result": "resolved",
+      "detail": "The original AT-21 workspace slice is retained while job/log/image/device endpoint isolation, B03/Temporal execution, actual Agent single-writer/worktree enforcement and production storage approval remain out of scope. G5 cannot be reported as full AT-21 completion."
+    }
+  ],
+  "testability_assessment": {
+    "fixed_independent_oracles": [
+      "Exact canonical worker request/result bytes, fixed status/error codes and exit classes",
+      "Exact marker JSON bytes plus one LF, file mode 0600, directory modes 0700, UUID path containment and no-follow identity checks",
+      "Real PostgreSQL intent state, generation/token equality flags, claim-expiry boundaries, G4 job/command/outbox immutability",
+      "Operation ordering across write/fsync/close/link/child-directory sync/job sync/root sync and READY commit",
+      "Fresh-connection recovery and idempotency at every crash-table boundary",
+      "Independent process contention, stale-worker fencing, no-follow adversarial trees, sentinel preservation and explicit ENOSPC injection"
+    ],
+    "required_test_layers": [
+      "Unit tests for canonical settings/DTO/error mapping without treating them as filesystem acceptance",
+      "Real temporary POSIX filesystem tests for modes, symlinks, type/identity, exact bytes and preserving unknown contents",
+      "Real isolated PostgreSQL tests for claim/fence/conditional completion and G4 accepted-group immutability",
+      "Independent worker processes with bounded private logs for crash, lease race, restart and signal shutdown",
+      "Full fixed G5 candidate gate plus required G4/G1-G3/B01 regressions after source freeze"
+    ],
+    "nonblocking_note": "Settings.workspace_root=None is described as disabling workspace operations, while a worker configured without a root is invalid_request. The implementation may expose a service-level no-op result for the disabled setting, but that return shape is not separately pinned. TC should assert that disabled mode performs no claim/FS/task work and that the CLI rejects a missing configured root; it should not invent a service return DTO unless the product API publishes one. This does not block the approved worker/API integration or G5 persistence oracles."
+  },
+  "original_scope_guard": {
+    "workspace_slice_only": true,
+    "full_AT_21_complete": false,
+    "real_agent_or_temporal_execution": false,
+    "production_storage_or_power_loss_claim": false,
+    "accepted_job_command_outbox_must_remain_unchanged": true,
+    "statement": "A G5 pass is local workspace provisioning/recovery evidence only. AT-21 remains incomplete until actual job, log, image, device, file-path and session isolation are verified through their real resources; G5 does not grant deployment, execution or production-storage approval."
+  }
+}

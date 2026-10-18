@@ -1,0 +1,93 @@
+{
+  "kind": "ifpmic.b02.g5.contract-review.v1",
+  "decision": "reject_pending_preimplementation_clarifications",
+  "reviewed_contract": {
+    "path": "docs/ifpmic/evidence/b02/g5-implementation-contract.json",
+    "sha256": "dcf2266d6e87318ea23224442f8a17163f8e7136c0a8e7ddd0ad89d3cc6e6100"
+  },
+  "source_pins": {
+    "governing_b02_plan": {
+      "path": "docs/ifpmic/B02-IDENTITY.md",
+      "sha256": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a"
+    },
+    "source_collection": {
+      "path": "docs/ifpmic/evidence/b02/g5-source-collection.json",
+      "sha256": "58a5632cbeabb5b30e58fbb7548224fa381e3976a04dad68fbb970c59a84ec16"
+    },
+    "protocol_advice": {
+      "path": "docs/ifpmic/evidence/b02/g5-workspace-protocol-advice.json",
+      "sha256": "2ca51031ada512c932dd1e89497a110013a702201b7d0d7d9bf9a2fb493342f6"
+    },
+    "tc_risk_matrix": {
+      "path": "docs/ifpmic/evidence/b02/g5-tc-risk-matrix.json",
+      "sha256": "08919062de208239a735b4a3b5e6b3b395c1c90588d1da5da8cb9c1244d57de2"
+    },
+    "original_requirement": {
+      "path": "docs/ifpmic/design-v1/specs/requirements.json",
+      "sha256": "6e1dc87cdbcaa66ed690ffd13d2d70242dff43410c9f822447bd520719ce249b"
+    },
+    "original_acceptance": {
+      "path": "docs/ifpmic/design-v1/specs/acceptance-cases.json",
+      "sha256": "f7163553edc9e8e753965cb8748ab04aac8f68c1a453f567f62284a01b38b0d5"
+    },
+    "original_backlog": {
+      "path": "docs/ifpmic/design-v1/specs/implementation-backlog.json",
+      "sha256": "115e48568e0464b8e67ef17274dba97b3046a8de902e1cf426d9b70e1528e5d0"
+    },
+    "original_workflow": {
+      "path": "docs/ifpmic/design-v1/specs/workflow.v1.json",
+      "sha256": "bab40a7abb3929896add1ef2cd074893dd2a7de14d200a5d6cea4b7a77eb0e89"
+    },
+    "original_agent_contract": {
+      "path": "docs/ifpmic/design-v1/specs/agent-contract.json",
+      "sha256": "ca6d4bea7abf0fffe7354c482af0d521c3a2e367217a69923a4bfe43fa27ab64"
+    },
+    "original_data_model": {
+      "path": "docs/ifpmic/design-v1/specs/data-model.json",
+      "sha256": "00c84f8a39b1b8959daa8d94b1d67e860d83ad9bdb809065a5cd3b18af07071b"
+    },
+    "original_design_docx_current_bytes": {
+      "path": "IFPMIC_AX_Design_v1.docx",
+      "sha256": "18a14876a689beae0599b5d4014bf95db79bef047d0e4ceafa60d9a9417624fc",
+      "locator": "paragraph 217"
+    },
+    "original_design_package_current_bytes": {
+      "path": "IFPMIC_AX_Design_Package_v1.zip",
+      "sha256": "34946eda4c85fd9706b40e218a233a3fdd5ab0a00b2538778c9b9cf047e19080"
+    },
+    "baseline_commit": "bf75b503602f3d8df5a14c5c731dc137d7037b0a"
+  },
+  "scope_assessment": {
+    "accepted": [
+      "The contract keeps G5 to DB-backed workspace provisioning and recovery. It does not activate jobs, dispatch commands, add an HTTP workspace endpoint, or claim completion of AT-21, B03, B07, or B11.",
+      "The named staging file under the private root, file fsync/close before no-overwrite hard-link publication, create-once convergence, own-invocation-only temporary cleanup, and preserving ambiguous remnants follow the senior protocol advice and address markerless crash recovery.",
+      "The separate claim and completion transactions, row lock followed by a fresh clock check and fenced update, manual ERROR retry, preflight before claim, and DB-only READY state provide concrete implementable boundaries and test oracles.",
+      "The CLI is an explicit worker entrypoint and API construction/lifespan does not start workspace work. This preserves the approved B02 and existing AX API boundary."
+    ],
+    "blockers": [
+      {
+        "id": "G5-C1-CLAIM-STATE-INVARIANT",
+        "contract_locator": "claim_protocol.selection (JSON pointer /claim_protocol/selection; line 45)",
+        "evidence": "Eligibility currently includes PROVISIONING with a missing lease. Migration 001 defines the allowed states and nullable claim columns but no CHECK constraint that guarantees state/claim_token/claim_expires_at consistency (services/ifpmic_api/migrations/001_initial.sql:165-175). Senior advice and B02 scope permit reclaiming an expired claim, not treating a partially written or malformed claim as ordinary expiry.",
+        "required_resolution": "Pin the valid row invariant before implementation: RESERVED has both claim fields NULL; PROVISIONING has both claim_token and claim_expires_at present; READY and ERROR have both cleared. A PROVISIONING row with either field missing (or otherwise inconsistent) must fail closed as an invariant error without filesystem effects, or specify another explicit safe handling. Only a complete PROVISIONING claim with claim_expires_at <= database clock is reclaimable. Add literal tests for each malformed combination."
+      },
+      {
+        "id": "G5-C2-BUILD-OUTPUT-BOUNDARY",
+        "contract_locator": "filesystem.layout (JSON pointer /filesystem/layout; line 57), plus /out_of_scope and /verification/impact",
+        "evidence": "The original design requires each job to have an isolated workspace and build output directory (IFPMIC_AX_Design_v1.docx paragraph 217; current hash pinned above). The contract declares the exact layout to be marker plus source/tc/artifacts only, and rejects unknown entries while provisioning. It leaves no explicit mapping for the original build-output directory or normative deferral/creation rule for later B07.",
+        "required_resolution": "Explicitly decide whether G5 creates a separate per-job build output directory or B07 owns its creation. If deferred, state that the G5 layout is only the pre-execution scaffold, specify that B07 must create/validate a job-scoped build output directory before any build, and ensure later workspace validation accepts that documented addition without weakening G5's unknown-entry checks during initial provisioning. Pin the test boundary accordingly."
+      }
+    ]
+  },
+  "remaining_risks_after_resolution": [
+    "Process-kill and syscall-fault evidence cannot establish physical power-loss behavior or production filesystem/storage guarantees; the contract appropriately excludes those claims.",
+    "The workspace lease fences DB state and is not the original single-writer/worktree guarantee. B03/B07 still must enforce writer isolation before execution.",
+    "The original worker/publisher account separation and release approval/digest controls remain B07/B11 scope and are not supplied by this local provisioner."
+  ],
+  "review_execution": {
+    "mode": "read_only",
+    "product_or_test_code_reviewed": false,
+    "tests_or_services_run": false,
+    "contract_modified": false
+  }
+}

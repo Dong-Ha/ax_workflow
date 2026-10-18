@@ -1,0 +1,168 @@
+{
+  "kind": "ifpmic.b02.g5.implementation-contract.v2",
+  "status": "proposed_before_any_G5_product_or_test_code",
+  "requirements": [
+    "REQ-13",
+    "B02-G5",
+    "AT-21-workspace-slice"
+  ],
+  "governing_plan": {
+    "path": "docs/ifpmic/B02-IDENTITY.md",
+    "sha256": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a"
+  },
+  "baseline": {
+    "commit": "bf75b50",
+    "gate_archive_sha256": "5b7cec3e8e2d6febe0afe5da38744e59fb3a4b77fd3865cefac21bc87a528193",
+    "final_review_sha256": "016735ed8a370737d695494eec415083a29b8b6de42831639535aeaaaefc7150"
+  },
+  "inputs": {
+    "docs/ifpmic/evidence/b02/g5-source-collection.json": "58a5632cbeabb5b30e58fbb7548224fa381e3976a04dad68fbb970c59a84ec16",
+    "docs/ifpmic/evidence/b02/g5-tc-risk-matrix.json": "08919062de208239a735b4a3b5e6b3b395c1c90588d1da5da8cb9c1244d57de2",
+    "docs/ifpmic/evidence/b02/g5-workspace-protocol-advice.json": "2ca51031ada512c932dd1e89497a110013a702201b7d0d7d9bf9a2fb493342f6"
+  },
+  "original_and_policy": {
+    "original": "B02 creates a request-specific workspace; REQ-13/AT-21 separates users/jobs/paths. Temporal, real writer ownership/worktrees, publisher service accounts and approvals remain original B03/B07/B11 responsibilities.",
+    "supplement": "The exact marker filename/serialization/mode, Linux/POSIX filesystem operations, claim lease, explicit worker commands and error retry below refine approved B02 G5. They do not alter original17 files or its DTOs. The fourth child build is required by original DOCX paragraph217. Parent plan named source/tc/artifacts but did not forbid build; v1 supplemental exact-three restriction was rejected before code.",
+    "approval": "Root/Code-dev owns product/runner; TC independently owns test/fixtures/ledger; separate reviewer and TC must approve the exact contract hash before G5 code. No SAM/TEM/SQE responsibilities are reassigned."
+  },
+  "settings": {
+    "workspace_root": "Optional str, canonical absolute POSIX path other than /, with no empty/dot/dotdot path components, duplicate or trailing slash, NUL or lone surrogate. Settings validation does no filesystem IO. It must point to an already provisioned service-owned directory of exact mode0700. Never choose it from HTTP/project/profile/owner/title. None disables workspace operations.",
+    "workspace_lease_seconds": "int (not bool)1..300 inclusive, default60; PostgreSQL clock_timestamp is authoritative, not auth clock/client time.",
+    "workspace_poll_seconds": "int (not bool)1..60 inclusive, default1 for explicit run loop.",
+    "compatibility": "Existing Settings callers remain valid with defaults. No new dependency or migration; original001/002 immutable. Existing AX server and G4 HTTP DTOs/routes unchanged."
+  },
+  "interface": {
+    "app": "create_app filesystem injection is passed to lazy WorkspaceService at app.state.workspaces. No FS access, claim, worker or new asyncio task starts during import, construction or API lifespan. Existing auth maintenance is unchanged.",
+    "service": "WorkspaceService(settings, *, db_factory, filesystem=None, fault_hook=None); reconcile_once(job_id=None) and retry_error(job_id). Adapter check_root() performs read-only root validation before claiming, provision(job_id,workspace_token) returns only after full validation/sync or raises fixed WorkspaceError. Root validation is repeated during provision. Injection is trusted local test code; mocks alone cannot establish acceptance.",
+    "worker": "python -m services.ifpmic_api.workspace {once|run|retry-error}, IFPMIC_API_CONFIG only. Uses configured runtime database_dsn, not operator DSN. Missing root/DSN/config or extra argv is WORKSPACE_INVALID_REQUEST/exit2; private exception text is never printed.",
+    "stdin": "once consumes <=65536bytes strict UTF8 JSON {} or {job_id:canonical UUID}; retry-error exactly {job_id:canonical UUID}. Reject duplicate/extra fields, malformed/nonobject/nonfinite JSON/invalidUUID. run does not read stdin; it polls one intent per iteration with configured interval and no command-line path/options.",
+    "result": "Exactly one sorted-key compact ASCII JSON object {status,job_id,error_code} plus LF on stdout; stderr empty. statuses idle,ready,already_ready,error,stale,retry_queued,not_retryable,dependency_unavailable,commit_uncertain,invalid_request,stopped. job_id canonical DB UUID or null; never root/marker/workspace/claim token/SQL/OS text. ready/already_ready/idle/retry_queued/not_retryable/stopped have null error_code; error has WORKSPACE_UNSAFE/WORKSPACE_NO_SPACE/WORKSPACE_IO/WORKSPACE_INVALID_STATE; stale has WORKSPACE_STALE; dependency_unavailable has WORKSPACE_UNAVAILABLE; commit_uncertain has WORKSPACE_COMMIT_UNCERTAIN; invalid_request has WORKSPACE_INVALID_REQUEST.",
+    "exit": "ready/already_ready/idle/retry_queued/not_retryable exit0; error/stale/dependency_unavailable/commit_uncertain exit3. run emits no per-job output, handles SIGINT/SIGTERM by stopping after current iteration, emits one {status:stopped,job_id:null,error_code:null} LF and exit0. No fault flags/env/HTTP inputs.",
+    "scope": "Standalone worker is an explicit execution entrypoint for workspace provisioning, not Agent/Temporal/publisher execution or final deployment. B03 will require READY before activation and manage writer fencing separately."
+  },
+  "claim_protocol": {
+    "transaction": "Fresh non-owner runtime connection, explicit READ COMMITTED, local lock_timeout5s and statement_timeout30s; parameterized SQL. No FS operation while claim transaction is open.",
+    "selection": "Optionally read a targeted READY intent first through a fresh DB transaction: validate READY invariants and return already_ready without any filesystem check or mutation. For actual claims preflight root read-only, then SELECT one RESERVED or expired-valid/malformed PROVISIONING candidate by ascending job_id FOR UPDATE SKIP LOCKED; only a complete valid PROVISIONING with nonNULL expiry<=clock_timestamp may be reclaimed. Also select malformed PROVISIONING (missing token/expiry,generation0,error present) so the invariant-fault path can block it without FS. Valid active claims are excluded. After row lock recheck state/invariant/expiry using a separate SQL statement before mutation. ERROR/READY excluded from normal scan. Missing/busy/noteligible target returns idle. Existing FK/stable workspace_token/job_id only from DB.",
+    "claim": "Increment generation, generate new DB UUID claim_token, set state PROVISIONING, claim_expires_at=clock_timestamp()+lease, error_code=NULL, preserving workspace_token/job/command identities. Commit before any FS effect. Claim ack uncertainty returns commit_uncertain and performs no FS; retry waits until lease expiry if committed. No claim renewal in this bounded empty-layout provisioner.",
+    "completion": "After durable FS success use a fresh transaction. First SELECT matching job intent FOR UPDATE, then in a separate statement UPDATE conditional on job_id, PROVISIONING, exact generation+claim_token and claim_expires_at>clock_timestamp. Set READY, clear claim_token/expiry/error. Zero rows means stale with no mutation; equality at expiry is stale. Current DB clock is sampled after row lock acquisition. Conditional UPDATE is the lease linearization point; its COMMIT/ack may occur after expiry while lock excludes supersession. Before DB completion stale workers may only perform create-once stable layout operations and own-temp cleanup. Lease is a DB completion fence, not an Agent single-writer lock.",
+    "failure": "On fixed FS failure, fresh transaction first locks matching intent FOR UPDATE then separate conditional UPDATE with identical state/generation/token/live-lease fence sets ERROR/fixed code and clears claim fields. Zero rows -> stale. No other table changes. DB failure retains actual current state; never pretend ERROR persisted.",
+    "commit_uncertainty": "Set commit_started only immediately before each transaction context exits. Precommit failures are dependency_unavailable, commit/ack/postcommit failures are commit_uncertain. Read actual DB state on later invocation; do not infer rollback or retry destructive operations. Controlled injected ack loss is not real network/power-loss proof.",
+    "retry_error": "Explicit CLI/service method only: lock matching ERROR intent, set RESERVED, clear error and claim fields, preserve generation and stable identities. No FS IO, no chmod/delete/adoption; correction of unsafe contents is an operator action outside this worker. Missing/nonERROR -> not_retryable; next claim increments generation. No automatic retry of ERROR and no workflow infra-retry count is consumed.",
+    "preflight": "An optional targeted READY lookup is DB-only and precedes FS validation. For any potential claim, check configured root read-only before acquiring/mutating a claim. Global root unsafe/unavailable returns error with job_id:null/fixed FS code, leaving all intents unclaimed and unmodified. Reopen/recheck root during provision. Missing configured root returns invalid_request with job_id:null, no DB/FS operation. A worker CLI also requires configured DSN; an explicitly injected service db_factory supplies its own DB connection authority.",
+    "invariants": "RESERVED requires claim_token=NULL,claim_expires_at=NULL,error_code=NULL and generation<9223372036854775807. PROVISIONING requires generation>0,claim_token nonNULL,claim_expires_at nonNULL,error_code=NULL. READY requires generation>0,both claim fields NULL,error_code=NULL. ERROR is terminal pending explicit retry. Under claim row lock malformed RESERVED/PROVISIONING is changed to ERROR/WORKSPACE_INVALID_STATE with cleared claim fields, no generation increment and no filesystem mutation. Invalid-state update has error-commit hooks. Do not interpret a missing lease as expired. A malformed targeted READY returns error/WORKSPACE_INVALID_STATE without FS or row mutation. If an expired PROVISIONING generation cannot increment within bigint max, set ERROR/WORKSPACE_INVALID_STATE without FS; a live max-generation claim may still complete normally."
+  },
+  "filesystem": {
+    "platform": "Pinned Linux CPython3.12 POSIX local filesystem with directory fsync and same-filesystem hard links. No ctypes/O_TMPFILE/procfs publication dependency. Validate support at actual runtime; unsupported syscall fails safely. Local process-crash and syscall fault tests do not establish physical power-loss/NFS/production storage guarantees.",
+    "root_open": "Walk every absolute configured component with dir_fd-relative O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC starting /. Each ancestor must be root/service-euid owned and not group/other writable; root-owned sticky temporary parent (e.g. /tmp) is allowed. Final root exact service euid-owned0700 without special bits. Never create/chmod root/ancestors. Keep root FD, verify configured namespace still identifies same root before completion. Reject symlink components; do not resolve() as a security substitute. Ancestor policy prevents unprivileged rename of configured pathname; privileged/same-euid mutation remains outside threat model.",
+    "job_path": "Only canonical DB job_id basename beneath root; mkdir0700 create-once. Open O_DIRECTORY|O_NOFOLLOW, require service euid owner,0700,same st_dev as root. Existing file/symlink/wrongowner/mode/device is unsafe, never fixed. No path from request text enters FS.",
+    "layout": "Fixed marker .ifpmic-workspace.json plus exactly four child directories source,tc,artifacts,build. Each child service-owned0700,same device,nofollow opened and empty during initial provisioning. build is the original DOCX paragraph217 per-job build-output directory; B07 must use this job-scoped path and manage its writer/worktree rules before builds. Unknown entries or child contents -> WORKSPACE_UNSAFE/preserved. READY is not provisioned/revalidated by ordinary scan, so future B03/B07 outputs are not read/deleted/rejected by G5.",
+    "marker_bytes": "ASCII sorted compact JSON {format:ifpmic.workspace.v1,job_id:<canonical DB UUID>,workspace_token:<canonical stable DB UUID>} followed by one LF. Require regular service-owned exact0600 marker, bounded exact expected bytes, no extra keys/duplicate syntax/trailing data, no symlink. Marker hard-link count>=1 is allowed because dead staging aliases can remain; no nlink=1 guarantee is claimed. Before opening, nofollow-lstat and reject nonregular objects (including device/FIFO); then O_RDONLY|O_NONBLOCK|O_NOFOLLOW|O_CLOEXEC plus fstat/path identity, expected-length+1 bounded read and exact bytes. This avoids opening a preexisting device/FIFO merely to determine its type.",
+    "empty_recovery": "When marker missing, only an exactly empty matching owner0700 job directory with the existing DB intent may continue. Any file or directory before marker is unsafe. A marker-present partial layout with only expected empty children is recoverable. Orphan UUID dirs without a DB intent are ignored/preserved and never adopted or scanned recursively. If initial marker lookup missed and enumeration is nonempty, recheck marker once before classifying unknown residue; a concurrent valid marker-first winner is normal recovery. Always revalidate allowed layout after winner validation.",
+    "staging": "Create a random O_CREAT|O_EXCL|O_NOFOLLOW service-owned0600 named marker file directly under private root, outside job directory. Name is internal .ifpmic-marker-<jobUUID>-<randomUUID>. Record dev/ino of this invocation-created inode. Fully write with short-write handling, file fsync, close writer before publication. Validate unchanged staging identity/regular type/mode/owner before linking.",
+    "publication": "os.link(stage_name,marker_name,src_dir_fd=root_fd,dst_dir_fd=job_fd,follow_symlinks=False). Never rename/replace/truncate an existing marker. EEXIST means validate winner marker against the same stable DB token/bytes; mismatch is unsafe. No stage filename is reused or adopted after restart.",
+    "temp_cleanup": "Only this invocation may unlink its exact recorded root-level staging name when nofollow lstat still matches recorded dev/ino/owner/type. Never unlink an unexpected replacement or another invocation/dead staging file. Own temporary cleanup is the sole root-level non-layout mutation beyond job mkdir; stale claim does not authorize shared/unknown deletion. Crash leftovers are preserved for manual operational review.",
+    "durability_order": [
+      "root/job opened and identities validated",
+      "mkdir job or safely recover empty same-intent directory",
+      "complete marker write -> file fsync -> close -> hardlink create-once publish (or validate matching existing marker)",
+      "ensure fixed empty children; verify marker/layout and identities",
+      "fsync source,tc,artifacts,build directory FDs",
+      "fsync job directory FD",
+      "fsync root FD (workspace parent)",
+      "revalidate root/job/child namespace inode/device identity, expected entries and exact marker bytes",
+      "only then conditionally commit READY"
+    ],
+    "error_mapping": "Unsafe identity/type/mode/content/symlink/foreign-device -> WORKSPACE_UNSAFE. ENOSPC or EDQUOT -> WORKSPACE_NO_SPACE. Other OS IO/fsync/link/permission failures -> WORKSPACE_IO. No OS message, path, content or raw SQL is a code/message. Partial bytes and accepted records are preserved. Malformed persisted claim/state invariant is WORKSPACE_INVALID_STATE; it is not a filesystem error and never authorizes filesystem effects.",
+    "scope_of_races": "FD-relative nofollow and namespace identity checks prevent following attacker entries and detect replacements at tested seams. Private0700 root assumes trusted service euid and privileged mount namespace; hostile privileged/same-euid concurrent writes or remounts are outside this guarantee. Same-device checks do not claim detection of every same-device bind mount. Stale service workers obey create-once/no-delete protocol.",
+    "creation_modes": "Explicit0700/0600 creation and verify results; never chmod existing/new objects to hide a wrong mode. Explicit worker process may set umask077 before operations; API/shared process umask is never changed."
+  },
+  "crash_table": [
+    {
+      "point": "before claim commit",
+      "durable_state": "RESERVED or previous claim; no FS",
+      "recovery": "rescan normally"
+    },
+    {
+      "point": "after claim commit before mkdir",
+      "durable_state": "PROVISIONING live lease, FS unchanged",
+      "recovery": "wait expiry, new generation/token, same stable workspace token"
+    },
+    {
+      "point": "after mkdir before marker publish",
+      "durable_state": "PROVISIONING; empty job dir, possible root-level dead staging file",
+      "recovery": "after expiry safely recover empty job, preserve root staging remnant"
+    },
+    {
+      "point": "after publish before/during children/sync",
+      "durable_state": "PROVISIONING; exact matching marker with partial expected empty children",
+      "recovery": "after expiry validate marker/layout, create missing stable children, repeat all required sync"
+    },
+    {
+      "point": "after FS sync before READY commit",
+      "durable_state": "PROVISIONING; durable valid layout",
+      "recovery": "after expiry validate+sync again and fence READY"
+    },
+    {
+      "point": "after READY commit before ack",
+      "durable_state": "READY if committed, otherwise still PROVISIONING",
+      "recovery": "fresh DB inspection/targeted once resolves; never assume rollback"
+    },
+    {
+      "point": "unsafe remnant or IO exception",
+      "durable_state": "fenced ERROR if error commit known, otherwise inspect DB",
+      "recovery": "preserve content; explicit retry-error after cause correction, no automatic adoption/deletion"
+    }
+  ],
+  "fault_hooks": {
+    "signature": "fault_hook(name) local injected object only; no HTTP/env/CLI fault enablement. Each name is called once at the indicated actual boundary for that invocation. Existing G3/G4 hooks unchanged.",
+    "names": [
+      "workspace_before_claim",
+      "workspace_before_claim_commit",
+      "workspace_after_claim_commit",
+      "workspace_before_mkdir",
+      "workspace_after_mkdir",
+      "workspace_before_marker_write",
+      "workspace_after_marker_write",
+      "workspace_before_marker_fsync",
+      "workspace_after_marker_fsync",
+      "workspace_before_marker_close",
+      "workspace_after_marker_close",
+      "workspace_before_marker_publish",
+      "workspace_after_marker_publish",
+      "workspace_before_children",
+      "workspace_after_children",
+      "workspace_before_children_sync",
+      "workspace_after_children_sync",
+      "workspace_before_directory_sync",
+      "workspace_after_directory_sync",
+      "workspace_before_parent_sync",
+      "workspace_after_parent_sync",
+      "workspace_before_ready",
+      "workspace_before_ready_commit",
+      "workspace_after_ready_commit",
+      "workspace_after_completion_lock",
+      "workspace_before_error_commit",
+      "workspace_after_error_commit",
+      "workspace_before_retry_commit",
+      "workspace_after_retry_commit"
+    ],
+    "filesystem_injection": "Tests may wrap real syscall-backed adapter operations to raise exact OSError/ENOSPC or block at hooks. Actual SIGKILL child runs and real PostgreSQL/FS are mandatory; fake-only traces do not prove durability."
+  },
+  "verification": {
+    "TC_plan": "g5-tc-risk-matrix.json eight groups, with this contract resolving its initial open questions; TC must review exact contract hash and author tests independently after dual approval.",
+    "required": "Real G4-created jobs for two users/projects; exactmarkerbytes/dir modes/identity; no-follow every ancestor/job/child/marker; empty-unmarked versus unknown/nonempty preservation; partial marker-present recovery; root-stage crash remnants; two independent process claims(active/expired/at-expiry/stale/independentjobs); per-boundary realprocess kill/restart; controlledENOSPC,shortwrites/fsync/link errors and realcommit+controlledackloss; explicit retry-error/CLIprivacy/runshutdown; immutable G4 rows/DTOs and orphan/sentinelpreservation. Include malformed RESERVED/PROVISIONING/READY state vectors, no generation overflow, and original per-job build directory. Explicit fresh-clock comparison after completion lock; DB conditional update is linearization even if ack occurs after lease expiry.",
+    "candidate": "Freeze source/plan/TCledger/lock/runner before gate. Independently pinned exact G5 IDs/count, legacy167 IDs from acceptedG3, G491 IDs from acceptedG4, all48 B01Node; zero failures/errors/skips. Split fixed Python inventories under300s each, Node180s, individualcases30s. Require actual worker process lifecycle/logprivacy+PGstop/PIDfalse, sourcebefore/after equality and original17+2/protected96/89 unchanged.",
+    "impact": "Only new Python workspace module(s), settings/app integration, independent tests, runner, README/evidence/progress. Full AX Node/build/browser checks remain G6 under unchangedUI-byte criteria; no user-facingUIconnection now. No originalAT markedcomplete.",
+    "failure_recovery": "Retain first failure raw logs/source manifest privately0700/0600, classify root cause without weakening oracle, return to claim/FS/transaction or fixture authoring stage, repeat affected target then full G5+G4/G1-G3/B01 fixed gate. New relevant source bytes invalidate frozen candidate."
+  },
+  "out_of_scope": [
+    "No job state transition, command apply, outbox dispatch, real Agent/Temporal/device/publisher call, artifact upload/read or new HTTP workspace route.",
+    "No production root provisioning, real capacity exhaustion, real power-loss durability, storage/DB backup/RPO/RTO, real SSO or final deployment/external submission approval.",
+    "No claim that DB workspace lease ensures original one-writer/worktree invariant; B03/B07 must enforce that before execution. G5 is a prerequisite, not a substitute."
+  ],
+  "supersedes": {
+    "path": "docs/ifpmic/evidence/b02/g5-implementation-contract.json",
+    "sha256": "dcf2266d6e87318ea23224442f8a17163f8e7136c0a8e7ddd0ad89d3cc6e6100",
+    "resolution": "Preserve rejected v1; never reclaim malformed claims. Add original per-job build output directory now; also clarify worker DTO/preflight ordering."
+  }
+}
