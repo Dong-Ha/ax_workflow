@@ -1,0 +1,185 @@
+{
+  "kind": "ifpmic_b02_g4_source_collection",
+  "scope": "Read-only source collection for G4 job create/read, command read, authorization, persistence, and cursor planning. No source or tests were modified; no tests, database, service, or network were run.",
+  "source_pins": {
+    "docs/ifpmic/design-v1/specs/openapi.v1.json": {
+      "sha256": "2ed780cfa06349b18f5025937e050fd98a5cefa34b552eb836cfaccad416dd7a",
+      "locations": [
+        "#/paths/~1api~1v1~1jobs/post",
+        "#/paths/~1api~1v1~1jobs/get",
+        "#/paths/~1api~1v1~1jobs~1{job_id}/get",
+        "#/paths/~1api~1v1~1commands~1{command_id}/get",
+        "#/components/schemas/CreateJob",
+        "#/components/schemas/Job",
+        "#/components/schemas/JobList",
+        "#/components/schemas/Snapshot",
+        "#/components/schemas/CommandReceipt",
+        "#/components/schemas/CommandStatus",
+        "#/components/schemas/Error"
+      ]
+    },
+    "docs/ifpmic/design-v1/specs/data-model.json": {
+      "sha256": "00c84f8a39b1b8959daa8d94b1d67e860d83ad9bdb809065a5cd3b18af07071b",
+      "locations": [
+        "/entities[name=jobs]",
+        "/entities[name=artifacts]",
+        "/entities[name=events]",
+        "/entities[name=commands_outbox]",
+        "/consistency",
+        "/authorization",
+        "/transactions"
+      ]
+    },
+    "docs/ifpmic/B02-IDENTITY.md": {
+      "sha256": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a",
+      "locations": ["paragraphs 23-25", "paragraphs 35-53", "G4 row in verification table"]
+    },
+    "services/ifpmic_api/catalog.py": {
+      "sha256": "65cfaae738728a957ba73587bdc3caaa582a90650624bb1c31bd11f66fb2db1f",
+      "locations": ["import_snapshot", "main"]
+    },
+    "services/ifpmic_api/migrations/001_initial.sql": {
+      "sha256": "cf0437a5f32e1589e4ea821afbb2ef2480d780a276667880aa9a08a0f4c77f12",
+      "locations": ["CREATE TABLE statements for memberships, catalog, jobs, delegations, artifacts, commands, outbox, workspace_intents", "role grants and column-limited mutations"]
+    },
+    "services/ifpmic_api/app.py": {
+      "sha256": "be6485fb3002b3bc35966eb8efab2e9cb09905d9f4789f91b721a46bfb572a82",
+      "locations": ["create_app routes", "Boundary", "callback_values"]
+    },
+    "services/ifpmic_api/auth.py": {
+      "sha256": "9fef8084e8b11a7e1d0929a1842ab4fdddb0361adcbaa70700529a5e9999a887",
+      "locations": ["AuthService.authenticate", "Session"]
+    }
+  },
+  "original_openapi_contract": {
+    "global_security": "All paths inherit UserSession security.",
+    "routes": {
+      "POST /api/v1/jobs": {
+        "request_body": "Required application/json CreateJob.",
+        "required_headers": ["Idempotency-Key: string", "X-CSRF-Token: string"],
+        "success": "202 CommandReceipt; documented errors 401, 403, 409, 422."
+      },
+      "GET /api/v1/jobs": {
+        "query": {
+          "cursor": "Optional string.",
+          "limit": "Optional integer, minimum 1, maximum 100, original OpenAPI default 25."
+        },
+        "success": "200 JobList; documented errors 401, 403, 409, 422."
+      },
+      "GET /api/v1/jobs/{job_id}": {
+        "path": "Required job_id string.",
+        "success": "200 Snapshot, not bare Job; documented errors 401, 403, 409, 422."
+      },
+      "GET /api/v1/commands/{command_id}": {
+        "path": "Required command_id string.",
+        "success": "200 CommandStatus; documented errors 401, 403, 409, 422."
+      }
+    },
+    "schemas": {
+      "CreateJob": {
+        "type": "object; additionalProperties=false; no property is nullable or has a default.",
+        "required_fields": {
+          "project_id": "string",
+          "title": "string",
+          "request_text": "string",
+          "change_type": "string enum NEW_HW | FEATURE | BUGFIX",
+          "base_ref": "string",
+          "input_artifact_ids": "array of strings",
+          "profile_version": "string",
+          "release_mode": "string enum team_github_tag | shared_gerrit_change | shared_github_pr | shared_github_commit"
+        },
+        "additional_rules_from_B02": "Body <=8 MiB; nesting <=64; reject duplicate JSON keys, invalid UTF-8, unknown keys and owner_id. Strings are nonempty; identifiers reject C0/DEL, request_text may retain newline/tab but not NUL. Preserve string values and array order without normalization; structured project_id is a Unicode scalar; input_artifact_ids must identify already-existing validated/available artifacts owned by the authenticated user and same project."
+      },
+      "Job": {
+        "type": "object; additionalProperties=false; all listed fields required.",
+        "fields": {
+          "job_id": "string (database UUID)",
+          "owner_id": "string, taken from authenticated user, never request payload",
+          "status": "string; OpenAPI has no enum",
+          "revision": "integer >=0",
+          "cycle": "integer >=0",
+          "workflow_version": "string",
+          "current_step_ids": "array of strings",
+          "candidate_fingerprint": "string or null",
+          "profile_version": "string"
+        },
+        "initial_G4_values": "status DRAFT, revision 0, cycle 0, current_step_ids [], candidate_fingerprint null; workflow_version comes from validated snapshot.payload.workflow.workflow_id and is ifpmic-sw-v1. profile_version is projected from the catalog label; job response must not add project_id or title."
+      },
+      "JobList": {
+        "type": "object; additionalProperties=false; both fields required.",
+        "fields": {"items": "array of Job", "next_cursor": "string or null"}
+      },
+      "Snapshot": {
+        "type": "object; additionalProperties=false; all fields required.",
+        "fields": {
+          "job": "Job",
+          "steps": "array of objects; each requires step_id:string, cycle:integer>=0, attempt:integer>=0, state:string, detail:string, artifact_ids:string[]; no additional properties.",
+          "last_event_id": "required string"
+        }
+      },
+      "CommandReceipt": {
+        "type": "object; additionalProperties=false; all fields required.",
+        "fields": {"command_id": "string", "status": "accepted | applied | rejected", "resource_id": "string"},
+        "G4_initial_result": "202 with status accepted and resource_id equal to the new job ID; commit must succeed before response."
+      },
+      "CommandStatus": {
+        "type": "object; additionalProperties=false; all fields required.",
+        "fields": {"command_id": "string", "status": "accepted | applied | rejected", "applied_revision": "integer>=0 or null", "error": "Error or null"},
+        "G4_initial_result": "Accepted commands report applied_revision null and error null."
+      },
+      "Error": {
+        "type": "object; additionalProperties=false; fields code:string, message:string, trace_id:string; all required. B02 requires message equal to fixed code and server-generated UUID trace_id."
+      }
+    }
+  },
+  "authorization_and_acceptance_rules": {
+    "principal": "Actor/owner is derived from the validated ax_session. Paperclip identity headers, body owner_id, project/admin role, local-board, worker or bridge credentials cannot impersonate a person.",
+    "create": "Caller must have an active project membership whose capability includes request.create. The project/profile must be eligible; create body cannot mint memberships, eligibility, or profile JSON.",
+    "read": "Caller must have active membership and be the job owner or have an unexpired, nonrevoked job.read delegation scoped to that exact job. Membership/delegation are checked on every query; project/company/operator administrators gain no implicit access. Missing and unauthorized job/command resources use the same 403 behavior to avoid existence disclosure. Lists return only visible rows.",
+    "atomic_acceptance": "Capture immutable snapshot first. In one DB transaction serialize current membership and eligibility authority, then insert DRAFT job, accepted command with full semantic CreateJob text+digest, pending outbox, and RESERVED workspace intent. Unique(actor, canonical route, idempotency key) arbitrates races; same key/same body returns original receipt, same key/different body is 409. Replay rechecks current membership/ownership but does not revalidate the old profile or eligibility. Only commit permits 202; ambiguous commit returns 503 COMMIT_UNCERTAIN and same-key retry reconciles.",
+    "workflow": "Job.workflow_version maps to the stable B01 workflow registry ID ifpmic-sw-v1; B01 schema_version 1.0.0 is format version and not workflow version. Raw source/state/agent/bundle hashes remain separately bound in the profile snapshot.",
+    "state_boundary": "G4 leaves job DRAFT, command accepted, applied_revision null, error null, outbox pending and workspace intent RESERVED. B02 does not turn acceptance into execution. B03 Temporal remains authoritative for workflow transitions and outbox consumption."
+  },
+  "current_database_support": {
+    "memberships_and_serialization": "memberships PK(project_id,user_id), active boolean, capabilities text[] constrained to request.create; authorization_guards row and triggers serialize membership/delegation/eligibility changes. Runtime can SELECT and UPDATE lock_version only; operator updates active/capabilities. This column-level grant supports scoped row locking without runtime authority mutation.",
+    "profiles": "profile_catalog PK(project_id,version_key), unique project/snapshot and snapshot_id, immutable bytes/digest/label/mode/enabled/configuration_complete. Eligibility and revocation have project-scoped FKs; current catalog.import_snapshot can only import trusted B01 bridge records, is idempotent for exact bytes, rejects conflict, and does not grant eligibility. Runtime has SELECT only for catalog/grants.",
+    "jobs": "UUID job_id; owner/project/snapshot/workflow_id; DRAFT/status check set, revision/cycle defaults and checks, current_step_ids, candidate_fingerprint; FK project/snapshot to catalog; UNIQUE(project_id,job_id); owner/status/created index. Runtime has SELECT and limited INSERT columns only; no UPDATE/DELETE on jobs.",
+    "delegations": "delegation_id UUID, project_id/job_id/user_id, action constrained exactly job.read, expiry and nullable revocation; composite FK binds same project/job; trigger serializes with project authority guard. Operator may insert and update only expiry/revocation; runtime SELECT only.",
+    "artifacts": "UUID ID, project, owner, nullable job, state pending|available|rejected, SHA256, nonnegative size; composite project/job FK. Runtime is SELECT-only; operator insert. B02 forbids pretending missing IDs exist, and artifact upload path is later scope.",
+    "commands": "Command record binds authenticated actor, fixed route POST /api/v1/jobs, printable ASCII idempotency key length 1..128, project/job, ASCII command_payload_json, payload_sha256, status accepted|applied|rejected, nullable applied_revision/error_code; UNIQUE(actor,route,key), job_id unique, project/job FK and unique (command_id,job_id). Runtime has limited insert only; no status mutation in G4.",
+    "outbox_and_workspace": "commands_outbox currently has command_id PK/FK, state pending|dispatched, created_at, and pending index; runtime may insert command_id only. workspace_intents binds one job and one command, has unique workspace_token, RESERVED|PROVISIONING|READY|ERROR, generation/claim/error fields and composite FK to command/job; runtime inserts job_id+command_id only and has column-limited updates for later reconciliation.",
+    "implementation_state": "catalog.py provides immutable catalog import only. app.py currently exposes auth/login/callback/session/logout routes; no job-create, job-list, job-detail, or command-status routes exist. AuthService.authenticate returns a Session under the caller transaction and updates last_seen_at, providing the reusable authentication seam."
+  },
+  "ambiguities_to_resolve_before_G4_implementation": [
+    {
+      "id": "G4-LIST-LIMIT-DEFAULT",
+      "severity": "contract_default_conflict",
+      "sources": ["openapi.v1.json GET /api/v1/jobs limit default=25", "B02-IDENTITY.md paragraph 51 says default=20"],
+      "issue": "The route default cannot preserve both values. B02 calls pagination an added implementation contract, while the API contract says original route/DTO behavior remains; explicitly decide whether B02 intentionally overrides the original OpenAPI default before authoring tests."
+    },
+    {
+      "id": "G4-SNAPSHOT-LAST-EVENT",
+      "severity": "required-response-field-without-storage-source",
+      "sources": ["openapi.v1.json Snapshot.last_event_id is required string", "001_initial.sql has no events/step_runs table", "B02 G4 creates an initial DRAFT job and defers workflow transitions to B03"],
+      "issue": "GET /jobs/{job_id} must return a Snapshot including last_event_id, but the current schema has neither event table nor a defined empty/initial event cursor. Define the G4 DRAFT response sentinel or add the appropriate event persistence contract; do not invent a value from DB implementation behavior."
+    },
+    {
+      "id": "G4-OUTBOX-SHAPE-MAPPING",
+      "severity": "data-model_mapping",
+      "sources": ["data-model.json commands_outbox fields command_id, scope, payload_hash, status, expected_revision", "001_initial.sql commands_outbox fields command_id,state,created_at and command table stores route/hash/status"],
+      "issue": "Clarify the intended mapping: G4 can create a pending outbox row and derive scope/hash/status/revision from commands, but the current table omits the conceptual fields scope, payload_hash, and expected_revision and names status as state. Confirm this is deliberate denormalization before B03 consumption is built."
+    },
+    {
+      "id": "G4-CURSOR-FILTER-SCOPE",
+      "severity": "pagination_contract_gap",
+      "sources": ["openapi.v1.json GET /api/v1/jobs exposes only cursor and limit", "B02 says cursor binds actor and filter but defines no list filter parameters"],
+      "issue": "Specify the filter tuple (currently none is defined) that the cursor binds, or clarify that only actor and canonical route are in the MAC context for this version."
+    }
+  ],
+  "implementation_constraints": [
+    "Preserve exact required response DTO fields, nullability and additionalProperties=false from original OpenAPI; Job does not gain project_id/title.",
+    "No user-controlled owner, membership, delegation, grant, eligibility, profile content or workflow selector is accepted.",
+    "Do not weaken project/job ownership checks, artifact availability/ownership checks, idempotency uniqueness, transaction atomicity, immutable snapshot binding, fixed error DTOs, or current 001 privileges.",
+    "No table mutation or endpoint change is required by this source collection; any schema addition or API default reconciliation needs an explicit contract decision first."
+  ]
+}

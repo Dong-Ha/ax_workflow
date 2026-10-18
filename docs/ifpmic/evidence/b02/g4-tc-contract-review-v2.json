@@ -1,0 +1,44 @@
+{
+  "kind": "ifpmic.b02.g4-tc-contract-review.v2",
+  "reviewed_contract": {
+    "path": "docs/ifpmic/evidence/b02/g4-implementation-contract-v2.json",
+    "sha256": "830a98401e9addb3869722134866515183310dd0b86019463e08f6ef4baf2d14"
+  },
+  "basis": {
+    "parent_plan_path": "docs/ifpmic/B02-IDENTITY.md",
+    "parent_plan_sha256": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a",
+    "openapi_path": "docs/ifpmic/design-v1/specs/openapi.v1.json",
+    "openapi_sha256": "2ed780cfa06349b18f5025937e050fd98a5cefa34b552eb836cfaccad416dd7a",
+    "data_model_path": "docs/ifpmic/design-v1/specs/data-model.json",
+    "data_model_sha256": "00c84f8a39b1b8959daa8d94b1d67e860d83ad9bdb809065a5cd3b18af07071b",
+    "risk_matrix_v2_path": "docs/ifpmic/evidence/b02/g4-tc-risk-matrix-v2.json",
+    "risk_matrix_v2_sha256": "e749d098b5bbdab50f461264c445408f56a84913f1fe3a140506b3136ebeb317",
+    "prior_review_path": "docs/ifpmic/evidence/b02/g4-tc-contract-review.json",
+    "prior_review_sha256": "aab57034dc11188325ff70a40a78beea9871a34b802a1aaa01772392e9522054"
+  },
+  "verdict": "approved_for_test_planning",
+  "delta_review": [
+    {
+      "id": "G4-V2-1",
+      "finding": "The cursor serialization ambiguity is resolved with sorted compact ASCII JSON, exact six-digit UTC timestamp ending in Z, canonical unpadded base64url, exact MAC domain, and an exact integer version check that rejects booleans.",
+      "testability": "Independent cursor vectors can now be minted with the configured test key and compared byte-for-byte, while server-issued tokens still cover normal pagination."
+    },
+    {
+      "id": "G4-V2-2",
+      "finding": "Operator CLI failure outputs now define three exact codes and exit classes: AUTHORITY_INVALID_REQUEST/2, AUTHORITY_FORBIDDEN/2, AUTHORITY_UNAVAILABLE/3.",
+      "testability": "Each malformed, unauthorized, and dependency failure can be asserted against a fixed literal response without inferring an HTTP status."
+    },
+    {
+      "id": "G4-V2-3",
+      "finding": "The revised contract pins the reviewed G4 risk matrix and includes the cursor and CLI error definitions in the contract source.",
+      "testability": "The fixed source and review hashes provide a stable implementation/test oracle; earlier risk-matrix corrections remain explicit."
+    }
+  ],
+  "remaining_blockers": [],
+  "test_execution_authorized": false,
+  "reason_test_execution_not_authorized": "This is a bounded v2 contract delta review only. Product/test implementation and execution await the parent's explicit assignment and the other required independent approval.",
+  "scope_limits": [
+    "No tests or product code were run or modified.",
+    "No original AT-21 end-to-end completion is claimed; workflow execution, workspace, artifact/device routes, and real SSO remain outside this G4 slice."
+  ]
+}

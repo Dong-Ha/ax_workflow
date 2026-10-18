@@ -1,0 +1,101 @@
+{
+  "kind": "ifpmic.b02.g4-transaction-advice.v1",
+  "status": "preimplementation-architecture-advice-not-runtime-evidence",
+  "scope": "Narrow review of G4 transaction ordering, current authorization, idempotency and fault boundaries. No implementation, tests, service, database or network execution was performed for this advice.",
+  "source_pins_at_review": {
+    "docs/ifpmic/B02-IDENTITY.md": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a",
+    "docs/ifpmic/evidence/b02/g4-source-collection.json": "edbf595fab3eac8595834740008a318f32466947c616a4d0c1a2def229dad142",
+    "docs/ifpmic/evidence/b02/g4-tc-risk-matrix.json": "0aec3fa1f9b08164b3bba248c2673ba9a403235f5fa99a419295b08d130aabcc",
+    "services/ifpmic_api/migrations/001_initial.sql": "cf0437a5f32e1589e4ea821afbb2ef2480d780a276667880aa9a08a0f4c77f12",
+    "services/ifpmic_api/auth.py": "9fef8084e8b11a7e1d0929a1842ab4fdddb0361adcbaa70700529a5e9999a887",
+    "services/ifpmic_api/snapshot_bridge.py": "743f357fed62a37770d4bfef2a3321fab649b25a3a1b040f64d61bec628443e8",
+    "services/ifpmic_api/catalog.py": "65cfaae738728a957ba73587bdc3caaa582a90650624bb1c31bd11f66fb2db1f",
+    "services/ifpmic_api/app.py": "be6485fb3002b3bc35966eb8efab2e9cb09905d9f4789f91b721a46bfb572a82"
+  },
+  "findings": [
+    {
+      "id": "G4-LOCK-INVERSION",
+      "severity": "implementation-blocker-unless-policy-applied",
+      "evidence": "001_initial.sql lock_project_authority is a BEFORE ROW membership trigger, while operator_role has direct UPDATE(active,capabilities). An UPDATE can lock its membership tuple before its trigger waits for authorization_guards.",
+      "risk": "Acceptance holding the guard and waiting on a blocking membership FOR UPDATE can deadlock with that authority mutation holding membership and waiting on the guard.",
+      "recommendation": "Preserve guard-first and the membership row lock, but require membership FOR UPDATE NOWAIT. SQLSTATE 55P03 aborts the entire acceptance transaction and maps to fixed 503 DEPENDENCY_UNAVAILABLE. Do not transparently retry or hold the guard while waiting for membership. A same-key caller retry reconciles. Guard acquisition retains a bounded 5s lock timeout.",
+      "rejected_shortcut": "Reversing acceptance to membership-first alone is insufficient: operator multi-statement or multi-row transactions can already hold the guard before reaching another membership row."
+    },
+    {
+      "id": "G4-SNAPSHOT-AFTER-WAIT",
+      "severity": "correctness-requirement",
+      "evidence": "Authority grants/revocations and membership changes serialize through authorization_guards; eligibility validity also depends on time.",
+      "risk": "A shared statement snapshot taken before a lock wait, REPEATABLE READ snapshot, or transaction-start now() can evaluate authority using stale state/time after the guard is obtained.",
+      "recommendation": "Require READ COMMITTED on actual and injected connections. Lock guard in one statement, lock membership NOWAIT in another, then issue fresh authority reads. Sample the trusted clock after lock acquisition for eligibility validity; do not use transaction-start now() as current authorization time. Define the authorization observation as the acceptance linearization point; expiry after that observation does not retroactively revoke an accepted receipt."
+    },
+    {
+      "id": "G4-SESSION-SERIALIZATION",
+      "severity": "test-validity-requirement",
+      "evidence": "auth.py AuthService.authenticate SELECTs the session FOR UPDATE and updates last_seen_at inside the caller transaction.",
+      "risk": "Concurrent requests with the same cookie serialize at authentication, masking the intended cross-project unique-key race.",
+      "recommendation": "Race tests must use two independently issued sessions for the same stable actor. Commit and release preflight authentication before awaiting Node capture. Authenticate again in the final acceptance or replay transaction, using the same session-before-project-lock order as other API paths."
+    },
+    {
+      "id": "G4-REPLAY-PROJECT-SCOPE",
+      "severity": "authorization-requirement",
+      "evidence": "commands has UNIQUE(actor_id,route,idempotency_key), which is global across the actor's projects; B02 requires current membership/ownership on replay without current profile revalidation.",
+      "risk": "A winner can belong to another project. Locking its project while still holding the attempted project's guard introduces multiple-project lock ordering and can disclose an inaccessible original command if digest comparison precedes authorization.",
+      "recommendation": "If an existing command is found before attempted-project locking, authorize and lock only its original project. If it appears after attempted-project locks were acquired, raise an internal replay marker, roll back the entire attempt, and open a fresh authenticated transaction scoped to the original command's project and ownership/current membership. Authorize that scope before exposing a receipt or digest conflict. Never hold two project guards to resolve replay."
+    },
+    {
+      "id": "G4-UNIQUE-RECOVERY",
+      "severity": "atomicity-requirement",
+      "evidence": "001_initial.sql commands UNIQUE(actor_id,route,idempotency_key) is immediate and separate from command/job and workspace uniqueness constraints.",
+      "risk": "Catching every UniqueViolation as replay can hide unrelated integrity defects, and querying an aborted transaction cannot reliably reconcile the winner.",
+      "recommendation": "Only the commands_actor_id_route_idempotency_key_key constraint on ifpmic.commands enters replay recovery. Inspect structured diagnostics, not exception text. Roll back the entire attempt, including any inserted job, before fresh authentication and scoped replay. Other constraint errors remain fixed dependency failures. A missing winner during recovery is a fixed dependency failure, not evidence of rollback or permission to mint another resource."
+    },
+    {
+      "id": "G4-CAPTURE-CATALOG-REPLAY",
+      "severity": "ordering-requirement",
+      "evidence": "catalog.py imports immutable nine-field SnapshotRecord identities and bytes; B02 prohibits historical replay from depending on current profile files or eligibility.",
+      "risk": "A replay discovered after capture can incorrectly fail on current catalog/eligibility if those checks run first. A preflight miss followed by capture failure can also coincide with a winner committing meanwhile.",
+      "recommendation": "In final acceptance, check for a raced existing command before any catalog conflict or eligibility rejection. For a genuinely new acceptance, compare all nine catalog fields to the validated captured SnapshotRecord, then check mode, enabled, configuration completeness and current unrevoked grant validity under the guard. Consider one fresh authenticated scoped replay probe before returning a capture failure; if no committed command is visible, return the original fixed capture error and let same-key retry reconcile. Do not re-run Node for historical replay."
+    },
+    {
+      "id": "G4-COMMIT-BOUNDARY",
+      "severity": "atomicity-requirement",
+      "evidence": "B02 acceptance commits job, command, outbox and workspace intent together, and distinguishes uncertain commit from precommit rollback.",
+      "risk": "A flag set before a precommit fault falsely classifies a guaranteed rollback as uncertain; a flag cleared after commit falsely claims rollback after acknowledgement loss.",
+      "recommendation": "Complete all inserts and all precommit hooks first. Set ready_to_commit immediately before leaving the actual transaction context. Before that boundary, injected failures roll back all acceptance rows and map to DEPENDENCY_UNAVAILABLE; COMMIT/after-commit/before-response uncertainty maps to COMMIT_UNCERTAIN. Return 202 only after successful commit. Once response headers have already been sent, a new 503 cannot be promised: connection loss must be reconciled by the same idempotency key."
+    }
+  ],
+  "recommended_transaction_order": [
+    "Preflight transaction: authenticate write with Origin/CSRF, inspect actor/route/key, perform original-project authorized replay when present, otherwise validate attempted-project membership. Commit and release every DB transaction/session lock before Node await.",
+    "Capture the immutable trusted Node SnapshotRecord outside any DB transaction; never grant eligibility or import catalog through the user request.",
+    "Final READ COMMITTED transaction: configure bounded locks/statements, authenticate write again, inspect actor/route/key before choosing a single project scope.",
+    "Acquire that project's authorization_guards FOR UPDATE in its own statement; acquire actor membership FOR UPDATE NOWAIT in its own statement; check current active capability/ownership as appropriate.",
+    "Recheck actor/route/key before new-request catalog/eligibility checks. A newly discovered existing command restarts only the scoped replay path after whole-transaction rollback; do not acquire its second project guard.",
+    "For new acceptance, compare all immutable catalog fields, evaluate current eligibility with fresh trusted time, validate existing same-project actor-owned available artifacts, then insert DRAFT job, accepted command with semantic JSON/digest, pending outbox and RESERVED intent.",
+    "Run precommit hooks, set ready_to_commit at the context-exit boundary, commit, run after-commit/before-response hooks, then return 202. Exact idempotency unique violation instead rolls back all rows and uses a fresh scoped authenticated replay transaction."
+  ],
+  "independent_test_seams": [
+    "Test-only injected callable/object barriers, never environment or HTTP flags; no production request can activate them.",
+    "Barrier immediately after guard acquisition and before membership NOWAIT: independently start an operator UPDATE that holds membership while its trigger waits on guard. Acceptance must fail promptly with fixed 503, insert zero acceptance rows and release guard so revocation can finish.",
+    "Barrier while an operator holds guard before committing membership or revocation; acceptance waits, then fresh statements must observe committed authority and current trusted time.",
+    "Two sessions for one stable actor with the same key: same project and different projects, same and different semantic bodies. Independently verify winner row counts, loser rollback and exact original receipt or authorized conflict.",
+    "Observe contender reaching pre-insert barrier rather than only launching two clients; same-session serialization is not sufficient concurrency evidence.",
+    "A test barrier after preliminary replay miss permits a different-project winner to commit; the losing path must release attempted-project locks before original-project replay, and recheck current original-project membership/ownership.",
+    "Inject every insert boundary plus precommit, actual commit uncertainty, after-commit and before-response boundaries. A test hook before COMMIT is only rollback evidence; use an actual lost commit acknowledgement or process boundary for true ambiguous-commit evidence.",
+    "After uncertain commit or process loss, restart and retry the same key. Verify one durable job/command/outbox/intent group, persisted exact semantic payload, and no workflow/workspace advancement.",
+    "Revoke membership, grant eligibility or let eligibility expire during capture/guard waits; test reads through single scoped queries with current owner/delegation/membership predicates and no existence disclosure."
+  ],
+  "risks_and_edge_cases": [
+    "NOWAIT intentionally permits safe transient 503 under authority contention; it does not guarantee every simultaneous request receives 202 or 409 on its first attempt.",
+    "Lock timeout, deadlock or unrelated database errors before COMMIT must abort the whole attempt. Do not recover from failed SQL inside a poisoned transaction.",
+    "Existing operator rights make artifacts insert-only and catalog immutable. Future artifact mutation/deletion, schema-owner bypass, new lock-taking triggers, or multi-resource workflow execution require a new concurrency review.",
+    "Profile grant existence alone is insufficient: check granted_at <= observation_time < expires_at, mode, no revocation, enabled and configuration_complete. Historical replay skips these current profile checks.",
+    "Current authorization reads may linearize before a simultaneously committed revocation; every later read must evaluate fresh membership/delegation. No implication of permanent authorization follows from acceptance.",
+    "Snapshot source pin drift and supplemental contract decisions must be reviewed by the main orchestrator before implementing tests; advice source pins describe this review only."
+  ],
+  "remaining_uncertainty": [
+    "These are source-based findings. PostgreSQL runtime lock behavior and HTTP failure outcomes still need the approved isolated real-service tests.",
+    "The main orchestrator owns the final supplemental G4 contract, hook names, error precedence, cursor semantics and source/test integration.",
+    "The capture-failure concurrent-winner probe is a recommendation for the supplemental contract; this advice does not silently establish a new public error precedence.",
+    "Original AT-21 completion, B03 execution and G5 filesystem recovery remain outside this advice."
+  ]
+}

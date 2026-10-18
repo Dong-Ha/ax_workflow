@@ -1,0 +1,31 @@
+{
+  "kind": "ifpmic.b02.g4.independent-contract-review.v2",
+  "decision": "approve_for_code_and_test_authoring_with_nonblocking_upstream_editorial_followup",
+  "reviewed_contract": {
+    "path": "docs/ifpmic/evidence/b02/g4-implementation-contract-v2.json",
+    "sha256": "830a98401e9addb3869722134866515183310dd0b86019463e08f6ef4baf2d14"
+  },
+  "source_pins": {
+    "docs/ifpmic/B02-IDENTITY.md": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a",
+    "docs/ifpmic/design-v1/specs/openapi.v1.json": "2ed780cfa06349b18f5025937e050fd98a5cefa34b552eb836cfaccad416dd7a",
+    "docs/ifpmic/design-v1/specs/data-model.json": "00c84f8a39b1b8959daa8d94b1d67e860d83ad9bdb809065a5cd3b18af07071b",
+    "docs/ifpmic/evidence/b02/g4-source-collection.json": "edbf595fab3eac8595834740008a318f32466947c616a4d0c1a2def229dad142",
+    "docs/ifpmic/evidence/b02/g4-transaction-advice.json": "ed53de12e30480b32ecd70f36f3569ba75405fd399fb89526dc669ea8e46b370",
+    "docs/ifpmic/evidence/b02/g4-tc-risk-matrix-v2.json": "e749d098b5bbdab50f461264c445408f56a84913f1fe3a140506b3136ebeb317",
+    "services/ifpmic_api/migrations/001_initial.sql": "cf0437a5f32e1589e4ea821afbb2ef2480d780a276667880aa9a08a0f4c77f12",
+    "services/ifpmic_api/migrations/002_auth_retention.sql": "95c01f06eb586e0c1067f04672edfed8e0a11215752ad859ac9e4744da5a504e",
+    "services/ifpmic_api/catalog.py": "65cfaae738728a957ba73587bdc3caaa582a90650624bb1c31bd11f66fb2db1f",
+    "services/ifpmic_api/app.py": "be6485fb3002b3bc35966eb8efab2e9cb09905d9f4789f91b721a46bfb572a82",
+    "services/ifpmic_api/auth.py": "9fef8084e8b11a7e1d0929a1842ab4fdddb0361adcbaa70700529a5e9999a887"
+  },
+  "review_findings": {
+    "scope_and_original_contract": "The contract preserves the original CreateJob, Job, JobList, Snapshot, CommandReceipt, CommandStatus and Error DTO boundaries, including exact required create fields and no caller-selected owner/workflow. It reconciles OpenAPI default limit 25, the initial DRAFT Snapshot sentinel, normalized outbox mapping, and the fixed limit/cursor-only list extension. The durable acceptance slice remains distinct from workspace creation, Temporal execution, artifact/device routes, real SSO and full AT-21.",
+    "authorization_and_durability": "The documented active-membership/capability rules, per-job read delegation, artifact ownership checks, catalog/grant eligibility, replay authorization, four-row atomic group, scoped unique-winner recovery, READ COMMITTED fresh authority reads, guard-first plus membership NOWAIT lock order, and commit-uncertainty behavior are sufficiently concrete to implement and test independently. No material defect found in the pinned source reconciliation or transaction advice.",
+    "pagination_v2": "V2 now specifies canonical UTF-8 JSON bytes, sorted compact ASCII-escaped keys, exact UTC microsecond timestamp form, canonical base64url without padding, domain-separated HMAC bytes, exact integer version (excluding bool), canonical decode, scope binding, limits and error mapping. This resolves the byte-oracle gap in v1.",
+    "operator_cli_v2": "V2 names the three public CLI error codes and their exit classes, input envelope, mock-only grant policy, and non-disclosure boundary. Validation and grant eligibility errors are distinguishable from forbidden authority and dependency/configuration failures. The exact code for unknown/cross-project revoke should be stated as AUTHORITY_FORBIDDEN in the contract text; the current revoke paragraph says only 'fixedauthorityerror'. This is a nonblocking literal clarification because the failure table uniquely defines the applicable class and code.",
+    "risk_matrix_consistency": "The new risk-matrix-v2 list_contract agrees with the reviewed contract, but its known_oracles.pagination still says default 20, and its retained G4-06/unresolved_items text still says cursor mapping and pagination semantics are unresolved. These are stale contradictions in the pinned risk-matrix artifact, not ambiguity in the supplemental contract. Before the test ledger is frozen, mark the stale statements superseded by contract v2 or update the risk matrix; tests must cite contract v2 as authority.",
+    "evidence_ref_text": "The v1 nonblocking question about evidence_ref Unicode scalar text remains: nonempty/no-C0/DEL does not explicitly exclude escaped lone surrogates, which cannot be stored in PostgreSQL UTF-8 TEXT. Add an explicit scalar-text check before freezing CLI input tests. This does not block product/test authoring because it is a narrow malformed-input boundary and does not affect grant authority or persisted valid references."
+  },
+  "blockers": [],
+  "execution_status": "Read-only document/source review only. No product code, tests, services, database, or network were run. This approval is for implementation and test authoring against the pinned supplemental contract; it is not G4 runtime acceptance."
+}

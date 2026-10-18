@@ -1,0 +1,65 @@
+{
+  "kind": "ifpmic.b02.g4-tc-contract-review.v1",
+  "reviewed_contract": {
+    "path": "docs/ifpmic/evidence/b02/g4-implementation-contract.json",
+    "sha256": "291b6dd9418eac32a2860f9f8299233b24b42785aab6c00e2c6d0756d00caaeb"
+  },
+  "basis": {
+    "parent_plan_path": "docs/ifpmic/B02-IDENTITY.md",
+    "parent_plan_sha256": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a",
+    "openapi_path": "docs/ifpmic/design-v1/specs/openapi.v1.json",
+    "openapi_sha256": "2ed780cfa06349b18f5025937e050fd98a5cefa34b552eb836cfaccad416dd7a",
+    "data_model_path": "docs/ifpmic/design-v1/specs/data-model.json",
+    "data_model_sha256": "00c84f8a39b1b8959daa8d94b1d67e860d83ad9bdb809065a5cd3b18af07071b",
+    "risk_matrix_v1_sha256": "0aec3fa1f9b08164b3bba248c2673ba9a403235f5fa99a419295b08d130aabcc"
+  },
+  "verdict": "approved_for_tc_planning_with_nonblocking_oracle_notes",
+  "scope_findings": [
+    {
+      "id": "G4-C1",
+      "finding": "The contract reconciles the default list limit to 25 as required by the original OpenAPI, fixes the detail response to the original Snapshot DTO, and explicitly describes empty DRAFT snapshots without inventing workflow events.",
+      "evidence": "OpenAPI components.schemas Snapshot requires job/steps/last_event_id; JobList query limit default is 25; contract original_contract_reconciliation.limit/detail."
+    },
+    {
+      "id": "G4-C2",
+      "finding": "Original CreateJob/Job/CommandReceipt/CommandStatus schemas, semantic payload persistence and digest, initial DRAFT mapping, workflow registry ID, and normalized command/outbox mapping are concrete enough for independent literal assertions.",
+      "evidence": "Contract request_boundary, transaction_and_races.atomic_group, original_contract_reconciliation.outbox_mapping; OpenAPI schema keys are additionalProperties=false."
+    },
+    {
+      "id": "G4-C3",
+      "finding": "Membership/delegation scope, existence hiding, preflight/replay reauthorization, project guard then NOWAIT membership lock ordering, and lock-conflict rollback are testable against the real PostgreSQL fixture and actual FastAPI process.",
+      "evidence": "Contract authorization and transaction_and_races.lock_order/replay_lock_scope/fault_injection."
+    },
+    {
+      "id": "G4-C4",
+      "finding": "The commit uncertainty boundary, insert/commit/response fault seams, process restart behavior, and exact 0-or-1 complete row-group oracle are stated independently of implementation details.",
+      "evidence": "Contract transaction_and_races.atomic_group/commit_uncertainty/seams and verification.expected."
+    },
+    {
+      "id": "G4-C5",
+      "finding": "The pagination contract resolves original filter/default ambiguities: only limit/cursor are accepted, default 25, descending composite order, actor/fixed-route/fixed-scope-bound MAC token, no TTL, access is checked per page, and concurrent insertion semantics are stated.",
+      "evidence": "Contract original_contract_reconciliation.filters and pagination."
+    },
+    {
+      "id": "G4-C6",
+      "finding": "The contract preserves regression boundaries and does not claim original AT-21 completion, B03 execution, filesystem readiness, artifact/device routes, real SSO, or UI acceptance from backend tests.",
+      "evidence": "Contract scope, verification.expected/impact_and_skips, and parent plan G4/G5/G6 sections."
+    }
+  ],
+  "nonblocking_oracle_notes": [
+    {
+      "id": "G4-N1",
+      "issue": "Cursor payload is exact in fields, MAC domain, scope and time precision, but the JSON byte serialization order/spacing is not explicitly specified even though canonical encoding is required.",
+      "test_handling": "Use server-issued tokens for valid pagination, actor-binding and filter-binding cases. For malformed/tampered cases mutate the token and assert fixed INVALID_REQUEST. Do not assert an independently generated canonical token byte sequence until serialization is fixed."
+    },
+    {
+      "id": "G4-N2",
+      "issue": "The operator CLI says unknown/cross-project revoke returns a fixed authority error, but does not name the exact error code for each distinct invalid/unauthorized case.",
+      "test_handling": "Assert the specified exit class, sanitized one-line envelope, no mutation, and stable code per input class; leave exact code literal assertions pending a small contract clarification. Do not infer an HTTP status for this CLI."
+    }
+  ],
+  "blocking_findings": [],
+  "test_execution_authorized": false,
+  "reason_test_execution_not_authorized": "The parent requested preimplementation contract review only; implementation/tests require both independent review records and a subsequent explicit task.",
+  "original_at_21_completed": false
+}

@@ -1,0 +1,119 @@
+{
+  "kind": "ifpmic.b02.g4-implementation-contract.v2",
+  "status": "proposed_for_dual_independent_review_before_product_or_test_code",
+  "requirements": [
+    "REQ-13",
+    "B02-G4",
+    "AT-21-job-slice"
+  ],
+  "parent_plan": {
+    "path": "docs/ifpmic/B02-IDENTITY.md",
+    "sha256": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a"
+  },
+  "source_pins": {
+    "docs/ifpmic/B02-IDENTITY.md": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a",
+    "docs/ifpmic/design-v1/specs/openapi.v1.json": "2ed780cfa06349b18f5025937e050fd98a5cefa34b552eb836cfaccad416dd7a",
+    "docs/ifpmic/design-v1/specs/data-model.json": "00c84f8a39b1b8959daa8d94b1d67e860d83ad9bdb809065a5cd3b18af07071b",
+    "docs/ifpmic/evidence/b02/g4-source-collection.json": "edbf595fab3eac8595834740008a318f32466947c616a4d0c1a2def229dad142",
+    "docs/ifpmic/evidence/b02/g4-tc-risk-matrix.json": "0aec3fa1f9b08164b3bba248c2673ba9a403235f5fa99a419295b08d130aabcc",
+    "services/ifpmic_api/migrations/001_initial.sql": "cf0437a5f32e1589e4ea821afbb2ef2480d780a276667880aa9a08a0f4c77f12",
+    "services/ifpmic_api/migrations/002_auth_retention.sql": "95c01f06eb586e0c1067f04672edfed8e0a11215752ad859ac9e4744da5a504e",
+    "docs/ifpmic/evidence/b02/g4-transaction-advice.json": "ed53de12e30480b32ecd70f36f3569ba75405fd399fb89526dc669ea8e46b370",
+    "docs/ifpmic/evidence/b02/g4-tc-risk-matrix-v2.json": "e749d098b5bbdab50f461264c445408f56a84913f1fe3a140506b3136ebeb317"
+  },
+  "scope": "Original create/list/Snapshot/command APIs with real PostgreSQL durable acceptance and scoped authorization. No workflow execution, workspace filesystem, artifact/device routes, UI integration or original AT completion.",
+  "original_contract_reconciliation": {
+    "limit": "Correct parent-plan default20 to original OpenAPI default25. Range1..100 unchanged. This explicit, dual-reviewed correction preserves the original contract; parent plan and original files stay byte-identical.",
+    "detail": "GET /jobs/{job_id} returns original Snapshot {job,steps,last_event_id}, not bare Job. In this pre-Temporal DRAFT-only increment, steps=[], last_event_id=\"\" denotes no workflow events yet (not a fabricated event ID). Empty string is permitted by original schema. If row is not initial DRAFT/0/0/[]/null, fail503DEPENDENCY_UNAVAILABLE rather than invent steps/events. B03/B04 must replace this narrow initial projection with persisted step/event projection before activation.",
+    "outbox_mapping": "Existing normalized storage is preserved without migration: conceptual scope=commands(project_id,job_id,actor_id,route); payload_hash=commands.payload_sha256; command status=commands.status; dispatch state=commands_outbox.state; expected_revision=literal0 for the fixed create route. Full immutable semantic payload is commands.command_payload_json. No create outbox consumer exists until B03.",
+    "filters": "Original route accepts only optional limit/cursor. Unknown or repeated query fields are422INVALID_REQUEST, including owner_id/project/status. Fixed effective filter is accessible jobs under active membership+owner/delegation. No user-selected owner filter exists. Cursor binds actor, fixed route and fixed scope."
+  },
+  "request_boundary": {
+    "create": "Exact8 required original CreateJob fields, strict types/enums and no defaults/additional keys. application/json with optional charset=utf-8; no other content encoding than absent/identity. Reject duplicate Content-Type/Content-Encoding/Idempotency-Key. POST has no query. Authenticate session+Origin+CSRF before reading body or invoking bridge; final acceptance authenticates again after bridge.",
+    "size_and_depth": "Stream cap8388608 bytes inclusive; cap exceeds ->422REQUEST_TOO_LARGE. Before JSON decode scan nesting outside quoted/escaped strings: top object depth1, arrays/objects maximum64 inclusive; excess ->same code. Strict UTF8/no BOM, duplicate JSON keys at any depth, nonfinite constants, nonobject, malformedJSON ->422INVALID_REQUEST. No raw body/profile is logged.",
+    "strings": "Every CreateJob string is nonempty. All except request_text reject C0/DEL; request_text permits controls except NUL (newlines/tabs retained). title/base_ref/profile_version allow lone surrogates and astral values losslessly. project_id must be Unicode scalar. input_artifact_ids contains canonical lowercase UUID strings; preserve order and duplicates in semantic payload. Each ID must already identify an available artifact with same authenticated owner/project; missing/foreign/unavailable ->403FORBIDDEN, malformed identifier ->422INVALID_REQUEST. Upload remains deferred.",
+    "idempotency_header": "Exactly one Idempotency-Key,1..128 printable ASCII including spaces; do not trim. Missing/duplicate/invalid ->422INVALID_REQUEST. No body or header may select owner,workflow,eligibility,paths orgrant.",
+    "semantic_identity": "Persist json.dumps(payload,ensure_ascii=True,sort_keys=True,separators=(\",\",\":\"),allow_nan=False) as ASCII TEXT, preserving every string/array value. Digest exactly SHA256(UTF8(json.dumps({\"format\":\"ifpmic.create-job.v1\",\"payload\":payload},ensure_ascii=True,sort_keys=True,separators=(\",\",\":\"),allow_nan=False))). Different keys/samebody create independent jobs; object key order irrelevant; array order/string normalization affects identity."
+  },
+  "authorization": {
+    "create": "Current verified session actor and active project membership with request.create. No caller identity headers trusted. Existing known membership is checked before any bridge request, then rechecked transactionally at acceptance.",
+    "reads": "Repository SQL always scopes active membership AND (job.owner_id=actor OR unexpired/unrevoked action=job.read delegation for that same project/job/actor). Own reads require active membership but not request.create capability, which gates only new creation. Command reads use job scope; delegation grants only read, nevercreate/replay-as-other-actor.",
+    "existence": "Missing/malformed/noncanonical/forbidden job/command detail IDs all403FORBIDDEN with fixed Error DTO. Lists hide inaccessible rows. UUID selectors never interpolate SQL. No RLS/productionauthorityclaim."
+  },
+  "snapshot_binding": {
+    "new_only": "Use configured fixed SnapshotBridge.read_snapshot(project_id,profile_version). Result must be trusted SnapshotRecord and exactly match catalog project/version_key/snapshot_id/rawbytes/hash/ASCII label/mode/enabled/configuration_complete. Runtime cannot import or mutate catalog. workflow_version comes from record.workflow_id=ifpmic-sw-v1. Do not recompute Node version key/canonical hashes in Python.",
+    "eligibility": "Under project guard require catalog enabled/configuration_complete, snapshot.mode==settings.mode, and matching unrevoked grant with granted_at<=trustednow<expires_at. Missing/knownineligible ->422PROFILE_INELIGIBLE; immutablecatalog/frame mismatch ->409PROFILE_VERSION_CONFLICT; child PROFILE_VERSION_INVALID ->422PROFILE_INELIGIBLE; other bridge/IO/protocol failures ->503DEPENDENCY_UNAVAILABLE. A valid bridge record with no catalog row is known unprovisioned/ineligible.",
+    "config": "Add optional paired settings node_executable/profile_store absolute path strings; malformed/unpaired ->SETTINGS_INVALID. When omitted auth/read/replay still operate; new creation requiring bridge ->503DEPENDENCY_UNAVAILABLE. Default creates one lazy fixed bridge per app from these settings; injected bridge_runner must expose async read_snapshot. No request/env switch picks a bridge path.",
+    "replay": "Before bridge/currenteligibility check, look up stable actor+fixedroute+key and recheck current membership and own resource. Originalmatchingdigest returns original202receipt regardless current file availability, eligibilityexpiry/revocation, removedcapability or missing bridgeconfig. Differentbody yields409 only after original resource authorization; inactive membership/foreignresource ->403. Do not turn accepted into applied.",
+    "bridge_failure_replay_probe": "If preflight misses but Node capture fails, do one fresh authenticated scoped replay lookup before mapping the bridge failure. A concurrently committed winner is recovered without requiring its current file/eligibility. Probe miss keeps original bridge error mapping; no looping or second bridge launch."
+  },
+  "transaction_and_races": {
+    "isolation": "Explicit READ COMMITTED, bounded lock_timeout5s/statement_timeout30s. Never await Node/network while holding an open transaction.",
+    "lock_order": "Final transaction authenticate current session first, then lock relevant project authorization_guard FOR UPDATE, then membership FOR UPDATE NOWAIT. Guard lock and subsequent current authority reads are separate SQL statements. NOWAIT is mandatory: existing operator raw UPDATE locks membership before its BEFORE trigger waits guard; waiting for membership would deadlock. Lock contention55P03 returns503DEPENDENCY_UNAVAILABLE with full rollback; no blind automatic retry. Caller may retry samekey. Membership and grant changes already serialize on guard triggers.",
+    "atomic_group": "After snapshotcapture/finalauthorization/currenteligibility/artifact checks insert job ->command ->outbox ->workspaceintent in ONE transaction. DB generatesUUIDs; only permitted runtime columns inserted. Initialstate DRAFT/revision0/cycle0/[]/null, commandaccepted/applied_revisionnull/errornull, outboxpending,intentRESERVED. Session touch in same transaction. No filesystem effect.",
+    "unique_winner": "Existing UNIQUE(actor_id,route,idempotency_key) is final arbiter. On only its exact UniqueViolation rollback the complete attempted group, then new authenticated transaction rechecks ORIGINAL command project/ownership/currentmembership and payloadhash. Other constraint errors ->503dependency. Same/different-session and cross-project key races must not leave orphanjobs.",
+    "replay_lock_scope": "Existing command locks original project only. If it appears after locking requested-project authority, rollback through internal marker and perform fresh original-project replay; never acquire a second project or await bridge inside that transaction. No authorization decision is reused from an older preflight.",
+    "commit_uncertainty": "Faults before commit preparation ->503DEPENDENCY_UNAVAILABLE and zero newgroup. Set commit_started only immediately before transaction context commits. Any commit acknowledgment failure or fault after durablecommit/beforeHTTPresponse ->503COMMIT_UNCERTAIN; exactsamekeyretry discovers original receipt. Do not claim ambiguouscommit rolledback. ApiError validation/scope failures preserve their code.",
+    "seams": [
+      "job_before_insert",
+      "job_after_insert",
+      "command_before_insert",
+      "command_after_insert",
+      "outbox_before_insert",
+      "outbox_after_insert",
+      "intent_before_insert",
+      "intent_after_insert",
+      "job_before_commit",
+      "job_after_commit",
+      "job_before_response",
+      "job_after_guard_lock",
+      "job_after_membership_lock"
+    ],
+    "fault_injection": "Only injected Python fault_hook callable; no HTTP/environment faultflag. TC may launch separate Python test harness processes using factory+hook/barriers and actual Uvicorn. Independent race clients must use distinct valid sessions for sameactor because sessionFORUPDATE otherwise serializes.",
+    "fresh_clock": "Read trusted auth.now() after authority locks for grant/delegation/session boundary decisions; reject expired session again if waiting crosses expiry."
+  },
+  "pagination": {
+    "query": "GET /jobs onlylimit/cursor, default25,1..100; decimal ASCII digits canonical positive (no sign/leadingzero). Querymax16384bytes, strictpercent/UTF8/duplicatekeys. Reads/sessionrequired.",
+    "order": "Descending (created_at,job_id), strict lexicographic < boundary. Fetchlimit+1 authorizedrows; next_cursor onlywhenmore exist. Compare authorization in same SQL that selects rows. Newer concurrent inserts before cursor are outside remainingpages; older inserts may appear aftercursor. No across-page snapshot isolation guarantee.",
+    "cursor": "Canonical base64url-no-padding payload + \".\" + canonicalbase64urlHMACSHA256. Signing key=settings.csrf_key but domain ASCII(\"ifpmic.cursor.v1\") || NUL byte || ASCII(base64url_payload) separate from CSRF. Payloadexact {v:1,actor_id,route:\"GET /api/v1/jobs\",scope:\"accessible-jobs-v1\",created_at:UTCiso8601microseconds,job_id:canonicalUUID}. VerifyMACconstanttime before parsing; strictJSON/canonicalencoding;max8192chars. No TTL: session/membership/delegation rechecked eachpage; provisionedkeyrotation invalidatescursor. Limit maychange acrosspages; no cursorcredentials/publication/logging.",
+    "errors": "Malformed/tampered/wrongactor/wrongroute/wrongscope/invalidtimestamp/ID cursor ->422INVALID_REQUEST. Unknownowner/filterquery also422, not cursor-generatedpermission. No cursor includes inaccessible row identifiers; anchor comes onlyfrom lastvisibleitem.",
+    "cursor_serialization": "UTF8(json.dumps(payload,ensure_ascii=True,sort_keys=True,separators=(\",\",\":\"),allow_nan=False)); datetime timezoneUTC exactly YYYY-MM-DDTHH:MM:SS.ffffffZ. Require this exact JSON serialization and timestamp format on decode; canonical base64url_no_padding for both parts. MAC input is ASCII(\"ifpmic.cursor.v1\") then one NUL byte then ASCII(base64url_payload). v must be exact int1, notbool."
+  },
+  "operator_cli": {
+    "scope": "New explicit services.ifpmic_api.authority CLI subcommands grant-mock-profile/revoke-profile; existing catalog import CLI preserved. No realgrant option, userAPIgrant, roleescalation orautomaticgrant.",
+    "config": "Private IFPMIC_API_CONFIG through load_settings and separate IFPMIC_OPERATOR_DSN env; appmode=mock required forgrant, catalogmode=mock+enabled+complete. UUIDs/timestamps/hash/ref validated, strictstdinJSON<=64KiB, exactfields. authority_id onlyDBcurrent_user (notrequest). Revoke permitted currentappmode and existingprojectgrant only; append-only revocation insert is idempotent.",
+    "grant": "stdin {project_id,snapshot_id,evidence_ref,evidence_sha256,expires_at}; DB-generatedeligibility_id,granted_at trustedUTCnow,expires>now. require evidence_ref nonempty/noC0DEL, hash64lowerhex. Return only {eligibility_id}; private evidence_ref contents notpublished.",
+    "revoke": "stdin {project_id,eligibility_id}; append once withtrustedUTCtime, return {revoked:true}; unknown/crossproject ->fixedauthorityerror. No membership/delegation endpoints: explicit operator SQL provisioning remains rolelimited.",
+    "failure": "Exact one-line {error:{code}}: AUTHORITY_INVALID_REQUEST (malformedJSON, extra/missing/type/ID/timestamp/hash/ref or expires<=now), AUTHORITY_FORBIDDEN (wrongappmode, missing/foreign/ineligiblecatalog, missing/foreigngrant), AUTHORITY_UNAVAILABLE (settings/config/DB/unexpectedexception). Exit2 firsttwo, exit3unavailable, exit0success. NoDSN/profile/SQL/privateexception. NoCLIargumentscontainsecrets."
+  },
+  "verification": {
+    "purpose": "Prove durable scoped command acceptance aligned with original IFPMIC design; do not substitute mockedpolicy for runtime/transactionevidence.",
+    "target": [
+      "CreateJob/list/Snapshot/CommandStatus routes",
+      "repository scoped reads",
+      "exactsemanticpayload/digest",
+      "concurrency and revocationguard",
+      "atomic4rowgroup/commituncertainty/restart",
+      "cursor/limits",
+      "operatorgrant/revoke"
+    ],
+    "method": "TC literal-schema/SQL oracles; actual FastAPI+temporaryPG; independentprocess races and actualUvicornrestart; faultbarriers perinsert/commit/response; normal/exception/boundary/regression cases. Controlsandstepsremainunexecuted.",
+    "agents": {
+      "Code-dev": "main product/runner/integration",
+      "TC": "Luna independent tests/provider/fixtures/ledger",
+      "reviewer": "independent plan+frozen evidence review",
+      "SAM_TEM_SQE": "No invocation or reassignment of design agent duties in G4. Their original workflow business boundaries remain unchanged."
+    },
+    "pass_criteria": "All approved G4casespasswithoutskip; scope/DTOs exact; eachfault0or1completegroup; winnerreceiptsunique; restartpayloadlossless; membership/delegation/revocationcurrent; no secretrawlog/profileegress; G1/G2/G3all167+B01Node48regressionpass; originals17+2unchanged;sourcefreezeunchanged.",
+    "expected": "InitialDRAFTacceptedonly, noapplied/Temporal/FSstep. Nodeoriginal48preserved. Localoperatorgrantissynthetic/mockauthorityonly.",
+    "evidence": "TCcaseledgerwith9fields andsourcepins; retainedprivate0700/0600firstfailurelogs+hashes; fixedcandidateJUnit/counts, process/PIDexitandDBlifecycle, sanitizedDTO/digest/rowcount summaries, archivehashes, independentreview, commit/push.",
+    "recovery": "Preserve failures, classifyproduct vsfixture/oracle, correctrelevantstage, reapprovechangedsemanticsbeforecode/tests, rerunallG4andaffectedG3/G2/G1 plusfrozenG4gate afteranysource/test/runner/lockchange. Never restart a confirmedliveprocess solely on observationtimeout.",
+    "impact_and_skips": "No UI/server/runtime orNode dependency changes intended. G4gateincludesallPython+B01Node48+protectedsourcehashes. FullNode387/build/plugin/browser/outputcomparison remains mandatory G6; no G6skipapproval is claimed now. G5filesystem/B03execution/B04events-artifact-device/realSSO/original32AT remainunexecuted, not skippedpasses."
+  },
+  "primary_sources": [
+    "https://www.postgresql.org/docs/18/transaction-iso.html",
+    "https://www.postgresql.org/docs/18/sql-insert.html",
+    "https://www.psycopg.org/psycopg3/docs/basic/transactions.html"
+  ],
+  "revision_note": "Fix byte-level cursor oracle and exact CLI errors after independent TC review; preserve v1 and its reviews."
+}

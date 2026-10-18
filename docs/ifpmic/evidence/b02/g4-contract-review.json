@@ -1,0 +1,53 @@
+{
+  "kind": "ifpmic_b02_g4_independent_contract_review",
+  "decision": "approve_for_code_and_test_authoring_with_nonblocking_editorial_clarifications",
+  "reviewed_contract": {
+    "path": "docs/ifpmic/evidence/b02/g4-implementation-contract.json",
+    "sha256": "291b6dd9418eac32a2860f9f8299233b24b42785aab6c00e2c6d0756d00caaeb"
+  },
+  "source_pins": {
+    "docs/ifpmic/B02-IDENTITY.md": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a",
+    "docs/ifpmic/design-v1/specs/openapi.v1.json": "2ed780cfa06349b18f5025937e050fd98a5cefa34b552eb836cfaccad416dd7a",
+    "docs/ifpmic/design-v1/specs/data-model.json": "00c84f8a39b1b8959daa8d94b1d67e860d83ad9bdb809065a5cd3b18af07071b",
+    "docs/ifpmic/evidence/b02/g4-source-collection.json": "edbf595fab3eac8595834740008a318f32466947c616a4d0c1a2def229dad142",
+    "docs/ifpmic/evidence/b02/g4-tc-risk-matrix.json": "0aec3fa1f9b08164b3bba248c2673ba9a403235f5fa99a419295b08d130aabcc",
+    "docs/ifpmic/evidence/b02/g4-transaction-advice.json": "ed53de12e30480b32ecd70f36f3569ba75405fd399fb89526dc669ea8e46b370",
+    "services/ifpmic_api/catalog.py": "65cfaae738728a957ba73587bdc3caaa582a90650624bb1c31bd11f66fb2db1f",
+    "services/ifpmic_api/migrations/001_initial.sql": "cf0437a5f32e1589e4ea821afbb2ef2480d780a276667880aa9a08a0f4c77f12",
+    "services/ifpmic_api/migrations/002_auth_retention.sql": "95c01f06eb586e0c1067f04672edfed8e0a11215752ad859ac9e4744da5a504e",
+    "services/ifpmic_api/app.py": "be6485fb3002b3bc35966eb8efab2e9cb09905d9f4789f91b721a46bfb572a82",
+    "services/ifpmic_api/auth.py": "9fef8084e8b11a7e1d0929a1842ab4fdddb0361adcbaa70700529a5e9999a887"
+  },
+  "reviewed_reconciliation": {
+    "original_create_job": "Matches OpenAPI's eight required fields, enums, no-null/no-default behavior and additionalProperties=false. Keeps owner_id and workflow selector out of request body. B02's stricter body, UTF-8, depth, duplicate-key, scalar-identifier, artifact-availability and semantic-payload policies are explicit and do not alter the original DTO.",
+    "job_and_receipt_dtos": "Matches the exact Job, JobList, Snapshot, CommandReceipt, CommandStatus and Error field sets and nullability. Job omits project_id/title; workflow_version maps to the validated immutable registry ID; new acceptance stays DRAFT/accepted with nullable fields as specified.",
+    "original_limit_default": "The supplemental contract deliberately chooses original OpenAPI default25 and range1..100. It names the conflicting B02 paragraph default20 rather than silently resolving it; the implementation/test oracle must cite this reviewed supplemental correction.",
+    "snapshot_initial_projection": "Snapshot includes required job/steps/last_event_id. For this initial-only DRAFT state, steps=[] and last_event_id='' are valid under the original string schema and are expressly documented as an empty sentinel, not a fabricated event ID. Activation is held for B03/B04 event projection.",
+    "outbox_mapping": "Normalized schema mapping preserves all conceptual outbox information by joins/derivation: scope and actor/project/job/route from commands, payload_hash/status from commands, dispatch state from commands_outbox.state, expected_revision=0 for a new job. The existing command_payload_json retains full semantic payload. No added migration is required for this accepted initial state.",
+    "cursor": "Uses only the original cursor/limit query parameters, fixes actor/route/scope, and rejects unknown/repeated query fields. Cursor error mapping and sort/page behavior are concretely specified; default direction and concurrent insert behavior are explicit.",
+    "authorization": "Active membership request.create gates creation; active membership plus owner or live job.read delegation gates reads. Delegations are per-job/read-only; no implicit administrator inheritance. Existing schema uniqueness/FKs and column-limited grants support this, with operator setup separate from user API.",
+    "artifacts_and_eligibility": "CreateJob cannot upload or grant. Supplied artifact UUIDs must already be available, same-project and caller-owned. Catalog compare, mode/enabled/completeness and current grant validity are explicit; replay bypasses current profile availability/eligibility only after authorizing the original resource.",
+    "idempotency_and_transaction": "The original actor/route/key unique arbiter is used; same payload replays original receipt, different payload conflicts after authorization. Exact unique-constraint recovery rolls back attempted rows and scopes a fresh replay transaction to one project. Guard-first then membership FOR UPDATE NOWAIT addresses the existing trigger lock inversion; READ COMMITTED separate fresh authority reads and post-lock clock sampling address stale snapshots/time. Capture remains outside DB transactions.",
+    "scope": "Retains original job API and durable accepted-command slice. Workflow execution, workspace filesystem, artifact ingress, device routes, UI, corporate SSO and complete AT-21 are explicitly excluded."
+  },
+  "nonblocking_clarifications": [
+    {
+      "id": "G4-CURSOR-CANONICAL-BYTES",
+      "note": "For independent implementations to emit byte-identical cursors, spell out the exact canonical JSON serialization (UTF-8/ensure_ascii, key order, compact separators, timestamp representation) before cursor tests are frozen. The contract does specify payload fields, HMAC domain, encoding, and validation, so this is a test-oracle precision improvement rather than a route/scope blocker."
+    },
+    {
+      "id": "G4-OPERATOR-CLI-LITERAL-ERRORS",
+      "note": "The mock grant/revoke CLI defines output shape and exit classes but calls an error a fixed authority error without naming each public code/status. Pin literal codes for validation, unknown/cross-project grant, real-mode denial, and dependency failure before independent CLI tests are frozen."
+    },
+    {
+      "id": "G4-OPERATOR-EVIDENCE-UNICODE",
+      "note": "The mock grant CLI requires nonempty evidence_ref without C0/DEL, but does not say whether escaped lone surrogates are rejected. As PostgreSQL UTF-8 TEXT cannot store lone surrogates and CreateJob's exceptional surrogate policy is field-specific, specify evidence_ref as Unicode scalar text before implementation."
+    },
+    {
+      "id": "G4-UPSTREAM-ORACLE-SUPERSESSION",
+      "note": "The source-pinned preimplementation risk matrix still states default20 and labels cursor mapping/page behavior unresolved. This contract explicitly corrects/resolves those points; keep this reviewed contract authoritative and update the TC ledger/risk-matrix reference before freezing its cases so stale text cannot become an oracle."
+    }
+  ],
+  "blockers": [],
+  "execution_status": "No tests, product code, database, service, or network were run. This decision approves the pinned supplemental contract for implementation/test authoring only; it is not G4 runtime evidence or acceptance."
+}

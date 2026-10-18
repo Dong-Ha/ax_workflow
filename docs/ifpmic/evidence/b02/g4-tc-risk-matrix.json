@@ -1,0 +1,171 @@
+{
+  "kind": "ifpmic.b02.g4-tc-risk-matrix.v1",
+  "status": "preimplementation-risk-matrix",
+  "basis": {
+    "plan": "docs/ifpmic/B02-IDENTITY.md",
+    "plan_scope": ["REQ-13", "AT-21"],
+    "design_contracts": ["REQ-02", "REQ-05", "REQ-11", "REQ-12", "REQ-14"],
+    "openapi": "docs/ifpmic/design-v1/specs/openapi.v1.json",
+    "data_model": "docs/ifpmic/design-v1/specs/data-model.json",
+    "runtime_baseline": [
+      "services/ifpmic_api/auth.py",
+      "services/ifpmic_api/catalog.py",
+      "services/ifpmic_api/migrations/001_initial.sql",
+      "tests/ifpmic_api/conftest.py",
+      "tests/ifpmic_api/test_migrations.py"
+    ]
+  },
+  "scope_and_impact": {
+    "included": "G4 user-scoped FastAPI job create/list/detail/command reads and their PostgreSQL transaction, authorization, idempotency, persistence, and pagination behavior.",
+    "out_of_scope": "G5 workspace provisioning recovery, B03 Temporal execution, B04 artifacts, B09 device actions, real SSO/production DB/backup acceptance, and full AT-21 job/log/image/device execution. Synthetic database fixtures are not real authority or end-to-end acceptance evidence.",
+    "preservation": "Do not alter the existing localhost GET-only AX server, the 17 pinned design contracts, the 59-scenario accepted UI/control baseline, source profile bytes, or authentication/session semantics except where an approved G4 contract explicitly integrates them.",
+    "impact_rule": "Any endpoint, DTO, authorization, catalog, replay-state, or visual meaning change expands regression to its direct API/DB/auth and affected AX UI/browser/host gates. No UI gate may be skipped merely because this matrix says backend-only; the approved plan's byte-identical UI conditions must be established at gate time.",
+    "agent_roles": {
+      "code_dev": "main implements services and migrations",
+      "tc": "independent literal-oracle tests and fixtures only",
+      "arch_runner": "SAM/TEM/static checks and pinned verification runner",
+      "sqe": "terminal/process/environment evidence",
+      "report": "sanitized evidence and report assembly",
+      "human": "approval of material deviations and final acceptance"
+    }
+  },
+  "known_oracles": {
+    "request_schema": "CreateJob exact required keys: project_id,title,request_text,change_type,base_ref,input_artifact_ids,profile_version,release_mode; change_type NEW_HW|FEATURE|BUGFIX; release_mode team_github_tag|shared_gerrit_change|shared_github_pr|shared_github_commit; additionalProperties=false; owner_id is never accepted.",
+    "job_schema": "Job exact fields job_id,owner_id,status,revision,cycle,workflow_version,current_step_ids,candidate_fingerprint,profile_version; initial accepted state is DRAFT, revision=0, cycle=0, current_step_ids=[], candidate_fingerprint=null, workflow_version=ifpmic-sw-v1 from the verified snapshot workflow_id.",
+    "receipt_schema": "POST response is HTTP 202 and exact CommandReceipt {command_id,status:'accepted',resource_id}; CommandStatus keeps accepted, applied_revision:null, error:null while B03 is absent. Acceptance does not mean workflow execution or workspace READY.",
+    "authorization": "Identity is the current authenticated OIDC session only. Active membership with request.create permits request creation and self-owned reads. A non-owner can read one job only through active, unexpired, unrevoked job.read delegation; no project/company/operator inheritance. Missing and forbidden detail lookups both return 403 FORBIDDEN.",
+    "payload_identity": "CreateJob semantic digest is SHA256(UTF8(json.dumps({'format':'ifpmic.create-job.v1','payload':semantic_payload},ensure_ascii=True,sort_keys=True,separators=(',',':'),allow_nan=False))). Object key order is irrelevant; values/array order/string bytes are preserved without normalization. Store the full ASCII ensure_ascii JSON semantic payload. workflow_version is the immutable B01 registry id, not schema_version.",
+    "transaction_group": "For a new accepted request, one DB transaction inserts DRAFT job, accepted command, pending outbox row, and RESERVED workspace intent, all FK-bound. Authorization and eligibility are checked/locked in the same acceptance path. Workspace reconciliation cannot advance job/command or discard the outbox.",
+    "idempotency": "A stable actor_id + POST /api/v1/jobs + Idempotency-Key unique tuple selects the winner. Same tuple/same digest returns the original receipt; same tuple/different digest returns 409 IDEMPOTENCY_CONFLICT. Key is one printable ASCII value, length 1..128.",
+    "pagination": "Limit is 1..100, default 20. Ordering is (created_at,job_id); cursor is opaque authenticated data bound to actor and filter. Revoked/inaccessible rows remain hidden on subsequent pages.",
+    "public_errors": "Fixed classes include 401 AUTH_REQUIRED; 403 FORBIDDEN/CSRF_INVALID/ORIGIN_FORBIDDEN; 409 IDEMPOTENCY_CONFLICT/PROFILE_VERSION_CONFLICT; 422 INVALID_REQUEST/REQUEST_TOO_LARGE/PROFILE_INELIGIBLE; 503 DEPENDENCY_UNAVAILABLE/COMMIT_UNCERTAIN. Error DTO is {code,message,trace_id}, with message equal to code and no SQL/OS/IdP/bridge exception text."
+  },
+  "case_groups": [
+    {
+      "id": "G4-01-authz-scope",
+      "purpose": "Prove owner identity and every read/write scope derive from current session, membership, and narrow job delegation.",
+      "target": "POST/GET /api/v1/jobs; GET /api/v1/jobs/{job_id}; GET /api/v1/commands/{command_id}; PostgreSQL membership/delegation fixtures.",
+      "method": "Run the actual FastAPI app against isolated PostgreSQL with independently seeded users A/B, projects X/Y, active/inactive memberships, job-owned rows, job.read delegation, and revoked/expired grants. Compare exact DTOs and independently queried rows; vary cookie/session actor separately from hostile body/header identities.",
+      "agent": "TC writes fixed fixtures/assertions; code-dev implements; arch-runner runs static/SAM/TEM; SQE records server/DB; report sanitizes; human approves deviations.",
+      "passcriteria": "A can create only in an eligible project where A has active request.create; body owner_id and Paperclip/company/user/worker identity headers cannot change owner. A reads own job; B reads only the specifically delegated job while membership and delegation remain valid. Inactive, expired, revoked, other-project, non-owner/nondelegate, missing-job and wrong-command cases reveal no data and detail failures are the same 403 FORBIDDEN. List contains only accessible rows; command lookup is job/project scoped.",
+      "expected": "Accepted row owner_id equals authenticated user A; no unauthorized row or DTO appears; read-only actors cannot create, mutate, approve, or gain device scope.",
+      "evidence": "Sanitized HTTP status/DTO hashes, synthetic fixture IDs, SQL row counts, grant/revoke timestamps, no-secret log scan, and test case ledger under workflow-artifacts/verification/B02/G4/.",
+      "recovery": "Preserve failing fixture/report; correct repository scope or transaction authority checks, then rerun G4-01 and affected acceptance/idempotency cases. Never weaken identity assertions to Paperclip headers or synthetic owner fields.",
+      "scope_impact": "REQ-13 / AT-21 job access slices; auth/session and repository/query scope. Does not accept artifact/log/image/device isolation end-to-end."
+    },
+    {
+      "id": "G4-02-create-validation-and-snapshot-binding",
+      "purpose": "Verify original CreateJob contract and that stored job fields bind to the immutable verified B01 snapshot without silently normalizing payloads.",
+      "target": "POST /api/v1/jobs; bridge/catalog/eligibility reads; job and command_payload_json rows; OpenAPI CreateJob and Job schemas.",
+      "method": "Use literal valid/invalid request fixtures. Exercise each missing/extra/wrong-type/enum case, duplicate JSON key, invalid UTF-8, body/depth boundary, NUL/identifier controls, lone-surrogate/astral text, array ordering, unknown or cross-project artifact IDs, unavailable artifacts, disabled/incomplete/wrong-mode/missing/expired/revoked eligibility, and snapshot profile conflict. Independently calculate semantic JSON/digest and parse persisted ASCII JSON after connection/process restart.",
+      "agent": "TC owns oracle and raw synthetic fixture; code-dev owns app/repository; arch-runner performs static checks; SQE captures HTTP/PG evidence; report strips raw profile/request text; human approves policy exceptions.",
+      "passcriteria": "Valid request preserves every semantic field and array order, stores no raw lone surrogate in PostgreSQL UTF-8 TEXT, uses the exact independent body digest and B01 workflow registry ID, and returns only the specified Job/CommandReceipt keys. Each specified malformed or ineligible request receives the plan's fixed error class; rejected requests create no job, command, outbox, or intent. No body field grants eligibility or selects workflow.",
+      "expected": "Valid accepted request starts exactly DRAFT/0/0/[]/null and points to immutable snapshot; invalid cases leave business row counts unchanged. Restarted read returns semantically identical stored payload, not reconstruction from digest or current profile files.",
+      "evidence": "Literal request vectors, independently computed digests, response key sets/statuses, sanitized SQL counts, snapshot/profile hashes, restart comparison, and no-payload-log check.",
+      "recovery": "Retain original request vector and failed row delta; fix validation/serialization/snapshot binding, then rerun G4-02 and G4-03/G4-05. Do not translate parser or database errors into new public messages without reviewed contract.",
+      "scope_impact": "REQ-13 / AT-21 request/job slice and REQ-02/05/11/12/14 preservation. Does not test B03 execution or artifact upload.",
+      "unresolved": ["The plan does not state whether profile_version is merely display label or an additional selector; test only the explicitly mapped project/version-key lookup until the supplemental contract fixes its semantics."]
+    },
+    {
+      "id": "G4-03-idempotency-and-concurrency",
+      "purpose": "Prove winner/loser semantics under same and different key/body races, membership revocation races, and retry after accepted or uncertain commit.",
+      "target": "POST /api/v1/jobs transaction; UNIQUE(actor_id,route,idempotency_key); authorization guard/membership row locks; commands/job/outbox/intent.",
+      "method": "Use independent HTTP clients/processes synchronized at barriers against real PostgreSQL. Race same actor/key/same body, same actor/key/different body, different keys/same body, different actors/same key, and request acceptance against revoke/deactivate/expiry transition. Independently inspect committed records and retry the exact original key/body after each winner and simulated response loss.",
+      "agent": "TC controls deterministic barriers/fault hooks; code-dev implements lock/unique/replay behavior; arch-runner runs race/static checks; SQE tracks child processes; report stores sanitized winner ledger; human accepts the linearization result.",
+      "passcriteria": "One actor/route/key has at most one accepted command/job/outbox/intent group. Same body returns original receipt; changed body is 409 IDEMPOTENCY_CONFLICT. A different key or actor follows separately specified uniqueness rather than being accidentally conflated. Membership mutation and request are linearized by approved guard/row locks: no acceptance may use a revoked/inactive membership after its revoke wins. Retry after commit-response loss resolves to the original receipt, never duplicate acceptance.",
+      "expected": "Exactly one winner per unique tuple; all losers produce only approved replay/conflict behavior; no partial or duplicate group. The persisted semantic payload and receipt identify the winning body/job.",
+      "evidence": "Barrier schedule and process exit records, request/result ledger, row counts before/after, SQL lock/grant inspection, retry receipt equality and sanitized fault-hook IDs.",
+      "recovery": "Preserve complete race schedule and database snapshot summary; correct lock ordering/unique-conflict handling, then rerun all relevant same/different actor/key/body races and membership authorization cases. No sleeps-only race proof.",
+      "scope_impact": "REQ-13 / AT-21 admission correctness, membership mutation serialization, and authorization durability.",
+      "unresolved": ["The plan fixes same-key replay and same-key body conflict but does not explicitly state whether semantically identical requests with different idempotency keys should create separate jobs; do not assert deduplication across keys."]
+    },
+    {
+      "id": "G4-04-atomicity-and-fault-boundaries",
+      "purpose": "Demonstrate job, command, outbox, and workspace-intent atomicity across failures at every specified insertion and commit/response boundary.",
+      "target": "G4 fault_hook around job/command/outbox/intent inserts, SQL commit before/after, and HTTP response; real PostgreSQL transaction.",
+      "method": "Inject each approved fault point in turn using test-only fault_hook or a controlled DB connection/process termination. After each failure inspect all four tables from a fresh connection; exercise pre-commit rollback, post-commit response loss, DB unavailable, and retry. Confirm accepted replay does not recapture or revalidate mutable profile bytes.",
+      "agent": "TC enumerates fault points and checks row invariants; code-dev implements transaction/error mapping; arch-runner validates hook isolation/static config; SQE records server and PG exit state; report publishes sanitized evidence; human approves uncertainty policy.",
+      "passcriteria": "Before commit, any error leaves zero rows for the attempted new request across all four tables and returns only the approved fixed error. After commit but before response, result is 503 COMMIT_UNCERTAIN, durable rows remain exactly one complete group, and same-key retry recovers the original 202 receipt. No fault hook is enabled by HTTP/environment input; no normal response precedes commit.",
+      "expected": "The transaction has either zero or one complete durable acceptance group; no partial rows, no duplicate replay, no accepted-to-applied transition. All error DTO fields are fixed/sanitized.",
+      "evidence": "Per-hook named case result, fresh-connection row counts, transaction outcome, retry receipt, process/server outcome and sanitized log scan.",
+      "recovery": "Keep fault point, DB state summary, and original failure evidence. Fix transaction scope/error mapping, then rerun all insertion/commit/response cases plus G4-03 concurrency.",
+      "scope_impact": "REQ-13 / AT-21 durable command acceptance only. Workspace filesystem effects are deferred to G5; this group tests RESERVED intent insertion, not directory readiness."
+    },
+    {
+      "id": "G4-05-persistence-and-restart",
+      "purpose": "Prove accepted work is recoverable from PostgreSQL after application restart while remaining a command receipt rather than a completed workflow.",
+      "target": "Job, command, outbox, intent persistence and GET detail/status/list after Uvicorn/process restart.",
+      "method": "Create an accepted request, stop only the test API process, reopen a fresh PostgreSQL connection, start a new API process with the same approved config, then fetch job and command status and retry same key/body. Compare semantic payload, workflow_version, IDs, revisions, and state against independent fixture expectations.",
+      "agent": "TC drives process lifecycle and durable-state oracle; code-dev owns persistence/read model; arch-runner verifies process/config pins; SQE records stop/start and health; report sanitizes evidence; human approves final state semantics.",
+      "passcriteria": "All IDs and semantic payload survive restart; initial job remains DRAFT revision0/cycle0; command remains accepted with applied_revision=null/error=null; outbox remains pending and intent RESERVED (unless a distinct approved G5-only reconciler fixture is explicitly used). Replaying returns the original receipt and does not create rows.",
+      "expected": "Durable, immutable acceptance survives process loss and cannot be misreported as B03 execution, workspace READY, or workflow success.",
+      "evidence": "Before/after row hashes and counts, independent payload/digest check, process exit/health records, exact DTOs, no-secret log check.",
+      "recovery": "Preserve old/new-process and row evidence; fix persistence or GET projection, then rerun restart, replay, and atomicity cases.",
+      "scope_impact": "REQ-13 durable command API. Full filesystem crash recovery belongs to G5 and Temporal execution to B03."
+    },
+    {
+      "id": "G4-06-list-detail-pagination",
+      "purpose": "Verify stable pagination and authorization filtering without leaking inaccessible job IDs or changing result sets through cursor tampering.",
+      "target": "GET /api/v1/jobs, GET /api/v1/jobs/{job_id}, GET /api/v1/commands/{command_id}; opaque cursor generation/validation.",
+      "method": "Seed deterministic created_at/job_id rows spanning multiple pages, owners, projects, active/revoked memberships, delegations, and filters. Traverse all pages; test limits 1,20,100 and invalid bounds; mutate one cursor byte, replay across actor/filter, expire/revoke access between pages, add rows before/after the cursor, and directly fetch hidden IDs/commands.",
+      "agent": "TC has an independently sorted row oracle and adversarial cursor cases; code-dev owns scoped repository and cursor; arch-runner checks token/log behavior; SQE records HTTP; report stores only hashes/counts; human resolves unspecified error semantics.",
+      "passcriteria": "For a fixed authorized fixture, pages follow `(created_at,job_id)` order with no duplicates or omissions, each page respects requested/default bounds, and only currently accessible entries are returned. A cursor cannot be reused by another actor or altered filter; revocation hides later-page rows. Direct missing and forbidden detail both return 403 FORBIDDEN and identical public shape.",
+      "expected": "Concatenated authorized pages equal the independent expected sequence exactly; unauthorized resources never appear in items, next_cursor payload, or error text.",
+      "evidence": "Fixture row manifest/hash, per-page DTO hashes/counts, cursor tamper/reuse outcomes without raw cursor publication, authorization row snapshots.",
+      "recovery": "Retain deterministic seed/order and cursor failure case; correct query boundary or cursor binding, then rerun all pages plus revocation/race cases.",
+      "scope_impact": "REQ-13 list/detail/read authorization and pagination extension; no artifact download endpoint is accepted here.",
+      "unresolved": ["The plan does not assign a fixed public code/status for malformed, expired, or actor/filter-mismatched cursors. Do not assume INVALID_REQUEST, FORBIDDEN, or an empty page before a supplemental contract fixes mapping.", "The plan specifies limit default/range but not filter names, default sort direction, cursor TTL, or how rows inserted concurrently relative to a cursor are treated; test only explicitly agreed stable fixture traversal until these are fixed."]
+    },
+    {
+      "id": "G4-07-errors-and-non-disclosure",
+      "purpose": "Verify failure DTO and logging boundaries across validation, auth, database, bridge, and unexpected exceptions.",
+      "target": "All G4 endpoints, API error mapper, Uvicorn logs, DB/bridge exceptions.",
+      "method": "Inject sentinel-bearing SQL errors, bridge/profile exceptions, malformed headers/body, unauthorized IDs, and unexpected exceptions. Capture response and service logs in private temporary files; inspect public surfaces for every sentinel, raw request, raw profile, cursor internals, cookie, CSRF, authorization, SQL/OS detail.",
+      "agent": "TC uses synthetic canaries only; code-dev owns error mapping/logging; arch-runner static-scans routes/logging; SQE records private log hashes/sizes; report publishes sanitized absence facts only; human reviews residual risk.",
+      "passcriteria": "Public Error DTO is exact `{code,message,trace_id}`, trace_id is server UUID, message equals fixed code, and no sensitive sentinel appears in response or application logs. Unknown errors do not fall through to framework validation or traceback response. Authentication and existence-hiding behavior remain fixed.",
+      "expected": "Safe fixed errors and no private-data egress; no raw request/profile/cursor/auth material in logs.",
+      "evidence": "HTTP response shape/status, private log SHA/byte count, canary-absence boolean and test source hash; never publish raw canary-bearing logs.",
+      "recovery": "Preserve private raw files with restrictive permissions; redact only derived report, fix mapper/logger, then rerun affected endpoint and service-start tests.",
+      "scope_impact": "REQ-13 security and observability boundary; proxy redaction and real production log transport remain separate operational acceptance."
+    }
+  ],
+  "cross_cutting_regression": {
+    "required": ["B01 48 existing profile/bridge tests", "G1 migration/auth tests", "G2 bridge/catalog tests", "G3 auth/session/OIDC tests", "accepted 59-scenario UI/control baseline and pinned hashes", "all original design contract/source files and raw package input byte hashes"],
+    "real_service": "G4 must use the actual FastAPI process and isolated real PostgreSQL for DB, transaction, and race claims. In-process unit tests can support narrow validation but are never counted as the G4 runtime/transaction acceptance.",
+    "excluded_claims": ["No real corporate SSO acceptance without approved issuer/client and real authorization evidence.", "No B03 Temporal workflow execution, SAM/TEM/TC agent execution, hardware/device control, artifact upload/download, or full AT-21 acceptance.", "No claim that synthetic membership/eligibility is a real project grant."]
+  },
+  "unresolved_items": [
+    {
+      "id": "G4-U1",
+      "issue": "Exact cursor error/status mapping, expiry, default sort direction, filter schema, and concurrent insertion behavior are not fixed by B02-IDENTITY.md.",
+      "test_consequence": "Keep adversarial cursor tests as pending contract rows; do not encode a guessed public status or pagination snapshot rule."
+    },
+    {
+      "id": "G4-U2",
+      "issue": "The general list query fields and exact OpenAPI path parameter/query definitions for added pagination/filter contract are not fully defined by the original OpenAPI schema (JobList only fixes items and next_cursor).",
+      "test_consequence": "Preserve original DTO key sets, but wait for a supplemental request/response contract before asserting new filter fields or error envelopes."
+    },
+    {
+      "id": "G4-U3",
+      "issue": "The exact transaction/fault-hook naming and how HTTP response loss is injected in a real Uvicorn process remain implementation API details, although approved semantic fault boundaries are listed in the plan.",
+      "test_consequence": "Require deterministic test-only seam or independently killable process barrier for each boundary; never expose a fault flag through environment or HTTP."
+    },
+    {
+      "id": "G4-U4",
+      "issue": "Input artifact upload is deferred; the exact available-artifact state transition and ownership fixture interface must be coordinated with the later artifact contract.",
+      "test_consequence": "G4 may seed synthetic already-available artifacts in isolated PostgreSQL and test validation/scoping, but cannot claim upload or artifact end-to-end acceptance."
+    },
+    {
+      "id": "G4-U5",
+      "issue": "Same semantic body under a different idempotency key and cursor pagination under concurrent inserts have no explicit deduplication/snapshot semantics.",
+      "test_consequence": "Assert only tuple uniqueness and specified ordered traversal on a fixed dataset; record observations for review rather than inventing semantics."
+    }
+  ],
+  "acceptance_guard": {
+    "independent_plan_review_before_tests": true,
+    "no_completion_without_evidence": true,
+    "environment_blocked_is_separate_from_failed_or_passed": true,
+    "skip_requires": ["technical reason", "affected requirement/AT trace", "remaining risk", "named human approval", "revalidation trigger"],
+    "original_at_21_completed": false
+  }
+}
