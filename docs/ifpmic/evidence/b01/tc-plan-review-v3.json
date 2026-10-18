@@ -1,0 +1,91 @@
+{
+  "kind": "b01_independent_tc_plan_review_v3",
+  "reviewer_role": "independent TC plan reviewer",
+  "reviewed_plan": {
+    "path": "docs/ifpmic/B01-PROFILES.md",
+    "sha256": "2a03572f898b1003a957340252f05bc615d03cbe9ee96d63ec655578d764ddef"
+  },
+  "decision": "approve_tc_plan",
+  "scope": "Read-only review of B01 testability, independent expected-value oracles, original source boundaries, and conditional UI gate skip. This approval authorizes TC work to resume; it is not the separate plan-review-v3 approval required before product implementation.",
+  "reviewed_evidence": {
+    "source_collection": {
+      "path": "docs/ifpmic/evidence/b01/source-collection.json",
+      "sha256": "15c2571bb495efcb89aa5b94eb51bd44167a2b22f5ddb5dbbc3f5918bfc66c72"
+    },
+    "snapshot_architecture_advice": {
+      "path": "docs/ifpmic/evidence/b01/snapshot-architecture-advice.json",
+      "sha256": "2bdc222b1121b8af0dc6d715bed3fbbd285c823ada5956289cd989cd17466ec7"
+    },
+    "prior_independent_plan_review": {
+      "path": "docs/ifpmic/evidence/b01/plan-review.json",
+      "sha256": "a345f195e9d7e83a8dc70c39508104201d2ce3f7802ce4e3259d1d312627373a",
+      "resolved_findings": [
+        "Snapshot identity binds raw SHA256 values for workflow, state-contract, and agent-contract sources as a versioned bundle.",
+        "Real completeness defines all five required nonempty collection paths and a release-mode-independent placeholder policy.",
+        "The UI gate skip names and pins the accepted controls archive, report, independent review, gate, full source inventory, and build/plugin outputs."
+      ]
+    },
+    "accepted_controls_baseline": {
+      "path": "docs/ifpmic/evidence/b01/controls-baseline.json",
+      "sha256": "a872346739a4c10f310490b5da1aa5a4dbf58deaec32706929ea64a0a2e16247",
+      "accepted_archive_sha256": "b33b53c5ca378a5b2881301f7f07f3ce839c21e39d2bc2359421374d015a8ec0",
+      "accepted_verification_sha256": "e3f64565629e55288ec9eec0ce59033729c8e7d825149c3f84fe5d24bce30386",
+      "accepted_review_sha256": "f596744589b21e9f56242c49dcda897692aebca125fb67daa07851d73ad44f52",
+      "accepted_gate_sha256": "ceb5e97c8411e225c9e450ad1f2ff692f0c2bffd7b19595c52929a7b4392fcdc",
+      "scope_note": "Historical accepted mock controls gate; not B01 or original acceptance evidence."
+    },
+    "original_contract_pins": {
+      "workflow.v1.json": "bab40a7abb3929896add1ef2cd074893dd2a7de14d200a5d6cea4b7a77eb0e89",
+      "state-contract.json": "0248e130017043539319c56af854f5388a95d33e7e687902a3438fdff414244a",
+      "agent-contract.json": "ca6d4bea7abf0fffe7354c482af0d521c3a2e367217a69923a4bfe43fa27ab64",
+      "project-profile.example.json": "37301c6ff5c9cae237b6037a3106368cfd07e4582462d52a35dfee39de7839f2",
+      "implementation-backlog.json": "115e48568e0464b8e67ef17274dba97b3046a8de902e1cf426d9b70e1528e5d0",
+      "acceptance-cases.json": "f7163553edc9e8e753965cb8748ab04aac8f68c1a453f567f62284a01b38b0d5"
+    }
+  },
+  "review_findings": {
+    "scope_and_source_fidelity": {
+      "result": "pass",
+      "details": "The plan matches backlog B01 and separates B02 identity/database/workspaces, B03 durable execution, and later B04/B05. It preserves the disabled mock source example and imported originals. The new profile schema is clearly an implementation schema, not a claim about a supplied original contract. AT-04 and AT-28 remain not executed."
+    },
+    "prior_plan_blockers": {
+      "result": "pass",
+      "details": "All three blocking points in plan-review.json are explicitly corrected. The versioned snapshot workflow reference binds all three original raw contract SHA values. Completeness lists exact collections, marker behavior, release modes, and no implied approval. Conditional gate omission has a pinned accepted candidate and requires relevant inventory plus build/plugin byte equality; otherwise the full gate is required."
+    },
+    "testable_public_contract": {
+      "result": "pass",
+      "details": "Named exports, returned DTO shapes, stable error codes, limits, and Node fs-compatible I/O seam are concrete enough for independent unit and subprocess assertions. Expected schema/path/hash values can be literal and independently computed without consulting product validator or canonicalization helpers."
+    },
+    "required_tc_oracles": [
+      "P1: fixed literal schema inventory and valid real fixture; each required field missing/null/wrong type, unknown keys at every object, all enums/literal booleans/numeric boundaries, array uniqueness; all five empty arrays across four release modes; all marker values and exempt fields; malformed UTF-8, duplicate escaped keys, root types, depth 64/65, byte limit ±1, stable safe issues and sentinel non-leakage.",
+      "P2: hardcoded three-source raw pins and independently computed bundle/profile/snapshot hashes; canonical object-key reorder invariance and array-order sensitivity; identity/version/workflow rebinding; detached/deep-frozen values; project/version key and filename agreement; corrupt record and altered original pin negatives.",
+      "P3: actual independent processes for equal/conflicting identity races; deterministic barriers around link/EEXIST/directory sync; write/file-sync/close/link/directory-sync fault injections; process termination before/after publication; uncertain-final retention and recovery; no overwrite/rollback; corruption, symlink, non-directory, oversized final, orphan-temp and wrong-identity tests.",
+      "P4: child-process CLI matrix for validate/require-real/snapshot/read/init, exact argument combinations and exit 0/2/3 behavior; fatal decoding; safe stdout and empty stderr for errors; sentinel values and paths excluded; read-only defaults and no network/hardware/publisher/transcript side effects.",
+      "P5: exact accepted controls source/build/plugin pin and inventory comparison; any mismatch expands to the required UI/browser gate. Preserve original ZIP/DOCX and imported-contract bytes; report intended Ajv/package/README changes narrowly."
+    ],
+    "filesystem_and_concurrency_feasibility": {
+      "result": "pass_with_declared_limit",
+      "details": "The specified seam supports targeted operation faults and barriers while child processes exercise real same-filesystem link races. It can establish process-level atomic publication and retry rules on the stated Node 24/Linux local filesystem. It cannot prove power-loss durability, distributed filesystem behavior, or multiuser authorization; the plan does not claim these."
+    },
+    "ui_gate_skip": {
+      "result": "pass_with_strict_gate",
+      "details": "Skipping the 11-command controls gate is justified only after exact relevant source inventory and all accepted build/plugin outputs match their pinned bytes. A source path addition/deletion, protected import, state/UI/server behavior change, or output difference requires the full gate; current review does not prejudge that future result."
+    },
+    "additional_tc_case_required": {
+      "result": "must_include_before_tc_freeze",
+      "details": "The snapshot object capture path should have direct negative cases for sparse arrays (holes), custom enumerable array properties, symbol properties, accessors, and cycles. These exercise the plan's explicit rule that caller-owned non-JSON/exotic records are rejected as SNAPSHOT_CORRUPT rather than silently canonicalized or dropped. A product sparse/custom-array bug was reported fixed during this review; preserve the pre-fix diagnostic and assert these cases against the fixed contract."
+    }
+  },
+  "path_notation_clarification": {
+    "result": "resolved_by_plan_revision",
+    "details": "The plan v3 explicitly defines both issues[].path and configuration.unresolved_paths as JSON Pointers; dot notation in the field inventory is descriptive only. The earlier TC attempt's dotted unresolved-path expectations were based on the ambiguous v2 prose and are not evidence of a product defect. Update those expectations to the v3 pointer form after resuming TC work; preserve the v2 failing run and its provenance."
+  },
+  "implementation_gate": {
+    "tc_plan_approved": true,
+    "product_implementation_approved_by_this_record": false,
+    "separate_plan_review_required": true,
+    "required_plan_review_path": "docs/ifpmic/evidence/b01/plan-review-v3.json",
+    "reason": "The reviewed plan requires both the separate plan-review-v3 approval and this TC plan review against this exact SHA before product implementation."
+  },
+  "reviewer_verdict": "Approve the TC plan for SHA 2a03572f898b1003a957340252f05bc615d03cbe9ee96d63ec655578d764ddef. Resume TC authorship after this record. Product implementation remains gated on the separate plan-review-v3 approval."
+}

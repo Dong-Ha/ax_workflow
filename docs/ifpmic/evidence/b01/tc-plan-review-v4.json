@@ -1,0 +1,38 @@
+{
+  "kind": "b01_independent_tc_plan_review_v4",
+  "reviewer_role": "independent TC plan reviewer",
+  "reviewed_plan": {
+    "path": "docs/ifpmic/B01-PROFILES.md",
+    "sha256": "8c22f1ceaf1d0f3ca1cf7113a829d7e4441df1fb5ebebdbe48a9d71c1e20d7a8"
+  },
+  "decision": "approve_tc_plan",
+  "scope": "Read-only review of the v4 delta from the previously approved TC plan. This record does not approve product implementation; the separate plan-review-v4 record remains required.",
+  "delta_review": {
+    "change": "The canonical record plus LF must fit the store's 2 MiB limit. createSnapshot rejects a larger record as PROFILE_VERSION_INVALID; exact equality is accepted. No separate arbitrary profileVersion length limit is defined.",
+    "testability": "pass",
+    "oracle": "The TC can build the expected canonical payload independently using the approved fixed profile, contract bundle hashes, and serializer, then solve the ASCII profileVersion length so canonical(record)+LF is exactly 2 MiB. Assert exact acceptance, exact byte length, independent snapshot hash, and +1 byte rejection with PROFILE_VERSION_INVALID. This directly verifies the envelope budget without taking size expectations from product output.",
+    "consistency": "pass",
+    "details": "The new rule aligns createSnapshot's successful output with the existing read/store maximum of 2 MiB while preserving the prior nonempty/no-control identity rule. Profile text retains its independent 1 MiB cap."
+  },
+  "prior_approved_scope_carryforward": {
+    "approved_plan_sha256": "2a03572f898b1003a957340252f05bc615d03cbe9ee96d63ec655578d764ddef",
+    "tc_plan_review_path": "docs/ifpmic/evidence/b01/tc-plan-review-v3.json",
+    "carryforward": [
+      "P1-P5 independent fixed oracles for schema/parser/completeness, canonical hashes and identity, process races and filesystem faults, CLI boundaries, and regression pins remain valid.",
+      "Both DTO path fields are JSON Pointers under v3; old v2 dotted-path failures remain ambiguous-plan evidence rather than a product defect.",
+      "The published controls candidate and 11-command gate omission condition remain explicitly pinned and conditional."
+    ],
+    "additional_required_tests": [
+      "Sparse arrays, custom enumerable array properties, symbol properties, accessors, and cycles in caller-owned records must fail closed as SNAPSHOT_CORRUPT; preserve the reported pre-fix diagnostic and assert the fixed behavior.",
+      "The v4 exact 2 MiB record boundary and one-byte-over case must use an independently derived expected version length and must not be relaxed to a shorter convenient value."
+    ]
+  },
+  "implementation_gate": {
+    "tc_plan_approved": true,
+    "product_implementation_approved_by_this_record": false,
+    "separate_plan_review_required": true,
+    "required_plan_review_path": "docs/ifpmic/evidence/b01/plan-review-v4.json",
+    "reason": "The plan requires independent plan-review-v4 and TC plan review against the same exact plan SHA before product implementation."
+  },
+  "reviewer_verdict": "Approve the v4 TC plan delta for SHA 8c22f1ceaf1d0f3ca1cf7113a829d7e4441df1fb5ebebdbe48a9d71c1e20d7a8. Resume TC work only after the plan's required independent approvals are recorded."
+}

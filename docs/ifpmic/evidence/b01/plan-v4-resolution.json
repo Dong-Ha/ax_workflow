@@ -1,0 +1,46 @@
+{
+  "kind": "b01_v4_plan_resolution",
+  "approved_plan": {
+    "path": "docs/ifpmic/B01-PROFILES.md",
+    "sha256": "8c22f1ceaf1d0f3ca1cf7113a829d7e4441df1fb5ebebdbe48a9d71c1e20d7a8"
+  },
+  "reviews": [
+    {
+      "path": "docs/ifpmic/evidence/b01/plan-review-v4.json",
+      "sha256": "22ba63a31698d01689353d6c1f06be10c6bc0a61f9e8d4f68b59643950ecc95f"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b01/tc-plan-review-v4.json",
+      "sha256": "30baa1358f31b937f932b555279f094225e4a2cf400ddea036fb2fc9b0a67e48"
+    }
+  ],
+  "historical_plans": [
+    {
+      "path": "docs/ifpmic/evidence/b01/attempts/plan-v1.md",
+      "sha256": "0bbf7c807c2280b792b5fd362f8c5b9050ed234887ae295642dd6af3eaefa18c"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b01/attempts/plan-v2.md",
+      "sha256": "b94ca888ae8781317fe67125990509ae67b5cf5b9443cb4a6a70a1c9b89bead4"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b01/attempts/plan-v3.md",
+      "sha256": "2a03572f898b1003a957340252f05bc615d03cbe9ee96d63ec655578d764ddef"
+    }
+  ],
+  "resolutions": [
+    {
+      "issue": "V2 path notation ambiguity",
+      "decision": "Both public issue paths and unresolved paths are JSON Pointer; dotted field references are prose only. Preserve initial mismatched oracle evidence, then reapprove clarified plan."
+    },
+    {
+      "issue": "Unbounded version versus bounded persisted envelope",
+      "decision": "Derived maximum: canonical record UTF8 + LF <=2MiB; createSnapshot rejects excess with PROFILE_VERSION_INVALID. No independent business length restriction."
+    },
+    {
+      "issue": "Malformed caller arrays ignored or native parse failure",
+      "decision": "Genuine product defect in initial record capture. Reject sparse/custom arrays and invalid JSON-only values as SNAPSHOT_CORRUPT; require regression tests."
+    }
+  ],
+  "status": "Both v4 preimplementation reviews verified before applying size-policy implementation and resuming semantic TC updates. This record is not test/gate or whole-B01 acceptance."
+}
