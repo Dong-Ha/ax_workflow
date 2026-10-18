@@ -1,0 +1,50 @@
+{
+  "kind": "ifpmic.b02.g6.tc-contract-review.v1",
+  "status": "conditional_blocker",
+  "reviewer_role": "TC perspective; not independent final approval",
+  "reviewed_contract": {
+    "path": "docs/ifpmic/evidence/b02/g6-execution-contract.json",
+    "sha256": "dd28255535f7210e7234d1052c8f48670c71aab2d36fd9c04aaeff0433ba8496"
+  },
+  "inputs": {
+    "docs/ifpmic/evidence/b02/g6-tc-api-acceptance-matrix.json": "b003d59057d64a211faae36fe23cd0c2a1e679dc2b4148f45decca19be79cda2",
+    "docs/ifpmic/evidence/b02/g6-source-baseline.json": "e6f8a41f1b33b21e4e903636eb2c404d6ef0da95b673294f5d17b686cf38d8bf",
+    "package.json": "939f378819422b4c2ee5fa81c53731bb13041c3d32aabf429bbb5616f46787cb"
+  },
+  "decision": "Do not treat this review as approval to execute G6. The test inventory and acceptance-scope boundaries are reviewable, but the Node invocation and inventory source need clarification in a revised contract.",
+  "findings": [
+    {
+      "severity": "blocker",
+      "topic": "Node option placement and exact inventory provenance",
+      "evidence": "package.json defines test as `node --test tests/*.test.mjs`. Contract G6.2 invokes `npm test -- --test-concurrency=2 --test-reporter=spec`, which npm appends after the package-script arguments. The contract does not establish that Node 24 parses these flags in that position or that they control concurrency/reporting. It also says compare names to the accepted B01 inventory without pinning the historical log/parser artifact that defines the exact 387 names.",
+      "required_resolution": "Revise the contract to specify an unambiguous Node argv ordering (or a dedicated fixed runner) and pin the accepted B01 spec-log bytes/parser rule used to derive the exact expected 387 test names. Retain all 387 callbacks, the 30-second per-callback ceiling and 180-second command ceiling; no waiver or filtering.",
+      "verification_scope": "Static contract review only; no test command was run."
+    },
+    {
+      "severity": "observation",
+      "topic": "Timing feasibility",
+      "evidence": "The contract records two accepted aggregate callbacks above 30 seconds under default concurrency (36.5726s and 34.6788s). Concurrency 2 is a scheduling hypothesis, not evidence that all callbacks meet the unchanged 30-second ceiling.",
+      "required_resolution": "Keep the gate fail-closed if any of the exact 387 callbacks exceeds 30 seconds. Report the actual per-callback durations; do not increase thresholds, skip, split, or replace callbacks."
+    },
+    {
+      "severity": "accepted_boundary",
+      "topic": "Route and acceptance scope",
+      "evidence": "The matrix explicitly identifies implemented authentication, job, command-status, and workspace evidence while listing absent plan-decision, human-submission, controls, release-manifest, approval, events, artifacts, notifications, bridge/device and runtime-event routes. It also leaves original AT-01..AT-32 unexecuted and AT-21 partial.",
+      "required_resolution": "Preserve these limitations in G6/G7 reporting. G1-G5 regression or a passing 202/job/workspace test must not be presented as worker execution, artifact/log/image/device isolation, corporate SSO, or original AT completion."
+    },
+    {
+      "severity": "accepted_method_with_condition",
+      "topic": "Python regression reuse and split command limits",
+      "evidence": "G6.1 calls the accepted G5 orchestrator for fresh G1-G5 execution and targeted B01 Node regressions. The contract identifies separate Python subprocess ceilings and records that prior G5 evidence is not substituted for fresh execution.",
+      "required_resolution": "The revised runner must preserve exact case inventories, zero skips, child lifecycle cleanup, and each accepted command ceiling; the split must not omit or duplicate tests silently."
+    }
+  ],
+  "execution": {
+    "tests_or_services_run": false,
+    "read_only_checks": [
+      "Read g6-execution-contract.json, g6-tc-api-acceptance-matrix.json, package.json, and pinned source metadata.",
+      "Computed SHA-256 for the reviewed contract, matrix, package.json, source baseline, and B02 plan."
+    ],
+    "limitations": "This is a proposed-contract review only. It is not a G6 execution, source freeze, performance result, or independent final acceptance."
+  }
+}

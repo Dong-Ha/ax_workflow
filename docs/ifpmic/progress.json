@@ -274,6 +274,15 @@
             "errors": 0,
             "skipped": 0
           }
+        },
+        {
+          "id": "g6_fixed_candidate_regression",
+          "status": "in_progress",
+          "contract": "evidence/b02/g6-execution-contract-v2.json",
+          "independent_plan_review": "evidence/b02/g6-contract-review-v2.json",
+          "tc_plan_review": "evidence/b02/g6-tc-contract-review-v2.json",
+          "verification_plan": "evidence/b02/g6-tc-api-acceptance-matrix.json",
+          "scope": "Execution contract reviewed; fresh351Python+48targetedNode, full387Node and frontend/plugin rebuild remain unexecuted. Conditional11-browser-command omission requires exact before/after source, lock and ten rebuilt output checks; no G6 acceptance claimed."
         }
       ]
     },
@@ -467,7 +476,7 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "B02: G6 combined full Node/build checks and explicit plugin/UI-omission decision, then G7 final B02 acceptance. B03-B13 and32original AT remain pending.",
+  "next_step": "B02: implement and independently review the G6 fixed-candidate runner, execute all required regressions/builds and conditional UI scope checks, then G7 final local B02 review. B03-B13 and32original AT remain pending.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",

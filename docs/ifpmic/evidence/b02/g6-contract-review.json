@@ -1,0 +1,42 @@
+{
+  "kind": "ifpmic.b02.g6.contract-review.v1",
+  "reviewed_contract": {
+    "path": "docs/ifpmic/evidence/b02/g6-execution-contract.json",
+    "sha256": "dd28255535f7210e7234d1052c8f48670c71aab2d36fd9c04aaeff0433ba8496"
+  },
+  "pinned_review_inputs": {
+    "docs/ifpmic/B02-IDENTITY.md": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a",
+    "docs/ifpmic/evidence/b02/g6-source-baseline.json": "e6f8a41f1b33b21e4e903636eb2c404d6ef0da95b673294f5d17b686cf38d8bf",
+    "docs/ifpmic/evidence/b02/g6-tc-api-acceptance-matrix.json": "b003d59057d64a211faae36fe23cd0c2a1e679dc2b4148f45decca19be79cda2",
+    "docs/ifpmic/evidence/b02/g6-preplan-diagnostic-record.json": "437824aca966a4d19bac5a455c9553891a553f1bdbf433cc37aeced1fd6d073a",
+    "docs/ifpmic/evidence/b02/g5-gate.zip": "c299d6c0c03fe28692a012916923325e406d6bb606ccf0c1203921f6b82df7ab",
+    "docs/ifpmic/evidence/b02/g5-verification.json": "6dac77b8ab4b7474a0438ee407d6e11406d5b7c8f1a1fcd2491c0e5f7dce8030",
+    "docs/ifpmic/evidence/b02/g5-final-review.json": "e76f9a4eafa4999b44263c512e57d24116bdcbf54b36ee8268c5e412d54ff237",
+    "scripts/verify_ifpmic_g5.py": "ee137621450b4a28d0be30708981bebaa012d9f282db9816e45e6b78325c427b"
+  },
+  "verdict": "revise_before_implementation_or_execution",
+  "findings": [
+    {
+      "severity": "blocker",
+      "stage": "G6.2",
+      "finding": "The contract requires parsing 387 spec pass names and comparing them to the accepted B01 inventory, but it does not pin the historical name inventory or prescribe how to derive it before the new run. The source baseline explicitly says accepted evidence lacks TAP IDs; it does not itself embed the 387 names. Thus the gate has no explicit, immutable names oracle, and a runner could accidentally derive its expected names from the candidate run.",
+      "evidence": [
+        "docs/ifpmic/evidence/b02/g6-execution-contract.json: inputs and G6.2 target/method/pass_criteria",
+        "docs/ifpmic/evidence/b02/g6-source-baseline.json: g6_acceptance_criteria.full_node.full_suite_exact_tap_case_ids_in_accepted_gate=false",
+        "docs/ifpmic/evidence/b02/g6-source-baseline.json: g6_acceptance_criteria.full_node.note"
+      ],
+      "resolution": "Add a separately pinned historical inventory artifact derived from docs/ifpmic/evidence/b01/local-profile-gate.zip's gate/unit.log, pin both archive/log SHA-256, and record the deterministic extraction rule and 387 names before execution. The archive log was independently checked: SHA-256 2af91de317f51039c8f66c3f8db7c1f0d41e6fe0d4e2d1931e8b6e1ab3af2ce3; the proposed regex extracted 387 records and 387 unique names. No tests or services were run."
+    },
+    {
+      "severity": "clarification",
+      "stage": "G6.0",
+      "finding": "The pass criterion phrase `installed lock32exact` is ambiguous in isolation. The baseline records Python 3.12.3 distribution pins, Node/npm versions, 79 locked npm package records, 9 direct installed packages, and five accepted additive AJV package records.",
+      "resolution": "Spell out the Python distribution pin requirement and npm lock requirements separately, including exact current-B01 package-record equality and the five allowed additive records."
+    }
+  ],
+  "scope_review": {
+    "assessment": "The proposed G6 scope preserves fresh G1-G5 execution, full Node regression, build/plugin/source verification, original-input checks, and conditional omission of only the 11 existing UI/browser/native-host commands. It correctly leaves G7 and original AT completion pending.",
+    "timing": "The 30-second per-callback limit is retained. The recorded concurrency-2 approach is explicitly a hypothesis, not a waiver; the diagnostic record is disclaimed as acceptance evidence.",
+    "no_execution": true
+  }
+}

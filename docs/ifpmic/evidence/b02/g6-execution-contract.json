@@ -1,0 +1,110 @@
+{
+  "kind": "ifpmic.b02.g6.execution-contract.v1",
+  "status": "proposed_pending_independent_review",
+  "requirements": [
+    "REQ-13",
+    "B02-G6"
+  ],
+  "author": "Code-dev/main; TC owns existing tests and route matrix; separate reviewer approves this plan and fixed evidence.",
+  "inputs": {
+    "docs/ifpmic/B02-IDENTITY.md": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a",
+    "docs/ifpmic/evidence/b02/g6-source-baseline.json": "e6f8a41f1b33b21e4e903636eb2c404d6ef0da95b673294f5d17b686cf38d8bf",
+    "docs/ifpmic/evidence/b02/g6-tc-api-acceptance-matrix.json": "b003d59057d64a211faae36fe23cd0c2a1e679dc2b4148f45decca19be79cda2",
+    "docs/ifpmic/evidence/b02/g6-preplan-diagnostic-record.json": "437824aca966a4d19bac5a455c9553891a553f1bdbf433cc37aeced1fd6d073a",
+    "docs/ifpmic/evidence/b02/g5-gate.zip": "c299d6c0c03fe28692a012916923325e406d6bb606ccf0c1203921f6b82df7ab",
+    "docs/ifpmic/evidence/b02/g5-verification.json": "6dac77b8ab4b7474a0438ee407d6e11406d5b7c8f1a1fcd2491c0e5f7dce8030",
+    "docs/ifpmic/evidence/b02/g5-final-review.json": "e76f9a4eafa4999b44263c512e57d24116bdcbf54b36ee8268c5e412d54ff237",
+    "scripts/verify_ifpmic_g5.py": "ee137621450b4a28d0be30708981bebaa012d9f282db9816e45e6b78325c427b"
+  },
+  "scope": "Fresh integrated regression of accepted local G1-G5 foundations plus complete existing AX/IFPMIC Node unit/build/plugin regressions. No new product semantics or original AT completion.",
+  "candidate": {
+    "sources": "Capture union of334 latest accepted source paths from g6-source-baseline, every current src/server/plugins/scripts/tests/runtime/services source (excluding caches), original17design files, B01/B02 JSON evidence, rootpackage/lock/config, PLAN/VERIFICATION/progress/source manifest and relevant Paperclip experiment sources already pinned. Add all execution/review files before gate. Pin immutable accepted archives/reports and relevant installed toolchain entries separately.",
+    "capture": "Private0700 run leaf; BEFORE execution capture exact source hashes, fingerprint and source ZIP0600, verify every ZIP entry against source map; before/after byte+inventory comparisons. No source/plan/lock/test/runner edits while live. Metadata publication/progress updates follow successful gate.",
+    "ownership": "Reuse accepted G4 Popen/subreaper wrapper; preserve all failures and source bytes; stop/reap only confirmed owned descendants and exact isolated PostgreSQL fixture. Never restart because observation wait expires."
+  },
+  "phases": [
+    {
+      "id": "G6.0",
+      "purpose": "Verify approved sources, tools and conditional UI scope before effects.",
+      "target": "Accepted controls/B01/G5 archives/reviews, original inputs, current sources/dependencies/10outputs.",
+      "method": "Recompute all pins, exact source inventories, controls->B01->current lock delta, installed tool entry hashes, original17+2, and prebuild10output hashes.",
+      "owner": "main; independent reviewer verifies inputs.",
+      "pass_criteria": "51UI/build sources and46UI/server/plugin inventory unchanged, all334 baseline source bytes unchanged, original17+2unchanged, Node24.17.0/npm11.13.0/Python3.12.3, installed lock32exact, pinned PG18.1, accepted10prebuildoutputs exact.",
+      "expected": "Same accepted frontend and local runtime inputs; backend remains unconnected to UI.",
+      "evidence": "before source/environment/dependency/output maps and private source ZIP.",
+      "recovery": "No tests/build on invalid precondition; preserve failure, reassess impacted stage, repair actual environment or expand UI scope under a new reviewed candidate."
+    },
+    {
+      "id": "G6.1",
+      "purpose": "Fresh auth/API/bridge/workspace normal, exception, boundary and regression evidence; no reused pass substitutes for execution.",
+      "target": "351exact Python cases (167legacy+91G4+93G5),48B01 Node, actual local PG/OIDC/Uvicorn/workers.",
+      "method": "Invoke unchanged accepted verify_ifpmic_g5.main within G6 orchestrator; it launches three independent pytest commands under300s EACH and targeted48Node under180s. Capture unique child gate/source ZIP/JUnits/logs and require complete pass; verify observed source pins, exact IDs, all threePG lifecycles, actualG3/G4/G5 observations/private identity/log checks and owned children absent.",
+      "owner": "main runs accepted TC-authored tests; independent reviewer audits.",
+      "pass_criteria": "351Python+48Node exact inventory,0fail/error/skip/cancel/todo; everyPython and48targetedNode testcase<=30s, finite timings; sourcechanges[]; protected96/inventory89/original17+2 unchanged; allPGstopped/PIDfalse; actual worker logs/identities validated before redaction.",
+      "expected": "All local prerequisite invariants hold on current frozen G6 inputs.",
+      "evidence": "Fresh child G5 report, redacted3JUnit, normalized passing logs,42oractual verified private worker records/actualPG lifecycle; no raw identity/log promotion.",
+      "recovery": "Child failure retains complete private evidence. Return to failing G1-G5 protocol/fixture/product, diagnose first, preserve immutable original oracles; fix requires new candidate/review and rerun affected tests plus allG6."
+    },
+    {
+      "id": "G6.2",
+      "purpose": "Complete current AX and IFPMIC regression on unchanged existing tests.",
+      "target": "All root tests/*.test.mjs and exact387 accepted B01 names.",
+      "method": "npm test -- --test-concurrency=2 --test-reporter=spec, owned process,180s timeout. Parse all387spec pass names/timings and compare exact accepted B01 log inventory. No test-name filter, no skips; fixed concurrency controls CPU contention without changing any source/oracle.",
+      "owner": "main runs TC-owned existing Node suite.",
+      "pass_criteria": "387exact unique callback names, allpass,0fail/skip/cancel/todo; every callback finite0..30s; command<=180s.",
+      "expected": "Original339+48B01 regressions preserved; no legacy adapter/graph/control behavior change.",
+      "evidence": "Private raw/full successful normalized log, counts, exact sorted names, per-callback timings/max and ownership cleanup.",
+      "recovery": "Preserve actual command/output and candidate. Timing or functional failure is a failed gate, not permission to increase limits/skip/split tests. Diagnose impacted execution/fixture; any configuration change creates reviewed new candidate."
+    },
+    {
+      "id": "G6.3",
+      "purpose": "Prove rebuilt frontend/native-plugin output equivalence, not merely preexisting hashes.",
+      "target": "TypeScript/Vite build and page-only native Paperclip plugin outputs.",
+      "method": "Sequential npm run build (120s), npm run ifpmic:plugin:build (120s), npm run ifpmic:verify-sources (30s); capture each command log/exit. Inventory dist/ and .paperclip-lab/ifpmic-plugin recursively and compare all10paths+SHA to accepted controls after rebuild.",
+      "owner": "main; independent reviewer compares outputs/source.",
+      "pass_criteria": "Allcommands exit0, exact10output names and bytes matchcontrols, original17+2unchanged; source/dependency/tool files unchanged.",
+      "expected": "UI receives no FastAPI connection or semantic/bundle change.",
+      "evidence": "Before/after10outputmap, build/plugin/source verification logs and source diff.",
+      "recovery": "Retain changed outputs/failurelogs; output/meaning drift invalidates UI omission, reassess and expand browser/native/AX or full11command gate. No silent baseline regeneration."
+    },
+    {
+      "id": "G6.4",
+      "purpose": "Verify complete immutable candidate and safe evidence promotion.",
+      "target": "All source/tool/dependency/original/output maps and process cleanup.",
+      "method": "Recompute source and output inventories/hashes and installed tool entries; require noowned livechildren; redact hostname and absolute workspace/run paths only in passing JUnit/log publication, retain raw private provenance hashes; publish safe archive/verification.",
+      "owner": "main creates evidence; separate reviewer accepts G6 only.",
+      "pass_criteria": "sourcechanges[], allprotected/original/tool/dependency pins unchanged, exact10outputs, everyrequiredphasepassed, private evidence0700/0600, no credentials/PID/startticks/rawservice or workerlog promotion.",
+      "expected": "Reviewable repeatable evidence for local G6 scope.",
+      "evidence": "Public gate archive/verification with original private SHA provenance, independent final review.",
+      "recovery": "Publication mismatch is not acceptance; correct evidence only if bytes are retained and tests unchanged, otherwise new frozen candidate. No completion before independent review."
+    }
+  ],
+  "python_split_decision": "Retain accepted G5 fixed inventories and existing300s per subprocess, not a500s standalone integration command. G6 orchestrator calls the accepted G5 orchestrator in-process; no external wrapper300s deadline truncates or conceals the three separate300s commands. Node48 retains180s. Accepted G5 standalone351+48 is prior evidence only; fresh execution is mandatory here.",
+  "node_timing_decision": {
+    "fact": "Accepted B01 full387 log contains aggregate12-route and13-type x required-field callbacks at36.572611812s and34.678834679s under default concurrency; these prior results are not a promise of current30s compliance.",
+    "approach": "Preserve all existing test bytes and387callbacks; reduce only Node test-runner concurrency to2, force spec reporter matching accepted name inventory, and enforce unchanged30s limit on EVERY callback plus180s command. This is a scheduling hypothesis, not a waiver or claimed pass.",
+    "unapproved_diagnostic": "Separate g6-preplan-diagnostic-record.json records accidental filtered run with unavailable underlying process exit/raw-before-source evidence. It is not used as G6 acceptance or a source of replacement thresholds."
+  },
+  "conditional_ui_omission": {
+    "decision": "Only the parent B02 plan conditional scope is eligible; grant after postbuild criteria pass and independent audit. No general waiver or originalAT waiver.",
+    "conditions": [
+      "46UI/server/plugin exact inventory and51relevantsource hashes equal controls/B01/current before+after.",
+      "Existing control lock records unchanged; only five already-accepted B01 AJV records/additionalCLI scripts differ, current package/lock equal acceptedB01.",
+      "All10UI/plugin outputs matchcontrols after actual rebuild.",
+      "No frontend/backend connection added; source unchanged and route search confirms separate unconnectedFastAPIservice."
+    ],
+    "omitted": "Existing11command browser/native-host/UI gate only;351Python,48targetedNode,full387Node,build/plugin/originalinputs checks remainmandatory.",
+    "residual_risks": [
+      "Native UI has not accepted real IFPMIC authentication/user operation or live API rendering.",
+      "CorporateSSO/TLS/proxy/production DB/storage policy remainunaccepted.",
+      "B03Temporal/outbox andB04SSE/artifact/log/userUI plusB09device isolation andoriginal32AT remainpending."
+    ],
+    "expand_trigger": "Any UI/source/inventory/dependency resolution/output/connection/state/catalog semantics drift. Source changes require new reviewed candidate; visual semantics drift requires originalfull11command gate."
+  },
+  "G7_boundary": "G6pass does not completeB02. G7 independent final audit must joinG1-G6source/evidence and route-levelAT21matrix, record localpartialonly, preserve alloriginalATnot_executed and remainingB03-B13 scope, then commit/push accordingtorepositoryinstructions. No deployment/external submission authorization.",
+  "forbidden_effects": [
+    "No realAgent/Temporal/device/publisher/deployment/external submission.",
+    "No original auth/log/config mutation or external transmission of private inputs.",
+    "No silent clock/threshold/oracle relaxation, fabricated historical evidence or testpassclaims without current output."
+  ]
+}

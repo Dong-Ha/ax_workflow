@@ -1,0 +1,290 @@
+{
+  "G6_execution_requirements": {
+    "evidence": "Frozen G6 matrix, source/output hash manifest, exact command/JUnit/log inventory and independent review record.",
+    "exact_inventory": {
+      "b01_node_predecessor_tests": 48,
+      "build_and_native_plugin_outputs_to_pin": 10,
+      "full_node_suite_minimum_for_G6": 387,
+      "original_imported_files_byte_identical": 17,
+      "original_uploaded_archives_byte_identical": 2,
+      "python_predecessor_regressions": 351,
+      "skipped_or_expected_failure_tests": 0
+    },
+    "expected_result": "G6 can pass only as regression verification of the implemented local slice; it cannot upgrade unimplemented OpenAPI endpoints or mark original AT cases complete.",
+    "method": "Capture candidate before/after source and build hashes; run relevant pytest suites, full Node suite and build/plugin checks under the approved command deadlines; inspect route-level DTO/authority evidence and conditional browser omission criteria from B02-IDENTITY.md. The G6 ledger must compare exact collected test IDs, not only totals, and pin all ten build/native-plugin outputs.",
+    "pass_criteria": "Zero unexpected test failures/skips, required source/upload bytes unchanged, output/source fingerprints match the reviewed candidate, no hidden mutation or unlogged scope change, and limitations stay explicit.",
+    "purpose": "Validate an immutable candidate against all required existing suites and original API/AT boundaries.",
+    "recovery": "Any source/lock/output/test inventory drift creates a new candidate; preserve failed evidence, reassess impact, and rerun affected stages plus G6.",
+    "scope_impact": "B03-B13, remaining AT-21 assets, all original AT-01..AT-32, real corporate SSO and production environment acceptance remain tracked outside this local gate.",
+    "target": "Original source inventory (17 imported files and ZIP/DOCX), protected sources, lockfiles, Python APIs, Node adapter contracts, build and native plugin outputs.",
+    "tc_owner": "TC authors tests and evidence; main integrates/runs the fixed candidate; independent reviewer checks source, counts, artifacts and AT mapping."
+  },
+  "acceptance_status": {
+    "AT21": "partial_evidence_for_auth_session_job_command_workspace_path_isolation; logs/artifacts/images/devices and production deployment remain unproven",
+    "G0_G5": "Previously accepted as partial prerequisite slices under their own reviews; this matrix does not modify those decisions.",
+    "G6": "not_run",
+    "G7": "not_run",
+    "original_AT_01_to_AT_32": "all remain not_executed in design-v1 acceptance-cases.json"
+  },
+  "kind": "ifpmic.b02.g6.tc-api-acceptance-matrix.v1",
+  "original_openapi_routes_not_implemented": [
+    {
+      "coverage": "No handler in services/ifpmic_api/app.py; no endpoint-level test.",
+      "route": "POST /api/v1/jobs/{job_id}/plan-decision"
+    },
+    {
+      "coverage": "No handler; G2+ replay simulator tests are not a real API submission endpoint.",
+      "route": "POST /api/v1/jobs/{job_id}/human-submissions"
+    },
+    {
+      "coverage": "No handler; local mock control protocol is not an HTTP control endpoint.",
+      "route": "POST /api/v1/jobs/{job_id}/controls"
+    },
+    {
+      "coverage": "No handler; mock release projection is not a public manifest endpoint.",
+      "route": "GET /api/v1/jobs/{job_id}/release-manifest"
+    },
+    {
+      "coverage": "No handler; local mock approval protocol is not an HTTP approval endpoint.",
+      "route": "POST /api/v1/jobs/{job_id}/approval"
+    },
+    {
+      "coverage": "No SSE/event endpoint; B04 reconnection/Last-Event-ID/duplicate-delivery behavior is untested.",
+      "route": "GET /api/v1/jobs/{job_id}/events"
+    },
+    {
+      "coverage": "No handler; upload authorization, content validation, size, idempotency and storage lifecycle are untested.",
+      "route": "POST /api/v1/artifacts"
+    },
+    {
+      "coverage": "No handler; ownership-safe upload/content replacement is untested.",
+      "route": "PUT /api/v1/artifacts/{artifact_id}/content"
+    },
+    {
+      "coverage": "No handler; image/log artifact direct-URL isolation is untested.",
+      "route": "GET /api/v1/artifacts/{artifact_id}/content"
+    },
+    {
+      "coverage": "No handlers; B04 notification listing/read state is untested.",
+      "route": "GET /api/v1/notifications and POST /api/v1/notifications/{notification_id}/read"
+    },
+    {
+      "coverage": "No handlers; B09 bridge/device identity, leases, command and telemetry isolation are untested.",
+      "route": "POST /api/v1/bridge-enrollment-tokens and /bridge/v1/{enroll,refresh,heartbeat,commands} plus command events"
+    },
+    {
+      "coverage": "No handler; B03 runtime-event ingestion and worker identity binding are untested.",
+      "route": "POST /internal/v1/runtime-events"
+    }
+  ],
+  "route_matrix": [
+    {
+      "evidence": [
+        "tests/ifpmic_api/test_auth.py::test_login_builds_pkce_s256_and_split_origin_allowlisted_request",
+        "tests/ifpmic_api/test_auth.py::test_host_cors_and_preflight_are_exact",
+        "tests/ifpmic_api/test_auth.py::test_real_uvicorn_callback_stdout_stderr_and_application_log_canaries",
+        "docs/ifpmic/evidence/b02/g3-verification.json"
+      ],
+      "expected_result": "Login issues no application job; only a short-lived browser transaction is created. Corporate IdP/TLS/proxy is explicitly outside local acceptance.",
+      "method": "Synthetic provider and real local Uvicorn; validate PKCE S256, state/nonce/browser binding, exact issuer endpoints, secure cookies, errors and query-canary absence.",
+      "pass_criteria": "G3 report has 114 Python cases with zero failures/errors/skips, real local service exits cleanly, callback canaries absent from logs, and source hash matches the report.",
+      "purpose": "Create a browser-bound OIDC authorization request.",
+      "recovery": "Preserve failed Uvicorn/private logs and the exact G3 source candidate; fix auth behavior before continuing to route regression checks.",
+      "route": "GET /auth/login",
+      "scope_impact": "Synthetic/local authentication evidence only; does not satisfy corporate SSO or original AT-21 alone.",
+      "target": "Supplemental authentication route; not part of the original OpenAPI job surface.",
+      "tc_owner": "TC-owned G3 tests; independent reviewer audits the accepted evidence."
+    },
+    {
+      "evidence": [
+        "tests/ifpmic_api/test_auth.py::test_valid_signed_callback_creates_only_opaque_session_and_literal_stable_csrf",
+        "tests/ifpmic_api/test_auth.py::test_signed_id_token_claim_oracle",
+        "tests/ifpmic_api/test_auth.py::test_consumed_callback_cannot_be_replayed_and_failure_requires_fresh_login",
+        "tests/ifpmic_api/test_auth.py::test_concurrent_callback_consumes_browser_state_once",
+        "tests/ifpmic_api/test_auth.py::test_token_provider_error_mapping_is_literal_and_fixed",
+        "docs/ifpmic/evidence/b02/g3-verification.json"
+      ],
+      "expected_result": "Browser cookie contains only opaque session material and stable CSRF companion; provider tokens and callback code do not enter DTO/log output.",
+      "method": "Fixed synthetic issuer, signed JWT claim/key oracle, callback replay/race/expiry matrices, controlled provider failures, real local callback and log canaries.",
+      "pass_criteria": "Only valid iss/aud/azp/nonce/signature/expiry/state/PKCE creates a session; replay, malformed callback, provider failure and expired state fail closed; no callback secrets leak.",
+      "purpose": "Validate OIDC code/state/token and create an opaque local session.",
+      "recovery": "Keep a failed callback transcript in private evidence, ensure canary values are excluded from promoted artifacts, and rerun all G3 auth cases after a semantic fix.",
+      "route": "GET /auth/callback",
+      "scope_impact": "No actual corporate provider or user directory is used.",
+      "target": "Supplemental callback/session-establishment route.",
+      "tc_owner": "TC-owned G3 tests."
+    },
+    {
+      "evidence": [
+        "tests/ifpmic_api/test_auth.py::test_idle_timeout_exact_boundary",
+        "tests/ifpmic_api/test_auth.py::test_absolute_session_expiry_exact_boundary_and_no_extension",
+        "tests/ifpmic_api/test_auth.py::test_login_rotates_session_and_csrf_stays_stable_during_get",
+        "tests/ifpmic_api/test_auth.py::test_csrf_token_is_stable_across_application_restart",
+        "tests/ifpmic_api/test_auth.py::test_logout_requires_session_exact_csrf_and_origin_then_revokes",
+        "tests/ifpmic_api/test_auth.py::test_duplicate_or_spoofed_auth_headers_never_authenticate",
+        "tests/ifpmic_api/test_auth.py::test_spoofed_actor_headers_do_not_override_valid_cookie_session",
+        "docs/ifpmic/evidence/b02/g3-verification.json"
+      ],
+      "expected_result": "A and B browser sessions remain distinct; no user-supplied identity header is an authorization source.",
+      "method": "Two isolated clients, idle/absolute expiry boundaries, restart-stable CSRF, rotation/logout, duplicate/spoofed headers, exact Origin/CORS and cookie metadata.",
+      "pass_criteria": "Invalid/expired/revoked sessions fail; exact Origin+CSRF required for logout; spoofed actor headers never change cookie identity; logout revokes and clears cookie.",
+      "purpose": "Expose current authenticated identity/CSRF and revoke the session.",
+      "recovery": "Preserve the failed request/cookie metadata without cookie values; rerun G3 and affected G4 authorization/session tests.",
+      "route": "GET /api/v1/session; POST /auth/logout",
+      "scope_impact": "Synthetic identity and local browser origins do not prove deployed identity lifecycle.",
+      "target": "Supplemental session routes consumed by the local UI.",
+      "tc_owner": "TC-owned G3 tests."
+    },
+    {
+      "evidence": [
+        "tests/ifpmic_api/test_jobs.py::test_create_job_returns_original_openapi_dtos_and_persists_atomic_semantic_record",
+        "tests/ifpmic_api/test_jobs.py::test_create_job_rejects_each_missing_original_required_field_atomically",
+        "tests/ifpmic_api/test_jobs.py::test_create_job_rejects_all_untrusted_or_unknown_fields",
+        "tests/ifpmic_api/test_jobs.py::test_same_key_replays_original_receipt_different_body_conflicts_and_different_key_is_new",
+        "tests/ifpmic_api/test_jobs.py::test_job_fault_boundaries_are_all_or_none_and_retry_recovers_committed_receipt",
+        "tests/ifpmic_api/test_jobs.py::test_database_commit_ack_loss_is_uncertain_and_replay_finds_committed_group",
+        "tests/ifpmic_api/test_jobs.py::test_independent_processes_contend_at_open_transaction_unique_insert",
+        "tests/ifpmic_api/test_workspace.py::test_real_filesystem_provisions_literal_marker_four_private_children_idempotently",
+        "docs/ifpmic/evidence/b02/g4-verification.json",
+        "docs/ifpmic/evidence/b02/g5-verification.json"
+      ],
+      "expected_result": "A new job is persisted as DRAFT/accepted, with workflow_id pinned to `ifpmic-sw-v1`; outbox/intent is pending/reserved. G5 may later make workspace READY, but neither event applies the command.",
+      "method": "Validate exact request DTO/enums/size/depth/scalars, profile snapshot binding, membership/eligibility, input artifacts, idempotency, independent process races, rollback/ack loss, then GET receipt and rows to prove atomic persistence. Cross-reference workspace preparation separately.",
+      "pass_criteria": "202 exactly matches CommandReceipt; one durable semantic job/accepted command/outbox/intent group; same key+body replays original receipt; conflicting body is 409; rejected requests create zero group rows; no test infers worker execution from accepted.",
+      "purpose": "Create an immutable accepted job/command/outbox/workspace-intent group from an authenticated user request.",
+      "recovery": "Retain the exact candidate, DB lifecycle and private JUnit; repair the transactional/API layer and rerun G4 plus G5 where job intent/acceptance is affected.",
+      "route": "POST /api/v1/jobs",
+      "scope_impact": "B03 outbox dispatch/Temporal worker execution is absent. 202 is acceptance only.",
+      "target": "Original OpenAPI CreateJob request and CommandReceipt 202 response.",
+      "tc_owner": "TC-owned G4/G5 tests; original API schema comparison by independent reviewer."
+    },
+    {
+      "evidence": [
+        "tests/ifpmic_api/test_jobs.py::test_list_default25_descending_cursor_bytes_and_complete_pagination",
+        "tests/ifpmic_api/test_jobs.py::test_list_rejects_invalid_bounds_noncanonical_or_unsupported_query",
+        "tests/ifpmic_api/test_jobs.py::test_list_rejects_invalid_or_wrong_scope_signed_cursor",
+        "tests/ifpmic_api/test_jobs.py::test_access_is_rechecked_between_list_pages_after_membership_revocation",
+        "tests/ifpmic_api/test_jobs.py::test_authorization_is_current_session_membership_and_one_job_read_delegation_only",
+        "docs/ifpmic/evidence/b02/g4-verification.json"
+      ],
+      "expected_result": "No global listing or owner/project spoofing; next_cursor is null at end.",
+      "method": "Literal 25-item default, descending deterministic order, complete cursor traversal, malformed/noncanonical/scope-tampered cursor rejection, session/membership recheck between pages.",
+      "pass_criteria": "Only authorized rows are returned; every page is bounded and ordered; valid cursor produces no duplicates/gaps; invalid/foreign cursor is rejected with fixed error; revoked membership denies later page.",
+      "purpose": "List only jobs visible to the authenticated actor, using signed stable pagination.",
+      "recovery": "Preserve original page/cursor evidence privately; fix query/authorization semantics, then rerun all G4 pagination and authorization cases.",
+      "route": "GET /api/v1/jobs",
+      "scope_impact": "No event stream or notification feed is implied by the job list.",
+      "target": "Original OpenAPI JobList DTO with items and next_cursor.",
+      "tc_owner": "TC-owned G4 tests."
+    },
+    {
+      "evidence": [
+        "tests/ifpmic_api/test_jobs.py::test_create_job_returns_original_openapi_dtos_and_persists_atomic_semantic_record",
+        "tests/ifpmic_api/test_jobs.py::test_authorization_is_current_session_membership_and_one_job_read_delegation_only",
+        "tests/ifpmic_api/test_jobs.py::test_owner_and_project_cannot_be_spoofed_by_identity_headers_or_request_body",
+        "tests/ifpmic_api/test_jobs.py::test_lone_surrogate_and_astral_semantic_text_round_trip_in_ascii_payload",
+        "tests/ifpmic_api/test_workspace.py::test_two_accepted_jobs_get_independent_workspace_identities_across_users_and_projects",
+        "docs/ifpmic/evidence/b02/g4-verification.json",
+        "docs/ifpmic/evidence/b02/g5-verification.json"
+      ],
+      "expected_result": "Snapshot is a persisted state projection, not evidence of a running workflow; raw configuration bytes are not exposed.",
+      "method": "Compare exact required fields/types against OpenAPI; test owner, nonmember, delegated read, expired/revoked delegate, malformed/missing IDs and cross-user/project direct URL; verify no private profile/raw logs/provider tokens are included.",
+      "pass_criteria": "200 DTO matches schema for authorized reader; 403/404 policy is fixed for foreign/missing resources; unauthorized response contains no target details; owner/project are server-derived.",
+      "purpose": "Return the authorized public job snapshot and steps DTO.",
+      "recovery": "Keep the failing DTO/authorization sample private and rerun G4 auth/DTO plus G5 cross-project workspace tests after correction.",
+      "route": "GET /api/v1/jobs/{job_id}",
+      "scope_impact": "Step details currently reflect stored/mock data; no live event or artifact content API is supplied.",
+      "target": "Original OpenAPI Snapshot/Job/step DTO.",
+      "tc_owner": "TC-owned G4 tests, with B01 safe projection regression."
+    },
+    {
+      "evidence": [
+        "tests/ifpmic_api/test_jobs.py::test_create_job_returns_original_openapi_dtos_and_persists_atomic_semantic_record",
+        "tests/ifpmic_api/test_jobs.py::test_authorization_is_current_session_membership_and_one_job_read_delegation_only",
+        "tests/ifpmic_api/test_jobs.py::test_same_key_replays_original_receipt_different_body_conflicts_and_different_key_is_new",
+        "tests/ifpmic_api/test_jobs.py::test_database_commit_ack_loss_is_uncertain_and_replay_finds_committed_group",
+        "docs/ifpmic/evidence/b02/g4-verification.json"
+      ],
+      "expected_result": "No test maps accepted to applied or reports workflow execution from receipt/workspace readiness.",
+      "method": "Compare exact DTO and GET authorization for owner, nonmember, delegate, expired/revoked delegate; inspect durable receipt after idempotent replay and uncertain commit.",
+      "pass_criteria": "Newly accepted command remains `accepted` with null applied_revision until a real consumer applies it; foreign actor cannot fetch it; idempotent replay returns original command ID/status.",
+      "purpose": "Expose accepted command status to an authorized actor.",
+      "recovery": "Rerun G4 receipt, authorization, idempotency and commit-uncertainty tests; keep accepted/consumer-applied states distinct.",
+      "route": "GET /api/v1/commands/{command_id}",
+      "scope_impact": "No command consumer exists under B03, so applied/rejected transition behavior is not accepted end-to-end.",
+      "target": "Original OpenAPI CommandStatus DTO with accepted/applied/rejected, nullable applied_revision and error.",
+      "tc_owner": "TC-owned G4 tests."
+    },
+    {
+      "evidence": [
+        "tests/ifpmic_api/test_workspace.py::test_two_accepted_jobs_get_independent_workspace_identities_across_users_and_projects",
+        "tests/ifpmic_api/test_workspace.py::test_independent_worker_processes_contend_for_one_live_claim",
+        "tests/ifpmic_api/test_workspace.py::test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage",
+        "tests/ifpmic_api/test_workspace.py::test_existing_workspace_damage_is_fail_closed_and_never_repaired",
+        "docs/ifpmic/evidence/b02/g5-verification.json",
+        "docs/ifpmic/evidence/b02/g5-final-review.json"
+      ],
+      "expected_result": "Workspace READY means provisioned, not built or executed; no job logs or image contents are served by a route.",
+      "method": "Real PostgreSQL 18.1 and POSIX filesystem; two users/projects, concurrent claims, per-job marker/children, symlink/FIFO, crash/retry and direct cross-job read denial.",
+      "pass_criteria": "Distinct per-job UUID directories and markers, no path sharing/overwrite/deletion; only validated intent reaches READY; accepted G4 semantic rows unchanged.",
+      "purpose": "Ensure separate durable filesystem paths for different accepted jobs without claiming execution.",
+      "recovery": "Preserve path/marker/fault evidence and intent state; correct workspace state machine and rerun affected G5 plus G4 acceptance integrity checks.",
+      "route": "Private workspace lifecycle (not an OpenAPI route)",
+      "scope_impact": "No build process, worktree ownership, log service, artifact transfer, device access, or B03 worker is exercised.",
+      "target": "G5 workspace service contract; related to AT-21 path separation only.",
+      "tc_owner": "TC-owned G5 suite and independent final review."
+    }
+  ],
+  "scope": {
+    "AT21": {
+      "current_partial_evidence": [
+        "G3 establishes synthetic two-session authentication, cookie/session isolation and session expiry/revocation controls.",
+        "G4 proves two actors cannot read each other's job/command and cross-project reads are denied, including independent sessions/process races.",
+        "G5 proves accepted jobs for different users/projects receive separate workspace identities and filesystem paths, and cross-job HTTP reads are forbidden."
+      ],
+      "id": "AT-21",
+      "original_given": "A\uc640 B \uc791\uc5c5 \ub3d9\uc2dc \uc2e4\ud589",
+      "original_status": "not_executed",
+      "original_then": "\uc11c\ubc84 \uad8c\ud55c \uac80\uc0ac\ub85c \uac70\uc808; \ud30c\uc77c \uacbd\ub85c \ubc0f \uc138\uc158 \ubd84\ub9ac",
+      "original_when": "A\uac00 B\uc758 \uc791\uc5c5\u00b7\ub85c\uadf8\u00b7\uc774\ubbf8\uc9c0\u00b7\uc7a5\ube44 \uc870\ud68c",
+      "unproven_original_assets": [
+        "Per-job log retrieval/authorization: no implemented original log endpoint is present in the current FastAPI route set.",
+        "Artifact/image upload, content retrieval and cross-owner denial: original OpenAPI defines artifact routes, but those routes are not implemented in the current app and have no accepted endpoint-level tests.",
+        "Device/bridge command and telemetry isolation: original OpenAPI bridge/runtime routes are not implemented; no hardware/device access was executed.",
+        "Real corporate SSO, deployed TLS/proxy, production project provisioning and operating database/workspace policy are environment acceptance, not established by synthetic local fixtures."
+      ]
+    },
+    "claims_prohibited": [
+      "A POST 202 response is command acceptance only; it does not prove command application, worker execution, build completion, publication, artifact availability, or device action.",
+      "G5 READY means the private workspace is durably prepared only; it is not a job execution state.",
+      "No original AT-01..AT-32 is marked executed by this matrix or by G1-G5 partial evidence.",
+      "No B03 Temporal/outbox consumer, B04 live SSE/artifact/log delivery, B09 device/bridge, real publisher, external provider or corporate OIDC was exercised."
+    ],
+    "current_test_inventory": {
+      "interpretation": "These are local prerequisite/test suites, not executions of the original 32 acceptance cases.",
+      "node_b01": 48,
+      "python_g1_g5": 351,
+      "source": "G5 accepted verification inventory: G1=12, G2=41, G3=114, G4=91, G5=93; separate B01 Node suite=48."
+    },
+    "purpose": "Map original design-v1 HTTP routes and AT-21 user-isolation assertions to accepted G1-G5 evidence, then identify the exact route and environment evidence still required for G6."
+  },
+  "source_pins": {
+    "docs/ifpmic/B02-IDENTITY.md": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a",
+    "docs/ifpmic/design-v1/specs/acceptance-cases.json": "f7163553edc9e8e753965cb8748ab04aac8f68c1a453f567f62284a01b38b0d5",
+    "docs/ifpmic/design-v1/specs/data-model.json": "00c84f8a39b1b8959daa8d94b1d67e860d83ad9bdb809065a5cd3b18af07071b",
+    "docs/ifpmic/design-v1/specs/openapi.v1.json": "2ed780cfa06349b18f5025937e050fd98a5cefa34b552eb836cfaccad416dd7a",
+    "docs/ifpmic/design-v1/specs/requirements.json": "6e1dc87cdbcaa66ed690ffd13d2d70242dff43410c9f822447bd520719ce249b",
+    "docs/ifpmic/evidence/b02/g1-final-review.json": "ff3d83a515797ed4c2fa113f1e0bc598cef537428c30a57ebaf2f0034aa84bdb",
+    "docs/ifpmic/evidence/b02/g1-verification.json": "0421d4d025e8463a22e08036fc2f8a517822676deea71afa1ea2844decd9a63a",
+    "docs/ifpmic/evidence/b02/g2-final-review.json": "710d38fb44121390312a2c11a3df10fc30f0107ec2653cde89dc0e44e788dd46",
+    "docs/ifpmic/evidence/b02/g2-verification.json": "09dad23c1e038db1a30a68da604d9dea43edcfd66e3591dc10d52cd0b97c560e",
+    "docs/ifpmic/evidence/b02/g3-final-review.json": "dc0cfa5b2eb899e0ee0b4f4412db949f798ba7ac88f19cb79a74825b7e2f11e8",
+    "docs/ifpmic/evidence/b02/g3-verification.json": "f474be1df8ae355095d1b3bbc6ac400958fa502f8123649b02046046152c492c",
+    "docs/ifpmic/evidence/b02/g4-final-review.json": "016735ed8a370737d695494eec415083a29b8b6de42831639535aeaaaefc7150",
+    "docs/ifpmic/evidence/b02/g4-verification.json": "439a66c5a42129c616cc06eb165541eff9a284086db0d23fbf5d89c0d503624f",
+    "docs/ifpmic/evidence/b02/g5-final-review.json": "e76f9a4eafa4999b44263c512e57d24116bdcbf54b36ee8268c5e412d54ff237",
+    "docs/ifpmic/evidence/b02/g5-gate.zip": "c299d6c0c03fe28692a012916923325e406d6bb606ccf0c1203921f6b82df7ab",
+    "docs/ifpmic/evidence/b02/g5-verification.json": "6dac77b8ab4b7474a0438ee407d6e11406d5b7c8f1a1fcd2491c0e5f7dce8030"
+  },
+  "status": "pre_execution_matrix_only"
+}

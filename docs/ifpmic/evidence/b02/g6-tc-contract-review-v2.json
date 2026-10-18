@@ -1,0 +1,67 @@
+{
+  "kind": "ifpmic.b02.g6.tc-contract-review.v2",
+  "status": "secondary_review_pass_pending_independent_final_review",
+  "reviewer_role": "TC perspective; not independent final approval",
+  "reviewed_contract": {
+    "path": "docs/ifpmic/evidence/b02/g6-execution-contract-v2.json",
+    "sha256": "e45256f8f942046645af1f61cbc3c91a504780cb3d8c408a8d35702753c8cd63"
+  },
+  "inputs": {
+    "docs/ifpmic/evidence/b02/g6-node-inventory.json": "e26e02a584c9cdeca983c03093c4a77577cb83f86ff26a32c5705eaa6b5a2c57",
+    "docs/ifpmic/evidence/b02/g6-tc-api-acceptance-matrix.json": "b003d59057d64a211faae36fe23cd0c2a1e679dc2b4148f45decca19be79cda2",
+    "docs/ifpmic/evidence/b02/g6-source-baseline.json": "e6f8a41f1b33b21e4e903636eb2c404d6ef0da95b673294f5d17b686cf38d8bf",
+    "package.json": "939f378819422b4c2ee5fa81c53731bb13041c3d32aabf429bbb5616f46787cb",
+    "docs/ifpmic/evidence/b02/g6-tc-contract-review.json": "544fb572b8a424206f7a3b82f1e79392d953d95bbe1d9eedb3d35ca762875249"
+  },
+  "decision": "The v2 contract resolves the v1 TC blockers. It is sufficiently precise for the planned fixed-candidate execution, subject to the separate independent final review and preflight pins.",
+  "checks": [
+    {
+      "topic": "Node argv and package-script integrity",
+      "result": "pass",
+      "evidence": "G6.2 specifies direct argv with `node --test --test-concurrency=2 --test-reporter=spec` before the complete sorted tests/*.test.mjs operands, no shell and no filter. It also requires package.json scripts.test to remain exactly `node --test tests/*.test.mjs` and to enumerate the same complete glob. Thus runner flags are unambiguously placed while the repository npm-test definition remains unchanged."
+    },
+    {
+      "topic": "Historical Node callback inventory",
+      "result": "pass",
+      "evidence": "The pinned node inventory names the accepted B01 source archive and gate/unit.log entry, pins the entry SHA-256 and byte length, records the extraction regex and UTF-8/multiline rules, and contains exactly 387 unique expected names. Read-only verification recomputed the ZIP entry SHA and byte length and independently counted 387 extracted lines. This is provenance from the accepted historical log, not a new test run."
+    },
+    {
+      "topic": "Timing and failure gates",
+      "result": "pass_with_disclosed_risk",
+      "evidence": "The contract retains all 387 callbacks, requires exact names, zero skip/fail/cancel/TODO, finite 0..30-second per-callback duration and a 180-second whole-command deadline. It explicitly discloses the two historical aggregate callbacks above 30 seconds and treats concurrency 2 only as a hypothesis."
+    },
+    {
+      "topic": "Fresh prerequisite regressions and inventory",
+      "result": "pass",
+      "evidence": "G6.1 requires fresh accepted G1-G5 execution (351 Python cases plus targeted 48 B01 Node cases) through the unchanged G5 runner, preserving its separate subprocess deadlines, exact inventories, lifecycle cleanup, and no-skip criteria. Previously accepted reports do not substitute for fresh execution."
+    },
+    {
+      "topic": "Build/output and conditional UI omission",
+      "result": "pass",
+      "evidence": "The gate requires sequential build/plugin/source verification, exact ten output-path/hash comparison after rebuild, unchanged source/dependency/original-input pins, and makes UI omission conditional on explicit inventory, connection and output checks. Drift triggers scope reassessment rather than a waiver."
+    },
+    {
+      "topic": "Original API and acceptance boundaries",
+      "result": "pass",
+      "evidence": "The pinned route matrix retains absent endpoints and states AT-21 is partial and original AT-01..AT-32 remain not executed. It prohibits claiming execution, artifacts/logs/images/device behavior, corporate SSO or B03/B04/B09 completion from this regression gate."
+    }
+  ],
+  "v1_resolution": {
+    "prior_contract": "docs/ifpmic/evidence/b02/g6-execution-contract.json",
+    "prior_sha256": "dd28255535f7210e7234d1052c8f48670c71aab2d36fd9c04aaeff0433ba8496",
+    "resolution": "V2 moves flags before operands, pins an exact accepted SPEC inventory derived from historical archive bytes, and clarifies Python distribution counts separately from Node lock/direct dependency records. The v1 review remains historical and unchanged."
+  },
+  "residual_risk": [
+    "Concurrency 2 may not bring every historical aggregate callback below 30 seconds; the gate must fail if any exact callback exceeds the existing limit.",
+    "This contract is a test-execution plan, not a claim that the command, build, or any G6 phase has run or passed.",
+    "No original AT case, corporate identity provider, production environment, remaining B03-B13 behavior, or missing OpenAPI endpoint is accepted by this review."
+  ],
+  "execution": {
+    "tests_or_services_run": false,
+    "read_only_validation": [
+      "Recomputed SHA-256 for the contract, node inventory, matrix, source baseline, package.json, and prior v1 review inputs.",
+      "Opened the pinned historical ZIP entry, verified its recorded SHA-256 and byte length, and checked the inventory contains 387 unique names matching 387 extracted SPEC lines."
+    ],
+    "scope_limit": "No test suite, build, service, or G6 gate was executed. Separate independent final review remains required."
+  }
+}

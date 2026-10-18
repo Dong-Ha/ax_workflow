@@ -1,0 +1,52 @@
+{
+  "kind": "ifpmic.b02.g6.contract-review.v2",
+  "reviewed_contract": {
+    "path": "docs/ifpmic/evidence/b02/g6-execution-contract-v2.json",
+    "sha256": "e45256f8f942046645af1f61cbc3c91a504780cb3d8c408a8d35702753c8cd63"
+  },
+  "review_inputs": {
+    "docs/ifpmic/B02-IDENTITY.md": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a",
+    "docs/ifpmic/evidence/b02/g6-source-baseline.json": "e6f8a41f1b33b21e4e903636eb2c404d6ef0da95b673294f5d17b686cf38d8bf",
+    "docs/ifpmic/evidence/b02/g6-tc-api-acceptance-matrix.json": "b003d59057d64a211faae36fe23cd0c2a1e679dc2b4148f45decca19be79cda2",
+    "docs/ifpmic/evidence/b02/g6-preplan-diagnostic-record.json": "437824aca966a4d19bac5a455c9553891a553f1bdbf433cc37aeced1fd6d073a",
+    "docs/ifpmic/evidence/b02/g6-node-inventory.json": "e26e02a584c9cdeca983c03093c4a77577cb83f86ff26a32c5705eaa6b5a2c57",
+    "docs/ifpmic/evidence/b02/g6-contract-review.json": "ff141d8b651273f1e2b2268a094df41cf765e487aa5e20b1325a13383eaf443d",
+    "docs/ifpmic/evidence/b02/g6-tc-contract-review.json": "544fb572b8a424206f7a3b82f1e79392d953d95bbe1d9eedb3d35ca762875249",
+    "docs/ifpmic/evidence/b02/g5-gate.zip": "c299d6c0c03fe28692a012916923325e406d6bb606ccf0c1203921f6b82df7ab",
+    "docs/ifpmic/evidence/b02/g5-verification.json": "6dac77b8ab4b7474a0438ee407d6e11406d5b7c8f1a1fcd2491c0e5f7dce8030",
+    "docs/ifpmic/evidence/b02/g5-final-review.json": "e76f9a4eafa4999b44263c512e57d24116bdcbf54b36ee8268c5e412d54ff237",
+    "scripts/verify_ifpmic_g5.py": "ee137621450b4a28d0be30708981bebaa012d9f282db9816e45e6b78325c427b",
+    "docs/ifpmic/evidence/b01/local-profile-gate.zip": "486d153780df2121cd9d57a56a9ad794ac8829ca25945954ed71b522f6c0fab1",
+    "package.json": "939f378819422b4c2ee5fa81c53731bb13041c3d32aabf429bbb5616f46787cb"
+  },
+  "verdict": "approve_for_runner_implementation_and_authoring_only",
+  "resolved_v1_blockers": [
+    {
+      "topic": "Historical Node names oracle",
+      "finding": "The new inventory is pinned to the accepted B01 archive and unit.log bytes. I independently recomputed the archive and entry SHA-256 values, applied the recorded UTF-8/Python-multiline regex, and verified 387 extracted rows, 387 unique names, and exact equality with the sorted expected_names list. The log has no TAP IDs, but its historical SPEC names are a reproducible pre-run oracle.",
+      "evidence": {
+        "archive_sha256": "486d153780df2121cd9d57a56a9ad794ac8829ca25945954ed71b522f6c0fab1",
+        "entry_sha256": "2af91de317f51039c8f66c3f8db7c1f0d41e6fe0d4e2d1931e8b6e1ab3af2ce3",
+        "extracted_records": 387,
+        "unique_names": 387,
+        "expected_names_sorted_and_equal": true
+      }
+    },
+    {
+      "topic": "Node invocation and timing",
+      "finding": "G6.2 now specifies a direct argv with concurrency and SPEC flags before every sorted tests/*.test.mjs operand, verifies the unchanged package.json test script, pins the complete expected names list, and retains 30 seconds per callback and 180 seconds for the command. The historical over-30-second callbacks remain explicitly disclosed; no waiver is implied.",
+      "evidence": "The package test script is exactly `node --test tests/*.test.mjs`; static search found no test dependence on npm lifecycle environment variables. No command was executed."
+    },
+    {
+      "topic": "Tool and package inventory wording",
+      "finding": "G6.0 now distinguishes Python 3.12.3's 32 hash-locked distributions from Node's 79 lock records, 9 direct packages, and five accepted additive AJV records relative to controls. This matches the pinned baseline's separate tool/package inventory."
+    }
+  ],
+  "scope_review": {
+    "assessment": "Fresh G1-G5 regression, the 48 targeted B01 Node cases, all 387 full-suite cases, rebuild and plugin/source checks, source/output immutability, and conditional omission of only the 11 existing browser/native-host/UI commands are retained. Original AT completion, production SSO/storage, B03-B13, and G7 remain outside this approval.",
+    "execution_limits": "The accepted G5 orchestrator retains its separate command ceilings; Node full-suite timing remains fail-closed at 30 seconds per callback and 180 seconds total. The diagnostic run is expressly not acceptance evidence.",
+    "conditional_ui_scope": "Omission remains conditional on unchanged source/dependency inventories and all ten outputs matching after rebuild, followed by independent audit; any mismatch expands the gate.",
+    "no_tests_build_or_services_run": true
+  },
+  "approval_boundary": "This decision permits authoring the fixed G6 runner and preparing a frozen candidate. It is not approval to execute the gate or acceptance of G6; a separate pre-gate review is required before any run, and G6 acceptance requires complete fresh evidence and independent final review."
+}
