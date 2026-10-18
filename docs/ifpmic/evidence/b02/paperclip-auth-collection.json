@@ -1,0 +1,153 @@
+{
+  "kind": "ifpmic_b02_paperclip_auth_collection",
+  "scope": "Read-only inspection of the locally installed Paperclip 2026.1005.0 package, the IFPMIC Paperclip plugin, the B02 plan boundary, and local executable/dependency metadata. No credentials, auth/config files, service startup, or live external calls were used.",
+  "paperclip_artifact": {
+    "package": "paperclipai",
+    "version": "2026.1005.0",
+    "repository_metadata": "https://github.com/paperclipai/paperclip (package directory: cli; server package directory: server; plugin SDK package directory: packages/plugins/sdk)",
+    "pinned_git_commit": null,
+    "commit_limitation": "The lab contains npm-installed packages under .paperclip-lab/runtime/node_modules, not a Paperclip git checkout. The package metadata and npm lock provide version and tarball integrity, but no Paperclip source commit was locally available. `git rev-parse` from node_modules resolves to the enclosing AX repository and is not a Paperclip commit.",
+    "npm_lock": {
+      "path": ".paperclip-lab/runtime/package-lock.json",
+      "sha256": "f66619b2dfb6bf301404f30675132878687622c0b039dc0c5d1f8965c65cc101"
+    },
+    "packages": [
+      {
+        "name": "paperclipai",
+        "version": "2026.1005.0",
+        "resolved": "https://registry.npmjs.org/paperclipai/-/paperclipai-2026.1005.0.tgz",
+        "integrity": "sha512-+2JQad9cnLm5K/x4ecFTV7/qIzqADinH4BKg7OA4/fppODgUX9HZ+aaeStyNUvcPtgaT7eFmLMd4suJSLSzBSA==",
+        "package_json_sha256": "1049902e3628726e55efe3835e984d5453e229468cca2b840661c9636c42b9fa",
+        "dist_index_sha256": "ba0ec9c2b7f407b3e9abb3b6413a5fd42a9a1fd545d1a39ce50016da741eb044"
+      },
+      {
+        "name": "@paperclipai/server",
+        "version": "2026.1005.0",
+        "resolved": "https://registry.npmjs.org/@paperclipai/server/-/server-2026.1005.0.tgz",
+        "integrity": "sha512-aqOP7l0yong2VAeIWOq5Gfvi4LYi3/iYlyMsMakDW0raDDida+6QKRZ7a41wO2mxId5OfEz1Gqh9/M0gs7QcnQ=="
+      },
+      {
+        "name": "@paperclipai/plugin-sdk",
+        "version": "2026.1005.0",
+        "resolved": "https://registry.npmjs.org/@paperclipai/plugin-sdk/-/plugin-sdk-2026.1005.0.tgz",
+        "integrity": "sha512-Ii54ukCFMujaRVGrRV/+RaudPmXka0FnSFF4Q8mTv8Gktb92okbPTtctf3zTlUNe908FG1tKoM90UGF2YwfVWA=="
+      }
+    ]
+  },
+  "verified_integration_facts": [
+    {
+      "finding": "The accepted architecture keeps Paperclip as the upper management/UI layer and assigns IFPMIC identity, per-project/job authorization, command acceptance and artifacts to the separate IFPMIC API; Temporal is the workflow decision maker and PostgreSQL stores the IFPMIC records. The plan explicitly says company scope alone does not establish individual job ownership.",
+      "evidence": [
+        { "path": "docs/ifpmic/PLAN.md", "lines": "78-96", "sha256": "3b99c7b3629a8e0e6bc41d524329d2a0de27a468ec447a990fa360dcc38aa39d" }
+      ]
+    },
+    {
+      "finding": "Paperclip's authenticated-mode request actor is derived from a Better Auth session resolved from request headers; the server then loads the authenticated user's active company memberships and instance-admin role. In local_trusted mode it instead creates the synthetic `local-board` actor with instance-admin access, so that mode cannot supply individual human attribution for B02.",
+      "evidence": [
+        { "path": ".paperclip-lab/runtime/node_modules/@paperclipai/server/dist/middleware/auth.js", "lines": "147-160,183-224", "sha256": "ee5f477e7028891df21ac989c8a15303f2cc1da2afe8cc40c9aa6b88ac7d92b6" },
+        { "path": ".paperclip-lab/runtime/node_modules/@paperclipai/server/dist/auth/better-auth.js", "lines": "165-226,270-303", "sha256": "795fdc266ef92d44e01301a4831e726ec4561ebf5ea51d324f22eeef76c7ddac" }
+      ]
+    },
+    {
+      "finding": "Plugin company scope is checked by the host. `assertPluginBridgeScope` requires an instance admin when no company ID is supplied and calls `assertCompanyAccess` for a supplied company. For authenticated board actors, company membership is checked; writes also enforce viewer read-only access. This is company authorization, not IFPMIC job-owner authorization, which remains the IFPMIC API's responsibility.",
+      "evidence": [
+        { "path": ".paperclip-lab/runtime/node_modules/@paperclipai/server/dist/routes/plugins.js", "lines": "454-463", "sha256": "5789c74210a1a6d18c7b1348c97cd7994ef3720eb898efe5d21c2a531d63c5a7" },
+        { "path": ".paperclip-lab/runtime/node_modules/@paperclipai/server/dist/routes/authz.js", "lines": "18-42,54-85", "sha256": "73631aaa84212df86f0ea2ddbd04f9600e48a36b5ee2a5256b62803bc0017479" }
+      ]
+    },
+    {
+      "finding": "The plugin `performAction` bridge validates the request actor at the host, authorizes the company scope, and injects an actor context into worker RPC. The SDK type declares actor context immutable and host-authenticated (`user|agent|system`, user/agent/run/company IDs) and states it is resolved by the host, never from caller parameters. This is the locally evidenced actor propagation seam for a plugin-mediated integration.",
+      "evidence": [
+        { "path": ".paperclip-lab/runtime/node_modules/@paperclipai/server/dist/routes/plugins.js", "lines": "491-510,1113-1153", "sha256": "5789c74210a1a6d18c7b1348c97cd7994ef3720eb898efe5d21c2a531d63c5a7" },
+        { "path": ".paperclip-lab/runtime/node_modules/@paperclipai/plugin-sdk/dist/protocol.d.ts", "lines": "296-329", "sha256": "eef4a9bf3bceb3d810d11eb26432d34fe685d1700a2b3231a78ac248da40f1a0" },
+        { "path": ".paperclip-lab/runtime/node_modules/@paperclipai/plugin-sdk/dist/types.d.ts", "lines": "741-749", "sha256": "5d52f1164ef8f3c8acb1edd431ad0a97df48c5697491401c041e21233acf5637" }
+      ]
+    },
+    {
+      "finding": "The plugin UI SDK exposes `useHostContext().userId` as current host context, but this is frontend context and not a server-verified credential. The SDK README explicitly says plugin UI runs as same-origin JavaScript, can call Paperclip APIs using the board session, and is not a frontend sandbox. The UI may use the Paperclip session for calls to Paperclip itself; the separate IFPMIC origin does not automatically receive that cookie or a verifiable user identity.",
+      "evidence": [
+        { "path": ".paperclip-lab/runtime/node_modules/@paperclipai/plugin-sdk/dist/ui/types.d.ts", "lines": "50-75", "sha256": "972ff4b6877befddc4c42d06ad1ebb830f57c4846aaa97b202b263dd16113c72" },
+        { "path": ".paperclip-lab/runtime/node_modules/@paperclipai/plugin-sdk/README.md", "lines": "40-51", "sha256": "9b4fc804c57b3f0adf208a1b95512ac88a7c073f2f92861e691fc7bc5fb5700d" }
+      ]
+    },
+    {
+      "finding": "The plugin worker's `ctx.http.fetch` is an outbound-call facility gated by `http.outbound`; the SDK describes it as a host-managed tracing/audit client. The SDK does not document this facility as forwarding Paperclip's browser session or as minting a signed identity assertion for an external API. A caller-supplied userId/companyId header or JSON field therefore must not be accepted by IFPMIC as authenticated identity without an independently verifiable trust mechanism.",
+      "evidence": [
+        { "path": ".paperclip-lab/runtime/node_modules/@paperclipai/plugin-sdk/dist/types.d.ts", "lines": "422-439", "sha256": "5d52f1164ef8f3c8acb1edd431ad0a97df48c5697491401c041e21233acf5637" },
+        { "path": ".paperclip-lab/runtime/node_modules/@paperclipai/plugin-sdk/README.md", "lines": "40-51", "sha256": "9b4fc804c57b3f0adf208a1b95512ac88a7c073f2f92861e691fc7bc5fb5700d" }
+      ]
+    },
+    {
+      "finding": "The inspected Better Auth constructor enables email/password and resolves cookie/header-backed sessions. This package source does not establish a configured enterprise SSO provider or prove any SSO deployment settings. The mutation guard rejects authenticated browser mutations without a trusted same-origin Origin/Referer; Paperclip's session/cookie and CSRF policy is host-specific and must not be replaced with user identity headers.",
+      "evidence": [
+        { "path": ".paperclip-lab/runtime/node_modules/@paperclipai/server/dist/auth/better-auth.js", "lines": "165-226,276-303", "sha256": "795fdc266ef92d44e01301a4831e726ec4561ebf5ea51d324f22eeef76c7ddac" },
+        { "path": ".paperclip-lab/runtime/node_modules/@paperclipai/server/dist/middleware/board-mutation-guard.js", "lines": "1-74", "sha256": "33459f3257490a84958ffa6916afa5149d4aef5e4348f84e2354cbb95766909f" },
+        { "path": ".paperclip-lab/runtime/node_modules/@paperclipai/server/dist/app.js", "lines": "446", "sha256": "873bd1ed443303081ab012f4bf1ea44833ba00b4d31d64f1248583b4f939577e" }
+      ]
+    }
+  ],
+  "local_ifpmic_plugin": {
+    "version": "0.1.0",
+    "manifest": "plugins/ifpmic-ax/manifest.mjs",
+    "manifest_sha256": "25304d897bd26f2a9475a110acf6e40aca41d91b26eb5c2f1ff0f8d2a96c113d",
+    "current_capabilities": ["ui.page.register"],
+    "worker": "plugins/ifpmic-ax/worker.mjs",
+    "worker_sha256": "5f33c2266890dbeeb526684335e84f0899ef890bdf6e7652901fdfcc6bee82fa",
+    "ui": "plugins/ifpmic-ax/ui.tsx",
+    "ui_sha256": "dda268570d188f9376f3a1ca96fbf2635f304fbd8f35bdd7f647b3618c0faa2b",
+    "observed_scope": "Worker setup is empty with a read-only health response; current plugin has no data/action handlers and no IFPMIC API authentication integration."
+  },
+  "prerequisites": {
+    "node": "v24.17.0 available",
+    "python3": "3.12.3 available; FastAPI, temporalio, psycopg, and SQLAlchemy Python modules absent",
+    "docker": "absent",
+    "podman": "absent",
+    "psql": "absent",
+    "postgres": "absent on PATH; a bundled embedded PostgreSQL 18.1 toolchain exists inside the Paperclip runtime dependency tree (below)",
+    "temporal_cli": "absent on PATH",
+    "uvicorn": "absent on PATH",
+    "embedded_postgres_candidate": {
+      "wrapper_package": {
+        "path": ".paperclip-lab/runtime/node_modules/embedded-postgres",
+        "version": "18.1.0-beta.16",
+        "npm_integrity": "sha512-TDp7Ld0h84x5fzIIZFyreYWqZrxUNjuXB6OxqJCmV6PodB2vzQ+1hlL6n4uK1de7bIAxYt5OkDykwcuIONQdQg==",
+        "package_json_sha256": "9e752e900517fc17e8cf260c2f64b7f5d51f2258649e668e2c5eadbfeacecdc2",
+        "entry_sha256": "17277c7bbbc1791632575ed4ff299399211d2a87497f0e507d4c22be22ab8e8f"
+      },
+      "linux_x64_package": {
+        "path": ".paperclip-lab/runtime/node_modules/@embedded-postgres/linux-x64",
+        "version": "18.1.0-beta.16",
+        "npm_integrity": "sha512-+GIabpHh7QV2AcYBuzyQC41AYczSFphxfHy4ccTPIPrp6OSthZXH+A9fymjQzOiDHg9+1UeYET00Aj7sScjXrg==",
+        "package_json_sha256": "5940c86ba071e1804ddbd1c0c8e234752f158704b2adf9908a847acc69dd2f84",
+        "executables": [
+          {
+            "path": ".paperclip-lab/runtime/node_modules/@embedded-postgres/linux-x64/native/bin/initdb",
+            "version_command_result": "PostgreSQL 18.1",
+            "sha256": "7cba14094c5f505f492fd243c5eda04f0dc3be05f12b7bd278f150f1e03b721f"
+          },
+          {
+            "path": ".paperclip-lab/runtime/node_modules/@embedded-postgres/linux-x64/native/bin/postgres",
+            "version_command_result": "PostgreSQL 18.1",
+            "sha256": "c85fa9c977d9e641c2d22d93675a9b7097764b7df2c4c9ea021f5780522b2af2"
+          },
+          {
+            "path": ".paperclip-lab/runtime/node_modules/@embedded-postgres/linux-x64/native/bin/pg_ctl",
+            "version_command_result": "PostgreSQL 18.1",
+            "sha256": "24a1f166819e0924319ff3faf752ad2a1ac594e223e2f3b1a2038dc84a2969de"
+          }
+        ]
+      },
+      "assessment": "This removes the PostgreSQL binary dependency blocker for a later isolated temporary IFPMIC test cluster, subject to plan approval and a bounded init/start/stop smoke. No cluster has been initialized, no database service is provisioned for IFPMIC, and the package's compatibility as IFPMIC's chosen database has not yet been tested."
+    },
+    "project_manifests": "No pyproject.toml, requirements*.txt, docker-compose*.yml, compose.yml, or Temporal deployment manifest found within the inspected project depth. Root currently has Node package.json only. The bundled PostgreSQL packages are nested under Paperclip and do not constitute an IFPMIC database service.",
+    "checks": "Read-only version/path and installed-module checks; PostgreSQL binaries were invoked only with --version. No service was started, no database initialized, and no dependency installed."
+  },
+  "unresolved_integration_questions": [
+    "No local Paperclip git source checkout or source commit is pinned; the observed npm version/integrity identifies the installed artifact, not the exact source commit.",
+    "No external SSO provider or production authenticated Paperclip configuration was verified. The successful prior lab mount used local_trusted, which represents the actor as synthetic local-board admin.",
+    "The SDK exposes a trusted actor to a worker action but does not supply a documented signed assertion for the separate IFPMIC service. B02 must select and review an actual trusted identity exchange (for example shared OIDC validation or a narrowly scoped signed short-lived assertion) before accepting user identity at the FastAPI boundary; raw headers/params from UI are not evidence.",
+    "Paperclip company/project membership and roles do not replace IFPMIC's per-job owner/project authorization and artifact checks. These must be enforced by the IFPMIC API on each read/write/download as required by PLAN.md.",
+    "FastAPI, Temporal service, and a separate PostgreSQL database are not provisioned in this environment; integration and SSO/session behavior remain untested."
+  ],
+  "status": "read-only source collection; no authentication design approval or integration completion claim"
+}

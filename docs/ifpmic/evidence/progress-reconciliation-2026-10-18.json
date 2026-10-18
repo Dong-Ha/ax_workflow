@@ -1,0 +1,36 @@
+{
+  "kind": "ifpmic_progress_reconciliation",
+  "purpose": "Replace stale not-started/50-scenario summary with already independently accepted scoped increments; preserve original B01 and AT acceptance gaps.",
+  "before_sha256": "a2c84992b28c8f3beedcb15b1c6b15b278e3c2f8d44d7caa95cdcc33902a9c56",
+  "after_sha256": "36a49abd004ced3caab9d8541fe231d568d2f05ed6b0198ec869d3817b96fc79",
+  "progress_path": "docs/ifpmic/progress.json",
+  "evidence": [
+    {
+      "path": "docs/ifpmic/evidence/v2/children-verification.json",
+      "sha256": "5d4ce1a0c64a59c983dfbd62ddbcaeb832234fb8b55afc72a7dc2a96c5f7afe2"
+    },
+    {
+      "path": "docs/ifpmic/evidence/v2/children-review.json",
+      "sha256": "188357fb8f1c96b05070b97888d0ad52d4ea4647e45b1edf499e28a35573cbd8"
+    },
+    {
+      "path": "docs/ifpmic/evidence/v2/controls-ui-verification.json",
+      "sha256": "e3f64565629e55288ec9eec0ce59033729c8e7d825149c3f84fe5d24bce30386"
+    },
+    {
+      "path": "docs/ifpmic/evidence/v2/controls-ui-review.json",
+      "sha256": "f596744589b21e9f56242c49dcda897692aebca125fb67daa07851d73ad44f52"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b01/local-profile-verification.json",
+      "sha256": "670d355e061a0782bb71234ffabb231891e6c92dc5e18cadb1c8e7a57b0bff46"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b01/final-review.json",
+      "sha256": "3659f8c1d70b68b1e2a56993688a39a406855d6e82c510dbf2f4b27afc52093b"
+    }
+  ],
+  "current_goal_status": "active",
+  "original_acceptance_status": "not_executed",
+  "new_product_or_test_changes": false
+}

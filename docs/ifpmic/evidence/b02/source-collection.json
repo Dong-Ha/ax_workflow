@@ -1,0 +1,140 @@
+{
+  "kind": "ifpmic_b02_original_contract_source_collection",
+  "captured_at_head": "1fa94b5c1b478468347c5afa5c0565fe0fae03c2",
+  "sources": [
+    {
+      "path": "IFPMIC_AX_Design_v1.docx",
+      "sha256": "18a14876a689beae0599b5d4014bf95db79bef047d0e4ceafa60d9a9417624fc",
+      "locator": "word/document.xml paragraphs 20, 23, 34-40, 56-59, 298, 323, 327-356, 359-392, 423, 448-456, 505-510, 567-574",
+      "use": "Original user-scope, implementation stack, security/isolation, API/outbox and deployment boundary evidence; text extraction was read-only."
+    },
+    {
+      "path": "docs/ifpmic/design-v1/specs/implementation-backlog.json",
+      "sha256": "115e48568e0464b8e67ef17274dba97b3046a8de902e1cf426d9b70e1528e5d0",
+      "json_pointers": ["/1", "/2"],
+      "use": "B02 is user-scoped API, DB, per-request workspace, depends on B01, acceptance AT-21. B03 separately owns Temporal workflow, outbox, human wait and version pin."
+    },
+    {
+      "path": "docs/ifpmic/design-v1/specs/requirements.json",
+      "sha256": "6e1dc87cdbcaa66ed690ffd13d2d70242dff43410c9f822447bd520719ce249b",
+      "json_pointers": ["/12"],
+      "use": "REQ-13 requires isolated per-person work and multiple users; design reference is ownership/workspace isolation; acceptance AT-21."
+    },
+    {
+      "path": "docs/ifpmic/design-v1/specs/acceptance-cases.json",
+      "sha256": "f7163553edc9e8e753965cb8748ab04aac8f68c1a453f567f62284a01b38b0d5",
+      "json_pointers": ["/20"],
+      "use": "AT-21 specifies concurrent A/B jobs and A attempting B job/log/image/device reads; server authorization must reject and paths/sessions must remain separated. Status remains not_executed in source."
+    },
+    {
+      "path": "docs/ifpmic/design-v1/specs/openapi.v1.json",
+      "sha256": "2ed780cfa06349b18f5025937e050fd98a5cefa34b552eb836cfaccad416dd7a",
+      "json_pointers": ["/servers/0", "/security", "/components/securitySchemes", "/paths/~1api~1v1~1jobs", "/paths/~1api~1v1~1jobs~1{job_id}", "/paths/~1api~1v1~1artifacts", "/paths/~1bridge~1v1~1enroll", "/components/schemas/CreateJob", "/components/schemas/Job", "/components/schemas/Snapshot", "/components/schemas/Error"],
+      "use": "Designed API contract. Server hostname is placeholder ax.internal.example. Global UserSession is cookie ax_session; BridgeToken and WorkerToken are bearer schemes. User write calls require CSRF and Idempotency-Key."
+    },
+    {
+      "path": "docs/ifpmic/design-v1/specs/data-model.json",
+      "sha256": "00c84f8a39b1b8959daa8d94b1d67e860d83ad9bdb809065a5cd3b18af07071b",
+      "json_pointers": ["/entities/0", "/entities/1", "/entities/2", "/entities/17", "/authorization", "/consistency", "/transactions"],
+      "use": "User identity subject is unique; local pilot identity is mock-only. Projects carry member roles/profile versions. Job owner is derived from auth, never request payload. Queries/downloads require project membership and job ownership/delegated role; service tokens are assignment-scoped. PostgreSQL stores command inbox/outbox, immutable evidence and projections; Temporal is authoritative for process transitions."
+    },
+    {
+      "path": "docs/ifpmic/design-v1/specs/workflow.v1.json",
+      "sha256": "bab40a7abb3929896add1ef2cd074893dd2a7de14d200a5d6cea4b7a77eb0e89",
+      "json_pointers": ["/required_invariants"],
+      "use": "Workflow invariants include no concurrent same-workspace writers; this belongs to durable workflow/execution concerns, not a replacement for B02 authorization."
+    },
+    {
+      "path": "docs/ifpmic/design-v1/specs/state-contract.json",
+      "sha256": "0248e130017043539319c56af854f5388a95d33e7e687902a3438fdff414244a",
+      "json_pointers": ["/rules/5"],
+      "use": "Defines aggregate job-state vocabulary. Included as adjacent state contract; implementation of transitions is separate B03 scope."
+    },
+    {
+      "path": "docs/ifpmic/design-v1/specs/project-profile.example.json",
+      "sha256": "37301c6ff5c9cae237b6037a3106368cfd07e4582462d52a35dfee39de7839f2",
+      "json_pointers": [""],
+      "use": "Versioned project profile example reviewed for real authentication/configuration references; no real SSO configuration or secret values are present."
+    },
+    {
+      "path": "docs/ifpmic/design-v1/specs/agent-contract.json",
+      "sha256": "ca6d4bea7abf0fffe7354c482af0d521c3a2e367217a69923a4bfe43fa27ab64",
+      "json_pointers": ["/concurrency"],
+      "use": "Agent workspace rule: one writer per workspace."
+    },
+    {
+      "path": "docs/ifpmic/design-v1/specs/bridge-contract.json",
+      "sha256": "d9a0deaa745d4078a779a153aad6a889a49b7675dc8ad3688f8b4c641233047d",
+      "json_pointers": ["/transport"],
+      "use": "Bridge uses outbound HTTPS long poll and authenticated heartbeat; neighboring scoped service-auth contract."
+    },
+    {
+      "path": "docs/ifpmic/design-v1/specs/sources.json",
+      "sha256": "c0c6f96c54ba4fd1c7a1bd70b954a7316bebdba86ff681e5a07141c682eeb7ef",
+      "json_pointers": ["/0", "/5", "/6", "/7", "/10"],
+      "use": "Lists local original source S01 and cited Temporal/FastAPI references. It does not declare an internal SSO provider or approved production hostname."
+    },
+    {
+      "path": "docs/ifpmic/design-v1/README.txt",
+      "sha256": "33ff9f07a74c3e276ac63746340a56e4bbdeca18d2531de24cc978d533283122",
+      "use": "Design package metadata; the design package is a contract, not an existing service implementation."
+    },
+    {
+      "path": "server/index.mjs",
+      "sha256": "9f462d86df80903570ab9ec110be564586dd89c45a3fd553a59cc6d5d6e56299",
+      "line_locators": ["22-42", "54"],
+      "use": "Current AX API binds to 127.0.0.1, allows only localhost host values, and permits GET-only /api/dashboard and /api/agents/:id/activity routes. It is a local read-only transcript viewer, not the designed authenticated IFPMIC API."
+    }
+  ],
+  "b02_contract": {
+    "backlog": "B02 depends on B01 and delivers user-scoped API, database, and per-request workspaces; AT-21 is its listed acceptance. Preserve the full scope rather than substituting mock auth or SQLite.",
+    "identity_and_authority": [
+      "User entity fields are user_id, identity_subject, display_name; SSO subject must be unique. Local pilot identity is limited to mock mode.",
+      "CreateJob accepts project_id, title, request_text, change_type, base_ref, input_artifact_ids, profile_version, release_mode. It has no owner_id input.",
+      "Job response includes owner_id, project_id is part of stored Job entity, and owner must come from authenticated identity rather than request body.",
+      "Every query and download checks project membership and job ownership/delegated role. Internal worker and bridge tokens are scoped to assignments. Admin operational visibility does not imply ability to approve on behalf of a user; separate project authority is required.",
+      "AT-21 requires negative cross-user reads for job, log, image/artifact, and device data, including direct URLs, plus separation of filesystem paths and sessions."
+    ],
+    "session_and_csrf_contract": [
+      "OpenAPI global security is UserSession cookie ax_session for ordinary API routes.",
+      "Every user write requires authentication, X-CSRF-Token and Idempotency-Key per DOCX paragraph 356; individual OpenAPI write parameters mark these headers required except artifact service-token alternatives.",
+      "Artifact endpoints allow UserSession, BridgeToken or WorkerToken; their CSRF header is required for UserSession and ignored for scoped bearer authentication.",
+      "Bridge enrollment and refresh use explicit token exchange routes; heartbeat and assigned command operations use scoped BridgeToken; runtime events use WorkerToken. These are neighboring service identities, not human-session substitutes."
+    ],
+    "storage_and_workspace": [
+      "B02 requires persistent DB and per-request workspace. The original stack specifies FastAPI, PostgreSQL, and separate Temporal persistence; Temporal is B03 process authority, PostgreSQL stores command inbox/outbox, immutable evidence and projections.",
+      "Workspace and build output directories are per job; one write execution per workspace. Worker and publisher service accounts are separate.",
+      "API command authorization/schema checks and command plus outbox insert are one transaction; HTTP 202 means accepted, not applied. Same idempotency key with different body and stale revision conflict; dispatcher retry is deduplicated.",
+      "Artifact availability follows metadata registration, byte receipt, size/hash verification, then available state. Downloads reauthorize."
+    ],
+    "original_api_routes": [
+      "POST/GET /api/v1/jobs; GET /api/v1/jobs/{job_id}",
+      "POST /api/v1/jobs/{job_id}/plan-decision, /human-submissions, /controls, /approval; GET /release-manifest, /events",
+      "GET /api/v1/commands/{command_id}; POST /api/v1/artifacts; PUT/GET /api/v1/artifacts/{artifact_id}/content; GET /api/v1/notifications; POST /api/v1/notifications/{notification_id}/read",
+      "POST /api/v1/bridge-enrollment-tokens; POST /bridge/v1/enroll and /refresh; POST /bridge/v1/heartbeat; GET /bridge/v1/commands; POST /bridge/v1/commands/{command_id}/events; POST /internal/v1/runtime-events"
+    ],
+    "http_statuses": "OpenAPI commonly documents 401 auth required, 403 ownership/role mismatch, 409 revision/idempotency conflict, and 422 invalid schema/state; writes generally return 202 command receipt, artifact metadata registration 201, enrollment 201. Error DTO has code/message/trace_id. Exact error-code enum and detailed field constraints are not supplied.",
+    "separate_scope": "Temporal workflows, durable transitions, human waits and workflow version pin are B03, though B02 must provide the user/API/database/outbox boundary needed to hand commands over atomically."
+  },
+  "missing_real_environment_configuration": {
+    "status": "not supplied in reviewed source set; no credential values copied",
+    "missing_references": [
+      "Approved internal identity provider/SSO issuer and protocol/client registration/callback configuration; OpenAPI only defines a session cookie shape and user entity subject.",
+      "Approved internal API hostname/TLS reverse-proxy deployment setting; OpenAPI server remains https://ax.internal.example placeholder.",
+      "Provisioned PostgreSQL service/database/migration/backup configuration and separate Temporal persistence/service configuration; architecture names these dependencies but supplies no deployment references.",
+      "Real project membership/role assignments and delegated approval policy source; model only names member_roles and delegated role checks.",
+      "Production workspace/artifact storage roots, quotas and cleanup/retention policy; design states per-job isolation but no actual paths/configuration."
+    ],
+    "not_asserted": "No claim that credentials or these services do not exist outside this repository; only that this source set does not contain their approved references."
+  },
+  "implementation_detail_gaps_and_ambiguities": [
+    "The design explicitly labels OpenAPI as a new design contract, not an existing endpoint. AX server/index.mjs currently exposes only local GET read APIs and rejects non-GET API requests with 405.",
+    "The OpenAPI specifies session cookie name and CSRF header presence, but not SSO login/callback/logout/session renewal, cookie SameSite/Secure/HttpOnly properties, CSRF issuance/validation algorithm, or session lifetime/revocation.",
+    "Project role names, role-grant lifecycle, delegated-role matrix, and authorization precedence for a user who is a project member but not job owner are not enumerated.",
+      "CreateJob requires project_id; the OpenAPI Job response exposes owner_id but omits project_id even though the data-model jobs entity includes project_id. Owner assignment is auth-derived; exact database constraints, membership resolution, and project-not-found versus forbidden behavior need implementation-level definition.",
+    "OpenAPI provides common status categories and a generic Error DTO, but no stable code enum, trace-id policy, or route-specific validation issue format.",
+    "Database entity list and transaction invariants are conceptual field strings rather than DDL/migrations; workspace provisioning/cleanup failure semantics and durable command handoff are not fully specified in B02."
+  ],
+  "b01_interoperability_note": "B01 currently provides a Node library for profile validation/snapshot, while the original backend stack is Python/FastAPI. The reviewed source set does not define a language-neutral B01 boundary or integration mechanism. Record this as an integration question for the owning architecture; this collection does not decide whether to bind subprocess, port a contract, or change stack.",
+  "privacy": "Source extraction and review omitted all credential values. No service was started, network accessed, or source file modified."
+}
