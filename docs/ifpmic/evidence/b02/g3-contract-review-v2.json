@@ -1,0 +1,49 @@
+{
+  "review": "Independent source-informed B02 G3 implementation contract review v2",
+  "verdict": "approved_for_implementation_and_test_authoring",
+  "scope": "Preimplementation review of the revised G3 contract against the approved B02 plan and locally installed Authlib/HTTPX2 source. No product code or tests were reviewed or authored.",
+  "source_pins": {
+    "docs/ifpmic/B02-IDENTITY.md": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a",
+    "docs/ifpmic/evidence/b02/g3-implementation-contract-v2.json": "157bebf63781aeec4463ca68a19c7991ae690ef0d535f2cf367fc4ff95cf2292",
+    "docs/ifpmic/evidence/b02/g3-authlib-source-collection-v2.json": "1cdff5ec842aa644b479705804e401dee6a78faa1cb01d6e11f419006ac5e223",
+    ".ifpmic-venv/lib/python3.12/site-packages/authlib/integrations/base_client/async_openid.py": "e71c505a379c5cff4990c91d32f2910dbb59981bcb27955a6d96d58280fb29b4",
+    ".ifpmic-venv/lib/python3.12/site-packages/authlib/integrations/httpx_client/oauth2_client.py": "24c0c3dd6b05c8daeb9d781ce6ceef6c64107ae25a881076fefb82a5995ae463",
+    ".ifpmic-venv/lib/python3.12/site-packages/authlib/oauth2/client.py": "87ff9d5d5b06a1b54b82849f1e27fc4649966bb943dd69fdea8e92cf8dc6a4dc",
+    ".ifpmic-venv/lib/python3.12/site-packages/authlib/oauth2/claims.py": "05433952941421a3cffd24976691b1737e5894cca484f2b681edeb513d6356fe",
+    ".ifpmic-venv/lib/python3.12/site-packages/authlib/oidc/core/claims.py": "b513ebb513ff64d0c3fffe2482b74b47aaa1ce40ec839da69f13bec1b1c2af78",
+    ".ifpmic-venv/lib/python3.12/site-packages/joserfc/_rfc7519/claims.py": "7b7ced716a57f088fa61ede3c214290bdb95b742c3a81d0321e9aa6853400477",
+    ".ifpmic-venv/lib/python3.12/site-packages/httpx2/_client.py": "fa3948aa66a9efd5edf097c6d13d927612c617328b43ceefc4bdd5e350aaa93b",
+    ".ifpmic-venv/lib/python3.12/site-packages/joserfc/jwt.py": "6bda702ac912095a33ccc5f5604af43b426295bec1f4dda508c02cbc10214e3d"
+  },
+  "resolved_v1_blocker": {
+    "id": "G3-ORIGIN-POLICY-1",
+    "assessment": "Resolved. The v2 policy allows endpoints on different explicitly configured HTTPS origins, while network access remains restricted to exact configured method and complete URL pairs and cannot be redirected or selected from provider metadata or token claims. This matches B02's configured-origin boundary without imposing the unsupported single-origin restriction."
+  },
+  "reviewed_points": [
+    {
+      "point": "Parent scope and status boundaries",
+      "assessment": "The contract keeps G3 limited to authentication/session/CSRF, preserves the existing AX localhost GET-only server and original OpenAPI job DTOs, does not claim corporate SSO or AT-21 completion, and keeps G4 authorization/job writes and G6 full UI/regression acceptance separate. Synthetic local protocol tests are not represented as real corporate-provider acceptance."
+    },
+    {
+      "point": "Browser-bound one-time state and session issuance",
+      "assessment": "The browser cookie hash, five-minute expiry, atomic consumption before token exchange, non-consumption on cross-browser mismatch, nonce/PKCE linkage, opaque session hash, rotation, absolute/idle expiry and stable domain-separated HMAC CSRF token are explicit and testable. Injected time and real PostgreSQL allow independent expiry, replay, concurrency and commit-fault checks. The CSRF response is explicitly canonical base64url without padding, exactly 43 characters for SHA-256."
+    },
+    {
+      "point": "Authlib integration and claim validation",
+      "assessment": "Direct AsyncOAuth2Client URL construction and token exchange use the pinned APIs and avoid the Starlette PKCE helper's DEBUG verifier log. Strict joserfc signature decoding with the application algorithm allowlist is followed by Authlib CodeIDToken claim checks with explicit issuer/audience and injected time. The revised contract's exp>now, finite non-bool NumericDate, unique string audiences, subject scalar, nonce and azp rules close the reviewed source gaps. Tests can assert exp == now rejection and bool/NaN/infinity rejection instead of inheriting the library's weaker boundary behavior."
+    },
+    {
+      "point": "Network policy and response limits",
+      "assessment": "A single callback HTTPX2 client handles the token and configured JWKS requests. Exact method/full-URL allowlisting across explicitly configured origins, no redirects, no environment proxy, fixed TLS, identity content encoding and a streamed 65536-byte cap per response make endpoint confinement and size rejection testable for chunked responses as well as declared Content-Length. Finite per-operation and outer callback network deadlines are concrete."
+    },
+    {
+      "point": "Privacy and independent verification",
+      "assessment": "No callback error text or token material is returned or persisted; Uvicorn access logging and raw request logging are disabled, while actual service stdout/stderr and application logs are tested with canaries. The synthetic signed protocol provider, two clients, real PostgreSQL, literal crypto/HMAC oracles, boundary cases and frozen gate provide adequate independent testability without overclaiming deployment acceptance."
+    }
+  ],
+  "blockers": [],
+  "limitations": [
+    "This is contract approval only. No implementation, test, service or provider behavior was executed or accepted.",
+    "The real corporate provider endpoint set, issuer registration, client authentication policy and TLS environment remain unapproved environment configuration."
+  ]
+}

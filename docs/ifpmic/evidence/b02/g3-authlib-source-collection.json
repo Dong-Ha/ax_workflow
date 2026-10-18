@@ -1,0 +1,98 @@
+{
+  "kind": "b02_g3_authlib_httpx_source_collection",
+  "scope": "Read-only inspection of the locally installed pinned libraries and their source. This records API evidence, not an implementation or provider-configuration approval.",
+  "installed_packages": {
+    "Authlib": "1.9.1",
+    "httpx2": "2.13.1",
+    "joserfc": "1.7.5",
+    "python": "3.12"
+  },
+  "source_pins": {
+    ".ifpmic-venv/lib/python3.12/site-packages/authlib/integrations/base_client/async_app.py": "1fa9d8d8185d6f03cff3a2071a48d92c2d9413321a78641a039f745363f3e99f",
+    ".ifpmic-venv/lib/python3.12/site-packages/authlib/integrations/base_client/async_openid.py": "e71c505a379c5cff4990c91d32f2910dbb59981bcb27955a6d96d58280fb29b4",
+    ".ifpmic-venv/lib/python3.12/site-packages/authlib/integrations/base_client/sync_app.py": "4c2b7a570fedb93b42a84653a9e98c2fa3a90f61048b50ca6cae15beed628736",
+    ".ifpmic-venv/lib/python3.12/site-packages/authlib/integrations/httpx_client/oauth2_client.py": "24c0c3dd6b05c8daeb9d781ce6ceef6c64107ae25a881076fefb82a5995ae463",
+    ".ifpmic-venv/lib/python3.12/site-packages/authlib/oauth2/client.py": "87ff9d5d5b06a1b54b82849f1e27fc4649966bb943dd69fdea8e92cf8dc6a4dc",
+    ".ifpmic-venv/lib/python3.12/site-packages/authlib/oidc/core/claims.py": "b513ebb513ff64d0c3fffe2482b74b47aaa1ce40ec839da69f13bec1b1c2af78",
+    ".ifpmic-venv/lib/python3.12/site-packages/httpx2/_client.py": "fa3948aa66a9efd5edf097c6d13d927612c617328b43ceefc4bdd5e350aaa93b",
+    ".ifpmic-venv/lib/python3.12/site-packages/httpx2/_models.py": "d139d0c54a1acd65995f693d876441e55fe418ef2799f647ec6361f695b0d4d6",
+    ".ifpmic-venv/lib/python3.12/site-packages/httpcore2/_trace.py": "15462c8d4707d462b579e591a97682b92632e9e03619cc1052984b6c94502fda",
+    ".ifpmic-venv/lib/python3.12/site-packages/joserfc/jwt.py": "6bda702ac912095a33ccc5f5604af43b426295bec1f4dda508c02cbc10214e3d",
+    ".ifpmic-venv/lib/python3.12/site-packages/joserfc/jwk.py": "10bbcd792970f29850fecbd9cf27b126a2522f98a1ea31ec74133788d1cf8166",
+    ".ifpmic-venv/lib/python3.12/site-packages/joserfc/jws.py": "0a4f9b7b62a671ef16b9e3c476f3c23b1055ec3f36a614047520c2b82813f4cb"
+  },
+  "api_evidence": [
+    {
+      "source": "authlib/integrations/httpx_client/oauth2_client.py:67-108",
+      "symbols": ["AsyncOAuth2Client", "SESSION_REQUEST_PARAMS"],
+      "finding": "AsyncOAuth2Client is an HTTPX2 AsyncClient subclass. Its forwarded client options include transport, timeout, limits, follow_redirects, max_redirects, proxy, trust_env, verify and related request settings."
+    },
+    {
+      "source": "authlib/oauth2/client.py:166-202",
+      "symbols": ["OAuth2Client.create_authorization_url"],
+      "finding": "Direct create_authorization_url(url, state, code_verifier, ...) returns (authorization_url, state). With code_challenge_method='S256' and a supplied verifier it adds the S256 challenge. Supplying application-generated state, verifier and nonce avoids the Starlette helper's code-verifier debug log."
+    },
+    {
+      "source": "authlib/oauth2/client.py:207-271; authlib/integrations/httpx_client/oauth2_client.py:157-181",
+      "symbols": ["OAuth2Client.fetch_token", "AsyncOAuth2Client._fetch_token"],
+      "finding": "Direct fetch_token(fixed_token_endpoint, grant_type='authorization_code', code=..., code_verifier=..., redirect_uri=...) prepares and posts the form. Omit state when the application validates the callback state itself; state is used by Authlib when parsing a complete authorization_response. Inspected implementation has no log call that prints authorization code, token response, verifier or token request body."
+    },
+    {
+      "source": "authlib/integrations/base_client/async_app.py:76-83,93-110; authlib/integrations/base_client/sync_app.py:339-376",
+      "symbols": ["AsyncOAuth2Mixin.load_server_metadata", "AsyncOAuth2Mixin.create_authorization_url", "OAuth2Base._create_oauth2_authorization_url"],
+      "finding": "The Starlette OAuth wrapper fetches discovery and merges metadata into client kwargs. Its authorization helper logs the generated code_verifier at DEBUG. Avoid this helper for a strict no-secret-logs contract, and do not allow discovery metadata to override trusted HTTP client policy."
+    },
+    {
+      "source": "authlib/integrations/base_client/async_openid.py:16-33,42-90",
+      "symbols": ["AsyncOpenIDMixin.fetch_jwk_set", "AsyncOpenIDMixin.parse_id_token"],
+      "finding": "Built-in discovery/JWKS helpers call request() then resp.json(), buffering the response without a configured byte limit. parse_id_token uses joserfc jwt.decode, KeySet.import_key_set and JWSRegistry; its algorithm list comes from discovery (default RS256), strict_check_header=False, and default claim options constrain issuer only. Supply fixed application algorithm policy and explicit issuer/audience claim options if using this validation path."
+    },
+    {
+      "source": "authlib/oidc/core/claims.py:CodeIDToken and IDToken validation methods",
+      "symbols": ["CodeIDToken.validate", "IDToken.validate_iss", "IDToken.validate_aud", "IDToken.validate_nonce", "IDToken.validate_azp"],
+      "finding": "The code-flow ID token requires iss, sub, aud, exp and iat; validates nbf when present, nonce when provided, and azp consistency. Default audience validation is not pinned to the configured client_id unless an explicit aud claims_option is supplied. azp is required by the helper when the audience is not the single client_id; it is not unconditionally required for a matching single audience."
+    },
+    {
+      "source": "httpx2/_client.py:1450-1505; httpx2/_models.py:AsyncByteStream and Response stream APIs",
+      "symbols": ["AsyncClient.__init__", "AsyncClient.request", "AsyncClient.send", "AsyncByteStream"],
+      "finding": "HTTPX2 defaults follow_redirects=False but trust_env=True and max_redirects=20. Set all relevant values explicitly (including trust_env=False, proxy=None, finite timeout/limits, follow_redirects=False and max_redirects=0). A size limit must count streamed bytes; Content-Length alone does not protect chunked responses. The inspected Authlib calls do not expose streaming before JSON parsing, so a capped stream/transport or bounded custom HTTP client is required."
+    },
+    {
+      "source": "httpx2/_client.py:1480-1505; httpx2/_transports/default.py AsyncHTTPTransport; HTTPX2 MockTransport API",
+      "symbols": ["AsyncClient.__init__", "AsyncHTTPTransport", "MockTransport"],
+      "finding": "HTTPX2 accepts an AsyncBaseTransport, including MockTransport for request-level tests. Authlib's wrapper creates and closes separate clients for discovery, token and JWKS operations; reusing a normal AsyncHTTPTransport object as client_kwargs across those clients risks it being closed after the first client. A managed transport factory/client override or equivalent lifecycle design is needed. A MockTransport has a no-op close and is reusable for tests."
+    },
+    {
+      "source": "httpx2/_client.py:1085-1091,1923-1929; httpcore2/_trace.py:17-88",
+      "symbols": ["AsyncClient request logging", "Trace"],
+      "finding": "HTTPX2 logs method, URL and response status at INFO; HTTPCore2 DEBUG trace logs operation names, trace fields and exceptions. The inspected direct Authlib authorization/token methods do not log code, token, verifier or request body. Keep endpoint URLs free of credential-bearing query strings, avoid attaching traces that emit sensitive data, and retain application-level redaction."
+    }
+  ],
+  "official_references": [
+    {
+      "url": "https://docs.authlib.org/en/stable/oauth2/client/web/starlette.html",
+      "use": "Authlib Starlette client integration and documented callback helpers; local source inspection is the authority for pinned 1.9.1 implementation details."
+    },
+    {
+      "url": "https://openid.net/specs/openid-connect-core-1_0.html#CodeFlowAuth",
+      "use": "OpenID Connect Core code flow, including ID token validation requirements."
+    },
+    {
+      "url": "https://openid.net/specs/openid-connect-core-1_0.html#IDTokenValidation",
+      "use": "OpenID Connect Core ID Token validation, including issuer, audience, azp, time and nonce checks."
+    },
+    {
+      "url": "https://www.rfc-editor.org/rfc/rfc9700.html",
+      "use": "OAuth 2.0 Security Best Current Practice."
+    }
+  ],
+  "unresolved_contract_questions": [
+    "Exact maximum response bytes for discovery, JWKS and token responses, and whether the cap applies to decoded/decompressed bytes, need explicit contract values. Authlib's standard request().json() path does not enforce a cap.",
+    "Exact configured-origin matching and a transport lifecycle compatible with separate Authlib clients need implementation-level specification; HTTPS alone does not bind an endpoint to an approved origin.",
+    "Clarify whether azp must always be present or only when required by OIDC audience rules; Authlib's default validation uses the latter behavior."
+  ],
+  "limitations": [
+    "No service, provider, or network was contacted; no runtime request was executed.",
+    "HTTPX/Authlib logging findings are from installed source inspection and do not prove that application handlers, proxies, ASGI servers or deployment logs redact sensitive callback data."
+  ]
+}

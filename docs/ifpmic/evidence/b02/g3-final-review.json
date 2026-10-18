@@ -1,0 +1,60 @@
+{
+  "kind": "ifpmic_b02_g3_independent_final_review",
+  "reviewer_role": "independent read-only G3 final reviewer",
+  "decision": "accept_partial_g3_candidate",
+  "scope": "Partial G3 acceptance for local OIDC authorization-code/PKCE, opaque database sessions, CSRF and Origin checks, and bounded authentication retention. This does not accept full B02, G4-G7, original AT cases, or corporate SSO.",
+  "plan": {
+    "path": "docs/ifpmic/B02-IDENTITY.md",
+    "sha256": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a",
+    "contract_path": "docs/ifpmic/evidence/b02/g3-implementation-contract-v4.json",
+    "contract_sha256": "9b01aea9e54d1663aa7ad0bd6d14028292aa85a4e4c7300c5552b3613a810a72",
+    "contract_review": "docs/ifpmic/evidence/b02/g3-contract-review-v4.json",
+    "tc_contract_review": "docs/ifpmic/evidence/b02/g3-tc-contract-review-v4.json",
+    "pre_gate_review": "docs/ifpmic/evidence/b02/g3-pre-gate-review-v3.json"
+  },
+  "frozen_gate": {
+    "archive_path": "docs/ifpmic/evidence/b02/g3-gate.zip",
+    "published_archive_sha256": "76d5c6377d2dc8a80c8f01fcf5ffe53e083ed109a8a18345ba023ff745067c50",
+    "verification_report_path": "docs/ifpmic/evidence/b02/g3-verification.json",
+    "verification_report_sha256": "f474be1df8ae355095d1b3bbc6ac400958fa502f8123649b02046046152c492c",
+    "raw_gate_entry_sha256": "af69ca32e11ebc87864f1096846286619a6628e926b45b8000875e1edec38a9c",
+    "candidate_fingerprint": "f0ffc53d3afad880e0d7c7f14116ac1b137e93a17b7cf583396c643d9a52e2b6",
+    "source_changes": [],
+    "tests": {
+      "python_total": 167,
+      "python_passed": 167,
+      "python_failed": 0,
+      "python_errors": 0,
+      "python_skipped": 0,
+      "g1_cases": 12,
+      "g2_cases": 41,
+      "g3_cases": 114,
+      "b01_node_total": 48,
+      "b01_node_passed": 48,
+      "b01_node_failed": 0,
+      "b01_node_cancelled": 0,
+      "b01_node_skipped": 0,
+      "b01_node_todo": 0
+    }
+  },
+  "independent_evidence_audit": {
+    "result": "pass",
+    "checks": [
+      "Verified the published archive digest, exact four-member inventory, entry byte counts, and SHA256 values against g3-verification.json. Members are under gate/ and their bytes match the report.",
+      "Verified the archived frozen gate has verdict pass, empty source_changes, and the reported candidate fingerprint. Recomputed all 82 gate source hashes against the current worktree; all matched. The orchestrator additionally confirmed those hashes match staged index bytes and that the cached whitespace check passes.",
+      "Recomputed all ten G3 implementation/test source_pins_at_authoring hashes from the TC ledger against the current worktree; all matched. The ledger records 114 G3 cases and 10 migration regression cases, while the frozen gate records the combined 167 Python tests and 48 B01 Node tests, all passing without skips.",
+      "Confirmed migration 001 retains its pinned SHA256 cf0437a5f32e1589e4ea821afbb2ef2480d780a276667880aa9a08a0f4c77f12. Migration 002 is pinned at 95c01f06eb586e0c1067f04672edfed8e0a11215752ad859ac9e4744da5a504e; its SQL adds expiry indexes and DELETE only on oidc_login_transactions and user_sessions for the runtime role. The migration tests pin both versions and exercise the retention privilege boundary.",
+      "Compared private and published JUnit XML after substituting the private hostname with redacted-local-host; their parsed XML trees are equal. All 167 test cases are retained. The archive contains no original hostname, host-specific filesystem paths, or PostgreSQL DSN/password assignment patterns.",
+      "Confirmed archive publication excludes private raw JUnit, lifecycle and service-observation source files, actual service stdout/stderr and config, PostgreSQL server logs, and failed development outputs. The passing aggregate logs are present as the other two entries.",
+      "Verified the private G3 gate directory is mode 0700 and its private evidence files are mode 0600. The recorded lifecycle ends stopped with pid_alive false. The actual Uvicorn observation records five cases (success 303; expired state, invalid state, provider error, and replay 401), canaries absent, exit code 0, and PID absent.",
+      "Verified all three failed targeted-attempt stdout files referenced by the ledger exist and match their recorded hashes. The report marks the earlier passing pre-whitespace gate as superseded after trimming one EOF blank line, re-pinning the ledger/review, and rerunning the complete frozen gate."
+    ]
+  },
+  "limitations": [
+    "The gate uses a synthetic local issuer, locally signed tokens, temporary PostgreSQL, and loopback Uvicorn. It does not establish real corporate SSO, production TLS/reverse-proxy behavior, or production authentication.",
+    "Original AT-21 and all other original AT cases remain unexecuted and are not counted as complete by the synthetic suite.",
+    "G4-G7, durable user APIs/workspaces, combined acceptance, Temporal orchestration, B03-B13, devices/release approvals, and full Node/build/browser G6 remain pending.",
+    "The 96 protected-source and 89 inventory checks, plus original 17 imported files and two uploads, are byte/inventory comparisons only; they do not constitute full product acceptance. Functional retention/capacity cases are not production load guarantees."
+  ],
+  "reviewer_verdict": "Accept the frozen G3 candidate as a partial B02 foundation. Keep full B02, G4-G7, corporate SSO, original AT-21 and all other original acceptance work explicitly pending."
+}

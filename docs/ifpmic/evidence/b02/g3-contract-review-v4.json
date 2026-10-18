@@ -1,0 +1,33 @@
+{
+  "review": "Independent narrow B02 G3 contract v4 delta review",
+  "verdict": "approved_for_implementation_and_test_authoring",
+  "scope": "Reviewed only the exact v4 delta against reviewed v3 contract, approved B02 plan, v3 review and pinned Authlib APIs. No product, test, service or database execution occurred.",
+  "source_pins": {
+    "docs/ifpmic/B02-IDENTITY.md": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a",
+    "docs/ifpmic/evidence/b02/g3-implementation-contract-v3.json": "0de7956ee751fa3fb3efc24458832b4e69d760c435ee23940c9f9f4656ebd531",
+    "docs/ifpmic/evidence/b02/g3-implementation-contract-v4.json": "9b01aea9e54d1663aa7ad0bd6d14028292aa85a4e4c7300c5552b3613a810a72",
+    "docs/ifpmic/evidence/b02/g3-contract-review-v3.json": "b0bfa4a401a0299102cd8a4666cbb574b372fcf87c6cc5ac5a476f730a7dd0b9",
+    "docs/ifpmic/evidence/b02/g3-authlib-source-collection-v2.json": "1cdff5ec842aa644b479705804e401dee6a78faa1cb01d6e11f419006ac5e223",
+    ".ifpmic-venv/lib/python3.12/site-packages/authlib/oauth2/client.py": "87ff9d5d5b06a1b54b82849f1e27fc4649966bb943dd69fdea8e92cf8dc6a4dc",
+    ".ifpmic-venv/lib/python3.12/site-packages/authlib/integrations/httpx_client/oauth2_client.py": "24c0c3dd6b05c8daeb9d781ce6ceef6c64107ae25a881076fefb82a5995ae463"
+  },
+  "delta_review": [
+    {
+      "point": "Token endpoint error classification",
+      "assessment": "The v4 delta resolves G3-CONTRACT-TOKEN-ERROR-1. Only invalid_grant from HTTP 400/401 maps to user authentication failure. invalid_request and other OAuth provider errors map to a dependency failure; an OAuth error payload on HTTP 200 and invalid_grant on HTTP 500 also map to dependency failure. This separates a rejected/expired authorization code from malformed server-generated token requests and upstream protocol/configuration failures, without exposing provider descriptions. The cases are concrete independent test oracles."
+    },
+    {
+      "point": "Garbage-collection contract preservation",
+      "assessment": "The v4 diff leaves the reviewed v3 retention, admission, scheduler, lock, narrow DELETE privilege and migration test requirements unchanged. No new state-lifecycle or authority-boundary issue was introduced by the error-mapping delta."
+    },
+    {
+      "point": "Original scope and limitations",
+      "assessment": "The approved B02 parent plan SHA remains unchanged. G3 still does not claim real corporate SSO, AT-21, G4 or G6 completion; the revised error mapping does not narrow the original API, DB, workspace or follow-on scope."
+    }
+  ],
+  "blockers": [],
+  "limitations": [
+    "This approves contract sufficiency only. Product implementation, TC coverage, migrations, scheduler lifecycle and runtime behavior remain unreviewed and unaccepted.",
+    "The contract delta was confirmed by structural JSON comparison: only `/oidc/network` error mapping and the `supersedes` record changed from v3."
+  ]
+}

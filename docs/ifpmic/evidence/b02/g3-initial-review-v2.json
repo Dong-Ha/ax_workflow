@@ -1,0 +1,25 @@
+{
+  "review": "Historical follow-up to initial G3 code review: pending-state capacity rollback",
+  "verdict": "material_gap_found_fixed_in_current_source",
+  "scope": "Read-only comparison of the preserved pre-fix AuthService.begin implementation with the agreed G3 retention/admission contract. No tests, database, service, or network were run.",
+  "contract_pin": {
+    "path": "docs/ifpmic/evidence/b02/g3-implementation-contract-v4.json",
+    "sha256": "9b01aea9e54d1663aa7ad0bd6d14028292aa85a4e4c7300c5552b3613a810a72"
+  },
+  "historical_source_pin": {
+    "path": "docs/ifpmic/evidence/b02/attempts/g3-before-review-fixes/auth-before-capacity-commit.py",
+    "sha256": "e97797836cd8ebec063337d05286447a894cf25866d7190decc23bce0a903cd7"
+  },
+  "finding": {
+    "id": "G3-IMPL-CAPACITY-CLEANUP-ROLLBACK",
+    "severity": "material_retention_progress_gap",
+    "location": "historical AuthService.begin, capacity check in the transaction",
+    "evidence": "The archived implementation ran expiry cleanup, counted pending rows, then raised DEPENDENCY_UNAVAILABLE when count reached 1024 before leaving db.transaction(). That exception rolled back the transaction, including the cleanup batch.",
+    "impact": "When a backlog remained at or above the cap, each rejected login rolled back the bounded expiry cleanup, so repeated attempts could not make expiry progress and could keep the admission cap blocked.",
+    "resolution_seen_in_current_source": "Current services/ifpmic_api/auth.py tracks admitted inside the transaction, allows cleanup to commit without inserting when full, then raises the fixed 503 ApiError after the transaction exits. The count and insert remain in the same transaction under the shared advisory lock."
+  },
+  "review_limits": [
+    "Current-source behavior was inspected statically only; no PostgreSQL test has been run or accepted here.",
+    "This historical review preserves the pre-fix source hash and does not replace the original G3 initial review."
+  ]
+}

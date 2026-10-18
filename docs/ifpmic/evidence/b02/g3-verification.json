@@ -1,0 +1,185 @@
+{
+  "kind": "ifpmic_b02_g3_verification",
+  "decision": "g3_pass_pending_independent_final_review",
+  "requirements": [
+    "REQ-13",
+    "B02-G3"
+  ],
+  "scope": "Partial B02 local OIDC code+PKCE, opaque database session, CSRF/Origin and bounded auth retention.",
+  "plan_sha256": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a",
+  "contract_sha256": "9b01aea9e54d1663aa7ad0bd6d14028292aa85a4e4c7300c5552b3613a810a72",
+  "candidate_fingerprint": "f0ffc53d3afad880e0d7c7f14116ac1b137e93a17b7cf583396c643d9a52e2b6",
+  "gate_archive": {
+    "path": "docs/ifpmic/evidence/b02/g3-gate.zip",
+    "sha256": "76d5c6377d2dc8a80c8f01fcf5ffe53e083ed109a8a18345ba023ff745067c50",
+    "entries": {
+      "gate.json": {
+        "bytes": 44292,
+        "sha256": "af69ca32e11ebc87864f1096846286619a6628e926b45b8000875e1edec38a9c"
+      },
+      "pytest.xml": {
+        "bytes": 33391,
+        "sha256": "89d15fa6829cabc9c6465247aebcb4d9c81b45e25334ed727b485ae060631d1d"
+      },
+      "python.log": {
+        "bytes": 272,
+        "sha256": "931308753abafa0120b3d3ba4add40a77ab7802f1ddb2359d65ae408e45e448c"
+      },
+      "b01-node.log": {
+        "bytes": 11074,
+        "sha256": "9571474d05e3b97d95c3fa822009e39767573fc1f26bf80200fcace3dd45a06f"
+      }
+    }
+  },
+  "tests": {
+    "python": {
+      "tests": 167,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 167
+    },
+    "g1_cases": 12,
+    "g2_cases": 41,
+    "g3_cases": 114,
+    "b01_node": {
+      "tests": 48,
+      "pass": 48,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    }
+  },
+  "source_changes": [],
+  "unchanged_existing_sources": {
+    "protected_source_count": 96,
+    "protected_inventory_count": 89,
+    "original_imported_files": 17,
+    "original_uploads": 2,
+    "scope": "Byte/inventory comparison only. Full Node/build/browser G6 remains pending."
+  },
+  "postgres_lifecycle": {
+    "stop_status": "stopped",
+    "pid_alive": false,
+    "binary_versions": {
+      "initdb": "initdb (PostgreSQL) 18.1",
+      "pg_ctl": "pg_ctl (PostgreSQL) 18.1",
+      "postgres": "postgres (PostgreSQL) 18.1"
+    },
+    "binary_sha256": {
+      "initdb": "7cba14094c5f505f492fd243c5eda04f0dc3be05f12b7bd278f150f1e03b721f",
+      "pg_ctl": "24a1f166819e0924319ff3faf752ad2a1ac594e223e2f3b1a2038dc84a2969de",
+      "postgres": "c85fa9c977d9e641c2d22d93675a9b7097764b7df2c4c9ea021f5780522b2af2"
+    },
+    "lifecycle": [
+      {
+        "duration_ms": 5,
+        "exit_code": 0,
+        "operation": "initdb_version"
+      },
+      {
+        "duration_ms": 2,
+        "exit_code": 0,
+        "operation": "pg_ctl_version"
+      },
+      {
+        "duration_ms": 7,
+        "exit_code": 0,
+        "operation": "postgres_version"
+      },
+      {
+        "duration_ms": 1664,
+        "exit_code": 0,
+        "operation": "initdb"
+      },
+      {
+        "duration_ms": 111,
+        "exit_code": 0,
+        "operation": "pg_ctl_start"
+      },
+      {
+        "duration_ms": 115,
+        "exit_code": 0,
+        "operation": "pg_ctl_stop"
+      }
+    ]
+  },
+  "auth_service_observation": {
+    "kind": "ifpmic.g3.service-observation.v1",
+    "cases": {
+      "expired_state": 401,
+      "invalid_state": 401,
+      "provider_error": 401,
+      "replay": 401,
+      "success": 303
+    },
+    "canaries_absent": true,
+    "service_exit_code": 0,
+    "pid_alive": false,
+    "logs": {
+      "stderr": {
+        "bytes": 350,
+        "sha256": "8c795b88580678be604350cb06c62a61850bcfacb1baec1d5b616bf5b32c790d"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "private_directory_mode": "0o700",
+    "stdout_mode": "0o600",
+    "stderr_mode": "0o600"
+  },
+  "private_evidence_permissions": {
+    "gate_directory_mode": "0o700",
+    "files": {
+      "private-auth-observation.json": "0o600",
+      "private-b01_node.log": "0o600",
+      "private-lifecycle.json": "0o600",
+      "private-pytest.xml": "0o600",
+      "private-python.log": "0o600"
+    }
+  },
+  "publication": {
+    "junit": {
+      "raw_private_sha256": "e69c2d58bc270ed3afdc2dbd22de4a29ab2771f09b65d05c217f3baa48e091b1",
+      "published_sha256": "89d15fa6829cabc9c6465247aebcb4d9c81b45e25334ed727b485ae060631d1d",
+      "transformation": "Only hostname replaced with redacted-local-host; XML serialized."
+    },
+    "successful_logs": "Inspected passing Python summary and B01 TAP output; bytes promoted unchanged.",
+    "excluded": [
+      "private raw JUnit",
+      "private lifecycle and service observation source files",
+      "actual service stdout/stderr and private config",
+      "PostgreSQL server logs",
+      "all failed development outputs"
+    ],
+    "synthetic_test_ids": "Fixed synthetic values in parametrized case IDs come from committed tests, not actual runtime credentials."
+  },
+  "development_history": {
+    "tc_ledger": "g3-tc-ledger.json",
+    "pre_gate_review": "g3-pre-gate-review-v3.json",
+    "historical_sources": "g3-historical-source.json",
+    "resolved_product_findings": [
+      "Provider error matrix distinguishes invalid_grant HTTP400/401 from dependency failures.",
+      "002 adds only auth expiry indexes and runtime DELETE permissions; 001 remains immutable.",
+      "Bounded cleanup commits before login-capacity503, and periodic maintenance retries privately.",
+      "Public JWKS rejection includes RSA oth private-key material."
+    ],
+    "failed_attempts": "Three failed targeted runs retained privately with hashes and fixture/oracle classifications in TC ledger; no failures erased or marked passing.",
+    "superseded_pre_whitespace_gate": {
+      "private_report": "workflow-artifacts/verification/B02/G3/gates/2026-10-18T16-17-36-785217Z/gate.json",
+      "sha256": "4e61e7f83e5a658949208d0c0c4320d3981d76edf25d7a3541f30e9e683690ba",
+      "verdict": "pass",
+      "reason_superseded": "Cached whitespace check reported one extra EOF blank line in test_auth.py. Trimmed only that line; TC ledger and independent pre-gate review re-pinned, then complete frozen gate rerun on current bytes."
+    }
+  },
+  "limitations": [
+    "Synthetic local issuer, signed tokens, temporary PostgreSQL and actual loopback Uvicorn only. No real corporate SSO registration, production authentication, TLS/reverse-proxy or AT-21 acceptance.",
+    "G4-G7 durable user APIs/workspaces/combined acceptance, Temporal orchestration, B03-B13 and all original AT remain pending.",
+    "Full Node387/build/browser G6 remains pending; existing protected sources and original17+2 are byte/inventory comparisons, not full product acceptance.",
+    "The inherited environment.oidc_protocol=not_executed describes the G1 environment smoke probe only. G3 protocol execution is evidenced by114 tests and the separate actual-service observation.",
+    "Gate covers pinned Linux CPython3.12 and installed library source hashes. Retention/capacity bounds are functional checks, not production load guarantees."
+  ]
+}

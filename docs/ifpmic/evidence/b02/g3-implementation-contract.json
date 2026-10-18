@@ -1,0 +1,70 @@
+{
+  "kind": "ifpmic_b02_g3_preimplementation_contract",
+  "status": "pending_independent_review",
+  "approved_parent_plan": {
+    "path": "docs/ifpmic/B02-IDENTITY.md",
+    "sha256": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a"
+  },
+  "requirements": [
+    "REQ-13",
+    "B02-G3"
+  ],
+  "scope": "Concrete implementation and independent TC oracles for approved G3 authentication. No change to original OpenAPI job DTOs, design contracts, AX GET-only server, or original AT status.",
+  "ownership": {
+    "main": "services/ifpmic_api/{settings,oidc,auth,app,serve}.py, verification runner, README, final integration",
+    "TC": "tests/ifpmic_api/test_auth.py and synthetic provider helpers; separate authored tests and case ledger",
+    "reviewer": "Read-only contract/candidate review; no product/test authoring",
+    "excluded": "No SAM/TEM/SQE execution, real device, publishing or real corporate SSO approval."
+  },
+  "factory": {
+    "signature": "create_app(settings, *, db_factory=None, oidc_transport=None, bridge_runner=None, filesystem=None, clock=None, fault_hook=None)",
+    "settings": "Settings immutable/repr=False dataclass: mode,api_origin,issuer,client_id,authorization_endpoint,token_endpoint,jwks_uri,redirect_uri,post_login_url,allowed_ui_origins(tuple),csrf_key(bytes),database_dsn(optional),client_secret(optional),client_auth_method(default client_secret_basic),signing_algorithms(default tuple RS256).",
+    "db_factory": "Callable returning fresh psycopg connection/context manager; runtime role only, no connection on import. Default approved DSN connect_timeout10/autocommitTrue. Tests use real isolated PG18.1.",
+    "oidc_transport": "Optional factory returning a fresh HTTPX2 AsyncBaseTransport for one callback client; production uses fresh AsyncHTTPTransport with trust_env=False/verify=True/proxy=None/retries0. Not HTTP input.",
+    "clock": "Callable returning aware UTC datetime; production datetime.now(timezone.utc). Used for DB and Authlib validate(now=timestamp,leeway=0).",
+    "fault_hook": "Optional test-only callable(point) at session_before_commit/session_after_commit; no env/HTTP switch."
+  },
+  "settings_policy": {
+    "mode": "Only mock or real. Invalid/missing required settings fail closed SETTINGS_INVALID; no real-to-mock fallback.",
+    "urls": "All configured absolute URLs forbid userinfo/query/fragment/control characters. Authorization/token/JWKS share exact normalized issuer origin. No discovery, token jku/x5u URL lookup or provider metadata override. redirect_uri exactly api_origin + /auth/callback. post_login_url fixed and origin in allowed_ui_origins. UI/API origins canonical exact origins, not wildcard.",
+    "transport": "Real URLs HTTPS only. Mock HTTP permitted only for literal loopback127.0.0.1 or ::1; all mock configured API/UI/IdP origins loopback. No production TLS/SSO acceptance inferred from mock.",
+    "client_auth": "Only client_secret_basic with nonempty secret or explicitly configured none with PKCE; no client secret from a request.",
+    "crypto": "csrf_key at least32 bytes. Allowed algorithms configurable nonempty unique subset of RS256/384/512,PS256/384/512,ES256/384/512; no HS/none. Default RS256.",
+    "launch": "python -m services.ifpmic_api.serve reads IFPMIC_API_CONFIG path to explicit owner-only regular no-symlink JSON config (mode0600), csrf_key canonical base64url decoded. IFPMIC_API_PORT nonsecret validated1..65535. Bind127.0.0.1, Uvicorn access_log=False, proxy_headers=False, server_header=False; no secrets in argv, no existing AX/auth config read."
+  },
+  "oidc": {
+    "authorize": "GET /auth/login takes no query. Generate independent random32-byte canonical base64url state/browser/nonce/verifier. Authlib direct AsyncOAuth2Client configured code_challenge_method=S256 creates configured authorization URL with response_type=code,scope=openid,state,nonce,redirect_uri,client_id,code_verifier. Never use Starlette PKCE-debug helper. Return303 fixed IdP URL; no user return URL.",
+    "browser_binding": "ax_login cookie=random32-byte base64url, host-only,Path=/auth,HttpOnly,SameSite=Lax,Secure iff real,Max-Age300. New login rotates it; DB stores state_hash=SHA256(ASCII(state)),browser_hash=SHA256(ASCII(cookie)),nonce,pkce_verifier,expires_at=now+300seconds.",
+    "callback": "GET /auth/callback allows code,state,error,error_description,iss,session_state only; duplicate parameter names, bad percent encoding/UTF8, literal controls, query>8192bytes or code>4096characters fail401 AUTH_REQUIRED without echo. State/browser canonical32-byte base64url. On matching unconsumed browser/state and expires_at>now, UPDATE consumed_at atomically and commit before exchange. Cross-browser mismatch does not consume another browser state. Once consumed, failed provider/token attempts require fresh login. Optional response iss must equal configured issuer. Provider error returns401 fixed DTO; never redirect its error_description.",
+    "network": "One client handles tokenPOST and configuredJWKSGET, trust_envFalse,follow_redirectsFalse,max_redirects0,proxyNone,TLSverifyTrue,timeout5s per network operation and outer10s callback network budget. Endpoint allowlist compares exact configured method+URL, not URL from received JWT. Request Accept-Encoding:identity; reject any nonidentity Content-Encoding rather than unbounded decompression. Stream byte cap65536 per response including chunked; Content-Length is not sole enforcement. Redirect/non2xx network failure503 DEPENDENCY_UNAVAILABLE; OAuth invalid_grant400/401 ->401 AUTH_REQUIRED.",
+    "verification": "joserfc signature decode using KeySet.import_key_set and strict JWSRegistry(app algorithms), then Authlib CodeIDToken(claims,header,options,params). Explicit options iss=value configured issuer and aud=value client_id; params nonce,client_id and ephemeral access_token for at_hash when present. Validate(now=injected timestamp,leeway=0). Require iss/sub/aud/exp/iat and nonce; sub nonempty Unicode scalar, no NUL. aud string or nonempty unique string list contains configured client_id. Multi-audience requires azp=client_id; any supplied azp must equal client_id. NumericDate exp/iat/optionalnbf finite numeric nonbool; exp>now,nbf<=now,iat<=now. No token-claimed nonce bypass. JWKS<=32 keys, public asymmetric keys only; never token-selected key URL. Fetch per callback, no cache fallback.",
+    "identity": "users.identity_subject is json.dumps([issuer,subject],ensure_ascii=True,separators=(comma,colon)), exact ordered pair, no email/display-name merge. display_name initially fixed IFPMIC user. Signed subject is only identity source.",
+    "success": "One transaction upsert user, revoke existing canonical ax_session if present, insert new opaque sessionhash then commit. Only after commit set session cookie and return303 post_login_url with no query/token/state. Delete ax_login. No OAuth token persists in DB/browser/localStorage/DTO/log. Auth session commit ambiguity returns fixed503; no successful response/cookie on failed commit."
+  },
+  "session": {
+    "cookie": "ax_session=random32 bytes canonical base64url without padding (43chars); host-only,Path=/,HttpOnly,SameSite=Lax,Secure iff real,Max-Age28800. Store SHA256(ASCII(cookie)), not decoded bytes.",
+    "validity": "Require nonrevoked row with expires_at>now and last_seen_at>now-1800seconds, where created_at<=now. Expiry exactly boundary invalid. SELECT FOR UPDATE plus last_seen update in same transaction. Absolute expiry now+28800seconds never extends. Login rotation revokes old token and changes CSRF.",
+    "csrf": "GET /api/v1/session exact {user_id,csrf_token,mode},Cache-Control:no-store. Stable token base64url(HMAC-SHA256(csrf_key,b\"ifpmic.csrf.v1\\x00\"+ASCII(ax_session))). No rotation on GET; same key survives service restart. No CSRF or raw session token stored in DB.",
+    "logout": "POST /auth/logout empty body only; valid current session+single matching X-CSRF-Token+exact allowed Origin. Revoke that row, commit, delete ax_session, return204. Missing/expired/revoked session401 AUTH_REQUIRED; bad CSRF403 CSRF_INVALID; bad/missing Origin403 ORIGIN_FORBIDDEN.",
+    "future_G4": "Shared auth helper accepts caller connection/request and checks/touches session in caller transaction for write, so G4 authorization and acceptance can serialize with logout. G3 does not implement user job endpoints."
+  },
+  "http_boundary": {
+    "headers": "Duplicate Origin ->403 ORIGIN_FORBIDDEN; duplicate X-CSRF-Token ->403 CSRF_INVALID; duplicate Authorization or Cookie headers, duplicate ax_session/ax_login cookie names, malformed auth cookie ->401 AUTH_REQUIRED. Single Authorization/owner_id/companyId/userId/local-board/worker headers never authenticate or override cookie actor.",
+    "host": "Exact API-origin Host, one header, no forwarded-header trust. Invalid host ->422 INVALID_REQUEST.",
+    "cors": "Explicit exact origins, credentials true, Vary Origin; no wildcard. GET without Origin allowed; any supplied unknown Origin forbidden403. Valid preflight: methods GET/POST, headers Content-Type/X-CSRF-Token/Idempotency-Key, Max-Age600,204; invalid preflight method/header403 FORBIDDEN. No auth required for valid preflight.",
+    "errors": "Fixed {code,message,trace_id} JSON with message=code and server UUID trace_id. No FastAPI validation/error detail or exception repr. Headers Cache-Control:no-store,Referrer-Policy:no-referrer. JSON ensure_ascii=True. No docs/openapi routes enabled in G3 service.",
+    "logging": "No query/request/header/body logging or debug tracing callbacks. Authlib direct flow avoids PKCE debug helper; HTTPX2 only uses fixed query-free endpoint URLs, no logging middleware. Outer application boundary suppresses unexpected raw exceptions into fixed dependency errors. Service actual stdout/stderr/captured application logs tested for callback code/state/error_description canaries. Reverse proxy log redaction remains unaccepted environment work."
+  },
+  "verification": {
+    "purpose": "Prove only valid browser-bound OIDC establishes opaque sessions and authenticated CSRF writes without private query/token leakage.",
+    "target": "Settings/HTTPX2 transport/Authlib verification/PostgreSQL state+users+sessions/FastAPI middleware/routes/Uvicorn entrypoint.",
+    "method": "TC actual local signed OIDC protocol provider and real PG, two clients, literal crypto/HMAC oracles and clock boundaries, malformed/redirect/proxy/network/duplicate/rotation/concurrency/fault cases, actual service logging probe; main frozen regression gate after targeted pass.",
+    "agent": "Independent TC author; main product integration; separate contract and final evidence reviewers.",
+    "pass_criteria": "All authored normal/exception/boundary/regression cases pass, no skips; issuer/subject only identity, one-time state, strict token verification, only valid Origin+CSRF+current session logout, sensitive output0; private PG/server terminate cleanly.",
+    "expected_result": "Locally verified G3 auth foundation; no corporate SSO or original AT-21 completion claim.",
+    "evidence": "Source-pinned contract reviews, TC ledger and private retained first-failure logs, frozen JUnit/TAP+gate with source before/after hashes, sanitized cookie/HTTP/crypto/service-log canary assertions and lifecycle hashes.",
+    "failure_recovery": "Preserve first failing output and exact source; diagnose product vs fixture vs oracle. Return to affected auth/transport/session boundary and rerun all G3 plus relevant G1/G2 before final acceptance. Material parent-plan semantics changes require reapproval.",
+    "regression_scope": "Frozen G3 gate includes all Python G1/G2/G3 and existing B01Node48, environment/hash lock and original17+2/96protected byte checks. Full Node387/build/browser/API/workspace acceptance stays G6; no claim of satisfying G6 UI omission conditions at G3."
+  },
+  "pending": "Await independent source-informed contract review AND TC agreement before product/test implementation. Entire B02 and original32 AT remain active/pending."
+}

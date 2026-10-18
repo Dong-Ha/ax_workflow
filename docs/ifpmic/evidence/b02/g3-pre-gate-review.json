@@ -1,0 +1,52 @@
+{
+  "review": "Read-only pre-gate review of the G3 runner, README, and current TC coverage overview",
+  "verdict": "blocked_pending_tc_ledger_sync_and_final_freeze",
+  "scope": "Static inspection only. No tests, service, PostgreSQL, or network were executed, and no product or TC files were changed. The test suite is still explicitly in progress and this review does not accept G3.",
+  "source_pins": {
+    "scripts/verify_ifpmic_g3.py": "ef60e77d341d9a2153ecdb5c519a2ac56846c7ee59ae34dab118458de2889f6d",
+    "README.md": "f419ab5fece644f376ebcdee1c08c905437e1a292905b67e1b00dfbefe8f024a",
+    "tests/ifpmic_api/test_auth.py": "28c10c084773b6df86f7bcb40a87ae1be64849e803b73cebd7225c220b2635f7",
+    "tests/ifpmic_api/oidc_provider.py": "b5e3a70df73245c143bd2e2e9db1ee2dd6061dde0cf1dfa7c02d9cdc4fe8f367",
+    "tests/ifpmic_api/test_migrations.py": "2e259f567f4c358aece674a4c932e48d2b6e9dec94613ad105feca6df3d12a7a",
+    "docs/ifpmic/evidence/b02/g3-tc-ledger.json": "de55e041ec3592f9cf90ef11c2603645479e1dd8f28f85a1f2855c27297d50f3",
+    "docs/ifpmic/evidence/b02/g3-implementation-contract-v4.json": "9b01aea9e54d1663aa7ad0bd6d14028292aa85a4e4c7300c5552b3613a810a72",
+    "docs/ifpmic/evidence/b02/g3-contract-review-v4.json": "83184c2c5d805f521f98ab0fe6fbf5c4b04bb3c7326f42b27d56ed3a651c32bd",
+    "docs/ifpmic/evidence/b02/g3-tc-contract-review-v4.json": "f2f7695cb5a1f3ee3e67afcfb228c30cc9aac600e89f5408fcef4a22e9f60ece",
+    "docs/ifpmic/evidence/b02/g3-initial-review-v3.json": "b346eb73dd274e66dd21df8997b5f6fb255f3164bec74631d00bff30d1fed404",
+    "docs/ifpmic/evidence/b02/g3-contract-review-v2.json": "e5024ecf58665aef6f848ae4b7f514fbf5a0394c007e8a597d74a6b5949b9440",
+    "docs/ifpmic/evidence/b02/plan-review-v3.json": "fa9a273001c214a7cb39802ed86f4f968f9899a84a5be75d61b1483aa5694cef",
+    "docs/ifpmic/evidence/b02/tc-plan-review-v3.json": "c41bf370859a4a6a61d1e1bdaa005b07e4311d2b73c1bca5b1c49540a16fb0df",
+    "services/ifpmic_api/migrations/001_initial.sql": "cf0437a5f32e1589e4ea821afbb2ef2480d780a276667880aa9a08a0f4c77f12",
+    "services/ifpmic_api/migrations/002_auth_retention.sql": "95c01f06eb586e0c1067f04672edfed8e0a11215752ad859ac9e4744da5a504e"
+  },
+  "concrete_blockers": [
+    {
+      "id": "G3-GATE-LEDGER-CONTRACT-PIN",
+      "severity": "gate_will_fail_before_test_execution",
+      "location": "docs/ifpmic/evidence/b02/g3-tc-ledger.json approved_contract; scripts/verify_ifpmic_g3.py contract check",
+      "evidence": "The current ledger approves g3-implementation-contract-v2.json SHA 157bebf63781aeec4463ca68a19c7991ae690ef0d535f2cf367fc4ff95cf2292. The runner requires the ledger's approved_contract.sha256 to equal the v4 contract SHA 9b01aea9e54d1663aa7ad0bd6d14028292aa85a4e4c7300c5552b3613a810a72. These values differ, so the runner will stop with 'Independent G3 case inventory missing'.",
+      "required_resolution": "Update the TC ledger's contract pin to approved v4, preserving its historical review trail, before freezing or running the G3 gate."
+    },
+    {
+      "id": "G3-GATE-LEDGER-CASE-COUNT",
+      "severity": "gate_will_fail_case_inventory_check",
+      "location": "docs/ifpmic/evidence/b02/g3-tc-ledger.json case_count.expected_g3_pytest_cases; scripts/verify_ifpmic_g3.py exact g3_cases count",
+      "evidence": "The ledger currently expects 94 G3 tests. A read-only AST count of the current test_auth.py, multiplying literal pytest.parametrize rows, gives 114; the runner requires actual collected G3 cases to equal the ledger count. The ledger's own stated AST method therefore needs recomputation against the frozen suite. This was source parsing, not test collection or execution.",
+      "required_resolution": "After TC finishes harness corrections, recalculate and pin the exact collected case inventory/count, then make the runner's exact-count comparison use that frozen value."
+    }
+  ],
+  "coverage_overview": {
+    "auth_suite": "The current test_auth.py includes PKCE/config validation, signed claim and key rejection cases including RSA oth, bounded egress, callback state/one-use/race/error mapping, session/CSRF/logout, header/host/CORS boundaries, a real Uvicorn stdout/stderr canary probe, expiry cleanup batch/progress, 1024-row admission race and full-cap cleanup commit behavior, and lifespan retry/shutdown. The independent test ledger has not yet been reconciled to its current source and the test file is still being corrected.",
+    "migration_delta": "test_migrations.py pins 001 unchanged and 002 by exact hash, expects both applied migration versions, and includes runtime/operator privilege and migration rollback/concurrency cases. This is meaningful static coverage of the G3 retention privilege delta; results remain unrun here.",
+    "provider": "The local synthetic provider suppresses BaseHTTPRequestHandler request logging and supports endpoint/status/JWKS/claim/response-limit controls. The actual Uvicorn canary test checks success, replay, provider error, expired state, and invalid state, then writes only aggregate status and log digests to the runner observation file; raw service logs remain in a private directory."
+  },
+  "runner_review": {
+    "positive_static_checks": [
+      "Pins the approved parent plan, G3 v4 contract and both independent v4 reviews, Authlib/Joserfc source-review digest and installed library hashes, immutable migration 001, and the G1/G2/G3 plus B01 regression inventory.",
+      "Captures raw pytest/process output in a uniquely named gate leaf created with mode 0700, chmods private-* artifacts to 0600, publishes only hostname-redacted JUnit, publishes aggregate service-log hashes rather than log contents, checks exact service status/canary/PID/mode evidence, and verifies PostgreSQL stops.",
+      "Checks source hashes before and after the run and requires all Python cases, exact G1/G2/G3 inventories, and exactly 48 B01 Node cases to pass without skips."
+    ],
+    "conditional_freeze": "Do not run or describe this as a frozen gate while TC is changing the harness or until the ledger pin/count mismatch is corrected. Re-pin this runner, README, tests, ledger, and relevant product sources after the final TC/product changes."
+  },
+  "acceptance_limit": "This review identifies a deterministic gate/ledger inconsistency and an authored test-count discrepancy; it does not claim any test passes, database/service behavior, G3 acceptance, production SSO, or original AT-21 completion."
+}

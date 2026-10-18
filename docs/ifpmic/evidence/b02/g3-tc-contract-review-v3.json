@@ -1,0 +1,61 @@
+{
+  "kind": "ifpmic_b02_g3_tc_contract_review_v3",
+  "review": "Independent test-oracle readiness review for G3 retention and provider-error clarification",
+  "verdict": "approved_for_tc_authoring",
+  "scope": "Read-only review of the exact v3 contract and the existing G1 migration-test inventory. No product, test, dependency, database or service changes and no test execution.",
+  "inputs": {
+    "docs/ifpmic/evidence/b02/g3-implementation-contract-v3.json": "0de7956ee751fa3fb3efc24458832b4e69d760c435ee23940c9f9f4656ebd531",
+    "docs/ifpmic/B02-IDENTITY.md": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a",
+    "docs/ifpmic/evidence/b02/g3-implementation-contract-v2.json": "157bebf63781aeec4463ca68a19c7991ae690ef0d535f2cf367fc4ff95cf2292",
+    "tests/ifpmic_api/test_migrations.py": "1ffbde403be4d98948058a241e2944fbbd61025d19f4aee1296ad2934d2353f2",
+    "services/ifpmic_api/auth.py": "f72c8a602fbbd52ace494d17e3ea4da8a338d2525328dcc265d16ba2daa10920",
+    "services/ifpmic_api/app.py": "3e25b9fc3dbc4ec82e7af3acfb518c6b664e909b295e03217bb2f69edc02434d",
+    "services/ifpmic_api/migrate.py": "3f658907f13f6eab042a7b15f2958e98c65334e995686da434640d100341818d"
+  },
+  "findings": [
+    {
+      "id": "G3-V3-PROVIDER-ERROR-ORACLE",
+      "result": "sufficient",
+      "assessment": "The new error mapping is directly testable with the local provider: token endpoint HTTP 400/401 carrying invalid_grant or invalid_request must be AUTH_REQUIRED; HTTP redirect/non-success and invalid_client, server_error, temporarily_unavailable, or unknown OAuth error values must be DEPENDENCY_UNAVAILABLE. A signed-token claim failure remains AUTH_REQUIRED. The synthetic provider can vary status and error body without changing the protocol fixture or contacting an external identity provider."
+    },
+    {
+      "id": "G3-V3-MIGRATION-002-ORACLE",
+      "result": "sufficient",
+      "assessment": "The contract keeps 001_initial.sql byte-pinned and requires exact 001+002 migration inventory. Existing tests/ifpmic_api/test_migrations.py has a single-version literal in migration version, applied/unchanged results, source-drift copy, removed-version fixture, and accepted ledger rows. TC can preserve every 001 hash/assertion, independently pin 002 bytes, copy both ordered SQL files into drift fixtures, and check atomic refusal. No database-vendor substitute is needed."
+    },
+    {
+      "id": "G3-V3-RETENTION-DELETE-PRIVILEGE",
+      "result": "sufficient",
+      "assessment": "The authorized privilege delta is explicit and narrow: runtime DELETE is added only for oidc_login_transactions and user_sessions. Real PostgreSQL role tests can verify both positive grants and denials on all other tables, then exercise actual runtime cleanup. It grants no authority/profile/job/catalog mutation."
+    },
+    {
+      "id": "G3-V3-RETENTION-CLEANUP-ORACLE",
+      "result": "sufficient",
+      "assessment": "Fixed clock, real PostgreSQL rows, expired/unexpired fixtures and public begin/login behavior support independent boundary checks. A table with 1001 expired rows can prove one bounded 1000-row batch without imposing an ordering oracle; repeated maintenance/begin calls prove eventual bounded cleanup. Tests can prove consumed-but-unexpired login rows and revoked-before-absolute-expiry sessions remain, while only rows at expires_at <= now are removed. The fixed advisory lock plus a 1023-row prefill and concurrent begin calls gives a literal exactly-one-capacity-winner oracle."
+    },
+    {
+      "id": "G3-V3-RETENTION-SCHEDULER-ORACLE",
+      "result": "sufficient_with_bounded_timing",
+      "assessment": "An app lifespan test with the approved one-second test interval, a pre-seeded expired row and real DB can observe maintenance without adding a public route. A db_factory wrapper can cause one maintenance connection failure, prove a later tick retries, and verify shutdown stops future calls. The contract does not require whether the first periodic attempt happens immediately or after the first interval; authoring should accept either within one bounded interval plus startup tolerance, without changing cleanup semantics. This timing detail is non-blocking because the guarantee is bounded repeated maintenance, not an immediate startup deadline."
+    },
+    {
+      "id": "G3-V3-RETENTION-FAIL-CLOSED-ADMISSION",
+      "result": "sufficient",
+      "assessment": "The existing fresh real-PG fixture can fill the login table with 1024 unexpired rows, including consumed rows, and assert a fixed 503, no new row and no ax_login cookie; at 1023 rows a valid login is admitted. A concurrent two-client attempt at 1023 rows should yield one 303 and one fixed 503, exactly 1024 rows, no overshoot. A failing cleanup/DB connection must not create a state or cookie. The bounded table count and fixed serialized lock avoid dependence on IP or client identifiers."
+    }
+  ],
+  "test_authoring_conditions": [
+    "Preserve services/ifpmic_api/migrations/001_initial.sql bytes and its existing SHA assertion.",
+    "Update only G1 migration-inventory expectations after the independently approved 002 is present; preserve every existing 001 schema, role, constraint and privilege assertion.",
+    "Add literal 002 hash/inventory and drift fixtures containing both 001 and 002 sources in order.",
+    "Test runtime DELETE positive grants for the two authentication-retention tables and negative grants on all unrelated state/authority tables against real PostgreSQL.",
+    "Do not execute tests or alter product semantics until both independent v3 reviews are recorded. Preserve first targeted command stdout/stderr to private files and do not log provider canaries or DSNs."
+  ],
+  "limitations": [
+    "This approves v3 as a testable implementation contract only; it is not product, migration, G3, or B02 acceptance.",
+    "Local synthetic provider tests do not establish corporate OIDC registration, production TLS/proxy behavior or real SSO acceptance.",
+    "The contract explicitly leaves bounded cleanup best-effort during DB/service outage; tests must not claim immediate erasure during an outage.",
+    "Original AT-21 job/log/image/device integration and remaining B02 milestones are not executed or completed by this review."
+  ],
+  "required_next_step": "After the separate source-informed review approves this exact v3 SHA, update G1 migration expectations and add retention/admission tests using the approved 002 implementation; keep test execution gated until the parent confirms candidate readiness."
+}

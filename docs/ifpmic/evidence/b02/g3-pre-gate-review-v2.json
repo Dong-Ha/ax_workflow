@@ -1,0 +1,59 @@
+{
+  "review": "Read-only G3 pre-freeze follow-up after TC ledger reconciliation",
+  "verdict": "prior_gate_ledger_blockers_resolved_pre_freeze_ready",
+  "scope": "Static source-pin and evidence review only. The TC ledger reports its targeted suite passed, but I did not execute tests, service, PostgreSQL, or network. The full frozen G3 gate remains pending and this is not G3 acceptance.",
+  "prior_review": {
+    "path": "docs/ifpmic/evidence/b02/g3-pre-gate-review.json",
+    "sha256": "38c808d06b29b048ecfc8b78c34cc4eb8c48261f3fac01316932fdbe04181a4e",
+    "resolved_findings": [
+      "Ledger contract pin now identifies approved implementation contract v4 SHA 9b01aea9e54d1663aa7ad0bd6d14028292aa85a4e4c7300c5552b3613a810a72.",
+      "Ledger expected G3 case count now equals 114, matching its recorded pytest collection result."
+    ]
+  },
+  "source_pins": {
+    "docs/ifpmic/B02-IDENTITY.md": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a",
+    "docs/ifpmic/evidence/b02/g3-tc-ledger.json": "763443b263b9c67764439e21c97de0c16f06322681e53cfcc79f7c3f98ccaa80",
+    "docs/ifpmic/evidence/b02/g3-implementation-contract-v4.json": "9b01aea9e54d1663aa7ad0bd6d14028292aa85a4e4c7300c5552b3613a810a72",
+    "docs/ifpmic/evidence/b02/g3-contract-review-v4.json": "83184c2c5d805f521f98ab0fe6fbf5c4b04bb3c7326f42b27d56ed3a651c32bd",
+    "docs/ifpmic/evidence/b02/g3-tc-contract-review-v4.json": "f2f7695cb5a1f3ee3e67afcfb228c30cc9aac600e89f5408fcef4a22e9f60ece",
+    "docs/ifpmic/evidence/b02/g3-contract-review-v2.json": "e5024ecf58665aef6f848ae4b7f514fbf5a0394c007e8a597d74a6b5949b9440",
+    "docs/ifpmic/evidence/b02/plan-review-v3.json": "fa9a273001c214a7cb39802ed86f4f968f9899a84a5be75d61b1483aa5694cef",
+    "docs/ifpmic/evidence/b02/tc-plan-review-v3.json": "c41bf370859a4a6a61d1e1bdaa005b07e4311d2b73c1bca5b1c49540a16fb0df",
+    "scripts/verify_ifpmic_g3.py": "ef60e77d341d9a2153ecdb5c519a2ac56846c7ee59ae34dab118458de2889f6d",
+    "README.md": "f419ab5fece644f376ebcdee1c08c905437e1a292905b67e1b00dfbefe8f024a",
+    "services/ifpmic_api/settings.py": "f8e14f943d6429db0c28f0d5b3b6da0c0c0d03c3a5ad81828e2e08b2fc314aaf",
+    "services/ifpmic_api/oidc.py": "78bc0d3194a987fe2232595e21719dc5dee2f79bbe41faeb9fcb8597a1f24478",
+    "services/ifpmic_api/auth.py": "9fef8084e8b11a7e1d0929a1842ab4fdddb0361adcbaa70700529a5e9999a887",
+    "services/ifpmic_api/app.py": "be6485fb3002b3bc35966eb8efab2e9cb09905d9f4789f91b721a46bfb572a82",
+    "services/ifpmic_api/serve.py": "2e45b6385ad15068f6d203e11caa7d447d4223aaefc9dce718aa57d55da3fe7e",
+    "services/ifpmic_api/migrations/001_initial.sql": "cf0437a5f32e1589e4ea821afbb2ef2480d780a276667880aa9a08a0f4c77f12",
+    "services/ifpmic_api/migrations/002_auth_retention.sql": "95c01f06eb586e0c1067f04672edfed8e0a11215752ad859ac9e4744da5a504e",
+    "tests/ifpmic_api/test_auth.py": "92aea242c2fec5bbf081701ce2f6746dab887f9036de6c82713c2640d63306c7",
+    "tests/ifpmic_api/test_migrations.py": "1f4f7ea3576875222a639447d7ef39177d811883691f807347146fab407e2c12",
+    "tests/ifpmic_api/oidc_provider.py": "b5e3a70df73245c143bd2e2e9db1ee2dd6061dde0cf1dfa7c02d9cdc4fe8f367"
+  },
+  "ledger_reconciliation": {
+    "contract_pin": "Matches approved v4 SHA exactly.",
+    "case_inventory": "expected_g3_pytest_cases=114; pytest collection recorded as 114; targeted result recorded as 114 auth + 10 migration = 124 passed, zero failures and skips.",
+    "current_source_pins": "All ten ledger source_pins_at_authoring entries (five product modules, migrations 001/002, auth tests, migration tests, and synthetic provider) match their current file hashes.",
+    "attempts": "Attempts 1-3 are retained with output hashes and classified as fixture/oracle or test cleanup corrections; the ledger reports attempt 4 as 124/124 passing and retains private stdout/stderr hashes. No failure was hidden by the ledger; independent review of private logs was not performed."
+  },
+  "migration_regression_review": {
+    "result": "Static coverage is consistent with the new 002 retention migration while preserving 001.",
+    "evidence": [
+      "test_migrations.py pins both 001 and 002 hashes, expects both applied versions on fresh and repeat migration, and records both source hashes.",
+      "Its drift loop mutates each migration independently while copying the other unchanged; removed-version checks retain the second migration under a wrong version.",
+      "Its failed-migration rollback loop injects invalid SQL independently into each migration, then verifies schema rollback; the concurrent application check expects both versions exactly once.",
+      "The ledger records the required 10 migration cases and exact 001/002 pins."
+    ]
+  },
+  "runner_alignment": {
+    "result": "The prior two ledger mismatches are resolved; reviewed runner's required contract SHA, G3 case threshold/exact test count, both independent G3 contract approvals, immutable 001 pin, G1/G2 inventories, and 48-case B01 Node inventory align with current evidence.",
+    "freeze_condition": "After root freezes the candidate, all source hashes must still match the gate's captured pre-run fingerprint and post-run fingerprint; the final gate must pass with no skips and produce its own service observation and lifecycle evidence."
+  },
+  "remaining_limits": [
+    "The 124/124 result and Uvicorn service observation are reported by TC's private targeted run; this reviewer did not reproduce them or inspect their private raw logs.",
+    "No frozen G1/G2/G3 plus B01 gate has run as part of this review.",
+    "No real corporate OIDC, production TLS/proxy, original AT-21 completion, or full B02 acceptance is claimed."
+  ]
+}

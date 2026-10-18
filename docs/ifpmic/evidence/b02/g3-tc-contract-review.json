@@ -1,0 +1,53 @@
+{
+  "review": "Independent B02 G3 contract review for test-oracle readiness",
+  "verdict": "contract_requires_one_literal_oracle_clarification",
+  "scope": "Read-only review of the supplemental G3 contract against the approved B02 identity plan and the pinned local Authlib API. No product code or tests were written or executed.",
+  "source_pins": {
+    "docs/ifpmic/evidence/b02/g3-implementation-contract.json": "239f50b55e763abb8822956b65cac2d5db70fadfb14e67a6005520505c687e4f",
+    "docs/ifpmic/B02-IDENTITY.md": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a",
+    "docs/ifpmic/evidence/b02/g3-authlib-source-collection.json": "da3206e06465d08aa549eeb79e9c7575cb38ae201ff7166d60e1a720c11241fc",
+    ".ifpmic-venv/lib/python3.12/site-packages/authlib/oidc/core/claims.py": "b513ebb513ff64d0c3fffe2482b74b47aaa1ce40ec839da69f13bec1b1c2af78",
+    ".ifpmic-venv/lib/python3.12/site-packages/authlib/oauth2/client.py": "87ff9d5d5b06a1b54b82849f1e27fc4649966bb943dd69fdea8e92cf8dc6a4dc"
+  },
+  "reviewed_contract_points": [
+    {
+      "point": "OIDC NumericDate boundary oracle",
+      "assessment": "The contract defines zero leeway and unambiguous comparisons: exp must be strictly greater than injected now; nbf and iat may equal now but cannot be in the future. NumericDate values must be finite numeric values and not booleans. This supports literal tests at one unit before, exactly at, and one unit after each boundary. Authlib 1.9.1 exposes CodeIDToken.validate(self, now=None, leeway=0), matching the planned injected-clock call."
+    },
+    {
+      "point": "OIDC audience and authorized-party rules",
+      "assessment": "The contract fixes aud as either a string or a nonempty unique string list containing the configured client_id. A multi-audience token requires azp equal to client_id; any supplied azp must also match for a single audience. Missing/mismatched azp, wrong client audience, duplicate audiences, wrong-type claims, and exact time boundaries have independent expected outcomes. This is compatible with the pinned Authlib CodeIDToken validation behavior when configured with the explicit audience option."
+    },
+    {
+      "point": "Nonce, issuer, and key policy",
+      "assessment": "The signed ID token must contain the configured exact issuer, subject, audience, expiration, issued-at, and matching nonce. The signature verifier is constrained to configured asymmetric algorithms and a bounded public-key JWKS fetched only from the configured endpoint. The planned local provider can use an unambiguous single-key baseline and independently vary signature, algorithm, key, issuer, nonce, and audience to test fail-closed behavior."
+    },
+    {
+      "point": "CSRF domain separator",
+      "assessment": "The domain separator spelling b\"ifpmic.csrf.v1\\x00\" unambiguously denotes one actual NUL byte between the ASCII domain and ASCII session cookie. It is consistent with the approved plan's explicit NUL-boundary wording. Literal tests should concatenate byte 0x00, not the four printable characters backslash-x-zero-zero."
+    },
+    {
+      "point": "HTTP and session testability",
+      "assessment": "The contract gives fixed routes, DTOs, status/error families, cookie attributes, clock boundaries, callback query allowlist, CORS behavior, one-time state consumption, session rotation, logout requirements, and the real-Uvicorn canary-log check. These support deterministic normal, malformed, cross-browser, duplicate-header, boundary, concurrency, restart-CSRF, commit-fault, and actual-server cases without contacting corporate SSO."
+    }
+  ],
+  "blockers": [
+    {
+      "id": "G3-CSRF-ENCODING",
+      "severity": "blocking",
+      "finding": "The approved parent plan specifies base64url_no_padding(HMAC-SHA256(...)), but the supplemental contract says only base64url(HMAC-SHA256(...)). A 32-byte HMAC encodes to 44 characters with padding or 43 characters without it, so the independent expected csrf_token is not fixed and the two documents currently disagree.",
+      "required_resolution": "Update the contract formula to base64url_no_padding, preserving the exact input bytes key || ASCII(\"ifpmic.csrf.v1\") || one NUL byte || ASCII(ax_session), then obtain a new exact contract hash review."
+    }
+  ],
+  "implementation_test_oracles": [
+    "Use literal boundary vectors for exp, nbf, and iat with injected UTC time and leeway zero; reject bool, NaN, infinity, missing required claims, and wrong claim types.",
+    "Use separate single- and multi-audience vectors, including missing/wrong azp, duplicate aud entries, wrong client_id, and matching azp; do not infer expected policy from Authlib's runtime output.",
+    "Construct the CSRF oracle from the approved formula and a literal byte vector; assert stability across GET and service restart, and rotation after login changes ax_session. Do not select padded or unpadded encoding until the blocker is resolved.",
+    "Keep provider state, code, error_description, cookies, CSRF values, Authorization, and raw exception text as canaries; assert their absence from actual Uvicorn stdout, stderr, and captured application logs without printing canaries on test failure."
+  ],
+  "limitations": [
+    "Contract-level review only; no G3 implementation or tests were accepted.",
+    "No external identity provider, corporate SSO, proxy, or production endpoint was contacted.",
+    "A passing local synthetic-provider suite would not complete original AT-21 or prove deployment proxy-log redaction."
+  ]
+}

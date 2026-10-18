@@ -1,0 +1,269 @@
+{
+  "kind": "ifpmic_b02_g3_independent_tc_case_ledger",
+  "status": "authored_and_targeted_suite_pass_pending_final_frozen_gate",
+  "approved_contract": {
+    "path": "docs/ifpmic/evidence/b02/g3-implementation-contract-v4.json",
+    "sha256": "9b01aea9e54d1663aa7ad0bd6d14028292aa85a4e4c7300c5552b3613a810a72"
+  },
+  "approved_parent_plan": {
+    "path": "docs/ifpmic/B02-IDENTITY.md",
+    "sha256": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a"
+  },
+  "requirements": [
+    "REQ-13",
+    "B02-G3"
+  ],
+  "ownership": {
+    "TC": [
+      "tests/ifpmic_api/test_auth.py",
+      "tests/ifpmic_api/test_migrations.py",
+      "tests/ifpmic_api/oidc_provider.py",
+      "docs/ifpmic/evidence/b02/g3-tc-ledger.json"
+    ],
+    "main": "services/ifpmic_api/{settings,oidc,auth,app,serve}.py and verification runner",
+    "reviewer": "Independent read-only source/test candidate review"
+  },
+  "case_count": {
+    "expected_g3_pytest_cases": 114,
+    "counting_method": "pytest --collect-only -q tests/ifpmic_api/test_auth.py reported 114 collected; the frozen G3 runner requires exactly this count.",
+    "separate_migration_regression_cases": 10
+  },
+  "case_groups": [
+    {
+      "id": "G3-SETTINGS-AND-PKCE",
+      "tests": [
+        "test_login_builds_pkce_s256_and_split_origin_allowlisted_request",
+        "test_settings_reject_unapproved_authentication_configuration",
+        "test_settings_reject_endpoint_aliases_and_url_confusion",
+        "test_real_mode_requires_https_for_api_ui_and_all_oidc_endpoints",
+        "test_load_settings_requires_private_regular_non_symlink_file"
+      ],
+      "purpose": "Check fixed private settings, independently configured origins, direct S256 PKCE, exact authorization parameters, secure configuration parsing and HTTPS mode boundaries.",
+      "normal_exception_boundary_regression": [
+        "valid split-origin mock configuration",
+        "bad mode/origin/algorithm/client-auth settings",
+        "userinfo/query/fragment/control/alias URL rejection",
+        "private file mode and symlink rejection"
+      ],
+      "expected_result": "Only approved values construct Settings; login redirects with canonical independent state, nonce, browser, verifier and no verifier in URL.",
+      "evidence_path": "Private test process logs under workflow-artifacts/verification/private/b02-g3/; public ledger contains no DSN or token values."
+    },
+    {
+      "id": "G3-OIDC-CLAIMS-AND-KEYS",
+      "tests": [
+        "test_signed_id_token_claim_oracle",
+        "test_jws_algorithm_key_and_private_jwks_rejections",
+        "test_signature_from_unpublished_key_is_rejected",
+        "test_untrusted_jws_header_cannot_select_a_key_url",
+        "test_rsa_jwks_other_private_parameter_is_rejected"
+      ],
+      "purpose": "Verify signed issuer/subject/audience/nonce and strict NumericDate/azp/key/header handling using a locally generated RSA key and literal claim oracle.",
+      "normal_exception_boundary_regression": [
+        "expiry equality and before/after",
+        "nbf/iat equality and future",
+        "non-finite/non-number claims",
+        "duplicate and multi-audience rules",
+        "wrong issuer/nonce/subject",
+        "unsupported algorithm, unknown key, private JWKS, unpublished signing key, untrusted jku",
+        "RSA oth private parameter rejected even when all other JWK fields are public"
+      ],
+      "expected_result": "Only tokens matching the configured issuer, client, nonce, time policy and public signing key create an identity; rejected tokens do not create users or sessions.",
+      "evidence_path": "Pytest result and source-pinned G3 gate report; raw execution logs are private and captured by the parent runner."
+    },
+    {
+      "id": "G3-ONE-USE-CALLBACK-AND-EGRESS",
+      "tests": [
+        "test_code_length_limit_is_enforced_before_exchange",
+        "test_oidc_stream_byte_limit_including_chunked_response",
+        "test_oidc_rejects_compression_and_redirects_without_following",
+        "test_oidc_non_success_http_status_is_fixed_dependency_error",
+        "test_cross_browser_state_mismatch_does_not_consume_valid_browser_transaction",
+        "test_consumed_callback_cannot_be_replayed_and_failure_requires_fresh_login",
+        "test_login_transaction_expiry_is_strict_at_boundary",
+        "test_concurrent_callback_consumes_browser_state_once",
+        "test_callback_query_allowlist_and_duplicate_parameters",
+        "test_callback_malformed_utf8_controls_and_size_fail_closed",
+        "test_provider_error_description_is_never_redirected_or_echoed",
+        "test_optional_callback_issuer_and_session_state_are_accepted_only_when_issuer_matches",
+        "test_token_provider_error_mapping_is_literal_and_fixed"
+      ],
+      "purpose": "Check state/browser binding, consume-before-network one-use behavior, exact callback query parsing, bounded response egress and no redirect/decompression.",
+      "normal_exception_boundary_regression": [
+        "valid optional issuer and session_state",
+        "cross-browser mismatch with rightful browser later completing",
+        "expired/equal transaction boundary",
+        "simultaneous callback race has exactly one winner",
+        "code/query length and UTF8/control/duplicate/unknown fields",
+        "65536-byte response accepted and chunked 65537-byte response rejected for token and JWKS",
+        "compression/redirect/non-success response rejection",
+        "provider error text suppression",
+        "literal HTTP-status/provider-error mapping: only invalid_grant at token endpoint 400/401 is AUTH_REQUIRED; other OAuth errors and malformed 200 are dependency failures"
+      ],
+      "expected_result": "Callback state can be consumed once by the matching browser; failure responses remain fixed; the network client reaches only the configured token and JWKS endpoints and enforces the byte limit.",
+      "evidence_path": "Synthetic provider request counters and sanitized pytest assertions; private raw runner logs only."
+    },
+    {
+      "id": "G3-SESSION-CSRF-LOGOUT-AND-FAULTS",
+      "tests": [
+        "test_valid_signed_callback_creates_only_opaque_session_and_literal_stable_csrf",
+        "test_idle_timeout_exact_boundary",
+        "test_absolute_session_expiry_exact_boundary_and_no_extension",
+        "test_login_rotates_session_and_csrf_stays_stable_during_get",
+        "test_csrf_token_is_stable_across_application_restart",
+        "test_session_commit_fault_never_returns_success_cookie",
+        "test_logout_requires_session_exact_csrf_and_origin_then_revokes"
+      ],
+      "purpose": "Verify opaque session persistence, literal HMAC CSRF, inactivity/absolute expiry, rotation, restart stability, commit ambiguity, and logout authorization.",
+      "normal_exception_boundary_regression": [
+        "opaque 32-byte session stored only as hash",
+        "idle timeout 29:59/30:00/30:01",
+        "absolute expiration one microsecond before/equal boundary",
+        "rotation revokes old session and changes CSRF",
+        "same configured HMAC remains stable across app restart",
+        "precommit rollback vs postcommit uncertainty",
+        "logout requires live session, exact CSRF and exact Origin"
+      ],
+      "expected_result": "A valid callback yields one opaque session and stable 43-character CSRF token; only current session plus valid CSRF and Origin revokes it; no cookie is emitted for an ambiguous commit.",
+      "evidence_path": "Isolated real PostgreSQL rows queried through the migration role; test command output retained privately by the parent runner."
+    },
+    {
+      "id": "G3-HTTP-BOUNDARY-AND-REAL-SERVER-LOGS",
+      "tests": [
+        "test_duplicate_or_spoofed_auth_headers_never_authenticate",
+        "test_spoofed_actor_headers_do_not_override_valid_cookie_session",
+        "test_duplicate_origin_and_csrf_headers_are_rejected",
+        "test_host_cors_and_preflight_are_exact",
+        "test_real_uvicorn_callback_stdout_stderr_and_application_log_canaries"
+      ],
+      "purpose": "Check duplicate security headers/cookies, untrusted actor headers, exact Host/CORS, and actual Uvicorn callback canary absence.",
+      "normal_exception_boundary_regression": [
+        "valid exact-origin preflight",
+        "invalid host/origin/method/header",
+        "duplicate cookie/authorization/origin/CSRF values",
+        "spoofed actor headers with and without a legitimate cookie",
+        "actual loopback Uvicorn valid callback, replay and provider error_description callback"
+      ],
+      "expected_result": "Header spoofing never creates or overrides an actor; only allowlisted CORS receives credentials; actual Uvicorn stdout/stderr do not contain callback code, state, cookie, access token or provider error description.",
+      "evidence_path": "Private 0700 directory workflow-artifacts/verification/private/b02-g3/ with 0600 Uvicorn stdout/stderr files; config removed after shutdown."
+    },
+    {
+      "id": "G3-AUTH-RETENTION-AND-ADMISSION",
+      "tests": [
+        "test_auth_maintenance_deletes_expired_rows_at_boundary_only",
+        "test_auth_maintenance_deletes_at_most_1000_per_table_and_makes_progress",
+        "test_login_admission_enforces_1024_row_cap_and_race_has_one_winner",
+        "test_full_login_capacity_rejection_commits_bounded_expiry_cleanup",
+        "test_lifespan_gc_retries_database_failure_and_stops_cleanly"
+      ],
+      "purpose": "Verify bounded removal of only absolute-expired authentication material, exact expiry boundary, global login-state cap/admission race, cleanup progress on capacity rejection, and retrying lifespan maintenance with clean shutdown.",
+      "normal_exception_boundary_regression": [
+        "expires_at <= trusted now deletes exactly; one-microsecond future login/session rows survive regardless consumed/revoked/idle flags",
+        "each maintenance call deletes at most1000 login rows and1000 session rows, then a second call makes remaining backlog progress",
+        "1023 login rows permit exactly one of two concurrent logins; second request at1024 is fixed503 without cookie or row",
+        "at full capacity with1001 expired plus1024 live rows, two rejected requests commit cleanup in1000 then1-row batches; after one live row is removed, a later request is admitted",
+        "background maintenance retries after a private DB exception, deletes expired row on next tick, logs no canary, and task is done at shutdown"
+      ],
+      "expected_result": "Only absolute-expired auth rows are deleted; cap stays1024; denied requests never mint state/cookies; scheduler shutdown is awaited.",
+      "evidence_path": "Private targeted pytest captures and the frozen G3 service observation; no private DB identifiers or canaries in this ledger."
+    }
+  ],
+  "verification": {
+    "targeted_command": ".ifpmic-venv/bin/python -m pytest -q tests/ifpmic_api/test_migrations.py tests/ifpmic_api/test_auth.py",
+    "execution_status": "passed 124 tests before whitespace-only EOF cleanup; corrected candidate awaits frozen gate rerun",
+    "collection_check": ".ifpmic-venv/bin/python -m pytest --collect-only -q tests/ifpmic_api/test_auth.py: 114 tests collected in 1.24s",
+    "pre_execution_check": ".ifpmic-venv/bin/python -m py_compile tests/ifpmic_api/test_auth.py tests/ifpmic_api/test_migrations.py tests/ifpmic_api/oidc_provider.py and git diff --check both passed.",
+    "service_observation": {
+      "path": "workflow-artifacts/verification/private/b02-g3/targeted-uvicorn-attempt-1/service-observation.json",
+      "sha256": "8f12078f0eb8ebb1a81e4a629d94d3bf42003c2a4563c4860afb557f81ae9f1a",
+      "mode": "0600",
+      "cases": {
+        "success": 303,
+        "replay": 401,
+        "provider_error": 401,
+        "expired_state": 401,
+        "invalid_state": 401
+      },
+      "canaries_absent": true,
+      "service_exit_code": 0,
+      "pid_alive": false,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      "stderr": {
+        "sha256": "b02856ee2705fca0244db485b1b9479538a03c18d04af639187bf26d9c66b929",
+        "bytes": 350
+      },
+      "private_directory_mode": "0o700",
+      "stdout_mode": "0o600",
+      "stderr_mode": "0o600"
+    },
+    "final_private_target_capture": {
+      "path": "workflow-artifacts/verification/private/b02-g3/targeted-attempt-4/",
+      "stdout_sha256": "ce979964a7610a7a618dbea294004e0de8fe1464088b847f418096ae8ab03fe3",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_mode": "0600",
+      "stderr_mode": "0600"
+    },
+    "failure_recovery": "First captured failures are retained below. Fixture/oracle failures were corrected only when evidence showed the approved behavior was intact; test expectations were not weakened. Frozen G3 gate must rerun all G1/G2/G3 and B01 Node regressions after final source freeze.",
+    "limitations": [
+      "No real corporate OIDC registration, public TLS, proxy policy or production identity provider was used.",
+      "No original AT-21 complete endpoint integration is claimed; actual G3 canary coverage is limited to the local service process.",
+      "No real device, SAM/TEM/SQE execution, job API, workspace or publication endpoint is included.",
+      "The focused Uvicorn observation is a private development probe; final frozen gate must generate its own pinned observation artifact."
+    ],
+    "historical_failures": [
+      {
+        "attempt": "targeted-attempt-1",
+        "result": "113 passed, 11 failed in 96.19s",
+        "stdout_path": "workflow-artifacts/verification/private/b02-g3/targeted-attempt-1/stdout.log",
+        "stdout_sha256": "f4e6ef09ca7816306f7190989de500a480f3939b2b3dedbd5d519dca7483a6eb",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "classification": "five new retention tests used unavailable psycopg Connection.executemany (changed to cursor executemany); inherited test-oracle issues were corrected: cookie deletion serialization, session idle-time fixture isolation, configured JWKS fetch count, invalid preflight isolation; Uvicorn executable resolution selected base Python without FastAPI. No product defect concluded from these fixture failures."
+      },
+      {
+        "attempt": "targeted-attempt-2",
+        "result": "123 passed, 1 failed in 132.93s",
+        "stdout_path": "workflow-artifacts/verification/private/b02-g3/targeted-attempt-2/stdout.log",
+        "stdout_sha256": "64681d8886c5c9f85bd806efcc7fa4bf82fcf296b9696607f659322228b59524",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "classification": "expired-state fixture used the TestClient frozen 2030 clock while the real Uvicorn subprocess used wall-clock UTC; test-only time oracle corrected."
+      },
+      {
+        "attempt": "targeted-attempt-3",
+        "result": "123 passed, 1 failed in 133.15s",
+        "stdout_path": "workflow-artifacts/verification/private/b02-g3/targeted-attempt-3/stdout.log",
+        "stdout_sha256": "0af1f46a246301672352d45fe2c7e8a02fa287b88e65f52c7a7ee915ed9ab983",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "classification": "test sent SIGTERM and observed the expected signal exit -15 despite passing server assertions; cleanup changed to Uvicorn handled SIGINT, then focused observation probe and full target passed."
+      }
+    ],
+    "whitespace_correction": {
+      "file": "tests/ifpmic_api/test_auth.py",
+      "change": "Removed extra blank line at EOF; no test logic changed.",
+      "targeted_result_before_correction": "124 passed, 0 failed, 0 skipped in 124.13s",
+      "frozen_gate_before_correction": "workflow-artifacts/verification/B02/G3/gates/2026-10-18T16-17-36-785217Z/gate.json",
+      "status": "historical pre-correction gate preserved; corrected-source frozen gate pending"
+    }
+  },
+  "source_pins_at_authoring": {
+    "services/ifpmic_api/settings.py": "f8e14f943d6429db0c28f0d5b3b6da0c0c0d03c3a5ad81828e2e08b2fc314aaf",
+    "services/ifpmic_api/oidc.py": "78bc0d3194a987fe2232595e21719dc5dee2f79bbe41faeb9fcb8597a1f24478",
+    "services/ifpmic_api/auth.py": "9fef8084e8b11a7e1d0929a1842ab4fdddb0361adcbaa70700529a5e9999a887",
+    "services/ifpmic_api/app.py": "be6485fb3002b3bc35966eb8efab2e9cb09905d9f4789f91b721a46bfb572a82",
+    "services/ifpmic_api/serve.py": "2e45b6385ad15068f6d203e11caa7d447d4223aaefc9dce718aa57d55da3fe7e",
+    "services/ifpmic_api/migrations/001_initial.sql": "cf0437a5f32e1589e4ea821afbb2ef2480d780a276667880aa9a08a0f4c77f12",
+    "services/ifpmic_api/migrations/002_auth_retention.sql": "95c01f06eb586e0c1067f04672edfed8e0a11215752ad859ac9e4744da5a504e",
+    "tests/ifpmic_api/test_auth.py": "874c2baab57ab1a0c2e4eed73ea563ff89ee82a8b665b735cbb2dc2826504cb2",
+    "tests/ifpmic_api/test_migrations.py": "1f4f7ea3576875222a639447d7ef39177d811883691f807347146fab407e2c12",
+    "tests/ifpmic_api/oidc_provider.py": "b5e3a70df73245c143bd2e2e9db1ee2dd6061dde0cf1dfa7c02d9cdc4fe8f367"
+  },
+  "expected_g3_pytest_cases": 114,
+  "migration_regression_scope": {
+    "test_file": "tests/ifpmic_api/test_migrations.py",
+    "required_g1_case_count": 10,
+    "preserved_001_sha256": "cf0437a5f32e1589e4ea821afbb2ef2480d780a276667880aa9a08a0f4c77f12",
+    "new_002_sha256": "95c01f06eb586e0c1067f04672edfed8e0a11215752ad859ac9e4744da5a504e",
+    "coverage": "Fresh/rerun inventory includes 001+002. Source-drift and failed-migration rollback each mutate 001 and 002 independently while retaining the other exact source; runtime DELETE is positively exercised only for the two auth retention tables and denied elsewhere."
+  }
+}

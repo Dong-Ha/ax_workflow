@@ -196,7 +196,7 @@
       "requirements": [
         "REQ-13"
       ],
-      "scope": "B02 G1 foundation and G2 private bridge/catalog import independently accepted as partial increments. Frozen G2 gate passes Python53 and B01 Node48. G3-G7, authentication/API/workspaces and AT-21 remain pending.",
+      "scope": "B02 G1/G2/G3 partial foundations independently accepted. G3 covers local signed-OIDC/session/CSRF/auth-retention only. G4-G7 and original AT-21 remain pending.",
       "increments": [
         {
           "id": "g1_python_postgres_migrations",
@@ -211,6 +211,24 @@
           "evidence": "evidence/b02/g2-verification.json",
           "independent_acceptance": "evidence/b02/g2-final-review.json",
           "candidate_fingerprint": "2e9c116e2b58a50702e3ed5949102a04265c9ac26b6243258ecc09ba9eaf7717"
+        },
+        {
+          "id": "g3_oidc_session_csrf_retention",
+          "status": "verified",
+          "contract": "evidence/b02/g3-implementation-contract-v4.json",
+          "evidence": "evidence/b02/g3-verification.json",
+          "scope": "Synthetic local signed-OIDC/PG/Uvicorn verification only; actual corporate SSO and original AT remain pending.",
+          "independent_acceptance": "evidence/b02/g3-final-review.json",
+          "candidate_fingerprint": "f0ffc53d3afad880e0d7c7f14116ac1b137e93a17b7cf583396c643d9a52e2b6",
+          "tests": {
+            "python_total": 167,
+            "g1": 12,
+            "g2": 41,
+            "g3": 114,
+            "b01_node": 48,
+            "failed": 0,
+            "skipped": 0
+          }
         }
       ]
     },
@@ -404,12 +422,12 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "B02: implement approved G3 OIDC/session/CSRF authentication and G4 durable user APIs. G1/G2 partial foundations are independently accepted; G5 workspace, G6/G7 combined acceptance, B03-B13 and32original AT remain pending.",
+  "next_step": "B02: implement G4 durable user APIs and G5 workspace under the approved plan; G6/G7 combined acceptance, B03-B13 and32original AT remain pending.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",
     "Approved Bedrock/Claude runtime profile"
   ],
   "publication_policy": "Only authorized git repository documentation, source and synthetic verification summaries/screenshots; never runtime credentials or application logs.",
-  "updated_at": "2026-10-18T14:39:10.900543+00:00"
+  "updated_at": "2026-10-18T16:26:26.814525+00:00"
 }

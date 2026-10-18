@@ -1,0 +1,51 @@
+{
+  "review": "Independent source-informed B02 G3 implementation contract review",
+  "verdict": "blocked_pending_origin_policy_clarification",
+  "scope": "Preimplementation review of the proposed G3 contract against approved B02 scope and locally installed Authlib/HTTPX2 source. No product code or tests were reviewed or authored.",
+  "source_pins": {
+    "docs/ifpmic/B02-IDENTITY.md": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a",
+    "docs/ifpmic/evidence/b02/g3-implementation-contract.json": "239f50b55e763abb8822956b65cac2d5db70fadfb14e67a6005520505c687e4f",
+    "docs/ifpmic/evidence/b02/g3-authlib-source-collection.json": "da3206e06465d08aa549eeb79e9c7575cb38ae201ff7166d60e1a720c11241fc",
+    ".ifpmic-venv/lib/python3.12/site-packages/authlib/integrations/base_client/async_openid.py": "e71c505a379c5cff4990c91d32f2910dbb59981bcb27955a6d96d58280fb29b4",
+    ".ifpmic-venv/lib/python3.12/site-packages/authlib/integrations/httpx_client/oauth2_client.py": "24c0c3dd6b05c8daeb9d781ce6ceef6c64107ae25a881076fefb82a5995ae463",
+    ".ifpmic-venv/lib/python3.12/site-packages/authlib/oauth2/client.py": "87ff9d5d5b06a1b54b82849f1e27fc4649966bb943dd69fdea8e92cf8dc6a4dc",
+    ".ifpmic-venv/lib/python3.12/site-packages/authlib/oidc/core/claims.py": "b513ebb513ff64d0c3fffe2482b74b47aaa1ce40ec839da69f13bec1b1c2af78",
+    ".ifpmic-venv/lib/python3.12/site-packages/httpx2/_client.py": "fa3948aa66a9efd5edf097c6d13d927612c617328b43ceefc4bdd5e350aaa93b",
+    ".ifpmic-venv/lib/python3.12/site-packages/joserfc/jwt.py": "6bda702ac912095a33ccc5f5604af43b426295bec1f4dda508c02cbc10214e3d"
+  },
+  "reviewed_points": [
+    {
+      "point": "Parent scope and status boundaries",
+      "assessment": "The contract keeps G3 limited to authentication/session/CSRF, preserves the existing AX localhost GET-only server and original OpenAPI job DTOs, does not claim corporate SSO or AT-21 completion, and keeps G4 authorization/job writes and G6 full UI/regression acceptance separate. Synthetic local protocol tests are not represented as real corporate-provider acceptance."
+    },
+    {
+      "point": "Browser-bound one-time state and session issuance",
+      "assessment": "The explicit browser cookie hash, 5-minute expiry, atomic consumption before token exchange, non-consumption on cross-browser mismatch, nonce/PKCE linkage, opaque session hash, rotation, absolute/idle expiry, and stable domain-separated HMAC CSRF token form testable state transitions. Callback protocol errors do not echo provider-controlled text. The injected clock and real PostgreSQL concurrency/fault testing make expiry, replay, and commit behavior independently observable."
+    },
+    {
+      "point": "Authlib integration fidelity",
+      "assessment": "The direct AsyncOAuth2Client authorization URL and token exchange match the pinned APIs and avoid the Starlette PKCE helper's DEBUG verifier log. The contract correctly pins configured issuer and audience, validates time with injected now and leeway zero, restricts the algorithm set, and handles Authlib CodeIDToken azp behavior explicitly. Supplying access_token to CodeIDToken supports at_hash verification when present."
+    },
+    {
+      "point": "HTTP boundary, privacy and body limits",
+      "assessment": "One short-lived callback client avoids the Authlib wrapper's separate-client transport-closure problem. Explicit method/URL allowlisting, no redirects, no environment proxy, fixed TLS policy, identity content encoding, streaming byte counts, finite timeouts and an outer deadline address the source-identified egress and buffering risks. Uvicorn access logging is disabled and actual process/application logs are checked with callback canaries. These are sufficiently concrete for independent test authoring."
+    },
+    {
+      "point": "Token and identity validation testability",
+      "assessment": "The contract provides literal claim and crypto checks for issuer, subject, audience, azp, algorithm, nonce, NumericDate boundaries, public-only JWKS and key-count limits. It rejects boolean/non-finite NumericDate values and binds users only by the issuer/subject pair. The local signed provider can exercise valid and invalid cases without claiming real SSO."
+    }
+  ],
+  "blockers": [
+    {
+      "id": "G3-ORIGIN-POLICY-1",
+      "location": "g3-implementation-contract.json#/settings_policy/urls",
+      "finding": "The contract requires the authorization, token and JWKS endpoints to share the issuer's exact normalized origin. The approved B02 plan requires requests to be restricted to configured HTTPS origins, but does not require a single shared origin. This stronger restriction could exclude a legitimate corporate OIDC deployment where discovery issuer and token/JWKS endpoints use separate configured hosts. No real provider configuration was available to justify this compatibility restriction.",
+      "required_resolution": "Replace the same-origin rule with exact allowlisting of each configured endpoint's method and complete URL, plus an explicit set of configured HTTPS origins. Keep rejecting discovery metadata or token claims that introduce endpoints; preserve exact method/URL checks and no redirect/environment-proxy policy. If a single-origin deployment restriction is a deliberate product requirement, state that constraint and its provider-compatibility consequence explicitly in the parent plan before approval."
+    }
+  ],
+  "limitations": [
+    "This is contract review only; no service or provider requests were run and no implementation/test behavior is accepted.",
+    "The Authlib source collection documents response-size cap requirements; the proposed 65536-byte cap with identity encoding closes that gap, but still needs stream-level tests against chunked and rejected content-encoding responses.",
+    "No real SSO registration, endpoint set, TLS certificate policy, or corporate issuer was available to validate deployment compatibility."
+  ]
+}

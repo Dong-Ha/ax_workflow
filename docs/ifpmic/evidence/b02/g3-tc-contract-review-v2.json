@@ -1,0 +1,62 @@
+{
+  "review": "Independent B02 G3 contract v2 review for test-oracle readiness",
+  "verdict": "contract_sufficient_for_implementation_and_test_authoring",
+  "scope": "Read-only review of the revised supplemental G3 contract against the approved B02 identity plan and pinned local Authlib source/API. No product code or tests were written or executed.",
+  "source_pins": {
+    "docs/ifpmic/evidence/b02/g3-implementation-contract-v2.json": "157bebf63781aeec4463ca68a19c7991ae690ef0d535f2cf367fc4ff95cf2292",
+    "docs/ifpmic/B02-IDENTITY.md": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a",
+    "docs/ifpmic/evidence/b02/g3-authlib-source-collection.json": "da3206e06465d08aa549eeb79e9c7575cb38ae201ff7166d60e1a720c11241fc",
+    ".ifpmic-venv/lib/python3.12/site-packages/authlib/oidc/core/claims.py": "b513ebb513ff64d0c3fffe2482b74b47aaa1ce40ec839da69f13bec1b1c2af78",
+    ".ifpmic-venv/lib/python3.12/site-packages/authlib/oauth2/claims.py": "05433952941421a3cffd24976691b1737e5894cca484f2b681edeb513d6356fe",
+    ".ifpmic-venv/lib/python3.12/site-packages/authlib/jose/rfc7519/claims.py": "9d797c8843489e1dd70394252f79b52ec0904164f944b39544556158aea91f00",
+    ".ifpmic-venv/lib/python3.12/site-packages/authlib/oauth2/client.py": "87ff9d5d5b06a1b54b82849f1e27fc4649966bb943dd69fdea8e92cf8dc6a4dc"
+  },
+  "reviewed_contract_points": [
+    {
+      "point": "CSRF encoding and domain separator",
+      "assessment": "The revised contract now agrees with the approved parent plan: the HMAC-SHA256 result is unpadded Base64URL and exactly 43 URL-safe characters. The input is csrf_key || ASCII(\"ifpmic.csrf.v1\") || one actual NUL byte || ASCII(ax_session). The byte-level derivation is sufficiently fixed for an independent literal HMAC oracle."
+    },
+    {
+      "point": "Configured IdP endpoint origins",
+      "assessment": "Authorization, token, and JWKS endpoints may use distinct explicitly configured HTTPS origins, while each network operation is restricted to its exact configured method and full URL. Discovery and token-selected URLs remain prohibited. Issuer remains an exact ID-token claim value and is no longer incorrectly coupled to endpoint origin. This makes a realistic split-origin synthetic provider testable without broadening the egress policy."
+    },
+    {
+      "point": "OIDC NumericDate boundaries",
+      "assessment": "The literal contract is clear: exp > injected now, nbf <= now, iat <= now, with leeway zero; each NumericDate is finite numeric and not boolean. Authlib 1.9.1 exposes CodeIDToken.validate(self, now=None, leeway=0), but its pinned JWT claims validator rejects exp only when exp < now, so equality is accepted by that validator. The implementation must apply the stricter contract exp > now check explicitly; the independent TC oracle must assert that exp == now is rejected. This is a known implementation hazard, not an ambiguity in the expected result."
+    },
+    {
+      "point": "Audience and authorized-party boundaries",
+      "assessment": "The contract specifies a string aud or a nonempty unique list of strings containing client_id. Multi-audience values require azp == client_id; if azp is present for a single audience it must also match. The pinned Authlib CodeIDToken validates configured aud options and azp consistency, but the application must still enforce the contract's unique-list/type rules. Literal TC cases can distinguish single vs multiple audience, absent/mismatched azp, duplicate aud, wrong client, and wrong claim types."
+    },
+    {
+      "point": "Signature, nonce, and issuer",
+      "assessment": "The configured algorithm set, exact issuer, matching nonce, required claims, bounded public asymmetric JWKS, fixed JWKS endpoint, optional response iss check, and at_hash verification inputs are stated explicitly. A local signed provider can independently vary each claim and signature while retaining a valid baseline. No real IdP is needed for G3 contract tests."
+    },
+    {
+      "point": "Callback, session, and HTTP boundary",
+      "assessment": "Routes, query allowlist/limits, browser-bound one-time state, consume-before-exchange behavior, cross-browser mismatch semantics, cookie attributes, session/idle boundary, stable CSRF across restart, logout status mapping, duplicate-header handling, exact CORS policy, fixed errors, and actual Uvicorn log-canary requirement provide independent normal, exception, boundary, race, and regression oracles."
+    }
+  ],
+  "required_test_case_groups": [
+    "Valid authorization-code/PKCE callback with exact token endpoint and a JWKS endpoint on a separately configured HTTPS origin; verify issuer remains exact and no discovery occurs.",
+    "ID-token claims and crypto matrix including exp just-before/equal/after now, nbf and iat equal boundaries, booleans/nonfinite values, aud scalar/list/duplicate/wrong client, multi-aud azp, nonce, issuer, signature, algorithm, key, and at_hash.",
+    "Browser-state isolation, duplicate callback parameters, malformed encoding, callback size caps, provider errors, redirect/non-2xx/invalid_grant, nonidentity content encoding, streamed response limit, timeout, proxy-environment isolation, and fresh-login requirement after consumed-state failure.",
+    "Session cookie rotation/hash-only persistence, exact expiry and idle boundaries, restart-stable literal CSRF, CSRF/Origin duplicates and failures, logout/revocation, and before/after-commit fault behavior.",
+    "Actual loopback Uvicorn callback canary checks across successful, failed, expired, and replayed callbacks; assert absence of code/state/error_description in stdout, stderr, and captured app logs without echoing canaries in test failures."
+  ],
+  "blockers": [],
+  "supersedes": {
+    "path": "docs/ifpmic/evidence/b02/g3-tc-contract-review.json",
+    "sha256": "8dc63fec4f9110a826e7a38cdb90bfe7330e38794a8ea7e3fd2f403d9a45f7c9",
+    "prior_verdict": "contract_requires_one_literal_oracle_clarification",
+    "resolved_by": [
+      "Explicit unpadded Base64URL with exact 43-character CSRF output.",
+      "Exact configured method/full-URL allowlist across separately configured HTTPS endpoint origins."
+    ]
+  },
+  "limitations": [
+    "Contract review only; no implementation or TC candidate has been reviewed or accepted.",
+    "No real identity provider, corporate SSO, proxy, or production endpoint was contacted.",
+    "Local synthetic-provider success does not complete original AT-21 or prove reverse-proxy log redaction."
+  ]
+}

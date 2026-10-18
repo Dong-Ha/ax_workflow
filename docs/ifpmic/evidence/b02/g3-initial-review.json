@@ -1,0 +1,66 @@
+{
+  "review": "Read-only initial G3 authentication implementation security review",
+  "verdict": "blocked_pending_material_findings",
+  "scope": "Static review of initial G3 service implementation against the approved G3 v2 contract. No service, database or tests were executed. No product or test files were changed.",
+  "source_pins": {
+    "docs/ifpmic/B02-IDENTITY.md": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a",
+    "docs/ifpmic/evidence/b02/g3-implementation-contract-v2.json": "157bebf63781aeec4463ca68a19c7991ae690ef0d535f2cf367fc4ff95cf2292",
+    "services/ifpmic_api/settings.py": "128e94b5cd80f299289f5e36f3ebb9241660e9e72b01fed81c9c7cad4f8e4988",
+    "services/ifpmic_api/errors.py": "e92506dc3ad272581c645febe898e7f4f68803e0f77177e67ea43626a20e4dc0",
+    "services/ifpmic_api/oidc.py": "dd40cec546a6a6731cdc4fc94884cadb9b4cbe062d3ba478b484c6b37f281964",
+    "services/ifpmic_api/auth.py": "f72c8a602fbbd52ace494d17e3ea4da8a338d2525328dcc265d16ba2daa10920",
+    "services/ifpmic_api/app.py": "3e25b9fc3dbc4ec82e7af3acfb518c6b664e909b295e03217bb2f69edc02434d",
+    "services/ifpmic_api/serve.py": "2e45b6385ad15068f6d203e11caa7d447d4223aaefc9dce718aa57d55da3fe7e",
+    "services/ifpmic_api/migrations/001_initial.sql": "cf0437a5f32e1589e4ea821afbb2ef2480d780a276667880aa9a08a0f4c77f12",
+    ".ifpmic-venv/lib/python3.12/site-packages/authlib/integrations/httpx_client/oauth2_client.py": "24c0c3dd6b05c8daeb9d781ce6ceef6c64107ae25a881076fefb82a5995ae463",
+    ".ifpmic-venv/lib/python3.12/site-packages/authlib/oidc/core/claims.py": "b513ebb513ff64d0c3fffe2482b74b47aaa1ce40ec839da69f13bec1b1c2af78",
+    ".ifpmic-venv/lib/python3.12/site-packages/joserfc/_rfc7519/claims.py": "7b7ced716a57f088fa61ede3c214290bdb95b742c3a81d0321e9aa6853400477",
+    ".ifpmic-venv/lib/python3.12/site-packages/httpx2/_models.py": "d139d0c54a1acd65995f693d876441e55fe418ef2799f647ec6361f695b0d4d6"
+  },
+  "confirmed_contract_alignment": [
+    {
+      "area": "Configuration and URL policy",
+      "assessment": "Settings are an immutable repr=False dataclass. The selected config file is opened with O_NOFOLLOW, checked as an owner-owned regular mode-0600 file, and size bounded. URLs reject userinfo, control/whitespace, literal query/fragment delimiters and backslashes; real mode requires HTTPS and mock mode requires literal loopback hosts. The exact configured token and JWKS method/URL allowlist is enforced by OidcTransport."
+    },
+    {
+      "area": "OIDC crypto and callback state",
+      "assessment": "Direct AsyncOAuth2Client PKCE construction avoids Authlib's verifier-debug helper. The implementation uses an application algorithm allowlist, strict JWS header checking, issuer/audience claim options, explicit subject/audience/azp checks, finite non-bool NumericDates with exp strictly greater than injected now, nonce validation and an at_hash presence guard. State is canonical random material, stored by hash with browser binding, consumed in one DB update transaction before token exchange, and provider errors do not echo descriptions."
+    },
+    {
+      "area": "Network limits and egress",
+      "assessment": "A single callback client handles token and JWKS requests with an injected fresh transport, no environment proxy, no redirects, TLS verification, finite timeout, endpoint method/URL allowlisting, identity-only encoding, declared length precheck and streamed 65536-byte cap. HTTPX response iteration closes the response stream in a finally path if the cap raises."
+    },
+    {
+      "area": "Session and HTTP boundary",
+      "assessment": "Successful OIDC creates an opaque session hash in a transaction and only sets the cookie after commit; prior canonical session tokens are revoked. Authentication checks expiry, inactivity and revocation while holding a row lock and touches last_seen in the caller transaction. CSRF uses the approved domain-separated HMAC bytes. Boundary rejects duplicate security headers/cookies, spoofable identity headers are unused, host and Origin are exact-checked, responses are fixed and no-store, and Uvicorn access logging is disabled."
+    },
+    {
+      "area": "Privacy",
+      "assessment": "Inspected service code does not log callback values or exception reprs. The Authlib, HTTPX2 and HTTPcore2 parent loggers are raised to WARNING, Uvicorn access logging is disabled, and serve prints only the fixed SETTINGS_INVALID startup message. Actual process log behavior remains unverified until the planned canary test runs."
+    }
+  ],
+  "findings": [
+    {
+      "id": "G3-IMPL-ERROR-MAPPING-1",
+      "severity": "material_contract_mismatch",
+      "location": "services/ifpmic_api/oidc.py:138-142",
+      "source_evidence": "Authlib AsyncOAuth2Client raises OAuthError for token endpoint OAuth error responses; its `.error` field represents the provider's error code. The approved contract specifically maps invalid_grant 400/401 to AUTH_REQUIRED and maps dependency failures to DEPENDENCY_UNAVAILABLE.",
+      "finding": "The catch-all condition treats every exception with a string `.error` as an authentication failure. This also classifies provider/server/configuration errors such as invalid_client or server_error as 401 AUTH_REQUIRED, masking a dependency/configuration problem and diverging from the specified invalid_grant behavior.",
+      "required_resolution": "Handle the contract's expected invalid-grant/authentication error values as AUTH_REQUIRED and map provider-side server/configuration/protocol failures to DEPENDENCY_UNAVAILABLE. Add independent tests for invalid_grant and representative non-grant OAuth error codes; never expose the error description or raw response."
+    },
+    {
+      "id": "G3-IMPL-LOGIN-RETENTION-1",
+      "severity": "material_unbounded_persistent_state",
+      "location": "services/ifpmic_api/auth.py:56-65,73-78; services/ifpmic_api/migrations/001_initial.sql:176-183,210-215",
+      "source_evidence": "Every unauthenticated GET /auth/login inserts a row containing state, browser, nonce and PKCE verifier material. expires_at is only checked during consume. The table schema has no cleanup/retention mechanism, and the runtime role has SELECT/INSERT plus UPDATE(consumed_at), but no DELETE privilege.",
+      "finding": "Expired and consumed OIDC transactions are never removed. Repeated public login requests therefore create indefinitely accumulating rows, and no database privilege currently permits the runtime to prune them. The five-minute validity limit prevents replay but does not bound persistent growth.",
+      "required_resolution": "Define and implement bounded OIDC transaction retention, preserving replay rejection throughout the validity window. This may use a narrowly scoped runtime purge of expired rows or an explicitly managed retention task; align the migration privilege/index policy and add a real-PostgreSQL test proving expired transaction rows are pruned and unexpired rows remain usable. Consider a request-rate/row-growth bound if cleanup is only opportunistic."
+    }
+  ],
+  "not_yet_verified": [
+    "No pytest, API, PostgreSQL or Uvicorn run was performed; planned TC coverage and captured log-canary evidence are still required.",
+    "The response-size stream cap, actual subprocess/service log canaries, duplicate header handling through the real ASGI server, browser cookie flags and transaction fault points were reviewed statically only.",
+    "No real corporate OIDC provider, SSO registration, TLS deployment or reverse-proxy log policy was evaluated."
+  ],
+  "next_review_condition": "Re-review the two findings after the product and approved test ledger are updated; do not treat this initial review as G3 acceptance."
+}

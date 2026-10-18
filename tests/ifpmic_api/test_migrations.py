@@ -28,6 +28,11 @@ from services.ifpmic_api.migrate import MigrationError, apply_migrations
 MIGRATION_VERSION = "001_initial"
 MIGRATION_FILE = Path(__file__).resolve().parents[2] / "services/ifpmic_api/migrations/001_initial.sql"
 PINNED_MIGRATION_SHA256 = "cf0437a5f32e1589e4ea821afbb2ef2480d780a276667880aa9a08a0f4c77f12"
+RETENTION_MIGRATION_VERSION = "002_auth_retention"
+RETENTION_MIGRATION_FILE = Path(__file__).resolve().parents[2] / "services/ifpmic_api/migrations/002_auth_retention.sql"
+PINNED_RETENTION_MIGRATION_SHA256 = "95c01f06eb586e0c1067f04672edfed8e0a11215752ad859ac9e4744da5a504e"
+MIGRATION_VERSIONS = [MIGRATION_VERSION, RETENTION_MIGRATION_VERSION]
+AUTH_RETENTION_DELETE_TABLES = {"oidc_login_transactions", "user_sessions"}
 
 REQUIRED_TABLES = {
     "users",
@@ -102,55 +107,71 @@ def _expect_migration_error(call, code):
 
 def test_fresh_migration_and_idempotent_rerun(pg_cluster, migration_db):
     assert hashlib.sha256(MIGRATION_FILE.read_bytes()).hexdigest() == PINNED_MIGRATION_SHA256
+    assert hashlib.sha256(RETENTION_MIGRATION_FILE.read_bytes()).hexdigest() == PINNED_RETENTION_MIGRATION_SHA256
 
     first = _migrate_with_cluster(pg_cluster, migration_db)
-    assert first == {"applied": [MIGRATION_VERSION], "unchanged": []}
+    assert first == {"applied": MIGRATION_VERSIONS, "unchanged": []}
 
     second = _migrate_with_cluster(pg_cluster, migration_db)
-    assert second == {"applied": [], "unchanged": [MIGRATION_VERSION]}
+    assert second == {"applied": [], "unchanged": MIGRATION_VERSIONS}
 
     with psycopg.connect(migration_db.owner_dsn(pg_cluster)) as connection:
         schema_owner = connection.execute(
             "SELECT pg_get_userbyid(nspowner) FROM pg_namespace WHERE nspname='ifpmic'"
         ).fetchone()[0]
-        row = connection.execute(
-            "SELECT version,source_sha256,runtime_role,operator_role FROM ifpmic.schema_migrations"
-        ).fetchone()
+        rows = connection.execute(
+            "SELECT version,source_sha256,runtime_role,operator_role FROM ifpmic.schema_migrations ORDER BY version"
+        ).fetchall()
         tables = {
             name
             for (name,) in connection.execute(
                 "SELECT tablename FROM pg_catalog.pg_tables WHERE schemaname='ifpmic'"
             ).fetchall()
         }
+        expiry_indexes = connection.execute(
+            "SELECT tablename,indexdef FROM pg_catalog.pg_indexes "
+            "WHERE schemaname='ifpmic' AND tablename=ANY(%s)",
+            (sorted(AUTH_RETENTION_DELETE_TABLES),),
+        ).fetchall()
     assert schema_owner == migration_db.roles.migration
-    assert row == (
-        MIGRATION_VERSION,
-        PINNED_MIGRATION_SHA256,
-        migration_db.roles.runtime,
-        migration_db.roles.operator,
-    )
+    assert rows == [
+        (MIGRATION_VERSION, PINNED_MIGRATION_SHA256, migration_db.roles.runtime, migration_db.roles.operator),
+        (RETENTION_MIGRATION_VERSION, PINNED_RETENTION_MIGRATION_SHA256, migration_db.roles.runtime, migration_db.roles.operator),
+    ]
     assert REQUIRED_TABLES <= tables
+    indexed_auth_tables = {
+        table: [definition for indexed_table, definition in expiry_indexes
+                if indexed_table == table and "(expires_at" in definition]
+        for table in AUTH_RETENTION_DELETE_TABLES
+    }
+    assert all(len(definitions) == 1 for definitions in indexed_auth_tables.values())
 
 
 def test_migration_rejects_file_drift_removed_versions_and_role_drift(pg_cluster, migration_db, tmp_path):
     assert _migrate_with_cluster(pg_cluster, migration_db) == {
-        "applied": [MIGRATION_VERSION],
+        "applied": MIGRATION_VERSIONS,
         "unchanged": [],
     }
 
-    copied = tmp_path / "changed"
-    copied.mkdir()
-    shutil.copyfile(MIGRATION_FILE, copied / f"{MIGRATION_VERSION}.sql")
-    with (copied / f"{MIGRATION_VERSION}.sql").open("ab") as source:
-        source.write(b"\n-- changed source bytes\n")
-    _expect_migration_error(
-        lambda: _migrate_with_cluster(pg_cluster, migration_db, migration_dir=copied),
-        "MIGRATION_DRIFT",
-    )
+    for version, source_file in (
+        (MIGRATION_VERSION, MIGRATION_FILE),
+        (RETENTION_MIGRATION_VERSION, RETENTION_MIGRATION_FILE),
+    ):
+        copied = tmp_path / f"changed-{version}"
+        copied.mkdir()
+        shutil.copyfile(MIGRATION_FILE, copied / f"{MIGRATION_VERSION}.sql")
+        shutil.copyfile(RETENTION_MIGRATION_FILE, copied / f"{RETENTION_MIGRATION_VERSION}.sql")
+        with (copied / f"{version}.sql").open("ab") as source:
+            source.write(b"\n-- changed source bytes\n")
+        _expect_migration_error(
+            lambda copied=copied: _migrate_with_cluster(pg_cluster, migration_db, migration_dir=copied),
+            "MIGRATION_DRIFT",
+        )
 
     removed = tmp_path / "removed"
     removed.mkdir()
-    shutil.copyfile(MIGRATION_FILE, removed / "002_replacement.sql")
+    shutil.copyfile(MIGRATION_FILE, removed / f"{MIGRATION_VERSION}.sql")
+    shutil.copyfile(RETENTION_MIGRATION_FILE, removed / "003_replacement.sql")
     _expect_migration_error(
         lambda: _migrate_with_cluster(pg_cluster, migration_db, migration_dir=removed),
         "MIGRATION_DRIFT",
@@ -172,10 +193,11 @@ def test_migration_rejects_file_drift_removed_versions_and_role_drift(pg_cluster
     # All rejected attempts leave the originally accepted migration record intact.
     with psycopg.connect(migration_db.owner_dsn(pg_cluster)) as connection:
         rows = connection.execute(
-            "SELECT version,source_sha256,runtime_role,operator_role FROM ifpmic.schema_migrations"
+            "SELECT version,source_sha256,runtime_role,operator_role FROM ifpmic.schema_migrations ORDER BY version"
         ).fetchall()
     assert rows == [
-        (MIGRATION_VERSION, PINNED_MIGRATION_SHA256, migration_db.roles.runtime, migration_db.roles.operator)
+        (MIGRATION_VERSION, PINNED_MIGRATION_SHA256, migration_db.roles.runtime, migration_db.roles.operator),
+        (RETENTION_MIGRATION_VERSION, PINNED_RETENTION_MIGRATION_SHA256, migration_db.roles.runtime, migration_db.roles.operator),
     ]
 
 
@@ -244,7 +266,7 @@ def test_invalid_role_and_active_transaction_are_refused(pg_cluster, migration_d
 
 def test_runtime_and_operator_are_distinct_nonowner_least_privilege_roles(pg_cluster, migration_db):
     assert _migrate_with_cluster(pg_cluster, migration_db) == {
-        "applied": [MIGRATION_VERSION],
+        "applied": MIGRATION_VERSIONS,
         "unchanged": [],
     }
     with psycopg.connect(migration_db.owner_dsn(pg_cluster)) as connection:
@@ -270,9 +292,10 @@ def test_runtime_and_operator_are_distinct_nonowner_least_privilege_roles(pg_clu
             assert connection.execute(
                 "SELECT has_table_privilege(%s,'ifpmic.schema_migrations','SELECT'), "
                 "has_table_privilege(%s,'ifpmic.schema_migrations','INSERT'), "
-                "has_table_privilege(%s,'ifpmic.schema_migrations','UPDATE')",
-                (role_name, role_name, role_name),
-            ).fetchone() == (False, False, False)
+                "has_table_privilege(%s,'ifpmic.schema_migrations','UPDATE'), "
+                "has_table_privilege(%s,'ifpmic.schema_migrations','DELETE')",
+                (role_name, role_name, role_name, role_name),
+            ).fetchone() == (False, False, False, False)
 
         for table in REQUIRED_TABLES:
             assert connection.execute(
@@ -283,6 +306,14 @@ def test_runtime_and_operator_are_distinct_nonowner_least_privilege_roles(pg_clu
                 "SELECT has_table_privilege(%s,%s,'SELECT')",
                 (migration_db.roles.operator, f"ifpmic.{table}"),
             ).fetchone()[0] is (table in OPERATOR_SELECT_TABLES)
+            assert connection.execute(
+                "SELECT has_table_privilege(%s,%s,'DELETE')",
+                (migration_db.roles.runtime, f"ifpmic.{table}"),
+            ).fetchone()[0] is (table in AUTH_RETENTION_DELETE_TABLES)
+            assert connection.execute(
+                "SELECT has_table_privilege(%s,%s,'DELETE')",
+                (migration_db.roles.operator, f"ifpmic.{table}"),
+            ).fetchone() == (False,)
 
         for table in REQUIRED_TABLES:
             for role_name, expected_columns in (
@@ -361,6 +392,12 @@ def test_runtime_and_operator_are_distinct_nonowner_least_privilege_roles(pg_clu
                 (role_name,),
             ).fetchone() == (False,)
 
+    with psycopg.connect(migration_db.runtime_dsn(pg_cluster), autocommit=True) as runtime:
+        for table in sorted(REQUIRED_TABLES - AUTH_RETENTION_DELETE_TABLES):
+            with pytest.raises(psycopg.errors.InsufficientPrivilege):
+                runtime.execute(sql.SQL("DELETE FROM ifpmic.{} WHERE false").format(sql.Identifier(table)))
+            runtime.rollback()
+
 
 def test_runtime_and_operator_can_only_perform_their_planned_mutations(pg_cluster, migration_db):
     _migrate_with_cluster(pg_cluster, migration_db)
@@ -391,6 +428,8 @@ def test_runtime_and_operator_can_only_perform_their_planned_mutations(pg_cluste
             "UPDATE ifpmic.user_sessions SET last_seen_at=%s,revoked_at=%s WHERE token_hash=%s",
             (now + timedelta(seconds=1), None, "2" * 64),
         )
+        runtime.execute("DELETE FROM ifpmic.oidc_login_transactions WHERE state_hash=%s", ("1" * 64,))
+        runtime.execute("DELETE FROM ifpmic.user_sessions WHERE token_hash=%s", ("2" * 64,))
 
     with psycopg.connect(migration_db.operator_dsn(pg_cluster)) as operator:
         operator.execute("INSERT INTO ifpmic.projects(project_id) VALUES(%s)", ("g1-project",))
@@ -525,7 +564,7 @@ def test_migration_cli_applies_and_reruns_without_leaking_connection_info(pg_clu
     assert first.returncode == 0
     assert first.stderr == ""
     assert first.stdout.endswith("\n") and first.stdout.count("\n") == 1
-    assert json.loads(first.stdout) == {"applied": [MIGRATION_VERSION], "unchanged": []}
+    assert json.loads(first.stdout) == {"applied": MIGRATION_VERSIONS, "unchanged": []}
     assert sentinel not in first.stdout + first.stderr and dsn not in first.stdout + first.stderr
 
     second = subprocess.run(
@@ -535,7 +574,7 @@ def test_migration_cli_applies_and_reruns_without_leaking_connection_info(pg_clu
     assert second.returncode == 0
     assert second.stderr == ""
     assert second.stdout.endswith("\n") and second.stdout.count("\n") == 1
-    assert json.loads(second.stdout) == {"applied": [], "unchanged": [MIGRATION_VERSION]}
+    assert json.loads(second.stdout) == {"applied": [], "unchanged": MIGRATION_VERSIONS}
     assert sentinel not in second.stdout + second.stderr and dsn not in second.stdout + second.stderr
 
 
@@ -629,19 +668,23 @@ def test_database_constraints_bind_owner_project_snapshot_and_command(pg_cluster
 
 
 def test_failed_migration_rolls_back_schema_and_concurrent_migration_is_serialized(pg_cluster, migration_db, tmp_path):
-    broken = tmp_path / "broken"
-    broken.mkdir()
-    broken_sql = tmp_path / "valid.sql"
-    source = MIGRATION_FILE.read_text(encoding="utf-8")
-    broken_sql.write_text(source.replace("CREATE TABLE ifpmic.users (", "CREATE TABLE ifpmic.users (") + "\nINVALID SQL;\n", encoding="utf-8")
-    broken_file = broken / f"{MIGRATION_VERSION}.sql"
-    shutil.copyfile(broken_sql, broken_file)
-    _expect_migration_error(
-        lambda: _migrate_with_cluster(pg_cluster, migration_db, migration_dir=broken),
-        "MIGRATION_IO",
-    )
-    with psycopg.connect(migration_db.owner_dsn(pg_cluster)) as connection:
-        assert connection.execute("SELECT to_regnamespace('ifpmic')").fetchone()[0] is None
+    for version, source_file in (
+        (MIGRATION_VERSION, MIGRATION_FILE),
+        (RETENTION_MIGRATION_VERSION, RETENTION_MIGRATION_FILE),
+    ):
+        broken = tmp_path / f"broken-{version}"
+        broken.mkdir()
+        shutil.copyfile(MIGRATION_FILE, broken / f"{MIGRATION_VERSION}.sql")
+        shutil.copyfile(RETENTION_MIGRATION_FILE, broken / f"{RETENTION_MIGRATION_VERSION}.sql")
+        broken_sql = broken / f"{version}.sql"
+        source = source_file.read_text(encoding="utf-8")
+        broken_sql.write_text(source + "\nINVALID SQL;\n", encoding="utf-8")
+        _expect_migration_error(
+            lambda broken=broken: _migrate_with_cluster(pg_cluster, migration_db, migration_dir=broken),
+            "MIGRATION_IO",
+        )
+        with psycopg.connect(migration_db.owner_dsn(pg_cluster)) as connection:
+            assert connection.execute("SELECT to_regnamespace('ifpmic')").fetchone()[0] is None
 
     barrier = threading.Barrier(2)
 
@@ -657,8 +700,8 @@ def test_failed_migration_rolls_back_schema_and_concurrent_migration_is_serializ
     with ThreadPoolExecutor(max_workers=2) as pool:
         results = list(pool.map(lambda _: migrate_once(), range(2)))
     assert sorted((tuple(row["applied"]), tuple(row["unchanged"])) for row in results) == sorted(
-        [((MIGRATION_VERSION,), ()), ((), (MIGRATION_VERSION,))]
+        [(tuple(MIGRATION_VERSIONS), ()), ((), tuple(MIGRATION_VERSIONS))]
     )
     with psycopg.connect(migration_db.owner_dsn(pg_cluster)) as connection:
-        assert connection.execute("SELECT count(*) FROM ifpmic.schema_migrations").fetchone()[0] == 1
+        assert connection.execute("SELECT count(*) FROM ifpmic.schema_migrations").fetchone()[0] == 2
         assert connection.execute("SELECT count(*) FROM ifpmic.jobs").fetchone()[0] == 0

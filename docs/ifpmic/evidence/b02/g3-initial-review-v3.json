@@ -1,0 +1,46 @@
+{
+  "review": "Read-only G3 authentication follow-up after retention/admission fixes",
+  "verdict": "static_review_clear_pending_independent_tests",
+  "scope": "Narrow static verification of the previously reported OAuth error mapping, retention/admission, and RSA public-key completeness issues against approved G3 contract v4. No tests, database, service, or network were run; this is not G3 acceptance.",
+  "source_pins": {
+    "docs/ifpmic/B02-IDENTITY.md": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a",
+    "docs/ifpmic/evidence/b02/g3-implementation-contract-v4.json": "9b01aea9e54d1663aa7ad0bd6d14028292aa85a4e4c7300c5552b3613a810a72",
+    "docs/ifpmic/evidence/b02/g3-contract-review-v4.json": "83184c2c5d805f521f98ab0fe6fbf5c4b04bb3c7326f42b27d56ed3a651c32bd",
+    "services/ifpmic_api/settings.py": "f8e14f943d6429db0c28f0d5b3b6da0c0c0d03c3a5ad81828e2e08b2fc314aaf",
+    "services/ifpmic_api/errors.py": "e92506dc3ad272581c645febe898e7f4f68803e0f77177e67ea43626a20e4dc0",
+    "services/ifpmic_api/oidc.py": "78bc0d3194a987fe2232595e21719dc5dee2f79bbe41faeb9fcb8597a1f24478",
+    "services/ifpmic_api/auth.py": "9fef8084e8b11a7e1d0929a1842ab4fdddb0361adcbaa70700529a5e9999a887",
+    "services/ifpmic_api/app.py": "be6485fb3002b3bc35966eb8efab2e9cb09905d9f4789f91b721a46bfb572a82",
+    "services/ifpmic_api/serve.py": "2e45b6385ad15068f6d203e11caa7d447d4223aaefc9dce718aa57d55da3fe7e",
+    "services/ifpmic_api/migrations/001_initial.sql": "cf0437a5f32e1589e4ea821afbb2ef2480d780a276667880aa9a08a0f4c77f12",
+    "services/ifpmic_api/migrations/002_auth_retention.sql": "95c01f06eb586e0c1067f04672edfed8e0a11215752ad859ac9e4744da5a504e",
+    "docs/ifpmic/evidence/b02/attempts/g3-before-review-fixes/auth-before-capacity-commit.py": "e97797836cd8ebec063337d05286447a894cf25866d7190decc23bce0a903cd7"
+  },
+  "verified_static_fixes": [
+    {
+      "prior_finding": "G3-IMPL-ERROR-MAPPING-1",
+      "status": "resolved in current source",
+      "evidence": "oidc.exchange maps only token-endpoint invalid_grant with observed HTTP status 400 or 401 to AUTH_REQUIRED. The transport permits those error statuses only for the token endpoint; HTTP 200 OAuth error payloads, HTTP 500 responses, invalid_request, and other provider errors become DEPENDENCY_UNAVAILABLE."
+    },
+    {
+      "prior_finding": "G3-IMPL-LOGIN-RETENTION-1",
+      "status": "addressed in current source and migration; runtime oracle pending",
+      "evidence": "Migration 002 adds expiry indexes and grants runtime DELETE only on oidc_login_transactions and user_sessions; migration 001 remains byte-identical at its pinned hash. AuthService._cleanup uses trusted current time, a fixed advisory transaction lock, expires_at<=now, and at most 1000 rows per table with ordered SKIP LOCKED deletion. app lifespan schedules bounded maintenance every configured 1..60 seconds (default 60), cancels and awaits the task on shutdown, and suppresses private exception text."
+    },
+    {
+      "prior_finding": "G3-IMPL-CAPACITY-CLEANUP-ROLLBACK",
+      "status": "resolved in current source; real-PostgreSQL oracle pending",
+      "evidence": "AuthService.begin uses the same advisory transaction lock as cleanup, runs cleanup and counts pending login rows within one transaction, inserts only below 1024, and raises the fixed 503 after leaving the transaction when full. Therefore the cleanup batch commits on an admission rejection while count-plus-insert remain serialized."
+    },
+    {
+      "prior_finding": "RSA JWKS public-key completeness",
+      "status": "resolved in current source; targeted oracle pending",
+      "evidence": "verify_token rejects RSA/EC keys containing private parameters d,p,q,dp,dq,qi,k and oth before importing the JWK set. The explicit oth rejection closes the multi-prime RSA private-material omission noted against the prior source."
+    }
+  ],
+  "remaining_review_status": {
+    "product_blocker_found": false,
+    "acceptance": "pending TC-ledger cases and frozen G1/G2/G3 gate; static inspection cannot establish SQL privilege behavior, transaction rollback/commit behavior, scheduler lifecycle, cryptographic provider cases, or actual log-canary absence.",
+    "scope_limit": "No claim of real corporate SSO, production deployment, original AT-21 completion, or full B02 completion."
+  }
+}

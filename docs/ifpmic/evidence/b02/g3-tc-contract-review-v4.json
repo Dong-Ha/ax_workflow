@@ -1,0 +1,31 @@
+{
+  "kind": "ifpmic_b02_g3_tc_contract_review_v4",
+  "review": "Independent test-oracle delta review for provider error classification",
+  "verdict": "approved_for_tc_authoring",
+  "scope": "Read-only review of the exact v4 delta from the previously approved v3 contract. No product, test, migration, dependency, database, or service changes; no test execution.",
+  "inputs": {
+    "docs/ifpmic/evidence/b02/g3-implementation-contract-v4.json": "9b01aea9e54d1663aa7ad0bd6d14028292aa85a4e4c7300c5552b3613a810a72",
+    "docs/ifpmic/evidence/b02/g3-implementation-contract-v3.json": "0de7956ee751fa3fb3efc24458832b4e69d760c435ee23940c9f9f4656ebd531",
+    "docs/ifpmic/evidence/b02/g3-tc-contract-review-v3.json": "768ff7818a700d01ab8a9c2edcae5a9ccbaaa34d169621b1fae9ca0955a2f85b"
+  },
+  "delta_review": {
+    "id": "G3-V4-TOKEN-PROVIDER-ERROR-MAPPING",
+    "result": "sufficient",
+    "assessment": "The revised mapping is precise and independently testable from the local synthetic provider. Only token-endpoint HTTP 400/401 carrying invalid_grant maps to 401 AUTH_REQUIRED. invalid_request and other provider OAuth errors map to 503 DEPENDENCY_UNAVAILABLE even at 400/401; HTTP 200 with an OAuth error payload and HTTP 500 carrying invalid_grant also map to 503. Invalid signed-token claims remain 401. A compact literal status/error matrix distinguishes each branch and checks that no user/session is created on rejection."
+  },
+  "carry_forward_review": {
+    "v3_auth_retention_policy": "Approved by this reviewer in g3-tc-contract-review-v3.json, SHA 768ff7818a700d01ab8a9c2edcae5a9ccbaaa34d169621b1fae9ca0955a2f85b. The v4 document carries the same explicit 002 migration, precise DELETE grants, bounded cleanup, admission limit, periodic scheduler and failure behavior.",
+    "testability": "The existing isolated PostgreSQL fixture and test seams support real database migration, grant, expiry-boundary, 1000-row batching, 1024-row admission/race, scheduler retry, and shutdown cases. The parent separately specified the direct maintenance-call result shape for deterministic tests; observable row counts remain the independent behavioral oracle."
+  },
+  "conditions": [
+    "Preserve the approved v3 test review as historical evidence; v4 is the current exact contract pin.",
+    "Retain 001_initial.sql bytes and all 001 behavioral/hash assertions while updating migration inventory and drift fixtures for 002.",
+    "Use a literal matrix for token HTTP status and OAuth error body; do not infer statuses from product output.",
+    "Run no code/tests until both v4 reviews are recorded and the parent confirms the fixed candidate is ready; retain command stdout/stderr privately from the first run."
+  ],
+  "limitations": [
+    "This approves the v4 contract for implementation and test authoring only, not the implementation, migration, G3, or B02 acceptance.",
+    "Synthetic loopback OIDC does not establish real corporate SSO, deployment TLS/proxy behavior, or original AT-21 completion.",
+    "The approved best-effort cleanup policy permits expired rows to remain during service/database outage; no immediate erasure guarantee is made."
+  ]
+}

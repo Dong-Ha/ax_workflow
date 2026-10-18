@@ -1,0 +1,36 @@
+{
+  "kind": "g3_historical_reviewed_sources",
+  "scope": "Exact prior source bytes copied before review-driven corrections, not reconstructed execution logs.",
+  "sources": [
+    {
+      "path": "docs/ifpmic/evidence/b02/attempts/g3-before-review-fixes/app.py",
+      "sha256": "3e25b9fc3dbc4ec82e7af3acfb518c6b664e909b295e03217bb2f69edc02434d"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/attempts/g3-before-review-fixes/auth-before-capacity-commit.py",
+      "sha256": "e97797836cd8ebec063337d05286447a894cf25866d7190decc23bce0a903cd7"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/attempts/g3-before-review-fixes/auth.py",
+      "sha256": "f72c8a602fbbd52ace494d17e3ea4da8a338d2525328dcc265d16ba2daa10920"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/attempts/g3-before-review-fixes/oidc-before-public-key-completeness.py",
+      "sha256": "eeff025cf25afa52888bcb5591a9ae2cfa511d53bb43a8817629a3c83d9f060a"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/attempts/g3-before-review-fixes/oidc.py",
+      "sha256": "dd40cec546a6a6731cdc4fc94884cadb9b4cbe062d3ba478b484c6b37f281964"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/attempts/g3-before-review-fixes/settings.py",
+      "sha256": "128e94b5cd80f299289f5e36f3ebb9241660e9e72b01fed81c9c7cad4f8e4988"
+    }
+  ],
+  "review_links": [
+    "g3-initial-review.json",
+    "g3-initial-review-v2.json",
+    "g3-initial-review-v3.json"
+  ],
+  "original_001": "services/ifpmic_api/migrations/001_initial.sql remains immutable cf0437a5f32e1589e4ea821afbb2ef2480d780a276667880aa9a08a0f4c77f12. Original G1 test source is retained in parent commit0f71928; updated tests must keep baseline001 counterexamples and add002 behavior."
+}
