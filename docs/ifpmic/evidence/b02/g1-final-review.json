@@ -1,0 +1,53 @@
+{
+  "kind":"ifpmic_b02_g1_independent_final_review",
+  "reviewer_role":"independent read-only G1 final reviewer",
+  "decision":"accept_partial_g1_candidate",
+  "scope":"Partial G1 acceptance for isolated Python toolchain resolution, PostgreSQL 18.1 migration schema, migration CLI, and database role/privilege checks only. This does not accept G2-G7, all of B02, or AT-21/other original acceptance cases.",
+  "plan":{
+    "path":"docs/ifpmic/B02-IDENTITY.md",
+    "sha256":"f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a",
+    "implementation_review":"docs/ifpmic/evidence/b02/plan-review-v3.json",
+    "tc_plan_review":"docs/ifpmic/evidence/b02/tc-plan-review-v3.json",
+    "runner_delta_review":"docs/ifpmic/evidence/b02/g1-pre-gate-review-v2.json"
+  },
+  "frozen_gate":{
+    "archive_path":"docs/ifpmic/evidence/b02/g1-gate.zip",
+    "published_archive_sha256":"183c6fc0dc1b8e4c4db98e887bc6e839b4f97326270899743b03ea28d2951ad2",
+    "verification_report_path":"docs/ifpmic/evidence/b02/g1-verification.json",
+    "verification_report_sha256":"0421d4d025e8463a22e08036fc2f8a517822676deea71afa1ea2844decd9a63a",
+    "raw_gate_entry_sha256":"72c90a977b673938f4673efdfe299cbe5bd6213a1af2995a602b528930b2d925",
+    "candidate_fingerprint":"7511806121f53497f6bb3d46ed1a9cf2722b4bcc34abfba8087f55b7f408a14c",
+    "source_count":32,
+    "source_changes":[],
+    "tests":{"total":12,"passed":12,"failed":0,"errors":0,"skipped":0,"elapsed":"5.42s"},
+    "environment":{"python":"3.12.3","installed_distributions":32,"postgresql":"18.1","requirements_lock_sha256":"6c8c950820a8c3ae9dea250e4080bc9dab09db17663e3d50118c5ac29211357e"},
+    "postgres_lifecycle":{"stop_status":"stopped","pid_alive_after_stop":false,"all_reported_operations_exit_zero":true}
+  },
+  "independent_evidence_audit":{
+    "result":"pass",
+    "checks":[
+      "Verified the published archive digest and its exact three-entry inventory, entry byte counts, and SHA256 values against the verification report.",
+      "Verified the archived gate bytes equal the frozen raw gate digest, with 12 passed cases, zero failures/errors/skips, empty source_changes, and matching candidate fingerprint.",
+      "Recomputed all 32 frozen source hashes against the current worktree; all matched. Independently rechecked the original 17 imported design files and two uploaded source files against source-manifest.json.",
+      "Compared the original local JUnit XML with the published XML after removing only the hostname attribute: the XML trees are otherwise equal, including all 12 test cases, durations, counts, and outcomes. The public archive has redacted-local-host and contains no original machine hostname.",
+      "Verified the archive excludes private-lifecycle.json and raw PostgreSQL server logs. The included pytest log is only the successful dot summary and aggregate count.",
+      "Confirmed the frozen gate records the private cluster stopped and its postmaster PID absent. No full Node/browser regression is claimed by this G1 gate."
+    ]
+  },
+  "publication_redaction":{
+    "entry":"gate/pytest.xml",
+    "transformation":"Only the host-specific JUnit hostname was replaced with redacted-local-host; test results and XML tree content are unchanged.",
+    "original_private_sha256":"32d91c81511044afa5ab959dfb2d244c3baa97e8709f015c9ea8a0f28d5cad25",
+    "published_sha256":"d30d7c0bcfde0f46cd7816d83637a483fd2304a9fca895a7e4fef477f641442e",
+    "provenance":"The original local gate and JUnit remain untouched. The public verification report records the original private hash and published sanitized hash without publishing the host value."
+  },
+  "scope_limits": [
+    "The private Unix-socket trust cluster and synthetic role/password setup do not establish production database authentication or deployment acceptance.",
+    "No OIDC protocol, service endpoint, Node snapshot bridge, workspace reconciler, Temporal worker, actual real eligibility authority, corporate SSO, or external service integration was accepted.",
+    "Runtime and operator roles are shared application roles; this G1 migration check does not establish per-user database isolation or RLS. The operator catalog insertion privilege still depends on the later G2 Node bridge import validation boundary.",
+    "Original AT-21 and all original acceptance cases remain not executed. Full Node/build/browser regression G6 remains pending.",
+    "The earlier failed targeted-test output files were not retained; the TC ledger records their classifications, and no historical log was reconstructed or represented as a passing gate artifact."
+  ],
+  "workspace_review":"The current worktree changes are confined to the documented G1 Python/migration/toolchain files, G1 tests/evidence, README/.gitignore, and progress metadata. Original ZIP/DOCX uploads remain untracked and outside the acceptance archive; no Paperclip database or auth files appear among changed paths.",
+  "reviewer_verdict":"Accept the frozen G1 candidate as a partial B02 foundation. Keep the G2-G7, B02, AT-21, production identity/database, and original acceptance work explicitly pending."
+}

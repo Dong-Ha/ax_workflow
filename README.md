@@ -6,6 +6,12 @@ IFPMIC workflow 시각화로 확장하는 방향은 [기준 자료와 이관 계
 
 ## IFPMIC 흐름 보기
 
+B02의 인증·요청 저장·작업 공간은 [독립 검토한 계획](./docs/ifpmic/B02-IDENTITY.md)에 따라 개발 중입니다. 현재 G1 기반은 Python3.12, 고정 Python 의존성, PostgreSQL18.1 migration과 분리된 DB 역할입니다. 실제 로그인·요청 API·작업 공간 reconciler는 후속 단계이며 기존 AX 서버는 계속 읽기 전용입니다.
+
+저장소 루트에서 `uv venv .ifpmic-venv --python /usr/bin/python3 --no-managed-python` 후 `uv pip sync --require-hashes --no-build --python .ifpmic-venv/bin/python services/ifpmic_api/requirements.lock`으로 격리 환경을 설치합니다. lock은 시험용 의존성까지 포함합니다. 기존 PostgreSQL에 적용할 때에는 별도 migration owner·runtime·operator 계정과 DB를 먼저 provision하고, 승인된 환경의 `IFPMIC_MIGRATION_DSN`, `IFPMIC_RUNTIME_ROLE`, `IFPMIC_OPERATOR_ROLE`을 전달하여 `.ifpmic-venv/bin/python -m services.ifpmic_api.migrate`를 실행합니다. DSN이나 자격 자료는 출력하지 않습니다. 현재 operator는 mock eligibility만 발급할 수 있으며 real authority는 별도 수용 대상입니다.
+
+`.ifpmic-venv/bin/python -m pytest -q tests/ifpmic_api`는 별도 임시 PostgreSQL 클러스터에서 G1을 검사합니다. 테스트 바이너리는 격리 Paperclip runtime의 pinned PostgreSQL18.1 도구를 사용하고 Paperclip DB·설정을 읽거나 재사용하지 않습니다. `.ifpmic-venv/bin/python scripts/verify_ifpmic_g1.py`는 소스·lock을 고정해 같은 검사를 실행하고 `workflow-artifacts/verification/B02/G1/gates/`에 결과를 보존합니다. 이 결과는 G1 범위이며 B02 서비스·OIDC·AT-21 또는 G6 전체 회귀 수용을 뜻하지 않습니다.
+
 B01의 로컬 프로파일 도구는 [사전 검증 계획](./docs/ifpmic/B01-PROFILES.md)에 따라 개발 중입니다. `npm run ifpmic:profile`은 원본 비활성 mock 예제를 읽어 구조·구성 상태만 출력합니다. `npm run ifpmic:profile -- --profile <JSON파일> --require-real-config`는 real/enabled/구성 완료 여부를 검사하며 실제 참조 확인·운영 smoke·승인을 수행하지 않습니다. 공개 출력의 경로는 JSON Pointer이며 프로파일 원문은 출력하지 않습니다. 이 도구는 기존 AX 기록 API와 독립적이고 네트워크·빌드·장비·배포를 실행하지 않습니다.
 
 스냅샷은 Linux의 신뢰된 로컬 저장소에서 명시적으로 만듭니다. 기존 parent 아래 `npm run ifpmic:profile -- --init-store --store <저장소>`로 초기화한 뒤 `npm run ifpmic:profile -- --snapshot --profile <JSON파일> --profile-version <버전> --store <저장소>`로 등록합니다. 같은 프로젝트·버전·내용은 같은 ID를 반환하고, 다른 내용은 충돌로 거절합니다. `--read --project-id <ID> --profile-version <버전> --store <저장소>`는 해시만 조회합니다. 저장소 파일에는 전체 프로파일이 있으므로 소유자가 관리하는 로컬 경로를 사용합니다. 스냅샷 생성은 승인이나 실행 권한을 부여하지 않습니다.

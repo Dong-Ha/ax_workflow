@@ -1,0 +1,8 @@
+{
+  "kind": "g1_historical_source_recovery",
+  "path": "docs/ifpmic/evidence/b02/attempts/g1-before-real-authority-guard.sql",
+  "sha256": "036f8a0d5c65dbd178b2f33d968d57b98cb015fcb0d56ee545952b3aeecf822e",
+  "review_path": "docs/ifpmic/evidence/b02/g1-initial-review.json",
+  "original_path": "services/ifpmic_api/migrations/001_initial.sql",
+  "method": "Exact prior SQL recovered by reversing only the subsequently added authority-guard patch and verifying equality with the independent initial review SHA. This is source preservation, not a reconstructed execution log."
+}

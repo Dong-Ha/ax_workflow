@@ -1,0 +1,6 @@
+# B02 approved direct runtime candidates. No telemetry/standard extras.
+fastapi==0.144.0
+uvicorn==0.54.0
+psycopg[binary]==3.3.6
+authlib==1.9.1
+httpx2==2.13.1

@@ -8,3 +8,8 @@ dist/
 
 # Generated local browser verification evidence (reviewed reports live under runs/)
 workflow-artifacts/
+
+# Isolated IFPMIC Python environment and Python-generated caches
+.ifpmic-venv/
+__pycache__/
+.pytest_cache/

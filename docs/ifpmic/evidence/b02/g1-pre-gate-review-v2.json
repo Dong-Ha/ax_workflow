@@ -1,0 +1,49 @@
+{
+  "kind":"ifpmic_b02_g1_independent_pre_gate_review_v2",
+  "reviewer_role":"independent read-only reviewer",
+  "decision":"approve_runner_delta_for_g1_freeze",
+  "supersedes_for_current_runner":"docs/ifpmic/evidence/b02/g1-pre-gate-review.json",
+  "historical_review_sha256":"8afc0687ccb314cc26c39f47aa4eac85ffe69e6353e8448e64961f76c88dafe0",
+  "reviewed_plan":{
+    "path":"docs/ifpmic/B02-IDENTITY.md",
+    "sha256":"f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a"
+  },
+  "reviewed_runner":{
+    "path":"scripts/verify_ifpmic_g1.py",
+    "sha256":"0f6603de4b0de546ccf2c23bc663c0568c2a178c8c19e31812c68b10a61e6d9b",
+    "change":"Read accepted B01 gate.json from the pinned local-profile-gate.zip and use its source hashes as the comparison baseline, so the approved Ajv/package changes from B01 do not cause false G1 failures."
+  },
+  "baseline_pin":{
+    "archive":"docs/ifpmic/evidence/b01/local-profile-gate.zip",
+    "gate_entry":"gate/gate.json",
+    "raw_gate_sha256":"597c3ada698cd20ff9c93a318e1177fe55e43e68844d08a6c56281cf940cb2c6"
+  },
+  "review_findings":[
+    {
+      "id":"RUNNER-DELTA-01",
+      "result":"pass",
+      "detail":"The runner hashes the archived gate entry itself against the accepted B01 gate SHA before trusting its sourceHashes map. This uses the exact B01 candidate that includes Ajv 8.20.0 and preserves the approved package/lock baseline instead of comparing against the older controls-only package files."
+    },
+    {
+      "id":"RUNNER-DELTA-02",
+      "result":"pass",
+      "detail":"The protected source selection covers accepted src/server/plugins, the four B01 runtime/ifpmic files, every pre-existing Node test/helper .mjs file, package manifests, build configuration, and the plugin build script. It checks exact bytes and current inventory, and separately checks original imported design files and uploaded source files. The independently recomputed selection contains 96 pinned paths and 89 src/server/plugin/runtime/Node-test inventory paths; all hashes and paths match the current worktree."
+    },
+    {
+      "id":"RUNNER-DELTA-03",
+      "result":"pass_with_limit",
+      "detail":"The G1 runner does not rerun full Node or browser regression and does not compare every standalone scripts/*.mjs file to B01. Its protected subset is explicitly an existing UI/server/build plus B01 runtime and Node-test integrity comparison. G1 remains limited to the Python dependency and PostgreSQL migration candidate; full Node/browser regression and broader B02 validation remain pending later gates."
+    }
+  ],
+  "independent_check":{
+    "method":"Read-only Python3 archive/hash/inventory comparison; no project tests, database cluster, or dependency installation run by reviewer.",
+    "result":"pass",
+    "details":[
+      "Verified archived gate entry SHA256 equals the pinned B01 gate SHA.",
+      "Recomputed all 96 selected protected source hashes against the worktree; all matched.",
+      "Recomputed the 89-entry protected source/test inventory and confirmed exact path equality.",
+      "Confirmed the runner source itself and the earlier g1-pre-gate-review.json remain source inputs for the upcoming frozen gate."
+    ]
+  },
+  "reviewer_verdict":"The runner baseline correction is sound for the scoped G1 candidate and resolves the false failure caused by comparing package files against the pre-B01 Ajv baseline. Approve freezing this runner and starting the G1 gate. This does not accept G1 until its frozen evidence is independently reviewed."
+}

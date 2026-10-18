@@ -1,0 +1,48 @@
+{
+  "review": "B02 G1 initial read-only implementation review",
+  "status": "initial_review_recorded_pending_authority_boundary_and_TC_checks",
+  "approved_plan": {
+    "path": "docs/ifpmic/B02-IDENTITY.md",
+    "sha256": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a"
+  },
+  "reviewed_source_pins": {
+    "services/ifpmic_api/migrate.py": "3f658907f13f6eab042a7b15f2958e98c65334e995686da434640d100341818d",
+    "services/ifpmic_api/migrations/001_initial.sql": "036f8a0d5c65dbd178b2f33d968d57b98cb015fcb0d56ee545952b3aeecf822e",
+    "services/ifpmic_api/requirements.in": "9d1622218da6e1cfe55b1f22db7bd771f421e54176653e00168e726d73272a00",
+    "services/ifpmic_api/requirements-test.in": "738049ca9fcfa198dc9919ebc10d0b877c77c910414f620b68780d0b7195c52e",
+    "services/ifpmic_api/requirements.lock": "6c8c950820a8c3ae9dea250e4080bc9dab09db17663e3d50118c5ac29211357e",
+    ".gitignore": "e087336d68f8354ad887bad44e2548f5c80d5d9eee1dd2cf2574a4545790e454"
+  },
+  "findings": [
+    {
+      "severity": "material_unresolved",
+      "area": "real profile eligibility issuance authority",
+      "evidence": "001_initial.sql grants operator_role INSERT on profile_eligibility without column restrictions; the table accepts both mock and real mode. Its authority_id=current_user constraint audits the connected role but does not itself distinguish approved corporate authority. B02-IDENTITY.md says mock grant is the only local operator grant command and that real eligibility cannot be created or activated without an approved corporate authority connection.",
+      "question": "Does possession of the configured operator database credential itself represent that approved authority, or must G1 enforce mock-only issuance until a separately authorized real-grant path exists?",
+      "resolution_needed_before_G1_freeze": true
+    },
+    {
+      "severity": "fixed_during_review",
+      "area": "operator and runtime role properties",
+      "initial_observation": "An earlier reviewed revision did not reject replication-capable roles and only checked outgoing role memberships.",
+      "current_evidence": "migrate.py queries rolreplication and rejects pg_auth_members rows where the configured role is either member or roleid.",
+      "status": "fixed_in_reviewed_source"
+    },
+    {
+      "severity": "fixed_during_review",
+      "area": "operator read privileges",
+      "initial_observation": "An earlier reviewed revision gave operator_role broad table SELECT access, including private authentication/request tables.",
+      "current_evidence": "001_initial.sql now grants operator SELECT only on the stated project, authority, profile, job, artifact, and workspace tables; it excludes login transactions, sessions, commands, and outbox.",
+      "status": "fixed_in_reviewed_source"
+    }
+  ],
+  "review_notes": {
+    "migration": "apply_migrations uses one transaction and transaction-scoped advisory lock; verifies role separation/properties and schema owner; stores per-version SQL SHA-256 and role names; rejects unknown applied versions, source drift, and role drift; errors are fixed codes and CLI output excludes DSN and role values. DDL and migration ledger writes share the transaction, so failure rolls back together.",
+    "privileges": "The runtime receives no job/command/outbox advancement or snapshot mutation privileges. It receives UPDATE(lock_version) on memberships and authorization_guards, which is narrowly needed for SELECT FOR UPDATE serialization; eligibility reads remain SELECT-only to runtime. Operator mutations are separately granted and authority-changing triggers lock the project guard. The PostgreSQL role is an application service role, not per-user project isolation; this review makes no RLS claim.",
+    "scope": "This is an initial G1 review only. It does not assert B02 acceptance or completion. TC-owned real PostgreSQL cases were reported as in progress; they were not run by this reviewer."
+  },
+  "verification": {
+    "performed": "Read-only source inspection and SHA-256 pinning of listed files.",
+    "not_performed": ["tests", "services", "database migrations", "dependency installation"]
+  }
+}

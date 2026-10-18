@@ -1,0 +1,43 @@
+{
+  "review": "B02 G1 initial read-only implementation review, authority-boundary follow-up",
+  "status": "initial_review_with_boundary_fix_recorded_pending_TC_checks",
+  "supersedes_for_current_source": "docs/ifpmic/evidence/b02/g1-initial-review.json",
+  "historical_review_sha256": "f6d8a5aefc940f719be62fd2ca181e61cdfa8e81d741d22a560ed24d7fee0729",
+  "approved_plan": {
+    "path": "docs/ifpmic/B02-IDENTITY.md",
+    "sha256": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a"
+  },
+  "reviewed_source_pins": {
+    "services/ifpmic_api/migrate.py": "3f658907f13f6eab042a7b15f2958e98c65334e995686da434640d100341818d",
+    "services/ifpmic_api/migrations/001_initial.sql": "cf0437a5f32e1589e4ea821afbb2ef2480d780a276667880aa9a08a0f4c77f12"
+  },
+  "findings": [
+    {
+      "severity": "resolved_in_reviewed_source",
+      "area": "real profile eligibility issuance authority",
+      "evidence": "The new require_mock_operator_grant trigger rejects any non-mock eligibility INSERT unless current_user owns profile_eligibility, raising SQLSTATE 42501 with fixed message REAL_ELIGIBILITY_AUTHORITY_UNAVAILABLE. The function is not SECURITY DEFINER. The operator grant command and direct operator SQL therefore cannot mint real eligibility; the schema owner can seed synthetic fixtures, and a future approved real issuer requires a new migration.",
+      "verdict": "The specific B02 G1 boundary is now explicit and matches the plan. Synthetic schema-owner fixtures remain privileged test setup, not evidence of corporate approval."
+    },
+    {
+      "severity": "fixed_during_review",
+      "area": "operator and runtime role properties",
+      "evidence": "migrate.py checks rolreplication and rejects pg_auth_members rows where the configured role is either member or roleid.",
+      "status": "verified_in_reviewed_source"
+    },
+    {
+      "severity": "fixed_during_review",
+      "area": "operator read privileges",
+      "evidence": "operator SELECT is limited to project, authority, profile, job, artifact, and workspace tables; login transactions, sessions, commands, and outbox are excluded.",
+      "status": "verified_in_reviewed_source"
+    }
+  ],
+  "review_notes": {
+    "migration": "The existing read-only review found one transactional migration with a transaction-scoped advisory lock, schema-owner/role-property checks, per-version source SHA-256 and role pins, drift rejection, and fixed-code CLI errors. DDL and the migration ledger are inside the same transaction.",
+    "privileges": "Runtime job/command/outbox advancement and snapshot mutation remain unavailable. UPDATE(lock_version) on memberships and authorization_guards is narrowly granted for SELECT FOR UPDATE serialization; eligibility reads remain SELECT-only to runtime. Authority changes serialize on the project guard. The PostgreSQL role is an application service role, not per-user project isolation; no RLS claim is made.",
+    "scope": "This remains an initial G1 review, not B02 acceptance. TC-owned real PostgreSQL checks are still required."
+  },
+  "verification": {
+    "performed": "Read-only source inspection and SHA-256 pinning of the approved plan and reviewed implementation files.",
+    "not_performed": ["tests", "services", "database migrations", "dependency installation"]
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "kind": "ifpmic_b02_g1_independent_pre_gate_review",
+  "reviewer_role": "independent read-only G1 source and TC reviewer",
+  "decision": "pre_gate_review_pass_pending_frozen_gate",
+  "approved_plan": {
+    "path":"docs/ifpmic/B02-IDENTITY.md",
+    "sha256":"f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a"
+  },
+  "approval_evidence": [
+    {"path":"docs/ifpmic/evidence/b02/plan-review-v3.json","plan_sha256":"f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a","decision":"approve_plan"},
+    {"path":"docs/ifpmic/evidence/b02/tc-plan-review-v3.json","plan_sha256":"f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a","decision":"approve_tc_plan"}
+  ],
+  "reviewed_source_sha256": {
+    "services/ifpmic_api/migrate.py":"3f658907f13f6eab042a7b15f2958e98c65334e995686da434640d100341818d",
+    "services/ifpmic_api/migrations/001_initial.sql":"cf0437a5f32e1589e4ea821afbb2ef2480d780a276667880aa9a08a0f4c77f12",
+    "services/ifpmic_api/requirements.in":"9d1622218da6e1cfe55b1f22db7bd771f421e54176653e00168e726d73272a00",
+    "services/ifpmic_api/requirements-test.in":"738049ca9fcfa198dc9919ebc10d0b877c77c910414f620b68780d0b7195c52e",
+    "services/ifpmic_api/requirements.lock":"6c8c950820a8c3ae9dea250e4080bc9dab09db17663e3d50118c5ac29211357e",
+    "scripts/verify_ifpmic_g1.py":"da78b0d993d32a7c9481f2342a921714e9aabd76d63f9362038a0f55ee9bb49a",
+    "tests/ifpmic_api/conftest.py":"8bb375918a493ab7f18291f8cc2f0a1c13eaaa28170c4a36cdc5f40b0b0b64e1",
+    "tests/ifpmic_api/test_environment.py":"52f9c4eb67faef6022b926a543ad0a38b8d792e1966055a367cfdfff00d6ea69",
+    "tests/ifpmic_api/test_migrations.py":"1ffbde403be4d98948058a241e2944fbbd61025d19f4aee1296ad2934d2353f2",
+    "docs/ifpmic/evidence/b02/g1-tc-ledger.json":"493ffda766b289192a88b4e4ad56eed3ef58e4414c4cec39999617365f4c8d92",
+    "docs/ifpmic/evidence/b02/g1-initial-review-v2.json":"5dcdbcfdb6c3e3158d7ee1c660a11a8d23611e1e6ddad2415eb65b7efe51cf66",
+    "docs/ifpmic/evidence/b02/plan-review-v3.json":"fa9a273001c214a7cb39802ed86f4f968f9899a84a5be75d61b1483aa5694cef",
+    "docs/ifpmic/evidence/b02/tc-plan-review-v3.json":"c41bf370859a4a6a61d1e1bdaa005b07e4311d2b73c1bca5b1c49540a16fb0df"
+  },
+  "findings": [
+    {
+      "id":"G1-REVIEW-01",
+      "result":"pass",
+      "detail":"The migration uses a transaction-scoped advisory lock, one transaction for DDL and migration ledger changes, exact source-byte SHA pins, applied-version drift checks, role-name drift checks, and fixed public error codes. It rejects active transactions, non-owner execution, invalid roles, changed/removed/empty migration sets, and verifies an existing schema is owned by the migration account."
+    },
+    {
+      "id":"G1-REVIEW-02",
+      "result":"pass",
+      "detail":"The migration checks runtime/operator login roles are distinct from the migration owner and rejects superuser, createdb, createrole, bypassrls, replication, and any incoming or outgoing role membership. It revokes PUBLIC access, withholds migration-ledger access, grants runtime narrow insert/update column lists, and gives the operator an explicit table/column privilege surface. The ledger independently enumerates literal privilege expectations, including excluded private auth/session/command/outbox reads and forbidden state/snapshot/ownership updates. No per-user DB isolation or RLS claim is made."
+    },
+    {
+      "id":"G1-REVIEW-03",
+      "result":"pass",
+      "detail":"The SQL schema pins the intended catalog, eligibility/revocation, job/delegation, artifact, command/outbox, workspace, and OIDC/session entities with keys, checks and foreign keys. Ordinary roles cannot update immutable catalog or job authority/state columns. A trigger rejects real-mode eligibility inserts by the operator role; only the schema owner can seed the synthetic real fixture used by the test, consistent with the documented privileged-fixture boundary."
+    },
+    {
+      "id":"G1-REVIEW-04",
+      "result":"pass",
+      "detail":"The G1 TC uses a literal expected table and privilege inventory rather than deriving its oracle from the migration. The cases cover fresh/idempotent migration, raw SQL hash, source/role drift, invalid and inherited roles, table/column privilege allowlists, direct status bootstrap rejection, real grant denial, transaction rollback, concurrent migration serialization, and sanitized CLI output. The environment fixture uses a fresh mode-0700 temporary cluster, fixed PostgreSQL 18.1 binary hashes, Unix socket only, no TCP listener, synthetic roles/databases, bounded start/stop, and post-teardown PID verification."
+    },
+    {
+      "id":"G1-REVIEW-05",
+      "result":"pass_with_scope_limit",
+      "detail":"The hash lock is a full pinned runtime/test resolution with deployment hashes, and the gate checks the installed isolated Python 3.12 environment against its exact package inventory, performs FastAPI/TestClient and Authlib construction probes, and rejects telemetry exporters. This establishes local resolution and narrow compatibility probes, not OIDC protocol acceptance, SSO, or supply-chain/production approval."
+    },
+    {
+      "id":"G1-REVIEW-06",
+      "result":"scope_limit_recorded",
+      "detail":"The operator role has direct catalog INSERT privilege, so database privilege tests alone cannot prove that every catalog row passed the future Node bridge importer. The approved architecture assigns bridge validation to the operator import path; G2 must test that importer boundary before profile import is accepted. This is outside G1 migration-only partial acceptance and must remain an explicit downstream condition."
+    }
+  ],
+  "reported_targeted_verification": {
+    "source":"TC-owned g1-tc-ledger.json; reviewer did not rerun tests",
+    "postgres_environment_and_migrations":"12 passed, 0 failed, 0 skipped",
+    "frozen_g1_gate":"pending"
+  },
+  "limitations": [
+    "This is a read-only pre-gate review; no database cluster was started and no tests or dependency installation were performed by this reviewer.",
+    "Final independent acceptance requires the fresh frozen gate and audit of its public/private evidence boundaries.",
+    "The temporary local PostgreSQL trust socket is not production DB authentication. No Paperclip DB or auth files were accessed.",
+    "This evidence cannot establish B02/G2-G7, user-level service isolation, RLS, corporate SSO, operational approval, or AT-21."
+  ],
+  "reviewer_verdict":"No material migration/role privilege or test-oracle blocker found for the scoped G1 candidate. Proceed to the frozen G1 gate; partial acceptance remains pending that evidence and must not be expanded beyond G1."
+}

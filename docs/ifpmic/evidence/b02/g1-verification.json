@@ -1,0 +1,122 @@
+{
+  "kind": "ifpmic_b02_g1_verification",
+  "decision": "g1_pass_pending_independent_final_review",
+  "scope": "Partial B02 G1: isolated Python toolchain, PostgreSQL schema, migration CLI and SQL privileges only.",
+  "plan_sha256": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a",
+  "candidate_fingerprint": "7511806121f53497f6bb3d46ed1a9cf2722b4bcc34abfba8087f55b7f408a14c",
+  "gate_archive": {
+    "path": "docs/ifpmic/evidence/b02/g1-gate.zip",
+    "sha256": "183c6fc0dc1b8e4c4db98e887bc6e839b4f97326270899743b03ea28d2951ad2",
+    "entries": {
+      "gate.json": {
+        "bytes": 7583,
+        "sha256": "72c90a977b673938f4673efdfe299cbe5bd6213a1af2995a602b528930b2d925"
+      },
+      "pytest.log": {
+        "bytes": 99,
+        "sha256": "5a6c885e5426ce021afdd7078d44c0fa1b5ae71f00be8f3a9443893dd1baa697"
+      },
+      "pytest.xml": {
+        "bytes": 1912,
+        "sha256": "d30d7c0bcfde0f46cd7816d83637a483fd2304a9fca895a7e4fef477f641442e"
+      }
+    }
+  },
+  "tests": {
+    "tests": 12,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "passed": 12
+  },
+  "environment": {
+    "python": "3.12.3",
+    "installed_distributions": 32,
+    "postgresql": "18.1",
+    "requirements_lock_sha256": "6c8c950820a8c3ae9dea250e4080bc9dab09db17663e3d50118c5ac29211357e"
+  },
+  "source_changes": [],
+  "postgres_lifecycle": {
+    "stop_status": "stopped",
+    "pid_alive_after_stop": false,
+    "binary_versions": {
+      "initdb": "initdb (PostgreSQL) 18.1",
+      "pg_ctl": "pg_ctl (PostgreSQL) 18.1",
+      "postgres": "postgres (PostgreSQL) 18.1"
+    },
+    "binary_sha256": {
+      "initdb": "7cba14094c5f505f492fd243c5eda04f0dc3be05f12b7bd278f150f1e03b721f",
+      "pg_ctl": "24a1f166819e0924319ff3faf752ad2a1ac594e223e2f3b1a2038dc84a2969de",
+      "postgres": "c85fa9c977d9e641c2d22d93675a9b7097764b7df2c4c9ea021f5780522b2af2"
+    },
+    "operations": [
+      {
+        "duration_ms": 6,
+        "exit_code": 0,
+        "operation": "initdb_version"
+      },
+      {
+        "duration_ms": 2,
+        "exit_code": 0,
+        "operation": "pg_ctl_version"
+      },
+      {
+        "duration_ms": 7,
+        "exit_code": 0,
+        "operation": "postgres_version"
+      },
+      {
+        "duration_ms": 1208,
+        "exit_code": 0,
+        "operation": "initdb"
+      },
+      {
+        "duration_ms": 108,
+        "exit_code": 0,
+        "operation": "pg_ctl_start"
+      },
+      {
+        "duration_ms": 115,
+        "exit_code": 0,
+        "operation": "pg_ctl_stop"
+      }
+    ],
+    "private_manifest_excluded_from_publication": true
+  },
+  "existing_sources": {
+    "protected_source_count": 96,
+    "protected_inventory_count": 89,
+    "original_imported_files": 17,
+    "original_uploads": 2,
+    "scope": "Byte/inventory comparison only. Full Node/build/browser G6 remains pending."
+  },
+  "development_history": {
+    "reviews": [
+      "g1-initial-review.json",
+      "g1-initial-review-v2.json",
+      "g1-pre-gate-review.json",
+      "g1-pre-gate-review-v2.json"
+    ],
+    "historical_source_manifest": "g1-historical-source.json",
+    "test_attempts": "g1-tc-ledger.json",
+    "raw_failed_targeted_pytest_logs": "not_retained_as_files; only tool history and concise TC ledger classifications remain. No past execution logs were reconstructed.",
+    "runner_correction": "Pre-freeze comparison baseline changed from older controls baseline to accepted B01 gate; previous runner source preserved, never executed as a frozen gate."
+  },
+  "limitations": [
+    "No production database authentication: private Unix socket uses synthetic trust-authenticated roles.",
+    "No OIDC protocol, user API, Node snapshot bridge, workspace reconciler, Temporal worker or real eligibility authority acceptance.",
+    "Original AT-21 and all original AT remain not_executed.",
+    "Full Node/build/browser G6 remains pending; G1 compares 96 protected existing source hashes and 89 inventory paths only.",
+    "A prior targeted initdb operation approached its 30-second watchdog; this gate initdb completed in 1208 ms. No performance acceptance claim.",
+    "Private lifecycle paths and raw PostgreSQL server logs are excluded from this archive."
+  ],
+  "publication_transformations": [
+    {
+      "entry": "gate/pytest.xml",
+      "method": "Replace machine hostname attribute with fixed redacted-local-host and serialize XML; no test outcomes or counts changed.",
+      "original_private_sha256": "32d91c81511044afa5ab959dfb2d244c3baa97e8709f015c9ea8a0f28d5cad25",
+      "published_sha256": "d30d7c0bcfde0f46cd7816d83637a483fd2304a9fca895a7e4fef477f641442e",
+      "provenance": "Original frozen gate and local raw JUnit remain unchanged. gate.json pytest.junit_sha256 refers to the original local JUnit, not the sanitized published XML."
+    }
+  ]
+}

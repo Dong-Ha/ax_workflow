@@ -1,0 +1,68 @@
+{
+  "schema": "ifpmic-b02-g1-tc-ledger-v1",
+  "plan_sha256": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a",
+  "scope": "G1 isolated PostgreSQL environment, migration application, SQL role grants, schema constraints, and migration CLI only",
+  "verdict": "partial_g1_tests_pass",
+  "limitations": [
+    "The cluster uses PostgreSQL local Unix-socket trust inside a private temporary directory to test SQL ownership and grants; this does not test production database authentication.",
+    "The synthetic schema-owner real-eligibility row is a constraint fixture, not an external authority grant or real eligibility evidence.",
+    "No OIDC provider, Paperclip session, FastAPI endpoint, workspace reconciler, Temporal worker, external device, or real AT execution is exercised by G1."
+  ],
+  "environment": {
+    "python": "3.12.3",
+    "pytest": "9.1.1",
+    "psycopg": "3.3.6",
+    "postgresql": "18.1",
+    "binary_sha256": {
+      "initdb": "7cba14094c5f505f492fd243c5eda04f0dc3be05f12b7bd278f150f1e03b721f",
+      "pg_ctl": "24a1f166819e0924319ff3faf752ad2a1ac594e223e2f3b1a2038dc84a2969de",
+      "postgres": "c85fa9c977d9e641c2d22d93675a9b7097764b7df2c4c9ea021f5780522b2af2"
+    },
+    "cluster_policy": "fresh pytest temp data directory mode 0700, private Unix socket mode 0700, listen_addresses empty, no TCP listener, synthetic roles and databases only"
+  },
+  "source_pins": {
+    "services/ifpmic_api/migrations/001_initial.sql": "cf0437a5f32e1589e4ea821afbb2ef2480d780a276667880aa9a08a0f4c77f12",
+    "tests/ifpmic_api/conftest.py": "8bb375918a493ab7f18291f8cc2f0a1c13eaaa28170c4a36cdc5f40b0b0b64e1",
+    "tests/ifpmic_api/test_environment.py": "52f9c4eb67faef6022b926a543ad0a38b8d792e1966055a367cfdfff00d6ea69",
+    "tests/ifpmic_api/test_migrations.py": "1ffbde403be4d98948058a241e2944fbbd61025d19f4aee1296ad2934d2353f2"
+  },
+  "checks": [
+    {
+      "command": "PYTHONPATH=. IFPMIC_TEST_LIFECYCLE_PATH=<private ignored path> .ifpmic-venv/bin/python -m pytest -q tests/ifpmic_api/test_environment.py tests/ifpmic_api/test_migrations.py",
+      "exit_code": 0,
+      "result": "12 passed in 35.77s",
+      "coverage": [
+        "pinned PostgreSQL binary versions and hashes; isolated socket-only cluster; private lifecycle manifest showed pg_ctl stop exit 0 and fixture PID absent after teardown",
+        "fresh migration, exact migration digest, idempotent rerun, schema ownership, schema/table inventory",
+        "changed/removed/empty migration source, runtime/operator role drift, invalid roles, current transaction rejection, migration owner rejection",
+        "non-superuser/non-owner/non-replication login roles, inbound/outbound membership rejection, no schema_migrations access",
+        "runtime/operator table and column privilege allowlists, operator read restrictions, forbidden direct status bootstrap, allowed workspace and delegation mutations",
+        "real eligibility minting denied to operator and synthetic owner fixture accepted",
+        "owner/project/snapshot/workflow/idempotency constraints; migration rollback; concurrent migration serialization",
+        "CLI missing config/extra arguments sanitization and successful fresh/idempotent invocation with no DSN or sentinel leakage"
+      ]
+    },
+    {
+      "command": ".ifpmic-venv/bin/python -m py_compile tests/ifpmic_api/conftest.py tests/ifpmic_api/test_environment.py tests/ifpmic_api/test_migrations.py",
+      "exit_code": 0
+    },
+    {
+      "command": "git diff --check -- tests/ifpmic_api",
+      "exit_code": 0
+    }
+  ],
+  "development_attempts": [
+    {
+      "command": ".ifpmic-venv/bin/pytest -q tests/ifpmic_api/test_environment.py tests/ifpmic_api/test_migrations.py",
+      "result": "collection error: ModuleNotFoundError: No module named 'services'",
+      "classification": "test invocation/bootstrap issue; the pytest console script did not add repository root to sys.path",
+      "resolution": "use PYTHONPATH=. or python -m pytest"
+    },
+    {
+      "command": "PYTHONPATH=. .ifpmic-venv/bin/pytest -q tests/ifpmic_api/test_environment.py tests/ifpmic_api/test_migrations.py",
+      "result": "initial query placeholder mismatch, followed by stale SQL hash and a closed-connection placement error in the test",
+      "classification": "test authoring errors; no product defect inferred",
+      "resolution": "corrected parameterized privilege queries, refreshed source pin after approved SQL change, and moved the checks to the live runtime connection"
+    }
+  ]
+}
