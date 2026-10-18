@@ -334,7 +334,7 @@
         ]
       },
       "plan": "B03-WORKFLOW.md",
-      "scope": "H0 implementation/verification planning independently accepted on the same SHA. H1 pinned SDK/CLI lock and local persistent Temporal qualification is next and not executed. H2-H4 code/tests require their separately reviewed detailed contracts first. No B03 implementation or original AT acceptance claimed.",
+      "scope": "H0 plan independently accepted. H1 resolver preparation succeeded with 32 original versions preserved and four additions; installation, SDK/CLI API qualification and persistent Temporal restart/retention/cleanup tests remain pending. No B03 implementation or original AT acceptance claimed.",
       "increments": [
         {
           "id": "h0_preimplementation_plan",
@@ -347,8 +347,9 @@
         },
         {
           "id": "h1_temporal_toolchain_qualification",
-          "status": "not_started",
-          "scope": "Resolve/lock base SDK additions against 32 existing constraints, verify CLI hash and actual APIs, durable history/restart/retention/cleanup before later implementation."
+          "status": "in_progress",
+          "scope": "Wheel-only resolver candidate generated successfully: 32 existing versions unchanged plus four pinned base-SDK dependencies. No install, import, binary/server execution or H1 acceptance yet.",
+          "preparation_evidence": "evidence/b03/h1-resolution-preparation.json"
         }
       ]
     },
@@ -525,12 +526,12 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "B03 H1: qualify the pinned base Temporal SDK and CLI in isolation against the accepted H0 plan, using reviewed TC tests and private lifecycle/history evidence. Do not implement H2/H3/H4 before their detailed contracts and TC ledger reviews. Full B02 environment/AT21, B03 implementation and original32 acceptance cases remain incomplete.",
+  "next_step": "B03 H1: review the preserved resolver candidate, install hash-verified wheels/CLI into isolated paths, and author/review/run TC qualification tests for actual SDK APIs and persistent Temporal history/restart/retention/cleanup. H2-H4 still require exact-SHA detailed contracts and TC-ledger reviews before code. Full B02 environment/AT21 and original32 AT remain incomplete.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",
     "Approved Bedrock/Claude runtime profile"
   ],
   "publication_policy": "Only authorized git repository documentation, source and synthetic verification summaries/screenshots; never runtime credentials or application logs.",
-  "updated_at": "2026-10-18T19:38:53.655041+00:00"
+  "updated_at": "2026-10-18T19:42:27.332425+00:00"
 }

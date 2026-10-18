@@ -1,0 +1,43 @@
+{
+  "kind": "ifpmic.b03.h1.resolver-progress-reconciliation.v1",
+  "scope": "Resolver preparation and derivative progress metadata only; not H1 or B03 acceptance.",
+  "plan_acceptance": {
+    "path": "docs/ifpmic/evidence/b03/plan-acceptance.json",
+    "sha256": "77bb4d6041fb117e81e3c2ee9dfe268ede7b397696909e21fac12a4e6eaccfc8"
+  },
+  "resolver_evidence": {
+    "path": "docs/ifpmic/evidence/b03/h1-resolution-preparation.json",
+    "sha256": "a777a09f3a00a24b4dc21a7aa3e649b5237aeec1360fbfd4c19c244b897eb213"
+  },
+  "progress": {
+    "path": "docs/ifpmic/progress.json",
+    "before_sha256": "5de38c445202a0c47e927051c6fc819d4b55c852596df40f1a53785550bf5b11",
+    "after_sha256": "e868352aa39e8320b4b348d4649f2f22ba9e8edf5b34636f3c6a719fa427ce24",
+    "changed_semantic_paths": [
+      "stages[B03].scope",
+      "stages[B03].increments[h1_temporal_toolchain_qualification]",
+      "next_step",
+      "updated_at"
+    ]
+  },
+  "frozen_g6_source_reconciliation": {
+    "captured": 352,
+    "unchanged": 351,
+    "changed": [
+      "docs/ifpmic/progress.json"
+    ],
+    "product_test_runner_plan_lock_changes": []
+  },
+  "root_review": [
+    "Matched all private attempt observation hashes to actual files; corrected an uncommitted summary path day typo to the actual retained directory.",
+    "Verified private files/directories mode0600/0700 and all32 original package versions unchanged in36-package candidate.",
+    "Two setup failures retained; successful resolver did not install packages or execute a Temporal service."
+  ],
+  "remaining": [
+    "Candidate lock/artifact validation and isolated installation",
+    "SDK/CLI real API/version/platform checks",
+    "Persistent local Temporal history, process restart/retention and cleanup tests",
+    "Independent H1 result review",
+    "B03 H2-H7 and full original acceptance"
+  ]
+}
