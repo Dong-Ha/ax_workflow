@@ -1,0 +1,587 @@
+{
+  "kind": "ifpmic_b02_g4_verification",
+  "decision": "g4_pass_pending_independent_final_review",
+  "requirements": [
+    "REQ-13",
+    "B02-G4"
+  ],
+  "scope": "Partial B02 local durable user job APIs, scoped authorization, idempotent atomic acceptance, initial Snapshot and signed pagination; synthetic mock operator authority only.",
+  "plan_sha256": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a",
+  "contract_sha256": "830a98401e9addb3869722134866515183310dd0b86019463e08f6ef4baf2d14",
+  "candidate_fingerprint": "e6af9ca38d9dc9c04a7299152a0897e19f862bae660e218f24bb6f183e8ef6b6",
+  "gate_archive": {
+    "path": "docs/ifpmic/evidence/b02/g4-gate.zip",
+    "sha256": "5b7cec3e8e2d6febe0afe5da38744e59fb3a4b77fd3865cefac21bc87a528193",
+    "entries": {
+      "gate.json": {
+        "bytes": 68452,
+        "sha256": "8ded997b2a9a55b06f351baa7924999d9f6aea493d60314c3e40d2f927909388"
+      },
+      "legacy_python-pytest.xml": {
+        "bytes": 33391,
+        "sha256": "647a88e00daffbfca8b8413398155348fd5073e479bb0f498174c5056c5d2a1b"
+      },
+      "g4_python-pytest.xml": {
+        "bytes": 15117,
+        "sha256": "87190987f7a0347529414ffca8eb0a7475ccf6a40e18165ef7c669c1c76e05d8"
+      },
+      "legacy-python.log": {
+        "bytes": 272,
+        "sha256": "116a8390a04434190d30b1c91c5fe21fdee3cf4f9127b2bd8213156f3258fd33"
+      },
+      "g4-python.log": {
+        "bytes": 659,
+        "sha256": "690e0e774f95552b3078424f292c5b48c5b31e01d1a67d94bfb9f3fcadaa075d"
+      },
+      "b01-node.log": {
+        "bytes": 11047,
+        "sha256": "e6070a507e528f5a0a197e2cbe078d8bf008534e38e24a92eb86da8834737ded"
+      }
+    }
+  },
+  "tests": {
+    "python_total": 258,
+    "g1": 12,
+    "g2": 41,
+    "g3": 114,
+    "g4": 91,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "b01_node": {
+      "tests": 48,
+      "pass": 48,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "legacy_python": {
+      "tests": 167,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 167
+    },
+    "g4_python": {
+      "tests": 91,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 91
+    },
+    "maximum_case_seconds": {
+      "legacy_python": 2.68,
+      "g4_python": 6.133
+    }
+  },
+  "source_changes": [],
+  "unchanged_existing_sources": {
+    "protected_source_count": 96,
+    "protected_inventory_count": 89,
+    "original_imported_files": 17,
+    "original_uploads": 2,
+    "scope": "Byte/inventory comparison only. Full Node/build/browser G6 remains pending."
+  },
+  "protected_sources_verified_before_and_after": true,
+  "owned_children_absent": true,
+  "postgres_lifecycles": {
+    "legacy_python": {
+      "stop_status": "stopped",
+      "pid_alive": false,
+      "binary_versions": {
+        "initdb": "initdb (PostgreSQL) 18.1",
+        "pg_ctl": "pg_ctl (PostgreSQL) 18.1",
+        "postgres": "postgres (PostgreSQL) 18.1"
+      },
+      "binary_sha256": {
+        "initdb": "7cba14094c5f505f492fd243c5eda04f0dc3be05f12b7bd278f150f1e03b721f",
+        "pg_ctl": "24a1f166819e0924319ff3faf752ad2a1ac594e223e2f3b1a2038dc84a2969de",
+        "postgres": "c85fa9c977d9e641c2d22d93675a9b7097764b7df2c4c9ea021f5780522b2af2"
+      },
+      "lifecycle": [
+        {
+          "duration_ms": 4,
+          "exit_code": 0,
+          "operation": "initdb_version"
+        },
+        {
+          "duration_ms": 1,
+          "exit_code": 0,
+          "operation": "pg_ctl_version"
+        },
+        {
+          "duration_ms": 6,
+          "exit_code": 0,
+          "operation": "postgres_version"
+        },
+        {
+          "duration_ms": 990,
+          "exit_code": 0,
+          "operation": "initdb"
+        },
+        {
+          "duration_ms": 107,
+          "exit_code": 0,
+          "operation": "pg_ctl_start"
+        },
+        {
+          "duration_ms": 115,
+          "exit_code": 0,
+          "operation": "pg_ctl_stop"
+        }
+      ]
+    },
+    "g4_python": {
+      "stop_status": "stopped",
+      "pid_alive": false,
+      "binary_versions": {
+        "initdb": "initdb (PostgreSQL) 18.1",
+        "pg_ctl": "pg_ctl (PostgreSQL) 18.1",
+        "postgres": "postgres (PostgreSQL) 18.1"
+      },
+      "binary_sha256": {
+        "initdb": "7cba14094c5f505f492fd243c5eda04f0dc3be05f12b7bd278f150f1e03b721f",
+        "pg_ctl": "24a1f166819e0924319ff3faf752ad2a1ac594e223e2f3b1a2038dc84a2969de",
+        "postgres": "c85fa9c977d9e641c2d22d93675a9b7097764b7df2c4c9ea021f5780522b2af2"
+      },
+      "lifecycle": [
+        {
+          "duration_ms": 4,
+          "exit_code": 0,
+          "operation": "initdb_version"
+        },
+        {
+          "duration_ms": 1,
+          "exit_code": 0,
+          "operation": "pg_ctl_version"
+        },
+        {
+          "duration_ms": 4,
+          "exit_code": 0,
+          "operation": "postgres_version"
+        },
+        {
+          "duration_ms": 861,
+          "exit_code": 0,
+          "operation": "initdb"
+        },
+        {
+          "duration_ms": 107,
+          "exit_code": 0,
+          "operation": "pg_ctl_start"
+        },
+        {
+          "duration_ms": 114,
+          "exit_code": 0,
+          "operation": "pg_ctl_stop"
+        }
+      ]
+    }
+  },
+  "auth_service_observation": {
+    "kind": "ifpmic.g3.service-observation.v1",
+    "cases": {
+      "expired_state": 401,
+      "invalid_state": 401,
+      "provider_error": 401,
+      "replay": 401,
+      "success": 303
+    },
+    "canaries_absent": true,
+    "service_exit_code": 0,
+    "pid_alive": false,
+    "logs": {
+      "stderr": {
+        "bytes": 350,
+        "sha256": "aa0dc03fc663952b859debab14c4968b2fee9ab2ed3c1222d346ba3f1dd3607d"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "private_directory_mode": "0o700",
+    "stdout_mode": "0o600",
+    "stderr_mode": "0o600"
+  },
+  "jobs_runtime_observation": {
+    "kind": "ifpmic.g4.runtime-observation.v1",
+    "cases": {
+      "create": 202,
+      "same_key_replay": 202,
+      "same_key_conflict": 409,
+      "unauthorized": 403,
+      "fault_precommit": 503,
+      "fault_postcommit": 503,
+      "pagination_default": 25,
+      "restart_detail": 200,
+      "concurrent_one_winner": true,
+      "membership_nowait_no_deadlock": true,
+      "bridge_failure_replay": true,
+      "cli_grant": 0,
+      "cli_revoke": 0,
+      "distinct_sessions_same_actor": true,
+      "cross_project_race": true,
+      "cross_project_unique_contention": true
+    },
+    "no_canaries": true,
+    "service": {
+      "exit_code": 0,
+      "pid_alive": false,
+      "logs": {
+        "stderr": {
+          "bytes": 700,
+          "sha256": "0e031eb90aff7ac04dbadc9bbdbfbda8c9ee6fc17db4fd059c7245d22e0a9d5f"
+        },
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "private_directory_mode": "0o700",
+      "stdout_mode": "0o600",
+      "stderr_mode": "0o600"
+    },
+    "services": [
+      {
+        "exit_code": 0,
+        "pid_alive": false,
+        "logs": {
+          "stderr": {
+            "bytes": 700,
+            "sha256": "0e031eb90aff7ac04dbadc9bbdbfbda8c9ee6fc17db4fd059c7245d22e0a9d5f"
+          },
+          "stdout": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        "private_directory_mode": "0o700",
+        "stdout_mode": "0o600",
+        "stderr_mode": "0o600"
+      },
+      {
+        "exit_code": 0,
+        "pid_alive": false,
+        "logs": {
+          "stderr": {
+            "bytes": 700,
+            "sha256": "0e031eb90aff7ac04dbadc9bbdbfbda8c9ee6fc17db4fd059c7245d22e0a9d5f"
+          },
+          "stdout": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        "private_directory_mode": "0o700",
+        "stdout_mode": "0o600",
+        "stderr_mode": "0o600"
+      }
+    ]
+  },
+  "private_evidence_permissions": {
+    "gate_directory_mode": "0o700",
+    "files": {
+      "private-auth-observation.json": "0o600",
+      "private-b01_node.log": "0o600",
+      "private-g4_python-lifecycle.json": "0o600",
+      "private-g4_python.log": "0o600",
+      "private-g4_python.xml": "0o600",
+      "private-jobs-observation.json": "0o600",
+      "private-legacy_python-lifecycle.json": "0o600",
+      "private-legacy_python.log": "0o600",
+      "private-legacy_python.xml": "0o600",
+      "private-lifecycle.json": "0o600"
+    }
+  },
+  "publication": {
+    "junit": {
+      "legacy_python": {
+        "raw_private_sha256": "a6cf45afe72b58e7919735a0307533d4e34534e06cc6b00cae0b837753b497aa",
+        "published_sha256": "647a88e00daffbfca8b8413398155348fd5073e479bb0f498174c5056c5d2a1b",
+        "transformation": "Only hostname replaced with redacted-local-host; XML serialized."
+      },
+      "g4_python": {
+        "raw_private_sha256": "247391343da401b0b9463191359cf71b7776ca3f4daae406900a142c8dd3ad8d",
+        "published_sha256": "87190987f7a0347529414ffca8eb0a7475ccf6a40e18165ef7c669c1c76e05d8",
+        "transformation": "Only hostname replaced with redacted-local-host; XML serialized."
+      }
+    },
+    "successful_logs": [
+      {
+        "entry": "legacy-python.log",
+        "raw_private_sha256": "116a8390a04434190d30b1c91c5fe21fdee3cf4f9127b2bd8213156f3258fd33",
+        "published_sha256": "116a8390a04434190d30b1c91c5fe21fdee3cf4f9127b2bd8213156f3258fd33",
+        "transformation": "Replace absolute gate and workspace paths with fixed placeholders; other successful output bytes unchanged."
+      },
+      {
+        "entry": "g4-python.log",
+        "raw_private_sha256": "f2b31e53ae2e048bc7ef4e4d5de76a3076417bee37acfe5e4725ab8c6641c792",
+        "published_sha256": "690e0e774f95552b3078424f292c5b48c5b31e01d1a67d94bfb9f3fcadaa075d",
+        "transformation": "Replace absolute gate and workspace paths with fixed placeholders; other successful output bytes unchanged."
+      },
+      {
+        "entry": "b01-node.log",
+        "raw_private_sha256": "e6070a507e528f5a0a197e2cbe078d8bf008534e38e24a92eb86da8834737ded",
+        "published_sha256": "e6070a507e528f5a0a197e2cbe078d8bf008534e38e24a92eb86da8834737ded",
+        "transformation": "Replace absolute gate and workspace paths with fixed placeholders; other successful output bytes unchanged."
+      }
+    ],
+    "excluded": [
+      "All raw private JUnit, configs, session/cursor values, actual service/worker stdout/stderr, PostgreSQL logs and development failure outputs."
+    ],
+    "synthetic_test_ids": "Committed fixed test vectors only; no live authentication values in public testcase IDs."
+  },
+  "development_history": {
+    "tc_ledger": "g4-tc-ledger.json",
+    "pre_gate_review": "g4-pre-gate-review-v2.json",
+    "execution_decision": "g4-gate-execution-decision-v3.json",
+    "private_attempt_evidence": [
+      {
+        "private_directory": "workflow-artifacts/verification/private/b02-g4/2026-10-18T16-43-59-539359Z",
+        "files": {
+          "candidate-source.zip": {
+            "sha256": "511c91c1e6eb97daaac51e277bc72d81fcb7a540a29c8aa1f0209575b28e419c",
+            "bytes": 48982
+          }
+        }
+      },
+      {
+        "private_directory": "workflow-artifacts/verification/private/b02-g4/2026-10-18T16-50-37-037102Z",
+        "files": {
+          "candidate-source.zip": {
+            "sha256": "f776dbb4bb2ec1abdda0a2a9a8bcd68c7bedc63c13aec1a47473e26cd02406a3",
+            "bytes": 41343
+          }
+        }
+      },
+      {
+        "private_directory": "workflow-artifacts/verification/private/b02-g4/attempt-3-2026-10-19",
+        "files": {
+          "candidate-source.zip": {
+            "sha256": "ad989ded79b1075f9e90d87b9cb26e839f3d8cee9f1b7950933ea7c801deb507",
+            "bytes": 253379
+          },
+          "private-jobs-observation.json": {
+            "sha256": "c7d6b16294c55556e1a9a2d3d1af86b231fe93168bd8f76357fd6ad1417c7839",
+            "bytes": 590
+          },
+          "private-junit.xml": {
+            "sha256": "501bf088ed582a48e8469166e49a1dbdb872275db881772be9d8da6f95732922",
+            "bytes": 33421
+          },
+          "private-postgres-lifecycle.json": {
+            "sha256": "636e14fda59ce01fd3ce1b1417ea474cd875eba1d73e0e8cabd9a468751604f5",
+            "bytes": 1137
+          },
+          "private-source-hashes.json": {
+            "sha256": "a73de3be7b3465f951a63ffaa0d2a686dbc4061d3bce505ae4bce271cfc2c6f9",
+            "bytes": 1203
+          },
+          "private-stderr.log": {
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          "private-stdout.log": {
+            "sha256": "f679b42ee044d5bb5001316d1f5376e8443a83cad5e3a0f3cb47d3447744ffdf",
+            "bytes": 18978
+          }
+        }
+      },
+      {
+        "private_directory": "workflow-artifacts/verification/private/b02-g4/attempt-4-focus-2026-10-19",
+        "files": {
+          "candidate-source.zip": {
+            "sha256": "988285b6a0f76be7d46c999b4fba40df8812203e48b35e9f5b9d7b432bb7c8f0",
+            "bytes": 253218
+          },
+          "private-jobs-observation.json": {
+            "sha256": "c15320c057cb0be439d5f7e74c1606351dddafc88e7d782df2162c0326bcba23",
+            "bytes": 3103
+          },
+          "private-junit.xml": {
+            "sha256": "de794ea91dbc1081abc07ab7a944f77194fcc67b0de7b3eba57db15a82626e75",
+            "bytes": 2796
+          },
+          "private-postgres-lifecycle.json": {
+            "sha256": "284e6020b528365b4b29ecc4c821ffde307dfdcfb7a2536778b19f4e1afba293",
+            "bytes": 1136
+          },
+          "private-source-hashes.json": {
+            "sha256": "ebfe2dd119a4abbd69f9cb45b5773bf99edafb074226bf4f00e8a78539a998cf",
+            "bytes": 1203
+          },
+          "private-stderr.log": {
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          "private-stdout.log": {
+            "sha256": "884a84146e7ecc9f32bf7545326ae0843489d36c5f5143a73b6e07d05758a489",
+            "bytes": 587
+          }
+        }
+      },
+      {
+        "private_directory": "workflow-artifacts/verification/private/b02-g4/reaper-fix-preflight-2026-10-19",
+        "files": {
+          "private-cleanup.json": {
+            "sha256": "52c3702201c6abfab03e6d1499a3dd6a80865f73b5bb1f535af07ff4f2eda027",
+            "bytes": 63
+          },
+          "private-junit.xml": {
+            "sha256": "460325493b6ffe1f61188d7505a1522ba94d15f6f599f7f40a40b77611725e6f",
+            "bytes": 382
+          },
+          "private-lifecycle.json": {
+            "sha256": "a44fd0b73b315255bd44518eca08649d7c6d8400bc9db6b2babd872437958f5d",
+            "bytes": 1136
+          },
+          "private-stderr.log": {
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          "private-stdout.log": {
+            "sha256": "17b8e6b00696fcc5c3be49824cff4bf9b2e41f8b55a6728679dec56495f77478",
+            "bytes": 98
+          },
+          "runner-source.json": {
+            "sha256": "4fa6c22bd8c52821a6953154922f53f569e56d064906d6dcb9cab353ed3abaa8",
+            "bytes": 118
+          }
+        }
+      },
+      {
+        "private_directory": "workflow-artifacts/verification/private/b02-g4/reaper-regression-2026-10-19",
+        "files": {
+          "candidate-source.zip": {
+            "sha256": "b646413927db017dd3dde7dfa1d591badc8313724de351812d1773ce05c6b21a",
+            "bytes": 33131
+          },
+          "private-junit.xml": {
+            "sha256": "a7875fe720ac2a36d8fc16a0d07a50831808b6aa86d79eb87222bc5ad81e839f",
+            "bytes": 5477
+          },
+          "private-stderr.log": {
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          "private-stdout.log": {
+            "sha256": "1c63373e9e913dd8e061918ec1745593115e8d9ce14de3639f1c49fdcf1d3127",
+            "bytes": 5648
+          }
+        }
+      },
+      {
+        "private_directory": "workflow-artifacts/verification/private/b02-g4/reaper-regression-attempt-2-2026-10-19",
+        "files": {
+          "candidate-source.zip": {
+            "sha256": "b82e2238b9b4ff75a8fbf71843eb943467b5118b4769ad5466419c795f6fadea",
+            "bytes": 33136
+          },
+          "private-junit.xml": {
+            "sha256": "e6b54cf911dc9b5fbd4f731b359e3220a0d74d626bddd116d7bbab694aee4313",
+            "bytes": 388
+          },
+          "private-stderr.log": {
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          "private-stdout.log": {
+            "sha256": "81430d4989237e5d24caca54cb6461fa6e54d232189144e6a83ef6663e5ba7e1",
+            "bytes": 570
+          }
+        }
+      },
+      {
+        "private_directory": "workflow-artifacts/verification/private/b02-g4/reaper-regression-attempt-3-2026-10-19",
+        "files": {
+          "candidate-source.zip": {
+            "sha256": "96e953764bc82479d24f4d0086f7b74cd1622481c82a85a872333105c13cab51",
+            "bytes": 33417
+          },
+          "private-junit.xml": {
+            "sha256": "5fc740f1c379db4ec678fb8d7e0e785bff2d4d38b4fe1567eb8d5ae78c670015",
+            "bytes": 540
+          },
+          "private-stderr.log": {
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          "private-stdout.log": {
+            "sha256": "ce024f7b7f380c5c8978b771ba8a2514b93b7315f6ca81fd60db3efe84f42471",
+            "bytes": 570
+          }
+        }
+      },
+      {
+        "private_directory": "workflow-artifacts/verification/private/b02-g4/reaper-regression-attempt-4-2026-10-19",
+        "files": {
+          "candidate-source.zip": {
+            "sha256": "6382b259a31f96038b01d5865d6162f7c22dc171047112efd526368581bd6a2e",
+            "bytes": 33633
+          },
+          "private-junit.xml": {
+            "sha256": "c164362636e57a17ad33c0889530728e5527a9824443873a1712555d7ecf2a15",
+            "bytes": 6898
+          },
+          "private-stderr.log": {
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          "private-stdout.log": {
+            "sha256": "5fa0b256f8c73cd15fcd6142423d3919eae21f10c80d8045adf587a1bb678a62",
+            "bytes": 6997
+          }
+        }
+      },
+      {
+        "private_directory": "workflow-artifacts/verification/private/b02-g4/reaper-regression-attempt-5-2026-10-19",
+        "files": {
+          "candidate-source.zip": {
+            "sha256": "0a86c3fd397d3c648990215e6276acb950b171ff6641881a468d9448349efad2",
+            "bytes": 33638
+          },
+          "private-junit.xml": {
+            "sha256": "46825a9014ab03d44b7b34790a014b505b17aef573076f062b1874459af913f6",
+            "bytes": 540
+          },
+          "private-stderr.log": {
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          "private-stdout.log": {
+            "sha256": "ddefdd314d68e5c95b8b5a73f635f313ddc48bafbcbf996000794fd7b29efcdd",
+            "bytes": 570
+          }
+        }
+      }
+    ],
+    "classification": "Initial three G4 target failures were traced to test fixture/oracle errors and retained. Reaper helper failures were retained and corrected without weakening original cleanup assertions; original helper restored and new helper added. Product code was unchanged after initial implementation.",
+    "failed_frozen_gate": {
+      "private_report": "workflow-artifacts/verification/B02/G4/gates/2026-10-18T17-16-33-510110Z/gate.json",
+      "sha256": "63de1213d44e4fa3af102cd74cd242115a2d4804941ee1e44feac2d17c1df2db",
+      "verdict": "fail",
+      "source_fingerprint": "641adb7056f1c5008fd321d46223f94deb50975b32742686f2c41a52ecadcaed",
+      "source_archive_sha256": "fa501b4a8c44b94318a41237815c4a26dc20447ffe9712a629d776af16e75d21",
+      "cause": "Subreaper adopted a stopped PostgreSQL daemon as a zombie until pytest completion; legacy teardown found PID still present.",
+      "correction": "Background reaper collects newly adopted child zombies during Popen command, excluding command handle and preexisting PID/starttime pairs. Original cleanup oracle plus new natural-exit/exit-status test both retained.",
+      "cleanup": {
+        "postgres": "already_stopped",
+        "children": {
+          "result": "stopped",
+          "signalled_count": 0,
+          "pid_alive": false
+        }
+      }
+    }
+  },
+  "limitations": [
+    "This is G4 partial local acceptance. G5 workspace creation, G6 combined Node/build/browser verification, G7 final B02 acceptance and B03-B13/original32 AT remain pending.",
+    "New job is DRAFT/revision0/cycle0; command accepted is not applied; outbox pending and workspace intent RESERVED. No filesystem/Temporal/device/publisher/external submission was performed.",
+    "OIDC issuer, grants, artifacts, memberships and project data are synthetic, with actual loopback Uvicorn processes and isolated PostgreSQL. No corporate SSO/TLS/production AT-21 acceptance.",
+    "Commit acknowledgment-loss case commits on real PostgreSQL then raises a controlled exception from an injected db_factory transaction wrapper; it does not simulate an actual network or server transport fault.",
+    "Original17 imported files and2 uploads plus existing protected96 sources/89 inventory unchanged by byte/inventory checks. Full AX UI/build G6 acceptance remains pending.",
+    "Inherited environment.oidc_protocol=not_executed describes G1 environment smoke only; G3 protocol and G4 execution are evidenced separately by exact tests and actual runtime observations."
+  ]
+}

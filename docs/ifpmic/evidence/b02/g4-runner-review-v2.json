@@ -1,0 +1,44 @@
+{
+  "kind": "ifpmic.b02.g4.runner-review.v2",
+  "decision": "approve_static_runner_design_pending_tc_child_cleanup_test_and_final_ledger_pin",
+  "reviewed_runner": {
+    "path": "scripts/verify_ifpmic_g4.py",
+    "sha256": "a7845788af6e688da865341766d0001a734b8d2cacdfe39a680ff335e442a15d"
+  },
+  "supersedes_review": {
+    "path": "docs/ifpmic/evidence/b02/g4-runner-review.json",
+    "sha256": "7236aa9969bbb7b22b0830f35a69242beeb494291998a82e049f4cd86a4637a7",
+    "resolved": [
+      "The final G4 ledger now provides expected_g4_case_ids; runner compares the sorted observed testcase IDs against that exact inventory before evaluating counts."
+    ]
+  },
+  "source_pins": {
+    "docs/ifpmic/evidence/b02/g4-implementation-contract-v2.json": "830a98401e9addb3869722134866515183310dd0b86019463e08f6ef4baf2d14",
+    "docs/ifpmic/evidence/b02/g4-contract-review-v2.json": "620236c8176d57025c1e9e0e1a93d85994001d9125f97d196f242e404767efbc",
+    "docs/ifpmic/evidence/b02/g4-tc-contract-review-v2.json": "106949a70e29b6b7846c6a15a18abc8d8208305b44edaf719a74b7e66e65f834",
+    "docs/ifpmic/evidence/b02/g3-contract-review-v2.json": "e5024ecf58665aef6f848ae4b7f514fbf5a0394c007e8a597d74a6b5949b9440",
+    "scripts/verify_ifpmic_g1.py": "0f6603de4b0de546ccf2c23bc663c0568c2a178c8c19e31812c68b10a61e6d9b",
+    "scripts/verify_ifpmic_g2.py": "de0785319a339185be4809cd60eaff442767988fd9fb82a673689fcd1d2dc522",
+    "scripts/verify_ifpmic_g3.py": "ef60e77d341d9a2153ecdb5c519a2ac56846c7ee59ae34dab118458de2889f6d",
+    "services/ifpmic_api/migrations/001_initial.sql": "cf0437a5f32e1589e4ea821afbb2ef2480d780a276667880aa9a08a0f4c77f12",
+    "services/ifpmic_api/migrations/002_auth_retention.sql": "95c01f06eb586e0c1067f04672edfed8e0a11215752ad859ac9e4744da5a504e"
+  },
+  "review_findings": {
+    "exact_inventory": "The source change resolves the prior exact-case-ID gap: it loads the independently authored G4 ID list, validates list length/uniqueness against expected count, and compares it to sorted JUnit class.name IDs. The contract and approval key checks remain exact; the runner also checks G1/G2/G3 declared counts and all B01 Node outcomes.",
+    "child_ownership_and_cleanup": "Static review of enable_subreaper, /proc ancestry discovery, starttime capture, pidfd_open plus starttime recheck, pidfd_send_signal and bounded SIGINT/SIGTERM/SIGKILL waits found the cleanup scoped to descendants/adopted descendants of the gate process. Session changes do not break ancestry ownership. pidfd use prevents signaling a reused PID after the recorded starttime differs; exited processes are skipped, and waitpid reaps exited adopted children. The runner also checks for live owned children before PASS and retries bounded cleanup on failure. This is materially safer than process-group cleanup for setsid Uvicorn subprocesses.",
+    "isolation_and_scope": "The Linux/CPython gate runs as its own process, enables Linux child-subreaper mode before spawning test commands, and signals only kernel-owned descendants. It does not search or signal unrelated same-user processes. PID values and raw process metadata are not published in the aggregate report.",
+    "gate_integrity": "Plan/contract reviews, immutable migrations, Authlib source review/library hashes, B01 preservation, source-before/after inventory, private raw logs, neutral-host JUnit transformation, service aggregates and timeout budgets remain checked. G4 inventory exactness is now checked against test IDs rather than only count."
+  },
+  "remaining_conditions": [
+    {
+      "id": "G4-RUNNER-CHILD-CLEANUP-TEST",
+      "condition": "Before freezing, TC must exercise cleanup_owned_children in an isolated helper process: create a gate-owned child which forks a setsid grandchild and intentionally exits/times out its direct test parent, keep an unrelated canary process alive, then verify the gate-owned descendants are reaped/stopped while the unrelated canary remains alive. Include PID-reuse-safe identity/liveness evidence and confirm the unconfirmed outcome fails closed if a child cannot be stopped. Static inspection cannot establish these OS lifecycle claims."
+    },
+    {
+      "id": "G4-RUNNER-FINAL-LEDGER",
+      "condition": "At final review, verify the written G4 ledger pins the exact approved contract SHA, exact case IDs/count, and current test/source bytes, and that the runner's expected_ids equal that ledger. Do not claim gate pass from this static review."
+    }
+  ],
+  "blockers": [],
+  "execution_status": "Read-only static review. No tests, service, database, or network were run. Static runner design is approved subject to the two explicit TC/final-ledger conditions; this is not verification-gate or G4 acceptance."
+}

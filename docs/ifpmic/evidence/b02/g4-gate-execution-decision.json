@@ -1,0 +1,34 @@
+{
+  "kind": "ifpmic.b02.g4-gate-execution-decision.v1",
+  "requirements": [
+    "REQ-13",
+    "B02-G4"
+  ],
+  "decision": "Run fixed legacy and G4 Python inventories as two commands, each with the approved300second cap; require both pass/no skips plus unchanged sources.",
+  "evidence": {
+    "accepted_G3_gate_archive_sha256": "76d5c6377d2dc8a80c8f01fcf5ffe53e083ed109a8a18345ba023ff745067c50",
+    "legacy_python_seconds": 179.79,
+    "first_G4_target_seconds": 151.06,
+    "first_G4_target_result": "74passed7failed, preserved privately; diagnostic evidence only, not acceptedcandidate.",
+    "sum_seconds": 330.85
+  },
+  "technical_reason": "Measured sum exceeds300seconds before new independentprocess and cleanup cases are added. Splitting prevents a predictable timeout without dropping tests or increasing per-command allowance.",
+  "fixed_inventory": [
+    "legacy: test_environment.py,test_migrations.py,test_snapshot_bridge.py,test_auth.py (167 accepted original test IDs)",
+    "G4: test_jobs.py (exact IDs and count independently pinned by TC before freeze)",
+    "B01:48existingNodecases"
+  ],
+  "guards": [
+    "Refuse unexpected test_*.py modules in tests/ifpmic_api.",
+    "Compare legacy IDs against acceptedG3 archive, and G4 IDs against independent TC ledger.",
+    "Capture each PostgreSQL lifecycle before the next command overwrites its private manifest.",
+    "Both actualG3auth observation and G4service/restart/process/cleanup observations remain required.",
+    "Kernel subreaper owns orphaned test descendants; pidfd cleanup on failures. TC separate-process cleanup test is mandatory."
+  ],
+  "omitted_verification": "None of the G4 planned cases or G1/G2/G3/B01 regressions are omitted. G6 full Node/build/plugin/browser acceptance remains pending under parent plan.",
+  "limits": "This is G4 partial verification, not G6/fullB02/originalAT acceptance. ProductionSSO/TLS, G5FS and B03execution remain unverified.",
+  "runner": {
+    "path": "scripts/verify_ifpmic_g4.py",
+    "sha256": "4b89e1b1f7d820e7bb38f8af4d4d0dd27094373e4cdcd141962a9a2a3161ed32"
+  }
+}

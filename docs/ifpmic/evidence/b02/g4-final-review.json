@@ -1,0 +1,102 @@
+{
+  "kind": "ifpmic.b02.g4.final-review.v1",
+  "decision": "accept_partial_g4",
+  "scope": "Independent audit of the frozen G4 gate archive, verification report, source snapshot, case inventories, privacy promotion and recorded failure history. This accepts only the scoped local G4 partial verification described below.",
+  "reviewed_artifacts": {
+    "verification_report": {
+      "path": "docs/ifpmic/evidence/b02/g4-verification.json",
+      "sha256": "439a66c5a42129c616cc06eb165541eff9a284086db0d23fbf5d89c0d503624f"
+    },
+    "archive": {
+      "path": "docs/ifpmic/evidence/b02/g4-gate.zip",
+      "sha256": "5b7cec3e8e2d6febe0afe5da38744e59fb3a4b77fd3865cefac21bc87a528193",
+      "exact_entries": [
+        "gate/gate.json",
+        "gate/legacy_python-pytest.xml",
+        "gate/g4_python-pytest.xml",
+        "gate/legacy-python.log",
+        "gate/g4-python.log",
+        "gate/b01-node.log"
+      ],
+      "zip_integrity_check": "passed",
+      "entry_hash_and_length_checks": "all six entries match the verification report"
+    },
+    "frozen_gate_report": {
+      "path": "workflow-artifacts/verification/B02/G4/gates/2026-10-18T17-26-06-712615Z/gate.json",
+      "sha256": "8ded997b2a9a55b06f351baa7924999d9f6aea493d60314c3e40d2f927909388",
+      "verdict": "pass",
+      "source_fingerprint": "e6af9ca38d9dc9c04a7299152a0897e19f862bae660e218f24bb6f183e8ef6b6"
+    }
+  },
+  "inventory_and_source_audit": {
+    "python_counts": {
+      "legacy": 167,
+      "g1": 12,
+      "g2": 41,
+      "g3": 114,
+      "g4": 91,
+      "total": 258,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "b01_node": {
+      "tests": 48,
+      "passed": 48,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "exact_case_id_checks": {
+      "legacy_vs_accepted_g3_archive": "167/167 exact IDs match; no duplicates",
+      "g4_vs_independent_tc_ledger": "91/91 exact IDs match; no duplicates",
+      "g4_ledger_path": "docs/ifpmic/evidence/b02/g4-tc-ledger.json",
+      "g4_ledger_sha256": "ed7e7fcb517cf3b94bf3d6f32aa63509f827225b85ac55f3d9437235803dc5fc"
+    },
+    "source_snapshot": {
+      "captured_source_count": 111,
+      "working_tree_hash_mismatches": [],
+      "git_index_hash_mismatches": [],
+      "fingerprint_recomputed_from_sorted_source_hashes": true,
+      "runtime_library_hashes": 8,
+      "runtime_library_hash_mismatches": [],
+      "accepted_legacy_source_hashes_match": true,
+      "immutable_migrations_001_and_002_match": true,
+      "protected_existing_sources": 96,
+      "protected_inventory_entries": 89,
+      "original_imported_files": 17,
+      "original_uploads": 2,
+      "recorded_source_changes": []
+    }
+  },
+  "runtime_and_scope_review": {
+    "maximum_case_seconds": {
+      "legacy_python": 2.68,
+      "g4_python": 6.133
+    },
+    "postgres": "Both isolated test-cluster lifecycles report stopped with PID absent; recorded lifecycle operations exited successfully.",
+    "services": "The actual G3 auth service exited 0 with PID absent. Both G4 Uvicorn lifecycles exited 0 with PID absent. The G4 aggregate records create, replay/conflict, authorization, fault recovery, pagination, restart and concurrency outcomes; owned child processes are absent.",
+    "process_races": "The exact G4 inventory includes the two-independent-process transaction contention test, and the gate reported all 91 G4 cases passed. The runtime observation records distinct-session and cross-project races with one-winner results.",
+    "scope": "Partial local durable job API verification with synthetic users, OIDC, profiles, memberships, artifacts and mock operator grants. New jobs remain DRAFT with command unapplied and workspace intent reserved. G5 workspace, G6 combined UI/build/browser checks, G7/full B02, production corporate SSO/TLS, B03 Temporal execution and full original AT-21 acceptance remain unverified."
+  },
+  "privacy_and_failure_history": {
+    "archive_promotion": "The archive contains only gate report, two hostname-redacted JUnit reports and three successful test logs. The two published JUnit XML trees match their private originals after removing only the hostname attribute. Published logs match the raw successful logs after replacing the workspace root with <workspace>; no raw private logs, credentials, cookies, authorization headers, private keys or absolute workspace path were included. The G4 warning summary is retained in the passing output and does not alter the 91-pass/zero-skip result.",
+    "private_permissions": "The frozen gate leaf is mode 0700; raw JUnit, service observations, lifecycle manifests and raw logs are mode 0600. Private files were not promoted into the archive.",
+    "attempt_history": "The verification report lists all ten directories under workflow-artifacts/verification/private/b02-g4; each listed directory exists. The failed first frozen gate and all subsequent focused/reaper attempts remain classified separately from acceptance.",
+    "failed_gate": {
+      "path": "workflow-artifacts/verification/B02/G4/gates/2026-10-18T17-16-33-510110Z/gate.json",
+      "report_sha256": "63de1213d44e4fa3af102cd74cd242115a2d4804941ee1e44feac2d17c1df2db",
+      "source_archive_path": "workflow-artifacts/verification/B02/G4/gates/2026-10-18T17-16-33-510110Z/private-failed-source.zip",
+      "source_archive_sha256": "fa501b4a8c44b94318a41237815c4a26dc20447ffe9712a629d776af16e75d21",
+      "classification": "failed, not accepted; PostgreSQL was stopped but remained an adopted zombie until the pytest command ended. The corrected runner reaps only newly adopted zombies and preserves both command and preexisting-child wait ownership."
+    }
+  },
+  "blockers": [],
+  "limitations": [
+    "This is partial G4 acceptance only; it does not complete B02, G6 or the original AT-21 acceptance.",
+    "The controlled commit-acknowledgment-loss test is not an injected PostgreSQL transport failure.",
+    "Synthetic authority and local loopback service evidence do not establish production identity-provider or corporate authorization approval."
+  ],
+  "execution_status": "Read-only archive/source/evidence audit. No tests, services or databases were run by this reviewer."
+}

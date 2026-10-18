@@ -1,0 +1,29 @@
+{
+  "kind": "ifpmic.b02.g4.initial-implementation-review.v1",
+  "status": "read_only_source_review_pre_tests",
+  "reviewed_contract": {
+    "path": "docs/ifpmic/evidence/b02/g4-implementation-contract-v2.json",
+    "sha256": "830a98401e9addb3869722134866515183310dd0b86019463e08f6ef4baf2d14"
+  },
+  "reviewed_sources": {
+    "docs/ifpmic/evidence/b02/g4-transaction-advice.json": "ed53de12e30480b32ecd70f36f3569ba75405fd399fb89526dc669ea8e46b370",
+    "services/ifpmic_api/request_contract.py": "ad88f756ce4bf526bb3c2d89dab64765bcfc42ab7f8b2832dcb012b271e07fe0",
+    "services/ifpmic_api/jobs.py": "bc682d6ea83ef6545b3105b2a9e8e4df75273445ebca1f8193219010bcea79b4",
+    "services/ifpmic_api/authority.py": "c1f8c91985f119b6435fc175cf21cc350c54ef2ba47959c4526bb22e6afa6734",
+    "services/ifpmic_api/app.py": "291e46d0dd41ab4464fa95f1fd695f25cf2387be4d59ab37e31f553ea90219e5",
+    "services/ifpmic_api/settings.py": "5d69621a8c1ff63c059527713e69a2675dab7a766897e0a50d926f5c86d3e266",
+    "services/ifpmic_api/errors.py": "374b49dc97c616d8e4c9432d997d5c9bd9b4a542f236f451a3e43ae92d16e967",
+    "services/ifpmic_api/migrations/001_initial.sql": "cf0437a5f32e1589e4ea821afbb2ef2480d780a276667880aa9a08a0f4c77f12",
+    "services/ifpmic_api/migrations/002_auth_retention.sql": "95c01f06eb586e0c1067f04672edfed8e0a11215752ad859ac9e4744da5a504e"
+  },
+  "findings": {
+    "request_and_URI_boundary": "No material mismatch found in the reviewed create/list boundary. Create checks authentication, Origin and CSRF before key/body parsing; enforces one idempotency/content-type header, no POST query, identity-only content encoding, an inclusive streamed 8 MiB cap, duplicate-key/nonfinite rejection, UTF-8 parsing and 64-level nesting. It preserves escaped lone surrogates through ASCII-escaped semantic TEXT and requires scalar project_id. List parsing caps query bytes, rejects malformed percent/UTF-8, duplicate and unknown fields, enforces canonical positive limit 1..100/default25, and validates authenticated cursor bytes as specified by contract v2.",
+    "authorization_and_replay": "The create path closes preflight DB/session locks before awaiting the fixed snapshot bridge, then authenticates again in a fresh READ COMMITTED transaction. It checks the existing actor/route/key before project lock and again after guard-first plus membership FOR UPDATE NOWAIT; post-lock authorization time is sampled through auth.now(). A raced global idempotency winner is handled after full rollback in a fresh scoped replay probe. Replay rechecks session, original-project active membership and ownership before comparing digest; it does not require current profile files, catalog or eligibility. A bridge failure also receives one fresh authenticated replay probe before fixed error mapping. These paths align with the approved transaction advice at source level.",
+    "acceptance_and_commit": "The new-acceptance transaction compares all nine immutable catalog fields, checks enabled/complete/mode/current grant, validates available caller-owned same-project artifact IDs, and inserts only job, command with full ASCII semantic payload and digest, outbox, and RESERVED workspace intent. Hooks cover each insertion and pre/post-commit/response boundaries. commit_started is set only after the precommit hook immediately before transaction-context exit; precommit errors roll back and map to dependency failure, while commit/after-commit/response uncertainty maps to COMMIT_UNCERTAIN. Only the named commands actor/route/key unique constraint enters winner replay recovery. No product source creates workflow steps, filesystem effects, or artifact uploads.",
+    "DTO_and_pagination": "The code projects the specified Job keys from durable command/job rows, emits the initial-only Snapshot envelope with empty steps and last_event_id sentinel, and scopes job/command reads and list rows by active membership plus owner or live same-job read delegation. Cursor generation and verification use the v2 canonical serialization, exact version typing, constant-time MAC comparison, actor/route/scope binding, and descending composite boundary. Error mapping is fixed and avoids serializing exception text.",
+    "operator_and_privileges": "The operator CLI accepts only the two fixed subcommands and bounded stdin DTOs, uses explicit private settings/operator DSN, derives authority_id from current_user in SQL, and grants only in mock mode. It returns the contract's exact AUTHORITY_INVALID_REQUEST / AUTHORITY_FORBIDDEN / AUTHORITY_UNAVAILABLE classes and exits 2/3/0 respectively. It rejects lone surrogates in project_id/evidence_ref and does not expose evidence_ref. Revoke unknown/cross-project handling is AUTHORITY_FORBIDDEN. Existing migrations 001/002 remain byte-identical to their reviewed source pins; product additions use current schema and no migration was part of this review.",
+    "remaining_test_questions": "Source inspection cannot establish PostgreSQL lock timing, rollback/commit acknowledgment outcomes, FK/trigger behavior, or actual FastAPI response/log behavior. The independent TC suite must demonstrate both cross-project global-key races with distinct sessions, membership trigger inversion/NOWAIT rollback, expiry/revocation during capture/guard wait, exact row counts at each fault boundary, and restart/replay from persisted TEXT. This review makes no runtime or acceptance claim."
+  },
+  "blockers": [],
+  "execution_status": "Read-only inspection only. No tests, service, database, or network were run. This initial source review is not final G4 acceptance."
+}

@@ -1,0 +1,40 @@
+{
+  "kind": "ifpmic.b02.g4.pre-gate-review.v1",
+  "decision": "approve_to_start_frozen_gate",
+  "reviewed_runner": {
+    "path": "scripts/verify_ifpmic_g4.py",
+    "sha256": "041c1ff879c2d1b81cd23919ce5b38acf7694aba8b1fd4077a374ec106c0ddac"
+  },
+  "reviewed_tc_ledger": {
+    "path": "docs/ifpmic/evidence/b02/g4-tc-ledger.json",
+    "sha256": "e2ba8c2a3b59a2741a0770c49c12af1215605c123e0346a3e6e7858503588dbd",
+    "approved_contract_sha256": "830a98401e9addb3869722134866515183310dd0b86019463e08f6ef4baf2d14",
+    "case_count": 90,
+    "exact_case_ids_count": 90,
+    "current_source_pin_mismatches": []
+  },
+  "reviewed_execution_decision": {
+    "path": "docs/ifpmic/evidence/b02/g4-gate-execution-decision-v2.json",
+    "sha256": "933dbb31861460538ca635c923a9509a0feaba6016a61e535b68191670ef3323",
+    "runner_sha256_matches": true,
+    "tc_ledger_sha256_matches": true,
+    "decision": "The 167-case accepted legacy Python inventory and all 90 G4 cases run as fixed inventories in separate commands, each under the existing 300-second timeout. B01 runs all 48 Node cases under 180 seconds. No required case is omitted; G6 remains pending."
+  },
+  "additional_source_pins": {
+    "docs/ifpmic/evidence/b02/g4-implementation-contract-v2.json": "830a98401e9addb3869722134866515183310dd0b86019463e08f6ef4baf2d14",
+    "docs/ifpmic/evidence/b02/g4-contract-review-v2.json": "620236c8176d57025c1e9e0e1a93d85994001d9125f97d196f242e404767efbc",
+    "docs/ifpmic/evidence/b02/g4-tc-contract-review-v2.json": "106949a70e29b6b7846c6a15a18abc8d8208305b44edaf719a74b7e66e65f834",
+    "docs/ifpmic/evidence/b02/g3-contract-review-v2.json": "e5024ecf58665aef6f848ae4b7f514fbf5a0394c007e8a597d74a6b5949b9440",
+    "docs/ifpmic/evidence/b02/g3-gate.zip": "76d5c6377d2dc8a80c8f01fcf5ffe53e083ed109a8a18345ba023ff745067c50",
+    "services/ifpmic_api/migrations/001_initial.sql": "cf0437a5f32e1589e4ea821afbb2ef2480d780a276667880aa9a08a0f4c77f12",
+    "services/ifpmic_api/migrations/002_auth_retention.sql": "95c01f06eb586e0c1067f04672edfed8e0a11215752ad859ac9e4744da5a504e"
+  },
+  "review_findings": {
+    "coverage_and_inventory": "Runner validates the final exact G4 ledger SHA, approved contract SHA, all 12 current ledger source pins, exact sorted G4 testcase IDs, and the fixed test-module inventory. It compares all 167 legacy testcase IDs with the accepted G3 gate archive, checks the 12/41/114 G1/G2/G3 class counts, and compares the current legacy service/test/runner/ledger bytes against the hash-pinned accepted G3 archive, with only app.py/settings.py/errors.py excluded as the three separately pinned G4 integration files. It checks G1/G2/G3 and B01 sources remain stable through the run, plus all 48 B01 Node cases with zero fail/cancel/skip/todo.",
+    "runtime_and_cleanup": "The gate requires the actual G3 auth-service and G4 Uvicorn observations, expected aggregate case outcomes, canary-absence markers, log SHA/byte metadata, stopped process/PID evidence, private service mode evidence and the isolated PostgreSQL lifecycle for both Python phases. It captures each PostgreSQL manifest before the next phase can overwrite it. The Linux subreaper cleanup test is part of the exact 90-case inventory; its focused JUnit entry passed, and it verifies a setsid orphan is stopped while an unrelated process remains alive. Cleanup uses ancestry plus pidfd/starttime checks and bounded signal escalation; the runner fails if owned children remain.",
+    "privacy_and_source_freeze": "Gate artifacts are written beneath a mode-0700 leaf; private logs/manifests/JUnit inputs are created or reset mode 0600, raw logs remain private, and only redacted JUnit plus safe aggregate observations are published. The runner hashes sources before and after execution and checks installed Authlib pins and both immutable migrations. The 18-case focused preflight passed with no failures/skips and PostgreSQL stopped/PID absent; its observation and lifecycle hashes are recorded in the ledger. The full gate will execute the final whitespace-corrected bytes, so the focused result is not represented as full acceptance.",
+    "scope": "The decision and gate explicitly limit the claim to local G4 durable job API and accepted regressions. Real corporate SSO, G5 workspace, B03 Temporal execution, G6 full UI/build/browser checks, device/artifact routes, and original AT-21 completion remain pending."
+  },
+  "blockers": [],
+  "execution_status": "Read-only pre-gate evidence review. This artifact authorizes starting the frozen gate; it does not claim the gate has run or passed, and it is not G4 acceptance."
+}

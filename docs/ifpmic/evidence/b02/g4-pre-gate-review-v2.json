@@ -1,0 +1,71 @@
+{
+  "kind": "ifpmic.b02.g4.pre-gate-review.v2",
+  "decision": "approve_to_start_frozen_gate",
+  "scope": "Read-only final review of the G4 gate runner, child-reaper regression evidence, source pins, and gate decision. This authorizes starting the frozen gate only; it is not a gate pass or acceptance claim.",
+  "reviewed_sources": {
+    "runner": {
+      "path": "scripts/verify_ifpmic_g4.py",
+      "sha256": "ad9b66b7463b84f22227d8ba924b42628f8abb463d0873ac9a90ab013708c13a"
+    },
+    "tc_ledger": {
+      "path": "docs/ifpmic/evidence/b02/g4-tc-ledger.json",
+      "sha256": "ed7e7fcb517cf3b94bf3d6f32aa63509f827225b85ac55f3d9437235803dc5fc",
+      "approved_contract_sha256": "830a98401e9addb3869722134866515183310dd0b86019463e08f6ef4baf2d14",
+      "expected_case_count": 91,
+      "exact_case_ids_count": 91,
+      "current_source_pin_mismatches": []
+    },
+    "execution_decision": {
+      "path": "docs/ifpmic/evidence/b02/g4-gate-execution-decision-v3.json",
+      "sha256": "e34236ad139a0ac550b12c365a485d5d5b1bb1b4255e57c6cc598984822c6914",
+      "runner_sha256_matches": true,
+      "ledger_sha256_matches": true,
+      "decision_scope": "Run the full accepted legacy Python inventory and exact 91-case G4 inventory as separate fixed commands, each within the approved 300-second cap; run all 48 B01 Node cases within 180 seconds. No listed verification is omitted. G6 and full AT-21 acceptance remain pending."
+    }
+  },
+  "additional_source_pins": {
+    "docs/ifpmic/evidence/b02/g4-implementation-contract-v2.json": "830a98401e9addb3869722134866515183310dd0b86019463e08f6ef4baf2d14",
+    "docs/ifpmic/evidence/b02/g4-contract-review-v2.json": "620236c8176d57025c1e9e0e1a93d85994001d9125f97d196f242e404767efbc",
+    "docs/ifpmic/evidence/b02/g4-tc-contract-review-v2.json": "106949a70e29b6b7846c6a15a18abc8d8208305b44edaf719a74b7e66e65f834",
+    "docs/ifpmic/evidence/b02/g3-contract-review-v2.json": "e5024ecf58665aef6f848ae4b7f514fbf5a0394c007e8a597d74a6b5949b9440",
+    "docs/ifpmic/evidence/b02/g3-gate.zip": "76d5c6377d2dc8a80c8f01fcf5ffe53e083ed109a8a18345ba023ff745067c50",
+    "services/ifpmic_api/migrations/001_initial.sql": "cf0437a5f32e1589e4ea821afbb2ef2480d780a276667880aa9a08a0f4c77f12",
+    "services/ifpmic_api/migrations/002_auth_retention.sql": "95c01f06eb586e0c1067f04672edfed8e0a11215752ad859ac9e4744da5a504e",
+    "scripts/verify_ifpmic_g1.py": "0f6603de4b0de546ccf2c23bc663c0568c2a178c8c19e31812c68b10a61e6d9b",
+    "scripts/verify_ifpmic_g2.py": "de0785319a339185be4809cd60eaff442767988fd9fb82a673689fcd1d2dc522",
+    "scripts/verify_ifpmic_g3.py": "ef60e77d341d9a2153ecdb5c519a2ac56846c7ee59ae34dab118458de2889f6d"
+  },
+  "child_reaper_review": {
+    "runner_logic": "Before launching each fixed command, run_owned_command snapshots all currently owned descendants as (PID, /proc starttime) pairs. Its background reaper only calls waitpid for newly adopted direct-child zombies, excluding both the active Popen command and every baseline pair. The Popen owner retains the wrapped command's wait status. Failure cleanup remains ancestry-scoped, checks starttime against pidfds before signaling, uses bounded signal escalation, and the runner requires owned descendants to be absent before a passing report.",
+    "tc_source_pin": {
+      "path": "tests/ifpmic_api/test_jobs.py",
+      "sha256": "dc96141956bb93ff1d3b06214bf4d176265cea654c3f2235f4e281b071287a28"
+    },
+    "focused_evidence": {
+      "attempt": "reaper-regression-attempt-5",
+      "junit_path": "workflow-artifacts/verification/private/b02-g4/reaper-regression-attempt-5-2026-10-19/private-junit.xml",
+      "junit_sha256": "46825a9014ab03d44b7b34790a014b505b17aef573076f062b1874459af913f6",
+      "parsed_counts": {
+        "tests": 2,
+        "errors": 0,
+        "failures": 0,
+        "skipped": 0,
+        "failure_elements": 0,
+        "error_elements": 0
+      },
+      "asserted_behavior": "The original cleanup test verifies a gate-owned orphan is stopped while an outside process remains alive. The natural-orphan test verifies a newly adopted orphan is reaped while the wrapped command is live, the command's exit code and stdout remain intact, and a preexisting direct Popen child that exits 17 retains wait() status 17. The source-pinned test also verifies an unrelated outside process survives.",
+      "private_directory_mode": "0700",
+      "junit_mode": "0600",
+      "candidate_source_zip_sha256": "0a86c3fd397d3c648990215e6276acb950b171ff6641881a468d9448349efad2",
+      "stdout_sha256": "ddefdd314d68e5c95b8b5a73f635f313ddc48bafbcbf996000794fd7b29efcdd",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "review_findings": {
+    "inventory_and_source_freeze": "The runner checks the exact 91 G4 IDs against the TC ledger and its source pins, checks the fixed test module inventory, compares the accepted legacy IDs with the pinned G3 archive, and verifies current legacy bytes against the accepted archive subject to the explicitly pinned G4 integration files. It preserves the accepted 12/41/167 regression inventories and 48-case B01 Node suite, and pins both database migrations. The decision's runner and ledger hashes match the reviewed files.",
+    "gate_execution_and_privacy": "The approved decision keeps the complete inventories, uses the specified per-command timeouts, retains per-phase PostgreSQL lifecycle evidence, and requires actual service/restart observations and child cleanup. The gate runner writes private evidence beneath a private leaf, preserves raw logs as private files, and publishes only its designated safe report outputs. The previous failed gate remains classified as nonacceptance evidence; no full frozen gate result is claimed here.",
+    "scope": "This review authorizes only the bounded local G4 gate and its stated regressions. It does not establish production SSO, G5 workspace behavior, B03 execution, G6 UI/build/browser verification, or complete original AT-21 acceptance."
+  },
+  "blockers": [],
+  "execution_status": "Static source/pin review and focused JUnit parsing only. No services, databases, or full G4 gate were run by this reviewer."
+}

@@ -1,0 +1,43 @@
+{
+  "kind": "ifpmic.b02.g4.runner-review.v1",
+  "decision": "conditional_hold_before_frozen_gate",
+  "reviewed_runner": {
+    "path": "scripts/verify_ifpmic_g4.py",
+    "sha256": "0a8d594edfc708592cf96a8b8a6e54345e8af6a34814e9fc85bc9276a0bcda06"
+  },
+  "source_pins": {
+    "docs/ifpmic/evidence/b02/g4-implementation-contract-v2.json": "830a98401e9addb3869722134866515183310dd0b86019463e08f6ef4baf2d14",
+    "docs/ifpmic/evidence/b02/g4-contract-review-v2.json": "620236c8176d57025c1e9e0e1a93d85994001d9125f97d196f242e404767efbc",
+    "docs/ifpmic/evidence/b02/g4-tc-contract-review-v2.json": "106949a70e29b6b7846c6a15a18abc8d8208305b44edaf719a74b7e66e65f834",
+    "docs/ifpmic/evidence/b02/g4-tc-risk-matrix-v3.json": "65a47224d9b30f6c299df73d268d4d22581f3df507475932bc64e01d1da0264a",
+    "docs/ifpmic/evidence/b02/g3-contract-review-v2.json": "e5024ecf58665aef6f848ae4b7f514fbf5a0394c007e8a597d74a6b5949b9440",
+    "scripts/verify_ifpmic_g1.py": "0f6603de4b0de546ccf2c23bc663c0568c2a178c8c19e31812c68b10a61e6d9b",
+    "scripts/verify_ifpmic_g2.py": "de0785319a339185be4809cd60eaff442767988fd9fb82a673689fcd1d2dc522",
+    "scripts/verify_ifpmic_g3.py": "ef60e77d341d9a2153ecdb5c519a2ac56846c7ee59ae34dab118458de2889f6d",
+    "services/ifpmic_api/migrations/001_initial.sql": "cf0437a5f32e1589e4ea821afbb2ef2480d780a276667880aa9a08a0f4c77f12",
+    "services/ifpmic_api/migrations/002_auth_retention.sql": "95c01f06eb586e0c1067f04672edfed8e0a11215752ad859ac9e4744da5a504e"
+  },
+  "verified_static_design": {
+    "approvals": "Runner verifies approved B02 plan SHA and both G4 contract reviews against exact contract v2 SHA; verifies the v2 Authlib source review SHA and installed-library pins; pins immutable migrations 001 and 002.",
+    "regression_inventory": "Runner uses exact fixed G1 count 12, B01 Node count 48 with all zero skipped/todo/cancelled, and ledger-declared minimum/exact counts for G2, G3 and G4. Python coverage classes and aggregate case IDs are recorded. It also invokes the accepted source/profile baseline check through the unchanged G1 helper.",
+    "source_capture": "Before commands, the runner hashes itself, G1/G2/G3 runners, README, B02 plan, all Python/SQL/in/lock/json service and test files, and B02 evidence JSON; it compares the source inventory after execution. This captures the new runner and implementation/test sources. Requirements lock and installed authentication library files are checked separately.",
+    "privacy_and_outputs": "Each uniquely timestamped gate leaf is created mode 0700. Raw pytest XML and command logs remain in that leaf and private-* files are chmod 0600 before report publication. Published JUnit replaces only hostname; report exposes aggregate counts/case IDs, hashes, sanitized lifecycle and runtime observations, not raw output or request/profile data.",
+    "runtime_observations": "Runner requires actual G3 service aggregate with success/replay/provider-error/expiry cases, canary absence and service PID/log evidence; actual G4 aggregate with create/replay/conflict/authorization/fault/pagination/restart/race/bridge/CLI observations; and 2..16 service lifecycle records with exit/PID/log hashes and restrictive modes. It checks PostgreSQL lifecycle shutdown, fresh library hashes and source stability.",
+    "timeouts": "Configured test command timeouts are 300 seconds for Python and 180 seconds for Node, consistent with the G4 gate plan. No runner execution was performed for this review."
+  },
+  "blockers": [
+    {
+      "id": "G4-RUNNER-CASE-ID-ORACLE",
+      "severity": "must_resolve_before_frozen_gate",
+      "evidence": "The Python runner compares G4 testcase count to expected_g4_pytest_cases, then records observed case IDs, but never compares those IDs with an independently pinned exact testcase-ID list from the TC ledger. A renamed or substituted case set of the same size can satisfy the current count gate while diverging from the reviewed case inventory.",
+      "required_resolution": "Have the final TC ledger carry the exact expected G1/G2/G3/G4 case IDs (or at minimum G4 IDs plus the accepted prior inventories), pin that ledger in the gate, and compare sorted observed IDs exactly to the ledger before PASS. A count alone is insufficient for the frozen evidence claim."
+    }
+  ],
+  "conditional_recovery_note": {
+    "id": "G4-RUNNER-TIMEOUT-CHILD-CLEANUP",
+    "severity": "operational-followup",
+    "evidence": "On Python timeout, subprocess.run terminates the pytest process and the runner's failure cleanup targets the PostgreSQL fixture cluster. G4 tests also spawn actual Uvicorn child processes; if pytest is terminated before its finally blocks run, the runner itself does not independently confirm or clean a still-live Uvicorn PID.",
+    "required_resolution": "Ensure the G4 service harness performs bounded cleanup on pytest interruption and retains process identity/liveness evidence, or have the runner consume a private service manifest and safely confirm stopped children. Any timed-out child must remain an explicit failure/uncertain cleanup outcome, never a pass."
+  },
+  "execution_status": "Read-only static runner review. No tests, service, database, or network were run. Do not treat this conditional review as gate approval or G4 acceptance."
+}

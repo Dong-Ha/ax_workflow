@@ -15,6 +15,8 @@ from starlette.responses import Response, RedirectResponse
 from .auth import AuthService, canonical_token, csrf_token
 from .errors import ApiError
 from .settings import Settings, SettingsError
+from .jobs import JobService
+from .request_contract import idempotency_key, list_query, read_create
 
 
 def json_response(value, status=200):
@@ -152,6 +154,8 @@ def create_app(settings, *, db_factory=None, oidc_transport=None, bridge_runner=
     app.state.auth = auth
     app.state.bridge_runner = bridge_runner
     app.state.filesystem = filesystem
+    jobs = JobService(settings, auth, db_factory=db_factory, bridge_runner=bridge_runner, fault_hook=fault_hook)
+    app.state.jobs = jobs
 
     @app.exception_handler(ApiError)
     async def api_error(request, error):
@@ -207,6 +211,27 @@ def create_app(settings, *, db_factory=None, oidc_transport=None, bridge_runner=
         response = Response(status_code=204)
         response.delete_cookie('ax_session', path='/', secure=settings.mode == 'real', httponly=True, samesite='lax')
         return response
+
+    @app.post('/api/v1/jobs')
+    async def create_job(request: Request):
+        jobs.pre_authenticate(request, write=True)
+        key = idempotency_key(request)
+        payload = await read_create(request)
+        return json_response(await jobs.create(request, payload, key), 202)
+
+    @app.get('/api/v1/jobs')
+    async def list_jobs(request: Request):
+        jobs.pre_authenticate(request)
+        limit, cursor = list_query(request)
+        return json_response(jobs.list(request, limit, cursor))
+
+    @app.get('/api/v1/jobs/{job_id}')
+    async def job_snapshot(job_id: str, request: Request):
+        return json_response(jobs.snapshot(request, job_id))
+
+    @app.get('/api/v1/commands/{command_id}')
+    async def command_status(command_id: str, request: Request):
+        return json_response(jobs.command(request, command_id))
 
     app.add_middleware(Boundary, settings=settings)
     return app

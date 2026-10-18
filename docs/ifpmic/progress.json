@@ -196,7 +196,7 @@
       "requirements": [
         "REQ-13"
       ],
-      "scope": "B02 G1/G2/G3 partial foundations independently accepted. G3 covers local signed-OIDC/session/CSRF/auth-retention only. G4-G7 and original AT-21 remain pending.",
+      "scope": "B02 G1-G4 partial local foundations independently accepted. G4 durable create/list/Snapshot/command APIs verified with synthetic signed OIDC, isolated PostgreSQL and actual loopback Uvicorn. G5 workspace, G6-G7 combined/final B02 and original AT-21 remain pending.",
       "increments": [
         {
           "id": "g1_python_postgres_migrations",
@@ -227,6 +227,27 @@
             "g3": 114,
             "b01_node": 48,
             "failed": 0,
+            "skipped": 0
+          }
+        },
+        {
+          "id": "g4_user_scoped_durable_command_api",
+          "status": "verified",
+          "contract": "evidence/b02/g4-implementation-contract-v2.json",
+          "scope": "Original create/list/Snapshot/command DTOs, scoped PostgreSQL acceptance and mock operator eligibility. No Temporal execution, filesystem workspace or original AT acceptance.",
+          "verification_plan": "evidence/b02/g4-tc-risk-matrix-v3.json",
+          "evidence": "evidence/b02/g4-verification.json",
+          "independent_acceptance": "evidence/b02/g4-final-review.json",
+          "candidate_fingerprint": "e6af9ca38d9dc9c04a7299152a0897e19f862bae660e218f24bb6f183e8ef6b6",
+          "tests": {
+            "python_total": 258,
+            "g1": 12,
+            "g2": 41,
+            "g3": 114,
+            "g4": 91,
+            "b01_node": 48,
+            "failed": 0,
+            "errors": 0,
             "skipped": 0
           }
         }
@@ -422,12 +443,12 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "B02: implement G4 durable user APIs and G5 workspace under the approved plan; G6/G7 combined acceptance, B03-B13 and32original AT remain pending.",
+  "next_step": "B02: implement G5 workspace state machine and filesystem reconciliation with independent TC proof; then G6/G7 combined/final acceptance. B03-B13 and32original AT remain pending.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",
     "Approved Bedrock/Claude runtime profile"
   ],
   "publication_policy": "Only authorized git repository documentation, source and synthetic verification summaries/screenshots; never runtime credentials or application logs.",
-  "updated_at": "2026-10-18T16:26:26.814525+00:00"
+  "updated_at": "2026-10-18T17:34:04.478217+00:00"
 }

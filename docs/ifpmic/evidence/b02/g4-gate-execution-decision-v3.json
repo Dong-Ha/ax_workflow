@@ -1,0 +1,66 @@
+{
+  "kind": "ifpmic.b02.g4-gate-execution-decision.v3",
+  "requirements": [
+    "REQ-13",
+    "B02-G4"
+  ],
+  "decision": "Run fixed legacy and G4 Python inventories as two commands, each with the approved300second cap; require both pass/no skips plus unchanged sources.",
+  "evidence": {
+    "accepted_G3_gate_archive_sha256": "76d5c6377d2dc8a80c8f01fcf5ffe53e083ed109a8a18345ba023ff745067c50",
+    "legacy_python_seconds": 179.79,
+    "first_G4_target_seconds": 151.06,
+    "first_G4_target_result": "74passed7failed, preserved privately; diagnostic evidence only, not acceptedcandidate.",
+    "sum_seconds": 330.85
+  },
+  "technical_reason": "Measured sum exceeds300seconds before new independentprocess and cleanup cases are added. Splitting prevents a predictable timeout without dropping tests or increasing per-command allowance.",
+  "fixed_inventory": [
+    "legacy: test_environment.py,test_migrations.py,test_snapshot_bridge.py,test_auth.py (167 accepted original test IDs)",
+    "G4: test_jobs.py (exact IDs and count independently pinned by TC before freeze)",
+    "B01:48existingNodecases"
+  ],
+  "guards": [
+    "Refuse unexpected test_*.py modules in tests/ifpmic_api.",
+    "Compare legacy IDs against acceptedG3 archive, and G4 IDs against independent TC ledger.",
+    "Capture each PostgreSQL lifecycle before the next command overwrites its private manifest.",
+    "Both actualG3auth observation and G4service/restart/process/cleanup observations remain required.",
+    "Kernel subreaper owns orphaned test descendants; pidfd cleanup on failures. TC separate-process cleanup test is mandatory.",
+    "Independent TC ledger bytes and every required product/test source pin checked before execution.",
+    "All Python cases must report finite duration within30seconds.",
+    "Narrow stdlib symbol-table check catches undefined globals in explicit G4 test modules.",
+    "Compare accepted G3 archived implementation/test/ledger/runner source hashes before executing legacy phase; only three approved G4 integration edits (app/settings/errors) are excluded and pinned independently by G4 TC."
+  ],
+  "omitted_verification": "None of the G4 planned cases or G1/G2/G3/B01 regressions are omitted. G6 full Node/build/plugin/browser acceptance remains pending under parent plan.",
+  "limits": "This is G4 partial verification, not G6/fullB02/originalAT acceptance. ProductionSSO/TLS, G5FS and B03execution remain unverified.",
+  "runner": {
+    "path": "scripts/verify_ifpmic_g4.py",
+    "sha256": "ad9b66b7463b84f22227d8ba924b42628f8abb463d0873ac9a90ab013708c13a"
+  },
+  "supersedes": "g4-gate-execution-decision-v2.json; first frozen gate failed due to unreaped adopted PostgreSQL zombie, all failed evidence retained.",
+  "tc_ledger": {
+    "path": "docs/ifpmic/evidence/b02/g4-tc-ledger.json",
+    "sha256": "ed7e7fcb517cf3b94bf3d6f32aa63509f827225b85ac55f3d9437235803dc5fc",
+    "exact_cases": 91
+  },
+  "focused_preflight": {
+    "cases": 18,
+    "verdict": "pass",
+    "full_gate_pending": true,
+    "observation_sha256": "c15320c057cb0be439d5f7e74c1606351dddafc88e7d782df2162c0326bcba23",
+    "whitespace_only_post_focus": "Two extra EOF blank lines trimmed before candidate freeze; full gate will run final bytes."
+  },
+  "runtime_reaper_fix": {
+    "reason": "Gate became Linux subreaper before pytest, so a stopped PostgreSQL daemon was adopted as a zombie until command completion. Legacy teardown correctly found its PID still present.",
+    "change": "During each Popen command, reap only adopted direct-child zombies with PID-specific waitpid, excluding command PID; leave command completion and exit status to its Popen handle.",
+    "legacy_preflight": "Formerly failing untouched legacy auth lifecycle case passed with stopped PostgreSQL/PID absent through actual revised wrapper.",
+    "additional_TC_case": "Preserve original owned-orphan cleanup/outside-process survival test and add separate natural-orphan/status-preservation test; full G4 inventory becomes91.",
+    "ownership_guard": "Snapshot baseline child PID/starttime pairs before Popen and exclude those plus active command PID from background waitpid; preserve preexisting child wait ownership.",
+    "focused_two_helpers": "Both passed with preexisting owner wait() ==17; see TC ledger final execution history."
+  },
+  "failed_gate": {
+    "path": "workflow-artifacts/verification/B02/G4/gates/2026-10-18T17-16-33-510110Z/gate.json",
+    "sha256": "63de1213d44e4fa3af102cd74cd242115a2d4804941ee1e44feac2d17c1df2db",
+    "source_zip_sha256": "fa501b4a8c44b94318a41237815c4a26dc20447ffe9712a629d776af16e75d21",
+    "acceptance": false,
+    "cleanup": "PostgreSQL already stopped; no owned live children after cleanup."
+  }
+}

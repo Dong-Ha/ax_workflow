@@ -1,0 +1,51 @@
+{
+  "kind": "ifpmic.b02.g4-gate-execution-decision.v2",
+  "requirements": [
+    "REQ-13",
+    "B02-G4"
+  ],
+  "decision": "Run fixed legacy and G4 Python inventories as two commands, each with the approved300second cap; require both pass/no skips plus unchanged sources.",
+  "evidence": {
+    "accepted_G3_gate_archive_sha256": "76d5c6377d2dc8a80c8f01fcf5ffe53e083ed109a8a18345ba023ff745067c50",
+    "legacy_python_seconds": 179.79,
+    "first_G4_target_seconds": 151.06,
+    "first_G4_target_result": "74passed7failed, preserved privately; diagnostic evidence only, not acceptedcandidate.",
+    "sum_seconds": 330.85
+  },
+  "technical_reason": "Measured sum exceeds300seconds before new independentprocess and cleanup cases are added. Splitting prevents a predictable timeout without dropping tests or increasing per-command allowance.",
+  "fixed_inventory": [
+    "legacy: test_environment.py,test_migrations.py,test_snapshot_bridge.py,test_auth.py (167 accepted original test IDs)",
+    "G4: test_jobs.py (exact IDs and count independently pinned by TC before freeze)",
+    "B01:48existingNodecases"
+  ],
+  "guards": [
+    "Refuse unexpected test_*.py modules in tests/ifpmic_api.",
+    "Compare legacy IDs against acceptedG3 archive, and G4 IDs against independent TC ledger.",
+    "Capture each PostgreSQL lifecycle before the next command overwrites its private manifest.",
+    "Both actualG3auth observation and G4service/restart/process/cleanup observations remain required.",
+    "Kernel subreaper owns orphaned test descendants; pidfd cleanup on failures. TC separate-process cleanup test is mandatory.",
+    "Independent TC ledger bytes and every required product/test source pin checked before execution.",
+    "All Python cases must report finite duration within30seconds.",
+    "Narrow stdlib symbol-table check catches undefined globals in explicit G4 test modules.",
+    "Compare accepted G3 archived implementation/test/ledger/runner source hashes before executing legacy phase; only three approved G4 integration edits (app/settings/errors) are excluded and pinned independently by G4 TC."
+  ],
+  "omitted_verification": "None of the G4 planned cases or G1/G2/G3/B01 regressions are omitted. G6 full Node/build/plugin/browser acceptance remains pending under parent plan.",
+  "limits": "This is G4 partial verification, not G6/fullB02/originalAT acceptance. ProductionSSO/TLS, G5FS and B03execution remain unverified.",
+  "runner": {
+    "path": "scripts/verify_ifpmic_g4.py",
+    "sha256": "041c1ff879c2d1b81cd23919ce5b38acf7694aba8b1fd4077a374ec106c0ddac"
+  },
+  "supersedes": "g4-gate-execution-decision.json; retained as historical runner pin",
+  "tc_ledger": {
+    "path": "docs/ifpmic/evidence/b02/g4-tc-ledger.json",
+    "sha256": "e2ba8c2a3b59a2741a0770c49c12af1215605c123e0346a3e6e7858503588dbd",
+    "exact_cases": 90
+  },
+  "focused_preflight": {
+    "cases": 18,
+    "verdict": "pass",
+    "full_gate_pending": true,
+    "observation_sha256": "c15320c057cb0be439d5f7e74c1606351dddafc88e7d782df2162c0326bcba23",
+    "whitespace_only_post_focus": "Two extra EOF blank lines trimmed before candidate freeze; full gate will run final bytes."
+  }
+}

@@ -4,6 +4,7 @@ import base64
 import json
 import os
 import stat
+from pathlib import Path
 from urllib.parse import urlsplit
 
 
@@ -46,6 +47,8 @@ class Settings:
     client_auth_method: str = 'client_secret_basic'
     signing_algorithms: tuple[str, ...] = ('RS256',)
     auth_gc_interval_seconds: int = 60
+    node_executable: str | None = None
+    profile_store: str | None = None
 
     def __post_init__(self):
         try:
@@ -55,6 +58,11 @@ class Settings:
                 raise ValueError()
             if type(self.auth_gc_interval_seconds) is not int or not 1 <= self.auth_gc_interval_seconds <= 60:
                 raise ValueError()
+            if (self.node_executable is None) != (self.profile_store is None):
+                raise ValueError()
+            for path in (self.node_executable, self.profile_store):
+                if path is not None and (not isinstance(path, str) or not Path(path).is_absolute() or '\x00' in path):
+                    raise ValueError()
             if (type(self.allowed_ui_origins) is not tuple or not self.allowed_ui_origins or
                     len(set(self.allowed_ui_origins)) != len(self.allowed_ui_origins)):
                 raise ValueError()

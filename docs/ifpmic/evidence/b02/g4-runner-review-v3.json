@@ -1,0 +1,54 @@
+{
+  "kind": "ifpmic.b02.g4.runner-review.v3",
+  "decision": "conditional_hold_for_tc_source_pin_enforcement_and_child_cleanup_test",
+  "reviewed_runner": {
+    "path": "scripts/verify_ifpmic_g4.py",
+    "sha256": "4b89e1b1f7d820e7bb38f8af4d4d0dd27094373e4cdcd141962a9a2a3161ed32"
+  },
+  "execution_decision": {
+    "path": "docs/ifpmic/evidence/b02/g4-gate-execution-decision.json",
+    "sha256": "9ace4f33fb31058e690c8de26d512f0c6f049d02ed36991993560137f4ef3ce2",
+    "runner_sha_matches_decision": true,
+    "decision": "The fixed split is justified by pinned prior timings. The complete accepted legacy inventory and full independent G4 inventory run as separate commands, each retains the existing 300-second timeout; no cases are omitted and G6 remains pending."
+  },
+  "prior_review": {
+    "path": "docs/ifpmic/evidence/b02/g4-runner-review-v2.json",
+    "sha256": "32ee09ea511efd4ba23cf4864e1f53a73e53f3f6945dce5191182ec3d7251e74",
+    "resolved": [
+      "Exact G4 case IDs are now compared with the expected ID inventory."
+    ],
+    "still_pending": [
+      "Independent TC helper test for subreaper cleanup with a setsid grandchild and unrelated live canary."
+    ]
+  },
+  "source_pins": {
+    "docs/ifpmic/evidence/b02/g4-implementation-contract-v2.json": "830a98401e9addb3869722134866515183310dd0b86019463e08f6ef4baf2d14",
+    "docs/ifpmic/evidence/b02/g4-contract-review-v2.json": "620236c8176d57025c1e9e0e1a93d85994001d9125f97d196f242e404767efbc",
+    "docs/ifpmic/evidence/b02/g4-tc-contract-review-v2.json": "106949a70e29b6b7846c6a15a18abc8d8208305b44edaf719a74b7e66e65f834",
+    "docs/ifpmic/evidence/b02/g3-contract-review-v2.json": "e5024ecf58665aef6f848ae4b7f514fbf5a0394c007e8a597d74a6b5949b9440",
+    "scripts/verify_ifpmic_g1.py": "0f6603de4b0de546ccf2c23bc663c0568c2a178c8c19e31812c68b10a61e6d9b",
+    "scripts/verify_ifpmic_g2.py": "de0785319a339185be4809cd60eaff442767988fd9fb82a673689fcd1d2dc522",
+    "scripts/verify_ifpmic_g3.py": "ef60e77d341d9a2153ecdb5c519a2ac56846c7ee59ae34dab118458de2889f6d",
+    "services/ifpmic_api/migrations/001_initial.sql": "cf0437a5f32e1589e4ea821afbb2ef2480d780a276667880aa9a08a0f4c77f12",
+    "services/ifpmic_api/migrations/002_auth_retention.sql": "95c01f06eb586e0c1067f04672edfed8e0a11215752ad859ac9e4744da5a504e"
+  },
+  "review_findings": {
+    "inventory_split": "Static review confirms the runner refuses test_*.py inventory changes, compares the split legacy Python case IDs to the accepted archived G3 IDs, checks legacy class counts, compares G4 observed IDs to TC expected_g4_case_ids, and checks G4 count. Each Python phase has its own 300-second cap and retained JUnit/log evidence. It verifies and preserves the PostgreSQL lifecycle manifest after each phase so a later run cannot silently overwrite earlier shutdown evidence. Node retains its 180-second cap and exact 48-case no-skip condition.",
+    "cleanup_delta": "The newly added child ownership cleanup is still ancestry-scoped to this Linux gate via subreaper adoption. It snapshots /proc ancestry and starttime, opens pidfds, rechecks starttime before pidfd signaling, escalates bounded INT/TERM/KILL, reaps adopted exits, and fails the gate if any owned child remains alive. It handles session-detached descendants without process-group signaling. This static review does not replace the required real helper test.",
+    "decision_alignment": "The execution decision records the accepted archive hash, timing arithmetic, exact fixed inventory split, no omitted tests/no G6 claim, and its runner SHA matches the reviewed current runner."
+  },
+  "blockers": [
+    {
+      "id": "G4-RUNNER-TC-SOURCE-PINS",
+      "severity": "must_resolve_before_frozen_gate",
+      "evidence": "The runner validates contract SHA, testcase-ID list and count, then captures current source bytes and checks they remain stable during the run. It does not validate that test_jobs.py and other G4 test inputs match the independent source_pins recorded in the TC ledger, and does not check a pinned ledger artifact SHA. Therefore an edited test body retaining the same pytest IDs/count can replace the reviewed oracle and still pass the gate.",
+      "required_resolution": "Pin the final TC ledger SHA and verify it at gate start; verify every ledger source pin relevant to G4 test/fixture/provider bytes against current bytes before execution. Preserve the existing source-before/after comparison to catch mid-run changes. Include the exact G4 inventory and source pins in the frozen ledger."
+    }
+  ],
+  "remaining_condition": {
+    "id": "G4-RUNNER-CHILD-CLEANUP-TEST",
+    "severity": "required_before_gate_acceptance",
+    "condition": "TC must run the isolated helper test specified in runner review v2: a gate-owned setsid grandchild survives its direct parent, is stopped/reaped by the subreaper cleanup, and an unrelated canary remains alive. Also demonstrate fail-closed unconfirmed status for an intentionally unkillable/held child if practical. No gate execution was performed here."
+  },
+  "execution_status": "Read-only static review. No tests, services, database, or network were run. This is not frozen-gate approval or G4 acceptance."
+}
