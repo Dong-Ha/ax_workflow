@@ -1,0 +1,157 @@
+{
+  "kind": "ifpmic_b02_g2_verification",
+  "decision": "g2_pass_pending_independent_final_review",
+  "requirements": [
+    "REQ-13",
+    "B02-G2"
+  ],
+  "scope": "Partial B02 private Node bridge, raw-byte immutable PostgreSQL catalog and operator import CLI.",
+  "plan_sha256": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a",
+  "candidate_fingerprint": "2e9c116e2b58a50702e3ed5949102a04265c9ac26b6243258ecc09ba9eaf7717",
+  "gate_archive": {
+    "path": "docs/ifpmic/evidence/b02/g2-gate.zip",
+    "sha256": "58e4548dad9f156f20a0ce96dc8eeb8d46d0a4c347960e9bdb09652d9082fb4c",
+    "entries": {
+      "gate.json": {
+        "bytes": 16949,
+        "sha256": "9090167eb3b2d9c94d8a245dc367dde1692454e2056ced533282d247ccc22d00"
+      },
+      "pytest.xml": {
+        "bytes": 8726,
+        "sha256": "daac2aad5199a196264701e6d266f1e8ed6ccf17d5f105620912d566b698c0ac"
+      },
+      "python.log": {
+        "bytes": 100,
+        "sha256": "9d0dce24ed89a96ebf9dbb445a28b00d3dfc64321d56bad27de3599035fc87ec"
+      },
+      "b01-node.log": {
+        "bytes": 11056,
+        "sha256": "da159dc48ab75301556d23b7ac05bf411c3dbcec274717c9187695c67bf45b00"
+      }
+    }
+  },
+  "tests": {
+    "python": {
+      "tests": 53,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 53
+    },
+    "g1_cases": 12,
+    "g2_cases": 41,
+    "b01_node": {
+      "tests": 48,
+      "pass": 48,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    }
+  },
+  "source_changes": [],
+  "unchanged_existing_sources": {
+    "protected_source_count": 96,
+    "protected_inventory_count": 89,
+    "original_imported_files": 17,
+    "original_uploads": 2,
+    "scope": "Byte/inventory comparison only. Full Node/build/browser G6 remains pending."
+  },
+  "postgres_lifecycle": {
+    "stop_status": "stopped",
+    "pid_alive": false,
+    "binary_versions": {
+      "initdb": "initdb (PostgreSQL) 18.1",
+      "pg_ctl": "pg_ctl (PostgreSQL) 18.1",
+      "postgres": "postgres (PostgreSQL) 18.1"
+    },
+    "binary_sha256": {
+      "initdb": "7cba14094c5f505f492fd243c5eda04f0dc3be05f12b7bd278f150f1e03b721f",
+      "pg_ctl": "24a1f166819e0924319ff3faf752ad2a1ac594e223e2f3b1a2038dc84a2969de",
+      "postgres": "c85fa9c977d9e641c2d22d93675a9b7097764b7df2c4c9ea021f5780522b2af2"
+    },
+    "lifecycle": [
+      {
+        "duration_ms": 4,
+        "exit_code": 0,
+        "operation": "initdb_version"
+      },
+      {
+        "duration_ms": 1,
+        "exit_code": 0,
+        "operation": "pg_ctl_version"
+      },
+      {
+        "duration_ms": 6,
+        "exit_code": 0,
+        "operation": "postgres_version"
+      },
+      {
+        "duration_ms": 1121,
+        "exit_code": 0,
+        "operation": "initdb"
+      },
+      {
+        "duration_ms": 109,
+        "exit_code": 0,
+        "operation": "pg_ctl_start"
+      },
+      {
+        "duration_ms": 115,
+        "exit_code": 0,
+        "operation": "pg_ctl_stop"
+      }
+    ]
+  },
+  "private_evidence_permissions": {
+    "gate_directory_mode": "0o700",
+    "files": {
+      "private-b01_node.log": "0o600",
+      "private-lifecycle.json": "0o600",
+      "private-pytest.xml": "0o600",
+      "private-python.log": "0o600"
+    }
+  },
+  "publication": {
+    "junit": {
+      "raw_private_sha256": "04b065fd13837197534c0daed2ab4d841fa94bbe26e8dd6004b1e31b540c6f92",
+      "published_sha256": "daac2aad5199a196264701e6d266f1e8ed6ccf17d5f105620912d566b698c0ac",
+      "transformation": "Only hostname replaced with redacted-local-host; XML serialized."
+    },
+    "successful_logs": "Inspected successful dot-summary and passing B01 TAP output promoted without byte changes.",
+    "excluded": [
+      "private-pytest.xml",
+      "private-lifecycle.json",
+      "raw PostgreSQL server logs",
+      "all failed development attempt output"
+    ],
+    "synthetic_test_ids": "Some JUnit/gate case IDs contain fixed synthetic request/ATTACKER_PATH values from the committed tests; these are not actual request data or host paths."
+  },
+  "development_history": {
+    "tc_ledger": "g2-tc-ledger.json",
+    "reviews": [
+      "g2-contract-review.json",
+      "g2-initial-review.json",
+      "g2-initial-review-v2.json",
+      "g2-initial-review-v3.json",
+      "g2-initial-review-v4.json",
+      "g2-initial-review-v5.json"
+    ],
+    "historical_sources": "g2-historical-source.json",
+    "resolved_product_findings": [
+      "Launch-cancellation handle ownership and repeated cancellation cleanup.",
+      "Paused output pipe drain before completed process reap.",
+      "Numeric operator request values rejected at CLI boundary.",
+      "Gate private leaf0700, raw artifacts0600; retained development evidence permissions also corrected without altering bytes."
+    ],
+    "failed_attempts": "All G2 targeted stdout/stderr files retained privately with hashes/classifications in TC ledger; no failed run was erased or relabeled as passing."
+  },
+  "limitations": [
+    "Only Linux CPython3.12 subprocess lifecycle is supported; gate records exact stdlib module hashes.",
+    "Pending-launch/repeated-cancel tests use controlled process seams; actual Node timeout/overflow tests separately verify process PID disappearance. No kernel failure/performance guarantee.",
+    "Node-derived version key and semantic B01 hashes are trusted outputs of the fixed configured Node bridge. Python checks wire/hash/identity and never recanonicalizes. Internal SnapshotRecord/catalog primitives are trusted code, not user-input APIs.",
+    "Catalog import creates no eligibility grant. Real authority and production DB/SSO authentication remain unverified.",
+    "G3-G7, user-facing FastAPI endpoints/auth/workspaces, Temporal orchestration, original AT-21/all original AT, actual devices/release approvals remain pending.",
+    "Existing 96 protected source hashes/89 inventory paths and originals17+2 match. Full Node387/build/browser and broader dependency/output checks are deferred to G6, with no full G6/UI omission acceptance claimed."
+  ]
+}

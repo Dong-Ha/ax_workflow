@@ -1,0 +1,59 @@
+{
+  "review": "B02 G2 implementation and gate-source follow-up",
+  "status": "source_review_gate_privacy_blocker",
+  "approved_plan": {
+    "path": "docs/ifpmic/B02-IDENTITY.md",
+    "sha256": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a"
+  },
+  "supersedes": "docs/ifpmic/evidence/b02/g2-initial-review-v3.json",
+  "historical_v3_sha256": "2c5eb3fcb9bcd3684fce47bc66c58351cf6130a80220e4bdd62deee2ba9cfb11",
+  "reviewed_source_pins": {
+    "services/ifpmic_api/snapshot_bridge.py": "743f357fed62a37770d4bfef2a3321fab649b25a3a1b040f64d61bec628443e8",
+    "services/ifpmic_api/snapshot_bridge.mjs": "c43822624bb68b7b75a4c13860c78408a80a3de56f10022c0f2591170200fd88",
+    "services/ifpmic_api/catalog.py": "65cfaae738728a957ba73587bdc3caaa582a90650624bb1c31bd11f66fb2db1f",
+    "scripts/verify_ifpmic_g2.py": "a50a65b3ebd466593d77b052f3f88a2814537fad0b7dc3da889f9e4e0d9123c1",
+    "scripts/verify_ifpmic_g1.py": "0f6603de4b0de546ccf2c23bc663c0568c2a178c8c19e31812c68b10a61e6d9b",
+    "README.md": "99690efb050452cd04057b261a20dd57e0dd72b93ccd6b2df41be0dfc3fdad08",
+    "docs/ifpmic/B02-IDENTITY.md": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a",
+    "runtime/ifpmic/snapshot.mjs": "9bbfdcaf483167c931f0b6e0a453697cd8ea92f3b12f33ab30ffa0b2dd52b789",
+    "runtime/ifpmic/store.mjs": "0f532d26504b1975b61b8e67c87225c29d4d576115ed81d2314ecb6ae359477e",
+    "runtime/ifpmic/profile.mjs": "2277163d940aed1b8c0c16a2da09f412e777800a2cb907cde5919799481028dd"
+  },
+  "implementation_review": {
+    "status": "no_source_blocker_found",
+    "lifecycle": "Cleanup is now delegated to a dedicated task awaited in a shield loop, so repeated caller cancellation is recorded and propagated only after cleanup. If launch has not produced a handle, cleanup cancels and awaits the retained spawn task. On the supported CPython/Linux runtime, asyncio's Unix subprocess cancellation path closes the transport, kills a still-running child, and awaits process exit. If a child handle exists, cleanup cancels/gathers readers and writer, closes stdin, kills a live child, drains stdout/stderr to EOF without retaining or exposing bytes, and waits for process exit concurrently. This addresses the paused-pipe overflow deadlock and closes the earlier source-level cancellation gaps.",
+    "runtime_constraint": "SnapshotBridge rejects non-Linux, non-CPython, or non-3.12 runtimes. README documents Linux CPython 3.12. The G2 runner records hashes of the active asyncio Unix/base subprocess stdlib modules; the gate is required to verify those runtime details in its artifact.",
+    "protocol_and_privacy": "Node bridge still reuses the B01 reader, pinned workflow verifier, and Node-derived versionKey; Python validates exact frame/DTO shape, duplicate JSON keys, strict base64, byte/hash/identity/type/bundle conditions and does not recanonicalize. Fixed environment, shell-free exec, bounded input/output/queue, and fixed scrubbed error codes remain in place.",
+    "catalog_cli": "Catalog insertion remains IDLE-only and transactional, inserts once, compares every immutable catalog field after conflict, and never updates or grants eligibility. The private CLI now checks both exact allowed request keys and that all request values are strings before calling the fixed bridge; executable, store root, and DSN are environment configuration, not request fields.",
+    "readme": "README states the supported Linux CPython 3.12 boundary, bounded subprocess limits, private operator import invocation, non-leaking result, no eligibility side effect, and the scoped G2 gate."
+  },
+  "gate_source_review": {
+    "runner": "The runner pins the approved plan and independent plan review files, records candidate source hashes before/after, invokes G1+G2 Python cases and all 48 existing B01 Node cases, records Python/JUnit and Node counts, verifies private PostgreSQL lifecycle shutdown, captures stdlib source digests, retains raw test logs privately, and publishes JUnit with hostname attributes replaced. It enforces exactly 12 G1 cases, an exact G2 count from TC's independent ledger (minimum 22), no skips/failures, and exactly 48 passing B01 cases.",
+    "execution_prerequisite": "At review time docs/ifpmic/evidence/b02/g2-tc-ledger.json was not present, although the runner requires its expected_g2_pytest_cases integer. The runner is intentionally not runnable to a pass until TC freezes that ledger and completes the outstanding case work.",
+    "candidate_scope": "The runner describes this as G1/G2 local acceptance only and explicitly leaves G3-G7, full B02, and original acceptance tests pending. It checks that existing AX/UI/Node sources and imported/uploaded design sources match accepted byte baselines through the G1 helper."
+  },
+  "findings": [
+    {
+      "severity": "blocker",
+      "area": "private verification artifacts permissions",
+      "path": "scripts/verify_ifpmic_g2.py:34,72,75,80",
+      "evidence": "The gate creates its timestamped directory with `directory.mkdir(parents=True)` and writes private logs, raw JUnit XML, and lifecycle JSON with `write_bytes`, without setting restrictive modes. Under the reviewed environment umask 0022, ordinary mkdir/open defaults produce a 0755 directory and 0644 files, making artifacts called private readable by other local users. Failure output may include sensitive assertion or diagnostic data.",
+      "required_resolution": "Create the unique gate leaf directory with mode 0700 and ensure raw private logs/JUnit/lifecycle files are mode 0600 (or equivalent safely restrictive creation). Add a permission assertion to the verifier or TC check; keep only the intended sanitized publication readable.",
+      "blocks_gate_candidate_review": true
+    }
+  ],
+  "required_remaining_evidence": [
+    "Run the frozen G2 gate after TC ledger/tests are complete; verify pending-launch cancellation, acquired-child cancellation, repeated cancellation, launch timeout, and bursty output overflow all demonstrate process reap and slot release.",
+    "Review the final generated gate artifact and exact source fingerprint; no G2 or B02 acceptance is claimed by this source review."
+  ],
+  "blockers": ["Restrict permissions on private verification artifacts before executing the frozen gate."],
+  "verification": {
+    "performed": "Read-only source inspection, file SHA-256 pinning, local Python runtime identification, and inspection of CPython 3.12.3 asyncio Unix subprocess/transport cleanup code.",
+    "local_subprocess_runtime": {
+      "python": "CPython 3.12.3 on Linux",
+      "asyncio.unix_events.py_sha256": "1fff06cce78763800f05f4d2bebfcdbc07ebf9564ca7e7222e0d91e39dee08c9",
+      "limitation": "Source/runtime evidence only; not an execution or TC test result."
+    },
+    "not_performed": ["G1/G2 runner execution", "pytest", "Node tests", "services", "database operations"]
+  }
+}

@@ -1,0 +1,128 @@
+{
+  "schema_version": 1,
+  "expected_g2_pytest_cases": 41,
+  "status": "targeted_pass_pending_independent_review",
+  "plan": {
+    "id": "B02-G2",
+    "sha256": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a",
+    "requirements": ["REQ-13", "B02-G2"],
+    "acceptance_cases": "AT-21 source requirements are not counted as completed by this local test suite."
+  },
+  "scope": {
+    "target": "Private Node snapshot bridge, Python decoding/catalog import, and explicit operator CLI.",
+    "agent": "TC author (verification_plan)",
+    "test_file": "tests/ifpmic_api/test_snapshot_bridge.py",
+    "test_sha256": "6823910f6283e02e21e494e9897c9282b1841b2a440506bece6b3593174debbf",
+    "case_count": 41,
+    "normal_exception_boundary_regression": true,
+    "real_external_AT21_execution": false
+  },
+  "case_groups": [
+    {
+      "id": "G2-BRIDGE-GOLDEN",
+      "purpose": "Use the pinned B01 vector as a fixed cross-language oracle and verify exact persisted raw bytes and Node-derived version keys.",
+      "target": ["SnapshotBridge.read_snapshot", "decode_frame", "runtime/ifpmic snapshot/store", "profile_catalog"],
+      "method": "Real Node child plus immutable B01 seed; fixed snapshot/workflow/profile/bundle hashes, escaped lone-surrogate labels and astral UTF-8 bytes; PostgreSQL BYTEA/text readback.",
+      "pass_criteria": "Golden identifiers and SHA-256 values match literal test constants; returned and stored bytes equal published bytes; labels preserve lone surrogate via JSON escape; no eligibility is created.",
+      "expected_result": "Exact B01 data crosses Node/Python/PostgreSQL without Python recanonicalization or data loss.",
+      "evidence": "workflow-artifacts/verification/B02/g2/bridge-attempt-4.stdout.log",
+      "failure_recovery": "Preserve failed attempt and private lifecycle record; fix only the identified boundary/harness defect, rerun the owned targeted suite, and retain prior report hashes."
+    },
+    {
+      "id": "G2-FRAME-VALIDATION",
+      "purpose": "Reject malformed or mismatched protocol frames without exposing raw data.",
+      "target": ["decode_frame", "Node request reader", "SnapshotBridge child error mapping"],
+      "method": "Literal mutations for duplicate/extra keys, duplicate request identity, bad UTF-8/JSON/base64/hash/protocol/newline/bound identity; fixed recognized and unrecognized child error frames.",
+      "pass_criteria": "Only the exact valid frame returns a DTO; malformed output is BRIDGE_PROTOCOL; recognized child codes are allowlisted; unknown child/spawn errors are fixed and sanitized.",
+      "expected_result": "Invalid frames cannot be reinterpreted as another profile or leak child diagnostics.",
+      "evidence": "workflow-artifacts/verification/B02/g2/bridge-attempt-4.stdout.log",
+      "failure_recovery": "Retain the failing fixture and its output hash; do not broaden accepted frame shapes to match implementation output."
+    },
+    {
+      "id": "G2-LIMITS-IDENTITY",
+      "purpose": "Verify inclusive byte/deadline/concurrency limits and identity-safe behavior.",
+      "target": ["Node stdin", "Python request builder", "record/stdout/stderr decoder", "SnapshotBridge resource controls"],
+      "method": "Exact and plus-one byte limits; actual 2 MiB B01 snapshot; astral ensure_ascii expansion; invalid platform/config; timeout, cancellation during delayed spawn, repeated cancellation, real burst child overflow and PID reaping; 4 active plus 16 queued capacity.",
+      "pass_criteria": "Inclusive limits succeed, over-limit inputs fail with fixed codes before unsafe processing, active/queue limits are honored, and every launched process is closed/killed/reaped within bounded tests.",
+      "expected_result": "Resource controls enforce configured bounds without deadlocked pipes or orphaned children.",
+      "evidence": "workflow-artifacts/verification/B02/g2/bridge-attempt-4.stdout.log",
+      "failure_recovery": "Preserve the bounded process/lifecycle evidence; repair cleanup or byte accounting and rerun the full targeted suite before freezing."
+    },
+    {
+      "id": "G2-PROFILE-STATE",
+      "purpose": "Check configuration-completeness projection while preserving the underlying B01 record.",
+      "target": ["SnapshotRecord.configuration_complete", "six B01 sections and nested arrays"],
+      "method": "Fixed records with all four unresolved markers spread over all six required sections, empty nested path/case arrays, and a complete baseline.",
+      "pass_criteria": "Markers or empty required arrays make the projection incomplete; complete baseline remains complete; profile mode/enabled and raw data are retained.",
+      "expected_result": "Completeness is a deterministic projection and does not mutate B01 bytes.",
+      "evidence": "workflow-artifacts/verification/B02/g2/bridge-attempt-4.stdout.log",
+      "failure_recovery": "Keep the fixed profile fixtures and correct only projection behavior or test fixture construction with a documented reason."
+    },
+    {
+      "id": "G2-CATALOG-CLI",
+      "purpose": "Validate immutable catalog ingestion and the operator-only bridge invocation path.",
+      "target": ["catalog.import_snapshot", "python -m services.ifpmic_api.catalog", "real isolated PostgreSQL roles"],
+      "method": "Operator CLI first import/idempotent replay and exact input ceiling; fixed malformed/missing config/extra args/duplicate or extra request keys/oversize input; DSN canary absence; direct conflict/active transaction/concurrent importer/runtime denial/surrogate BYTEA persistence.",
+      "pass_criteria": "A valid trusted bridge result is inserted once and exact retries return imported=false; conflicts and active transactions do not replace data; runtime role cannot import; output contains only fixed IDs/hashes/status and no DSN/profile bytes; no eligibility rows are created.",
+      "expected_result": "Catalog write authority remains separated from ordinary runtime access, and CLI errors/output do not disclose request or connection details.",
+      "evidence": "workflow-artifacts/verification/B02/g2/bridge-attempt-4.stdout.log and bridge-attempt-4-lifecycle-private.json",
+      "failure_recovery": "Preserve sanitized test results and private cluster lifecycle separately; fix database transaction/privilege behavior or CLI validation without adding a real eligibility grant."
+    }
+  ],
+  "execution": {
+    "command": "IFPMIC_TEST_LIFECYCLE_PATH=<ignored-private-path> PYTHONPATH=. .ifpmic-venv/bin/python -m pytest -q tests/ifpmic_api/test_snapshot_bridge.py",
+    "runtime": {"python": "CPython 3.12.3", "node": "v24.17.0", "postgresql": "18.1"},
+    "attempts": [
+      {
+        "id": 1,
+        "result": "failed",
+        "summary": "22 setup errors before product assertions; seed test helper passed fd 0 to fs/promises.readFile.",
+        "classification": "test_harness_error",
+        "stdout": {"path": "workflow-artifacts/verification/B02/g2/bridge-attempt-1.stdout.log", "sha256": "6a4adb2d40fd1959a543ccec48ec113bcff907b81ecc36e890955d592d4aa0b8"},
+        "stderr": {"path": "workflow-artifacts/verification/B02/g2/bridge-attempt-1.stderr.log", "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"},
+        "recovery": "Seed helper now consumes process.stdin as an async iterable; no product behavior was changed for this failure."
+      },
+      {
+        "id": 2,
+        "result": "failed",
+        "summary": "19 passed, 3 failed: astral raw-byte expectation used escaped JSON; fake child exited zero in error-mapping test; numeric CLI profile version returned BRIDGE_INVALID_REQUEST before request-type validation was added.",
+        "classification": "two_test_oracle_errors_and_one_product_input-validation_defect",
+        "stdout": {"path": "workflow-artifacts/verification/B02/g2/bridge-attempt-2.stdout.log", "sha256": "b58b96964d56de335f6b8d46a5348e1d15db3c696ba1b28f1ee60d4a47193ffb"},
+        "stderr": {"path": "workflow-artifacts/verification/B02/g2/bridge-attempt-2.stderr.log", "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"},
+        "recovery": "TC now expects literal UTF-8 astral bytes and uses a nonzero fake exit for error translation; CLI validates string types before calling the bridge."
+      },
+      {
+        "id": 3,
+        "result": "failed",
+        "summary": "40 passed, 1 failed: test request fixture was one byte below STDIN_LIMIT because the placeholder byte was included in the baseline.",
+        "classification": "test_fixture_arithmetic_error",
+        "stdout": {"path": "workflow-artifacts/verification/B02/g2/bridge-attempt-3.stdout.log", "sha256": "2253d8387fce7c495971f090317e4d3ede808b4098afba3d88f58b499d1038fb"},
+        "stderr": {"path": "workflow-artifacts/verification/B02/g2/bridge-attempt-3.stderr.log", "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"},
+        "recovery": "Corrected the independent exact-boundary input length by one byte; no acceptance limit was relaxed."
+      },
+      {
+        "id": 4,
+        "result": "passed",
+        "collected_cases": 41,
+        "passed_cases": 41,
+        "failed_cases": 0,
+        "duration_seconds": 34.71,
+        "stdout": {"path": "workflow-artifacts/verification/B02/g2/bridge-attempt-4.stdout.log", "sha256": "78665ac537d4e794b626ed65dfd1ef581471dc442ad58a60e4ca85797be321c7"},
+        "stderr": {"path": "workflow-artifacts/verification/B02/g2/bridge-attempt-4.stderr.log", "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"},
+        "postgresql_lifecycle": {"path": "workflow-artifacts/verification/B02/g2/bridge-attempt-4-lifecycle-private.json", "status": "stopped", "pid_alive": false, "binary_version": "18.1"}
+      }
+    ]
+  },
+  "source_pins": {
+    "tests/ifpmic_api/test_snapshot_bridge.py": "6823910f6283e02e21e494e9897c9282b1841b2a440506bece6b3593174debbf",
+    "services/ifpmic_api/snapshot_bridge.py": "743f357fed62a37770d4bfef2a3321fab649b25a3a1b040f64d61bec628443e8",
+    "services/ifpmic_api/snapshot_bridge.mjs": "c43822624bb68b7b75a4c13860c78408a80a3de56f10022c0f2591170200fd88",
+    "services/ifpmic_api/catalog.py": "65cfaae738728a957ba73587bdc3caaa582a90650624bb1c31bd11f66fb2db1f"
+  },
+  "limitations": [
+    "This is targeted G2 development evidence, not final B02 acceptance.",
+    "No actual external AT-21 identity/job/artifact/log/device endpoint scenarios were executed.",
+    "Catalog import is operator-path ingestion only; it does not grant profile eligibility or make an actual authority approval.",
+    "No full application acceptance, browser UI gate, or production Paperclip authentication claim is made."
+  ]
+}

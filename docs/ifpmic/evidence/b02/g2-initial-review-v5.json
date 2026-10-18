@@ -1,0 +1,52 @@
+{
+  "review": "B02 G2 current source and frozen-gate follow-up",
+  "status": "source_review_approved_for_candidate_gate_execution_only",
+  "supersedes": "docs/ifpmic/evidence/b02/g2-initial-review-v4.json",
+  "historical_v4_sha256": "769dd3e54131051e81fe72b57dc4751cace2da8ad9d3af3fb2b4a6257b484bcd",
+  "approved_plan": {
+    "path": "docs/ifpmic/B02-IDENTITY.md",
+    "sha256": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a"
+  },
+  "reviewed_source_pins": {
+    "services/ifpmic_api/snapshot_bridge.py": "743f357fed62a37770d4bfef2a3321fab649b25a3a1b040f64d61bec628443e8",
+    "services/ifpmic_api/snapshot_bridge.mjs": "c43822624bb68b7b75a4c13860c78408a80a3de56f10022c0f2591170200fd88",
+    "services/ifpmic_api/catalog.py": "65cfaae738728a957ba73587bdc3caaa582a90650624bb1c31bd11f66fb2db1f",
+    "scripts/verify_ifpmic_g2.py": "de0785319a339185be4809cd60eaff442767988fd9fb82a673689fcd1d2dc522",
+    "scripts/verify_ifpmic_g1.py": "0f6603de4b0de546ccf2c23bc663c0568c2a178c8c19e31812c68b10a61e6d9b",
+    "tests/ifpmic_api/test_snapshot_bridge.py": "6823910f6283e02e21e494e9897c9282b1841b2a440506bece6b3593174debbf",
+    "docs/ifpmic/evidence/b02/g2-tc-ledger.json": "018b4abe93f5bf4234d530fdfb20a8da8319ec0376fd9650a8222acede586dae",
+    "README.md": "99690efb050452cd04057b261a20dd57e0dd72b93ccd6b2df41be0dfc3fdad08",
+    "runtime/ifpmic/snapshot.mjs": "9bbfdcaf483167c931f0b6e0a453697cd8ea92f3b12f33ab30ffa0b2dd52b789",
+    "runtime/ifpmic/store.mjs": "0f532d26504b1975b61b8e67c87225c29d4d576115ed81d2314ecb6ae359477e",
+    "runtime/ifpmic/profile.mjs": "2277163d940aed1b8c0c16a2da09f412e777800a2cb907cde5919799481028dd"
+  },
+  "v4_permission_finding": {
+    "status": "resolved_in_current_runner_source",
+    "evidence": "The unique gate leaf directory is created with mode 0700 before test artifacts are written. Raw private-* logs/JUnit/lifecycle evidence are chmodded 0600 in finally and their resulting modes are recorded in gate.json. During execution, the 0700 leaf prevents other local users from accessing temporarily created files. The sanitized pytest.xml and summary gate.json remain separate publication outputs.",
+    "reviewed_source": "scripts/verify_ifpmic_g2.py"
+  },
+  "implementation_review": {
+    "status": "no_source_blocker_found",
+    "process_lifecycle": "The current source uses a retained spawn task, dedicated cleanup task shielded through repeated cancellation, cleanup of a pending launch, stdin closure, cancellation and gathering of stream tasks, child termination, concurrent discard-drain of stdout/stderr to EOF, and process wait/reap. Runtime support is explicitly limited to Linux CPython 3.12, matching the documented CPython Unix subprocess cancellation behavior. No execution claim is made for this source review.",
+    "bridge_contract": "The fixed Node bridge reuses B01 readSnapshot/getWorkflow/versionKey and returns canonical record bytes/hash plus Node-derived version key. Python performs strict frame, duplicate-key, base64, limit/hash, identity, type, and workflow-bundle checks without recanonicalizing or implementing a second schema validator. The completeness projection matches B01's four markers, empty-array rule, and six inspected profile areas.",
+    "catalog_cli": "Import is IDLE-only and transactional, inserts without replacement, compares all immutable columns after conflict, and creates no eligibility. The CLI accepts only project_id/profile_version with string values from bounded stdin and takes Node executable, store root, and operator DSN from fixed environment configuration."
+  },
+  "tc_ledger": {
+    "path": "docs/ifpmic/evidence/b02/g2-tc-ledger.json",
+    "sha256": "018b4abe93f5bf4234d530fdfb20a8da8319ec0376fd9650a8222acede586dae",
+    "expected_g2_pytest_cases": 41,
+    "test_source_sha256_matches_ledger": true,
+    "ledger_status": "targeted_pass_pending_independent_review",
+    "assessment": "The runner's exact G2 case-count input now exists and its product/test pins match current reviewed files. Targeted TC status is not the frozen candidate gate and is not treated as final acceptance."
+  },
+  "gate_runner_review": {
+    "assessment": "The runner verifies approved plan and independent plan approvals, candidate source hashes before/after, exact G1/G2 inventories with no skips, all 48 B01 Node tests, installed hash-locked environment and Python standard-library source digests, accepted B01/original-source byte baselines, and private PostgreSQL shutdown. It keeps raw output private, publishes hostname-redacted JUnit, records source fingerprint and artifact modes, and explicitly limits the result to G1/G2 local acceptance while leaving G3-G7, full B02, and original AT-21 acceptance pending.",
+    "required_next_evidence": "Run the frozen candidate gate and review its gate.json, published JUnit, source fingerprint, private evidence modes, PostgreSQL lifecycle, and exact command results."
+  },
+  "blockers": [],
+  "limitations": [
+    "No gate, pytest, Node tests, database operations, or services were executed in this review.",
+    "Approval is only for running the frozen candidate gate; it is not G2 completion, B02 acceptance, original AT-21 completion, or production readiness.",
+    "A later source, ledger, plan, or approval change invalidates the reviewed pins and requires a new candidate review."
+  ]
+}

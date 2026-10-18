@@ -196,7 +196,7 @@
       "requirements": [
         "REQ-13"
       ],
-      "scope": "Approved B02 plan and G1 Python/PostgreSQL migration foundation independently accepted; 12 synthetic tests pass. G2-G7, authentication/API/workspaces and AT21 remain pending.",
+      "scope": "B02 G1 foundation and G2 private bridge/catalog import independently accepted as partial increments. Frozen G2 gate passes Python53 and B01 Node48. G3-G7, authentication/API/workspaces and AT-21 remain pending.",
       "increments": [
         {
           "id": "g1_python_postgres_migrations",
@@ -204,6 +204,13 @@
           "evidence": "evidence/b02/g1-verification.json",
           "independent_acceptance": "evidence/b02/g1-final-review.json",
           "candidate_fingerprint": "7511806121f53497f6bb3d46ed1a9cf2722b4bcc34abfba8087f55b7f408a14c"
+        },
+        {
+          "id": "g2_private_node_bridge_catalog",
+          "status": "verified",
+          "evidence": "evidence/b02/g2-verification.json",
+          "independent_acceptance": "evidence/b02/g2-final-review.json",
+          "candidate_fingerprint": "2e9c116e2b58a50702e3ed5949102a04265c9ac26b6243258ecc09ba9eaf7717"
         }
       ]
     },
@@ -397,7 +404,7 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "B02: implement approved G2 Node snapshot bridge and G3 authentication before later API/workspace and combined regression gates. G1 partial foundation is independently accepted; B03-B13 and32original AT remain pending.",
+  "next_step": "B02: implement approved G3 OIDC/session/CSRF authentication and G4 durable user APIs. G1/G2 partial foundations are independently accepted; G5 workspace, G6/G7 combined acceptance, B03-B13 and32original AT remain pending.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",

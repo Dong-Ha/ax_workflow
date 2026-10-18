@@ -1,0 +1,56 @@
+{
+  "kind": "ifpmic_b02_g2_independent_final_review",
+  "reviewer_role": "independent read-only G2 final reviewer",
+  "decision": "accept_partial_g2_candidate",
+  "scope": "Partial G2 acceptance for the fixed private Node snapshot bridge, Python frame decoder, immutable PostgreSQL catalog import, and explicit operator CLI. This does not accept G3-G7, full B02, AT-21, or other original acceptance cases.",
+  "plan": {
+    "path": "docs/ifpmic/B02-IDENTITY.md",
+    "sha256": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a",
+    "contract_review": "docs/ifpmic/evidence/b02/g2-contract-review.json",
+    "tc_ledger": "docs/ifpmic/evidence/b02/g2-tc-ledger.json"
+  },
+  "frozen_gate": {
+    "archive_path": "docs/ifpmic/evidence/b02/g2-gate.zip",
+    "published_archive_sha256": "58e4548dad9f156f20a0ce96dc8eeb8d46d0a4c347960e9bdb09652d9082fb4c",
+    "verification_report_path": "docs/ifpmic/evidence/b02/g2-verification.json",
+    "verification_report_sha256": "09dad23c1e038db1a30a68da604d9dea43edcfd66e3591dc10d52cd0b97c560e",
+    "raw_gate_entry_sha256": "9090167eb3b2d9c94d8a245dc367dde1692454e2056ced533282d247ccc22d00",
+    "candidate_fingerprint": "2e9c116e2b58a50702e3ed5949102a04265c9ac26b6243258ecc09ba9eaf7717",
+    "source_changes": [],
+    "tests": {
+      "python_total": 53,
+      "python_passed": 53,
+      "python_failed": 0,
+      "python_errors": 0,
+      "python_skipped": 0,
+      "g1_cases": 12,
+      "g2_cases": 41,
+      "b01_node_total": 48,
+      "b01_node_passed": 48,
+      "b01_node_failed": 0,
+      "b01_node_cancelled": 0,
+      "b01_node_skipped": 0
+    }
+  },
+  "independent_evidence_audit": {
+    "result": "pass",
+    "checks": [
+      "Verified the published archive digest, exact four-entry inventory, entry byte counts, and SHA256 values against g2-verification.json. ZIP member names carry the gate/ directory prefix; the report's entry map names are relative to that directory.",
+      "Verified archived gate bytes match the recorded raw gate digest; gate verdict is pass, source_changes is empty, and the candidate fingerprint matches the verification report.",
+      "Recomputed all four G2 test and implementation source pins against the current worktree; all matched. Recomputed all five historical source hashes in g2-historical-source.json; all matched.",
+      "Confirmed the frozen gate lists 53 Python passes (12 G1 and 41 G2) and 48 B01 Node passes, with zero failures, errors, cancellations, skips, or todo cases as applicable. The test inventory covers the ledger's G2 bridge, frame validation, limits/identity, profile-state, and catalog/CLI groups.",
+      "Compared the private and published JUnit XML. Its test suites, cases, identities, results, and timings are retained; the host-specific hostname is replaced with redacted-local-host and the XML is serialized with a normalized declaration. The original hostname is absent from all published archive entries.",
+      "Confirmed the public archive has only gate.json, pytest.xml, python.log, and b01-node.log under gate/. It excludes private lifecycle/JUnit evidence, raw PostgreSQL server logs, and failed development outputs. No host-specific filesystem paths or PostgreSQL connection strings/password assignments were found in the archived entries.",
+      "Confirmed the recorded PostgreSQL lifecycle ends stopped with pid_alive false. The frozen gate directory is mode 0700; private evidence files are mode 0600. Published aggregate artifacts are inside that private directory and mode 0644.",
+      "The frozen gate reports unchanged source and inventory comparisons, including the original 17 imported files and two uploads. This is the recorded byte/inventory comparison scope; no full Node/build/browser G6 result is claimed."
+    ]
+  },
+  "limitations": [
+    "The passing local suite is targeted G2 evidence and does not count synthetic test cases as completion of original AT-21 or any other original acceptance test.",
+    "Only Linux CPython 3.12 subprocess lifecycle is supported by this gate; controlled process seams cover pending-launch cancellation, while real child timeout/overflow cases cover PID cleanup.",
+    "The configured fixed Node bridge is trusted to provide the Node-derived version key and semantic B01 hashes. Python validates the wire/hash/identity boundary and does not recanonicalize the snapshot. Internal SnapshotRecord/catalog primitives are a trusted code boundary.",
+    "Catalog import is operator-path ingestion and grants no profile eligibility. Production database authentication and real authority approval remain unverified.",
+    "G3-G7, user-facing API/auth/workspaces, Temporal orchestration, actual devices/release approvals, original AT-21, and all other original acceptance cases remain pending. Full Node/build/browser G6 and broader dependency/output checks are deferred and not accepted here."
+  ],
+  "reviewer_verdict": "Accept the frozen G2 candidate as a partial B02 foundation. Keep G3-G7, full B02, AT-21, production identity/database, and original acceptance work explicitly pending."
+}

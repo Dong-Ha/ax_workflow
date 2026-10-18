@@ -1,0 +1,45 @@
+{
+  "review": "B02 G2 initial implementation lifecycle follow-up",
+  "status": "source_review_sufficient_pending_TC_fault_tests_and_runtime_platform_pin",
+  "approved_plan": {
+    "path": "docs/ifpmic/B02-IDENTITY.md",
+    "sha256": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a"
+  },
+  "supersedes_current_lifecycle_assessment_in": "docs/ifpmic/evidence/b02/g2-initial-review-v2.json",
+  "historical_v2_sha256": "02e6930b04d2e62e77d79c6947e5b28bd72aa2dc82d5bd3ec721119f626d9bd8",
+  "reviewed_source_pins": {
+    "services/ifpmic_api/snapshot_bridge.py": "77aa22531a6bfd1f11c0270c8db557f46aae2d654a2ad4b2ff06783cc4294cc8",
+    "services/ifpmic_api/snapshot_bridge.mjs": "c43822624bb68b7b75a4c13860c78408a80a3de56f10022c0f2591170200fd88",
+    "services/ifpmic_api/catalog.py": "8c6f83b72a188fdfa9d15afbd4ac7e27bea8bfbdc30ef091028cbd7a65e890c5"
+  },
+  "launch_cleanup_review": {
+    "code_change": "_run retains the create_subprocess_exec task, shields normal acquisition, and on cancellation starts a dedicated cleanup task. Cleanup cancels and awaits a still-pending spawn task, recovers a process handle if acquisition won the race, kills/waits for an acquired child, cancels and gathers stream tasks, and remains shielded in a loop until cleanup finishes. Additional caller cancellations are observed and re-propagated after cleanup.",
+    "stdlib_evidence": {
+      "runtime": "CPython 3.12.3 on Linux",
+      "source_path": "/usr/lib/python3.12/asyncio/unix_events.py",
+      "source_sha256": "1fff06cce78763800f05f4d2bebfcdbc07ebf9564ca7e7222e0d91e39dee08c9",
+      "behavior": "_UnixSelectorEventLoop._make_subprocess_transport catches BaseException while awaiting subprocess startup, calls transport.close(), awaits transport._wait(), and re-raises. BaseSubprocessTransport.close kills a still-running process; _UnixSubprocessTransport._wait waits for the exit watcher. This supports the pending-launch cancel/reap assumption for this CPython Unix implementation."
+    },
+    "assessment": "The prior lost-handle, repeated-cancellation, and unbounded ignored-spawn concerns are addressed in source for the stated CPython/Linux process model: cleanup cancels/awaits launch and its cancellation handler kills/reaps a launched transport; a dedicated shield loop prevents repeated caller cancellation from abandoning cleanup. Cancellation cleanup may take longer than the operation deadline while the OS completes termination/reaping; the timeout is not reported as complete before cleanup finishes.",
+    "platform_condition": "This lifecycle conclusion relies on CPython's asyncio Unix subprocess implementation. The service runtime must be constrained to a compatible CPython/Linux environment; it must not be represented as verified for other Python implementations or Windows without separate evidence."
+  },
+  "other_reviewed_contracts": {
+    "protocol_and_trust": "Node reuses B01 readSnapshot/getWorkflow/versionKey and returns exact record bytes/hash and Node-derived version key. Python strictly checks frame, duplicate JSON keys, constants, byte limits, base64, hash, expected project/version, field types and pinned workflow bundle, without recanonicalizing or revalidating B01 schema.",
+    "metadata": "The configuration-completeness projection matches B01's four unresolved markers, empty-array rule, six inspected sections, and recursive value traversal.",
+    "catalog_cli": "The catalog path performs IDLE-only transactional insert-once then full immutable-field comparison, with no update or eligibility side effect. The private CLI accepts only bounded project/version input and uses fixed environment configuration to call the bridge and database."
+  },
+  "pending_evidence": {
+    "tc_required": [
+      "Cancel during pending launch and assert the process/transport is reaped.",
+      "Cancel after process acquisition and assert kill/reap.",
+      "Repeat cancellation while cleanup is active and assert cleanup completes before cancellation propagates.",
+      "Exercise timeout during launch and confirm termination/reap before timeout result escapes."
+    ],
+    "reviewer_execution": "No tests or services were run in this review; no TC pass is claimed."
+  },
+  "blockers": [],
+  "limitations": [
+    "This is source review, not test acceptance or B02 completion.",
+    "Cancellation cleanup completion can outlast the nominal child deadline while the OS reaps a killed process; this is required cleanup latency."
+  ]
+}

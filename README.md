@@ -8,6 +8,10 @@ IFPMIC workflow 시각화로 확장하는 방향은 [기준 자료와 이관 계
 
 B02의 인증·요청 저장·작업 공간은 [독립 검토한 계획](./docs/ifpmic/B02-IDENTITY.md)에 따라 개발 중입니다. 현재 G1 기반은 Python3.12, 고정 Python 의존성, PostgreSQL18.1 migration과 분리된 DB 역할입니다. 실제 로그인·요청 API·작업 공간 reconciler는 후속 단계이며 기존 AX 서버는 계속 읽기 전용입니다.
 
+G2는 B01 스냅샷을 고정 Node subprocess로 검증하고 원본 바이트를 PostgreSQL catalog에 그대로 보관하는 연결 계층입니다. 현재 지원 환경은 Linux CPython3.12이며, 프로세스 시작 취소 때 자식 프로세스를 종료·회수하는 CPython Unix subprocess 동작을 사용합니다. child 실행은 최대10초, 동시4개·대기16개로 제한하며, 종료·회수가 끝나야 슬롯을 반환합니다. profile version의 astral/lone surrogate는 ASCII JSON label로 손실 없이 보존합니다.
+
+운영자가 미리 provision한 프로젝트에 스냅샷을 가져올 때에는 `IFPMIC_NODE_EXECUTABLE`(Node 실행 파일 절대 경로), `IFPMIC_PROFILE_STORE`(신뢰된 B01 저장소), `IFPMIC_OPERATOR_DSN`을 설정하고 `.ifpmic-venv/bin/python -m services.ifpmic_api.catalog`의 stdin에 `{"project_id":"프로젝트ID","profile_version":"버전"}` JSON을 전달합니다. 요청으로 executable·script·저장소 경로나 profile 본문을 선택할 수 없습니다. 결과는 imported 여부와 해시 ID뿐입니다. 같은 버전·원본 바이트는 멱등이며 충돌은 덮어쓰지 않습니다. 가져오기는 eligibility를 부여하지 않습니다. `.ifpmic-venv/bin/python scripts/verify_ifpmic_g2.py`는 G1·G2 Python 검사와 기존 B01 Node48건을 실행합니다. 전체 서비스·SSO·UI 통합 수용은 후속 검증 대상입니다.
+
 저장소 루트에서 `uv venv .ifpmic-venv --python /usr/bin/python3 --no-managed-python` 후 `uv pip sync --require-hashes --no-build --python .ifpmic-venv/bin/python services/ifpmic_api/requirements.lock`으로 격리 환경을 설치합니다. lock은 시험용 의존성까지 포함합니다. 기존 PostgreSQL에 적용할 때에는 별도 migration owner·runtime·operator 계정과 DB를 먼저 provision하고, 승인된 환경의 `IFPMIC_MIGRATION_DSN`, `IFPMIC_RUNTIME_ROLE`, `IFPMIC_OPERATOR_ROLE`을 전달하여 `.ifpmic-venv/bin/python -m services.ifpmic_api.migrate`를 실행합니다. DSN이나 자격 자료는 출력하지 않습니다. 현재 operator는 mock eligibility만 발급할 수 있으며 real authority는 별도 수용 대상입니다.
 
 `.ifpmic-venv/bin/python -m pytest -q tests/ifpmic_api`는 별도 임시 PostgreSQL 클러스터에서 G1을 검사합니다. 테스트 바이너리는 격리 Paperclip runtime의 pinned PostgreSQL18.1 도구를 사용하고 Paperclip DB·설정을 읽거나 재사용하지 않습니다. `.ifpmic-venv/bin/python scripts/verify_ifpmic_g1.py`는 소스·lock을 고정해 같은 검사를 실행하고 `workflow-artifacts/verification/B02/G1/gates/`에 결과를 보존합니다. 이 결과는 G1 범위이며 B02 서비스·OIDC·AT-21 또는 G6 전체 회귀 수용을 뜻하지 않습니다.

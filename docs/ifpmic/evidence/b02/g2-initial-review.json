@@ -1,0 +1,43 @@
+{
+  "review": "B02 G2 initial implementation review",
+  "status": "blocking_gap_found",
+  "approved_plan": {
+    "path": "docs/ifpmic/B02-IDENTITY.md",
+    "sha256": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a"
+  },
+  "reviewed_source_pins": {
+    "services/ifpmic_api/snapshot_bridge.mjs": "c43822624bb68b7b75a4c13860c78408a80a3de56f10022c0f2591170200fd88",
+    "services/ifpmic_api/snapshot_bridge.py": "bcb7c5ade7a3e072d47b09936f1b4ab3fa151c93da313147a063e92507ab8d99",
+    "services/ifpmic_api/catalog.py": "8c6f83b72a188fdfa9d15afbd4ac7e27bea8bfbdc30ef091028cbd7a65e890c5",
+    "services/ifpmic_api/migrate.py": "3f658907f13f6eab042a7b15f2958e98c65334e995686da434640d100341818d",
+    "services/ifpmic_api/migrations/001_initial.sql": "cf0437a5f32e1589e4ea821afbb2ef2480d780a276667880aa9a08a0f4c77f12",
+    "runtime/ifpmic/snapshot.mjs": "9bbfdcaf483167c931f0b6e0a453697cd8ea92f3b12f33ab30ffa0b2dd52b789",
+    "runtime/ifpmic/store.mjs": "0f532d26504b1975b61b8e67c87225c29d4d576115ed81d2314ecb6ae359477e",
+    "runtime/ifpmic/profile.mjs": "2277163d940aed1b8c0c16a2da09f412e777800a2cb907cde5919799481028dd",
+    "docs/ifpmic/design-v1/specs/workflow.v1.json": "bab40a7abb3929896add1ef2cd074893dd2a7de14d200a5d6cea4b7a77eb0e89",
+    "docs/ifpmic/design-v1/specs/state-contract.json": "0248e130017043539319c56af854f5388a95d33e7e687902a3438fdff414244a",
+    "docs/ifpmic/design-v1/specs/agent-contract.json": "ca6d4bea7abf0fffe7354c482af0d521c3a2e367217a69923a4bfe43fa27ab64"
+  },
+  "findings": [
+    {
+      "severity": "blocker",
+      "area": "subprocess cancellation and timeout during launch",
+      "path": "services/ifpmic_api/snapshot_bridge.py:SnapshotBridge._run",
+      "evidence": "The child handle is assigned only after await asyncio.create_subprocess_exec(...) returns. The finally cleanup kills and awaits the process only when child is not None. Cancellation or asyncio.timeout while that spawn await is pending can therefore enter cleanup with no retained process handle; if the OS child has already been spawned, the implementation has no way here to kill and reap it. This misses the explicit cancellation kill/reap requirement at the launch boundary.",
+      "required_resolution": "Make spawn acquisition cancellation-safe so cleanup retains/recovers the process handle after cancellation, then kills and reaps it; add a deterministic test that cancels while spawn acquisition is pending and proves the child is reaped. Also verify launch timeout follows the same cleanup path.",
+      "blocks_implementation_review": true
+    }
+  ],
+  "reviewed_behaviors": {
+    "node_boundary": "The Node bridge exposes only read_snapshot and uses B01 readSnapshot/getWorkflow/versionKey; request project/version values are not used as caller-selected paths or operations. The bridge emits the four specified success fields and base64-encodes canonical record bytes plus LF.",
+    "python_wire_validation": "The Python decoder rejects duplicate JSON keys and nonstandard constants, checks exact success DTO keys, single LF framing, strict base64 canonical spelling, byte cap/hash, identity, pinned workflow bundle/types, and fixed protocol errors. It does not recanonicalize B01 records or recompute version_key; this matches the trusted fixed Node boundary. The bundle digest constant matches the canonical digest of its three source hashes.",
+    "configuration_projection": "_complete mirrors B01's four unresolved markers, empty-array behavior, and six inspected profile sections. It is a bounded metadata projection over the Node-validated record, not a second schema validator.",
+    "process_limits": "Active/queued capacities, stream byte limits, fixed child environment without inherited NODE_OPTIONS, shell-free exec, deadline around spawn/write/read/wait, cancellation cleanup after a child handle exists, and fixed scrubbed errors are present. The launch-await gap above remains material.",
+    "catalog_and_operator_cli": "catalog.import_snapshot performs an IDLE transaction, insert-on-conflict-do-nothing, then compares all catalog immutable fields and never updates or grants eligibility. Concurrent same-key inserts serialize through PostgreSQL unique constraints and compare the winner; mismatches conflict. catalog.main accepts only project_id/profile_version on bounded stdin, reads through the configured bridge, connects using fixed environment configuration, and emits fixed error codes. Internal SnapshotRecord provenance is treated as trusted in-process code, not a user API boundary.",
+    "scope": "This review covers the initial G2 bridge/catalog implementation only. It does not assert B02 acceptance."
+  },
+  "verification": {
+    "performed": "Read-only source inspection and SHA-256 pinning. No tests, services, or database operations were run.",
+    "not_performed": ["TC G2 tests", "real PostgreSQL concurrency tests", "subprocess fault tests"]
+  }
+}

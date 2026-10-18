@@ -1,0 +1,53 @@
+{
+  "review": "Independent B02 G2 contract preimplementation review",
+  "verdict": "contract_sufficient_for_implementation_and_test_authoring",
+  "scope": "Read-only review of approved B02 G2 contract against current B01 snapshot reader. No bridge or Python implementation is reviewed or accepted.",
+  "source_pins": {
+    "docs/ifpmic/B02-IDENTITY.md": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a",
+    "runtime/ifpmic/snapshot.mjs": "9bbfdcaf483167c931f0b6e0a453697cd8ea92f3b12f33ab30ffa0b2dd52b789",
+    "runtime/ifpmic/store.mjs": "0f532d26504b1975b61b8e67c87225c29d4d576115ed81d2314ecb6ae359477e",
+    "runtime/ifpmic/profile.mjs": "2277163d940aed1b8c0c16a2da09f412e777800a2cb907cde5919799481028dd",
+    "docs/ifpmic/design-v1/specs/workflow.v1.json": "bab40a7abb3929896add1ef2cd074893dd2a7de14d200a5d6cea4b7a77eb0e89",
+    "docs/ifpmic/design-v1/specs/state-contract.json": "0248e130017043539319c56af854f5388a95d33e7e687902a3438fdff414244a",
+    "docs/ifpmic/design-v1/specs/agent-contract.json": "ca6d4bea7abf0fffe7354c482af0d521c3a2e367217a69923a4bfe43fa27ab64",
+    "docs/ifpmic/design-v1/qa/package-manifest.json": "46fe63988e7cd9312c379761c6023fc5e28e1259770274463ea848eb92960386"
+  },
+  "reviewed_contract_points": [
+    {
+      "point": "Fixed private Node ingress",
+      "assessment": "The contract fixes the bridge script and configured store root outside request data, uses a fixed read_snapshot operation, avoids shell execution, and reuses readSnapshot, getWorkflow and versionKey. It does not create a second profile ingress or a mock substitute for B01 publication semantics."
+    },
+    {
+      "point": "Canonical identity and raw record",
+      "assessment": "B01 writes canonical(record)+LF, caps the record at 2 MiB, verifies canonical bytes and project/version identity on read, and revalidates the pinned workflow bundle. The specified bridge preserves those exact bytes and hash; Python stores raw bytes and does not recanonicalize or recompute B01 profile identity."
+    },
+    {
+      "point": "Cross-language identity",
+      "assessment": "The protocol keeps project_id and profile_version separate from caller-selected paths. project_id is constrained to Unicode scalars at the B02 boundary, while profile_version can preserve B01-allowed lone surrogates through ensure_ascii JSON transport. version_key is appropriately Node-derived by the fixed trusted bridge; Python should validate its wire type and 64-hex form, not implement a competing canonicalizer."
+    },
+    {
+      "point": "Configuration metadata",
+      "assessment": "B01 profile.mjs defines the completeness rule: recursively inspect source, runtimes, build, quality, device, and release; unresolved marker strings are CONFIGURE, APPROVED_BEDROCK_PROFILE, PIN_AFTER_COMPATIBILITY_TEST, INTERNAL_EXISTING_RULES; empty arrays are unresolved; unresolved paths are JSON Pointers. Deriving only mode/enabled/configuration_complete from the verified raw record is a bounded metadata projection, not a second schema validator. Python implementation and tests must pin this exact rule and not claim it is a new source schema."
+    },
+    {
+      "point": "Subprocess resource and privacy contract",
+      "assessment": "The limits are concrete and testable: four active children, sixteen queued, immediate busy past the queue bound, ten-second child deadline covering spawn/write/read/wait, bounded stdout/stderr, scrubbed fixed environment, cancellation kill/reap, strict JSON duplicate-key/NaN rejection, one exact LF frame, strict base64 and fixed scrubbed errors. Profile material is not returned in diagnostics or logs."
+    },
+    {
+      "point": "Immutable catalog import",
+      "assessment": "The separate async read then synchronous IDLE-only database import is explicit: insert-once without eligibility side effects, compare every immutable field on conflict, never UPDATE an existing catalog record. This aligns with the B02 immutable catalog and leaves grant/revoke under the separate operator authority path."
+    }
+  ],
+  "implementation_test_oracles": [
+    "Golden bridge output must have exactly the protocol, record_base64, record_bytes_sha256, and version_key fields; malformed/duplicate-key/NaN, extra fields, wrong LF framing, wrong identity, invalid base64, over-limit streams, bad hash, and wrong workflow bundle must fail with fixed error codes.",
+    "Literal Node-produced records must verify with exact raw BYTEA equality and hash equality, including key-order, number, astral, lone-surrogate profile_version, and 2 MiB boundary cases; Python must not produce a second canonical form.",
+    "Completeness projection tests must cover every pinned marker, nested object path, empty nested array, all six relevant areas, and unaffected non-marker values, matching B01 JSON Pointer output semantics.",
+    "Process tests must show no caller path/operation/root selection, no shell, deadline and queue behavior, bounded output, cancellation kill/reap, and no private profile or stderr leakage.",
+    "Real PostgreSQL tests must prove duplicate import is idempotent only for identical immutable fields, conflicting same identity does not mutate the row, transaction failure rolls back, and catalog import creates no eligibility row."
+  ],
+  "blockers": [],
+  "limitations": [
+    "Review is contract-level only. No G2 bridge implementation or TC tests were present in the reviewed scope.",
+    "Accepted plan limits are operational design values, not measured performance acceptance."
+  ]
+}

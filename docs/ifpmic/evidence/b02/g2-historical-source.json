@@ -1,0 +1,27 @@
+{
+  "kind": "g2_historical_reviewed_sources",
+  "scope": "Prior product sources preserved for review traceability, never executable production modules.",
+  "sources": [
+    {
+      "path": "docs/ifpmic/evidence/b02/attempts/g2-before-launch-cleanup/catalog-before-input-type.py",
+      "sha256": "8c6f83b72a188fdfa9d15afbd4ac7e27bea8bfbdc30ef091028cbd7a65e890c5"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/attempts/g2-before-launch-cleanup/gate-before-private-permissions.py",
+      "sha256": "a50a65b3ebd466593d77b052f3f88a2814537fad0b7dc3da889f9e4e0d9123c1"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/attempts/g2-before-launch-cleanup/snapshot_bridge-single-cancel.py",
+      "sha256": "daaf2ad20db7edd597723a6519f8e0529f2f31b76297de4589a6b38f33bbbcb9"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/attempts/g2-before-launch-cleanup/snapshot_bridge-v3.py",
+      "sha256": "77aa22531a6bfd1f11c0270c8db557f46aae2d654a2ad4b2ff06783cc4294cc8"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/attempts/g2-before-launch-cleanup/snapshot_bridge.py",
+      "sha256": "bcb7c5ade7a3e072d47b09936f1b4ab3fa151c93da313147a063e92507ab8d99"
+    }
+  ],
+  "recovery": "Initial bridge source copied before correction; reviewed intermediate single-cancel bridge and pre-typecheck catalog recovered by reversing only their named subsequent patches and verified against exact independently recorded SHA256. V3 bridge copied before pipe-drain fix. These are source bytes, not reconstructed execution logs. Prior gate runner copied before the private-permission correction; exact reviewed hash retained."
+}

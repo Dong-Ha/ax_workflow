@@ -1,0 +1,42 @@
+{
+  "review": "B02 G2 initial implementation follow-up",
+  "status": "launch_handle_gap_fixed_for_single_cancellation; cleanup_boundaries_remain",
+  "supersedes_current_source_assessment_in": "docs/ifpmic/evidence/b02/g2-initial-review.json",
+  "historical_initial_review_sha256": "9fb798209a5150d6560d1246a62a0f54515dd6b4d1519370adb0d1e982906319",
+  "approved_plan": {
+    "path": "docs/ifpmic/B02-IDENTITY.md",
+    "sha256": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a"
+  },
+  "reviewed_source_pins": {
+    "services/ifpmic_api/snapshot_bridge.py": "daaf2ad20db7edd597723a6519f8e0529f2f31b76297de4589a6b38f33bbbcb9",
+    "services/ifpmic_api/snapshot_bridge.mjs": "c43822624bb68b7b75a4c13860c78408a80a3de56f10022c0f2591170200fd88",
+    "services/ifpmic_api/catalog.py": "8c6f83b72a188fdfa9d15afbd4ac7e27bea8bfbdc30ef091028cbd7a65e890c5",
+    "runtime/ifpmic/snapshot.mjs": "9bbfdcaf483167c931f0b6e0a453697cd8ea92f3b12f33ab30ffa0b2dd52b789",
+    "runtime/ifpmic/store.mjs": "0f532d26504b1975b61b8e67c87225c29d4d576115ed81d2314ecb6ae359477e",
+    "runtime/ifpmic/profile.mjs": "2277163d940aed1b8c0c16a2da09f412e777800a2cb907cde5919799481028dd"
+  },
+  "reviewed_delta": {
+    "previous_gap": "The initial revision could lose the process handle if cancellation interrupted create_subprocess_exec before assignment.",
+    "current_change": "The implementation stores the spawn coroutine in a retained task, awaits it under asyncio.shield, and in finally awaits that task to recover the process handle before killing/waiting.",
+    "assessment": "This closes the identified launch-handle race for one cancellation while spawn is pending, provided spawn acquisition itself completes."
+  },
+  "remaining_findings": [
+    {
+      "severity": "needs_resolution_or_explicit_tested_scope",
+      "area": "bounded cleanup during launch and repeated cancellation",
+      "evidence": "The recovery await in finally is `await asyncio.shield(spawn)` with no deadline of its own. If spawn acquisition stalls past the surrounding asyncio.timeout, cleanup can wait beyond the ten-second deadline. A further cancellation during this recovery await, or during the later `await child.wait()`, can interrupt cleanup before handle recovery/reaping is proven.",
+      "required_test_or_resolution": "Exercise a delayed spawn acquisition past the deadline, cancellation during spawn, and a second cancellation during cleanup. Ensure the documented child deadline remains bounded and process cleanup completes, or explicitly constrain and justify the guarantee if repeated cancellation lies outside the intended contract.",
+      "blocks_full_process_lifecycle_acceptance": true
+    }
+  ],
+  "unchanged_reviewed_behaviors": {
+    "wire_and_identity": "Python strict JSON parsing, duplicate-key and NaN rejection, exact success DTO keys, LF frame, strict base64, record limit/hash, expected identity, workflow pins, and type checks match the fixed Node bridge contract. Python trusts Node-derived version_key and does not re-canonicalize B01 records.",
+    "metadata": "The Python completeness projection mirrors B01's four markers, empty-array behavior, and six relevant sections over the verified record.",
+    "catalog": "Import is IDLE-only, transactional, insert-once, compares the full stored immutable field tuple after conflicts, and does not grant eligibility. The operator CLI accepts only project_id/profile_version from bounded stdin and sources executable/store/DSN from environment; it does not accept a caller record or metadata.",
+    "scope": "This remains an initial G2 implementation review. No product acceptance is asserted."
+  },
+  "verification": {
+    "performed": "Read-only inspection of the revised process lifecycle and source hashes.",
+    "not_performed": ["tests", "services", "database operations"]
+  }
+}
