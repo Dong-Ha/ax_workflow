@@ -6,6 +6,12 @@ IFPMIC workflow 시각화로 확장하는 방향은 [기준 자료와 이관 계
 
 ## IFPMIC 흐름 보기
 
+B01의 로컬 프로파일 도구는 [사전 검증 계획](./docs/ifpmic/B01-PROFILES.md)에 따라 개발 중입니다. `npm run ifpmic:profile`은 원본 비활성 mock 예제를 읽어 구조·구성 상태만 출력합니다. `npm run ifpmic:profile -- --profile <JSON파일> --require-real-config`는 real/enabled/구성 완료 여부를 검사하며 실제 참조 확인·운영 smoke·승인을 수행하지 않습니다. 공개 출력의 경로는 JSON Pointer이며 프로파일 원문은 출력하지 않습니다. 이 도구는 기존 AX 기록 API와 독립적이고 네트워크·빌드·장비·배포를 실행하지 않습니다.
+
+스냅샷은 Linux의 신뢰된 로컬 저장소에서 명시적으로 만듭니다. 기존 parent 아래 `npm run ifpmic:profile -- --init-store --store <저장소>`로 초기화한 뒤 `npm run ifpmic:profile -- --snapshot --profile <JSON파일> --profile-version <버전> --store <저장소>`로 등록합니다. 같은 프로젝트·버전·내용은 같은 ID를 반환하고, 다른 내용은 충돌로 거절합니다. `--read --project-id <ID> --profile-version <버전> --store <저장소>`는 해시만 조회합니다. 저장소 파일에는 전체 프로파일이 있으므로 소유자가 관리하는 로컬 경로를 사용합니다. 스냅샷 생성은 승인이나 실행 권한을 부여하지 않습니다.
+
+CLI는 성공0, 입력·구성 오류2, 저장소·파일 I/O·손상·publication 불확실성3으로 종료합니다. 불확실성 이후에는 final을 삭제하지 않고 같은 요청으로 재시도하여 검증·directory sync를 완료합니다. `npm run ifpmic:verify:profiles`는 독립 TC 테스트·전체 단위·build·plugin-build·원본 검사를 수행하고 후보 해시와 로그를 `workflow-artifacts/verification/B01/gates/`에 남깁니다. UI 검사를 생략하려면 기존 승인 후보의 화면·server 소스 목록/바이트와 빌드 결과가 모두 같아야 합니다. 실제 ingress·승인·장비·배포 및 원본 AT-04/28 수용은 후속 검증 대상입니다.
+
 `npm run build` 후 기존 AX 서버의 **http://127.0.0.1:3000/ifpmic.html**에서 IFPMIC v1의 29개 단계, 6개 구간, 41개 정상·복귀 연결과 단계별 담당·입출력·통과 조건을 확인할 수 있습니다. 단계 검색, 담당 필터, 방향키·Home·End 이동과 상세 경로 이동을 지원합니다. 기본 설계 보기에서 ‘모의 시나리오’로 전환하면 74개 합성 시나리오의 관측을 앞뒤로 탐색할 수 있습니다. 사람 대기, 실패 복귀, cycle·attempt 이력, metadata 반려 후 복구, 모의 승인·영수증과 장비 격리를 구분합니다. 재사용 근거·정책 면제(EXEMPT)·사람 확인 무변경 종료(NO_CHANGE), 현재 계획과 과거 계획을 구분합니다. 사양 질문의 답변 버전·현재 실행의 재검토, 원격 조회의 미발견·충돌·확인 결과도 별도로 표시합니다. 실제 작업 및 수용시험 완료로 집계하지 않습니다.
 
 Paperclip 안에서는 전용 page 플러그인으로 장착합니다. 플러그인은 `ui.page.register` 권한만 요청합니다. 실행·배포·외부 전송 권한이 없으며, 기존 실험과 분리한 로컬 데이터 디렉터리를 사용합니다.

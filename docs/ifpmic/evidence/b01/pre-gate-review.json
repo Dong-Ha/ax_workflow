@@ -1,0 +1,78 @@
+{
+  "kind": "b01_independent_pre_gate_review",
+  "reviewer_role": "independent read-only implementation and TC reviewer",
+  "reviewed_plan": {
+    "path": "docs/ifpmic/B01-PROFILES.md",
+    "sha256": "8c22f1ceaf1d0f3ca1cf7113a829d7e4441df1fb5ebebdbe48a9d71c1e20d7a8"
+  },
+  "decision": "pre_gate_review_pass_pending_frozen_gate",
+  "scope": "Independent source, TC oracle, public-output/privacy, snapshot authority, and local publication review. This record is not the final gate review or full B01/AT acceptance.",
+  "evidence_reviewed": [
+    {"path":"docs/ifpmic/evidence/b01/source-collection.json","purpose":"source authority, profile inventory, requirements and acceptance boundaries"},
+    {"path":"docs/ifpmic/evidence/b01/snapshot-architecture-advice.json","purpose":"publication, identity, approval and crash-window advice"},
+    {"path":"docs/ifpmic/evidence/b01/plan-review-v4.json","purpose":"exact plan SHA approval and corrected record-size rule"},
+    {"path":"docs/ifpmic/evidence/b01/tc-plan-review-v4.json","purpose":"independent TC oracle plan and v4 boundary requirements"},
+    {"path":"docs/ifpmic/evidence/b01/controls-baseline.json","purpose":"conditional UI/build regression comparison boundary"},
+    {"path":"docs/ifpmic/evidence/b01/tc-case-ledger.json","purpose":"P1/P2/P4 test scope and independent fixed vectors"},
+    {"path":"docs/ifpmic/evidence/b01/store-case-ledger.json","purpose":"P3 race, fault, crash-window and read-tamper test scope"}
+  ],
+  "reviewed_source_sha256": {
+    "runtime/ifpmic/index.mjs":"4bf311e4c456843240b3c7f6eae58ee45480e6b4e14e958dc92825c4140dda39",
+    "runtime/ifpmic/profile.mjs":"2277163d940aed1b8c0c16a2da09f412e777800a2cb907cde5919799481028dd",
+    "runtime/ifpmic/snapshot.mjs":"9bbfdcaf483167c931f0b6e0a453697cd8ea92f3b12f33ab30ffa0b2dd52b789",
+    "runtime/ifpmic/store.mjs":"0f532d26504b1975b61b8e67c87225c29d4d576115ed81d2314ecb6ae359477e",
+    "scripts/ifpmic-profile.mjs":"15d7abf96333ea54de5cb1edeebc8a9766f1903421b36af6414664e41c49cb78",
+    "scripts/verify-ifpmic-profiles.mjs":"324ba306ca0512e332724d288e255a95be73282d507852eb9b6f397d80cef18d",
+    "tests/ifpmic-profile-cli.test.mjs":"f0d95c5c05c16bcaa0bad22bdee3e6ca36af508c371ab97c996cb0f8b9d08d9e",
+    "tests/ifpmic-profile-contract.test.mjs":"a17c808fb9db31558fdeaf85249e9a0eaa7932359274281743c116a6521ef573",
+    "tests/ifpmic-profile-store.test.mjs":"04848d4c2851d5636028ee3211508d643c41421100b2fdc099df29e325ec2ad6",
+    "tests/helpers/ifpmic-profile-fixtures.mjs":"a3b3aa11d0647557a270173e06191be4c2f7e017cc4360753f68d637948b2d22",
+    "tests/helpers/ifpmic-profile-side-effects.mjs":"f3a678816f0b93d31a15aad49bc09103ca607cde550a731002fc5563d44ee09d",
+    "tests/helpers/ifpmic-profile-store-worker.mjs":"68ae867b78046e0e050a9eb3b98e452d3b5f0e191b1bde0d858d69ea295ae533"
+  },
+  "findings": [
+    {
+      "id":"REVIEW-01",
+      "result":"pass",
+      "detail":"The plan SHA matches the reviewed v4 approvals. The implementation-authored schema is distinguished from original source contracts. Registry pins bind exact workflow, state, and agent source bytes and keep schema_version separate from a runtime workflow revision."
+    },
+    {
+      "id":"REVIEW-02",
+      "result":"pass",
+      "detail":"The profile validator parses JSON text directly, rejects duplicate decoded keys, enforces the byte/depth boundaries and schema without mutation, limits issues to fixed codes and known JSON Pointer paths, and separates structural validity/configuration from operational checks and approvals. Configured and enabled mock profiles do not grant real authority."
+    },
+    {
+      "id":"REVIEW-03",
+      "result":"pass",
+      "detail":"Snapshot canonicalization uses UTF-16 default key ordering and preserves array order. Snapshot identity binds project, caller version, workflow/state/agent raw pins, profile digest and full payload digest. createSnapshot applies the 2 MiB canonical-record-plus-LF cap. TC expected profile/bundle/snapshot vectors and the exact/+1-byte boundary are independently constructed with fixed source pins and literal expected hashes rather than product schema/serializer outputs."
+    },
+    {
+      "id":"REVIEW-04",
+      "result":"pass",
+      "detail":"Store publication captures and validates the caller record before its first await, writes a unique 0600 temp, syncs and closes it before hardlink publication, does not overwrite or roll back final names, syncs the containing directory for successful and equal-content publication, reports ambiguous link/directory-sync results as PUBLICATION_UNCERTAIN, and permits retry to verify and sync the preserved final. Reads use no-follow opens, size and canonical-byte checks, identity/digest/workflow revalidation and deep-frozen returns."
+    },
+    {
+      "id":"REVIEW-05",
+      "result":"pass",
+      "detail":"CLI output is limited to the prescribed validation DTO, fixed error code, or snapshot hashes. File, parse, and storage failures omit raw profile text and filesystem error details; the independent CLI tests include sentinel-leak assertions and a static/preload side-effect check. Store tests use independent Node processes for equal/conflicting races, EEXIST directory-sync ordering, injected fs faults, kills around link/sync/response, and corruption/symlink/size checks."
+    },
+    {
+      "id":"REVIEW-06",
+      "result":"pass_with_limit",
+      "detail":"The verification runner pins the accepted controls baseline and v4 plan, compares protected source inventories and dependency drift, runs targeted and full unit/build/plugin/source verification, then requires exact accepted UI/plugin output hashes and unchanged source fingerprints. UI gate omission is conditional on those checks passing. Runner evidence remains required before final review."
+    }
+  ],
+  "reported_targeted_verification": {
+    "source":"parent-reported fresh targeted result; reviewer did not rerun tests per assignment",
+    "contract_and_cli":"30 passed, 0 failed, 0 skipped",
+    "store":"18 passed, 0 failed, 0 skipped",
+    "fresh_frozen_gate":"pending"
+  },
+  "limitations": [
+    "This is a read-only independent source/test review; no tests were rerun by this reviewer.",
+    "The frozen P5 gate and its exact source/output fingerprints have not yet been supplied at this review point.",
+    "Local process and injected-fault evidence does not establish power-loss durability, network filesystem behavior, Windows behavior, multiuser isolation, actual operational approval, ingress/service acceptance, or AT-04/AT-28 completion.",
+    "B01 remains a partial local library/CLI candidate; B01-B13 and original AT acceptance remain unfinished."
+  ],
+  "reviewer_verdict":"No material source-to-plan or independent-oracle blocker found in the reviewed snapshot. Final partial acceptance is withheld until the fresh frozen P5 gate is reviewed."
+}

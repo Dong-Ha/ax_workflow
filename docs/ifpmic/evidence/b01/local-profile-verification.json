@@ -1,0 +1,221 @@
+{
+  "kind": "ifpmic_b01_local_profile_verification",
+  "scope": "Accepted-plan local library/CLI candidate P1-P5; P6 independent final review recorded separately. Not original AT or B01-B05 service acceptance.",
+  "requirements": [
+    "REQ-01",
+    "REQ-02",
+    "REQ-03",
+    "REQ-04",
+    "REQ-05",
+    "REQ-06",
+    "REQ-07",
+    "REQ-08",
+    "REQ-09",
+    "REQ-10",
+    "REQ-11",
+    "REQ-13",
+    "REQ-14",
+    "REQ-15"
+  ],
+  "plan": {
+    "path": "docs/ifpmic/B01-PROFILES.md",
+    "sha256": "8c22f1ceaf1d0f3ca1cf7113a829d7e4441df1fb5ebebdbe48a9d71c1e20d7a8"
+  },
+  "gate": {
+    "original_path": "workflow-artifacts/verification/B01/gates/2026-10-18T14-32-40-648Z/gate.json",
+    "sha256": "597c3ada698cd20ff9c93a318e1177fe55e43e68844d08a6c56281cf940cb2c6",
+    "archive_entry": "gate/gate.json",
+    "verdict": "pass",
+    "commands": [
+      {
+        "name": "targeted",
+        "command": [
+          "node",
+          "--test",
+          "tests/ifpmic-profile-cli.test.mjs",
+          "tests/ifpmic-profile-contract.test.mjs",
+          "tests/ifpmic-profile-store.test.mjs"
+        ],
+        "startedAt": "2026-10-18T14:32:41.195Z",
+        "finishedAt": "2026-10-18T14:32:52.147Z",
+        "exitCode": 0,
+        "signal": null,
+        "counts": {
+          "tests": 48,
+          "pass": 48,
+          "fail": 0,
+          "skipped": 0
+        },
+        "log": "workflow-artifacts/verification/B01/gates/2026-10-18T14-32-40-648Z/targeted.log",
+        "logSha256": "74652743b8c27b2c76f023ceaa7521ce368789434f56e37c0b4b3b22d5d2f2d5"
+      },
+      {
+        "name": "unit",
+        "command": [
+          "npm",
+          "test"
+        ],
+        "startedAt": "2026-10-18T14:32:52.148Z",
+        "finishedAt": "2026-10-18T14:34:46.966Z",
+        "exitCode": 0,
+        "signal": null,
+        "counts": {
+          "tests": 387,
+          "pass": 387,
+          "fail": 0,
+          "skipped": 0
+        },
+        "log": "workflow-artifacts/verification/B01/gates/2026-10-18T14-32-40-648Z/unit.log",
+        "logSha256": "2af91de317f51039c8f66c3f8db7c1f0d41e6fe0d4e2d1931e8b6e1ab3af2ce3"
+      },
+      {
+        "name": "build",
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ],
+        "startedAt": "2026-10-18T14:34:46.966Z",
+        "finishedAt": "2026-10-18T14:35:04.192Z",
+        "exitCode": 0,
+        "signal": null,
+        "log": "workflow-artifacts/verification/B01/gates/2026-10-18T14-32-40-648Z/build.log",
+        "logSha256": "12ac755c3c897aa6e29fd7c8f36cc5c4d4cf3150eeb6e3e07daec2535cb2df10"
+      },
+      {
+        "name": "plugin-build",
+        "command": [
+          "npm",
+          "run",
+          "ifpmic:plugin:build"
+        ],
+        "startedAt": "2026-10-18T14:35:04.197Z",
+        "finishedAt": "2026-10-18T14:35:05.061Z",
+        "exitCode": 0,
+        "signal": null,
+        "log": "workflow-artifacts/verification/B01/gates/2026-10-18T14-32-40-648Z/plugin-build.log",
+        "logSha256": "e8264a2643dc26ecfa01fbf7bfa695f449060da8c0c52e4727f8f0fe7f680da8"
+      },
+      {
+        "name": "source-uploads",
+        "command": [
+          "npm",
+          "run",
+          "ifpmic:verify-sources"
+        ],
+        "startedAt": "2026-10-18T14:35:05.061Z",
+        "finishedAt": "2026-10-18T14:35:05.753Z",
+        "exitCode": 0,
+        "signal": null,
+        "log": "workflow-artifacts/verification/B01/gates/2026-10-18T14-32-40-648Z/source-uploads.log",
+        "logSha256": "b492da2b1f01db8326f2198d4eac6b76e77fac56c4deacfafb60398c45da90c4"
+      }
+    ],
+    "source_count": 200,
+    "build_output_count": 10,
+    "source_changes": []
+  },
+  "archive": {
+    "path": "docs/ifpmic/evidence/b01/local-profile-gate.zip",
+    "bytes": 46131,
+    "sha256": "486d153780df2121cd9d57a56a9ad794ac8829ca25945954ed71b522f6c0fab1",
+    "entries": [
+      {
+        "entry": "gate/build.log",
+        "bytes": 596,
+        "sha256": "12ac755c3c897aa6e29fd7c8f36cc5c4d4cf3150eeb6e3e07daec2535cb2df10"
+      },
+      {
+        "entry": "gate/gate.json",
+        "bytes": 28580,
+        "sha256": "597c3ada698cd20ff9c93a318e1177fe55e43e68844d08a6c56281cf940cb2c6"
+      },
+      {
+        "entry": "gate/plugin-build.log",
+        "bytes": 180,
+        "sha256": "e8264a2643dc26ecfa01fbf7bfa695f449060da8c0c52e4727f8f0fe7f680da8"
+      },
+      {
+        "entry": "gate/source-uploads.log",
+        "bytes": 152,
+        "sha256": "b492da2b1f01db8326f2198d4eac6b76e77fac56c4deacfafb60398c45da90c4"
+      },
+      {
+        "entry": "gate/targeted.log",
+        "bytes": 4868,
+        "sha256": "74652743b8c27b2c76f023ceaa7521ce368789434f56e37c0b4b3b22d5d2f2d5"
+      },
+      {
+        "entry": "gate/unit.log",
+        "bytes": 41232,
+        "sha256": "2af91de317f51039c8f66c3f8db7c1f0d41e6fe0d4e2d1931e8b6e1ab3af2ce3"
+      },
+      {
+        "entry": "development-attempts/attempt-1-profile-contract.log",
+        "bytes": 1378,
+        "sha256": "8681e71e2f352bd0d0186831459a45ee7b4cc85bf23e91328c91df152ae1e695"
+      },
+      {
+        "entry": "development-attempts/attempt-2-profile-contract.log",
+        "bytes": 33397,
+        "sha256": "073be6a43951a684cf0674cf547a292dac1ed0b20117fea3e56a1359dc5cc718"
+      },
+      {
+        "entry": "development-attempts/attempt-3-profile-contract.log",
+        "bytes": 1737,
+        "sha256": "f7593ce56869e4525e06513c1852bb7497e462359a27a40f3d15ba0ce990b01b"
+      },
+      {
+        "entry": "development-attempts/attempt-4-profile-contract-cli.log",
+        "bytes": 4339,
+        "sha256": "3c65766604a55cb54c40d8e522e4322c3afe98c2c5e9f8cfcb7a8b96410125f2"
+      },
+      {
+        "entry": "development-attempts/attempt-5-profile-contract.log",
+        "bytes": 2039,
+        "sha256": "d8f1e6f923e15d8d9fb6738fcf7c24afed4faa7cad1ef1b0028a692b5447ec1e"
+      },
+      {
+        "entry": "development-attempts/attempt-6-profile-contract-cli.log",
+        "bytes": 3117,
+        "sha256": "87a7155fed4cd52388f15bd933794f679aab4d7ee7c22732d3fea7d49ede1fd3"
+      },
+      {
+        "entry": "development-attempts/attempt-7-profile-contract-cli.log",
+        "bytes": 3209,
+        "sha256": "640445c73ed99c2a7d5ee71123109c5012e9676b1236f3da34c60a2c713f2937"
+      }
+    ]
+  },
+  "ui_gate_omission": {
+    "reason": "All protected baseline source bytes, UI/server inventory, and ten build/plugin outputs equal the accepted controls candidate; only isolated Node runtime/CLI/dependency additions.",
+    "baseline": "docs/ifpmic/evidence/b01/controls-baseline.json",
+    "remaining_risks": [
+      "Real service/UI integration is not tested.",
+      "Actual device, approval, publisher and original AT04/28 are not executed.",
+      "Local process/fault checks do not prove power-loss durability."
+    ]
+  },
+  "regression": {
+    "original_unit_tests": 339,
+    "new_targeted_tests": 48,
+    "whole_unit_tests": 387,
+    "old_dependency_packages_unchanged": true,
+    "protected_source_inventory": 46,
+    "unchanged_prior_source_pins_except_package_lock_readme": 166,
+    "matching_ui_plugin_outputs": 10
+  },
+  "failure_history": {
+    "plan_rejections": "plan-review.json and plan-review-v3.json; exact historical plans preserved under attempts/.",
+    "initial_product_bug": "Malformed caller arrays could discard properties or leak native SyntaxError; capture now rejects them as SNAPSHOT_CORRUPT and independent P3 regressions pass.",
+    "test_attempts": "Development logs retained in archive; import/fixture errors and v2 path ambiguity are classified in tc-case-ledger.json. They are not passing frozen gate evidence.",
+    "evidence_corrections": "Pre-freeze corrected a 65-character source-pin transcription in TC ledger and removed an extra EOF blank line; frozen gate reran all affected tests."
+  },
+  "remaining_acceptance": [
+    "B01 operational/profile smoke checks and actual service ingress are not implemented by this isolated library.",
+    "Original AT-04 and AT-28 remain not_executed until actual skip/release enforcement behavior exists.",
+    "B02 authentication/user scope/database/workspaces; B03-B05 durable workflow and mock service completion; B06-B13 and all32 original AT remain to be integrated and accepted.",
+    "No actual device, publisher, final deployment, external submission or real operational approval.",
+    "Linux trusted local filesystem process/fault evidence does not establish hostile-user isolation, network-FS/Windows or physical power-loss durability."
+  ]
+}

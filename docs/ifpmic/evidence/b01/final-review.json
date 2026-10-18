@@ -1,0 +1,90 @@
+{
+  "kind": "b01_independent_final_partial_review",
+  "reviewer_role": "independent read-only final reviewer",
+  "decision": "accept_partial_local_library_cli_candidate",
+  "scope": "P1-P5 local profile/workflow registry, validator, immutable snapshot store and CLI candidate. This is partial local acceptance only; it is not full B01 service acceptance, B01-B13 completion, or original AT acceptance.",
+  "reviewed_plan": {
+    "path": "docs/ifpmic/B01-PROFILES.md",
+    "sha256": "8c22f1ceaf1d0f3ca1cf7113a829d7e4441df1fb5ebebdbe48a9d71c1e20d7a8"
+  },
+  "evidence": {
+    "pre_gate_review": {
+      "path": "docs/ifpmic/evidence/b01/pre-gate-review.json",
+      "sha256": "030f734b0a6e4b968053bd077b8cf1e34ccf0f93644af18db55da11eb1dc0138",
+      "decision": "pre_gate_review_pass_pending_frozen_gate"
+    },
+    "gate": {
+      "path": "workflow-artifacts/verification/B01/gates/2026-10-18T14-32-40-648Z/gate.json",
+      "sha256": "597c3ada698cd20ff9c93a318e1177fe55e43e68844d08a6c56281cf940cb2c6",
+      "verdict": "pass",
+      "frozen_source_count": 200,
+      "source_changes_during_gate": [],
+      "targeted": {"tests":48,"passed":48,"failed":0,"skipped":0},
+      "full_unit": {"tests":387,"passed":387,"failed":0,"skipped":0},
+      "original_unit_count":339,
+      "new_targeted_count":48,
+      "commands": [
+        {"name":"targeted","exit_code":0,"log_sha256":"74652743b8c27b2c76f023ceaa7521ce368789434f56e37c0b4b3b22d5d2f2d5"},
+        {"name":"unit","exit_code":0,"log_sha256":"2af91de317f51039c8f66c3f8db7c1f0d41e6fe0d4e2d1931e8b6e1ab3af2ce3"},
+        {"name":"build","exit_code":0,"log_sha256":"12ac755c3c897aa6e29fd7c8f36cc5c4d4cf3150eeb6e3e07daec2535cb2df10"},
+        {"name":"plugin-build","exit_code":0,"log_sha256":"e8264a2643dc26ecfa01fbf7bfa695f449060da8c0c52e4727f8f0fe7f680da8"},
+        {"name":"source-uploads","exit_code":0,"log_sha256":"b492da2b1f01db8326f2198d4eac6b76e77fac56c4deacfafb60398c45da90c4"}
+      ]
+    },
+    "accepted_controls_comparison": {
+      "baseline_path":"docs/ifpmic/evidence/b01/controls-baseline.json",
+      "protected_ui_server_inventory_count":46,
+      "unchanged_prior_source_pins":166,
+      "intentional_prior_pin_differences":["README.md","package.json","package-lock.json"],
+      "unchanged_prior_dependency_resolutions":true,
+      "identical_build_and_plugin_outputs":10
+    },
+    "evidence_archive": {
+      "path":"docs/ifpmic/evidence/b01/local-profile-gate.zip",
+      "sha256":"486d153780df2121cd9d57a56a9ad794ac8829ca25945954ed71b522f6c0fab1",
+      "entries":13,
+      "contents":"Six frozen gate artifacts plus seven retained historical development logs; each entry name, size and SHA256 matches local-profile-verification.json."
+    },
+    "verification_report": {
+      "path":"docs/ifpmic/evidence/b01/local-profile-verification.json",
+      "sha256":"670d355e061a0782bb71234ffabb231891e6c92dc5e18cadb1c8e7a57b0bff46"
+    }
+  },
+  "independent_audit": {
+    "method":"Read-only Python3 archive and digest audit; no project tests rerun.",
+    "results":[
+      "Verified gate digest against the verification report and archived gate/gate.json bytes.",
+      "Verified the ZIP's exact 13-entry inventory, every entry byte count and SHA256 against the verification report.",
+      "Recomputed every one of the 200 frozen gate source hashes against the current worktree; all matched and the gate records sourceChanges=[].",
+      "Recomputed all ten current build/plugin output hashes and confirmed exact equality with the accepted controls baseline.",
+      "Rechecked the targeted and full unit test counts from the raw logs and verified all five gate log hashes.",
+      "Confirmed the 166 prior protected source hashes remain unchanged after excluding only README/package/lock, and all five gate commands exited zero."
+    ],
+    "result":"pass"
+  },
+  "partial_acceptance_findings": [
+    {
+      "id":"FINAL-01",
+      "result":"accepted",
+      "detail":"The frozen gate directly matches the approved plan SHA and records all five P5 commands passing. Targeted 48/48 and full unit 387/387 have no failures or skips; build, plugin build, and source-upload verification also pass."
+    },
+    {
+      "id":"FINAL-02",
+      "result":"accepted_with_scope_limit",
+      "detail":"The gate's source fingerprint remained unchanged, all 200 pinned inputs still match the worktree, the protected UI/server inventory is unchanged, and all ten accepted UI/plugin build outputs are byte-identical. The Node-only Ajv 8.20.0 addition is pinned and existing dependency resolutions are unchanged. This supports the plan's conditional omission of the 11-command UI/browser gate for this isolated change."
+    },
+    {
+      "id":"FINAL-03",
+      "result":"accepted_with_scope_limit",
+      "detail":"Independent pre-gate review found no material source-to-plan, fixed-oracle, privacy/authority, or publication defect. P1-P4 implementation and local fault/race evidence are consistent with their ledgers and limitations."
+    }
+  ],
+  "remaining_acceptance": [
+    "B01 operational profile smoke checks and actual authenticated/service ingress are not implemented or accepted.",
+    "AT-04 and AT-28 remain not executed; the local profile candidate does not prove approved skip evidence or real-release enforcement.",
+    "B02-B13 and the other original acceptance cases remain unfinished.",
+    "No operational approval, real device, publisher, deployment, external submission, hostile-user isolation, network filesystem, Windows behavior, or physical power-loss durability is accepted by this evidence."
+  ],
+  "post_gate_evidence_note":"The gate archive and verification report were created after the candidate gate. They are evidence containers, not members of the frozen candidate inventory. The gate's 200 source hashes and build output hashes were independently recomputed against the current worktree; they all match.",
+  "reviewer_verdict":"Accept the frozen P1-P5 local library/CLI candidate as a partial B01 implementation, with the stated limits. Do not mark B01 service acceptance, AT-04/AT-28, B01-B13, or overall project completion."
+}

@@ -1,0 +1,82 @@
+{
+  "kind": "b01_preimplementation_plan_review",
+  "reviewer_role": "independent reviewer",
+  "scope": "Re-review of B01 plan revision v3, including the requested JSON Pointer clarification and consistency with the current initial implementation contract.",
+  "decision": "revision_required_before_implementation",
+  "reviewed_plan": {
+    "path": "docs/ifpmic/B01-PROFILES.md",
+    "sha256": "2a03572f898b1003a957340252f05bc615d03cbe9ee96d63ec655578d764ddef"
+  },
+  "pinned_sources": [
+    {
+      "path": "docs/ifpmic/evidence/b01/source-collection.json",
+      "sha256": "15c2571bb495efcb89aa5b94eb51bd44167a2b22f5ddb5dbbc3f5918bfc66c72"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b01/snapshot-architecture-advice.json",
+      "sha256": "2bdc222b1121b8af0dc6d715bed3fbbd285c823ada5956289cd989cd17466ec7"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b01/controls-baseline.json",
+      "sha256": "a872346739a4c10f310490b5da1aa5a4dbf58deaec32706929ea64a0a2e16247"
+    },
+    {
+      "path": "docs/ifpmic/design-v1/specs/implementation-backlog.json",
+      "sha256": "115e48568e0464b8e67ef17274dba97b3046a8de902e1cf426d9b70e1528e5d0"
+    },
+    {
+      "path": "docs/ifpmic/design-v1/specs/workflow.v1.json",
+      "sha256": "bab40a7abb3929896add1ef2cd074893dd2a7de14d200a5d6cea4b7a77eb0e89"
+    },
+    {
+      "path": "docs/ifpmic/design-v1/specs/state-contract.json",
+      "sha256": "0248e130017043539319c56af854f5388a95d33e7e687902a3438fdff414244a"
+    },
+    {
+      "path": "docs/ifpmic/design-v1/specs/agent-contract.json",
+      "sha256": "ca6d4bea7abf0fffe7354c482af0d521c3a2e367217a69923a4bfe43fa27ab64"
+    },
+    {
+      "path": "docs/ifpmic/design-v1/specs/project-profile.example.json",
+      "sha256": "37301c6ff5c9cae237b6037a3106368cfd07e4582462d52a35dfee39de7839f2"
+    },
+    {
+      "path": "docs/ifpmic/design-v1/specs/openapi.v1.json",
+      "sha256": "2ed780cfa06349b18f5025937e050fd98a5cefa34b552eb836cfaccad416dd7a"
+    },
+    {
+      "path": "docs/ifpmic/design-v1/specs/data-model.json",
+      "sha256": "00c84f8a39b1b8959daa8d94b1d67e860d83ad9bdb809065a5cd3b18af07071b"
+    },
+    {
+      "path": "docs/ifpmic/design-v1/specs/requirements.json",
+      "sha256": "6e1dc87cdbcaa66ed690ffd13d2d70242dff43410c9f822447bd520719ce249b"
+    },
+    {
+      "path": "docs/ifpmic/design-v1/specs/acceptance-cases.json",
+      "sha256": "f7163553edc9e8e753965cb8748ab04aac8f68c1a453f567f62284a01b38b0d5"
+    },
+    {
+      "path": "docs/ifpmic/design-v1/specs/sources.json",
+      "sha256": "c0c6f96c54ba4fd1c7a1bd70b954a7316bebdba86ff681e5a07141c682eeb7ef"
+    }
+  ],
+  "reviewed_clarification": {
+    "result": "pass",
+    "details": "The revised API contract now explicitly defines both issues[].path and configuration.unresolved_paths as JSON Pointer, including array-index and unknown-key behavior. Dot notation is limited to prose field names. Required v3 review filenames are also explicit. This resolves the TC oracle ambiguity without changing profile semantics."
+  },
+  "other_scope_checks": {
+    "result": "pass",
+    "details": "The workflow/state/agent bundle hashes, five required nonempty arrays and equal release-mode policy, accepted controls baseline pins, profile schema boundary, mock/real authority boundary, future ingress reuse, and B02/B03 separation remain as approved in v2."
+  },
+  "blocking_findings": [
+    {
+      "id": "B01-PLAN-04",
+      "issue": "profileVersion has no maximum size, but stored snapshot records are capped at 2 MiB.",
+      "evidence": "The plan accepts any nonempty/no-control profileVersion and createSnapshot returns a record containing it. The same plan caps capture/read records at 2 MiB. Therefore a sufficiently large valid profileVersion can create a returned snapshot that publishSnapshot cannot store and readSnapshot cannot return; the expected public error and validation boundary are unspecified.",
+      "required_resolution": "Specify a deterministic pre-publication limit and error for snapshots whose canonical record exceeds 2 MiB (for example, reject from createSnapshot with PROFILE_VERSION_INVALID or a dedicated size code), or reconcile the record cap. Add independent P1/P2 and CLI expectations for the boundary. Do not report an unpersistable record as a successful snapshot."
+    }
+  ],
+  "acceptance_boundary": "AT-04 and AT-28 remain not executed by B01 preflight/store checks; full step-skip evidence and real-release enforcement are later behaviors.",
+  "reviewer_verdict": "Do not treat this exact plan revision as fully approved until the snapshot size/profileVersion boundary is specified and reviewed."
+}

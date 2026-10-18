@@ -1,0 +1,124 @@
+{
+  "kind": "ifpmic_b01_tc_case_ledger",
+  "approved_plan": {
+    "path": "docs/ifpmic/B01-PROFILES.md",
+    "sha256": "8c22f1ceaf1d0f3ca1cf7113a829d7e4441df1fb5ebebdbe48a9d71c1e20d7a8"
+  },
+  "review": {
+    "path": "docs/ifpmic/evidence/b01/tc-plan-review-v4.json",
+    "sha256": "30baa1358f31b937f932b555279f094225e4a2cf400ddea036fb2fc9b0a67e48"
+  },
+  "scope": {
+    "covered": ["P1", "P2", "P4"],
+    "deferred": [{
+      "area": "P3 local snapshot store, publication races, filesystem faults and recovery",
+      "status": "separately assigned to store TC worker; not represented as covered here"
+    }],
+    "acceptance_limit": "These local unit and CLI tests do not constitute B01 end-to-end acceptance, AT-04/AT-28 execution, or B02-B05 acceptance. No real workflow, operational approval, device, publisher, network, or external side effect was exercised."
+  },
+  "source_pins": {
+    "workflow_source_sha256": "bab40a7abb3929896add1ef2cd074893dd2a7de14d200a5d6cea4b7a77eb0e89",
+    "state_source_sha256": "0248e130017043539319c56af854f5388a95d33e7e687902a3438fdff414244a",
+    "agent_source_sha256": "ca6d4bea7abf0fffe7354c482af0d521c3a2e367217a69923a4bfe43fa27ab64",
+    "expected_bundle_sha256": "83146f468cc425fc5851e179a24781ed4ca62babb5d219b2a95f153d8a0bf873"
+  },
+  "cases": [
+    {
+      "requirement": "P1",
+      "test_file": "tests/ifpmic-profile-contract.test.mjs",
+      "cases": [
+        "legacy source example is structurally valid but remains disabled mock and unresolved",
+        "independent fully specified real fixture is complete but never operationally approved",
+        "schema rejects missing, null, extra, wrong type, enum, and numeric boundary in each profile section",
+        "every required field independently rejects missing, null, and wrong JSON types",
+        "every object rejects an unknown additional property without exposing its key or value",
+        "all four release modes share the same fixed completeness policy",
+        "mock enabled and marker-free input still does not grant real authorization",
+        "placeholder matching is case-sensitive and excludes validation/project_id text",
+        "each fixed marker is detected in configured string fields, but not in exempt text fields",
+        "strings are not normalized; empty and control-character values follow the fixed string contract",
+        "JSON parser errors have fixed codes, stable ordering, and no raw input in the DTO",
+        "JSON depth boundary accepts depth 64 for parsing and rejects depth 65 before schema",
+        "UTF-8 byte-size boundary is exact and oversized input is rejected without echoing it"
+      ],
+      "result": "pass"
+    },
+    {
+      "requirement": "P2",
+      "test_file": "tests/ifpmic-profile-contract.test.mjs",
+      "cases": [
+        "workflow registry returns only fixed contract bundle and immutable registry reference",
+        "workflow registry detects a changed source pin in an isolated copied module tree",
+        "snapshot captures input synchronously, canonical key order, detached deep-frozen payload",
+        "snapshot identity changes with project, profile version, or business content",
+        "snapshot digest matches a fixed independently computed canonical fixture vector",
+        "createSnapshot accepts canonical record bytes exactly at 2 MiB and rejects one byte over"
+      ],
+      "result": "pass"
+    },
+    {
+      "requirement": "P4",
+      "test_file": "tests/ifpmic-profile-cli.test.mjs",
+      "cases": [
+        "default and configured-real validation DTOs do not imply operational or approval status",
+        "require-real-config acceptance/rejection for mock, disabled, and unresolved profiles",
+        "invalid profile data, malformed UTF-8, oversized input, and file read errors have fixed sanitized output",
+        "usage errors return exact one-line DTOs with exit 2 and empty stderr",
+        "explicit init/snapshot/read use only the supplied local store and return hash-only DTOs verified against an independent canonical oracle",
+        "invalid store locations return fixed errors without path leakage",
+        "CLI/runtime static import scan and preload effect ledger show no network or child-process use"
+      ],
+      "result": "pass"
+    }
+  ],
+  "verification": {
+    "command": "node --test tests/ifpmic-profile-contract.test.mjs tests/ifpmic-profile-cli.test.mjs",
+    "exit_code": 0,
+    "tests": 30,
+    "passed": 30,
+    "failed": 0,
+    "skipped": 0,
+    "log": "workflow-artifacts/verification/B01/attempt-7-profile-contract-cli.log",
+    "log_sha256": "640445c73ed99c2a7d5ee71123109c5012e9676b1236f3da34c60a2c713f2937",
+    "syntax_check": "node --check tests/ifpmic-profile-cli.test.mjs"
+  },
+  "development_attempts": [
+    {
+      "log": "workflow-artifacts/verification/B01/attempt-1-profile-contract.log",
+      "sha256": "8681e71e2f352bd0d0186831459a45ee7b4cc85bf23e91328c91df152ae1e695",
+      "classification": "TC harness imported the wrong module path; corrected without changing requirements."
+    },
+    {
+      "log": "workflow-artifacts/verification/B01/attempt-2-profile-contract.log",
+      "sha256": "073be6a43951a684cf0674cf547a292dac1ed0b20117fea3e56a1359dc5cc718",
+      "classification": "Contains a plan-v2 JSON Pointer versus dotted-path ambiguity and TC oracle issues (overbroad secret regex and mistaken path expectation). The path ambiguity was resolved and re-reviewed in plan v3/v4; these results are historical and not used for acceptance."
+    },
+    {
+      "log": "workflow-artifacts/verification/B01/attempt-3-profile-contract.log",
+      "sha256": "f7593ce56869e4525e06513c1852bb7497e462359a27a40f3d15ba0ce990b01b",
+      "classification": "Pre-v3 rerun after TC corrections; historical because it predates the path clarification."
+    },
+    {
+      "log": "workflow-artifacts/verification/B01/attempt-4-profile-contract-cli.log",
+      "sha256": "3c65766604a55cb54c40d8e522e4322c3afe98c2c5e9f8cfcb7a8b96410125f2",
+      "classification": "Isolated workflow-pin harness copy omitted store.mjs; harness fixture corrected."
+    },
+    {
+      "log": "workflow-artifacts/verification/B01/attempt-5-profile-contract.log",
+      "sha256": "d8f1e6f923e15d8d9fb6738fcf7c24afed4faa7cad1ef1b0028a692b5447ec1e",
+      "classification": "Contract-only checkpoint passed 19/19 before the final CLI independent-oracle/oversized-input additions."
+    },
+    {
+      "log": "workflow-artifacts/verification/B01/attempt-6-profile-contract-cli.log",
+      "sha256": "87a7155fed4cd52388f15bd933794f679aab4d7ee7c22732d3fea7d49ede1fd3",
+      "classification": "Passed 29/29 before the CLI oversized-file case was added."
+    }
+  ],
+  "test_sha256": {
+    "tests/ifpmic-profile-contract.test.mjs": "a17c808fb9db31558fdeaf85249e9a0eaa7932359274281743c116a6521ef573",
+    "tests/ifpmic-profile-cli.test.mjs": "f0d95c5c05c16bcaa0bad22bdee3e6ca36af508c371ab97c996cb0f8b9d08d9e",
+    "tests/helpers/ifpmic-profile-fixtures.mjs": "a3b3aa11d0647557a270173e06191be4c2f7e017cc4360753f68d637948b2d22",
+    "tests/helpers/ifpmic-profile-side-effects.mjs": "f3a678816f0b93d31a15aad49bc09103ca607cde550a731002fc5563d44ee09d"
+  },
+  "status": "partial test coverage for P1/P2/P4; P3 and all end-to-end/acceptance evidence remain outside this ledger"
+}

@@ -1,0 +1,63 @@
+{
+  "kind": "b01_p3_independent_store_case_ledger",
+  "status": "targeted_cases_passed",
+  "plan": {
+    "path": "docs/ifpmic/B01-PROFILES.md",
+    "sha256": "8c22f1ceaf1d0f3ca1cf7113a829d7e4441df1fb5ebebdbe48a9d71c1e20d7a8"
+  },
+  "scope": "P3 create-once store and recovery tests, plus caller-record capture regressions assigned to this TC. This is not full B01 acceptance or a claim about power-loss behavior.",
+  "command": "node --test tests/ifpmic-profile-store.test.mjs",
+  "result": {
+    "tests": 18,
+    "passed": 18,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "cases": [
+    {
+      "id": "P3-RACE",
+      "coverage": "Independent Node processes publish identical payloads and conflicting payloads for one profile identity; same-content callers both succeed with one final, conflicting content yields one winner and one PROFILE_VERSION_CONFLICT."
+    },
+    {
+      "id": "P3-EEXIST-DIRSYNC",
+      "coverage": "A contender reaches and completes its own directory sync while the first writer is held after link and before its directory sync."
+    },
+    {
+      "id": "P3-FAULTS",
+      "coverage": "Temp write, file sync, close, link-after-success, directory sync, link-before-underlying-call non-EEXIST failure, and equal-content EEXIST directory-sync failure. Pre-link failures leave no final; ambiguous publication failures report PUBLICATION_UNCERTAIN; retry verifies and retains an existing final; cleanup unlink failure leaves publication intact and may leave an ignored temp."
+    },
+    {
+      "id": "P3-CAPTURE",
+      "coverage": "Caller record mutation immediately after publishSnapshot invocation does not alter returned or persisted snapshot. Sparse arrays, custom array properties, symbols, accessors, cycles, and exotic objects reject as SNAPSHOT_CORRUPT before storage I/O; accessor is not evaluated."
+    },
+    {
+      "id": "P3-INIT",
+      "coverage": "initStore parent-directory sync failure returns STORE_IO, leaves a 0700 root, and a normal retry succeeds. Root and published final modes are checked as 0700 and 0600."
+    },
+    {
+      "id": "P3-BOUNDARY",
+      "coverage": "An independently sized canonical record exactly 2 MiB including LF is published and read successfully."
+    },
+    {
+      "id": "P3-CRASH",
+      "coverage": "Independent worker killed before link leaves an ignored orphan; kills after link/before directory sync and after directory sync/before response both allow exact-byte-preserving verified retry."
+    },
+    {
+      "id": "P3-READ-TAMPER",
+      "coverage": "Reject symlink root/final, malformed JSON, modified record content, mismatched project identity, and oversized final; failed publish/read does not overwrite corrupt final."
+    }
+  ],
+  "source_pins": {
+    "tests/ifpmic-profile-store.test.mjs": "04848d4c2851d5636028ee3211508d643c41421100b2fdc099df29e325ec2ad6",
+    "tests/helpers/ifpmic-profile-store-worker.mjs": "68ae867b78046e0e050a9eb3b98e452d3b5f0e191b1bde0d858d69ea295ae533",
+    "runtime/ifpmic/store.mjs": "0f532d26504b1975b61b8e67c87225c29d4d576115ed81d2314ecb6ae359477e",
+    "runtime/ifpmic/snapshot.mjs": "9bbfdcaf483167c931f0b6e0a453697cd8ea92f3b12f33ab30ffa0b2dd52b789",
+    "tests/helpers/ifpmic-profile-fixtures.mjs": "a3b3aa11d0647557a270173e06191be4c2f7e017cc4360753f68d637948b2d22"
+  },
+  "limitations": [
+    "Only the targeted P3 test file was run; no full npm test/build was run by this TC.",
+    "Tests use temporary local filesystem roots and an fs/promises-compatible injected fault seam. They do not establish behavior on network filesystems, Windows, actual power loss, or OS-user isolation.",
+    "This ledger records test evidence against the pinned plan and implementation source hashes; it does not constitute final implementation acceptance."
+  ]
+}
