@@ -1,0 +1,117 @@
+{
+  "kind": "b01_preimplementation_plan_review",
+  "reviewer_role": "independent reviewer",
+  "scope": "Read-only review of the proposed B01 profile registry/snapshot implementation plan; no product or test implementation.",
+  "decision": "revision_required_before_implementation",
+  "reviewed_plan": {
+    "path": "docs/ifpmic/B01-PROFILES.md",
+    "sha256": "0bbf7c807c2280b792b5fd362f8c5b9050ed234887ae295642dd6af3eaefa18c"
+  },
+  "pinned_sources": [
+    {
+      "path": "docs/ifpmic/evidence/b01/source-collection.json",
+      "sha256": "15c2571bb495efcb89aa5b94eb51bd44167a2b22f5ddb5dbbc3f5918bfc66c72"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b01/snapshot-architecture-advice.json",
+      "sha256": "2bdc222b1121b8af0dc6d715bed3fbbd285c823ada5956289cd989cd17466ec7"
+    },
+    {
+      "path": "docs/ifpmic/design-v1/specs/implementation-backlog.json",
+      "sha256": "115e48568e0464b8e67ef17274dba97b3046a8de902e1cf426d9b70e1528e5d0"
+    },
+    {
+      "path": "docs/ifpmic/design-v1/specs/workflow.v1.json",
+      "sha256": "bab40a7abb3929896add1ef2cd074893dd2a7de14d200a5d6cea4b7a77eb0e89"
+    },
+    {
+      "path": "docs/ifpmic/design-v1/specs/state-contract.json",
+      "sha256": "0248e130017043539319c56af854f5388a95d33e7e687902a3438fdff414244a"
+    },
+    {
+      "path": "docs/ifpmic/design-v1/specs/agent-contract.json",
+      "sha256": "ca6d4bea7abf0fffe7354c482af0d521c3a2e367217a69923a4bfe43fa27ab64"
+    },
+    {
+      "path": "docs/ifpmic/design-v1/specs/project-profile.example.json",
+      "sha256": "37301c6ff5c9cae237b6037a3106368cfd07e4582462d52a35dfee39de7839f2"
+    },
+    {
+      "path": "docs/ifpmic/design-v1/specs/openapi.v1.json",
+      "sha256": "2ed780cfa06349b18f5025937e050fd98a5cefa34b552eb836cfaccad416dd7a"
+    },
+    {
+      "path": "docs/ifpmic/design-v1/specs/data-model.json",
+      "sha256": "00c84f8a39b1b8959daa8d94b1d67e860d83ad9bdb809065a5cd3b18af07071b"
+    },
+    {
+      "path": "docs/ifpmic/design-v1/specs/requirements.json",
+      "sha256": "6e1dc87cdbcaa66ed690ffd13d2d70242dff43410c9f822447bd520719ce249b"
+    },
+    {
+      "path": "docs/ifpmic/design-v1/specs/acceptance-cases.json",
+      "sha256": "f7163553edc9e8e753965cb8748ab04aac8f68c1a453f567f62284a01b38b0d5"
+    },
+    {
+      "path": "docs/ifpmic/design-v1/specs/sources.json",
+      "sha256": "c0c6f96c54ba4fd1c7a1bd70b954a7316bebdba86ff681e5a07141c682eeb7ef"
+    }
+  ],
+  "checks": {
+    "original_b01_scope": {
+      "result": "pass_with_acceptance_boundary",
+      "details": "B01 workflow registry, validators, and immutable profile snapshots match backlog B01. The plan correctly keeps B02 user authorization/database/workspaces and B03 durable Temporal/outbox/human-wait execution separate. Existing AX GET-only transcript API remains untouched."
+    },
+    "profile_field_inventory": {
+      "result": "pass",
+      "details": "The planned profile shape accounts for every top-level and nested field in the source example, including versions, all three quality tools, device, release, approval, and validation. The new project-profile JSON Schema is explicitly identified as an implementation artifact, not an original contract."
+    },
+    "mode_and_authority_boundary": {
+      "result": "pass",
+      "details": "Mock/real, enabled, completeness, external operational checks, and approval are reported separately. Configuration completeness never grants execution/release authority; the supplied disabled mock example remains unchanged."
+    },
+    "job_workflow_version_mapping": {
+      "result": "pass",
+      "details": "The plan explicitly maps Job.workflow_version as a lookup reference to the immutable workflow registry ID (workflow_id=ifpmic-sw-v1), with the registry enforcing pinned content. It correctly keeps schema_version=1.0.0 as document-format version rather than behavior version."
+    },
+    "snapshot_and_publication": {
+      "result": "pass_with_blocking_identity_gap",
+      "details": "The proposed deterministic envelope, payload hash, immutable version key, deep-frozen return, temp write/file sync/close, create-once hardlink, directory sync, uncertain publication result, no rollback, corruption checks, and independent-process fault/race matrix address the senior architecture advice. However, the plan says the registry supplies workflow, state, and agent contracts while binding the snapshot and workflow_version only to workflow.v1.json raw SHA. State/agent contract changes could therefore alter execution behavior without changing the pinned snapshot identity."
+    },
+    "profile_completeness_rules": {
+      "result": "blocking_ambiguity",
+      "details": "Schema-required fields are enumerated, but real-mode completeness only says that empty required collections are unresolved. It does not define which of driver_paths, test_paths, artifact_patterns, sqe_expected_cases, and reviewers must be nonempty, nor whether requirements vary by release mode or profile purpose. The checker result and --require-real-config exit status would otherwise depend on an unspecified rule."
+    },
+    "acceptance_scope": {
+      "result": "pass_with_boundary",
+      "details": "The plan does not claim B01 unit checks execute full AT-04 or AT-28. It correctly says full AT-04 requires X01 execution-plan/skip evidence behavior and full AT-28 requires later real-release enforcement. Keep those original cases not-executed until their service behaviors are implemented."
+    },
+    "verification_stage_design": {
+      "result": "pass_with_baseline_pin_needed",
+      "details": "P0-P6 provide distinct purpose, target, method, owner, pass result, evidence, and recovery/reverification paths; tests cover parser boundaries, deterministic identity, real processes, publication faults, CLI privacy, and integration gates. The conditional skip of the existing 11-command UI/browser gate is technically justified only when source and build/plugin output bytes equal the accepted controls candidate. Before relying on that skip, the implementation evidence must identify the exact accepted baseline candidate/artifacts and their hashes; the plan currently names the candidate generically."
+    }
+  },
+  "blocking_findings": [
+    {
+      "id": "B01-PLAN-01",
+      "issue": "Snapshot identity does not bind every contract that the registry claims to provide.",
+      "required_resolution": "Either narrow the registry's B01 responsibility to the workflow.v1.json contract only, or define a versioned immutable contract bundle and bind the state-contract.json and agent-contract.json source hashes (and any other behavior-defining inputs) into the snapshot/workflow reference. Preserve raw source SHA values distinctly from canonical hashes."
+    },
+    {
+      "id": "B01-PLAN-02",
+      "issue": "Real-mode completeness has no explicit per-collection rules.",
+      "required_resolution": "List the exact real-mode nonempty requirements for each array field and any conditional rules by release mode/profile purpose, or explicitly state that all profile arrays may be empty and point to a separate completeness policy. Add independent fixed expectations to P1 cases."
+    },
+    {
+      "id": "B01-PLAN-03",
+      "issue": "The UI gate skip lacks a pinned accepted-candidate identity.",
+      "required_resolution": "Name the existing accepted controls candidate/evidence manifest and record its relevant source/build/plugin artifact hashes in implementation evidence before using the conditional skip. If they cannot be established, run the 11-command gate."
+    }
+  ],
+  "acceptance_and_safety_notes": [
+    "AT-04 and AT-28 remain original acceptance IDs with not-executed status; B01 preflight mechanics alone cannot satisfy either whole case.",
+    "No profile secret values were copied or needed for this review.",
+    "No original contract was changed; no code or tests were implemented."
+  ],
+  "reviewer_verdict": "Do not begin product implementation against this exact plan revision. Resolve the three blocking findings, update the plan, and obtain a new review against its new SHA."
+}

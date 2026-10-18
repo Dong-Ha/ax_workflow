@@ -1,0 +1,79 @@
+{
+  "review": "B01 snapshot architecture advice",
+  "date": "2026-10-18",
+  "reviewer_role": "senior_sol",
+  "scope": "Independent architecture review only; no product implementation or operational approval.",
+  "decision": "proceed_with_corrections",
+  "source_pins": {
+    "docs/ifpmic/design-v1/specs/implementation-backlog.json": "115e48568e0464b8e67ef17274dba97b3046a8de902e1cf426d9b70e1528e5d0",
+    "docs/ifpmic/design-v1/specs/workflow.v1.json": "bab40a7abb3929896add1ef2cd074893dd2a7de14d200a5d6cea4b7a77eb0e89",
+    "docs/ifpmic/design-v1/specs/project-profile.example.json": "37301c6ff5c9cae237b6037a3106368cfd07e4582462d52a35dfee39de7839f2",
+    "docs/ifpmic/design-v1/specs/data-model.json": "00c84f8a39b1b8959daa8d94b1d67e860d83ad9bdb809065a5cd3b18af07071b",
+    "docs/ifpmic/design-v1/specs/openapi.v1.json": "2ed780cfa06349b18f5025937e050fd98a5cefa34b552eb836cfaccad416dd7a"
+  },
+  "findings": [
+    {
+      "id": "B01-ARCH-01",
+      "importance": "required",
+      "finding": "A same-directory temporary file, fully written and file-synced before a hardlink to the final name, is an appropriate create-once publication scheme for cooperating local processes.",
+      "recommendation": "Create a unique temporary regular file with wx and mode 0600; await its complete write, sync and close before link. Never mutate the temporary inode after publication. Do not replace this with plain rename, direct writes to final, or overwrite-on-conflict recovery. Final and temporary names must be on the same filesystem."
+    },
+    {
+      "id": "B01-ARCH-02",
+      "importance": "required",
+      "finding": "An EEXIST reader can observe a winner's complete file before the winner has synced its directory entry.",
+      "recommendation": "Both create success and equal-content idempotent success must sync the containing directory before acknowledging durable publication. On equal-content retry, verify the expected identity, schema and digests first. A successful link followed by sync failure must leave final intact and report an uncertain publication outcome; retry may verify and sync it. Never roll back a published final name. Require an already provisioned storage root, or provide explicit initialization under a preexisting parent: mkdir mode 0700 followed by parent-directory sync. Do not acknowledge recursively created unchecked ancestors as durable."
+    },
+    {
+      "id": "B01-ARCH-03",
+      "importance": "required",
+      "finding": "Snapshot identity and execution compatibility require more than a profile-body hash.",
+      "recommendation": "Bind project_id, profile_version, workflow_id, the pinned original workflow source SHA256, profile schema/canonicalization version, and canonical profile content in a deterministic snapshot payload. Hash the whole payload as well as the profile if separate profile digests are exposed. Verify requested identity against stored identity and the hashed filename on reads. The identity key SHA256(JSON.stringify([project_id, profile_version])) is unambiguous for validated strings. Rebinding that identity to another workflow is a conflict."
+    },
+    {
+      "id": "B01-ARCH-04",
+      "importance": "required",
+      "finding": "The original workflow schema_version is a format version, not an independent workflow revision.",
+      "recommendation": "Pin exact source bytes to the original manifest SHA256 and expose an explicit immutable workflow reference containing workflow_id and source digest. Keep a raw-source digest distinct from any canonical-JSON digest. The registry may use workflow_id as its lookup key if one ID permanently maps to one pinned content value. If workflow_version is needed later, explicitly document that mapping or an opaque encoding of the immutable reference; do not equate schema_version 1.0.0 with workflow behavior version. Do not rewrite imported original source contracts to invent the missing field."
+    },
+    {
+      "id": "B01-ARCH-05",
+      "importance": "required",
+      "finding": "Preflight validity and captured configuration do not establish project approval, environment smoke-test success, or permission for real execution.",
+      "recommendation": "Report structural validity, configuration completeness, mode/enabled restrictions, and external checks not performed separately. B01 must always report real execution authorization unavailable/false. Accepting a locally captured real-mode profile must not produce an approved or executable status. Approval settings are requirements for later approval checks, not evidence that approval occurred. Preserve the legacy example as disabled mock; placeholders may be structurally valid while completeness fails."
+    },
+    {
+      "id": "B01-ARCH-06",
+      "importance": "recommended",
+      "finding": "Mutable caller objects or nondeterministic envelope metadata can break validation/hash/idempotency correspondence.",
+      "recommendation": "Capture JSON data synchronously before the first await, then validate, canonicalize and persist only that captured value. Specify canonical JSON rules and accepted value types. Freeze registry entries or return independent copies. Keep timestamps, temporary names and preflight observations outside the deterministic snapshot payload used for conflict checks."
+    }
+  ],
+  "crash_windows": [
+    { "window": "before hardlink", "permitted_result": "No final record; temporary residue ignored." },
+    { "window": "after hardlink before directory sync", "permitted_result": "Final record may survive or disappear after power loss; if present its bytes are complete under the filesystem assumptions. No durable success acknowledgment yet." },
+    { "window": "after directory sync before response", "permitted_result": "Retry finds the same immutable record and succeeds idempotently." },
+    { "window": "temporary unlink not synced", "permitted_result": "Temporary residue may reappear after crash; it remains ignored. Sync after cleanup if durable removal is required." }
+  ],
+  "verification_recommendations": [
+    "Use actual independent processes to race identical and different payloads for one identity; assert one complete winner, deterministic conflicts, and no overwritten final bytes.",
+    "Force the winner to pause after hardlink and before directory sync; verify an idempotent contender performs directory sync before success.",
+    "Inject failures before and after link, including directory sync failure; verify no published final is removed and retry can verify the existing record.",
+    "Check corrupt final records, valid records with wrong identity, invalid digests, workflow rebinding, reordered JSON keys, ignored orphan temporary files, and caller mutation during asynchronous persistence.",
+    "State that these checks cover B01 mechanics only: full AT-04 requires X01 execution-plan behavior and full AT-28 requires later real-release enforcement."
+  ],
+  "limits_and_uncertainty": [
+    "Application immutability applies to cooperating processes in an owner-controlled local storage root; it is not tamper-proof storage or multiuser authorization.",
+    "Hashes detect corruption and establish content identity; they do not authenticate a malicious writer that can recompute them.",
+    "Hardlink and directory-sync support vary across filesystems/platforms. Fail explicitly on unsupported operations; do not silently downgrade. NFS and distributed storage are outside this review.",
+    "Actual power-loss durability remains dependent on the filesystem, device and deployment; process-crash tests cannot prove it. Ignored orphan temporary files are not backup or AT-17 recovery evidence.",
+    "Whether a profile revision should be reusable across workflows is a product choice. The proposed one-workflow snapshot binding deliberately makes rebinding conflict."
+  ],
+  "technical_sources": [
+    { "url": "https://www.man7.org/linux/man-pages/man2/link.2.html", "supports": "Hardlinks share an inode, do not overwrite an existing destination, require one filesystem, and have special NFS failure caveats." },
+    { "url": "https://www.man7.org/linux/man-pages/man2/fsync.2.html", "supports": "File sync alone does not persist its containing directory entry; directory sync is separate." },
+    { "url": "https://nodejs.org/docs/latest-v24.x/api/fs.html", "supports": "Node 24 exposes file handle sync and filesystem hardlink operations." }
+  ],
+  "product_files_changed": false,
+  "acceptance_cases_executed": false
+}

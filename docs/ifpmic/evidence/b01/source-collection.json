@@ -1,0 +1,143 @@
+{
+  "kind": "b01_source_collection",
+  "created_from": "read-only local source inspection",
+  "purpose": "Evidence for the B01 preimplementation boundary: workflow registry, contract validators, and immutable profile snapshots.",
+  "sources": [
+    {
+      "path": "docs/ifpmic/PLAN.md",
+      "sha256": "3b99c7b3629a8e0e6bc41d524329d2a0de27a468ec447a990fa360dcc38aa39d",
+      "locator": "Sections '화면에서 표현할 업무 구조', '상태와 증거의 불변 조건', '구현 순서와 완료 기준', '첫 실증과 연동 준비'"
+    },
+    {
+      "path": "docs/ifpmic/design-v1/specs/project-profile.example.json",
+      "sha256": "37301c6ff5c9cae237b6037a3106368cfd07e4582462d52a35dfee39de7839f2",
+      "locator": "JSON root and each named profile object"
+    },
+    {
+      "path": "docs/ifpmic/design-v1/specs/workflow.v1.json",
+      "sha256": "bab40a7abb3929896add1ef2cd074893dd2a7de14d200a5d6cea4b7a77eb0e89",
+      "locator": "JSON root: /workflow_id, /schema_version, /nodes, /roles, /states, /required_invariants, /release_modes"
+    },
+    {
+      "path": "docs/ifpmic/design-v1/specs/state-contract.json",
+      "sha256": "0248e130017043539319c56af854f5388a95d33e7e687902a3438fdff414244a",
+      "locator": "JSON root: /step_transitions, /rules"
+    },
+    {
+      "path": "docs/ifpmic/design-v1/specs/openapi.v1.json",
+      "sha256": "2ed780cfa06349b18f5025937e050fd98a5cefa34b552eb836cfaccad416dd7a",
+      "locator": "#/paths; #/components/schemas/CreateJob; #/components/schemas/Job"
+    },
+    {
+      "path": "docs/ifpmic/design-v1/specs/data-model.json",
+      "sha256": "00c84f8a39b1b8959daa8d94b1d67e860d83ad9bdb809065a5cd3b18af07071b",
+      "locator": "#/entities; #/authorization; #/consistency"
+    },
+    {
+      "path": "docs/ifpmic/design-v1/specs/implementation-backlog.json",
+      "sha256": "115e48568e0464b8e67ef17274dba97b3046a8de902e1cf426d9b70e1528e5d0",
+      "locator": "Array item /id=B01 and /id=B02 and /id=B03"
+    },
+    {
+      "path": "docs/ifpmic/design-v1/specs/requirements.json",
+      "sha256": "6e1dc87cdbcaa66ed690ffd13d2d70242dff43410c9f822447bd520719ce249b",
+      "locator": "Array items REQ-01 through REQ-15; per item /text, /design, /acceptance"
+    },
+    {
+      "path": "docs/ifpmic/design-v1/specs/acceptance-cases.json",
+      "sha256": "f7163553edc9e8e753965cb8748ab04aac8f68c1a453f567f62284a01b38b0d5",
+      "locator": "Array items /id=AT-04 and /id=AT-28"
+    },
+    {
+      "path": "docs/ifpmic/design-v1/specs/agent-contract.json",
+      "sha256": "ca6d4bea7abf0fffe7354c482af0d521c3a2e367217a69923a4bfe43fa27ab64",
+      "locator": "JSON root and /runtime_profile_ref, /expected_output_schema"
+    },
+    {
+      "path": "docs/ifpmic/design-v1/specs/bridge-contract.json",
+      "sha256": "d9a0deaa745d4078a779a153aad6a889a49b7675dc8ad3688f8b4c641233047d",
+      "locator": "JSON root: /command_fields, /profiles, /secrets"
+    },
+    {
+      "path": "docs/ifpmic/design-v1/specs/sources.json",
+      "sha256": "c0c6f96c54ba4fd1c7a1bd70b954a7316bebdba86ff681e5a07141c682eeb7ef",
+      "locator": "Manifest items S01-S11; local source and external references, use and checked metadata"
+    },
+    {
+      "path": "server/index.mjs",
+      "sha256": "9f462d86df80903570ab9ec110be564586dd89c45a3fd553a59cc6d5d6e56299",
+      "locator": "API method guard and GET routes in the request handler; localhost bind in server.listen"
+    }
+  ],
+  "b01_contract": {
+    "backlog_deliverable": "B01: workflow registry, validators, immutable profile snapshot",
+    "acceptance_ids": ["AT-04", "AT-28"],
+    "workflow_identity_fields": {
+      "workflow_id": "ifpmic-sw-v1",
+      "schema_version": "1.0.0",
+      "api_workflow_version": "OpenAPI Job requires workflow_version, but the source workflow does not define a separate semantic workflow_version field or mapping. Preserve workflow_id and schema_version distinctly until registry/version mapping is specified; do not silently equate schema_version with workflow_version."
+    },
+    "acceptance_meaning": {
+      "AT-04": "Same-baseline design reuse is explicitly approved at X01; record SKIPPED with evidence; NEW_HW cannot skip required documentation.",
+      "AT-28": "A passing mock profile/evidence cannot authorize a real release."
+    },
+    "validators_already_present": "The supplied static design verifier checks workflow structure and OpenAPI component schema validity/references, and confirms only that the example profile remains disabled mock. It does not define or validate a project-profile JSON Schema, validate profile completeness, make immutable snapshots, or implement a live registry. Synthetic replay validators are mock scenario code and are not an operational API ingress validator."
+  },
+  "profile_inventory": {
+    "top_level_fields": ["schema_version", "project_id", "mode", "enabled", "source", "runtimes", "build", "quality", "device", "release", "approval", "validation"],
+    "nested_fields": {
+      "source": ["repository_ref", "base_ref", "driver_paths", "test_paths"],
+      "runtimes": ["primary", "secondary", "provider_profile_ref", "model_id", "versions.claude_code", "versions.opencode"],
+      "build": ["profile_ref", "toolchain_digest", "kernel_config_digest", "timeout_minutes", "artifact_patterns"],
+      "quality.sam": ["program_ref", "parser_version", "rule_version", "thresholds_ref"],
+      "quality.tem": ["program_ref", "parser_version", "rule_version", "thresholds_ref"],
+      "quality.static": ["program_ref", "parser_version", "rule_version", "thresholds_ref"],
+      "device": ["bridge_id", "device_id", "adb_serial", "fastboot_serial", "board_id", "flash_profile_ref", "boot_identity_method", "sqe_script_ref", "sqe_expected_cases"],
+      "release": ["mode", "repository_ref", "target_ref", "version", "reviewers"],
+      "approval": ["plan_required", "release_required", "require_distinct_approver"]
+    },
+    "real_environment_values_unresolved_by_path": [
+      "project_id (real project identity must be confirmed)",
+      "source.repository_ref", "source.base_ref", "source.driver_paths", "source.test_paths",
+      "runtimes.provider_profile_ref", "runtimes.model_id", "runtimes.versions.claude_code", "runtimes.versions.opencode",
+      "build.profile_ref", "build.toolchain_digest", "build.kernel_config_digest", "build.artifact_patterns",
+      "quality.sam.program_ref", "quality.sam.parser_version", "quality.sam.rule_version", "quality.sam.thresholds_ref",
+      "quality.tem.program_ref", "quality.tem.parser_version", "quality.tem.rule_version", "quality.tem.thresholds_ref",
+      "quality.static.program_ref", "quality.static.parser_version", "quality.static.rule_version", "quality.static.thresholds_ref",
+      "device.bridge_id", "device.device_id", "device.adb_serial", "device.fastboot_serial", "device.board_id", "device.flash_profile_ref", "device.boot_identity_method", "device.sqe_script_ref", "device.sqe_expected_cases",
+      "release.repository_ref", "release.target_ref", "release.version", "release.reviewers",
+      "approval.require_distinct_approver (policy decision unresolved)"
+    ],
+    "secret_handling": "Only field names and reference paths are recorded here. Secret values, credential material, and environment-specific identifiers are intentionally omitted. Profiles should contain approved references, not credentials."
+  },
+  "requirement_profile_links": [
+    {"id":"REQ-01","profile_link":"source repository and driver scope; source pilot scope"},
+    {"id":"REQ-02","profile_link":"source/change classification plus approved baseline and skip evidence; no explicit example profile field binds baseline hash or plan approval"},
+    {"id":"REQ-03","profile_link":"quality.sam and quality.tem program/parser/rule/threshold references"},
+    {"id":"REQ-04","profile_link":"device SQE script/cases and boot identity fields"},
+    {"id":"REQ-05","profile_link":"workflow human-owned stage registry; profile is not the authority for owners"},
+    {"id":"REQ-06","profile_link":"runtimes and agent contract references; role ownership is in workflow/agent contract"},
+    {"id":"REQ-07","profile_link":"device bridge/device identifiers and ADB/fastboot serials"},
+    {"id":"REQ-08","profile_link":"device/SQE profile plus human fallback policy; fallback authorization is workflow contract"},
+    {"id":"REQ-09","profile_link":"release mode/repository/target/version/reviewers"},
+    {"id":"REQ-10","profile_link":"approval release_required and distinct-approver policy; digest binding/decision is runtime contract"},
+    {"id":"REQ-11","profile_link":"runtimes primary/secondary/provider/model/version references"},
+    {"id":"REQ-12","profile_link":"not profile data; web/API/events contract"},
+    {"id":"REQ-13","profile_link":"project_id scope is relevant, but membership/owner authorization and workspace isolation belong to B02"},
+    {"id":"REQ-14","profile_link":"not a profile value; workflow routing, human tasks and notifications contract"},
+    {"id":"REQ-15","profile_link":"source pilot repository/base ref and driver/test paths; exact first-job values remain to be supplied"}
+  ],
+  "implementation_boundaries": {
+    "new_schema": "A project-profile JSON Schema is a new implementation artifact, not an existing supplied original contract schema. Keep it versioned and explicitly map/validate the example profile against it.",
+    "first_reusable_module": "Implement a pure server-side profile/workflow contract validation and snapshot constructor under the future IFPMIC server package, and make the future authenticated job-creation ingress call it. A CLI may call the same module. Do not make a replay/mock-only validator the sole implementation, and do not add write routes to AX server/index.mjs.",
+    "b02_boundary": "B02 owns authenticated user-scoped API, authorization, DB persistence, and per-request workspaces. B01 validation may accept a trusted project context from ingress but cannot establish ownership/isolation itself.",
+    "b03_boundary": "B03 owns durable Temporal workflow execution, outbox, human waits, restart recovery and workflow version pinning. B01 may resolve immutable registry versions but does not execute or persist process transitions.",
+    "ax_api_boundary": "Current AX server/index.mjs is localhost-only and GET-only; it rejects non-GET API requests and exposes transcript dashboard/activity reads. Keep IFPMIC command/write ingress in a separate service boundary."
+  },
+  "uncertainties": [
+    "The project profile example supplies field names and a real-mode guard statement but no formal field-level schema or explicit list of required fields by mock versus real mode.",
+    "The OpenAPI contract requires workflow_version while the canonical workflow document contains workflow_id and schema_version; mapping/compatibility policy is not defined.",
+    "OpenAPI defines workflow/job APIs but no project-profile registry, profile approval, profile read, or immutable snapshot creation endpoint/schema.",
+    "No production values for repository, runtime/provider, build, quality, device, release, SSO, or approver policy were supplied; the profile is intentionally disabled mock."
+  ]
+}
