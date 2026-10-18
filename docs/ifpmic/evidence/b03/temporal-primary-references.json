@@ -1,0 +1,32 @@
+{
+  "kind": "ifpmic.b03.temporal-primary-reference-collection.v1",
+  "collected_at": "2026-10-18T19:28:29.024800+00:00",
+  "status": "reference_collection_only_not_dependency_or_plan_approval",
+  "sources": [
+    {
+      "url": "https://github.com/temporalio/documentation/blob/main/docs/develop/python/best-practices/testing-suite.mdx",
+      "observed": "Official testing guide distinguishes unit, integration and end-to-end coverage and describes workflow replay tests.",
+      "planning_inference": "B03 needs live-server integration plus retained-history replay; pure reducer tests alone cannot prove durable workflow execution."
+    },
+    {
+      "url": "https://python.temporal.io/temporalio.testing.WorkflowEnvironment.html",
+      "observed": "start_local supports a preexisting CLI path and a dev-server database filename; its default path can download the CLI. The local dev server uses SQLite.",
+      "planning_inference": "Pin the SDK and any test server binary before execution and prohibit implicit test downloads. Explicitly distinguish Temporal development-server persistence from the original IFPMIC PostgreSQL database; do not replace IFPMIC PostgreSQL or claim production topology acceptance."
+    },
+    {
+      "url": "https://python.temporal.io/temporalio.worker.Replayer.html",
+      "observed": "Replayer accepts workflow definitions and replays retained workflow histories.",
+      "planning_inference": "AT-29 requires a pinned v1 definition waiting through a v2 rollout, then resume and replay proof. Replayer success alone does not prove deployment routing or original AT completion."
+    },
+    {
+      "url": "https://github.com/temporalio/documentation/blob/main/docs/develop/safe-deployments.mdx",
+      "observed": "Safe deployment guidance covers workflow compatibility and history replay.",
+      "planning_inference": "Select and verify a compatible worker routing/version policy in the implementation plan; do not treat definition JSON version alone as worker-code compatibility."
+    }
+  ],
+  "limits": [
+    "References are mutable online documentation, not installed API/version evidence. Fetch immutable SDK/server release metadata and hashes before selecting dependencies.",
+    "No package was installed, binary downloaded, server started, or product/test code changed by this reference collection.",
+    "Only public Temporal names and documentation URLs were sent in searches; no local code, logs, credentials or original design content were uploaded."
+  ]
+}

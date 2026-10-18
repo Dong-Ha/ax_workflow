@@ -1,0 +1,76 @@
+{
+  "kind": "ifpmic.b02.g7.local-foundation-final-review.v1",
+  "reviewer_role": "independent cumulative local-foundation reviewer",
+  "reviewed_candidate": {
+    "head": "95f4a3d4a88e4f1fc9bcf09d003daf9a7267782d",
+    "plan": {
+      "path": "docs/ifpmic/B02-IDENTITY.md",
+      "sha256": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a"
+    },
+    "cumulative_verification": {
+      "path": "docs/ifpmic/evidence/b02/local-foundation-verification.json",
+      "sha256": "230f43b7ca76af6007d2056e02dc2ecabe77b5f0b50292c5959e9947d5948a6c"
+    }
+  },
+  "verdict": "accept_partial_local_b02_foundation",
+  "scope": "G0-G6 local foundation only. B02 remains in progress; original AT-21 is partial, all 32 original acceptance cases remain not executed, and B03-B13 remain pending.",
+  "independent_checks": {
+    "g0": {
+      "plan_acceptance": "The acceptance record, dual plan reviews, and source collection match the exact B02-IDENTITY.md SHA. Both reviewers explicitly limit approval to implementation/test authoring and preserve the original B02 and AT-21 scope.",
+      "source_collection_sha256": "da6fdce28078167517b5ee94336bddb81775d1dad91b41181c894acde2f2437a",
+      "plan_review_sha256": "fa9a273001c214a7cb39802ed86f4f968f9899a84a5be75d61b1483aa5694cef",
+      "tc_plan_review_sha256": "c41bf370859a4a6a61d1e1bdaa005b07e4311d2b73c1bca5b1c49540a16fb0df"
+    },
+    "stage_reports_and_archives": {
+      "result": "All G1-G6 verification reports, independent final reviews, and archive hashes match the manifest. For G1-G5 I independently checked every archive member set, byte count, and digest against each stage report. G6 has 13 entries and matches its published verification metadata.",
+      "stage_reviews": {
+        "G1": "ff3d83a515797ed4c2fa113f1e0bc598cef537428c30a57ebaf2f0034aa84bdb",
+        "G2": "710d38fb44121390312a2c11a3df10fc30f0107ec2653cde89dc0e44e788dd46",
+        "G3": "dc0cfa5b2eb899e0ee0b4f4412db949f798ba7ac88f19cb79a74825b7e2f11e8",
+        "G4": "016735ed8a370737d695494eec415083a29b8b6de42831639535aeaaaefc7150",
+        "G5": "e76f9a4eafa4999b44263c512e57d24116bdcbf54b36ee8268c5e412d54ff237",
+        "G6": "0a28856f6fc1ff11848c747e1728520717b44dd60ef7d320632be4942daebffa"
+      },
+      "archive_sha256": {
+        "G1": "183c6fc0dc1b8e4c4db98e887bc6e839b4f97326270899743b03ea28d2951ad2",
+        "G2": "58e4548dad9f156f20a0ce96dc8eeb8d46d0a4c347960e9bdb09652d9082fb4c",
+        "G3": "76d5c6377d2dc8a80c8f01fcf5ffe53e083ed109a8a18345ba023ff745067c50",
+        "G4": "5b7cec3e8e2d6febe0afe5da38744e59fb3a4b77fd3865cefac21bc87a528193",
+        "G5": "c299d6c0c03fe28692a012916923325e406d6bb606ccf0c1203921f6b82df7ab",
+        "G6": "41ad9f806216b0d29896a54b40c7e7ec0db5f574908a949216a484050456b647"
+      }
+    },
+    "fresh_g6_regression": {
+      "verification_sha256": "1f997503a29bc283942652befa30a41c7b2a24e38695ecde5b9578ce334847ae",
+      "result": "351 Python tests and 387 full Node tests passed with zero failures, errors, skips, cancellations, or todos; the 48 targeted Node cases are a subset. All ten rebuilt outputs match accepted controls. The G6 independent review confirms the exact inventories, timings, lifecycle cleanup, and service observations.",
+      "scope_note": "The 11 browser/native-host commands were omitted only under the approved unchanged-source, dependency, and output condition. This is not UI behavior or authentication acceptance."
+    },
+    "current_source_and_index": {
+      "result": "The 352-entry private G6 candidate source ZIP matches the captured source map and current disk except for the documented derivative docs/ifpmic/progress.json update. Of those entries, 350 are tracked; 349 match the index after excluding progress metadata. No product, test, runner, plan, or lock changes are recorded.",
+      "private_source_zip_sha256": "788f72ca52a19a9da30c49cc45a114a9f8e2639edef14ae97fd0f4809967c850",
+      "progress_reconciliation_sha256": "398fc4741f5c643961a96269604157819b160645bac0bd049ea748bd30c1235b",
+      "original_imports_byte_identical": 17,
+      "original_uploads_byte_identical_and_untracked": 2
+    },
+    "privacy_and_runtime_evidence": {
+      "result": "The G6 public archive excludes private source/build archives, original uploads, and raw worker/service logs. I scanned public G1-G6 archives for absolute workspace paths, database/secret markers, and synthetic OIDC canaries; none were present. G6 private gate files are mode 0600 under a mode 0700 directory. Its G5 workspace observation records 42 unique PID/start-tick identities, all stopped, and all 84 retained stdout/stderr files match their recorded sizes and hashes under private permissions.",
+      "g6_gate_entry_sha256": "60f98fefbae436f4ad660be4870e2ef7bd416fe8d8efafaff02dc4f9aa73d584",
+      "g6_private_workspace_observation_sha256": "b2826208267908e802869b2b2d1a517abb20a465280a1ef794b4d958084c9412",
+      "g6_private_workspace_observation_path": "workflow-artifacts/verification/B02/G5/gates/2026-10-18T19-08-19-351591Z/private-workspace-observation.json"
+    },
+    "requirements_and_boundaries": {
+      "result": "The manifest preserves direct REQ-13 and partial AT-21 scope, with REQ-02/05/11/12/14 preserved. It distinguishes local auth, API, database, workspace readiness, and isolation evidence from real corporate SSO, proxy redaction, production grants/database/backup policy, Temporal execution, live UI/SSE/artifact integration, device integration, and release acceptance.",
+      "original_acceptance_cases_sha256": "f7163553edc9e8e753965cb8748ab04aac8f68c1a453f567f62284a01b38b0d5",
+      "all_32_original_cases": "not_executed",
+      "B03_B13": "pending"
+    },
+    "verification_performed_by_reviewer": "Read-only inspection, SHA-256 verification of manifest pins, G1-G5 archive membership and entry digests, G6 source ZIP/current/index reconciliation, G6 archive privacy scan, and G5 process/log-file identity and digest checks. No tests, builds, services, databases, or network operations were run."
+  },
+  "decision_boundary": "Accept the cumulative local foundation as a partial B02 milestone only. This is not full B02 or AT-21 acceptance, does not complete any of the original 32 acceptance cases, and does not authorize production deployment or claim B03-B13 completion.",
+  "remaining_acceptance": [
+    "Corporate OIDC, TLS, reverse-proxy query redaction, and real project/membership/eligibility provisioning.",
+    "Operational PostgreSQL, backup, storage, and workspace policies.",
+    "B03 Temporal/outbox execution and the remaining B04-B13 integration, role, device, release, and acceptance work.",
+    "The original AT-01 through AT-32 acceptance suite, including full AT-21 logs/artifacts/images/devices isolation against real integrated endpoints."
+  ]
+}

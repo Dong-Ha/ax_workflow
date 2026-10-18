@@ -1,0 +1,920 @@
+{
+  "kind": "ifpmic.b02.g7.local-foundation-verification.v1",
+  "created_at": "2026-10-18T19:27:42.619923+00:00",
+  "decision": "cumulative_evidence_verified_pending_independent_review",
+  "candidate_head": "95f4a3d4a88e4f1fc9bcf09d003daf9a7267782d",
+  "scope": "Cumulative G0-G6 local foundation audit under approved B02 G7. This does not complete B02, original AT-21, any original acceptance test, or B03-B13.",
+  "requirements": {
+    "direct": [
+      "REQ-13",
+      "AT-21 (partial only)"
+    ],
+    "preserved": [
+      "REQ-02",
+      "REQ-05",
+      "REQ-11",
+      "REQ-12",
+      "REQ-14"
+    ],
+    "original_requirements": {
+      "path": "docs/ifpmic/design-v1/specs/requirements.json",
+      "sha256": "6e1dc87cdbcaa66ed690ffd13d2d70242dff43410c9f822447bd520719ce249b"
+    },
+    "original_backlog": {
+      "path": "docs/ifpmic/design-v1/specs/implementation-backlog.json",
+      "sha256": "115e48568e0464b8e67ef17274dba97b3046a8de902e1cf426d9b70e1528e5d0"
+    },
+    "original_workflow": {
+      "path": "docs/ifpmic/design-v1/specs/workflow.v1.json",
+      "sha256": "bab40a7abb3929896add1ef2cd074893dd2a7de14d200a5d6cea4b7a77eb0e89"
+    },
+    "original_agent_contract": {
+      "path": "docs/ifpmic/design-v1/specs/agent-contract.json",
+      "sha256": "ca6d4bea7abf0fffe7354c482af0d521c3a2e367217a69923a4bfe43fa27ab64"
+    },
+    "original_openapi": {
+      "path": "docs/ifpmic/design-v1/specs/openapi.v1.json",
+      "sha256": "2ed780cfa06349b18f5025937e050fd98a5cefa34b552eb836cfaccad416dd7a"
+    },
+    "route_and_at21_matrix": {
+      "path": "docs/ifpmic/evidence/b02/g6-tc-api-acceptance-matrix.json",
+      "sha256": "b003d59057d64a211faae36fe23cd0c2a1e679dc2b4148f45decca19be79cda2"
+    }
+  },
+  "verification_plan": {
+    "purpose": "Prove the local milestone from preserved execution evidence while retaining every unverified requirement.",
+    "target": "Approved G0 plan, accepted G1-G6 candidates, current frozen source, archive/raw evidence, privacy and acceptance boundaries.",
+    "method": "Read-only exact-SHA and archive-entry checks, current source/index reconciliation, independent review of raw evidence and requirements; no new test/service execution.",
+    "owner": "Code-dev/main integrates; separate worker_luna reviews; TC retains test ownership.",
+    "pass_criteria": "G0 dual reviews target the exact plan; all G1-G6 archives match their entry manifests; current product/test/runner/plan/lock bytes match G6; only documented progress metadata differs; independent reviewer accepts partial scope; no original AT completion claim.",
+    "expected_result": "accept_partial_local_b02_foundation, with B02 overall in_progress and 32 original AT not_executed.",
+    "evidence": "This manifest, pinned G0-G6 reports/archives/raw private evidence and independent local-foundation-final-review.json.",
+    "failure_recovery": "Preserve the rejected report and failure evidence; return to the affected G stage. Product/test/runner/lock changes require a new fixed candidate and relevant regression including G6, then repeat G7. Metadata-only mistakes require a versioned correction and independent re-review.",
+    "coverage": {
+      "normal": "G1 actual migrations, G2 bridge, G3 signed local OIDC, G4 API/DB, G5 workspace provisioning; freshly rerun in G6.",
+      "exception": "Protocol/authority/transaction/process/fault cases in pinned stage ledgers, rerun in G6.",
+      "boundary": "Body/schema/session/cursor/bridge limits and stale workspace claims in stage ledgers, rerun in G6.",
+      "regression": "Fresh 351 Python and 387 Node tests; targeted 48 Node are a subset; builds and original bytes checked.",
+      "impact_decision": "G7 changes derivative audit/progress metadata only. No product, test, runner, lock or UI bytes changed, so no duplicate service/test execution. G6 conditional omission remains restricted to the accepted exact-source/dependency/ten-output condition.",
+      "residual_risks": "Real SSO/proxy/production provisioning, actual Temporal orchestration, live UI/API integration, device and release acceptance remain unproven."
+    }
+  },
+  "g0": {
+    "plan": {
+      "path": "docs/ifpmic/B02-IDENTITY.md",
+      "sha256": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a"
+    },
+    "acceptance": {
+      "path": "docs/ifpmic/evidence/b02/plan-acceptance.json",
+      "sha256": "54f412c992b7ff0d73520040161f21d291c742bcc1a4a2f70db320e1e7997f16"
+    },
+    "dual_reviews": [
+      {
+        "path": "docs/ifpmic/evidence/b02/plan-review-v3.json",
+        "sha256": "fa9a273001c214a7cb39802ed86f4f968f9899a84a5be75d61b1483aa5694cef"
+      },
+      {
+        "path": "docs/ifpmic/evidence/b02/tc-plan-review-v3.json",
+        "sha256": "c41bf370859a4a6a61d1e1bdaa005b07e4311d2b73c1bca5b1c49540a16fb0df"
+      }
+    ],
+    "source_collection": {
+      "path": "docs/ifpmic/evidence/b02/source-collection.json",
+      "sha256": "da6fdce28078167517b5ee94336bddb81775d1dad91b41181c894acde2f2437a"
+    }
+  },
+  "stages": [
+    {
+      "id": "G1",
+      "verification": {
+        "path": "docs/ifpmic/evidence/b02/g1-verification.json",
+        "sha256": "0421d4d025e8463a22e08036fc2f8a517822676deea71afa1ea2844decd9a63a"
+      },
+      "independent_review": {
+        "path": "docs/ifpmic/evidence/b02/g1-final-review.json",
+        "sha256": "ff3d83a515797ed4c2fa113f1e0bc598cef537428c30a57ebaf2f0034aa84bdb"
+      },
+      "review_verdict": "accept_partial_g1_candidate",
+      "archive": {
+        "path": "docs/ifpmic/evidence/b02/g1-gate.zip",
+        "sha256": "183c6fc0dc1b8e4c4db98e887bc6e839b4f97326270899743b03ea28d2951ad2"
+      },
+      "archive_entries_verified": 3,
+      "historical_manifest_entry_prefix": "gate/",
+      "tests": {
+        "tests": 12,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0,
+        "passed": 12
+      },
+      "evidence_role": "historical stage acceptance; current code covered again by G6"
+    },
+    {
+      "id": "G2",
+      "verification": {
+        "path": "docs/ifpmic/evidence/b02/g2-verification.json",
+        "sha256": "09dad23c1e038db1a30a68da604d9dea43edcfd66e3591dc10d52cd0b97c560e"
+      },
+      "independent_review": {
+        "path": "docs/ifpmic/evidence/b02/g2-final-review.json",
+        "sha256": "710d38fb44121390312a2c11a3df10fc30f0107ec2653cde89dc0e44e788dd46"
+      },
+      "review_verdict": "accept_partial_g2_candidate",
+      "archive": {
+        "path": "docs/ifpmic/evidence/b02/g2-gate.zip",
+        "sha256": "58e4548dad9f156f20a0ce96dc8eeb8d46d0a4c347960e9bdb09652d9082fb4c"
+      },
+      "archive_entries_verified": 4,
+      "historical_manifest_entry_prefix": "gate/",
+      "tests": {
+        "python": {
+          "tests": 53,
+          "failed": 0,
+          "errors": 0,
+          "skipped": 0,
+          "passed": 53
+        },
+        "g1_cases": 12,
+        "g2_cases": 41,
+        "b01_node": {
+          "tests": 48,
+          "pass": 48,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        }
+      },
+      "evidence_role": "historical stage acceptance; current code covered again by G6"
+    },
+    {
+      "id": "G3",
+      "verification": {
+        "path": "docs/ifpmic/evidence/b02/g3-verification.json",
+        "sha256": "f474be1df8ae355095d1b3bbc6ac400958fa502f8123649b02046046152c492c"
+      },
+      "independent_review": {
+        "path": "docs/ifpmic/evidence/b02/g3-final-review.json",
+        "sha256": "dc0cfa5b2eb899e0ee0b4f4412db949f798ba7ac88f19cb79a74825b7e2f11e8"
+      },
+      "review_verdict": "accept_partial_g3_candidate",
+      "archive": {
+        "path": "docs/ifpmic/evidence/b02/g3-gate.zip",
+        "sha256": "76d5c6377d2dc8a80c8f01fcf5ffe53e083ed109a8a18345ba023ff745067c50"
+      },
+      "archive_entries_verified": 4,
+      "historical_manifest_entry_prefix": "gate/",
+      "tests": {
+        "python": {
+          "tests": 167,
+          "failed": 0,
+          "errors": 0,
+          "skipped": 0,
+          "passed": 167
+        },
+        "g1_cases": 12,
+        "g2_cases": 41,
+        "g3_cases": 114,
+        "b01_node": {
+          "tests": 48,
+          "pass": 48,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        }
+      },
+      "evidence_role": "historical stage acceptance; current code covered again by G6"
+    },
+    {
+      "id": "G4",
+      "verification": {
+        "path": "docs/ifpmic/evidence/b02/g4-verification.json",
+        "sha256": "439a66c5a42129c616cc06eb165541eff9a284086db0d23fbf5d89c0d503624f"
+      },
+      "independent_review": {
+        "path": "docs/ifpmic/evidence/b02/g4-final-review.json",
+        "sha256": "016735ed8a370737d695494eec415083a29b8b6de42831639535aeaaaefc7150"
+      },
+      "review_verdict": "accept_partial_g4",
+      "archive": {
+        "path": "docs/ifpmic/evidence/b02/g4-gate.zip",
+        "sha256": "5b7cec3e8e2d6febe0afe5da38744e59fb3a4b77fd3865cefac21bc87a528193"
+      },
+      "archive_entries_verified": 6,
+      "historical_manifest_entry_prefix": "gate/",
+      "tests": {
+        "python_total": 258,
+        "g1": 12,
+        "g2": 41,
+        "g3": 114,
+        "g4": 91,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0,
+        "b01_node": {
+          "tests": 48,
+          "pass": 48,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "legacy_python": {
+          "tests": 167,
+          "failed": 0,
+          "errors": 0,
+          "skipped": 0,
+          "passed": 167
+        },
+        "g4_python": {
+          "tests": 91,
+          "failed": 0,
+          "errors": 0,
+          "skipped": 0,
+          "passed": 91
+        },
+        "maximum_case_seconds": {
+          "legacy_python": 2.68,
+          "g4_python": 6.133
+        }
+      },
+      "evidence_role": "historical stage acceptance; current code covered again by G6"
+    },
+    {
+      "id": "G5",
+      "verification": {
+        "path": "docs/ifpmic/evidence/b02/g5-verification.json",
+        "sha256": "6dac77b8ab4b7474a0438ee407d6e11406d5b7c8f1a1fcd2491c0e5f7dce8030"
+      },
+      "independent_review": {
+        "path": "docs/ifpmic/evidence/b02/g5-final-review.json",
+        "sha256": "e76f9a4eafa4999b44263c512e57d24116bdcbf54b36ee8268c5e412d54ff237"
+      },
+      "review_verdict": "accept_partial_g5",
+      "archive": {
+        "path": "docs/ifpmic/evidence/b02/g5-gate.zip",
+        "sha256": "c299d6c0c03fe28692a012916923325e406d6bb606ccf0c1203921f6b82df7ab"
+      },
+      "archive_entries_verified": 8,
+      "historical_manifest_entry_prefix": "gate/",
+      "tests": {
+        "python_total": 351,
+        "g1": 12,
+        "g2": 41,
+        "g3": 114,
+        "g4": 91,
+        "g5": 93,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0,
+        "b01_node": {
+          "tests": 48,
+          "pass": 48,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "legacy_python": {
+          "tests": 167,
+          "failed": 0,
+          "errors": 0,
+          "skipped": 0,
+          "passed": 167
+        },
+        "g4_python": {
+          "tests": 91,
+          "failed": 0,
+          "errors": 0,
+          "skipped": 0,
+          "passed": 91
+        },
+        "g5_python": {
+          "tests": 93,
+          "failed": 0,
+          "errors": 0,
+          "skipped": 0,
+          "passed": 93
+        },
+        "maximum_case_seconds": {
+          "legacy_python": 4.155,
+          "g4_python": 7.97,
+          "g5_python": 7.111
+        }
+      },
+      "evidence_role": "historical stage acceptance; current code covered again by G6"
+    },
+    {
+      "id": "G6",
+      "verification": {
+        "path": "docs/ifpmic/evidence/b02/g6-verification.json",
+        "sha256": "1f997503a29bc283942652befa30a41c7b2a24e38695ecde5b9578ce334847ae"
+      },
+      "independent_review": {
+        "path": "docs/ifpmic/evidence/b02/g6-final-review.json",
+        "sha256": "0a28856f6fc1ff11848c747e1728520717b44dd60ef7d320632be4942daebffa"
+      },
+      "review_verdict": "accept_partial_g6",
+      "archive": {
+        "path": "docs/ifpmic/evidence/b02/g6-gate.zip",
+        "sha256": "41ad9f806216b0d29896a54b40c7e7ec0db5f574908a949216a484050456b647"
+      },
+      "archive_entries_verified": 13,
+      "historical_manifest_entry_prefix": "",
+      "tests": {
+        "python": 351,
+        "targeted_node": 48,
+        "full_node": 387,
+        "targeted_node_is_subset_of_full_node": true,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0,
+        "full_node_maximum_case_seconds": 20.115621383999997
+      },
+      "evidence_role": "current fresh integrated candidate"
+    }
+  ],
+  "current_source_reconciliation": {
+    "reference": "g6-gate.zip!gate/gate.json source_hashes",
+    "captured_entries": 352,
+    "unchanged_disk_entries": 351,
+    "unchanged_tracked_index_entries_excluding_progress": 349,
+    "changed_paths": [
+      "docs/ifpmic/progress.json"
+    ],
+    "allowed_progress_reconciliation": {
+      "path": "docs/ifpmic/evidence/b02/g6-progress-reconciliation.json",
+      "sha256": "398fc4741f5c643961a96269604157819b160645bac0bd049ea748bd30c1235b"
+    },
+    "progress_at_audit": {
+      "path": "docs/ifpmic/progress.json",
+      "sha256": "49edfb9dc1151a6259869fb065d940032ea8ded654ce54c470d416f7ab4c1709"
+    },
+    "post_review_metadata_policy": "Only progress status/evidence links, scope/next_step/updated_at and a derived reconciliation may change after acceptance. No original contract or product/test/runner/plan/lock changes are authorized by this exception.",
+    "product_test_runner_plan_lock_changes": [],
+    "original_imports_verified": 17,
+    "original_uploads_verified": 2,
+    "original_uploads_tracked": false
+  },
+  "fresh_regression_summary": {
+    "python": 351,
+    "node": 387,
+    "targeted_node_subset": 48,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "ten_rebuilt_outputs_equal_accepted_controls": true,
+    "source_fingerprint": "b845f54ee3757e7ddd8cc2130267587e358ea2e57e7f210be6c87942f29bdc43",
+    "independent_g6_review": {
+      "path": "docs/ifpmic/evidence/b02/g6-final-review.json",
+      "sha256": "0a28856f6fc1ff11848c747e1728520717b44dd60ef7d320632be4942daebffa"
+    }
+  },
+  "evidence_history": [
+    {
+      "path": "docs/ifpmic/evidence/b02/architecture-advice.json",
+      "sha256": "d125f5cbd05698eaf0e810b9677cea1db1514aff967eb0672964a33d4433bff9"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/attempts/g1-before-real-authority-guard.sql",
+      "sha256": "036f8a0d5c65dbd178b2f33d968d57b98cb015fcb0d56ee545952b3aeecf822e"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/attempts/g1-gate-before-baseline-fix.py",
+      "sha256": "da78b0d993d32a7c9481f2342a921714e9aabd76d63f9362038a0f55ee9bb49a"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/attempts/g2-before-launch-cleanup/catalog-before-input-type.py",
+      "sha256": "8c6f83b72a188fdfa9d15afbd4ac7e27bea8bfbdc30ef091028cbd7a65e890c5"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/attempts/g2-before-launch-cleanup/gate-before-private-permissions.py",
+      "sha256": "a50a65b3ebd466593d77b052f3f88a2814537fad0b7dc3da889f9e4e0d9123c1"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/attempts/g2-before-launch-cleanup/snapshot_bridge-single-cancel.py",
+      "sha256": "daaf2ad20db7edd597723a6519f8e0529f2f31b76297de4589a6b38f33bbbcb9"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/attempts/g2-before-launch-cleanup/snapshot_bridge-v3.py",
+      "sha256": "77aa22531a6bfd1f11c0270c8db557f46aae2d654a2ad4b2ff06783cc4294cc8"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/attempts/g2-before-launch-cleanup/snapshot_bridge.py",
+      "sha256": "bcb7c5ade7a3e072d47b09936f1b4ab3fa151c93da313147a063e92507ab8d99"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/attempts/g3-before-review-fixes/app.py",
+      "sha256": "3e25b9fc3dbc4ec82e7af3acfb518c6b664e909b295e03217bb2f69edc02434d"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/attempts/g3-before-review-fixes/auth-before-capacity-commit.py",
+      "sha256": "e97797836cd8ebec063337d05286447a894cf25866d7190decc23bce0a903cd7"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/attempts/g3-before-review-fixes/auth.py",
+      "sha256": "f72c8a602fbbd52ace494d17e3ea4da8a338d2525328dcc265d16ba2daa10920"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/attempts/g3-before-review-fixes/oidc-before-public-key-completeness.py",
+      "sha256": "eeff025cf25afa52888bcb5591a9ae2cfa511d53bb43a8817629a3c83d9f060a"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/attempts/g3-before-review-fixes/oidc.py",
+      "sha256": "dd40cec546a6a6731cdc4fc94884cadb9b4cbe062d3ba478b484c6b37f281964"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/attempts/g3-before-review-fixes/settings.py",
+      "sha256": "128e94b5cd80f299289f5e36f3ebb9241660e9e72b01fed81c9c7cad4f8e4988"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/attempts/plan-v1.md",
+      "sha256": "e4efc9c93af668b4f2db6bbad091720a5465ea789616b7a9b06dbc9e19933692"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/attempts/plan-v2.md",
+      "sha256": "6bfabb6794b5656a48ebfc1d40e3f007aea3769a19e49a1747ec38b8dd15487a"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/dependency-candidate-metadata.json",
+      "sha256": "d51c739c7f8e01413039e6d152f11c9f39d0a203128e2c4c23e96bb5e0c38fc2"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g1-final-review.json",
+      "sha256": "ff3d83a515797ed4c2fa113f1e0bc598cef537428c30a57ebaf2f0034aa84bdb"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g1-historical-source.json",
+      "sha256": "573425034240174f2459c5db176c45f6ea8dbde5fbab9010ccbada705e34745e"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g1-initial-review-v2.json",
+      "sha256": "5dcdbcfdb6c3e3158d7ee1c660a11a8d23611e1e6ddad2415eb65b7efe51cf66"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g1-initial-review.json",
+      "sha256": "f6d8a5aefc940f719be62fd2ca181e61cdfa8e81d741d22a560ed24d7fee0729"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g1-pre-gate-review-v2.json",
+      "sha256": "558b77ee08607beff089048e5a24ccd2bfa00e08c4524b5b8f3c203d500849af"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g1-pre-gate-review.json",
+      "sha256": "8afc0687ccb314cc26c39f47aa4eac85ffe69e6353e8448e64961f76c88dafe0"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g1-tc-ledger.json",
+      "sha256": "493ffda766b289192a88b4e4ad56eed3ef58e4414c4cec39999617365f4c8d92"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g1-verification.json",
+      "sha256": "0421d4d025e8463a22e08036fc2f8a517822676deea71afa1ea2844decd9a63a"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g2-contract-review.json",
+      "sha256": "e04ff411798204527d168b646e039e8c57e5fe55648f5d57e9385b5864385237"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g2-final-review.json",
+      "sha256": "710d38fb44121390312a2c11a3df10fc30f0107ec2653cde89dc0e44e788dd46"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g2-historical-source.json",
+      "sha256": "9e0569395a2c5371a668fb5f29756498e0e0dc9efdb55f6505193774b21bd16e"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g2-initial-review-v2.json",
+      "sha256": "02e6930b04d2e62e77d79c6947e5b28bd72aa2dc82d5bd3ec721119f626d9bd8"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g2-initial-review-v3.json",
+      "sha256": "2c5eb3fcb9bcd3684fce47bc66c58351cf6130a80220e4bdd62deee2ba9cfb11"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g2-initial-review-v4.json",
+      "sha256": "769dd3e54131051e81fe72b57dc4751cace2da8ad9d3af3fb2b4a6257b484bcd"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g2-initial-review-v5.json",
+      "sha256": "3869b4011a332651c58a74bbb82e5daaf1878c6a381108d4e762ec139dede532"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g2-initial-review.json",
+      "sha256": "9fb798209a5150d6560d1246a62a0f54515dd6b4d1519370adb0d1e982906319"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g2-tc-ledger.json",
+      "sha256": "018b4abe93f5bf4234d530fdfb20a8da8319ec0376fd9650a8222acede586dae"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g2-verification.json",
+      "sha256": "09dad23c1e038db1a30a68da604d9dea43edcfd66e3591dc10d52cd0b97c560e"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g3-authlib-source-collection-v2.json",
+      "sha256": "1cdff5ec842aa644b479705804e401dee6a78faa1cb01d6e11f419006ac5e223"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g3-authlib-source-collection.json",
+      "sha256": "da3206e06465d08aa549eeb79e9c7575cb38ae201ff7166d60e1a720c11241fc"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g3-contract-review-v2.json",
+      "sha256": "e5024ecf58665aef6f848ae4b7f514fbf5a0394c007e8a597d74a6b5949b9440"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g3-contract-review-v3.json",
+      "sha256": "b0bfa4a401a0299102cd8a4666cbb574b372fcf87c6cc5ac5a476f730a7dd0b9"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g3-contract-review-v4.json",
+      "sha256": "83184c2c5d805f521f98ab0fe6fbf5c4b04bb3c7326f42b27d56ed3a651c32bd"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g3-contract-review.json",
+      "sha256": "2d6443dce0847ee67b4425b36c6f74822b9da23ccbada47efcb57f23eef075c9"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g3-final-review.json",
+      "sha256": "dc0cfa5b2eb899e0ee0b4f4412db949f798ba7ac88f19cb79a74825b7e2f11e8"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g3-historical-source.json",
+      "sha256": "783d887f8bfea2c556410285fa2ce57978950e796cfe5dd915885c6103238a15"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g3-implementation-contract-v2.json",
+      "sha256": "157bebf63781aeec4463ca68a19c7991ae690ef0d535f2cf367fc4ff95cf2292"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g3-implementation-contract-v3.json",
+      "sha256": "0de7956ee751fa3fb3efc24458832b4e69d760c435ee23940c9f9f4656ebd531"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g3-implementation-contract-v4.json",
+      "sha256": "9b01aea9e54d1663aa7ad0bd6d14028292aa85a4e4c7300c5552b3613a810a72"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g3-implementation-contract.json",
+      "sha256": "239f50b55e763abb8822956b65cac2d5db70fadfb14e67a6005520505c687e4f"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g3-initial-review-v2.json",
+      "sha256": "2949e09cbf0029591fd3b5de13989599726313053c9df5222ff58dc8cfe64967"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g3-initial-review-v3.json",
+      "sha256": "b346eb73dd274e66dd21df8997b5f6fb255f3164bec74631d00bff30d1fed404"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g3-initial-review.json",
+      "sha256": "35fb0a63bedcc1076966180f9c4db81fcd8e723ea38739d4dec25361c2ae437e"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g3-pre-gate-review-v2.json",
+      "sha256": "de4b8a10d13cc0705a26abf744d5e2c00af3383e24528d63684c67b0766ec132"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g3-pre-gate-review-v3.json",
+      "sha256": "66b26bbe8adc509480bf68a46b8ccf144f60325a3ab5ad1a6928b1c610440bc2"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g3-pre-gate-review.json",
+      "sha256": "38c808d06b29b048ecfc8b78c34cc4eb8c48261f3fac01316932fdbe04181a4e"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g3-tc-contract-review-v2.json",
+      "sha256": "47689f9864a034248bec4d034001dd5c22a7de28f5885a4bafe7fe40e7cc978e"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g3-tc-contract-review-v3.json",
+      "sha256": "768ff7818a700d01ab8a9c2edcae5a9ccbaaa34d169621b1fae9ca0955a2f85b"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g3-tc-contract-review-v4.json",
+      "sha256": "f2f7695cb5a1f3ee3e67afcfb228c30cc9aac600e89f5408fcef4a22e9f60ece"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g3-tc-contract-review.json",
+      "sha256": "8dc63fec4f9110a826e7a38cdb90bfe7330e38794a8ea7e3fd2f403d9a45f7c9"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g3-tc-ledger-before-whitespace.json",
+      "sha256": "763443b263b9c67764439e21c97de0c16f06322681e53cfcc79f7c3f98ccaa80"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g3-tc-ledger.json",
+      "sha256": "b5a55a27d895c82a60a1efcc0c825654ce99a1775191ce480f3c9e2d6c56d359"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g3-verification.json",
+      "sha256": "f474be1df8ae355095d1b3bbc6ac400958fa502f8123649b02046046152c492c"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g4-contract-review-v2.json",
+      "sha256": "620236c8176d57025c1e9e0e1a93d85994001d9125f97d196f242e404767efbc"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g4-contract-review.json",
+      "sha256": "f42c90804eaf38408656e4340fd8fdec0e3712c40e6f1aebbd3beeb295c619fc"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g4-final-review.json",
+      "sha256": "016735ed8a370737d695494eec415083a29b8b6de42831639535aeaaaefc7150"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g4-gate-execution-decision-v2.json",
+      "sha256": "933dbb31861460538ca635c923a9509a0feaba6016a61e535b68191670ef3323"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g4-gate-execution-decision-v3.json",
+      "sha256": "e34236ad139a0ac550b12c365a485d5d5b1bb1b4255e57c6cc598984822c6914"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g4-gate-execution-decision.json",
+      "sha256": "9ace4f33fb31058e690c8de26d512f0c6f049d02ed36991993560137f4ef3ce2"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g4-implementation-contract-v2.json",
+      "sha256": "830a98401e9addb3869722134866515183310dd0b86019463e08f6ef4baf2d14"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g4-implementation-contract.json",
+      "sha256": "291b6dd9418eac32a2860f9f8299233b24b42785aab6c00e2c6d0756d00caaeb"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g4-initial-review.json",
+      "sha256": "a3712bb485d246493e8d81ceb0a44336840ceea6056508a00d086ae4c6985849"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g4-pre-gate-review-v2.json",
+      "sha256": "d756bf39f05e0f3c3f8a41bf7026d62ff40394b6fdb2338d1cb6d0d51847d69c"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g4-pre-gate-review.json",
+      "sha256": "b1e0d839f2c28667ae0aa048448b509af1c84bd0d54a26ce7a3a37b60a201dd4"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g4-runner-review-v2.json",
+      "sha256": "32ee09ea511efd4ba23cf4864e1f53a73e53f3f6945dce5191182ec3d7251e74"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g4-runner-review-v3.json",
+      "sha256": "b9b09be88e08c0170284dce453872ceae9e052b2a6c7e9945034f325d06fd0f8"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g4-runner-review.json",
+      "sha256": "7236aa9969bbb7b22b0830f35a69242beeb494291998a82e049f4cd86a4637a7"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g4-source-collection.json",
+      "sha256": "edbf595fab3eac8595834740008a318f32466947c616a4d0c1a2def229dad142"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g4-tc-contract-review-v2.json",
+      "sha256": "106949a70e29b6b7846c6a15a18abc8d8208305b44edaf719a74b7e66e65f834"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g4-tc-contract-review.json",
+      "sha256": "aab57034dc11188325ff70a40a78beea9871a34b802a1aaa01772392e9522054"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g4-tc-ledger.json",
+      "sha256": "ed7e7fcb517cf3b94bf3d6f32aa63509f827225b85ac55f3d9437235803dc5fc"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g4-tc-risk-matrix-v2.json",
+      "sha256": "e749d098b5bbdab50f461264c445408f56a84913f1fe3a140506b3136ebeb317"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g4-tc-risk-matrix-v3.json",
+      "sha256": "65a47224d9b30f6c299df73d268d4d22581f3df507475932bc64e01d1da0264a"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g4-tc-risk-matrix.json",
+      "sha256": "0aec3fa1f9b08164b3bba248c2673ba9a403235f5fa99a419295b08d130aabcc"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g4-transaction-advice.json",
+      "sha256": "ed53de12e30480b32ecd70f36f3569ba75405fd399fb89526dc669ea8e46b370"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g4-verification.json",
+      "sha256": "439a66c5a42129c616cc06eb165541eff9a284086db0d23fbf5d89c0d503624f"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g5-contract-review-v2.json",
+      "sha256": "c4200b52bc1dd7d51788750c84a0e38b97b7c5f526e687e1a878447f0205567d"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g5-contract-review.json",
+      "sha256": "2d0c7279b258e851d3c3970705665068647d06bfe8e5fa9d4258fba0fc242f18"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g5-final-review.json",
+      "sha256": "e76f9a4eafa4999b44263c512e57d24116bdcbf54b36ee8268c5e412d54ff237"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g5-gate-execution-decision-v2.json",
+      "sha256": "d237924fbb2ff90474b1ffe71921fa4291eb1714cd5504561031c49f32325cc5"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g5-gate-execution-decision.json",
+      "sha256": "c4d47e0f9dc1a948f6e228dc04f9492affd85f0158087be543d177b7000a35c7"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g5-gate-observation-contract.json",
+      "sha256": "ace8a426ab9ef5d5a12118c5d9e077a4d9c227c2dc4beb2612290001c17c6bf5"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g5-implementation-contract-v2.json",
+      "sha256": "cdbda5b333e0227f7804255d8d430968eec22d89657708fa8c109dea83f73b8b"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g5-implementation-contract.json",
+      "sha256": "dcf2266d6e87318ea23224442f8a17163f8e7136c0a8e7ddd0ad89d3cc6e6100"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g5-initial-review.json",
+      "sha256": "7de0b20f240efd593e361a0628983b979c0919ee70a3f764f2963bf030ce1dc5"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g5-pre-gate-review-v2.json",
+      "sha256": "4e3d5f2cf58678f5339e2fc8eddd464790f4042b10d22f3a4f92f63728fd3f9b"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g5-pre-gate-review.json",
+      "sha256": "aa46df2b24c22b1ddcca1203c4f8e2206c8b61dc5956dfe4939d8093de13a070"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g5-source-collection.json",
+      "sha256": "58a5632cbeabb5b30e58fbb7548224fa381e3976a04dad68fbb970c59a84ec16"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g5-tc-contract-review-v2-addendum.json",
+      "sha256": "6da82482b78e9cc7b314dc33352cac9821bfcbb58605c1dd71b1bd03242b2c24"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g5-tc-contract-review-v2.json",
+      "sha256": "a908ec47c4e6ac919797cc2d7fc162778251bdec1e827bd61740c4e3f5d05c09"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g5-tc-contract-review.json",
+      "sha256": "20dd7819dd5888f9dbc4f448f6ae6eba1eb03768fdd53ea8c4ad14741e48aff1"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g5-tc-ledger.json",
+      "sha256": "f0b7164d9125b48db4d276885c22f5af5768b35c8bb55bb5277ad9aee3a9a59f"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g5-tc-risk-matrix.json",
+      "sha256": "08919062de208239a735b4a3b5e6b3b395c1c90588d1da5da8cb9c1244d57de2"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g5-verification.json",
+      "sha256": "6dac77b8ab4b7474a0438ee407d6e11406d5b7c8f1a1fcd2491c0e5f7dce8030"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g5-workspace-protocol-advice.json",
+      "sha256": "2ca51031ada512c932dd1e89497a110013a702201b7d0d7d9bf9a2fb493342f6"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g6-contract-review-v2.json",
+      "sha256": "dc60fec3366914494729fb650f45c20dbca1c869906f93367bba064c18109b6b"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g6-contract-review.json",
+      "sha256": "ff141d8b651273f1e2b2268a094df41cf765e487aa5e20b1325a13383eaf443d"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g6-execution-contract-v2.json",
+      "sha256": "e45256f8f942046645af1f61cbc3c91a504780cb3d8c408a8d35702753c8cd63"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g6-execution-contract.json",
+      "sha256": "dd28255535f7210e7234d1052c8f48670c71aab2d36fd9c04aaeff0433ba8496"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g6-final-review.json",
+      "sha256": "0a28856f6fc1ff11848c747e1728520717b44dd60ef7d320632be4942daebffa"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g6-node-inventory.json",
+      "sha256": "e26e02a584c9cdeca983c03093c4a77577cb83f86ff26a32c5705eaa6b5a2c57"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g6-pre-gate-review.json",
+      "sha256": "30453ce21073904c9fb190fca9bb31cb2a8cecc5a0ea219ce3e6dd7112c0c036"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g6-preplan-diagnostic-record.json",
+      "sha256": "437824aca966a4d19bac5a455c9553891a553f1bdbf433cc37aeced1fd6d073a"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g6-progress-reconciliation.json",
+      "sha256": "398fc4741f5c643961a96269604157819b160645bac0bd049ea748bd30c1235b"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g6-source-baseline.json",
+      "sha256": "e6f8a41f1b33b21e4e903636eb2c404d6ef0da95b673294f5d17b686cf38d8bf"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g6-tc-api-acceptance-matrix.json",
+      "sha256": "b003d59057d64a211faae36fe23cd0c2a1e679dc2b4148f45decca19be79cda2"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g6-tc-contract-review-v2.json",
+      "sha256": "1204d724f789a3848532d9bdd2b766455f870481bb0f5abc3ba34a692645c1bb"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g6-tc-contract-review.json",
+      "sha256": "544fb572b8a424206f7a3b82f1e79392d953d95bbe1d9eedb3d35ca762875249"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/g6-verification.json",
+      "sha256": "1f997503a29bc283942652befa30a41c7b2a24e38695ecde5b9578ce334847ae"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/paperclip-auth-collection.json",
+      "sha256": "5255b7f5e529ec9de4114f8a31750aec34a4cc6673b6197ee9fe08f2381f4bfe"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/plan-acceptance.json",
+      "sha256": "54f412c992b7ff0d73520040161f21d291c742bcc1a4a2f70db320e1e7997f16"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/plan-review-v2.json",
+      "sha256": "034b9b7376824bea98d7e7325b6d8a2501ab9bce5257d80f54c9c8d07daec640"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/plan-review-v3.json",
+      "sha256": "fa9a273001c214a7cb39802ed86f4f968f9899a84a5be75d61b1483aa5694cef"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/plan-review.json",
+      "sha256": "34d0a5e67e5727c6c08464e2cbc5b84026bde1d4642659d3fceab45a402ce69e"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/source-collection.json",
+      "sha256": "da6fdce28078167517b5ee94336bddb81775d1dad91b41181c894acde2f2437a"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/tc-plan-review-v2.json",
+      "sha256": "fa8eb9c05f7605ebd87d289347997c61b46f39de40f32278ca38c63717b39a3e"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/tc-plan-review-v3.json",
+      "sha256": "c41bf370859a4a6a61d1e1bdaa005b07e4311d2b73c1bca5b1c49540a16fb0df"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/tc-plan-review.json",
+      "sha256": "58c83b707bfd5abdad751c6db3391f5af828db85c841939ce100b9ccf7564d30"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/tc-risk-matrix.json",
+      "sha256": "3bd978e2cbe7773f02e0ed94e820c6c2430d742c899721a6070764be96e1b5d6"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b02/technical-sources.json",
+      "sha256": "8ae934679291efc06c21d0c2f63bb5c5ea3b2c9adeb4c7208596886c8ebbaa40"
+    }
+  ],
+  "privacy": {
+    "public_scope": "Synthetic verification reports and normalized successful test/build summaries only; private runtime/source/build archives remain local.",
+    "private_original_uploads": "The private G6 source ZIP contains the two originals with mode 0600; neither original content nor private ZIP is in Git/public evidence.",
+    "no_new_external_transmission": "G7 performs local read-only audit and authorized repository record publication only.",
+    "review_required": "Independently inspect archive contents and preserved raw/private evidence; this manifest hash check is not itself a privacy proof."
+  },
+  "boundaries": {
+    "orchestration": "Paperclip remains the upper management/UI layer; FastAPI/PostgreSQL/Temporal remains the original execution architecture.",
+    "roles": "Code-dev manages integration; TC writes tests; SAM measurement/TEM measurement/SQE quality judgment remain separate; no real role execution performed here.",
+    "job_execution": "Local command acceptance and workspace readiness do not apply commands or execute jobs. Temporal/outbox activation remains B03.",
+    "human_approval": "Equipment actions require human assistance when needed; real deployment and external submission still require approval."
+  },
+  "remaining_acceptance": {
+    "original_cases": {
+      "path": "docs/ifpmic/design-v1/specs/acceptance-cases.json",
+      "sha256": "f7163553edc9e8e753965cb8748ab04aac8f68c1a453f567f62284a01b38b0d5"
+    },
+    "all_32_status": "not_executed",
+    "AT-21": "Only local session/job/command/workspace isolation proven. Logs/artifacts/images/devices and real environment acceptance remain incomplete.",
+    "environment": [
+      "Corporate OIDC/TLS/reverse-proxy query redaction",
+      "Approved project/membership/real eligibility provisioning",
+      "Operational PostgreSQL/backup and workspace policy"
+    ],
+    "backlog": {
+      "B03": "Temporal activation/outbox consumption/durable orchestration",
+      "B04": "Actual web API/SSE/artifact/log integration",
+      "B05": "Persistent integrated mock workflow completion",
+      "B06-B08": "Actual role/build/quality execution and policies",
+      "B09": "Device/bridge integration and isolation",
+      "B10-B13": "Release/approval/publisher/final acceptance"
+    },
+    "unimplemented_routes": "Explicit operations and route evidence remain in g6-tc-api-acceptance-matrix.json; mock engine behavior is not API implementation."
+  },
+  "next_step": "Independent G7 review, derive progress/reconciliation from its decision, validate staged metadata and source pins, commit and push. Then plan B03 against the original backlog with independent implementation/test plan review before code or environment changes."
+}

@@ -196,7 +196,7 @@
       "requirements": [
         "REQ-13"
       ],
-      "scope": "B02 G1-G6 partial local foundations independently accepted. Local PostgreSQL, identity/session/CSRF, scoped durable commands and workspace recovery passed fresh integrated regression. G7 cumulative final local audit, corporate SSO and full original AT-21 remain pending.",
+      "scope": "B02 G0-G7 local foundations independently accepted as a partial milestone. Fresh auth/API/PostgreSQL/workspace regression and cumulative evidence audit passed. Full B02, corporate SSO and original AT-21 across logs/artifacts/images/devices remain incomplete.",
       "increments": [
         {
           "id": "g1_python_postgres_migrations",
@@ -294,8 +294,19 @@
             "errors": 0,
             "skipped": 0
           }
+        },
+        {
+          "id": "g7_final_local_foundation_audit",
+          "status": "verified",
+          "scope": "Independent cumulative G0-G6 evidence/source/privacy audit; local foundation only, no full B02 or original AT completion.",
+          "evidence": "evidence/b02/local-foundation-verification.json",
+          "independent_acceptance": "evidence/b02/local-foundation-final-review.json",
+          "decision": "accept_partial_local_b02_foundation",
+          "tests_run_in_g7": false,
+          "regression_authority": "evidence/b02/g6-verification.json"
         }
-      ]
+      ],
+      "local_foundation_status": "verified"
     },
     {
       "id": "B03",
@@ -312,7 +323,15 @@
       "requirements": [
         "REQ-05",
         "REQ-14"
-      ]
+      ],
+      "preparation": {
+        "status": "source_collection_complete",
+        "scope": "Original requirements/current code and public Temporal references collected. Implementation not started; dependency/tool selection and independently reviewed implementation/test plan are still required.",
+        "evidence": [
+          "evidence/b03/source-collection.json",
+          "evidence/b03/temporal-primary-references.json"
+        ]
+      }
     },
     {
       "id": "B04",
@@ -487,12 +506,12 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "B02 G7: independently audit cumulative G0-G6 local foundation evidence and reconcile remaining requirements. B03-B13 and all 32 original acceptance tests remain pending.",
+  "next_step": "B03: resolve collected Temporal/outbox/human-wait/version-policy questions, select pinned local test topology, and independently review the implementation and TC verification plans before code, test, dependency or runtime changes. Full B02 environment/AT-21 and original32 AT remain pending.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",
     "Approved Bedrock/Claude runtime profile"
   ],
   "publication_policy": "Only authorized git repository documentation, source and synthetic verification summaries/screenshots; never runtime credentials or application logs.",
-  "updated_at": "2026-10-18T19:25:59.872434+00:00"
+  "updated_at": "2026-10-18T19:29:52.716287+00:00"
 }

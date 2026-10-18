@@ -1,0 +1,46 @@
+{
+  "kind": "ifpmic.b02.g7.post-review-progress-reconciliation.v1",
+  "basis": {
+    "manifest": {
+      "path": "docs/ifpmic/evidence/b02/local-foundation-verification.json",
+      "sha256": "230f43b7ca76af6007d2056e02dc2ecabe77b5f0b50292c5959e9947d5948a6c"
+    },
+    "independent_review": {
+      "path": "docs/ifpmic/evidence/b02/local-foundation-final-review.json",
+      "sha256": "a24a5d9566faa16784559b55feb8221382ca3b1ae9c5f0f3b80dbe2a04137715"
+    },
+    "prior_reconciliation": {
+      "path": "docs/ifpmic/evidence/b02/g6-progress-reconciliation.json",
+      "sha256": "398fc4741f5c643961a96269604157819b160645bac0bd049ea748bd30c1235b"
+    }
+  },
+  "decision": "accept_partial_local_b02_foundation",
+  "progress": {
+    "path": "docs/ifpmic/progress.json",
+    "before_g7_metadata_sha256": "49edfb9dc1151a6259869fb065d940032ea8ded654ce54c470d416f7ab4c1709",
+    "after_g7_metadata_sha256": "6e074371362bb2d7e0ce9a0d3b5926f54530b797fe416b91a585ff01366664df",
+    "frozen_g6_sha256": "082727fbade5804c0d09be44c36c0b0cfb064317c91f91e4bcffe82c7db831bc",
+    "changed_semantic_paths": [
+      "stages[B02].local_foundation_status",
+      "stages[B02].scope",
+      "stages[B02].increments[g7_final_local_foundation_audit]",
+      "stages[B03].preparation",
+      "next_step",
+      "updated_at"
+    ]
+  },
+  "scope": "Permitted derivative status/evidence/next-step metadata after independent acceptance; no product, test, runner, plan, lock or original source bytes changed. The reviewed manifest and historical reconciliation remain immutable point-in-time evidence.",
+  "current_frozen_sources": {
+    "unchanged": 351,
+    "changed": [
+      "docs/ifpmic/progress.json"
+    ],
+    "captured": 352
+  },
+  "remaining": {
+    "goal": "active",
+    "B02": "in_progress",
+    "B03": "implementation_not_started",
+    "original_32_AT": "not_executed"
+  }
+}

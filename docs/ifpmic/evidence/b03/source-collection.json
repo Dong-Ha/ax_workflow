@@ -1,0 +1,322 @@
+{
+  "kind": "ifpmic.b03.source-collection.v1",
+  "status": "read_only_source_collection_not_plan_or_acceptance",
+  "purpose": "Collect original B03 and AT-05/16/29 evidence plus current G4/G5 implementation boundaries for a future independently reviewed Temporal/outbox plan.",
+  "method": "Read-only local inspection of the accepted design-v1 JSON, current IFPMIC API/migrations/tests and accepted B01/G4/G5 evidence. No tests, services, dependency changes, network access or runtime execution were performed.",
+  "source_pins": {
+    "docs/ifpmic/PLAN.md": "3b99c7b3629a8e0e6bc41d524329d2a0de27a468ec447a990fa360dcc38aa39d",
+    "docs/ifpmic/design-v1/specs/implementation-backlog.json": "115e48568e0464b8e67ef17274dba97b3046a8de902e1cf426d9b70e1528e5d0",
+    "docs/ifpmic/design-v1/specs/acceptance-cases.json": "f7163553edc9e8e753965cb8748ab04aac8f68c1a453f567f62284a01b38b0d5",
+    "docs/ifpmic/design-v1/specs/requirements.json": "6e1dc87cdbcaa66ed690ffd13d2d70242dff43410c9f822447bd520719ce249b",
+    "docs/ifpmic/design-v1/specs/state-contract.json": "0248e130017043539319c56af854f5388a95d33e7e687902a3438fdff414244a",
+    "docs/ifpmic/design-v1/specs/workflow.v1.json": "bab40a7abb3929896add1ef2cd074893dd2a7de14d200a5d6cea4b7a77eb0e89",
+    "docs/ifpmic/design-v1/specs/agent-contract.json": "ca6d4bea7abf0fffe7354c482af0d521c3a2e367217a69923a4bfe43fa27ab64",
+    "docs/ifpmic/design-v1/specs/data-model.json": "00c84f8a39b1b8959daa8d94b1d67e860d83ad9bdb809065a5cd3b18af07071b",
+    "docs/ifpmic/design-v1/specs/openapi.v1.json": "2ed780cfa06349b18f5025937e050fd98a5cefa34b552eb836cfaccad416dd7a",
+    "docs/ifpmic/evidence/b01/source-collection.json": "15c2571bb495efcb89aa5b94eb51bd44167a2b22f5ddb5dbbc3f5918bfc66c72",
+    "docs/ifpmic/evidence/b01/local-profile-gate.zip": "486d153780df2121cd9d57a56a9ad794ac8829ca25945954ed71b522f6c0fab1",
+    "docs/ifpmic/evidence/b02/g4-verification.json": "439a66c5a42129c616cc06eb165541eff9a284086db0d23fbf5d89c0d503624f",
+    "docs/ifpmic/evidence/b02/g4-final-review.json": "016735ed8a370737d695494eec415083a29b8b6de42831639535aeaaaefc7150",
+    "docs/ifpmic/evidence/b02/g5-verification.json": "6dac77b8ab4b7474a0438ee407d6e11406d5b7c8f1a1fcd2491c0e5f7dce8030",
+    "docs/ifpmic/evidence/b02/g5-final-review.json": "e76f9a4eafa4999b44263c512e57d24116bdcbf54b36ee8268c5e412d54ff237",
+    "services/ifpmic_api/jobs.py": "bc682d6ea83ef6545b3105b2a9e8e4df75273445ebca1f8193219010bcea79b4",
+    "services/ifpmic_api/app.py": "a65c3d44a14ecae7b819e5042d4f490ce68c8b9b5f5962d1b5f2bbfe52fef192",
+    "services/ifpmic_api/workspace.py": "ad3e29f27ee20bc82eff9afcf51d9bb5ef6374d50b69bcf8fa508d81ecb60f67",
+    "services/ifpmic_api/snapshot_bridge.py": "743f357fed62a37770d4bfef2a3321fab649b25a3a1b040f64d61bec628443e8",
+    "services/ifpmic_api/migrations/001_initial.sql": "cf0437a5f32e1589e4ea821afbb2ef2480d780a276667880aa9a08a0f4c77f12",
+    "tests/ifpmic_api/test_jobs.py": "dc96141956bb93ff1d3b06214bf4d176265cea654c3f2235f4e281b071287a28",
+    "tests/ifpmic_api/test_workspace.py": "0254b67ac0a1da79dad2bf81110ca4d5519bc1dfe0e9c1210e807016b2d7d634"
+  },
+  "original_requirements": {
+    "backlog": {
+      "path": "docs/ifpmic/design-v1/specs/implementation-backlog.json",
+      "pointer": "/2",
+      "id": "B03",
+      "title": "워크플로우 실행",
+      "depends_on": [
+        "B01",
+        "B02"
+      ],
+      "deliverables": "Temporal workflow, outbox, 사람 대기, version pin",
+      "acceptance_ids": [
+        "AT-05",
+        "AT-16",
+        "AT-29"
+      ]
+    },
+    "acceptance_cases": [
+      {
+        "id": "AT-05",
+        "name": "사람 단계",
+        "given": "P07 또는 P21 진입",
+        "when": "에이전트가 완료 선언",
+        "then": "사람 제출 없이 다음 단계 불가; 내 작업함 생성",
+        "status": "not_executed"
+      },
+      {
+        "id": "AT-16",
+        "name": "서버 장애",
+        "given": "명령 수락 후 outbox 전달 전 서버 종료",
+        "when": "재시작",
+        "then": "command_id로 재전달·중복 제거; 작업 유실 없음",
+        "status": "not_executed"
+      },
+      {
+        "id": "AT-29",
+        "name": "워크플로우 업그레이드",
+        "given": "v1 실행이 사람 대기",
+        "when": "v2 배포 후 재개",
+        "then": "v1 정의로 재개; 호환 worker 유지 또는 명시적 migration",
+        "status": "not_executed"
+      }
+    ],
+    "related_requirements": [
+      {
+        "id": "REQ-05",
+        "text": "원본의 사람 담당 단계 보존",
+        "design": "P06 P07 P08 P10 P21",
+        "acceptance": "AT-05"
+      },
+      {
+        "id": "REQ-14",
+        "text": "사람 필요 시 알림 및 정의된 경로로 자동 복귀",
+        "design": "failure routing",
+        "acceptance": "AT-09"
+      }
+    ]
+  },
+  "original_contract_facts": {
+    "workflow": {
+      "path": "docs/ifpmic/design-v1/specs/workflow.v1.json",
+      "workflow_id": "ifpmic-sw-v1",
+      "schema_version": "1.0.0",
+      "status": "design_contract_not_executable_engine",
+      "start": "P01",
+      "terminal": "END",
+      "states": [
+        "PENDING",
+        "READY",
+        "RUNNING",
+        "WAITING_AGENT",
+        "WAITING_HUMAN",
+        "WAITING_DEVICE",
+        "WAITING_RETRY",
+        "RECONCILING",
+        "PAUSE_REQUESTED",
+        "PAUSED",
+        "CANCEL_REQUESTED",
+        "SUCCEEDED",
+        "FAILED",
+        "SKIPPED",
+        "CANCELED",
+        "SUPERSEDED"
+      ],
+      "required_invariants": [
+        "human_owned_nodes_require_human_evidence",
+        "measurements_match_candidate_fingerprint",
+        "approval_matches_release_digest",
+        "one_active_device_operation",
+        "no_same_workspace_concurrent_writers",
+        "old_cycle_result_never_unlocks_current_cycle",
+        "resume_never_blindly_replays_side_effects"
+      ],
+      "versioning_note": "B01 pins immutable registry content by workflow_id; schema_version is a document format version. AT-29 requires old v1 executions to resume with v1 semantics after v2 deployment, or an explicit migration."
+    },
+    "state_contract": {
+      "path": "docs/ifpmic/design-v1/specs/state-contract.json",
+      "locator": "/step_transitions and /rules",
+      "relevant_rules": [
+        "A failed node remains FAILED; retry creates a new attempt. New business cycle does not rewrite old records.",
+        "WAITING_HUMAN may succeed only with assigned human submission; permission prompt and human business task share notification UX but have different task kinds.",
+        "Pause takes effect at safe boundary; record resume_state and resume_step to restore wait or invoke a new attempt. Completed in-flight work may succeed while job remains paused.",
+        "Canceled workflow cannot erase already-published remote state; reconcile and retain receipt."
+      ]
+    },
+    "agent_contract": {
+      "path": "docs/ifpmic/design-v1/specs/agent-contract.json",
+      "functions": [
+        "start(task)->execution_id",
+        "events(execution_id,cursor)->event_stream",
+        "status(execution_id)",
+        "interrupt(execution_id)",
+        "resume(task,checkpoint)->execution_id",
+        "collect(execution_id)->TaskResult"
+      ],
+      "result_statuses": [
+        "completed",
+        "needs_human",
+        "failed",
+        "canceled",
+        "interrupted"
+      ],
+      "rule": "completed is an agent execution outcome, never a quality gate PASS",
+      "concurrency": "One writer per workspace; TC uses isolated test worktree and patch handoff; code-dev integration serializes."
+    },
+    "data_model": {
+      "path": "docs/ifpmic/design-v1/specs/data-model.json",
+      "consistency": "Temporal is authoritative for process transitions. PostgreSQL stores command inbox/outbox, immutable evidence and query projections. Workflow transitions project through idempotent activities. API 202 is not final success.",
+      "relevant_entities": [
+        "jobs",
+        "step_runs",
+        "execution_plans",
+        "candidate_manifests",
+        "human_tasks",
+        "gate_results",
+        "release_manifests",
+        "approvals",
+        "events",
+        "commands_outbox",
+        "notifications"
+      ],
+      "atomicity_rule": "Submit command and outbox record atomically",
+      "authorization_rule": "Every query/download checks project membership and job ownership/delegated role. Internal workers/bridge tokens additionally scoped to assignments."
+    },
+    "openapi": {
+      "path": "docs/ifpmic/design-v1/specs/openapi.v1.json",
+      "create_job": "POST /api/v1/jobs returns 202 CommandReceipt; accepted durable command is not completed operation.",
+      "command_status": "GET /api/v1/commands/{command_id} reports accepted/applied/rejected, applied_revision and error.",
+      "job_snapshot": "GET /api/v1/jobs/{job_id} returns snapshot projection.",
+      "events": "GET /api/v1/jobs/{job_id}/events is defined but not implemented; B04 owns event/SSE delivery."
+    }
+  },
+  "current_implementation_observations": {
+    "accepted_scope": [
+      {
+        "path": "services/ifpmic_api/jobs.py",
+        "symbols": [
+          "JobService.create",
+          "JobService.probe",
+          "JobService.replay",
+          "JobService.command"
+        ],
+        "facts": [
+          "create captures an immutable B01 SnapshotRecord, then atomically inserts the DRAFT job, accepted command, pending outbox row and RESERVED workspace intent",
+          "Idempotency is actor/route/key scoped; same body returns the original accepted receipt, conflicting body is rejected",
+          "202 response status is accepted; this module does not apply the command or advance job state",
+          "The current job row resolves workflow_id from SnapshotRecord.workflow_id (ifpmic-sw-v1); the public workflow_version field is a projection of that ID",
+          "command status read is scoped to current session/project/job authorization"
+        ]
+      },
+      {
+        "path": "services/ifpmic_api/migrations/001_initial.sql",
+        "symbols": [
+          "ifpmic.jobs",
+          "ifpmic.commands",
+          "ifpmic.commands_outbox",
+          "ifpmic.workspace_intents",
+          "runtime/operator grants"
+        ],
+        "facts": [
+          "commands default to accepted; outbox defaults pending; jobs default DRAFT/revision 0/cycle 0; workspace intent defaults RESERVED/generation 0",
+          "Runtime can insert the initial job/command/outbox/intent group but cannot update job status, command status/applied_revision, or outbox state",
+          "The workspace worker has its own narrow intent transition permissions; the migration explicitly states runtime cannot apply commands/outbox and B03 needs a separate migration",
+          "No Temporal schema, workflow process table or event projection is defined in this migration"
+        ]
+      },
+      {
+        "path": "services/ifpmic_api/workspace.py",
+        "symbols": [
+          "WorkspaceService.claim",
+          "WorkspaceService.finish",
+          "WorkspaceService.reconcile_once",
+          "WorkspaceService.retry_error"
+        ],
+        "facts": [
+          "This G5 worker provisions private workspace paths and transitions workspace_intents RESERVED/PROVISIONING/READY/ERROR",
+          "READY means workspace preparation only; module docstring states it does not apply a job command",
+          "It does not start workflow steps, invoke agent-contract functions, transition job state, or mark commands applied"
+        ]
+      },
+      {
+        "path": "services/ifpmic_api/app.py",
+        "symbols": [
+          "create_job",
+          "command_status",
+          "GET job list/detail routes"
+        ],
+        "facts": [
+          "Implemented job ingress and read projections cover create/list/detail/command status; plan decision, human submission, controls, release, approval, and events are absent",
+          "No workflow dispatcher or Temporal client/worker route is registered"
+        ]
+      },
+      {
+        "path": "services/ifpmic_api/snapshot_bridge.py",
+        "symbols": [
+          "WORKFLOW",
+          "SnapshotRecord.workflow_id",
+          "SnapshotRecord.workflow"
+        ],
+        "facts": [
+          "B01 snapshot resolver binds immutable content to workflow_id=ifpmic-sw-v1 and schema_version=1.0.0",
+          "It validates/returns the static workflow definition; it does not execute it"
+        ]
+      },
+      {
+        "path": "docs/ifpmic/evidence/b02/g4-verification.json",
+        "facts": [
+          "decision is g4_pass_pending_independent_final_review",
+          "scope is partial durable user-scoped job/API acceptance, not execution",
+          "The immutable report publication label predates g4-final-review.json, whose decision is accept_partial_g4; final review is pinned above."
+        ]
+      },
+      {
+        "path": "docs/ifpmic/evidence/b02/g5-verification.json",
+        "facts": [
+          "decision is g5_pass_pending_independent_final_review",
+          "scope is partial workspace provisioning/recovery and explicitly no job command execution",
+          "The immutable report publication label predates g5-final-review.json, whose decision is accept_partial_g5; final review is pinned above."
+        ]
+      }
+    ],
+    "implementation_search": "Read-only search found no Temporal client/SDK, workflow execution worker, command outbox dispatcher, or job transition applier in services/ifpmic_api. Existing WorkspaceService is a separate filesystem provisioner, not an execution substitute.",
+    "current_persistence_boundary": "The outbox row is pending and the command remains accepted after G4/G5. No accepted evidence proves delivery, workflow start, command application, step execution, human task creation, workflow recovery, or version-compatible resume."
+  },
+  "verification_requirements_for_future_plan": {
+    "normal": [
+      "accepted command reaches exactly one durable workflow start through outbox",
+      "workflow/registry identity remains pinned as ifpmic-sw-v1",
+      "agent completed/needs_human/failed/canceled/interrupted remain distinct from step/gate outcomes",
+      "human-owned P07/P21 cannot advance without assigned human submission",
+      "one effective command and workflow per idempotency identity; 202 remains acceptance, then applied/rejected is explicit"
+    ],
+    "exception": [
+      "crash after API commit but before outbox delivery; restart redispatches same command_id without loss or duplicate workflow",
+      "crash after Temporal start but before outbox acknowledgement; replay detects existing workflow and does not start a second one",
+      "Temporal unavailable/start timeout and uncertain start outcome remain reconciling until queried",
+      "human wait persists across process restart and resume uses exact pinned workflow version",
+      "result/outbox/event delivery duplicates are idempotent; stale cycle/attempt/execution results cannot advance current state"
+    ],
+    "boundary": [
+      "commit/dispatch/ack ordering and lease/visibility timeout boundaries",
+      "P07/P21 completion without human proof, wrong actor/task/version and duplicate submission",
+      "v1 human-wait execution resumed after v2 deployment; no silent workflow reinterpretation",
+      "same idempotency key with same/different body, same command ID replay, unique workflow ID collision",
+      "worker/outbox restart at each durable boundary; no job state advances from workspace READY alone"
+    ],
+    "regression": [
+      "B01 exact workflow_id/content fingerprint and old source pins",
+      "G4 accepted command/DB atomic four-row group and immutable 202 receipt",
+      "G5 workspace READY/lease/recovery unchanged and not treated as command application",
+      "API command GET before/after apply/reject and unauthorized job/command access remain scoped",
+      "no fabricated SSE/notification success until B04 endpoints are implemented"
+    ]
+  },
+  "open_questions_for_plan_not_resolved_by_sources": [
+    "Temporal workflow ID derivation, uniqueness scope, task queue, worker versioning/Build ID policy and how pinned workflow_id maps to Temporal type/version are not specified.",
+    "Exact outbox poll/claim/lease/ack schema, transaction boundaries, retry/backoff, poison-message handling and uncertain Temporal start reconciliation are not specified.",
+    "The original state contract gives step transitions and human evidence rules but not an executable command-to-transition payload/API mapping for command kinds, expected_revision, job revision or error DTOs.",
+    "Human task persistence/assignment/authorization/submission API and notification creation are data-model concepts; corresponding OpenAPI write endpoints are absent in current app and assigned partly to B04.",
+    "AT-16 says redeliver by command_id and avoid duplicate; exact proof oracle for a crash between remote Temporal start and local acknowledgement needs a deterministic Temporal test seam or actual test server.",
+    "AT-29 does not choose Temporal worker versioning, compatibility duration, workflow replay migration procedure or retirement criteria for old v1 workers.",
+    "The use of Paperclip as upper orchestration versus Temporal as sole process-transition authority must remain explicit; no Paperclip routine/automatic transition may independently dispatch the same task."
+  ],
+  "scope_and_acceptance_boundary": {
+    "status": "source_collection_only",
+    "AT-05": "not_executed",
+    "AT-16": "not_executed",
+    "AT-29": "not_executed",
+    "B03": "not_implemented_in_current_local_service",
+    "B04_plus": "remain separate backlog work",
+    "statement": "This record is not a B03 plan, implementation, Temporal operation, or acceptance result. G4/G5 verification reports retain their historical pre-review labels; their pinned final reviews accept only the respective local slices. They bound existing behavior and do not prove B03 execution."
+  }
+}
