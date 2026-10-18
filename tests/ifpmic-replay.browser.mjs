@@ -20,6 +20,7 @@ const report = {
   geometryMethod: 'Target full bounding box must fit the viewport and each overflow-clipping ancestor. The 4x4 hit grid counts only the target or its descendants; hits on ancestors are rejected.',
   sqeCaptureGeometry: [],
   childCaptureGeometry: [],
+  controlCaptureGeometry: [],
   apiRequests: [],
   pageErrors: [],
   consoleErrors: [],
@@ -103,6 +104,153 @@ const scenarioOracle = {
   'control-notes-retry': { current: 'END', status: 'COMPLETED', cycle: 1 },
 };
 
+// Independent control UI expectations transcribed from the approved plan and
+// the separate literal unit oracle. Each entry is the full named checkpoint
+// sequence; phase/admission/latest command status are fixed per observation.
+const controlCheckpointOracle = {
+  'control-command-lifecycle': [
+    ['accepted', '', 'true', 'accepted'], ['requested', 'PAUSE_REQUESTED', 'false', 'applied'],
+    ['paused', 'PAUSED', 'false', 'applied'], ['resumed', '', 'true', 'applied'],
+  ],
+  'control-command-conflicts': [
+    ['accepted', '', 'true', 'accepted'], ['applied-one', 'PAUSE_REQUESTED', 'false', 'accepted'],
+    ['rejected-two', 'PAUSE_REQUESTED', 'false', 'rejected'], ['duplicate', 'PAUSED', 'false', 'rejected'],
+    ['body-conflict', 'PAUSED', 'false', 'rejected'],
+  ],
+  'control-apply-after-progress': [
+    ['submitted', '', 'true', 'accepted'], ['advanced', '', 'true', 'accepted'], ['rejected', '', 'true', 'rejected'],
+  ],
+  'pause-human': [
+    ['paused', 'PAUSED', 'false', 'applied'], ['submitted', 'PAUSED', 'false', 'applied'],
+    ['finished', 'PAUSED', 'false', 'applied'], ['resumed', '', 'true', 'applied'],
+  ],
+  'pause-child': [
+    ['paused', 'PAUSED', 'false', 'applied'], ['returned', 'PAUSED', 'false', 'applied'],
+    ['collected', 'PAUSED', 'false', 'applied'], ['blocked', 'PAUSED', 'false', 'applied'],
+    ['resumed', '', 'true', 'applied'],
+  ],
+  'pause-manual-sqe': [
+    ['paused', 'PAUSED', 'false', 'applied'], ['submitted', 'PAUSED', 'false', 'applied'],
+    ['blocked', 'PAUSED', 'false', 'applied'], ['resumed', '', 'true', 'applied'],
+  ],
+  'pause-device-wait': [
+    ['paused', 'PAUSED', 'false', 'applied'], ['resumed', '', 'true', 'applied'],
+  ],
+  'pause-retry': [
+    ['paused', 'PAUSED', 'false', 'applied'], ['due-blocked', 'PAUSED', 'false', 'applied'],
+    ['resumed', '', 'true', 'applied'], ['retried', '', 'true', 'applied'],
+  ],
+  'pause-final': [
+    ['paused', 'PAUSED', 'false', 'applied'], ['finished', 'PAUSED', 'false', 'applied'],
+    ['resumed', '', 'true', 'applied'],
+  ],
+  'cancel-child': [
+    ['requested', 'CANCEL_REQUESTED', 'false', 'applied'], ['returned', 'CANCEL_REQUESTED', 'false', 'applied'],
+    ['blocked', 'CANCEL_REQUESTED', 'false', 'applied'], ['quiescent', 'QUIESCENT', 'false', 'applied'],
+    ['canceled', 'CANCELED', 'false', 'applied'],
+  ],
+  'cancel-flash-unknown': [
+    ['registered', '', 'true', ''], ['unknown', '', 'true', ''], ['requested', 'CANCEL_REQUESTED', 'false', 'applied'],
+    ['rejected', 'CANCEL_REQUESTED', 'false', 'applied'], ['reconciled', 'CANCEL_REQUESTED', 'false', 'applied'],
+    ['released', 'CANCEL_REQUESTED', 'false', 'applied'], ['canceled', 'CANCELED', 'false', 'applied'],
+  ],
+  'cancel-remote-late-receipt': [
+    ['intent', '', 'true', ''], ['requested', 'CANCEL_REQUESTED', 'false', 'applied'],
+    ['receipt', 'CANCEL_REQUESTED', 'false', 'applied'], ['quiescent', 'QUIESCENT', 'false', 'applied'],
+    ['canceled', 'CANCELED', 'false', 'applied'], ['late', 'CANCELED', 'false', 'applied'],
+  ],
+  'cancel-pending-dispatch': [
+    ['pending', '', 'true', ''], ['requested', 'CANCEL_REQUESTED', 'false', 'applied'],
+    ['blocked', 'CANCEL_REQUESTED', 'false', 'applied'], ['drained', 'QUIESCENT', 'false', 'applied'],
+    ['canceled', 'CANCELED', 'false', 'applied'],
+  ],
+  'cancel-released-notes': [
+    ['failed', '', 'true', ''], ['requested', 'CANCEL_REQUESTED', 'false', 'applied'],
+    ['canceled', 'CANCELED', 'false', 'applied'], ['blocked', 'CANCELED', 'false', 'rejected'],
+  ],
+  'control-notes-retry': [
+    ['failed', '', 'true', ''], ['accepted', '', 'true', 'accepted'], ['retried', '', 'true', 'applied'],
+    ['completed', '', 'true', 'applied'],
+  ],
+};
+
+const requiredControlCaptures = {
+  'control-command-lifecycle': { ids: ['accepted', 'requested', 'paused'], width: 1440 },
+  'pause-human': { ids: ['finished', 'resumed'], width: 375 },
+  'pause-child': { ids: ['returned', 'collected', 'blocked'], width: 1440 },
+  'pause-manual-sqe': { ids: ['submitted', 'blocked'], width: 375 },
+  'pause-retry': { ids: ['due-blocked', 'retried'], width: 375 },
+  'pause-final': { ids: ['finished', 'resumed'], width: 1440 },
+  'cancel-child': { ids: ['returned', 'canceled'], width: 1440 },
+  'cancel-flash-unknown': { ids: ['unknown', 'rejected', 'released', 'canceled'], width: 1440 },
+  'cancel-remote-late-receipt': { ids: ['receipt', 'canceled', 'late'], width: 375 },
+  'cancel-pending-dispatch': { ids: ['blocked', 'drained'], width: 1440 },
+  'cancel-released-notes': { ids: ['canceled'], width: 1440 },
+  'control-notes-retry': { ids: ['retried'], width: 1440 },
+};
+
+const controlEndOracle = {
+  'control-command-lifecycle': ['', 'true', 'applied'],
+  'control-command-conflicts': ['PAUSED', 'false', 'rejected'],
+  'control-apply-after-progress': ['', 'true', 'rejected'],
+  'pause-human': ['', 'true', 'applied'],
+  'pause-child': ['', 'true', 'applied'],
+  'pause-manual-sqe': ['', 'true', 'applied'],
+  'pause-device-wait': ['', 'true', 'applied'],
+  'pause-retry': ['', 'true', 'applied'],
+  'pause-final': ['', 'true', 'applied'],
+  'cancel-child': ['CANCELED', 'false', 'applied'],
+  'cancel-flash-unknown': ['CANCELED', 'false', 'applied'],
+  'cancel-remote-late-receipt': ['CANCELED', 'false', 'applied'],
+  'cancel-pending-dispatch': ['CANCELED', 'false', 'applied'],
+  'cancel-released-notes': ['CANCELED', 'false', 'rejected'],
+  'control-notes-retry': ['', 'true', 'applied'],
+};
+
+// Canonical and visible contract assertions for one or more decision points
+// in each control scenario. These literals come from the approved scenario
+// table/unit oracle; they do not read expected values from replay output.
+const controlVisualOracle = {
+  'control-command-lifecycle': [{ point: 'accepted', current: 'P01', status: 'RUNNING', state: 'RUNNING', attempt: 1 }],
+  'control-command-conflicts': [{ point: 'body-conflict', current: 'P07', status: 'WAITING_HUMAN', state: 'WAITING_HUMAN', attempt: 1, underlyingStatus: 'WAITING_HUMAN' }],
+  'control-apply-after-progress': [{ point: 'rejected', current: 'P02', status: 'RUNNING', state: 'PENDING', attempt: 1 }],
+  'pause-human': [{ point: 'finished', current: 'P08', status: 'PAUSED', state: 'PENDING', attempt: 1, resumeStep: 'P08', resumeState: 'PENDING', underlyingStatus: 'RUNNING' }],
+  'pause-child': [
+    { point: 'returned', current: 'P12', status: 'PAUSED', state: 'WAITING_AGENT', attempt: 1, resumeStep: 'P12', resumeState: 'WAITING_AGENT', underlyingStatus: 'RUNNING', textRegion: 'ifpmic-control-frontier', text: /completed/ },
+    { point: 'collected', current: 'P12', status: 'PAUSED', state: 'RUNNING', attempt: 1, resumeStep: 'P12', resumeState: 'RUNNING', underlyingStatus: 'RUNNING' },
+  ],
+  'pause-manual-sqe': [{ point: 'submitted', current: 'P22', status: 'PAUSED', state: 'READY', attempt: 1, resumeStep: 'P22', resumeState: 'READY', underlyingStatus: 'RUNNING', textRegion: 'ifpmic-control-frontier', text: /mock:manual:P22:c1:a1/ }],
+  'pause-device-wait': [{ point: 'paused', current: 'P22', status: 'WAITING_DEVICE', state: 'WAITING_DEVICE', attempt: 1, resumeStep: 'P22', resumeState: 'WAITING_DEVICE', underlyingStatus: 'WAITING_DEVICE', publicationCount: 0 }],
+  'pause-retry': [
+    { point: 'due-blocked', current: 'P13', status: 'PAUSED', state: 'WAITING_RETRY', attempt: 1, resumeStep: 'P13', resumeState: 'WAITING_RETRY', underlyingStatus: 'RUNNING', publicationCount: 0 },
+    { point: 'retried', current: 'P13', status: 'RUNNING', state: 'READY', attempt: 2, publicationCount: 0 },
+  ],
+  'pause-final': [{ point: 'finished', current: 'END', status: 'PAUSED', attempt: 1, publicationCount: 1, underlyingStatus: 'COMPLETED' }],
+  'cancel-child': [
+    { point: 'returned', current: 'P12', status: 'RECONCILING', state: 'WAITING_AGENT', attempt: 1, textRegion: 'ifpmic-control-effects', text: /completed[\s\S]*mock:cancel-child:ch:patch:c1:a1/ },
+    { point: 'canceled', current: 'P12', status: 'CANCELED', state: 'CANCELED', attempt: 1, publicationCount: 0 },
+  ],
+  'cancel-flash-unknown': [
+    { point: 'unknown', current: 'P22', status: 'RECONCILING', state: 'RUNNING', attempt: 1, effectAttrs: { 'data-bridge-state': 'UNKNOWN', 'data-released': 'false' }, textRegion: 'ifpmic-control-effects', text: /true \/ false/ },
+    { point: 'released', current: 'P22', status: 'RECONCILING', state: 'RUNNING', attempt: 1, effectAttrs: { 'data-bridge-state': 'SUCCEEDED', 'data-released': 'true' }, textRegion: 'ifpmic-control-effects', text: /true \/ true/ },
+    { point: 'canceled', current: 'P22', status: 'CANCELED', state: 'CANCELED', attempt: 1, publicationCount: 0 },
+  ],
+  'cancel-remote-late-receipt': [
+    { point: 'receipt', current: 'P25', status: 'RECONCILING', state: 'RUNNING', attempt: 1, publicationCount: 1, effectAttrs: { 'data-remote-outcome': 'found' }, textRegion: 'ifpmic-control-effects', text: /mock:cancel-remote-late-receipt:control:receipt:/ },
+    { point: 'canceled', current: 'P25', status: 'CANCELED', state: 'CANCELED', attempt: 1, publicationCount: 1 },
+    { point: 'late', current: 'P25', status: 'CANCELED', state: 'CANCELED', attempt: 1, publicationCount: 1, effectAttrs: { 'data-remote-outcome': 'found' } },
+  ],
+  'cancel-pending-dispatch': [
+    { point: 'blocked', current: 'P12', status: 'RECONCILING', state: 'RUNNING', attempt: 1, textRegion: 'ifpmic-control-frontier', text: /미할당 요청/ },
+    { point: 'drained', current: 'P12', status: 'RECONCILING', state: 'CANCEL_REQUESTED', attempt: 1, publicationCount: 0 },
+  ],
+  'cancel-released-notes': [
+    { point: 'canceled', current: 'P26', status: 'CANCELED', state: 'FAILED', attempt: 1, publicationCount: 1 },
+    { point: 'blocked', current: 'P26', status: 'CANCELED', state: 'FAILED', attempt: 1, publicationCount: 1, textRegion: 'ifpmic-control-command', text: /CONTROL_INELIGIBLE/ },
+  ],
+  'control-notes-retry': [{ point: 'retried', current: 'P26', status: 'RELEASED_PENDING_NOTES', state: 'READY', attempt: 2, publicationCount: 1 }],
+};
+
 let browser;
 let context;
 let page;
@@ -176,14 +324,64 @@ async function selectScenario(id) {
   await assertSummary({ current: 'P01', status: 'RUNNING', cycle: 1 });
 }
 
-async function assertSummary(expected) {
+async function assertSummary(expected, label = 'summary') {
   const output = summary();
   for (const [attr, value] of Object.entries({
     'data-current-step': expected.current,
     'data-status': expected.status,
     'data-cycle': String(expected.cycle),
     ...(expected.rework === undefined ? {} : { 'data-rework': String(expected.rework) }),
-  })) assert.equal(await output.getAttribute(attr), value);
+  })) assert.equal(await output.getAttribute(attr), value, `${label}/${attr}`);
+}
+
+async function captureControlTarget(name, width, target) {
+  const height = width === 375 ? 1800 : 1000;
+  await page.setViewportSize({ width, height });
+  await target.waitFor({ state: 'visible' });
+  await target.evaluate(element => element.scrollIntoView({ block: 'center', inline: 'nearest' }));
+  const view = await target.evaluate(element => {
+    const r = element.getBoundingClientRect();
+    const points = [];
+    for (let row = 1; row <= 4; row++) for (let col = 1; col <= 4; col++) {
+      const hit = document.elementFromPoint(r.left + r.width * col / 5, r.top + r.height * row / 5);
+      points.push(Boolean(hit && (hit === element || element.contains(hit))));
+    }
+    const overlaps = [];
+    for (const candidate of document.querySelectorAll('*')) {
+      if (candidate === element || element.contains(candidate) || candidate.contains(element)) continue;
+      const style = getComputedStyle(candidate);
+      if (!['fixed', 'sticky'].includes(style.position) || style.display === 'none'
+        || style.visibility === 'hidden' || Number(style.opacity) === 0) continue;
+      const box = candidate.getBoundingClientRect();
+      if (box.width > 0 && box.height > 0 && box.right > r.left && box.left < r.right
+        && box.bottom > r.top && box.top < r.bottom) overlaps.push(candidate.id || candidate.getAttribute('data-testid') || candidate.tagName);
+    }
+    const clipping = [];
+    for (let ancestor = element.parentElement; ancestor; ancestor = ancestor.parentElement) {
+      const style = getComputedStyle(ancestor);
+      const clipsX = ['hidden', 'auto', 'scroll', 'clip'].includes(style.overflowX);
+      const clipsY = ['hidden', 'auto', 'scroll', 'clip'].includes(style.overflowY);
+      if (!clipsX && !clipsY) continue;
+      const a = ancestor.getBoundingClientRect();
+      const left = a.left + ancestor.clientLeft, top = a.top + ancestor.clientTop;
+      const right = left + ancestor.clientWidth, bottom = top + ancestor.clientHeight;
+      clipping.push({ fitsX: !clipsX || (r.left >= left && r.right <= right),
+        fitsY: !clipsY || (r.top >= top && r.bottom <= bottom) });
+    }
+    return { rect: { left: r.left, top: r.top, right: r.right, bottom: r.bottom }, points, overlaps, clipping,
+      fitsViewport: r.left >= 0 && r.top >= 0 && r.right <= innerWidth && r.bottom <= innerHeight };
+  });
+  assert.equal(view.fitsViewport, true, `${name} full target fits viewport: ${JSON.stringify(view)}`);
+  assert.ok(view.points.every(Boolean), `${name} 4x4 hit grid hits target/descendant: ${JSON.stringify(view.points)}`);
+  assert.deepEqual(view.overlaps, [], `${name} has no fixed/sticky overlap`);
+  assert.ok(view.clipping.every(item => item.fitsX && item.fitsY), `${name} fits every clipping ancestor: ${JSON.stringify(view.clipping)}`);
+  assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true, `${name} no horizontal overflow`);
+  report.controlCaptureGeometry.push({ name, width, height, target: await target.getAttribute('data-testid'),
+    rect: view.rect, hit_grid: { samples: 16, inside_target_or_descendant: view.points.filter(Boolean).length },
+    fixed_sticky_overlaps: view.overlaps, overflow_clipping_ancestors: view.clipping });
+  const filename = `${hostMode ? 'host' : 'standalone'}-${name}-${width}.png`;
+  await page.screenshot({ path: path.join(evidenceDir, filename), fullPage: false });
+  report.evidence.push(`workflow-artifacts/verification/V2/ui/${filename}`);
 }
 
 async function moveCheckpoint(id) {
@@ -311,6 +509,106 @@ try {
       await assertSummary(expected);
       const current = expected.current === 'END' ? page.getByTestId('ifpmic-end') : card(expected.current);
       assert.equal(await current.getAttribute('data-current'), 'true', `${id} current node`);
+    }
+  });
+
+  await record('all controls checkpoints expose literal control state and three read-only semantic groups', async () => {
+    const regions = [
+      ['ifpmic-control-command', '명령 접수·적용 모의 관측'],
+      ['ifpmic-control-frontier', '제어·대기 복원 모의 관측'],
+      ['ifpmic-control-effects', '실행·부작용 모의 관측'],
+    ];
+    for (const [id, checkpoints] of Object.entries(controlCheckpointOracle)) {
+      const scenario = scenarioOracle[id];
+      assert.ok(scenario, `${id} has independent endpoint oracle`);
+      await selectScenario(id);
+      const end = controlEndOracle[id];
+      assert.ok(end, `${id} has independent control endpoint oracle`);
+      for (const [checkpoint, phase, admission, commandStatus] of [
+        ['start', '', 'true', ''], ...checkpoints, ['end', ...end],
+      ]) {
+        await page.setViewportSize({ width: 1440, height: 1000 });
+        await moveCheckpoint(checkpoint);
+        const summaryRegion = page.getByRole('region', { name: '작업 제어 모의 관측', exact: true });
+        assert.equal(await summaryRegion.count(), 1, `${id}/${checkpoint} control summary has approved accessible name`);
+        assert.equal(await page.getByTestId('ifpmic-control-observation').count(), 1,
+          `${id}/${checkpoint} exposes control summary test id`);
+        assert.equal(await summaryRegion.getAttribute('data-phase'), phase, `${id}/${checkpoint} literal phase`);
+        assert.equal(await summaryRegion.getAttribute('data-admission'), admission, `${id}/${checkpoint} literal admission`);
+        assert.equal(await summaryRegion.getAttribute('data-command-status'), commandStatus,
+          `${id}/${checkpoint} literal latest command status`);
+        const revision = await summaryRegion.getAttribute('data-revision');
+        assert.match(revision ?? '', /^\d+$/, `${id}/${checkpoint} exposes a numeric domain revision`);
+        if (checkpoint === 'start') assert.equal(revision, '0', `${id}/start literal initial revision`);
+        assert.notEqual(await summaryRegion.getAttribute('data-resume-step'), null,
+          `${id}/${checkpoint} exposes saved resume step`);
+        assert.notEqual(await summaryRegion.getAttribute('data-resume-state'), null,
+          `${id}/${checkpoint} exposes saved resume state`);
+        for (const [testId, name] of regions) {
+          const region = page.getByTestId(testId);
+          assert.equal(await region.count(), 1, `${id}/${checkpoint} ${testId} section exists`);
+          assert.equal(await page.getByRole('region', { name, exact: true }).count(), 1,
+            `${id}/${checkpoint} ${testId} approved accessible name`);
+          assert.equal(await region.locator('a[href],button,input,select').count(), 0,
+            `${id}/${checkpoint} ${testId} is read-only and has no actions or external links`);
+        }
+        const visual = controlVisualOracle[id]?.find(item => item.point === checkpoint);
+        if (visual) {
+          await assertSummary({ current: visual.current, status: visual.status, cycle: 1 }, `${id}/${checkpoint}`);
+          const replaySummary = summary();
+          assert.equal(await replaySummary.getAttribute('data-attempt'), String(visual.attempt),
+            `${id}/${checkpoint} literal current attempt`);
+          if (visual.state) assert.equal(await card(visual.current).getAttribute('data-state'), visual.state,
+            `${id}/${checkpoint} literal canonical step state`);
+          if (visual.resumeStep !== undefined) assert.equal(await summaryRegion.getAttribute('data-resume-step'), visual.resumeStep,
+            `${id}/${checkpoint} literal resume step`);
+          if (visual.resumeState !== undefined) assert.equal(await summaryRegion.getAttribute('data-resume-state'), visual.resumeState,
+            `${id}/${checkpoint} literal resume state`);
+          if (visual.underlyingStatus) assert.match(await page.getByTestId('ifpmic-control-frontier').innerText(),
+            new RegExp(`원래 업무 상태\\s*${visual.underlyingStatus}`),
+            `${id}/${checkpoint} preserves literal underlying canonical job state separately from aggregate pause`);
+          if (visual.publicationCount !== undefined) {
+            const effects = page.getByTestId('ifpmic-control-effects');
+            assert.equal(await effects.getAttribute('data-publication-count'), String(visual.publicationCount),
+              `${id}/${checkpoint} literal observed publication count`);
+          }
+          if (visual.effectAttrs) {
+            const effects = page.getByTestId('ifpmic-control-effects');
+            for (const [attribute, value] of Object.entries(visual.effectAttrs)) {
+              assert.equal(await effects.getAttribute(attribute), value, `${id}/${checkpoint} literal ${attribute}`);
+            }
+          }
+          if (visual.textRegion) assert.match(await page.getByTestId(visual.textRegion).innerText(), visual.text,
+            `${id}/${checkpoint} read-only visible evidence text`);
+        }
+      }
+    }
+  });
+
+  await record('approved controls checkpoints are captured in three semantic groups at 375px and 1440px', async () => {
+    const groups = [
+      ['command', 'ifpmic-control-command'],
+      ['frontier', 'ifpmic-control-frontier'],
+      ['effects', 'ifpmic-control-effects'],
+    ];
+    for (const [id, captureSpec] of Object.entries(requiredControlCaptures)) {
+      await selectScenario(id);
+      for (const checkpoint of captureSpec.ids) {
+        await moveCheckpoint(checkpoint);
+        for (const [groupName, testId] of groups) {
+          await captureControlTarget(`controls-${id}-${checkpoint}-${groupName}`, captureSpec.width, page.getByTestId(testId));
+        }
+        if (id === 'pause-retry' && checkpoint === 'retried') {
+          const historyButton = page.getByRole('button', { name: '이력 영역 펼치기', exact: true });
+          await historyButton.click();
+          const expandedHistoryButton = page.locator('button[aria-controls="ifpmic-replay-history"]');
+          assert.equal(await expandedHistoryButton.getAttribute('aria-expanded'), 'true', 'pause-retry history is expanded for the required capture');
+          const history = page.locator('#ifpmic-replay-history');
+          assert.match(await history.innerText(), /P13 · WAITING_RETRY · attempt 1/,
+            'pause-retry retried checkpoint visibly retains the original P13 retry-wait attempt');
+          await captureControlTarget('controls-pause-retry-retried-history', captureSpec.width, history);
+        }
+      }
     }
   });
 

@@ -1,0 +1,212 @@
+{
+  "kind": "independent_controls_k8_evidence_review",
+  "decision": "partial_acceptance",
+  "recorded_at": "2026-10-18T14:02:58+00:00",
+  "reviewer_agent": "/root/verification_plan",
+  "implementation_owner": "/root",
+  "scope": "K8 read-only audit of the frozen K1-K7 synthetic controls UI candidate, unique full-gate directory, published gate ZIP, and representative native Paperclip screenshots. This decision does not complete full V2, B01-B13, production/runtime integration, or any original acceptance test.",
+  "candidate": {
+    "gate_path": "workflow-artifacts/verification/V2/ui/gates/2026-10-15T17-07-52-191Z/gate.json",
+    "gate_sha256": "ceb5e97c8411e225c9e450ad1f2ff692f0c2bffd7b19595c52929a7b4392fcdc",
+    "verdict": "pass",
+    "finished_at": "2026-10-15T17:12:32.871Z",
+    "source_fingerprint": "8707f3be17c583d77f87c851981c8a4b9465e6b7ce6973f336105993de93a0e2",
+    "source_paths": 169,
+    "current_source_hash_matches": 169,
+    "source_changes_during_gate": [],
+    "build_and_plugin_asset_hashes": 10,
+    "current_build_and_plugin_hash_matches": 10
+  },
+  "verification_report": {
+    "path": "docs/ifpmic/evidence/v2/controls-ui-verification.json",
+    "sha256": "e3f64565629e55288ec9eec0ce59033729c8e7d825149c3f84fe5d24bce30386"
+  },
+  "public_gate_copy": {
+    "path": "docs/ifpmic/evidence/v2/controls-ui-gate.zip",
+    "sha256": "b33b53c5ca378a5b2881301f7f07f3ce839c21e39d2bc2359421374d015a8ec0",
+    "bytes": 50194669,
+    "entry_count": 320,
+    "manifest_entry_count": 320,
+    "all_entry_sha256_and_byte_lengths_match_manifest": true,
+    "every_archive_entry_byte_identical_to_unique_gate_folder": true,
+    "unsafe_or_duplicate_paths": 0,
+    "embedded_gate_sha256": "ceb5e97c8411e225c9e450ad1f2ff692f0c2bffd7b19595c52929a7b4392fcdc"
+  },
+  "gate_results": {
+    "commands_total": 11,
+    "commands_exit_zero": 11,
+    "all_command_durations_ms_below_120000": true,
+    "unit": {
+      "tests": 339,
+      "passed": 339,
+      "failed": 0,
+      "skipped": 0
+    },
+    "commands": [
+      { "name": "unit", "duration_ms": 63696, "exit_code": 0 },
+      { "name": "build", "duration_ms": 7624, "exit_code": 0 },
+      { "name": "plugin-build", "duration_ms": 427, "exit_code": 0 },
+      { "name": "source-uploads", "duration_ms": 300, "exit_code": 0 },
+      { "name": "design-validator", "duration_ms": 389, "exit_code": 0 },
+      { "name": "ifpmic-browser", "duration_ms": 3998, "exit_code": 0 },
+      { "name": "paperclip-host", "duration_ms": 5461, "exit_code": 0 },
+      { "name": "catalog-evidence", "duration_ms": 40358, "exit_code": 0 },
+      { "name": "replay-browser", "duration_ms": 58148, "exit_code": 0 },
+      { "name": "replay-host", "duration_ms": 68080, "exit_code": 0 },
+      { "name": "legacy-browser", "duration_ms": 31468, "exit_code": 0 }
+    ],
+    "standalone_browser": {
+      "verdict": "pass",
+      "checks": 19,
+      "failed": 0,
+      "control_captures": 82,
+      "geometry_rows_pass": 82,
+      "browser_writes": 0,
+      "external_requests": 0
+    },
+    "native_host_browser": {
+      "verdict": "pass",
+      "checks": 20,
+      "failed": 0,
+      "control_captures": 82,
+      "geometry_rows_pass": 82,
+      "browser_writes": 0,
+      "external_requests": 0,
+      "capture_adjustments": [
+        {
+          "selector": "aside[aria-label=\"Paperclip announcements\"]",
+          "count": 0,
+          "action": "none",
+          "observed_text": null
+        }
+      ]
+    },
+    "capture_basis": {
+      "required_cases": 12,
+      "checkpoint_points": 27,
+      "semantic_groups_per_point": 3,
+      "additional_retry_history_capture": 1,
+      "expected_captures_per_environment": 82,
+      "geometry": "Every target fits the viewport and each overflow-clipping ancestor; 16 hit samples target the element or a descendant; fixed/sticky overlap count is zero. Compact-history clipping remains a deliberate negative assertion."
+    },
+    "performance_observation": {
+      "mode": "mock",
+      "verdict": "pass",
+      "scenario_ids": [
+        "cycle-limit",
+        "metadata-recovery",
+        "cancel-child",
+        "cancel-flash-unknown",
+        "cancel-remote-late-receipt",
+        "cancel-pending-dispatch"
+      ],
+      "replays_per_scenario": 2,
+      "duration_limit_ms_per_replay": 120000,
+      "total_duration_ms": 270.312,
+      "source_unchanged": true,
+      "scope_limit": "Synthetic full-replay timing and determinism only; event counts and fixture hashes are recorded for the fixed cases, not asserted as a hardware/runtime load benchmark."
+    }
+  },
+  "manually_reviewed_native_host_pngs": [
+    {
+      "path": "host-controls-pause-retry-retried-history-375.png",
+      "sha256": "f825d4ae52c47b81c74e91226385c69592c9bd601bde0292a6e934a88c2a8077",
+      "finding": "Expanded history shows the earlier WAITING_RETRY attempt distinctly from the current retry."
+    },
+    {
+      "path": "host-controls-cancel-flash-unknown-unknown-effects-1440.png",
+      "sha256": "2c8df51ea2d3e15208107dd9a8fc8bbf60958c64b77e1b55d5f8bb2a280a546c",
+      "finding": "UNKNOWN and quarantined device state remain visible with no release evidence or reassignment authority."
+    },
+    {
+      "path": "host-controls-cancel-remote-late-receipt-late-effects-375.png",
+      "sha256": "45faee1aae94a6b0ce439bab2a70649d30e828dc77539ebe9cae749287906dc0",
+      "finding": "Late same-operation receipt remains visible while P25 and the job stay canceled and publication count stays one."
+    },
+    {
+      "path": "host-controls-pause-child-blocked-frontier-1440.png",
+      "sha256": "7bb86ee0b42e908eac00c93f8a1936d0165cc1cb7c1fd55b0bff2344fa4f4726",
+      "finding": "PAUSED aggregate, underlying RUNNING parent/P12, and child result/collection without integration are separately readable."
+    },
+    {
+      "path": "host-controls-pause-manual-sqe-blocked-effects-375.png",
+      "sha256": "66f9768977f8b8d90feaae8b3f55d092c4ef1d20cf85df9e31b9ae7a03774266",
+      "finding": "Manual SQE result and READY step remain distinct from resumed execution; host header does not obscure the detail."
+    },
+    {
+      "path": "host-controls-pause-final-finished-frontier-1440.png",
+      "sha256": "d5d44176a59a1c29e2b3aa800ec5a7cbe18ad6843d6c185f182820837bea4d37",
+      "finding": "P26 completion and END are preserved under aggregate PAUSED; resume does not imply another execution."
+    },
+    {
+      "path": "host-controls-cancel-flash-unknown-released-effects-1440.png",
+      "sha256": "3f75a50d3102e58086664cd1e38f43542997aa2003e9357108c6ad8f02660d2a",
+      "finding": "Terminal bridge result, reconciliation, release and lock/lease evidence are presented separately."
+    },
+    {
+      "path": "host-controls-cancel-released-notes-canceled-frontier-1440.png",
+      "sha256": "394bd284d1f74585ae490717bad38ea5236c62c1636bcad13855e85efc358fb2",
+      "finding": "Canceled job preserves P26 FAILED and the existing publication/receipt."
+    },
+    {
+      "path": "host-controls-control-notes-retry-retried-effects-1440.png",
+      "sha256": "a17e5ee26ffc68b33b3cc72f1e07953f9babf99f2e6e452fd11299ac5cc10b2d",
+      "finding": "Notes-only attempt 2 retains the single prior publication and receipt."
+    },
+    {
+      "path": "host-controls-cancel-pending-dispatch-drained-command-1440.png",
+      "sha256": "821b0c3cf58a57eac99c5b03036cf1d926902d4262c83aee36e1fdb4ac20dbad",
+      "finding": "The quiescent boundary and rejected invalid boundary remain visible without generating a child execution."
+    }
+  ],
+  "review_findings": {
+    "material_blockers": [],
+    "sampled_pngs_readable": true,
+    "sample_limit": "Ten native-host PNGs were manually inspected; this is representative sampling, not manual review of all 164 control PNGs. Automated geometry assertions cover all 164 captures.",
+    "historical_development_diagnostics": {
+      "path": "docs/ifpmic/evidence/v2/controls-ui-development-attempts.json",
+      "sha256": "60b784313e779d52ba920386952bcfcacc59d21ad03dd54e1a9b3372627f69df",
+      "bytes": 1281911,
+      "acceptance_evidence": false,
+      "note": "Preserved failed attempts and their recorded diagnostic provenance; not used to override the passing frozen candidate."
+    },
+    "review_cross_checks": [
+      "K3 independent reviewer record is controls-k3-review.json; it remains an intermediate checkpoint, not full controls acceptance.",
+      "K4/K5 intermediate checkpoint and independent literal catalog review are recorded in controls-k45-development-checkpoint.json.",
+      "The final K4 malformed-field nullability test ran within the frozen 339-test gate; malformed rejection preserves command receipts."
+    ]
+  },
+  "remaining_scope": {
+    "original_acceptance_cases": {
+      "path": "docs/ifpmic/design-v1/specs/acceptance-cases.json",
+      "count": 32,
+      "status": "not_executed",
+      "ids": [
+        "AT-01", "AT-02", "AT-03", "AT-04", "AT-05", "AT-06", "AT-07", "AT-08",
+        "AT-09", "AT-10", "AT-11", "AT-12", "AT-13", "AT-14", "AT-15", "AT-16",
+        "AT-17", "AT-18", "AT-19", "AT-20", "AT-21", "AT-22", "AT-23", "AT-24",
+        "AT-25", "AT-26", "AT-27", "AT-28", "AT-29", "AT-30", "AT-31", "AT-32"
+      ]
+    },
+    "implementation_backlog": {
+      "path": "docs/ifpmic/design-v1/specs/implementation-backlog.json",
+      "still_required": [
+        { "id": "B01", "acceptance": ["AT-04", "AT-28"] },
+        { "id": "B02", "acceptance": ["AT-21"] },
+        { "id": "B03", "acceptance": ["AT-05", "AT-16", "AT-29"] },
+        { "id": "B04", "acceptance": ["AT-03", "AT-27"] },
+        { "id": "B05", "acceptance": ["AT-01", "AT-09", "AT-10", "AT-11"] },
+        { "id": "B06", "acceptance": ["AT-06", "AT-23"] },
+        { "id": "B07", "acceptance": ["AT-02", "AT-07", "AT-30"] },
+        { "id": "B08", "acceptance": ["AT-08", "AT-12", "AT-31"] },
+        { "id": "B09", "acceptance": ["AT-14", "AT-22", "AT-32"] },
+        { "id": "B10", "acceptance": ["AT-13", "AT-15"] },
+        { "id": "B11", "acceptance": ["AT-18", "AT-19", "AT-20", "AT-26"] },
+        { "id": "B12", "acceptance": ["AT-17", "AT-24", "AT-25", "AT-27"] },
+        { "id": "B13", "acceptance": ["AT-01", "AT-04", "AT-23"] }
+      ]
+    },
+    "mock_scope_limit": "No real controls ingress, CSRF/auth, DB/outbox, Temporal delivery, runtime checkpoint, device bridge/lease, publisher, or real acceptance evidence is established by this UI gate. The original AT ledger is unchanged."
+  },
+  "waivers": []
+}

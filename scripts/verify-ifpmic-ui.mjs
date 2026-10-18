@@ -15,12 +15,16 @@ async function files(directory) {
 }
 async function snapshot() {
   const paths = (await Promise.all(['src', 'server', 'tests', 'scripts', 'plugins', 'docs/ifpmic/design-v1'].map(files))).flat();
-  paths.push('docs/ifpmic/V2-CONTROLS.md', 'docs/ifpmic/evidence/v2/controls-baseline-59.json', 'docs/ifpmic/evidence/v2/controls-plan-review.json', 'docs/ifpmic/evidence/v2/controls-catalog-plan-clarification.json', 'docs/ifpmic/evidence/v2/controls-artifact-registry.json', 'docs/ifpmic/V2-CHILDREN.md', 'docs/ifpmic/evidence/v2/children-baseline-50.json', 'docs/ifpmic/evidence/v2/children-plan-review.json', 'docs/ifpmic/evidence/v2/children-design-review.json', 'docs/ifpmic/V2-SQE-UI.md', 'docs/ifpmic/evidence/v2/sqe-ui-baseline-41.json', 'docs/ifpmic/evidence/v2/sqe-ui-plan-review.json', 'docs/ifpmic/V2-SQE.md', 'docs/ifpmic/evidence/v2/sqe-baseline-41.json', 'docs/ifpmic/evidence/v2/sqe-plan-review.json', 'docs/ifpmic/evidence/v2/sqe-design-review.json', 'docs/ifpmic/V2-ROUTING-UI.md', 'docs/ifpmic/evidence/v2/routing-ui-baseline-32.json', 'docs/ifpmic/evidence/v2/routing-ui-plan-review.json', 'docs/ifpmic/V2-ROUTING.md', 'docs/ifpmic/evidence/v2/routing-plan-review.json', 'docs/ifpmic/V2-EXCEPTION-UI-CAPTURE.md', 'docs/ifpmic/evidence/v2/exception-ui-capture-review.json', 'docs/ifpmic/evidence/v2/ui-catalog.json', 'docs/ifpmic/V2-EXCEPTION-UI.md', 'docs/ifpmic/V2-EXCEPTIONS.md', 'docs/ifpmic/evidence/v2/exception-ui-plan-review.json', 'docs/ifpmic/evidence/v2/exceptions-plan-review-2.json', 'README.md', 'docs/ifpmic/V2-UI.md', 'docs/ifpmic/V2-SCENARIOS.md', 'docs/ifpmic/V2-PROTOCOLS.md', 'docs/ifpmic/V2-IMPLEMENTATION.md', 'docs/ifpmic/evidence/v2/ui-plan-review.json', 'package.json', 'package-lock.json', 'vite.config.ts', 'tsconfig.json', 'index.html', 'ifpmic.html', 'docs/ifpmic/PLAN.md', 'docs/ifpmic/VERIFICATION.md', 'docs/ifpmic/evidence/plan-review.json', 'docs/ifpmic/source-manifest.json', 'IFPMIC_AX_Design_Package_v1.zip', 'IFPMIC_AX_Design_v1.docx');
+  paths.push('docs/ifpmic/evidence/v2/controls-development-checkpoint.json', 'docs/ifpmic/evidence/v2/controls-k3-development-checkpoint.json', 'docs/ifpmic/evidence/v2/controls-k3-review.json', 'docs/ifpmic/evidence/v2/controls-k45-development-checkpoint.json', 'docs/ifpmic/evidence/v2/controls-receipt-policy-diff.json', 'docs/ifpmic/evidence/v2/controls-source-collection.json', 'docs/ifpmic/evidence/v2/controls-design-review.json', 'docs/ifpmic/evidence/v2/controls-planning-verification.json', 'docs/ifpmic/V2-CONTROLS.md', 'docs/ifpmic/evidence/v2/controls-baseline-59.json', 'docs/ifpmic/evidence/v2/controls-plan-review.json', 'docs/ifpmic/evidence/v2/controls-catalog-plan-clarification.json', 'docs/ifpmic/evidence/v2/controls-artifact-registry.json', 'docs/ifpmic/V2-CHILDREN.md', 'docs/ifpmic/evidence/v2/children-baseline-50.json', 'docs/ifpmic/evidence/v2/children-plan-review.json', 'docs/ifpmic/evidence/v2/children-design-review.json', 'docs/ifpmic/V2-SQE-UI.md', 'docs/ifpmic/evidence/v2/sqe-ui-baseline-41.json', 'docs/ifpmic/evidence/v2/sqe-ui-plan-review.json', 'docs/ifpmic/V2-SQE.md', 'docs/ifpmic/evidence/v2/sqe-baseline-41.json', 'docs/ifpmic/evidence/v2/sqe-plan-review.json', 'docs/ifpmic/evidence/v2/sqe-design-review.json', 'docs/ifpmic/V2-ROUTING-UI.md', 'docs/ifpmic/evidence/v2/routing-ui-baseline-32.json', 'docs/ifpmic/evidence/v2/routing-ui-plan-review.json', 'docs/ifpmic/V2-ROUTING.md', 'docs/ifpmic/evidence/v2/routing-plan-review.json', 'docs/ifpmic/V2-EXCEPTION-UI-CAPTURE.md', 'docs/ifpmic/evidence/v2/exception-ui-capture-review.json', 'docs/ifpmic/evidence/v2/ui-catalog.json', 'docs/ifpmic/V2-EXCEPTION-UI.md', 'docs/ifpmic/V2-EXCEPTIONS.md', 'docs/ifpmic/evidence/v2/exception-ui-plan-review.json', 'docs/ifpmic/evidence/v2/exceptions-plan-review-2.json', 'README.md', 'docs/ifpmic/V2-UI.md', 'docs/ifpmic/V2-SCENARIOS.md', 'docs/ifpmic/V2-PROTOCOLS.md', 'docs/ifpmic/V2-IMPLEMENTATION.md', 'docs/ifpmic/evidence/v2/ui-plan-review.json', 'package.json', 'package-lock.json', 'vite.config.ts', 'tsconfig.json', 'index.html', 'ifpmic.html', 'docs/ifpmic/PLAN.md', 'docs/ifpmic/VERIFICATION.md', 'docs/ifpmic/evidence/plan-review.json', 'docs/ifpmic/source-manifest.json', 'IFPMIC_AX_Design_Package_v1.zip', 'IFPMIC_AX_Design_v1.docx');
   for (const name of await readdir(join(root, 'experiments/paperclip'))) if (/\.(mjs|json)$/.test(name)) paths.push(join('experiments/paperclip', name));
   return Object.fromEntries(await Promise.all([...new Set(paths)].sort().map(async path => [path, sha256(await readFile(join(root, path)))])));
 }
+async function buildOutputs() {
+  const paths = (await Promise.all(['dist', '.paperclip-lab/ifpmic-plugin'].map(files))).flat();
+  return Object.fromEntries(await Promise.all(paths.sort().map(async path => [path, sha256(await readFile(join(root, path)))])));
+}
 const before = await snapshot();
-const report = { kind: 'ifpmic_v2_partial_ui_candidate_verification', scope: 'P12 child observations and 74-scenario inventory/endpoints including 15 controls examples, with V0/V1/AX regression; controls interaction UI acceptance and real AT remain pending', attempt, startedAt: new Date().toISOString(), sourceHashes: before, sourceFingerprint: sha256(JSON.stringify(before)), commands: [], reports: {}, verdict: 'running' };
+const report = { kind: 'ifpmic_v2_partial_ui_candidate_verification', scope: 'P12 child observations and 74-scenario inventory/endpoints including 15 controls examples, with V0/V1/AX regression; synthetic controls observation UI and original IFPMIC/AX regression; actual controls execution and real AT remain pending', attempt, startedAt: new Date().toISOString(), sourceHashes: before, sourceFingerprint: sha256(JSON.stringify(before)), commands: [], reports: {}, verdict: 'running' };
 async function run(name, command, args) {
   const log = join(directory, `${name}.log`);
   const startedAt = new Date().toISOString();
@@ -59,11 +63,29 @@ try {
   report.reports['sqe-unit-observations.json'] = { path: relative(root, join(directory, 'sqe-unit-observations.json')), sha256: sha256(sqeBytes) };
   await run('build', 'npm', ['run', 'build']);
   await run('plugin-build', 'npm', ['run', 'ifpmic:plugin:build']);
+  report.buildOutputHashes = await buildOutputs();
   await run('source-uploads', 'npm', ['run', 'ifpmic:verify-sources']);
   await run('design-validator', 'python3', ['-c', 'import pathlib, tempfile, shutil, subprocess\nwith tempfile.TemporaryDirectory(prefix="ifpmic-gate-") as temp:\n target=pathlib.Path(temp)/"design"\n shutil.copytree("docs/ifpmic/design-v1",target)\n subprocess.run(["python3",str(target/"verify_design.py")],check=True)']);
   await run('ifpmic-browser', 'npm', ['run', 'test:ifpmic:browser']);
   await run('paperclip-host', 'npm', ['run', 'test:ifpmic:host']);
   await run('catalog-evidence', 'node', ['scripts/ifpmic-catalog-evidence.mjs']);
+  const performanceBytes = await readFile(join(root, 'workflow-artifacts/verification/V2/controls/performance.json'));
+  const performanceReport = JSON.parse(performanceBytes);
+  const performanceCases = ['cycle-limit', 'metadata-recovery', 'cancel-child', 'cancel-flash-unknown', 'cancel-remote-late-receipt', 'cancel-pending-dispatch'];
+  if (performanceReport.verdict !== 'pass' || performanceReport.mode !== 'mock'
+      || !Number.isFinite(Date.parse(performanceReport.generated_at))
+      || Date.parse(performanceReport.generated_at) < Date.parse(report.startedAt)
+      || performanceReport.duration_limit_ms_per_replay !== 120000
+      || performanceReport.runner?.sha256 !== before['scripts/ifpmic-control-performance.mjs']
+      || JSON.stringify(performanceReport.scenarios?.map(row => row.id)) !== JSON.stringify(performanceCases)
+      || !performanceReport.scenarios.every(row => row.verdict === 'pass' && row.deterministic && row.input_unchanged
+        && row.runs.length === 2 && row.runs.every(run => Number.isFinite(run.duration_ms) && run.duration_ms >= 0 && run.duration_ms <= 120000))
+      || !performanceReport.source_sha256?.['src/ifpmic/replay.mjs']
+      || !Object.entries(performanceReport.source_sha256 || {}).every(([path, hash]) => before[path] === hash)) {
+    throw new Error('Controls performance evidence must be fresh, deterministic and bound to this candidate');
+  }
+  await writeFile(join(directory, 'controls-performance.json'), performanceBytes);
+  report.reports['controls-performance.json'] = { path: relative(root, join(directory, 'controls-performance.json')), sha256: sha256(performanceBytes) };
   await run('replay-browser', 'npm', ['run', 'test:ifpmic:replay']);
   await run('replay-host', 'npm', ['run', 'test:ifpmic:replay:host']);
   await run('legacy-browser', 'npm', ['run', 'test:browser']);
@@ -96,6 +118,10 @@ try {
     }
   }
   const after = await snapshot();
+  report.finalBuildOutputHashes = await buildOutputs();
+  if (JSON.stringify(report.buildOutputHashes) !== JSON.stringify(report.finalBuildOutputHashes)) {
+    throw new Error('Built standalone/plugin outputs changed during verification');
+  }
   if (JSON.stringify(before) !== JSON.stringify(after)) {
     report.sourceChanges = [...new Set([...Object.keys(before), ...Object.keys(after)])].filter(path => before[path] !== after[path]);
     report.afterSourceFingerprint = sha256(JSON.stringify(after));

@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 import workflow from '../docs/ifpmic/design-v1/specs/workflow.v1.json' with { type: 'json' };
 import states from '../docs/ifpmic/design-v1/specs/state-contract.json' with { type: 'json' };
 import { createScenarioCatalog, replayScenario } from '../src/ifpmic/replay.mjs';
+import './ifpmic-control-performance.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const directory = resolve(root, 'workflow-artifacts/verification/V2/ui');

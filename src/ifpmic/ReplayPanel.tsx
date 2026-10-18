@@ -1,10 +1,12 @@
 import { ChildObservations, StepChildDetails } from './ChildObservations';
+import { ControlObservations } from './ControlObservations';
 import { useEffect, useState } from 'react';
 import { SqeObservations, StepSqeDetails } from './SqeObservations';
 import { RoutingObservations, RoutingHistory, StepRoutingDetails } from './RoutingObservations';
 import type { MockScenario, MockSpecReview, ReplaySnapshot, ReplayStep } from './replay.mjs';
 
 const labels: Record<string, string> = {
+  PAUSE_REQUESTED: '일시정지 요청', PAUSED: '일시정지', CANCEL_REQUESTED: '취소 요청', CANCELED: '취소됨', QUIESCENT: '안전 경계 확인',
   SKIPPED: '생략', EXEMPT: '정책 면제', NO_CHANGE: '변경 없음 종료', PENDING: '미시작', READY: '준비', RUNNING: '진행 중', SUCCEEDED: '완료', FAILED: '실패',
   WAITING_HUMAN: '사람 대기', WAITING_AGENT: 'Agent 대기', WAITING_DEVICE: '장비 대기',
   WAITING_RETRY: '재시도 대기', RECONCILING: '결과 확인 필요', COMPLETED: '모의 완료',
@@ -102,6 +104,7 @@ export function ReplayPanel({ catalog, scenario, cursor, snapshot, onScenario, o
     </div>
     <p className="ifpmic-replay-coordinates"><span className="ifpmic-mock">MOCK</span> {snapshot.job_id} · 후보 {snapshot.candidate_fingerprint}<br />요구사항 버전 {snapshot.requirements_version}<br /><span data-testid="ifpmic-catalog-version">{scenario.catalog_version ?? 'mock:ifpmic:legacy'}</span><br />요구사항 {scenario.requirement_ids.join(', ')}</p>
     <p className="ifpmic-replay-reason" data-testid="ifpmic-replay-reason">대기·차단 사유: <code>{snapshot.wait_reason || lastIgnored?.reason || '없음'}</code> · 중복 {snapshot.duplicate_count} · 충돌 {snapshot.conflict_count}</p>
+    {(scenario.catalog_version === 'mock:ifpmic:controls:v1' || snapshot.control.commands.length > 0) && <ControlObservations snapshot={snapshot} />}
     {snapshot.required_revalidation.length > 0 && <p className="ifpmic-revalidation">필수 재평가 구간: {snapshot.required_revalidation.join(' → ')}</p>}
     <div className="ifpmic-replay-grid">
       <ChildObservations snapshot={snapshot} /><ExceptionObservations snapshot={snapshot} /><RoutingObservations snapshot={snapshot} /><SqeObservations snapshot={snapshot} />
@@ -127,6 +130,6 @@ export function ReplayPanel({ catalog, scenario, cursor, snapshot, onScenario, o
       })}</div>{snapshot.history.length === 0 && <p>이 관측까지 과거 이력 없음</p>}
       {snapshot.failure_bundle.length > 0 && <p>MOCK · 한도 도달 증거 {snapshot.failure_bundle.map(item => `${item.step_id} c${item.cycle} a${item.attempt} ${item.evidence_id}`).join(', ')}</p>}</section>
     </div>
-    <p className="ifpmic-replay-pending"><strong>전체 V2 미완료</strong> · 후속 범위: 실제 자식 Agent 실행 연동, pause/resume/cancel 및 전체 V2 검증. 실제 수동 장비·SQE 실행 연동은 별도 범위. 실제 AT 미실행.</p>
+    <p className="ifpmic-replay-pending"><strong>전체 V2 미완료</strong> · 후속 범위: 실제 자식 Agent 실행과 작업 제어 연동 및 전체 V2 검증. 실제 수동 장비·SQE 실행 연동은 별도 범위. 실제 AT 미실행.</p>
   </section>;
 }
