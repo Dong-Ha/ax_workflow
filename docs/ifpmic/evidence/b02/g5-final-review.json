@@ -1,0 +1,64 @@
+{
+  "kind": "ifpmic.b02.g5.final-review.v1",
+  "decision": "accept_partial_g5",
+  "acceptance_scope": "B02 G5 local workspace provisioning and recovery slice only",
+  "reviewed_pins": {
+    "plan": {
+      "path": "docs/ifpmic/B02-IDENTITY.md",
+      "sha256": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a"
+    },
+    "approved_contract": {
+      "path": "docs/ifpmic/evidence/b02/g5-implementation-contract-v2.json",
+      "sha256": "cdbda5b333e0227f7804255d8d430968eec22d89657708fa8c109dea83f73b8b"
+    },
+    "pre_gate_review": {
+      "path": "docs/ifpmic/evidence/b02/g5-pre-gate-review-v2.json",
+      "sha256": "4e3d5f2cf58678f5339e2fc8eddd464790f4042b10d22f3a4f92f63728fd3f9b"
+    },
+    "gate_archive": {
+      "path": "docs/ifpmic/evidence/b02/g5-gate.zip",
+      "sha256": "c299d6c0c03fe28692a012916923325e406d6bb606ccf0c1203921f6b82df7ab",
+      "entries": 8
+    },
+    "gate_report": {
+      "path": "workflow-artifacts/verification/B02/G5/gates/2026-10-18T18-37-48-368045Z/gate.json",
+      "sha256": "6c1f9bbc167aafef05c8303df07b34666a5509e1bc92577238c9f55315e08c2e"
+    },
+    "verification_report": {
+      "path": "docs/ifpmic/evidence/b02/g5-verification.json",
+      "sha256": "6dac77b8ab4b7474a0438ee407d6e11406d5b7c8f1a1fcd2491c0e5f7dce8030"
+    },
+    "candidate_source": {
+      "private_path": "workflow-artifacts/verification/B02/G5/gates/2026-10-18T18-37-48-368045Z/private-candidate-source.zip",
+      "sha256": "02c05311b729d4e90d784c66bc71f2e82683d095d605f93816d49713c0b52d9e",
+      "entries": 135,
+      "fingerprint": "4f9b412af98c67be6921a87503b0d083e33ec69ce878a7f13c311c0eda6f1cd1"
+    }
+  },
+  "independent_audit": {
+    "gate_verdict": "pass",
+    "inventories": {
+      "legacy_python": {"tests": 167, "passed": 167, "failed": 0, "errors": 0, "skipped": 0},
+      "g4_python": {"tests": 91, "passed": 91, "failed": 0, "errors": 0, "skipped": 0},
+      "g5_python": {"tests": 93, "passed": 93, "failed": 0, "errors": 0, "skipped": 0},
+      "combined_python": 351,
+      "b01_node": {"tests": 48, "passed": 48, "failed": 0, "cancelled": 0, "skipped": 0, "todo": 0},
+      "maximum_case_seconds": {"legacy_python": 4.155, "g4_python": 7.970, "g5_python": 7.111}
+    },
+    "archive_and_sources": "All eight public archive entry hashes match the verification report. The private source ZIP hash and 135-entry source map match the gate report; every captured source byte matches both the current worktree and Git index. Recomputed source fingerprint matches the gate and verification reports. The three published Python JUnit files contain exactly the gate-reported case IDs with no failure, error or skip elements.",
+    "runtime_and_privacy": "All three isolated PostgreSQL phases report stopped with PID absent. The gate reports no source changes, protected-source verification passed, and owned children absent. The actual private workspace observation contains 42 unique (PID,start_ticks) records; all 84 retained worker log files are in a mode-0700 directory, individually mode-0600, and their byte counts/hashes match the raw observation. Process identities and raw worker logs are omitted from the promoted aggregate/archive. G3/G4/G5 canary checks pass. Eight runtime-library hashes and the protected 96-source/89-item inventory plus 17 imported files and two original uploads are recorded unchanged.",
+    "workspace_observation": "All schema-required workspace markers pass, including two_jobs_isolated, durable_layout, claim fencing, crash recovery, unsafe-entry preservation, CLI shutdown and G4 acceptance preservation. Four successful reconciler processes and the expected CLI/crash-worker lifecycle evidence are present among the 42 records.",
+    "history_and_uncertainty": "Both failed frozen candidates, three focused diagnostics and three bounded exact-case timing runs are retained in development_history. The failed candidate with six G5 test failures was corrected through contract-aligned test/fixture and evidence-aggregation changes; the accepted G5 product bytes and accepted G1-G4 tests remained unchanged. The earlier 44.545-second inherited G4 outlier is documented; its cause remains unattributed and the 30-second limit was retained. No claim is made that later runs prove timing variability cannot recur."
+  },
+  "limitations": [
+    "This accepts only the partial local G5 workspace prerequisite under B02. G6 and G7 remain pending, as do B03-B13 and the remaining original AT-21 scope.",
+    "READY means workspace preparation only: no job command, build, Agent/Temporal lifecycle, publisher, device or external submission ran.",
+    "Synthetic identity/project data and local PostgreSQL/POSIX evidence do not establish corporate SSO or production acceptance. Controlled syscall/ack-loss tests do not prove physical power-loss, actual disk exhaustion, NFS or privileged mount behavior."
+  ],
+  "review_limits": {
+    "read_only_audit": true,
+    "tests_or_services_run_by_reviewer": false,
+    "gate_or_verification_report_modified": false,
+    "other_product_test_or_evidence_files_modified": false
+  }
+}

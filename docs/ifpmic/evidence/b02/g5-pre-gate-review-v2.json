@@ -1,0 +1,67 @@
+{
+  "kind": "ifpmic.b02.g5.pre-gate-review.v2",
+  "decision": "approved_to_start_frozen_full_gate_only",
+  "acceptance": "not_claimed",
+  "reviewed_pins": {
+    "approved_contract": {
+      "path": "docs/ifpmic/evidence/b02/g5-implementation-contract-v2.json",
+      "sha256": "cdbda5b333e0227f7804255d8d430968eec22d89657708fa8c109dea83f73b8b"
+    },
+    "runner": {
+      "path": "scripts/verify_ifpmic_g5.py",
+      "sha256": "ee137621450b4a28d0be30708981bebaa012d9f282db9816e45e6b78325c427b"
+    },
+    "ledger": {
+      "path": "docs/ifpmic/evidence/b02/g5-tc-ledger.json",
+      "sha256": "f0b7164d9125b48db4d276885c22f5af5768b35c8bb55bb5277ad9aee3a9a59f"
+    },
+    "execution_decision": {
+      "path": "docs/ifpmic/evidence/b02/g5-gate-execution-decision-v2.json",
+      "sha256": "d237924fbb2ff90474b1ffe71921fa4291eb1714cd5504561031c49f32325cc5"
+    },
+    "observation_contract": {
+      "path": "docs/ifpmic/evidence/b02/g5-gate-observation-contract.json",
+      "sha256": "ace8a426ab9ef5d5a12118c5d9e077a4d9c227c2dc4beb2612290001c17c6bf5"
+    },
+    "corrected_test": {
+      "path": "tests/ifpmic_api/test_workspace.py",
+      "sha256": "0254b67ac0a1da79dad2bf81110ca4d5519bc1dfe0e9c1210e807016b2d7d634"
+    },
+    "workspace_fixture": {
+      "path": "tests/ifpmic_api/workspace_fixture.py",
+      "sha256": "5987916779c74a91b4dc44f16b03f27024762b4525ba6f8e9f14a20809e50ff8"
+    }
+  },
+  "independent_checks": {
+    "contract_and_review_pins": "The runner pins the approved G5 contract, original-source/risk/advice inputs and both independent contract reviews; no requirement or product source was changed for the corrected candidate.",
+    "inventory": {
+      "accepted_legacy_python": 167,
+      "accepted_g4_python": 91,
+      "g5_python": 93,
+      "g5_unique_case_ids": true,
+      "combined_python": 351,
+      "b01_node": 48,
+      "exact_junit_ids_and_zero_failures_errors_skips": true
+    },
+    "source_pins": {
+      "ledger_declares_nine_product_and_test_source_pins": true,
+      "all_nine_current_bytes_match": true,
+      "runner_source_capture_precedes_execution_and_is_rechecked_after": true,
+      "accepted_g4_baseline_and_protected_sources_are_checked_before_and_after": true
+    },
+    "runner_and_privacy": "The runner captures a private mode-0600 source archive in a private mode-0700 gate leaf, checks exact G5 ledger/schema/source pins and exact accepted inventories, uses fixed phase inventories and unchanged timeout limits, validates actual PostgreSQL lifecycle stops, and validates actual G5 child log bytes/modes/hashes and unique private process identities before dropping identifiers/raw logs from the report.",
+    "correction_oracles": [
+      "Ancestor root symlink/FIFO cases now assert global preflight error with null job_id and no intent mutation, as required by approved contract preflight; per-job special entries remain job-scoped ERROR cases.",
+      "Error commit-ack loss is injected in the same invocation as the filesystem error that produces ERROR; explicit retry preserves the filesystem tree and existing claim generation, matching approved retry_error semantics.",
+      "Cross-user isolation starts the second identity from a cleared cookie jar, avoiding inherited first-session cookies; the test still checks denied reads in both directions and distinct project/job workspace identity.",
+      "The observation aggregator retains the required cli_run_shutdown schema field and marks two_jobs_isolated only after its isolation assertions; correction focus evidence records all ten selected cases passing with PostgreSQL stopped and PID absent."
+    ],
+    "scope": "Approval permits only the frozen 351-Python + 48-Node gate on these exact bytes. It does not accept G5, complete AT-21/B02, or claim physical power-loss/production storage evidence."
+  },
+  "review_limits": {
+    "read_only": true,
+    "tests_or_verifier_run_by_reviewer": false,
+    "services_or_database_called_by_reviewer": false,
+    "product_or_test_files_modified_by_reviewer": false
+  }
+}

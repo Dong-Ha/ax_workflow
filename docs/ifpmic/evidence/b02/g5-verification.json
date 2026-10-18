@@ -1,0 +1,1795 @@
+{
+  "kind": "ifpmic_b02_g5_verification",
+  "decision": "g5_pass_pending_independent_final_review",
+  "requirements": [
+    "REQ-13",
+    "B02-G5"
+  ],
+  "scope": "Partial B02 local POSIX workspace provisioning/recovery, private four-child layout, database leases and generation/token fencing. No job command execution.",
+  "plan_sha256": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a",
+  "contract_sha256": "cdbda5b333e0227f7804255d8d430968eec22d89657708fa8c109dea83f73b8b",
+  "candidate_fingerprint": "4f9b412af98c67be6921a87503b0d083e33ec69ce878a7f13c311c0eda6f1cd1",
+  "gate_archive": {
+    "path": "docs/ifpmic/evidence/b02/g5-gate.zip",
+    "sha256": "c299d6c0c03fe28692a012916923325e406d6bb606ccf0c1203921f6b82df7ab",
+    "entries": {
+      "gate.json": {
+        "bytes": 117608,
+        "sha256": "6c1f9bbc167aafef05c8303df07b34666a5509e1bc92577238c9f55315e08c2e"
+      },
+      "legacy_python-pytest.xml": {
+        "bytes": 33391,
+        "sha256": "a1707e00d719f5906082c992c97cb85a15b85ec684a1ed702a3ddbf845a8c43b"
+      },
+      "g4_python-pytest.xml": {
+        "bytes": 15117,
+        "sha256": "1fc900fd243bd4a536fc9f08e92ef600e23d6e8f529081d7523bf55b5f2ae8df"
+      },
+      "g5_python-pytest.xml": {
+        "bytes": 15357,
+        "sha256": "8a16351c1bebbe4d5c0ef61ade084215a0caa8a7dd79a2124c33ee14a7b6c647"
+      },
+      "legacy-python.log": {
+        "bytes": 272,
+        "sha256": "c209737919b4f00759d2e8d036ba491bc731243ac2044c875bd32d0079a7e0c7"
+      },
+      "g4-python.log": {
+        "bytes": 659,
+        "sha256": "6e2fb35ff6edcedde46e21ec80197e7bbcabfd45ea54e0f4dd98d908a7b307fc"
+      },
+      "g5-python.log": {
+        "bytes": 191,
+        "sha256": "83b8ac433494746f1464b1c107e414a23523aebab6887f7a1a0489cac4e59adc"
+      },
+      "b01-node.log": {
+        "bytes": 11059,
+        "sha256": "ee6c063bfa3a59155c6613c27246af98f5f6b7a87bcd5cfd28c82a997b2584b8"
+      }
+    }
+  },
+  "private_candidate_source": {
+    "sha256": "02c05311b729d4e90d784c66bc71f2e82683d095d605f93816d49713c0b52d9e",
+    "entries": 135
+  },
+  "tests": {
+    "python_total": 351,
+    "g1": 12,
+    "g2": 41,
+    "g3": 114,
+    "g4": 91,
+    "g5": 93,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "b01_node": {
+      "tests": 48,
+      "pass": 48,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "legacy_python": {
+      "tests": 167,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 167
+    },
+    "g4_python": {
+      "tests": 91,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 91
+    },
+    "g5_python": {
+      "tests": 93,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 93
+    },
+    "maximum_case_seconds": {
+      "legacy_python": 4.155,
+      "g4_python": 7.97,
+      "g5_python": 7.111
+    }
+  },
+  "source_changes": [],
+  "unchanged_existing_sources": {
+    "protected_source_count": 96,
+    "protected_inventory_count": 89,
+    "original_imported_files": 17,
+    "original_uploads": 2,
+    "scope": "Byte/inventory comparison only. Full Node/build/browser G6 remains pending."
+  },
+  "protected_sources_verified_before_and_after": true,
+  "owned_children_absent": true,
+  "postgres_lifecycles": {
+    "legacy_python": {
+      "stop_status": "stopped",
+      "pid_alive": false,
+      "binary_versions": {
+        "initdb": "initdb (PostgreSQL) 18.1",
+        "pg_ctl": "pg_ctl (PostgreSQL) 18.1",
+        "postgres": "postgres (PostgreSQL) 18.1"
+      },
+      "binary_sha256": {
+        "initdb": "7cba14094c5f505f492fd243c5eda04f0dc3be05f12b7bd278f150f1e03b721f",
+        "pg_ctl": "24a1f166819e0924319ff3faf752ad2a1ac594e223e2f3b1a2038dc84a2969de",
+        "postgres": "c85fa9c977d9e641c2d22d93675a9b7097764b7df2c4c9ea021f5780522b2af2"
+      },
+      "lifecycle": [
+        {
+          "duration_ms": 5,
+          "exit_code": 0,
+          "operation": "initdb_version"
+        },
+        {
+          "duration_ms": 2,
+          "exit_code": 0,
+          "operation": "pg_ctl_version"
+        },
+        {
+          "duration_ms": 6,
+          "exit_code": 0,
+          "operation": "postgres_version"
+        },
+        {
+          "duration_ms": 1245,
+          "exit_code": 0,
+          "operation": "initdb"
+        },
+        {
+          "duration_ms": 112,
+          "exit_code": 0,
+          "operation": "pg_ctl_start"
+        },
+        {
+          "duration_ms": 115,
+          "exit_code": 0,
+          "operation": "pg_ctl_stop"
+        }
+      ]
+    },
+    "g4_python": {
+      "stop_status": "stopped",
+      "pid_alive": false,
+      "binary_versions": {
+        "initdb": "initdb (PostgreSQL) 18.1",
+        "pg_ctl": "pg_ctl (PostgreSQL) 18.1",
+        "postgres": "postgres (PostgreSQL) 18.1"
+      },
+      "binary_sha256": {
+        "initdb": "7cba14094c5f505f492fd243c5eda04f0dc3be05f12b7bd278f150f1e03b721f",
+        "pg_ctl": "24a1f166819e0924319ff3faf752ad2a1ac594e223e2f3b1a2038dc84a2969de",
+        "postgres": "c85fa9c977d9e641c2d22d93675a9b7097764b7df2c4c9ea021f5780522b2af2"
+      },
+      "lifecycle": [
+        {
+          "duration_ms": 5,
+          "exit_code": 0,
+          "operation": "initdb_version"
+        },
+        {
+          "duration_ms": 2,
+          "exit_code": 0,
+          "operation": "pg_ctl_version"
+        },
+        {
+          "duration_ms": 8,
+          "exit_code": 0,
+          "operation": "postgres_version"
+        },
+        {
+          "duration_ms": 1457,
+          "exit_code": 0,
+          "operation": "initdb"
+        },
+        {
+          "duration_ms": 109,
+          "exit_code": 0,
+          "operation": "pg_ctl_start"
+        },
+        {
+          "duration_ms": 216,
+          "exit_code": 0,
+          "operation": "pg_ctl_stop"
+        }
+      ]
+    },
+    "g5_python": {
+      "stop_status": "stopped",
+      "pid_alive": false,
+      "binary_versions": {
+        "initdb": "initdb (PostgreSQL) 18.1",
+        "pg_ctl": "pg_ctl (PostgreSQL) 18.1",
+        "postgres": "postgres (PostgreSQL) 18.1"
+      },
+      "binary_sha256": {
+        "initdb": "7cba14094c5f505f492fd243c5eda04f0dc3be05f12b7bd278f150f1e03b721f",
+        "pg_ctl": "24a1f166819e0924319ff3faf752ad2a1ac594e223e2f3b1a2038dc84a2969de",
+        "postgres": "c85fa9c977d9e641c2d22d93675a9b7097764b7df2c4c9ea021f5780522b2af2"
+      },
+      "lifecycle": [
+        {
+          "duration_ms": 5,
+          "exit_code": 0,
+          "operation": "initdb_version"
+        },
+        {
+          "duration_ms": 2,
+          "exit_code": 0,
+          "operation": "pg_ctl_version"
+        },
+        {
+          "duration_ms": 12,
+          "exit_code": 0,
+          "operation": "postgres_version"
+        },
+        {
+          "duration_ms": 4501,
+          "exit_code": 0,
+          "operation": "initdb"
+        },
+        {
+          "duration_ms": 109,
+          "exit_code": 0,
+          "operation": "pg_ctl_start"
+        },
+        {
+          "duration_ms": 115,
+          "exit_code": 0,
+          "operation": "pg_ctl_stop"
+        }
+      ]
+    }
+  },
+  "auth_service_observation": {
+    "kind": "ifpmic.g3.service-observation.v1",
+    "cases": {
+      "expired_state": 401,
+      "invalid_state": 401,
+      "provider_error": 401,
+      "replay": 401,
+      "success": 303
+    },
+    "canaries_absent": true,
+    "service_exit_code": 0,
+    "pid_alive": false,
+    "logs": {
+      "stderr": {
+        "bytes": 352,
+        "sha256": "514e60f5c7d9614c6da3c2b280fccc788f017bc3f7b450a1f1954835edfe29ae"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "private_directory_mode": "0o700",
+    "stdout_mode": "0o600",
+    "stderr_mode": "0o600"
+  },
+  "jobs_runtime_observation": {
+    "kind": "ifpmic.g4.runtime-observation.v1",
+    "cases": {
+      "bridge_failure_replay": true,
+      "cli_grant": 0,
+      "cli_revoke": 0,
+      "concurrent_one_winner": true,
+      "create": 202,
+      "cross_project_race": true,
+      "cross_project_unique_contention": true,
+      "distinct_sessions_same_actor": true,
+      "fault_postcommit": 503,
+      "fault_precommit": 503,
+      "membership_nowait_no_deadlock": true,
+      "pagination_default": 25,
+      "restart_detail": 200,
+      "same_key_conflict": 409,
+      "same_key_replay": 202,
+      "unauthorized": 403
+    },
+    "no_canaries": true,
+    "service": {
+      "exit_code": 0,
+      "pid_alive": false,
+      "logs": {
+        "stderr": {
+          "bytes": 704,
+          "sha256": "48ad450a67bd5e23b687e51772bbeb2d64ec9ac4c9eb413d3b94ee8dc1150b88"
+        },
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "private_directory_mode": "0o700",
+      "stdout_mode": "0o600",
+      "stderr_mode": "0o600"
+    },
+    "services": [
+      {
+        "exit_code": 0,
+        "pid_alive": false,
+        "logs": {
+          "stderr": {
+            "bytes": 704,
+            "sha256": "48ad450a67bd5e23b687e51772bbeb2d64ec9ac4c9eb413d3b94ee8dc1150b88"
+          },
+          "stdout": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        "private_directory_mode": "0o700",
+        "stdout_mode": "0o600",
+        "stderr_mode": "0o600"
+      },
+      {
+        "exit_code": 0,
+        "pid_alive": false,
+        "logs": {
+          "stderr": {
+            "bytes": 704,
+            "sha256": "48ad450a67bd5e23b687e51772bbeb2d64ec9ac4c9eb413d3b94ee8dc1150b88"
+          },
+          "stdout": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        "private_directory_mode": "0o700",
+        "stdout_mode": "0o600",
+        "stderr_mode": "0o600"
+      }
+    ]
+  },
+  "workspace_runtime_observation": {
+    "kind": "ifpmic.g5.runtime-observation.v1",
+    "cases": {
+      "active_claim_excluded": true,
+      "cli_once": 0,
+      "cli_run_shutdown": 0,
+      "controlled_enospc": true,
+      "controlled_ready_ack_loss": true,
+      "crash_recovery": true,
+      "durable_layout": true,
+      "g4_acceptance_preserved": true,
+      "malformed_claim_no_fs": true,
+      "ready_db_only": true,
+      "stale_claim_fenced": true,
+      "two_jobs_isolated": true,
+      "two_worker_processes": true,
+      "unsafe_entries_preserved": true
+    },
+    "processes": [
+      {
+        "role": "crash_worker",
+        "exit_code": -9,
+        "pid_alive": false,
+        "logs": {
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stdout": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        "private_directory_mode": "0o700",
+        "stdout_mode": "0o600",
+        "stderr_mode": "0o600"
+      },
+      {
+        "role": "crash_worker",
+        "exit_code": -9,
+        "pid_alive": false,
+        "logs": {
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stdout": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        "private_directory_mode": "0o700",
+        "stdout_mode": "0o600",
+        "stderr_mode": "0o600"
+      },
+      {
+        "role": "crash_worker",
+        "exit_code": -9,
+        "pid_alive": false,
+        "logs": {
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stdout": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        "private_directory_mode": "0o700",
+        "stdout_mode": "0o600",
+        "stderr_mode": "0o600"
+      },
+      {
+        "role": "crash_worker",
+        "exit_code": -9,
+        "pid_alive": false,
+        "logs": {
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stdout": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        "private_directory_mode": "0o700",
+        "stdout_mode": "0o600",
+        "stderr_mode": "0o600"
+      },
+      {
+        "role": "crash_worker",
+        "exit_code": -9,
+        "pid_alive": false,
+        "logs": {
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stdout": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        "private_directory_mode": "0o700",
+        "stdout_mode": "0o600",
+        "stderr_mode": "0o600"
+      },
+      {
+        "role": "crash_worker",
+        "exit_code": -9,
+        "pid_alive": false,
+        "logs": {
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stdout": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        "private_directory_mode": "0o700",
+        "stdout_mode": "0o600",
+        "stderr_mode": "0o600"
+      },
+      {
+        "role": "crash_worker",
+        "exit_code": -9,
+        "pid_alive": false,
+        "logs": {
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stdout": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        "private_directory_mode": "0o700",
+        "stdout_mode": "0o600",
+        "stderr_mode": "0o600"
+      },
+      {
+        "role": "crash_worker",
+        "exit_code": -9,
+        "pid_alive": false,
+        "logs": {
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stdout": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        "private_directory_mode": "0o700",
+        "stdout_mode": "0o600",
+        "stderr_mode": "0o600"
+      },
+      {
+        "role": "crash_worker",
+        "exit_code": -9,
+        "pid_alive": false,
+        "logs": {
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stdout": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        "private_directory_mode": "0o700",
+        "stdout_mode": "0o600",
+        "stderr_mode": "0o600"
+      },
+      {
+        "role": "crash_worker",
+        "exit_code": -9,
+        "pid_alive": false,
+        "logs": {
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stdout": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        "private_directory_mode": "0o700",
+        "stdout_mode": "0o600",
+        "stderr_mode": "0o600"
+      },
+      {
+        "role": "crash_worker",
+        "exit_code": -9,
+        "pid_alive": false,
+        "logs": {
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stdout": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        "private_directory_mode": "0o700",
+        "stdout_mode": "0o600",
+        "stderr_mode": "0o600"
+      },
+      {
+        "role": "crash_worker",
+        "exit_code": -9,
+        "pid_alive": false,
+        "logs": {
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stdout": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        "private_directory_mode": "0o700",
+        "stdout_mode": "0o600",
+        "stderr_mode": "0o600"
+      },
+      {
+        "role": "crash_worker",
+        "exit_code": -9,
+        "pid_alive": false,
+        "logs": {
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stdout": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        "private_directory_mode": "0o700",
+        "stdout_mode": "0o600",
+        "stderr_mode": "0o600"
+      },
+      {
+        "role": "crash_worker",
+        "exit_code": -9,
+        "pid_alive": false,
+        "logs": {
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stdout": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        "private_directory_mode": "0o700",
+        "stdout_mode": "0o600",
+        "stderr_mode": "0o600"
+      },
+      {
+        "role": "crash_worker",
+        "exit_code": -9,
+        "pid_alive": false,
+        "logs": {
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stdout": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        "private_directory_mode": "0o700",
+        "stdout_mode": "0o600",
+        "stderr_mode": "0o600"
+      },
+      {
+        "role": "crash_worker",
+        "exit_code": -9,
+        "pid_alive": false,
+        "logs": {
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stdout": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        "private_directory_mode": "0o700",
+        "stdout_mode": "0o600",
+        "stderr_mode": "0o600"
+      },
+      {
+        "role": "crash_worker",
+        "exit_code": -9,
+        "pid_alive": false,
+        "logs": {
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stdout": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        "private_directory_mode": "0o700",
+        "stdout_mode": "0o600",
+        "stderr_mode": "0o600"
+      },
+      {
+        "role": "crash_worker",
+        "exit_code": -9,
+        "pid_alive": false,
+        "logs": {
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stdout": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        "private_directory_mode": "0o700",
+        "stdout_mode": "0o600",
+        "stderr_mode": "0o600"
+      },
+      {
+        "role": "crash_worker",
+        "exit_code": -9,
+        "pid_alive": false,
+        "logs": {
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stdout": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        "private_directory_mode": "0o700",
+        "stdout_mode": "0o600",
+        "stderr_mode": "0o600"
+      },
+      {
+        "role": "crash_worker",
+        "exit_code": -9,
+        "pid_alive": false,
+        "logs": {
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stdout": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        "private_directory_mode": "0o700",
+        "stdout_mode": "0o600",
+        "stderr_mode": "0o600"
+      },
+      {
+        "role": "crash_worker",
+        "exit_code": -9,
+        "pid_alive": false,
+        "logs": {
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stdout": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        "private_directory_mode": "0o700",
+        "stdout_mode": "0o600",
+        "stderr_mode": "0o600"
+      },
+      {
+        "role": "crash_worker",
+        "exit_code": -9,
+        "pid_alive": false,
+        "logs": {
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stdout": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        "private_directory_mode": "0o700",
+        "stdout_mode": "0o600",
+        "stderr_mode": "0o600"
+      },
+      {
+        "role": "crash_worker",
+        "exit_code": -9,
+        "pid_alive": false,
+        "logs": {
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stdout": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        "private_directory_mode": "0o700",
+        "stdout_mode": "0o600",
+        "stderr_mode": "0o600"
+      },
+      {
+        "role": "crash_worker",
+        "exit_code": -9,
+        "pid_alive": false,
+        "logs": {
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stdout": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        "private_directory_mode": "0o700",
+        "stdout_mode": "0o600",
+        "stderr_mode": "0o600"
+      },
+      {
+        "role": "crash_worker",
+        "exit_code": -9,
+        "pid_alive": false,
+        "logs": {
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stdout": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        "private_directory_mode": "0o700",
+        "stdout_mode": "0o600",
+        "stderr_mode": "0o600"
+      },
+      {
+        "role": "reconciler",
+        "exit_code": 0,
+        "pid_alive": false,
+        "logs": {
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stdout": {
+            "bytes": 50,
+            "sha256": "92061df69f6c1fd9c9db47243a559e190c687d85e09e1ae588179c3a2eaaf656"
+          }
+        },
+        "private_directory_mode": "0o700",
+        "stdout_mode": "0o600",
+        "stderr_mode": "0o600"
+      },
+      {
+        "role": "reconciler",
+        "exit_code": 0,
+        "pid_alive": false,
+        "logs": {
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stdout": {
+            "bytes": 85,
+            "sha256": "d5fa962eec2f7cdc4327e72604e30ea50e010b0c110e08fc90a0f4ee00f06ef6"
+          }
+        },
+        "private_directory_mode": "0o700",
+        "stdout_mode": "0o600",
+        "stderr_mode": "0o600"
+      },
+      {
+        "role": "reconciler",
+        "exit_code": 0,
+        "pid_alive": false,
+        "logs": {
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stdout": {
+            "bytes": 92,
+            "sha256": "e17cef3bf05a5c08ff973856c4625c3d2ea793b5ff2206ca16b387ca0116dc03"
+          }
+        },
+        "private_directory_mode": "0o700",
+        "stdout_mode": "0o600",
+        "stderr_mode": "0o600"
+      },
+      {
+        "role": "reconciler",
+        "exit_code": 2,
+        "pid_alive": false,
+        "logs": {
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stdout": {
+            "bytes": 84,
+            "sha256": "5a4bdc2963a8a9f1f0f6fd2359bea06d153ecc55b6015c2e4123eadadf8099da"
+          }
+        },
+        "private_directory_mode": "0o700",
+        "stdout_mode": "0o600",
+        "stderr_mode": "0o600"
+      },
+      {
+        "role": "reconciler",
+        "exit_code": 2,
+        "pid_alive": false,
+        "logs": {
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stdout": {
+            "bytes": 84,
+            "sha256": "5a4bdc2963a8a9f1f0f6fd2359bea06d153ecc55b6015c2e4123eadadf8099da"
+          }
+        },
+        "private_directory_mode": "0o700",
+        "stdout_mode": "0o600",
+        "stderr_mode": "0o600"
+      },
+      {
+        "role": "reconciler",
+        "exit_code": 2,
+        "pid_alive": false,
+        "logs": {
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stdout": {
+            "bytes": 84,
+            "sha256": "5a4bdc2963a8a9f1f0f6fd2359bea06d153ecc55b6015c2e4123eadadf8099da"
+          }
+        },
+        "private_directory_mode": "0o700",
+        "stdout_mode": "0o600",
+        "stderr_mode": "0o600"
+      },
+      {
+        "role": "reconciler",
+        "exit_code": 2,
+        "pid_alive": false,
+        "logs": {
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stdout": {
+            "bytes": 84,
+            "sha256": "5a4bdc2963a8a9f1f0f6fd2359bea06d153ecc55b6015c2e4123eadadf8099da"
+          }
+        },
+        "private_directory_mode": "0o700",
+        "stdout_mode": "0o600",
+        "stderr_mode": "0o600"
+      },
+      {
+        "role": "reconciler",
+        "exit_code": 2,
+        "pid_alive": false,
+        "logs": {
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stdout": {
+            "bytes": 84,
+            "sha256": "5a4bdc2963a8a9f1f0f6fd2359bea06d153ecc55b6015c2e4123eadadf8099da"
+          }
+        },
+        "private_directory_mode": "0o700",
+        "stdout_mode": "0o600",
+        "stderr_mode": "0o600"
+      },
+      {
+        "role": "reconciler",
+        "exit_code": 2,
+        "pid_alive": false,
+        "logs": {
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stdout": {
+            "bytes": 84,
+            "sha256": "5a4bdc2963a8a9f1f0f6fd2359bea06d153ecc55b6015c2e4123eadadf8099da"
+          }
+        },
+        "private_directory_mode": "0o700",
+        "stdout_mode": "0o600",
+        "stderr_mode": "0o600"
+      },
+      {
+        "role": "reconciler",
+        "exit_code": 2,
+        "pid_alive": false,
+        "logs": {
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stdout": {
+            "bytes": 84,
+            "sha256": "5a4bdc2963a8a9f1f0f6fd2359bea06d153ecc55b6015c2e4123eadadf8099da"
+          }
+        },
+        "private_directory_mode": "0o700",
+        "stdout_mode": "0o600",
+        "stderr_mode": "0o600"
+      },
+      {
+        "role": "reconciler",
+        "exit_code": 2,
+        "pid_alive": false,
+        "logs": {
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stdout": {
+            "bytes": 84,
+            "sha256": "5a4bdc2963a8a9f1f0f6fd2359bea06d153ecc55b6015c2e4123eadadf8099da"
+          }
+        },
+        "private_directory_mode": "0o700",
+        "stdout_mode": "0o600",
+        "stderr_mode": "0o600"
+      },
+      {
+        "role": "reconciler",
+        "exit_code": 0,
+        "pid_alive": false,
+        "logs": {
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stdout": {
+            "bytes": 50,
+            "sha256": "92061df69f6c1fd9c9db47243a559e190c687d85e09e1ae588179c3a2eaaf656"
+          }
+        },
+        "private_directory_mode": "0o700",
+        "stdout_mode": "0o600",
+        "stderr_mode": "0o600"
+      },
+      {
+        "role": "reconciler",
+        "exit_code": 2,
+        "pid_alive": false,
+        "logs": {
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stdout": {
+            "bytes": 84,
+            "sha256": "5a4bdc2963a8a9f1f0f6fd2359bea06d153ecc55b6015c2e4123eadadf8099da"
+          }
+        },
+        "private_directory_mode": "0o700",
+        "stdout_mode": "0o600",
+        "stderr_mode": "0o600"
+      },
+      {
+        "role": "reconciler",
+        "exit_code": 3,
+        "pid_alive": false,
+        "logs": {
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stdout": {
+            "bytes": 65,
+            "sha256": "a28207eb15688f57c5e99f0f8731fbec53f2ae181fb22a1aa6cfc3b3655a5bc9"
+          }
+        },
+        "private_directory_mode": "0o700",
+        "stdout_mode": "0o600",
+        "stderr_mode": "0o600"
+      },
+      {
+        "role": "reconciler",
+        "exit_code": 2,
+        "pid_alive": false,
+        "logs": {
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stdout": {
+            "bytes": 84,
+            "sha256": "5a4bdc2963a8a9f1f0f6fd2359bea06d153ecc55b6015c2e4123eadadf8099da"
+          }
+        },
+        "private_directory_mode": "0o700",
+        "stdout_mode": "0o600",
+        "stderr_mode": "0o600"
+      },
+      {
+        "role": "reconciler",
+        "exit_code": 2,
+        "pid_alive": false,
+        "logs": {
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stdout": {
+            "bytes": 84,
+            "sha256": "5a4bdc2963a8a9f1f0f6fd2359bea06d153ecc55b6015c2e4123eadadf8099da"
+          }
+        },
+        "private_directory_mode": "0o700",
+        "stdout_mode": "0o600",
+        "stderr_mode": "0o600"
+      },
+      {
+        "role": "cli_run",
+        "exit_code": 0,
+        "pid_alive": false,
+        "logs": {
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stdout": {
+            "bytes": 53,
+            "sha256": "f72e1c5ca78e56cf70f1d48a2551a4c475c185075916ae0183a1869b69f6922a"
+          }
+        },
+        "private_directory_mode": "0o700",
+        "stdout_mode": "0o600",
+        "stderr_mode": "0o600"
+      }
+    ],
+    "no_canaries": true
+  },
+  "private_evidence_permissions": {
+    "gate_directory_mode": "0o700",
+    "files": {
+      "private-auth-observation.json": "0o600",
+      "private-b01_node.log": "0o600",
+      "private-candidate-source.zip": "0o600",
+      "private-g4_python-lifecycle.json": "0o600",
+      "private-g4_python.log": "0o600",
+      "private-g4_python.xml": "0o600",
+      "private-g5_python-lifecycle.json": "0o600",
+      "private-g5_python.log": "0o600",
+      "private-g5_python.xml": "0o600",
+      "private-jobs-observation.json": "0o600",
+      "private-legacy_python-lifecycle.json": "0o600",
+      "private-legacy_python.log": "0o600",
+      "private-legacy_python.xml": "0o600",
+      "private-lifecycle.json": "0o600",
+      "private-workspace-observation.json": "0o600"
+    }
+  },
+  "publication": {
+    "junit": {
+      "legacy_python": {
+        "raw_private_sha256": "d6070fc3c8515f7a77282c53440a0571b41aa542ca8f0f1f7533ff39d7e1c95a",
+        "published_sha256": "a1707e00d719f5906082c992c97cb85a15b85ec684a1ed702a3ddbf845a8c43b",
+        "transformation": "Only hostname replaced with redacted-local-host; XML serialized."
+      },
+      "g4_python": {
+        "raw_private_sha256": "fba7b957a3863efb4671c2d6704035c5d3bf9954f82c28f9fce96b3b32322ce4",
+        "published_sha256": "1fc900fd243bd4a536fc9f08e92ef600e23d6e8f529081d7523bf55b5f2ae8df",
+        "transformation": "Only hostname replaced with redacted-local-host; XML serialized."
+      },
+      "g5_python": {
+        "raw_private_sha256": "fa48565244ba0b7725481b64f0e3514b8f033401dc38994257347096e4f3422d",
+        "published_sha256": "8a16351c1bebbe4d5c0ef61ade084215a0caa8a7dd79a2124c33ee14a7b6c647",
+        "transformation": "Only hostname replaced with redacted-local-host; XML serialized."
+      }
+    },
+    "successful_logs": [
+      {
+        "entry": "legacy-python.log",
+        "raw_private_sha256": "c209737919b4f00759d2e8d036ba491bc731243ac2044c875bd32d0079a7e0c7",
+        "published_sha256": "c209737919b4f00759d2e8d036ba491bc731243ac2044c875bd32d0079a7e0c7",
+        "transformation": "Replace absolute gate and workspace paths with fixed placeholders; other successful output bytes unchanged."
+      },
+      {
+        "entry": "g4-python.log",
+        "raw_private_sha256": "271811db5b8c8a000811565d4d18f51b40cc08522f71fb9838e2f60d66334d64",
+        "published_sha256": "6e2fb35ff6edcedde46e21ec80197e7bbcabfd45ea54e0f4dd98d908a7b307fc",
+        "transformation": "Replace absolute gate and workspace paths with fixed placeholders; other successful output bytes unchanged."
+      },
+      {
+        "entry": "g5-python.log",
+        "raw_private_sha256": "83b8ac433494746f1464b1c107e414a23523aebab6887f7a1a0489cac4e59adc",
+        "published_sha256": "83b8ac433494746f1464b1c107e414a23523aebab6887f7a1a0489cac4e59adc",
+        "transformation": "Replace absolute gate and workspace paths with fixed placeholders; other successful output bytes unchanged."
+      },
+      {
+        "entry": "b01-node.log",
+        "raw_private_sha256": "ee6c063bfa3a59155c6613c27246af98f5f6b7a87bcd5cfd28c82a997b2584b8",
+        "published_sha256": "ee6c063bfa3a59155c6613c27246af98f5f6b7a87bcd5cfd28c82a997b2584b8",
+        "transformation": "Replace absolute gate and workspace paths with fixed placeholders; other successful output bytes unchanged."
+      }
+    ],
+    "excluded": [
+      "Raw private JUnit/configs/authentication values, process IDs/start_ticks, actual service/worker stdout/stderr, PostgreSQL logs, private candidate source ZIP, development/failure outputs."
+    ],
+    "synthetic_test_ids": "Fixed synthetic vectors only. Private identities are verified before redaction; actual retained worker log bytes match published hashes."
+  },
+  "development_history": {
+    "tc_ledger": "g5-tc-ledger.json",
+    "pre_gate_review": "g5-pre-gate-review-v2.json",
+    "execution_decision": "g5-gate-execution-decision-v2.json",
+    "focused_attempts": [
+      {
+        "artifacts": {
+          "junit": {
+            "path": "workflow-artifacts/verification/B02/G5/attempt-1/focused-smoke.junit.xml",
+            "sha256": "57fbcb3882bc36e2538e493796c92a29f33b5c6d76a140a5efbf2d66597ec390"
+          },
+          "log": {
+            "path": "workflow-artifacts/verification/B02/G5/attempt-1/focused-smoke.log",
+            "sha256": "e570c1fba539f961c0e7382aff84cf979551719c67f924a4ebde9b53fa549987"
+          },
+          "postgres_lifecycle_manifest_present": false,
+          "private_process_logs": [
+            {
+              "path": "workflow-artifacts/verification/B02/G5/attempt-1/workspace-process-logs/process-000-stdout.log",
+              "sha256": "92061df69f6c1fd9c9db47243a559e190c687d85e09e1ae588179c3a2eaaf656"
+            },
+            {
+              "path": "workflow-artifacts/verification/B02/G5/attempt-1/workspace-process-logs/process-000-stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            {
+              "path": "workflow-artifacts/verification/B02/G5/attempt-1/workspace-process-logs/process-001-stdout.log",
+              "sha256": "0b5dff0be8fd715702f13662af89e6b090d2aca1742545a1ba27c39648e77e8d"
+            },
+            {
+              "path": "workflow-artifacts/verification/B02/G5/attempt-1/workspace-process-logs/process-001-stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          ],
+          "source_files_copied_individually": true,
+          "source_manifest": {
+            "path": "workflow-artifacts/verification/B02/G5/attempt-1/source-hashes.json",
+            "sha256": "b1cb1dab5861e2dab7a3a6877e33bec64a8b68781f439ede19dc8f6815baa8d2"
+          },
+          "source_zip_present": false
+        },
+        "case_ids": [
+          "tests.ifpmic_api.test_workspace.test_real_filesystem_provisions_literal_marker_four_private_children_idempotently",
+          "tests.ifpmic_api.test_workspace.test_unexpected_file_is_preserved_error_is_explicit_and_retry_does_not_delete",
+          "tests.ifpmic_api.test_workspace.test_malformed_claim_becomes_invalid_state_without_filesystem_effect",
+          "tests.ifpmic_api.test_workspace.test_independent_worker_processes_contend_for_one_live_claim"
+        ],
+        "counts": {
+          "errors": 0,
+          "failed": 0,
+          "passed": 4,
+          "seconds": 9.24,
+          "skipped": 0,
+          "tests": 4
+        },
+        "id": "focused-smoke-attempt-1",
+        "interpretation": "Historical diagnostic only. Four selected tests passed against earlier test bytes. The attempt retained individual source files and hashes, not a source ZIP or PostgreSQL lifecycle manifest; it is not evidence for the current 93-case candidate or a complete G5 gate.",
+        "invocation": "Exact shell invocation was not retained; JUnit records four selected tests from test_workspace.py.",
+        "status": "historical_pass_on_earlier_test_candidate_not_current_candidate"
+      },
+      {
+        "artifacts": {
+          "focused_observation": {
+            "mode": "0o600",
+            "path": "workflow-artifacts/verification/B02/G5/focused/2026-10-18T18-12-41Z/workspace-observation.json",
+            "sha256": "ed6b3147c59a9ddb01eeffe2755e2cc2fa664cd519cb6973708c65b656675027"
+          },
+          "junit": {
+            "mode": "0o600",
+            "path": "workflow-artifacts/verification/B02/G5/focused/2026-10-18T18-12-41Z/pytest.junit.xml",
+            "sha256": "adc42e93155987e845988dfbb16d678833b378ed14364e3e825bb8422f41e140"
+          },
+          "postgres_lifecycle": {
+            "mode": "0o600",
+            "path": "workflow-artifacts/verification/B02/G5/focused/2026-10-18T18-12-41Z/private-lifecycle.json",
+            "pid_alive": false,
+            "sha256": "ce507a91d10ffd24b882f85b34aeb5d3dafea23420ac3208b9341b48814440ea",
+            "stop_status": "stopped"
+          },
+          "private_process_log_count": 32,
+          "private_process_logs": [
+            {
+              "bytes": 0,
+              "mode": "0o600",
+              "name": "process-000-stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            {
+              "bytes": 84,
+              "mode": "0o600",
+              "name": "process-000-stdout.log",
+              "sha256": "5a4bdc2963a8a9f1f0f6fd2359bea06d153ecc55b6015c2e4123eadadf8099da"
+            },
+            {
+              "bytes": 0,
+              "mode": "0o600",
+              "name": "process-001-stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            {
+              "bytes": 84,
+              "mode": "0o600",
+              "name": "process-001-stdout.log",
+              "sha256": "5a4bdc2963a8a9f1f0f6fd2359bea06d153ecc55b6015c2e4123eadadf8099da"
+            },
+            {
+              "bytes": 0,
+              "mode": "0o600",
+              "name": "process-002-stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            {
+              "bytes": 84,
+              "mode": "0o600",
+              "name": "process-002-stdout.log",
+              "sha256": "5a4bdc2963a8a9f1f0f6fd2359bea06d153ecc55b6015c2e4123eadadf8099da"
+            },
+            {
+              "bytes": 0,
+              "mode": "0o600",
+              "name": "process-003-stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            {
+              "bytes": 84,
+              "mode": "0o600",
+              "name": "process-003-stdout.log",
+              "sha256": "5a4bdc2963a8a9f1f0f6fd2359bea06d153ecc55b6015c2e4123eadadf8099da"
+            },
+            {
+              "bytes": 0,
+              "mode": "0o600",
+              "name": "process-004-stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            {
+              "bytes": 84,
+              "mode": "0o600",
+              "name": "process-004-stdout.log",
+              "sha256": "5a4bdc2963a8a9f1f0f6fd2359bea06d153ecc55b6015c2e4123eadadf8099da"
+            },
+            {
+              "bytes": 0,
+              "mode": "0o600",
+              "name": "process-005-stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            {
+              "bytes": 84,
+              "mode": "0o600",
+              "name": "process-005-stdout.log",
+              "sha256": "5a4bdc2963a8a9f1f0f6fd2359bea06d153ecc55b6015c2e4123eadadf8099da"
+            },
+            {
+              "bytes": 0,
+              "mode": "0o600",
+              "name": "process-006-stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            {
+              "bytes": 84,
+              "mode": "0o600",
+              "name": "process-006-stdout.log",
+              "sha256": "5a4bdc2963a8a9f1f0f6fd2359bea06d153ecc55b6015c2e4123eadadf8099da"
+            },
+            {
+              "bytes": 0,
+              "mode": "0o600",
+              "name": "process-007-stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            {
+              "bytes": 50,
+              "mode": "0o600",
+              "name": "process-007-stdout.log",
+              "sha256": "92061df69f6c1fd9c9db47243a559e190c687d85e09e1ae588179c3a2eaaf656"
+            },
+            {
+              "bytes": 0,
+              "mode": "0o600",
+              "name": "process-008-stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            {
+              "bytes": 84,
+              "mode": "0o600",
+              "name": "process-008-stdout.log",
+              "sha256": "5a4bdc2963a8a9f1f0f6fd2359bea06d153ecc55b6015c2e4123eadadf8099da"
+            },
+            {
+              "bytes": 0,
+              "mode": "0o600",
+              "name": "process-009-stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            {
+              "bytes": 65,
+              "mode": "0o600",
+              "name": "process-009-stdout.log",
+              "sha256": "a28207eb15688f57c5e99f0f8731fbec53f2ae181fb22a1aa6cfc3b3655a5bc9"
+            },
+            {
+              "bytes": 0,
+              "mode": "0o600",
+              "name": "process-010-stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            {
+              "bytes": 84,
+              "mode": "0o600",
+              "name": "process-010-stdout.log",
+              "sha256": "5a4bdc2963a8a9f1f0f6fd2359bea06d153ecc55b6015c2e4123eadadf8099da"
+            },
+            {
+              "bytes": 0,
+              "mode": "0o600",
+              "name": "process-011-stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            {
+              "bytes": 84,
+              "mode": "0o600",
+              "name": "process-011-stdout.log",
+              "sha256": "5a4bdc2963a8a9f1f0f6fd2359bea06d153ecc55b6015c2e4123eadadf8099da"
+            },
+            {
+              "bytes": 0,
+              "mode": "0o600",
+              "name": "process-012-stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            {
+              "bytes": 0,
+              "mode": "0o600",
+              "name": "process-012-stdout.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            {
+              "bytes": 0,
+              "mode": "0o600",
+              "name": "process-013-stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            {
+              "bytes": 0,
+              "mode": "0o600",
+              "name": "process-013-stdout.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            {
+              "bytes": 0,
+              "mode": "0o600",
+              "name": "process-014-stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            {
+              "bytes": 0,
+              "mode": "0o600",
+              "name": "process-014-stdout.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            {
+              "bytes": 0,
+              "mode": "0o600",
+              "name": "process-015-stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            {
+              "bytes": 53,
+              "mode": "0o600",
+              "name": "process-015-stdout.log",
+              "sha256": "f72e1c5ca78e56cf70f1d48a2551a4c475c185075916ae0183a1869b69f6922a"
+            }
+          ],
+          "source_manifest": {
+            "fingerprint": "37b08cf48c7cbb9b93cbffbabbad71e01d4e31d2855b803256ac58c667c96a2d",
+            "path": "workflow-artifacts/verification/B02/G5/focused/2026-10-18T18-12-41Z/source-manifest.json",
+            "sha256": "fcf0602028fac54b889dec80bf01b3209bd732c2095a54d6e54129294347bcc7"
+          },
+          "source_zip": {
+            "bytes": 552416,
+            "entries": 132,
+            "path": "workflow-artifacts/verification/B02/G5/focused/2026-10-18T18-12-41Z/candidate-source.zip",
+            "sha256": "9bb8f991fb3e7b1d3851cc96dec10aa1652ea9124ffff548d7b526eacc6b6bb8"
+          },
+          "stderr": {
+            "bytes": 0,
+            "mode": "0o600",
+            "path": "workflow-artifacts/verification/B02/G5/focused/2026-10-18T18-12-41Z/pytest.stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stdout": {
+            "bytes": 100,
+            "mode": "0o600",
+            "path": "workflow-artifacts/verification/B02/G5/focused/2026-10-18T18-12-41Z/pytest.stdout.log",
+            "sha256": "47800b9923b4f2c9c77b6e2e5afdeaba3c24938e0925dd500fdc5906fe23d1a5"
+          }
+        },
+        "case_ids": [
+          "tests.ifpmic_api.test_workspace.test_completion_rechecks_clock_after_waiting_for_row_lock",
+          "tests.ifpmic_api.test_workspace.test_locked_claim_is_idle_then_expired_claim_is_reconciled",
+          "tests.ifpmic_api.test_workspace.test_marker_close_and_directory_fsync_order_precede_ready",
+          "tests.ifpmic_api.test_workspace.test_precommit_database_faults_never_infer_commit_or_mutate_g4[claim]",
+          "tests.ifpmic_api.test_workspace.test_precommit_database_faults_never_infer_commit_or_mutate_g4[error]",
+          "tests.ifpmic_api.test_workspace.test_precommit_database_faults_never_infer_commit_or_mutate_g4[ready]",
+          "tests.ifpmic_api.test_workspace.test_precommit_database_faults_never_infer_commit_or_mutate_g4[retry]",
+          "tests.ifpmic_api.test_workspace.test_ready_completion_is_rejected_when_lease_expires_while_row_lock_is_held",
+          "tests.ifpmic_api.test_workspace.test_real_filesystem_syscall_faults_are_fenced_and_preserved[fsync_directory]",
+          "tests.ifpmic_api.test_workspace.test_real_filesystem_syscall_faults_are_fenced_and_preserved[fsync_file]",
+          "tests.ifpmic_api.test_workspace.test_real_filesystem_syscall_faults_are_fenced_and_preserved[link]",
+          "tests.ifpmic_api.test_workspace.test_real_filesystem_syscall_faults_are_fenced_and_preserved[unlink]",
+          "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_after_marker_publish-True-False-False]",
+          "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_after_ready_commit-False-True-True]",
+          "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_before_marker_write-True-False-False]",
+          "tests.ifpmic_api.test_workspace.test_worker_cli_rejects_malformed_requests_without_leaking_private_data",
+          "tests.ifpmic_api.test_workspace.test_worker_cli_run_stops_cleanly_on_sigterm"
+        ],
+        "counts": {
+          "errors": 0,
+          "failed": 0,
+          "maximum_case_seconds": 3.792,
+          "passed": 17,
+          "seconds": 38.78,
+          "skipped": 0,
+          "tests": 17
+        },
+        "id": "focused-current-candidate-attempt-1",
+        "interpretation": "All selected focused cases passed on the captured source candidate. The focused-only observation is distinct from the full runtime observation; the 93-case full G5 frozen gate remains mandatory.",
+        "invocation": "IFPMIC_TEST_LIFECYCLE_PATH=<private-lifecycle.json> IFPMIC_WORKSPACE_TEST_OBSERVATION_PATH=<workspace-observation.json> PYTHONPATH=<repository> .ifpmic-venv/bin/python -m pytest -q --junitxml=<private pytest.junit.xml> followed by the 17 exact node IDs in focused_execution_plan. stdout/stderr redirected to pre-created mode-0600 files.",
+        "status": "pass_selected_diagnostic_only_full_g5_pending"
+      },
+      {
+        "artifacts": {
+          "gate": {
+            "path": "workflow-artifacts/verification/B02/G5/gates/2026-10-18T18-23-54-639423Z/gate.json",
+            "sha256": "144e6ccd8695a0bbb390cb1c4b8b5259c264293f7d84007cf4129866c9cd4b65"
+          },
+          "junit": {
+            "path": "workflow-artifacts/verification/B02/G5/gates/2026-10-18T18-23-54-639423Z/private-g5_python.xml",
+            "sha256": "afdafb45ec54553ddbba85d44366c5787578f46b038a4d7ee781f25f9daa956a"
+          },
+          "log": {
+            "path": "workflow-artifacts/verification/B02/G5/gates/2026-10-18T18-23-54-639423Z/private-g5_python.log",
+            "sha256": "96eabe065dbbb70a22e026531a0efc50ea4e2b9c25d5932ecdab292b7c4d07d7"
+          },
+          "source_zip": {
+            "path": "workflow-artifacts/verification/B02/G5/gates/2026-10-18T18-23-54-639423Z/private-candidate-source.zip",
+            "sha256": "397e56e0137c31a378925cfcdeb7fe24e231b241eab16196c7beb56134bd7019"
+          }
+        },
+        "counts": {
+          "errors": 0,
+          "failed": 6,
+          "passed": 87,
+          "skipped": 0,
+          "tests": 93
+        },
+        "failure_case_ids": [
+          "tests.ifpmic_api.test_workspace.test_marker_job_and_ancestor_special_entries_are_never_followed[ancestor_symlink]",
+          "tests.ifpmic_api.test_workspace.test_marker_job_and_ancestor_special_entries_are_never_followed[ancestor_fifo]",
+          "tests.ifpmic_api.test_workspace.test_error_and_retry_commit_ack_losses_require_fresh_state_inspection[error-workspace_after_error_commit]",
+          "tests.ifpmic_api.test_workspace.test_error_and_retry_commit_ack_losses_require_fresh_state_inspection[retry-workspace_after_retry_commit]",
+          "tests.ifpmic_api.test_workspace.test_two_accepted_jobs_get_independent_workspace_identities_across_users_and_projects",
+          "tests.ifpmic_api.test_workspace.test_g5_observation_is_written_only_after_required_assertions"
+        ],
+        "id": "full-gate-attempt-2-analysis",
+        "interpretation": "The 93-case frozen G5 run had six failures. Review classified them as test setup/oracle issues: global ancestor preflight expects null job and unchanged intent; error-ack injection must happen in same call as filesystem error; retry-ack must seed ERROR through a real claim/error (generation 1); the second TestClient inherited the seeded session cookie; and the observation marker oracle omitted the independently required CLI shutdown marker. No product defect was established by these failures. The failed run remains immutable evidence and the full gate must be rerun after correction.",
+        "status": "failed_gate_preserved_before_test_oracle_corrections"
+      },
+      {
+        "artifacts": {
+          "candidate-source.zip": {
+            "bytes": 1597874,
+            "mode": "0o600",
+            "path": "workflow-artifacts/verification/B02/G5/focused/2026-10-19T18-35-42Z-oracle-fixes/candidate-source.zip",
+            "sha256": "4aa7f4667705c25ceed81d9a7d8d2eaf14b647ef980910eeaaedd956d7ba3d82"
+          },
+          "private-lifecycle.json": {
+            "bytes": 1137,
+            "mode": "0o600",
+            "path": "workflow-artifacts/verification/B02/G5/focused/2026-10-19T18-35-42Z-oracle-fixes/private-lifecycle.json",
+            "sha256": "89e24a3bf54f958f0a12b5a435bb43955335eb68ed12f19ab7dc98debdeead42"
+          },
+          "pytest.junit.xml": {
+            "bytes": 1825,
+            "mode": "0o600",
+            "path": "workflow-artifacts/verification/B02/G5/focused/2026-10-19T18-35-42Z-oracle-fixes/pytest.junit.xml",
+            "sha256": "29f544cefffc89e816a615a41a03339ead9e4349c6c71b87e089cdc608341633"
+          },
+          "source-hashes.json": {
+            "bytes": 15390,
+            "mode": "0o600",
+            "path": "workflow-artifacts/verification/B02/G5/focused/2026-10-19T18-35-42Z-oracle-fixes/source-hashes.json",
+            "sha256": "cfd9366e28811a26d92c3259757654a04d998beceedab1772435c93dded4f0b2"
+          },
+          "stderr.log": {
+            "bytes": 0,
+            "mode": "0o600",
+            "path": "workflow-artifacts/verification/B02/G5/focused/2026-10-19T18-35-42Z-oracle-fixes/stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stdout.log": {
+            "bytes": 100,
+            "mode": "0o600",
+            "path": "workflow-artifacts/verification/B02/G5/focused/2026-10-19T18-35-42Z-oracle-fixes/stdout.log",
+            "sha256": "c447be0f6ea12c516274ab8bb3468aaf513917760422242c5decbb0ff4b27139"
+          }
+        },
+        "case_count": 10,
+        "duration_seconds": 37.56,
+        "errors": 0,
+        "failed": 0,
+        "id": "focused-oracle-correction-attempt-1",
+        "invocation": "python -m pytest -q <six special-entry parameter cases> <two error/retry-ack cases> <cross-user/project isolation> <CLI SIGTERM shutdown> --junitxml <private attempt path>",
+        "observation": "Aggregator case was intentionally excluded, so no G5 runtime observation was emitted by this focused subset. This is not the complete 93-case gate.",
+        "passed": 10,
+        "postgres": "PostgreSQL 18.1 temporary private cluster; pg_ctl stop exit 0; server pid_alive false.",
+        "purpose": "Bounded verification of six special-entry params, both commit-ack cases, cross-user/project isolation, and CLI shutdown after approved fixture/oracle corrections.",
+        "skipped": 0,
+        "source_sha256": "0254b67ac0a1da79dad2bf81110ca4d5519bc1dfe0e9c1210e807016b2d7d634",
+        "status": "pass"
+      }
+    ],
+    "failed_frozen_gates": [
+      {
+        "private_gate": "workflow-artifacts/verification/B02/G5/gates/2026-10-18T18-16-29-582447Z/gate.json",
+        "report_sha256": "70e11333e7fa043f6cd7e951bb25e5c9785f87d578f48af6190cdac6f7bed419",
+        "candidate_source_sha256": "f71f74fea0f258411330b77c6947bc596455bdbc5e00f92b157133181c05dfef",
+        "source_fingerprint": "75bb9131b99fc0dd2f8b85e0739c6b6eb1c3eaf659d4c6bbd571a7c4d7aa56c9",
+        "finding": "Python case exceeds approved30second limit",
+        "functional_results": {
+          "legacy_python": 167,
+          "g4_python": 91,
+          "failed": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "case": "test_list_rejects_invalid_bounds_noncanonical_or_unsupported_query[project_id=somewhere]",
+        "observed_seconds": 44.545,
+        "limit_seconds": 30,
+        "interpretation": "One inherited G4 testcase exceeded the unchanged per-case limit. The first gate failed before G5 execution; JUnit total duration cannot attribute the delay. Sources/oracles remained unchanged for bounded diagnostics and the subsequent full gate.",
+        "cleanup": {
+          "postgres": "already_stopped",
+          "children": {
+            "result": "stopped",
+            "signalled_count": 0,
+            "pid_alive": false
+          }
+        }
+      },
+      {
+        "private_gate": "workflow-artifacts/verification/B02/G5/gates/2026-10-18T18-23-54-639423Z/gate.json",
+        "report_sha256": "144e6ccd8695a0bbb390cb1c4b8b5259c264293f7d84007cf4129866c9cd4b65",
+        "candidate_source_sha256": "397e56e0137c31a378925cfcdeb7fe24e231b241eab16196c7beb56134bd7019",
+        "private_g5_junit_sha256": "afdafb45ec54553ddbba85d44366c5787578f46b038a4d7ee781f25f9daa956a",
+        "source_fingerprint": "75bb9131b99fc0dd2f8b85e0739c6b6eb1c3eaf659d4c6bbd571a7c4d7aa56c9",
+        "functional_results": {
+          "legacy_python": 167,
+          "g4_python": 91,
+          "g5_passed": 87,
+          "g5_failed": 6,
+          "g5_errors": 0,
+          "g5_skipped": 0
+        },
+        "interpretation": "Independent contract-based review identified test setup/oracle errors in two global-root ancestor cases, ERROR/retry ack sequencing and generation fixtures, fresh second-user cookie setup, and CLI marker aggregation. Only G5 tests/ledger/runner pin and new decision/review changed; product and accepted G1-G4 tests remained exact.",
+        "cleanup": {
+          "postgres": "already_stopped",
+          "children": {
+            "result": "stopped",
+            "signalled_count": 0,
+            "pid_alive": false
+          }
+        }
+      }
+    ],
+    "source_transition": {
+      "prior_frozen_fingerprint": "75bb9131b99fc0dd2f8b85e0739c6b6eb1c3eaf659d4c6bbd571a7c4d7aa56c9",
+      "current_frozen_fingerprint": "4f9b412af98c67be6921a87503b0d083e33ec69ce878a7f13c311c0eda6f1cd1",
+      "changed_paths": [
+        "docs/ifpmic/evidence/b02/g5-tc-ledger.json",
+        "scripts/verify_ifpmic_g5.py",
+        "tests/ifpmic_api/test_workspace.py"
+      ],
+      "added_paths": [
+        "docs/ifpmic/evidence/b02/g5-gate-execution-decision-v2.json",
+        "docs/ifpmic/evidence/b02/g5-pre-gate-review-v2.json"
+      ],
+      "all_product_and_accepted_g1_g4_tests_unchanged": true
+    },
+    "bounded_timing_diagnostic": {
+      "attempts": [
+        {
+          "artifact_dir": "workflow-artifacts/verification/B02/G5/timing-diagnostic/2026-10-18T18-24-00Z/attempt-01",
+          "attempt": 1,
+          "changed_sources_after_run": [],
+          "exit_code": 0,
+          "junit_sha256": "ba5b8e27e0ccc83a73d4ac9e0271166e236cb7797ebf4d09237475e6aa9cceb3",
+          "manifest_sha256": "bb04dad421d10bbb16823c95aa8c71ef99cfb2518eb851aafac140a0292c494c",
+          "postgres_lifecycle_exit_codes": [
+            0,
+            0,
+            0
+          ],
+          "postgres_pid_alive": false,
+          "postgres_stop_status": "stopped",
+          "slowest_duration_lines": [
+            "1.56s setup    tests/ifpmic_api/test_jobs.py::test_list_rejects_invalid_bounds_noncanonical_or_unsupported_query[project_id=somewhere]",
+            "1.12s teardown tests/ifpmic_api/test_jobs.py::test_list_rejects_invalid_bounds_noncanonical_or_unsupported_query[project_id=somewhere]",
+            "0.01s call     tests/ifpmic_api/test_jobs.py::test_list_rejects_invalid_bounds_noncanonical_or_unsupported_query[project_id=somewhere]",
+            "1 passed, 1 warning in 3.14s"
+          ],
+          "source_fingerprint": "ac20f4089803464c9c7eb26cc20b07b25dadc499a429b3ebebbdd760208185d7",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "6b32316328bfe0c3f1566234ac190aaaf080f14173af5ccdb3f915d399117433",
+          "test_count": 1,
+          "test_time_seconds": [
+            2.695
+          ],
+          "zip_sha256": "4566b80b8e2a970bae4f3e017d3836000a63ea25de164487a16e41eef52fba4b"
+        },
+        {
+          "artifact_dir": "workflow-artifacts/verification/B02/G5/timing-diagnostic/2026-10-18T18-24-00Z/attempt-02",
+          "attempt": 2,
+          "changed_sources_after_run": [],
+          "exit_code": 0,
+          "junit_sha256": "061a2ac7bafbe9883c92ea8f5fa7d55519ffc1b8a274d5fe019f7ba00ddcf357",
+          "manifest_sha256": "cf35ab9c45d5fb716079b048c76481b067703c7a9e5c487f95cb3593bbabbe53",
+          "postgres_lifecycle_exit_codes": [
+            0,
+            0,
+            0
+          ],
+          "postgres_pid_alive": false,
+          "postgres_stop_status": "stopped",
+          "slowest_duration_lines": [
+            "1.57s setup    tests/ifpmic_api/test_jobs.py::test_list_rejects_invalid_bounds_noncanonical_or_unsupported_query[project_id=somewhere]",
+            "0.63s teardown tests/ifpmic_api/test_jobs.py::test_list_rejects_invalid_bounds_noncanonical_or_unsupported_query[project_id=somewhere]",
+            "0.01s call     tests/ifpmic_api/test_jobs.py::test_list_rejects_invalid_bounds_noncanonical_or_unsupported_query[project_id=somewhere]",
+            "1 passed, 1 warning in 2.68s"
+          ],
+          "source_fingerprint": "ac20f4089803464c9c7eb26cc20b07b25dadc499a429b3ebebbdd760208185d7",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "fd8bcb7c04b145c9acffe9cd44734d629102e87cfc4d4a8fa45b3dbf145dac56",
+          "test_count": 1,
+          "test_time_seconds": [
+            2.202
+          ],
+          "zip_sha256": "46a852b2150e57220b4a0251218b6d66c2e33b8332615d90530ae0cc84c44a6b"
+        },
+        {
+          "artifact_dir": "workflow-artifacts/verification/B02/G5/timing-diagnostic/2026-10-18T18-24-00Z/attempt-03",
+          "attempt": 3,
+          "changed_sources_after_run": [],
+          "exit_code": 0,
+          "junit_sha256": "9508169f185360421ea2f0092214242dcffb32a238236f06ae056c282417902d",
+          "manifest_sha256": "5965d0287c9671b182532142b95f5cacc167435ff7164b679ce980400322f212",
+          "postgres_lifecycle_exit_codes": [
+            0,
+            0,
+            0
+          ],
+          "postgres_pid_alive": false,
+          "postgres_stop_status": "stopped",
+          "slowest_duration_lines": [
+            "1.65s setup    tests/ifpmic_api/test_jobs.py::test_list_rejects_invalid_bounds_noncanonical_or_unsupported_query[project_id=somewhere]",
+            "1.13s teardown tests/ifpmic_api/test_jobs.py::test_list_rejects_invalid_bounds_noncanonical_or_unsupported_query[project_id=somewhere]",
+            "0.01s call     tests/ifpmic_api/test_jobs.py::test_list_rejects_invalid_bounds_noncanonical_or_unsupported_query[project_id=somewhere]",
+            "1 passed, 1 warning in 3.22s"
+          ],
+          "source_fingerprint": "ac20f4089803464c9c7eb26cc20b07b25dadc499a429b3ebebbdd760208185d7",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "189e4190d6e362c02277aa180c40074ec9c6aa120b527b81267a07d047db4a48",
+          "test_count": 1,
+          "test_time_seconds": [
+            2.785
+          ],
+          "zip_sha256": "56256e9e348cd115d63a6d09d005455cf3e67f2bb9201de977d1ae4e1312f069"
+        }
+      ],
+      "case": "tests/ifpmic_api/test_jobs.py::test_list_rejects_invalid_bounds_noncanonical_or_unsupported_query[project_id=somewhere]",
+      "conclusion": "bounded three isolated exact-case repeats; diagnostic only; no source or limit change",
+      "kind": "ifpmic.g5.g4-timeout-diagnostic.v1",
+      "summary_sha256": "5dafc76532cf205cf1c870f69d40c697b33698da937de058fd1f86048aaa2857",
+      "source_hash_maps_match_original_frozen133_entries": true,
+      "fingerprint_note": "Diagnostic serialization fingerprint differs from gate algorithm; exact133-entry source hash maps were compared and are identical."
+    },
+    "classification": "Focused diagnostics and both failed frozen candidates are recorded separately from final acceptance. Contract-based corrections changed G5 test setup/oracles and evidence serialization; no product code or accepted G1-G4 test was changed after initial implementation. The unchanged30s case limit was retained."
+  },
+  "limitations": [
+    "This is partial local G5 evidence. G6 combined Node/build/plugin/UI decision, G7 final B02 review, B03-B13 and all original32 AT remain pending.",
+    "READY describes only workspace preparation. Job remains DRAFT, command accepted, outbox pending; no Agent/Temporal/build/device/publisher/external submission was executed.",
+    "Real temporary PostgreSQL and local POSIX filesystem/processes with synthetic OIDC/project data. No corporate SSO/TLS/production AT acceptance.",
+    "Controlled ENOSPC/EDQUOT/syscall and real-commit-then-ack-wrapper exceptions do not establish physical disk exhaustion, actual network/power loss, NFS or cross-privileged mount behavior.",
+    "Trusted service euid and mount namespace; same-euid/privileged adversarial mutation excluded. st_dev does not detect every bind mount.",
+    "Original17 imported files and2 uploads plus protected96 sources/89 inventory unchanged by byte/inventory checks.",
+    "Inherited environment.oidc_protocol=not_executed is the G1 smoke field; G3 and later runtime proof is recorded separately.",
+    "The first frozen gate had a 44.545s G4 timing outlier and failed the unchanged30s case limit. No root cause was established; later passing runs are per-run evidence and do not prove permanent absence of timing variability."
+  ]
+}

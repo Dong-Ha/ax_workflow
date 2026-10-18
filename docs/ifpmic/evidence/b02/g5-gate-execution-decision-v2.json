@@ -1,0 +1,43 @@
+{
+  "kind": "ifpmic.b02.g5.gate-execution-decision.v2",
+  "requirements": [
+    "REQ-13",
+    "B02-G5"
+  ],
+  "decision": "Run fixed accepted legacy167, G491 and independent G5 inventories as three separate Python commands (300s each), plus all48 B01 Node cases (180s). Exact G5 IDs/count/source ledger must be independently frozen before the first gate.",
+  "reason": "Accepted G4 legacy phase130.80s plus G4 phase157.16s already totals287.96s. Required new workspace process/lease/FS/crash matrices cannot fit the remaining12.04s of a combined300s command; preserve all inventories without extending approved per-command or individual30s limits.",
+  "source_and_cleanup": [
+    "Validate accepted G4 archive SHA and every captured baseline byte except approved README/app/settings integrations.",
+    "Verify exact dual-approved G5 contract, independent reviews and original-source/advice/risk hashes.",
+    "Pin independent G5 ledger bytes and all current product/test source pins; compare exact observed JUnit IDs/counts, zero failures/errors/skips.",
+    "Capture private exact candidate-source ZIP and source manifest before testing, compare sources/libraries/protected17+2/96+89 after all phases.",
+    "Require each isolated PostgreSQL lifecycle stopped/PID absent before next phase can overwrite its raw manifest.",
+    "Reuse accepted G4 subreaper/Popen ownership wrapper with preexisting child PID/starttime exclusion. TC old and new helper tests remain in91-case regressions.",
+    "Require real G3 auth, G4 restart and G5 worker/kill/concurrency evidence; deduplicate private worker PID/starttime identities and verify actual private log bytes/modes/hash before redacting identities."
+  ],
+  "normal_and_failure_evidence": "Private0700 leaf and0600 raw evidence retained on every outcome. Timeouts terminate only owned confirmed descendants and the isolated PostgreSQL cluster, never restart on observation timeout. Failed source bytes and logs are preserved; source edits invalidate candidate.",
+  "scope": "G5 local prerequisite only. No G5 pass is claimed until the frozen gate passes and independent final review accepts. G6 full Node/build/plugin/UI-omission decision and G7 full B02 review remain required. B03-B13/original32 AT remain pending.",
+  "diagnostic_preflight": "TC first focused4 passed. Individual source-byte copies match all7 manifest entries, and log/JUnit/private process logs remain retained. No source ZIP or persisted PG lifecycle was produced. This diagnostic result is not final acceptance; the frozen gate reruns all final G5 cases with full evidence.",
+  "post_focus_normalization": "Removed one extra trailing LF from TC module before final freeze; original focused source ZIP retained. No semantic change or diagnostic rerun; final gate will exercise all93 cases on current bytes.",
+  "supersedes": "g5-gate-execution-decision.json; previous bytes and first pre-gate review remain preserved as historical candidate evidence.",
+  "failed_gate_history": [
+    {
+      "private_gate": "workflow-artifacts/verification/B02/G5/gates/2026-10-18T18-16-29-582447Z/gate.json",
+      "reason": "Inherited G4 query case44.545s exceeded unchanged30s limit despite258functional passes. Three exact-case diagnostics were2.202\u20132.785s with0.01s calls. Delay cause is unattributed; no product/oracle/time-limit changes."
+    },
+    {
+      "private_gate": "workflow-artifacts/verification/B02/G5/gates/2026-10-18T18-23-54-639423Z/gate.json",
+      "reason": "Inherited258 passed undercase limit; G5 had87pass/6test failures. Contract-based independent review traced root-preflight expectations, terminal ERROR/retained generation fixture sequencing, fresh-user cookie setup and marker/schema aggregation defects. Fix only independent G5 tests/ledger; preserve all approved product assertions and failure source ZIP/log/JUnit/PG cleanup evidence."
+    }
+  ],
+  "required_after_correction": "Recollect same93 IDs; bounded focused correction cases with captured source; independent v2 pre-gate review and full351 Python+48 Node gate on new frozen bytes. No G5 acceptance until complete pass and final independent review.",
+  "prior_gate_source_capture": "Both failed gates preserve all133 exact candidate entries in private source ZIPs; source maps were unchanged between them. Corrected final candidate is separately captured before testing.",
+  "initial_candidate_focus": "17 selected cases passed in38.78s against captured132-entry source ZIP; exact case IDs/JUnit/log hashes/PGstopped+PIDfalse and partial observation retained in independent TC ledger. Full93-case source-frozen gate remains pending.",
+  "final_candidate_inputs": {
+    "scripts/verify_ifpmic_g5.py": "ee137621450b4a28d0be30708981bebaa012d9f282db9816e45e6b78325c427b",
+    "docs/ifpmic/evidence/b02/g5-tc-ledger.json": "f0b7164d9125b48db4d276885c22f5af5768b35c8bb55bb5277ad9aee3a9a59f",
+    "docs/ifpmic/evidence/b02/g5-gate-observation-contract.json": "ace8a426ab9ef5d5a12118c5d9e077a4d9c227c2dc4beb2612290001c17c6bf5",
+    "tests/ifpmic_api/test_workspace.py": "0254b67ac0a1da79dad2bf81110ca4d5519bc1dfe0e9c1210e807016b2d7d634"
+  },
+  "corrected_candidate_focus": "All10 selected correction cases passed in37.56s with exact source ZIP134entries, JUnit/logs and PostgreSQL stopped/PIDfalse. Current93 testcase IDs unchanged; full351+48gate remains pending."
+}

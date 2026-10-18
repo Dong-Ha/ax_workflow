@@ -49,6 +49,9 @@ class Settings:
     auth_gc_interval_seconds: int = 60
     node_executable: str | None = None
     profile_store: str | None = None
+    workspace_root: str | None = None
+    workspace_lease_seconds: int = 60
+    workspace_poll_seconds: int = 1
 
     def __post_init__(self):
         try:
@@ -58,6 +61,15 @@ class Settings:
                 raise ValueError()
             if type(self.auth_gc_interval_seconds) is not int or not 1 <= self.auth_gc_interval_seconds <= 60:
                 raise ValueError()
+            if (type(self.workspace_lease_seconds) is not int or not 1 <= self.workspace_lease_seconds <= 300 or
+                    type(self.workspace_poll_seconds) is not int or not 1 <= self.workspace_poll_seconds <= 60):
+                raise ValueError()
+            if self.workspace_root is not None:
+                path = self.workspace_root
+                if (type(path) is not str or not path.startswith('/') or path == '/' or
+                        any(not part or part in ('.', '..') for part in path.split('/')[1:]) or
+                        any(c == '\x00' or 0xD800 <= ord(c) <= 0xDFFF for c in path)):
+                    raise ValueError()
             if (self.node_executable is None) != (self.profile_store is None):
                 raise ValueError()
             for path in (self.node_executable, self.profile_store):

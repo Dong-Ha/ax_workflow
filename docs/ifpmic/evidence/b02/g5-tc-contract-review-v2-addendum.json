@@ -1,0 +1,81 @@
+{
+  "kind": "ifpmic.b02.g5.tc-contract-review.v2",
+  "decision": "approved_for_independent_TC_authoring",
+  "reviewed_contract": {
+    "path": "docs/ifpmic/evidence/b02/g5-implementation-contract-v2.json",
+    "sha256": "cdbda5b333e0227f7804255d8d430968eec22d89657708fa8c109dea83f73b8b"
+  },
+  "governing_plan": {
+    "path": "docs/ifpmic/B02-IDENTITY.md",
+    "sha256": "f53a6d86e3e798d77a23741a923f95f960936179f26c4a2648df9b6178daf96a"
+  },
+  "supersedes_review": {
+    "path": "docs/ifpmic/evidence/b02/g5-tc-contract-review.json",
+    "v1_contract_sha256": "dcf2266d6e87318ea23224442f8a17163f8e7136c0a8e7ddd0ad89d3cc6e6100",
+    "preservation": "Historical v1 approval is retained; it is not the code-authoring gate after the independent v1 rejection."
+  },
+  "review_scope": [
+    "Malformed persisted claim invariants and fail-closed error behavior",
+    "Targeted READY database-only path and root preflight ordering",
+    "Required four-child initial workspace layout, including build",
+    "Fixed filesystem marker, no-follow, create-once, sync and crash semantics",
+    "Real PostgreSQL claim fencing, retries, subprocess CLI and fault hooks",
+    "Original REQ-13/AT-21 and B03/B07 boundary preservation"
+  ],
+  "findings": [
+    {
+      "id": "MALFORMED-CLAIM-FAIL-CLOSED",
+      "result": "resolved",
+      "detail": "Only a complete valid PROVISIONING claim with non-null expiry at or before the database clock is reclaimable. Malformed RESERVED/PROVISIONING invariants are detected under row lock and set ERROR/WORKSPACE_INVALID_STATE with claims cleared, no generation increment, and no filesystem mutation. A missing expiry is never treated as expired. Targeted malformed READY reports the fixed invariant error without filesystem access or row mutation. Generation exhaustion on an expired claim has a fixed no-filesystem error path; a live maximum-generation claim may still complete."
+    },
+    {
+      "id": "TARGETED-READY-AND-PREFLIGHT",
+      "result": "resolved",
+      "detail": "A targeted valid READY intent is looked up in PostgreSQL before filesystem preflight and returns already_ready without inspecting or mutating the path, preserving future B03/B07 output. A potential claim validates the configured root read-only before locking/mutating any claim. Unsafe global root returns a fixed error with null job_id and leaves every intent unchanged/unclaimed. A missing root returns invalid_request/WORKSPACE_INVALID_REQUEST with null job_id and no database or filesystem operation; injected db_factory usage is independent of the CLI DSN requirement."
+    },
+    {
+      "id": "ORPHAN-WITHOUT-INTENT",
+      "result": "preserved",
+      "detail": "UUID directories with no corresponding intent are ignored and preserved; they cannot be marked ERROR because no intent row exists. A valid existing intent with unsafe remnants follows its fixed ERROR/manual-inspection path. No adoption or recursive deletion is authorized."
+    },
+    {
+      "id": "BUILD-CHILD-AND-ORIGINAL-SCOPE",
+      "result": "resolved",
+      "detail": "Initial layout is exactly marker plus source, tc, artifacts and build directories, each 0700 and initially empty. The build child is tied to original design DOCX paragraph 217 and B07 use; this is an additive workspace detail and does not change the original 17 design files, request DTO or workflow execution. The prior v1 matrix's three-child list remains historical only."
+    },
+    {
+      "id": "FS-AND-CLAIM-ORACLES",
+      "result": "testable",
+      "detail": "The exact root/component open policy, job UUID path, four-child layout, marker JSON bytes/mode, no-follow and identity checks, owned staging file, hard-link create-once publication, synchronization order, bounded claims, conditional READY/ERROR updates, failure codes, retries, crash table and named hook inventory are concrete enough for independent literal tests. DB state and actual filesystem can be sampled independently after process faults."
+    },
+    {
+      "id": "ACCEPTANCE-AND-LIMITS",
+      "result": "preserved",
+      "detail": "Real isolated PostgreSQL, actual disposable POSIX filesystem and independent worker process evidence are required. Controlled ENOSPC/acknowledgement injection is not physical capacity, power-loss, NFS or production storage proof. G5 remains only the workspace portion of AT-21; job/log/image/device/session isolation, B03 Temporal, B07 writer/worktree enforcement and production storage approval are not complete."
+    }
+  ],
+  "independent_TC_readiness": {
+    "normal_cases": [
+      "Two separately authorized G4 jobs get unique database-UUID paths and exact five-object initial layout (marker plus four child directories).",
+      "Valid RESERVED and valid expired PROVISIONING claims follow ascending selection/generation/token/expiry rules; successful work fsyncs all required children, job and root before fenced READY.",
+      "Targeted READY is returned without any filesystem operation, even if future B03/B07 content exists; direct service with absent root is an exact no-op invalid_request.",
+      "Explicit retry-error changes only allowed intent fields, does no filesystem operation and preserves stable job/command/token identity."
+    ],
+    "exception_and_boundary_cases": [
+      "Malformed RESERVED and each malformed PROVISIONING field combination fail closed as WORKSPACE_INVALID_STATE without FS mutation; valid expiry -1/equality/+1ms and bigint generation limit are independently fixed.",
+      "Malformed targeted READY returns invalid_state without FS or row mutation; unscoped scan excludes READY; a missing root/DSN/argv error is distinct from unsafe root.",
+      "Root and every ancestor symlink/owner/mode/device, job/child/marker symlink/type/identity/mode/bytes, wrong token/job, malformed/duplicate marker syntax and unexpected contents are tested with preserved sentinels.",
+      "Injected short writes, ENOSPC/EDQUOT, write/fsync/close/link/directory sync/parent sync and each READY/error commit boundary produce fixed status/state and preserve accepted G4 records.",
+      "Two independent workers test active claim exclusion, expiry reclaim, stale completion/error fencing, two different jobs, create-once winner validation and crashes at each named filesystem/DB hook.",
+      "Empty matching same-intent remnant can recover; marker-present partial expected layout can recover; mismatched/nonempty remnants and no-intent orphan directories are preserved and never recursively removed/adopted."
+    ],
+    "regression_cases": [
+      "After every successful/error/retry/crash case, compare G4 job remains DRAFT/revision0, command remains accepted/applied_revision null, outbox remains pending, profile/snapshot bytes and original receipt remain exact.",
+      "No workspace state is exposed as workflow completion; no service startup/import creates filesystem entries, claims, workers or tasks; existing AX GET-only UI bytes and API DTOs remain unchanged under approved skip criteria.",
+      "Restart after durable marker-before-READY and after READY-before-ack observes persisted state; repeated reconciliation does not overwrite marker, duplicate children or alter unrelated job/sentinel data."
+    ],
+    "no_fake_acceptance": "Filesystem mocks may check pure mapping only; they cannot replace actual PostgreSQL, actual filesystem, independent worker processes, kill/restart and frozen regression gates."
+  },
+  "remaining_blockers": [],
+  "no_code_or_test_started_before_dual_approval": true
+}

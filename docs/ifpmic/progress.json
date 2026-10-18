@@ -196,7 +196,7 @@
       "requirements": [
         "REQ-13"
       ],
-      "scope": "B02 G1-G4 partial local foundations independently accepted. G4 durable create/list/Snapshot/command APIs verified with synthetic signed OIDC, isolated PostgreSQL and actual loopback Uvicorn. G5 workspace, G6-G7 combined/final B02 and original AT-21 remain pending.",
+      "scope": "B02 G1-G5 partial local foundations independently accepted. Explicit workspace provisioning/recovery now verified with isolated PostgreSQL, private POSIX filesystems and actual worker kill/restart evidence. G6/G7 final B02 checks and original AT-21 remain pending.",
       "increments": [
         {
           "id": "g1_python_postgres_migrations",
@@ -253,12 +253,27 @@
         },
         {
           "id": "g5_workspace_reconciliation",
-          "status": "in_progress",
+          "status": "verified",
           "contract": "evidence/b02/g5-implementation-contract-v2.json",
           "independent_plan_review": "evidence/b02/g5-contract-review-v2.json",
           "tc_plan_review": "evidence/b02/g5-tc-contract-review-v2.json",
           "verification_plan": "evidence/b02/g5-tc-risk-matrix.json",
-          "scope": "Preimplementation contract dual-approved; real workspace isolation/publication/recovery/claim fencing implementation and independent tests pending. No G5 acceptance claimed."
+          "scope": "Local workspace preparation/recovery and lease fencing only; job remains DRAFT, command accepted and outbox pending. No Agent/Temporal/build/device/publisher or original AT acceptance.",
+          "evidence": "evidence/b02/g5-verification.json",
+          "independent_acceptance": "evidence/b02/g5-final-review.json",
+          "candidate_fingerprint": "4f9b412af98c67be6921a87503b0d083e33ec69ce878a7f13c311c0eda6f1cd1",
+          "tests": {
+            "python_total": 351,
+            "g1": 12,
+            "g2": 41,
+            "g3": 114,
+            "g4": 91,
+            "g5": 93,
+            "b01_node": 48,
+            "failed": 0,
+            "errors": 0,
+            "skipped": 0
+          }
         }
       ]
     },
@@ -452,7 +467,7 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "B02: implement G5 workspace state machine and filesystem reconciliation with independent TC proof; then G6/G7 combined/final acceptance. B03-B13 and32original AT remain pending.",
+  "next_step": "B02: G6 combined full Node/build checks and explicit plugin/UI-omission decision, then G7 final B02 acceptance. B03-B13 and32original AT remain pending.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",

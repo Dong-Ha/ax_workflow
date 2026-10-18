@@ -1,0 +1,897 @@
+{
+  "acceptance_limits": [
+    "No original AT-21 is marked complete; only the G5 workspace slice is addressed.",
+    "No actual build execution, worktree writer fencing, Agent/Temporal lifecycle, real publisher, device or external provider is exercised.",
+    "Injected OSError and commit-ack exceptions are controlled seams, not actual ENOSPC exhaustion or network/power-loss evidence.",
+    "Final acceptance requires exact source hashes, full G5 suite, real PostgreSQL and POSIX process/filesystem evidence plus independent review.",
+    "Focused attempt-1 is not a current-source pass; it has no PostgreSQL lifecycle manifest and no source ZIP (only individual source copies/hashes).",
+    "Current candidate has 93 collected tests and has only been syntax-compiled/static-collected; runtime execution and independent review remain pending.",
+    "Per-case PID/start_ticks are test-only raw evidence; final gate must assert uniqueness before redaction, then publish no PID identity values.",
+    "Focused 17-case pass used test SHA 7c93339837dc149f11eee0b45dbf285c1342713cf278615623cda7886a5d9805; current test SHA is f8350ef7ecb6bdf77e83da0bc15a2cb2038b46ec00ceb7d8ca9642b8de1fe287 after a whitespace-only EOF cleanup. The full frozen gate is required against the current test bytes."
+  ],
+  "approved_contract": {
+    "path": "docs/ifpmic/evidence/b02/g5-implementation-contract-v2.json",
+    "sha256": "cdbda5b333e0227f7804255d8d430968eec22d89657708fa8c109dea83f73b8b"
+  },
+  "attempts": [
+    {
+      "artifacts": {
+        "junit": {
+          "path": "workflow-artifacts/verification/B02/G5/attempt-1/focused-smoke.junit.xml",
+          "sha256": "57fbcb3882bc36e2538e493796c92a29f33b5c6d76a140a5efbf2d66597ec390"
+        },
+        "log": {
+          "path": "workflow-artifacts/verification/B02/G5/attempt-1/focused-smoke.log",
+          "sha256": "e570c1fba539f961c0e7382aff84cf979551719c67f924a4ebde9b53fa549987"
+        },
+        "postgres_lifecycle_manifest_present": false,
+        "private_process_logs": [
+          {
+            "path": "workflow-artifacts/verification/B02/G5/attempt-1/workspace-process-logs/process-000-stdout.log",
+            "sha256": "92061df69f6c1fd9c9db47243a559e190c687d85e09e1ae588179c3a2eaaf656"
+          },
+          {
+            "path": "workflow-artifacts/verification/B02/G5/attempt-1/workspace-process-logs/process-000-stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "path": "workflow-artifacts/verification/B02/G5/attempt-1/workspace-process-logs/process-001-stdout.log",
+            "sha256": "0b5dff0be8fd715702f13662af89e6b090d2aca1742545a1ba27c39648e77e8d"
+          },
+          {
+            "path": "workflow-artifacts/verification/B02/G5/attempt-1/workspace-process-logs/process-001-stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ],
+        "source_files_copied_individually": true,
+        "source_manifest": {
+          "path": "workflow-artifacts/verification/B02/G5/attempt-1/source-hashes.json",
+          "sha256": "b1cb1dab5861e2dab7a3a6877e33bec64a8b68781f439ede19dc8f6815baa8d2"
+        },
+        "source_zip_present": false
+      },
+      "case_ids": [
+        "tests.ifpmic_api.test_workspace.test_real_filesystem_provisions_literal_marker_four_private_children_idempotently",
+        "tests.ifpmic_api.test_workspace.test_unexpected_file_is_preserved_error_is_explicit_and_retry_does_not_delete",
+        "tests.ifpmic_api.test_workspace.test_malformed_claim_becomes_invalid_state_without_filesystem_effect",
+        "tests.ifpmic_api.test_workspace.test_independent_worker_processes_contend_for_one_live_claim"
+      ],
+      "counts": {
+        "errors": 0,
+        "failed": 0,
+        "passed": 4,
+        "seconds": 9.24,
+        "skipped": 0,
+        "tests": 4
+      },
+      "id": "focused-smoke-attempt-1",
+      "interpretation": "Historical diagnostic only. Four selected tests passed against earlier test bytes. The attempt retained individual source files and hashes, not a source ZIP or PostgreSQL lifecycle manifest; it is not evidence for the current 93-case candidate or a complete G5 gate.",
+      "invocation": "Exact shell invocation was not retained; JUnit records four selected tests from test_workspace.py.",
+      "status": "historical_pass_on_earlier_test_candidate_not_current_candidate"
+    },
+    {
+      "artifacts": {
+        "focused_observation": {
+          "mode": "0o600",
+          "path": "workflow-artifacts/verification/B02/G5/focused/2026-10-18T18-12-41Z/workspace-observation.json",
+          "sha256": "ed6b3147c59a9ddb01eeffe2755e2cc2fa664cd519cb6973708c65b656675027"
+        },
+        "junit": {
+          "mode": "0o600",
+          "path": "workflow-artifacts/verification/B02/G5/focused/2026-10-18T18-12-41Z/pytest.junit.xml",
+          "sha256": "adc42e93155987e845988dfbb16d678833b378ed14364e3e825bb8422f41e140"
+        },
+        "postgres_lifecycle": {
+          "mode": "0o600",
+          "path": "workflow-artifacts/verification/B02/G5/focused/2026-10-18T18-12-41Z/private-lifecycle.json",
+          "pid_alive": false,
+          "sha256": "ce507a91d10ffd24b882f85b34aeb5d3dafea23420ac3208b9341b48814440ea",
+          "stop_status": "stopped"
+        },
+        "private_process_log_count": 32,
+        "private_process_logs": [
+          {
+            "bytes": 0,
+            "mode": "0o600",
+            "name": "process-000-stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "bytes": 84,
+            "mode": "0o600",
+            "name": "process-000-stdout.log",
+            "sha256": "5a4bdc2963a8a9f1f0f6fd2359bea06d153ecc55b6015c2e4123eadadf8099da"
+          },
+          {
+            "bytes": 0,
+            "mode": "0o600",
+            "name": "process-001-stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "bytes": 84,
+            "mode": "0o600",
+            "name": "process-001-stdout.log",
+            "sha256": "5a4bdc2963a8a9f1f0f6fd2359bea06d153ecc55b6015c2e4123eadadf8099da"
+          },
+          {
+            "bytes": 0,
+            "mode": "0o600",
+            "name": "process-002-stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "bytes": 84,
+            "mode": "0o600",
+            "name": "process-002-stdout.log",
+            "sha256": "5a4bdc2963a8a9f1f0f6fd2359bea06d153ecc55b6015c2e4123eadadf8099da"
+          },
+          {
+            "bytes": 0,
+            "mode": "0o600",
+            "name": "process-003-stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "bytes": 84,
+            "mode": "0o600",
+            "name": "process-003-stdout.log",
+            "sha256": "5a4bdc2963a8a9f1f0f6fd2359bea06d153ecc55b6015c2e4123eadadf8099da"
+          },
+          {
+            "bytes": 0,
+            "mode": "0o600",
+            "name": "process-004-stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "bytes": 84,
+            "mode": "0o600",
+            "name": "process-004-stdout.log",
+            "sha256": "5a4bdc2963a8a9f1f0f6fd2359bea06d153ecc55b6015c2e4123eadadf8099da"
+          },
+          {
+            "bytes": 0,
+            "mode": "0o600",
+            "name": "process-005-stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "bytes": 84,
+            "mode": "0o600",
+            "name": "process-005-stdout.log",
+            "sha256": "5a4bdc2963a8a9f1f0f6fd2359bea06d153ecc55b6015c2e4123eadadf8099da"
+          },
+          {
+            "bytes": 0,
+            "mode": "0o600",
+            "name": "process-006-stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "bytes": 84,
+            "mode": "0o600",
+            "name": "process-006-stdout.log",
+            "sha256": "5a4bdc2963a8a9f1f0f6fd2359bea06d153ecc55b6015c2e4123eadadf8099da"
+          },
+          {
+            "bytes": 0,
+            "mode": "0o600",
+            "name": "process-007-stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "bytes": 50,
+            "mode": "0o600",
+            "name": "process-007-stdout.log",
+            "sha256": "92061df69f6c1fd9c9db47243a559e190c687d85e09e1ae588179c3a2eaaf656"
+          },
+          {
+            "bytes": 0,
+            "mode": "0o600",
+            "name": "process-008-stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "bytes": 84,
+            "mode": "0o600",
+            "name": "process-008-stdout.log",
+            "sha256": "5a4bdc2963a8a9f1f0f6fd2359bea06d153ecc55b6015c2e4123eadadf8099da"
+          },
+          {
+            "bytes": 0,
+            "mode": "0o600",
+            "name": "process-009-stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "bytes": 65,
+            "mode": "0o600",
+            "name": "process-009-stdout.log",
+            "sha256": "a28207eb15688f57c5e99f0f8731fbec53f2ae181fb22a1aa6cfc3b3655a5bc9"
+          },
+          {
+            "bytes": 0,
+            "mode": "0o600",
+            "name": "process-010-stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "bytes": 84,
+            "mode": "0o600",
+            "name": "process-010-stdout.log",
+            "sha256": "5a4bdc2963a8a9f1f0f6fd2359bea06d153ecc55b6015c2e4123eadadf8099da"
+          },
+          {
+            "bytes": 0,
+            "mode": "0o600",
+            "name": "process-011-stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "bytes": 84,
+            "mode": "0o600",
+            "name": "process-011-stdout.log",
+            "sha256": "5a4bdc2963a8a9f1f0f6fd2359bea06d153ecc55b6015c2e4123eadadf8099da"
+          },
+          {
+            "bytes": 0,
+            "mode": "0o600",
+            "name": "process-012-stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "bytes": 0,
+            "mode": "0o600",
+            "name": "process-012-stdout.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "bytes": 0,
+            "mode": "0o600",
+            "name": "process-013-stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "bytes": 0,
+            "mode": "0o600",
+            "name": "process-013-stdout.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "bytes": 0,
+            "mode": "0o600",
+            "name": "process-014-stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "bytes": 0,
+            "mode": "0o600",
+            "name": "process-014-stdout.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "bytes": 0,
+            "mode": "0o600",
+            "name": "process-015-stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "bytes": 53,
+            "mode": "0o600",
+            "name": "process-015-stdout.log",
+            "sha256": "f72e1c5ca78e56cf70f1d48a2551a4c475c185075916ae0183a1869b69f6922a"
+          }
+        ],
+        "source_manifest": {
+          "fingerprint": "37b08cf48c7cbb9b93cbffbabbad71e01d4e31d2855b803256ac58c667c96a2d",
+          "path": "workflow-artifacts/verification/B02/G5/focused/2026-10-18T18-12-41Z/source-manifest.json",
+          "sha256": "fcf0602028fac54b889dec80bf01b3209bd732c2095a54d6e54129294347bcc7"
+        },
+        "source_zip": {
+          "bytes": 552416,
+          "entries": 132,
+          "path": "workflow-artifacts/verification/B02/G5/focused/2026-10-18T18-12-41Z/candidate-source.zip",
+          "sha256": "9bb8f991fb3e7b1d3851cc96dec10aa1652ea9124ffff548d7b526eacc6b6bb8"
+        },
+        "stderr": {
+          "bytes": 0,
+          "mode": "0o600",
+          "path": "workflow-artifacts/verification/B02/G5/focused/2026-10-18T18-12-41Z/pytest.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 100,
+          "mode": "0o600",
+          "path": "workflow-artifacts/verification/B02/G5/focused/2026-10-18T18-12-41Z/pytest.stdout.log",
+          "sha256": "47800b9923b4f2c9c77b6e2e5afdeaba3c24938e0925dd500fdc5906fe23d1a5"
+        }
+      },
+      "case_ids": [
+        "tests.ifpmic_api.test_workspace.test_completion_rechecks_clock_after_waiting_for_row_lock",
+        "tests.ifpmic_api.test_workspace.test_locked_claim_is_idle_then_expired_claim_is_reconciled",
+        "tests.ifpmic_api.test_workspace.test_marker_close_and_directory_fsync_order_precede_ready",
+        "tests.ifpmic_api.test_workspace.test_precommit_database_faults_never_infer_commit_or_mutate_g4[claim]",
+        "tests.ifpmic_api.test_workspace.test_precommit_database_faults_never_infer_commit_or_mutate_g4[error]",
+        "tests.ifpmic_api.test_workspace.test_precommit_database_faults_never_infer_commit_or_mutate_g4[ready]",
+        "tests.ifpmic_api.test_workspace.test_precommit_database_faults_never_infer_commit_or_mutate_g4[retry]",
+        "tests.ifpmic_api.test_workspace.test_ready_completion_is_rejected_when_lease_expires_while_row_lock_is_held",
+        "tests.ifpmic_api.test_workspace.test_real_filesystem_syscall_faults_are_fenced_and_preserved[fsync_directory]",
+        "tests.ifpmic_api.test_workspace.test_real_filesystem_syscall_faults_are_fenced_and_preserved[fsync_file]",
+        "tests.ifpmic_api.test_workspace.test_real_filesystem_syscall_faults_are_fenced_and_preserved[link]",
+        "tests.ifpmic_api.test_workspace.test_real_filesystem_syscall_faults_are_fenced_and_preserved[unlink]",
+        "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_after_marker_publish-True-False-False]",
+        "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_after_ready_commit-False-True-True]",
+        "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_before_marker_write-True-False-False]",
+        "tests.ifpmic_api.test_workspace.test_worker_cli_rejects_malformed_requests_without_leaking_private_data",
+        "tests.ifpmic_api.test_workspace.test_worker_cli_run_stops_cleanly_on_sigterm"
+      ],
+      "counts": {
+        "errors": 0,
+        "failed": 0,
+        "maximum_case_seconds": 3.792,
+        "passed": 17,
+        "seconds": 38.78,
+        "skipped": 0,
+        "tests": 17
+      },
+      "id": "focused-current-candidate-attempt-1",
+      "interpretation": "All selected focused cases passed on the captured source candidate. The focused-only observation is distinct from the full runtime observation; the 93-case full G5 frozen gate remains mandatory.",
+      "invocation": "IFPMIC_TEST_LIFECYCLE_PATH=<private-lifecycle.json> IFPMIC_WORKSPACE_TEST_OBSERVATION_PATH=<workspace-observation.json> PYTHONPATH=<repository> .ifpmic-venv/bin/python -m pytest -q --junitxml=<private pytest.junit.xml> followed by the 17 exact node IDs in focused_execution_plan. stdout/stderr redirected to pre-created mode-0600 files.",
+      "status": "pass_selected_diagnostic_only_full_g5_pending"
+    },
+    {
+      "artifacts": {
+        "gate": {
+          "path": "workflow-artifacts/verification/B02/G5/gates/2026-10-18T18-23-54-639423Z/gate.json",
+          "sha256": "144e6ccd8695a0bbb390cb1c4b8b5259c264293f7d84007cf4129866c9cd4b65"
+        },
+        "junit": {
+          "path": "workflow-artifacts/verification/B02/G5/gates/2026-10-18T18-23-54-639423Z/private-g5_python.xml",
+          "sha256": "afdafb45ec54553ddbba85d44366c5787578f46b038a4d7ee781f25f9daa956a"
+        },
+        "log": {
+          "path": "workflow-artifacts/verification/B02/G5/gates/2026-10-18T18-23-54-639423Z/private-g5_python.log",
+          "sha256": "96eabe065dbbb70a22e026531a0efc50ea4e2b9c25d5932ecdab292b7c4d07d7"
+        },
+        "source_zip": {
+          "path": "workflow-artifacts/verification/B02/G5/gates/2026-10-18T18-23-54-639423Z/private-candidate-source.zip",
+          "sha256": "397e56e0137c31a378925cfcdeb7fe24e231b241eab16196c7beb56134bd7019"
+        }
+      },
+      "counts": {
+        "errors": 0,
+        "failed": 6,
+        "passed": 87,
+        "skipped": 0,
+        "tests": 93
+      },
+      "failure_case_ids": [
+        "tests.ifpmic_api.test_workspace.test_marker_job_and_ancestor_special_entries_are_never_followed[ancestor_symlink]",
+        "tests.ifpmic_api.test_workspace.test_marker_job_and_ancestor_special_entries_are_never_followed[ancestor_fifo]",
+        "tests.ifpmic_api.test_workspace.test_error_and_retry_commit_ack_losses_require_fresh_state_inspection[error-workspace_after_error_commit]",
+        "tests.ifpmic_api.test_workspace.test_error_and_retry_commit_ack_losses_require_fresh_state_inspection[retry-workspace_after_retry_commit]",
+        "tests.ifpmic_api.test_workspace.test_two_accepted_jobs_get_independent_workspace_identities_across_users_and_projects",
+        "tests.ifpmic_api.test_workspace.test_g5_observation_is_written_only_after_required_assertions"
+      ],
+      "id": "full-gate-attempt-2-analysis",
+      "interpretation": "The 93-case frozen G5 run had six failures. Review classified them as test setup/oracle issues: global ancestor preflight expects null job and unchanged intent; error-ack injection must happen in same call as filesystem error; retry-ack must seed ERROR through a real claim/error (generation 1); the second TestClient inherited the seeded session cookie; and the observation marker oracle omitted the independently required CLI shutdown marker. No product defect was established by these failures. The failed run remains immutable evidence and the full gate must be rerun after correction.",
+      "status": "failed_gate_preserved_before_test_oracle_corrections"
+    },
+    {
+      "artifacts": {
+        "candidate-source.zip": {
+          "bytes": 1597874,
+          "mode": "0o600",
+          "path": "workflow-artifacts/verification/B02/G5/focused/2026-10-19T18-35-42Z-oracle-fixes/candidate-source.zip",
+          "sha256": "4aa7f4667705c25ceed81d9a7d8d2eaf14b647ef980910eeaaedd956d7ba3d82"
+        },
+        "private-lifecycle.json": {
+          "bytes": 1137,
+          "mode": "0o600",
+          "path": "workflow-artifacts/verification/B02/G5/focused/2026-10-19T18-35-42Z-oracle-fixes/private-lifecycle.json",
+          "sha256": "89e24a3bf54f958f0a12b5a435bb43955335eb68ed12f19ab7dc98debdeead42"
+        },
+        "pytest.junit.xml": {
+          "bytes": 1825,
+          "mode": "0o600",
+          "path": "workflow-artifacts/verification/B02/G5/focused/2026-10-19T18-35-42Z-oracle-fixes/pytest.junit.xml",
+          "sha256": "29f544cefffc89e816a615a41a03339ead9e4349c6c71b87e089cdc608341633"
+        },
+        "source-hashes.json": {
+          "bytes": 15390,
+          "mode": "0o600",
+          "path": "workflow-artifacts/verification/B02/G5/focused/2026-10-19T18-35-42Z-oracle-fixes/source-hashes.json",
+          "sha256": "cfd9366e28811a26d92c3259757654a04d998beceedab1772435c93dded4f0b2"
+        },
+        "stderr.log": {
+          "bytes": 0,
+          "mode": "0o600",
+          "path": "workflow-artifacts/verification/B02/G5/focused/2026-10-19T18-35-42Z-oracle-fixes/stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout.log": {
+          "bytes": 100,
+          "mode": "0o600",
+          "path": "workflow-artifacts/verification/B02/G5/focused/2026-10-19T18-35-42Z-oracle-fixes/stdout.log",
+          "sha256": "c447be0f6ea12c516274ab8bb3468aaf513917760422242c5decbb0ff4b27139"
+        }
+      },
+      "case_count": 10,
+      "duration_seconds": 37.56,
+      "errors": 0,
+      "failed": 0,
+      "id": "focused-oracle-correction-attempt-1",
+      "invocation": "python -m pytest -q <six special-entry parameter cases> <two error/retry-ack cases> <cross-user/project isolation> <CLI SIGTERM shutdown> --junitxml <private attempt path>",
+      "observation": "Aggregator case was intentionally excluded, so no G5 runtime observation was emitted by this focused subset. This is not the complete 93-case gate.",
+      "passed": 10,
+      "postgres": "PostgreSQL 18.1 temporary private cluster; pg_ctl stop exit 0; server pid_alive false.",
+      "purpose": "Bounded verification of six special-entry params, both commit-ack cases, cross-user/project isolation, and CLI shutdown after approved fixture/oracle corrections.",
+      "skipped": 0,
+      "source_sha256": "0254b67ac0a1da79dad2bf81110ca4d5519bc1dfe0e9c1210e807016b2d7d634",
+      "status": "pass"
+    }
+  ],
+  "case_groups": [
+    {
+      "agent": "TC worker authors and runs tests; code-dev owns implementation; independent reviewer audits evidence.",
+      "evidence": "Private focused pytest log and source bundle under workflow-artifacts/verification/B02/G5/attempt-*/; final gate observation only after complete assertions.",
+      "expected_result": "No settings path performs filesystem IO; invalid or non-private root has no claim and no created job directory.",
+      "id": "G5-SETTINGS",
+      "method": "Independent lexical vectors for canonical absolute paths, NUL/surrogate/dot/empty components and integer boundaries; real temporary POSIX root mode validation against a RESERVED PostgreSQL row.",
+      "pass_criteria": "All accepted boundary values construct; invalid values raise SettingsError; unsafe root yields fixed WORKSPACE_UNSAFE without changing DB intent or filesystem.",
+      "purpose": "Pin strict path/settings bounds and ensure a non-private configured root is rejected before a claim.",
+      "recovery": "Preserve the failed attempt. Correct only a demonstrated fixture defect; keep the literal vector and re-run affected case before full candidate gate.",
+      "scope_impact": "G5 settings/preflight only; does not establish production root provisioning or privileged-mount threat coverage.",
+      "target": "Settings validation and WorkspaceFilesystem.check_root via the real WorkspaceService."
+    },
+    {
+      "agent": "TC worker owns assertions; code-dev owns product; independent reviewer verifies source pins and artifact evidence.",
+      "evidence": "Real PG query snapshots and filesystem fingerprints in private run logs; sanitized aggregate at workflow-artifacts/verification/V2/workspace/observation.json.",
+      "expected_result": "Both accepted jobs are DRAFT with pending commands/outbox preserved and separate READY intents; unauthorized cross-project read is 403.",
+      "id": "G5-LAYOUT",
+      "method": "Compare marker against independent canonical ASCII literal; inspect lstat modes/devices/entries; create separate users/projects/profiles, reconcile their jobs, and attempt cross-owner detail access.",
+      "pass_criteria": "Exactly marker plus source/tc/artifacts/build, marker 0600, directories 0700, exact stable DB token, repeated READY is DB-only and does not modify future build content; different jobs have distinct token/path and remain isolated.",
+      "purpose": "Verify marker bytes, ownership/modes, exact four-child empty layout, idempotence, READY shortcut, and per-job isolation.",
+      "recovery": "Any unexpected object is preserved. An operator removes/corrects only the test-created invalid fixture, then explicit retry-error is exercised; no worker cleanup is assumed.",
+      "scope_impact": "Workspace existence and empty layout only; no build execution, worktree ownership, publication, Agent or Temporal behavior.",
+      "target": "Real WorkspaceFilesystem and WorkspaceService over accepted G4 job groups in temporary POSIX FS and PostgreSQL."
+    },
+    {
+      "agent": "TC worker owns fixtures/oracles; code-dev owns state/filesystem implementation; independent reviewer audits negative proof.",
+      "evidence": "Private before/after row snapshots and lstat-only tree fingerprints; failures retained in immutable attempt directory.",
+      "expected_result": "No symlink is followed, no unknown entry is deleted/adopted/chmodded, stable workspace token and all G4 acceptance data remain unchanged.",
+      "id": "G5-UNSAFE-RECOVERY",
+      "method": "Seed real DB malformed claim/READY states and filesystem marker/mode/content/symlink/orphan vectors; fingerprint contents before and after; explicitly retry only ERROR after operator fixture correction.",
+      "pass_criteria": "Malformed claim becomes ERROR/WORKSPACE_INVALID_STATE without filesystem effect; malformed READY is returned invalid without row or FS mutation; unsafe entries return fixed error and remain byte-identical; orphan is ignored; retry-error performs no filesystem mutation and cannot retry non-ERROR.",
+      "purpose": "Prove no-follow and no-adoption behavior for malformed state, unsafe contents, symlinks, orphan directories, and explicit retry.",
+      "recovery": "Keep rejected filesystem evidence; only test operator setup may remove its own known bad entry before explicit retry. Never weaken error code or preservation oracle.",
+      "scope_impact": "Expected hostile local filesystem entries only; same-euid/privileged remount races are explicitly outside contract.",
+      "target": "WorkspaceService state invariants and POSIX marker/job/child validation."
+    },
+    {
+      "agent": "TC worker authors deterministic barriers and assertions; code-dev owns transaction protocol; independent reviewer examines concurrency evidence.",
+      "evidence": "Named hook traces, exact result DTOs, independent PG reads and private process logs; aggregate flags are emitted only after assertions pass.",
+      "expected_result": "RESERVED/PROVISIONING/ERROR/READY rows obey contract fences; G4 job/command/outbox and stable workspace identity do not change.",
+      "id": "G5-FAULT-CLAIM",
+      "method": "Inject approved local OSError and controlled transaction acknowledgement exceptions at named hooks; pause competing reconcilers; expire a live lease and run a replacement; compare generation/token/layout.",
+      "pass_criteria": "ENOSPC/EDQUOT map WORKSPACE_NO_SPACE, other I/O maps WORKSPACE_IO, unknown dependency errors leave PROVISIONING, ack uncertainty is explicit, only expired replacement reaches READY, stale worker cannot supersede or delete winner state.",
+      "purpose": "Check fixed OS error mapping, dependency failures, DB claim commit uncertainty, lease expiry, and fencing.",
+      "recovery": "Stop/reap only the exact test child and wait out the bounded lease; preserve rows/filesystem remnants and re-read DB before retry.",
+      "scope_impact": "Controlled syscall/DB acknowledgement seams do not prove physical power-loss, real network partition, NFS, or production DB behavior.",
+      "target": "WorkspaceService claim/finish transactions and create-once provisioning against real PostgreSQL plus actual POSIX filesystem."
+    },
+    {
+      "agent": "TC worker operates isolated test processes; code-dev owns worker; independent reviewer audits child PIDs, stdout/stderr hashes and cleanup evidence.",
+      "evidence": "Private stdout/stderr files mode0600 in mode0700 attempt directory, process role/exit/PID status and hashes in sanitized aggregate.",
+      "expected_result": "No claim or file operation is inferred from process exit alone; recovery follows durable DB and marker state, preserving stale marker staging files.",
+      "id": "G5-CRASH-PROCESS",
+      "method": "Launch bounded subprocesses with private configuration; SIGKILL only the owned child at an approved local hook; inspect durable partial state; wait for lease expiry and invoke a replacement. Use a second independent worker/CLI process while first claim is live.",
+      "pass_criteria": "A live claim is excluded; only expired claims can be replaced; each crash point leaves the contract-allowed partial layout; after READY commit a fresh targeted read says already_ready; worker processes exit and report no live PID.",
+      "purpose": "Exercise process death at claim, mkdir, marker publish, directory sync, and READY boundaries, plus independent worker contention.",
+      "recovery": "A timed-out subprocess is terminated and reaped by exact PID only; any surviving DB claim is inspected and left to its lease before a bounded retry.",
+      "scope_impact": "Actual process-kill and local filesystem recovery, not physical power interruption or persistent-production storage qualification.",
+      "target": "Actual Python worker process, actual PostgreSQL claim rows, and actual temporary POSIX filesystem."
+    },
+    {
+      "agent": "TC worker owns CLI invocation; code-dev owns entrypoint; independent reviewer checks privacy and exact observation schema.",
+      "evidence": "Private worker streams/hashes and independent SQL projection comparison; no raw configuration or credentials in public ledger.",
+      "expected_result": "Workspace becomes READY only; no command application, outbox dispatch, job-state transition, HTTP route, agent, Temporal, device or publisher action occurs.",
+      "id": "G5-CLI-G4-REGRESSION",
+      "method": "Use private 0600 config, bounded stdin/argv, exact sorted compact JSON DTO and exit codes; signal run process; compare complete G4 owner/project/snapshot/workflow/command/payload/outbox/stable workspace identity before and after.",
+      "pass_criteria": "Valid commands emit exactly one sanitized JSON line with empty stderr; invalid request exits2; successful/retryable/stop statuses exit0; no raw path, token, SQL or OS detail appears; DRAFT/accepted/pending G4 rows remain intact.",
+      "purpose": "Verify standalone once/retry-error/run-stop interface and prove G5 does not execute or alter accepted AX jobs.",
+      "recovery": "Stop test worker with SIGTERM, verify exact PID gone, inspect DB and root before cleanup; preserve all failures and process logs privately.",
+      "scope_impact": "Standalone explicit workspace worker only. It is not the full B03/B07 execution pipeline and does not complete AT-21.",
+      "target": "python -m services.ifpmic_api.workspace, Settings loader, runtime DB role, and joined G4 acceptance rows."
+    }
+  ],
+  "collection": {
+    "collected": 92,
+    "command": ".ifpmic-venv/bin/python -m pytest --collect-only -q tests/ifpmic_api/test_workspace.py",
+    "execution_performed": false,
+    "exit_code": 0,
+    "note": "Static collection only; this temporary output is not an acceptance artifact.",
+    "raw_output_path": "/tmp/g5-collect-final.txt"
+  },
+  "crash_hook_coverage": {
+    "case_ids": [
+      "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_before_claim-False-False-False]",
+      "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_before_claim_commit-False-False-False]",
+      "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_after_claim_commit-False-False-False]",
+      "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_before_mkdir-False-False-False]",
+      "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_after_mkdir-False-False-False]",
+      "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_before_marker_write-True-False-False]",
+      "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_after_marker_write-True-False-False]",
+      "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_before_marker_fsync-True-False-False]",
+      "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_after_marker_fsync-True-False-False]",
+      "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_before_marker_close-True-False-False]",
+      "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_after_marker_close-True-False-False]",
+      "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_before_marker_publish-True-False-False]",
+      "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_after_marker_publish-True-False-False]",
+      "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_before_children-False-False-False]",
+      "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_after_children-False-True-False]",
+      "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_before_children_sync-False-True-False]",
+      "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_after_children_sync-False-True-False]",
+      "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_before_directory_sync-False-True-False]",
+      "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_after_directory_sync-False-True-False]",
+      "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_before_parent_sync-False-True-False]",
+      "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_after_parent_sync-False-True-False]",
+      "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_before_ready-False-True-False]",
+      "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_before_ready_commit-False-True-False]",
+      "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_after_completion_lock-False-True-False]",
+      "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_after_ready_commit-False-True-True]"
+    ],
+    "classification": "Each listed boundary runs in an actual SIGKILL worker; error/retry-only hooks are covered by commit-ack/fault tests, not mislabeled as normal provisioning crash points.",
+    "count": 25,
+    "required_normal_claim_fs_ready_hooks": [
+      "workspace_before_claim",
+      "workspace_before_claim_commit",
+      "workspace_after_claim_commit",
+      "workspace_before_mkdir",
+      "workspace_after_mkdir",
+      "workspace_before_marker_write",
+      "workspace_after_marker_write",
+      "workspace_before_marker_fsync",
+      "workspace_after_marker_fsync",
+      "workspace_before_marker_close",
+      "workspace_after_marker_close",
+      "workspace_before_marker_publish",
+      "workspace_after_marker_publish",
+      "workspace_before_children",
+      "workspace_after_children",
+      "workspace_before_children_sync",
+      "workspace_after_children_sync",
+      "workspace_before_directory_sync",
+      "workspace_after_directory_sync",
+      "workspace_before_parent_sync",
+      "workspace_after_parent_sync",
+      "workspace_before_ready",
+      "workspace_before_ready_commit",
+      "workspace_after_completion_lock",
+      "workspace_after_ready_commit"
+    ],
+    "source": "docs/ifpmic/evidence/b02/g5-implementation-contract-v2.json#fault_hooks.names"
+  },
+  "expected_g5_case_ids": [
+    "tests.ifpmic_api.test_workspace.test_actual_os_error_is_fixed_and_fenced_before_retry[122-WORKSPACE_NO_SPACE]",
+    "tests.ifpmic_api.test_workspace.test_actual_os_error_is_fixed_and_fenced_before_retry[28-WORKSPACE_NO_SPACE]",
+    "tests.ifpmic_api.test_workspace.test_actual_os_error_is_fixed_and_fenced_before_retry[5-WORKSPACE_IO]",
+    "tests.ifpmic_api.test_workspace.test_claim_commit_ack_loss_performs_no_filesystem_effect",
+    "tests.ifpmic_api.test_workspace.test_claim_invariant_matrix_fails_closed_without_filesystem_effect[expired_generation_exhausted]",
+    "tests.ifpmic_api.test_workspace.test_claim_invariant_matrix_fails_closed_without_filesystem_effect[provisioning_error_present]",
+    "tests.ifpmic_api.test_workspace.test_claim_invariant_matrix_fails_closed_without_filesystem_effect[provisioning_missing_expiry]",
+    "tests.ifpmic_api.test_workspace.test_claim_invariant_matrix_fails_closed_without_filesystem_effect[provisioning_missing_token]",
+    "tests.ifpmic_api.test_workspace.test_claim_invariant_matrix_fails_closed_without_filesystem_effect[provisioning_zero_generation]",
+    "tests.ifpmic_api.test_workspace.test_claim_invariant_matrix_fails_closed_without_filesystem_effect[reserved_generation_exhausted]",
+    "tests.ifpmic_api.test_workspace.test_claim_invariant_matrix_fails_closed_without_filesystem_effect[reserved_has_error]",
+    "tests.ifpmic_api.test_workspace.test_claim_invariant_matrix_fails_closed_without_filesystem_effect[reserved_has_expiry]",
+    "tests.ifpmic_api.test_workspace.test_claim_invariant_matrix_fails_closed_without_filesystem_effect[reserved_has_token]",
+    "tests.ifpmic_api.test_workspace.test_completion_rechecks_clock_after_waiting_for_row_lock",
+    "tests.ifpmic_api.test_workspace.test_error_and_retry_commit_ack_losses_require_fresh_state_inspection[error-workspace_after_error_commit]",
+    "tests.ifpmic_api.test_workspace.test_error_and_retry_commit_ack_losses_require_fresh_state_inspection[retry-workspace_after_retry_commit]",
+    "tests.ifpmic_api.test_workspace.test_exact_expired_claim_is_reclaimable_by_fresh_database_clock",
+    "tests.ifpmic_api.test_workspace.test_existing_workspace_damage_is_fail_closed_and_never_repaired[child_content]",
+    "tests.ifpmic_api.test_workspace.test_existing_workspace_damage_is_fail_closed_and_never_repaired[child_mode]",
+    "tests.ifpmic_api.test_workspace.test_existing_workspace_damage_is_fail_closed_and_never_repaired[extra_entry]",
+    "tests.ifpmic_api.test_workspace.test_existing_workspace_damage_is_fail_closed_and_never_repaired[marker_bytes]",
+    "tests.ifpmic_api.test_workspace.test_existing_workspace_damage_is_fail_closed_and_never_repaired[marker_mode]",
+    "tests.ifpmic_api.test_workspace.test_expired_claim_fences_old_worker_and_reuses_only_stable_layout",
+    "tests.ifpmic_api.test_workspace.test_g5_observation_is_written_only_after_required_assertions",
+    "tests.ifpmic_api.test_workspace.test_group_writable_intermediate_ancestor_is_rejected_without_claim",
+    "tests.ifpmic_api.test_workspace.test_independent_worker_processes_contend_for_one_live_claim",
+    "tests.ifpmic_api.test_workspace.test_live_max_generation_claim_is_excluded_without_filesystem_effect",
+    "tests.ifpmic_api.test_workspace.test_locked_claim_is_idle_then_expired_claim_is_reconciled",
+    "tests.ifpmic_api.test_workspace.test_malformed_claim_becomes_invalid_state_without_filesystem_effect",
+    "tests.ifpmic_api.test_workspace.test_malformed_ready_is_reported_without_inspecting_or_mutating_workspace",
+    "tests.ifpmic_api.test_workspace.test_marker_close_and_directory_fsync_order_precede_ready",
+    "tests.ifpmic_api.test_workspace.test_marker_job_and_ancestor_special_entries_are_never_followed[ancestor_fifo]",
+    "tests.ifpmic_api.test_workspace.test_marker_job_and_ancestor_special_entries_are_never_followed[ancestor_symlink]",
+    "tests.ifpmic_api.test_workspace.test_marker_job_and_ancestor_special_entries_are_never_followed[job_fifo]",
+    "tests.ifpmic_api.test_workspace.test_marker_job_and_ancestor_special_entries_are_never_followed[job_symlink]",
+    "tests.ifpmic_api.test_workspace.test_marker_job_and_ancestor_special_entries_are_never_followed[marker_fifo]",
+    "tests.ifpmic_api.test_workspace.test_marker_job_and_ancestor_special_entries_are_never_followed[marker_symlink]",
+    "tests.ifpmic_api.test_workspace.test_matching_marker_partial_layout_is_completed_without_adopting_unknown_entries",
+    "tests.ifpmic_api.test_workspace.test_missing_configured_directory_is_io_error_without_claim",
+    "tests.ifpmic_api.test_workspace.test_missing_root_and_invalid_target_do_not_claim_or_touch_filesystem",
+    "tests.ifpmic_api.test_workspace.test_orphan_workspace_is_ignored_and_not_adopted",
+    "tests.ifpmic_api.test_workspace.test_precommit_database_faults_never_infer_commit_or_mutate_g4[claim]",
+    "tests.ifpmic_api.test_workspace.test_precommit_database_faults_never_infer_commit_or_mutate_g4[error]",
+    "tests.ifpmic_api.test_workspace.test_precommit_database_faults_never_infer_commit_or_mutate_g4[ready]",
+    "tests.ifpmic_api.test_workspace.test_precommit_database_faults_never_infer_commit_or_mutate_g4[retry]",
+    "tests.ifpmic_api.test_workspace.test_ready_commit_ack_loss_is_uncertain_but_fresh_read_resolves",
+    "tests.ifpmic_api.test_workspace.test_ready_completion_is_rejected_when_lease_expires_while_row_lock_is_held",
+    "tests.ifpmic_api.test_workspace.test_ready_shortcut_does_not_inspect_or_change_future_build_contents",
+    "tests.ifpmic_api.test_workspace.test_real_filesystem_provisions_literal_marker_four_private_children_idempotently",
+    "tests.ifpmic_api.test_workspace.test_real_filesystem_syscall_faults_are_fenced_and_preserved[fsync_directory]",
+    "tests.ifpmic_api.test_workspace.test_real_filesystem_syscall_faults_are_fenced_and_preserved[fsync_file]",
+    "tests.ifpmic_api.test_workspace.test_real_filesystem_syscall_faults_are_fenced_and_preserved[link]",
+    "tests.ifpmic_api.test_workspace.test_real_filesystem_syscall_faults_are_fenced_and_preserved[unlink]",
+    "tests.ifpmic_api.test_workspace.test_retry_error_is_explicit_and_worker_cli_is_bounded_sanitized",
+    "tests.ifpmic_api.test_workspace.test_settings_workspace_path_and_integer_boundaries",
+    "tests.ifpmic_api.test_workspace.test_short_marker_writes_are_retried_until_exact_bytes_are_complete",
+    "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_after_children-False-True-False]",
+    "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_after_children_sync-False-True-False]",
+    "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_after_claim_commit-False-False-False]",
+    "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_after_completion_lock-False-True-False]",
+    "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_after_directory_sync-False-True-False]",
+    "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_after_marker_close-True-False-False]",
+    "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_after_marker_fsync-True-False-False]",
+    "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_after_marker_publish-True-False-False]",
+    "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_after_marker_write-True-False-False]",
+    "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_after_mkdir-False-False-False]",
+    "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_after_parent_sync-False-True-False]",
+    "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_after_ready_commit-False-True-True]",
+    "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_before_children-False-False-False]",
+    "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_before_children_sync-False-True-False]",
+    "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_before_claim-False-False-False]",
+    "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_before_claim_commit-False-False-False]",
+    "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_before_directory_sync-False-True-False]",
+    "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_before_marker_close-True-False-False]",
+    "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_before_marker_fsync-True-False-False]",
+    "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_before_marker_publish-True-False-False]",
+    "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_before_marker_write-True-False-False]",
+    "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_before_mkdir-False-False-False]",
+    "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_before_parent_sync-False-True-False]",
+    "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_before_ready-False-True-False]",
+    "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_before_ready_commit-False-True-False]",
+    "tests.ifpmic_api.test_workspace.test_symlink_child_and_symlink_root_are_never_followed",
+    "tests.ifpmic_api.test_workspace.test_sync_boundary_io_errors_never_report_ready[workspace_before_children_sync]",
+    "tests.ifpmic_api.test_workspace.test_sync_boundary_io_errors_never_report_ready[workspace_before_directory_sync]",
+    "tests.ifpmic_api.test_workspace.test_sync_boundary_io_errors_never_report_ready[workspace_before_marker_fsync]",
+    "tests.ifpmic_api.test_workspace.test_sync_boundary_io_errors_never_report_ready[workspace_before_parent_sync]",
+    "tests.ifpmic_api.test_workspace.test_two_accepted_jobs_get_independent_workspace_identities_across_users_and_projects",
+    "tests.ifpmic_api.test_workspace.test_two_reconcilers_skip_live_claim_then_one_completes",
+    "tests.ifpmic_api.test_workspace.test_unexpected_file_is_preserved_error_is_explicit_and_retry_does_not_delete",
+    "tests.ifpmic_api.test_workspace.test_unexpected_filesystem_exception_keeps_claim_provisioning_for_reconciliation",
+    "tests.ifpmic_api.test_workspace.test_worker_cli_rejects_malformed_requests_without_leaking_private_data",
+    "tests.ifpmic_api.test_workspace.test_worker_cli_run_stops_cleanly_on_sigterm",
+    "tests.ifpmic_api.test_workspace.test_workspace_preflight_rejects_nonprivate_root_without_claim"
+  ],
+  "expected_g5_pytest_cases": 93,
+  "expected_pytest_cases": 93,
+  "focused_execution_plan": {
+    "case_ids": [
+      "tests.ifpmic_api.test_workspace.test_real_filesystem_syscall_faults_are_fenced_and_preserved[fsync_file]",
+      "tests.ifpmic_api.test_workspace.test_real_filesystem_syscall_faults_are_fenced_and_preserved[fsync_directory]",
+      "tests.ifpmic_api.test_workspace.test_real_filesystem_syscall_faults_are_fenced_and_preserved[link]",
+      "tests.ifpmic_api.test_workspace.test_real_filesystem_syscall_faults_are_fenced_and_preserved[unlink]",
+      "tests.ifpmic_api.test_workspace.test_marker_close_and_directory_fsync_order_precede_ready",
+      "tests.ifpmic_api.test_workspace.test_worker_cli_rejects_malformed_requests_without_leaking_private_data",
+      "tests.ifpmic_api.test_workspace.test_locked_claim_is_idle_then_expired_claim_is_reconciled",
+      "tests.ifpmic_api.test_workspace.test_ready_completion_is_rejected_when_lease_expires_while_row_lock_is_held",
+      "tests.ifpmic_api.test_workspace.test_completion_rechecks_clock_after_waiting_for_row_lock",
+      "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_before_marker_write-True-False-False]",
+      "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_after_marker_publish-True-False-False]",
+      "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_after_ready_commit-False-True-True]",
+      "tests.ifpmic_api.test_workspace.test_precommit_database_faults_never_infer_commit_or_mutate_g4[claim]",
+      "tests.ifpmic_api.test_workspace.test_precommit_database_faults_never_infer_commit_or_mutate_g4[ready]",
+      "tests.ifpmic_api.test_workspace.test_precommit_database_faults_never_infer_commit_or_mutate_g4[error]",
+      "tests.ifpmic_api.test_workspace.test_precommit_database_faults_never_infer_commit_or_mutate_g4[retry]",
+      "tests.ifpmic_api.test_workspace.test_worker_cli_run_stops_cleanly_on_sigterm"
+    ],
+    "command": "pytest -q with --junitxml in a private attempt directory",
+    "count": 17,
+    "expected": "All 17 selected cases pass; real temporary PostgreSQL is stopped and lifecycle manifest records no surviving PID; observation emitted only after its assertions.",
+    "purpose": "Focused current-candidate review before the complete 93-case frozen gate; execution is not an acceptance substitute."
+  },
+  "gate_observation_contract": {
+    "path": "docs/ifpmic/evidence/b02/g5-gate-observation-contract.json",
+    "sha256": "ace8a426ab9ef5d5a12118c5d9e077a4d9c227c2dc4beb2612290001c17c6bf5"
+  },
+  "kind": "ifpmic.b02.g5.tc-ledger.v1",
+  "post_failure_corrections": [
+    {
+      "changes": [
+        "Retry-ack preservation now fingerprints the known empty job directory after actual ERROR and asserts no filesystem motion; no deletion/adoption is expected."
+      ],
+      "file": "tests/ifpmic_api/test_workspace.py",
+      "semantic_scope": "Test-fixture/oracle correction only; no product or accepted contract change.",
+      "sha256": "0254b67ac0a1da79dad2bf81110ca4d5519bc1dfe0e9c1210e807016b2d7d634"
+    }
+  ],
+  "post_focus_whitespace_corrections": [
+    {
+      "change": "Removed exactly one extra trailing LF after the focused pass; semantic bytes and test cases are unchanged. The private focused ZIP/manifest retain the exact pre-correction bytes; no rerun was performed for whitespace-only correction. The complete 93-case frozen gate must run on the current SHA.",
+      "current_sha256": "f8350ef7ecb6bdf77e83da0bc15a2cb2038b46ec00ceb7d8ca9642b8de1fe287",
+      "file": "tests/ifpmic_api/test_workspace.py",
+      "pre_correction_sha256": "7c93339837dc149f11eee0b45dbf285c1342713cf278615623cda7886a5d9805"
+    }
+  ],
+  "requirements": [
+    "REQ-13",
+    "B02-G5",
+    "AT-21-workspace-slice"
+  ],
+  "risk_group_traceability": [
+    {
+      "case_ids": [
+        "tests.ifpmic_api.test_workspace.test_settings_workspace_path_and_integer_boundaries",
+        "tests.ifpmic_api.test_workspace.test_workspace_preflight_rejects_nonprivate_root_without_claim",
+        "tests.ifpmic_api.test_workspace.test_group_writable_intermediate_ancestor_is_rejected_without_claim",
+        "tests.ifpmic_api.test_workspace.test_missing_configured_directory_is_io_error_without_claim",
+        "tests.ifpmic_api.test_workspace.test_missing_root_and_invalid_target_do_not_claim_or_touch_filesystem",
+        "tests.ifpmic_api.test_workspace.test_two_accepted_jobs_get_independent_workspace_identities_across_users_and_projects"
+      ],
+      "id": "G5-01-path-and-isolation"
+    },
+    {
+      "case_ids": [
+        "tests.ifpmic_api.test_workspace.test_real_filesystem_provisions_literal_marker_four_private_children_idempotently",
+        "tests.ifpmic_api.test_workspace.test_matching_marker_partial_layout_is_completed_without_adopting_unknown_entries",
+        "tests.ifpmic_api.test_workspace.test_real_filesystem_syscall_faults_are_fenced_and_preserved[fsync_file]",
+        "tests.ifpmic_api.test_workspace.test_real_filesystem_syscall_faults_are_fenced_and_preserved[fsync_directory]",
+        "tests.ifpmic_api.test_workspace.test_real_filesystem_syscall_faults_are_fenced_and_preserved[link]",
+        "tests.ifpmic_api.test_workspace.test_real_filesystem_syscall_faults_are_fenced_and_preserved[unlink]",
+        "tests.ifpmic_api.test_workspace.test_short_marker_writes_are_retried_until_exact_bytes_are_complete",
+        "tests.ifpmic_api.test_workspace.test_marker_close_and_directory_fsync_order_precede_ready"
+      ],
+      "id": "G5-02-marker-durable-publication"
+    },
+    {
+      "case_ids": [
+        "tests.ifpmic_api.test_workspace.test_existing_workspace_damage_is_fail_closed_and_never_repaired[marker_bytes]",
+        "tests.ifpmic_api.test_workspace.test_existing_workspace_damage_is_fail_closed_and_never_repaired[marker_mode]",
+        "tests.ifpmic_api.test_workspace.test_existing_workspace_damage_is_fail_closed_and_never_repaired[child_mode]",
+        "tests.ifpmic_api.test_workspace.test_existing_workspace_damage_is_fail_closed_and_never_repaired[child_content]",
+        "tests.ifpmic_api.test_workspace.test_existing_workspace_damage_is_fail_closed_and_never_repaired[extra_entry]",
+        "tests.ifpmic_api.test_workspace.test_symlink_child_and_symlink_root_are_never_followed",
+        "tests.ifpmic_api.test_workspace.test_marker_job_and_ancestor_special_entries_are_never_followed[marker_symlink]",
+        "tests.ifpmic_api.test_workspace.test_marker_job_and_ancestor_special_entries_are_never_followed[marker_fifo]",
+        "tests.ifpmic_api.test_workspace.test_marker_job_and_ancestor_special_entries_are_never_followed[job_symlink]",
+        "tests.ifpmic_api.test_workspace.test_marker_job_and_ancestor_special_entries_are_never_followed[job_fifo]",
+        "tests.ifpmic_api.test_workspace.test_marker_job_and_ancestor_special_entries_are_never_followed[ancestor_symlink]",
+        "tests.ifpmic_api.test_workspace.test_marker_job_and_ancestor_special_entries_are_never_followed[ancestor_fifo]",
+        "tests.ifpmic_api.test_workspace.test_group_writable_intermediate_ancestor_is_rejected_without_claim"
+      ],
+      "id": "G5-03-no-follow-and-marker-validation"
+    },
+    {
+      "case_ids": [
+        "tests.ifpmic_api.test_workspace.test_unexpected_file_is_preserved_error_is_explicit_and_retry_does_not_delete",
+        "tests.ifpmic_api.test_workspace.test_matching_marker_partial_layout_is_completed_without_adopting_unknown_entries",
+        "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_after_mkdir-False-False-False]",
+        "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_before_marker_write-True-False-False]",
+        "tests.ifpmic_api.test_workspace.test_orphan_workspace_is_ignored_and_not_adopted"
+      ],
+      "id": "G5-04-empty-unmarked-recovery-and-orphans"
+    },
+    {
+      "case_ids": [
+        "tests.ifpmic_api.test_workspace.test_exact_expired_claim_is_reclaimable_by_fresh_database_clock",
+        "tests.ifpmic_api.test_workspace.test_expired_claim_fences_old_worker_and_reuses_only_stable_layout",
+        "tests.ifpmic_api.test_workspace.test_independent_worker_processes_contend_for_one_live_claim",
+        "tests.ifpmic_api.test_workspace.test_live_max_generation_claim_is_excluded_without_filesystem_effect",
+        "tests.ifpmic_api.test_workspace.test_locked_claim_is_idle_then_expired_claim_is_reconciled",
+        "tests.ifpmic_api.test_workspace.test_two_reconcilers_skip_live_claim_then_one_completes"
+      ],
+      "id": "G5-05-two-reconciler-claim-fence"
+    },
+    {
+      "case_ids": [
+        "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_before_claim-False-False-False]",
+        "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_before_claim_commit-False-False-False]",
+        "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_after_claim_commit-False-False-False]",
+        "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_before_mkdir-False-False-False]",
+        "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_after_mkdir-False-False-False]",
+        "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_before_marker_write-True-False-False]",
+        "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_after_marker_write-True-False-False]",
+        "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_before_marker_fsync-True-False-False]",
+        "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_after_marker_fsync-True-False-False]",
+        "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_before_marker_close-True-False-False]",
+        "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_after_marker_close-True-False-False]",
+        "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_before_marker_publish-True-False-False]",
+        "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_after_marker_publish-True-False-False]",
+        "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_before_children-False-False-False]",
+        "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_after_children-False-True-False]",
+        "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_before_children_sync-False-True-False]",
+        "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_after_children_sync-False-True-False]",
+        "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_before_directory_sync-False-True-False]",
+        "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_after_directory_sync-False-True-False]",
+        "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_before_parent_sync-False-True-False]",
+        "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_after_parent_sync-False-True-False]",
+        "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_before_ready-False-True-False]",
+        "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_before_ready_commit-False-True-False]",
+        "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_after_completion_lock-False-True-False]",
+        "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_after_ready_commit-False-True-True]"
+      ],
+      "id": "G5-06-restart-and-crash-recovery"
+    },
+    {
+      "case_ids": [
+        "tests.ifpmic_api.test_workspace.test_actual_os_error_is_fixed_and_fenced_before_retry[122-WORKSPACE_NO_SPACE]",
+        "tests.ifpmic_api.test_workspace.test_actual_os_error_is_fixed_and_fenced_before_retry[28-WORKSPACE_NO_SPACE]",
+        "tests.ifpmic_api.test_workspace.test_actual_os_error_is_fixed_and_fenced_before_retry[5-WORKSPACE_IO]",
+        "tests.ifpmic_api.test_workspace.test_claim_commit_ack_loss_performs_no_filesystem_effect",
+        "tests.ifpmic_api.test_workspace.test_completion_rechecks_clock_after_waiting_for_row_lock",
+        "tests.ifpmic_api.test_workspace.test_error_and_retry_commit_ack_losses_require_fresh_state_inspection[error-workspace_after_error_commit]",
+        "tests.ifpmic_api.test_workspace.test_error_and_retry_commit_ack_losses_require_fresh_state_inspection[retry-workspace_after_retry_commit]",
+        "tests.ifpmic_api.test_workspace.test_precommit_database_faults_never_infer_commit_or_mutate_g4[claim]",
+        "tests.ifpmic_api.test_workspace.test_precommit_database_faults_never_infer_commit_or_mutate_g4[error]",
+        "tests.ifpmic_api.test_workspace.test_precommit_database_faults_never_infer_commit_or_mutate_g4[ready]",
+        "tests.ifpmic_api.test_workspace.test_precommit_database_faults_never_infer_commit_or_mutate_g4[retry]",
+        "tests.ifpmic_api.test_workspace.test_ready_commit_ack_loss_is_uncertain_but_fresh_read_resolves",
+        "tests.ifpmic_api.test_workspace.test_ready_completion_is_rejected_when_lease_expires_while_row_lock_is_held",
+        "tests.ifpmic_api.test_workspace.test_real_filesystem_syscall_faults_are_fenced_and_preserved[fsync_directory]",
+        "tests.ifpmic_api.test_workspace.test_real_filesystem_syscall_faults_are_fenced_and_preserved[fsync_file]",
+        "tests.ifpmic_api.test_workspace.test_real_filesystem_syscall_faults_are_fenced_and_preserved[link]",
+        "tests.ifpmic_api.test_workspace.test_real_filesystem_syscall_faults_are_fenced_and_preserved[unlink]",
+        "tests.ifpmic_api.test_workspace.test_sync_boundary_io_errors_never_report_ready[workspace_before_children_sync]",
+        "tests.ifpmic_api.test_workspace.test_sync_boundary_io_errors_never_report_ready[workspace_before_directory_sync]",
+        "tests.ifpmic_api.test_workspace.test_sync_boundary_io_errors_never_report_ready[workspace_before_marker_fsync]",
+        "tests.ifpmic_api.test_workspace.test_sync_boundary_io_errors_never_report_ready[workspace_before_parent_sync]",
+        "tests.ifpmic_api.test_workspace.test_unexpected_filesystem_exception_keeps_claim_provisioning_for_reconciliation"
+      ],
+      "id": "G5-07-storage-failure-and-commit-uncertainty"
+    },
+    {
+      "case_ids": [
+        "tests.ifpmic_api.test_workspace.test_claim_invariant_matrix_fails_closed_without_filesystem_effect[expired_generation_exhausted]",
+        "tests.ifpmic_api.test_workspace.test_claim_invariant_matrix_fails_closed_without_filesystem_effect[provisioning_error_present]",
+        "tests.ifpmic_api.test_workspace.test_claim_invariant_matrix_fails_closed_without_filesystem_effect[provisioning_missing_expiry]",
+        "tests.ifpmic_api.test_workspace.test_claim_invariant_matrix_fails_closed_without_filesystem_effect[provisioning_missing_token]",
+        "tests.ifpmic_api.test_workspace.test_claim_invariant_matrix_fails_closed_without_filesystem_effect[provisioning_zero_generation]",
+        "tests.ifpmic_api.test_workspace.test_claim_invariant_matrix_fails_closed_without_filesystem_effect[reserved_generation_exhausted]",
+        "tests.ifpmic_api.test_workspace.test_claim_invariant_matrix_fails_closed_without_filesystem_effect[reserved_has_error]",
+        "tests.ifpmic_api.test_workspace.test_claim_invariant_matrix_fails_closed_without_filesystem_effect[reserved_has_expiry]",
+        "tests.ifpmic_api.test_workspace.test_claim_invariant_matrix_fails_closed_without_filesystem_effect[reserved_has_token]",
+        "tests.ifpmic_api.test_workspace.test_live_max_generation_claim_is_excluded_without_filesystem_effect",
+        "tests.ifpmic_api.test_workspace.test_malformed_claim_becomes_invalid_state_without_filesystem_effect",
+        "tests.ifpmic_api.test_workspace.test_malformed_ready_is_reported_without_inspecting_or_mutating_workspace",
+        "tests.ifpmic_api.test_workspace.test_ready_shortcut_does_not_inspect_or_change_future_build_contents",
+        "tests.ifpmic_api.test_workspace.test_retry_error_is_explicit_and_worker_cli_is_bounded_sanitized",
+        "tests.ifpmic_api.test_workspace.test_two_accepted_jobs_get_independent_workspace_identities_across_users_and_projects",
+        "tests.ifpmic_api.test_workspace.test_unexpected_file_is_preserved_error_is_explicit_and_retry_does_not_delete",
+        "tests.ifpmic_api.test_workspace.test_worker_cli_rejects_malformed_requests_without_leaking_private_data",
+        "tests.ifpmic_api.test_workspace.test_worker_cli_run_stops_cleanly_on_sigterm"
+      ],
+      "id": "G5-08-no-destructive-reconcile-and-G4-regression"
+    },
+    {
+      "case_ids": [
+        "tests.ifpmic_api.test_workspace.test_g5_observation_is_written_only_after_required_assertions"
+      ],
+      "id": "G5-09-evidence-integrity"
+    }
+  ],
+  "source_pins": {
+    "services/ifpmic_api/app.py": "a65c3d44a14ecae7b819e5042d4f490ce68c8b9b5f5962d1b5f2bbfe52fef192",
+    "services/ifpmic_api/settings.py": "2974a462c9a60e05faf8ae7c1b684090d33adfddc1f2d24e1b7638074d36eb02",
+    "services/ifpmic_api/workspace.py": "ad3e29f27ee20bc82eff9afcf51d9bb5ef6374d50b69bcf8fa508d81ecb60f67",
+    "services/ifpmic_api/workspace_fs.py": "77e22fe789229841b4883fd2d1606964d468760a25d3cac4ea83d557ce3c5893",
+    "tests/ifpmic_api/conftest.py": "8bb375918a493ab7f18291f8cc2f0a1c13eaaa28170c4a36cdc5f40b0b0b64e1",
+    "tests/ifpmic_api/jobs_fixture.py": "aa9f4c7baada8617b9b1271fa0a36d6e7c00fae7bfbb6ff24fb2983ff069130a",
+    "tests/ifpmic_api/test_jobs.py": "dc96141956bb93ff1d3b06214bf4d176265cea654c3f2235f4e281b071287a28",
+    "tests/ifpmic_api/test_workspace.py": "0254b67ac0a1da79dad2bf81110ca4d5519bc1dfe0e9c1210e807016b2d7d634",
+    "tests/ifpmic_api/workspace_fixture.py": "5987916779c74a91b4dc44f16b03f27024762b4525ba6f8e9f14a20809e50ff8"
+  },
+  "source_pins_at_authoring": {
+    "services/ifpmic_api/app.py": "a65c3d44a14ecae7b819e5042d4f490ce68c8b9b5f5962d1b5f2bbfe52fef192",
+    "services/ifpmic_api/settings.py": "2974a462c9a60e05faf8ae7c1b684090d33adfddc1f2d24e1b7638074d36eb02",
+    "services/ifpmic_api/workspace.py": "ad3e29f27ee20bc82eff9afcf51d9bb5ef6374d50b69bcf8fa508d81ecb60f67",
+    "services/ifpmic_api/workspace_fs.py": "77e22fe789229841b4883fd2d1606964d468760a25d3cac4ea83d557ce3c5893",
+    "tests/ifpmic_api/test_workspace.py": "f8350ef7ecb6bdf77e83da0bc15a2cb2038b46ec00ceb7d8ca9642b8de1fe287",
+    "tests/ifpmic_api/workspace_fixture.py": "5987916779c74a91b4dc44f16b03f27024762b4525ba6f8e9f14a20809e50ff8"
+  },
+  "status": "focused_10_case_pass; full_93_case_gate_pending"
+}

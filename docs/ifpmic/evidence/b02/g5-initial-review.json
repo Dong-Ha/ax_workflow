@@ -1,0 +1,58 @@
+{
+  "kind": "ifpmic.b02.g5.initial-implementation-review.v1",
+  "status": "static_review_no_material_blocker_found_pending_independent_tests",
+  "reviewed_contract": {
+    "path": "docs/ifpmic/evidence/b02/g5-implementation-contract-v2.json",
+    "sha256": "cdbda5b333e0227f7804255d8d430968eec22d89657708fa8c109dea83f73b8b"
+  },
+  "reviewed_sources": {
+    "services/ifpmic_api/workspace_fs.py": "77e22fe789229841b4883fd2d1606964d468760a25d3cac4ea83d557ce3c5893",
+    "services/ifpmic_api/workspace.py": "ad3e29f27ee20bc82eff9afcf51d9bb5ef6374d50b69bcf8fa508d81ecb60f67",
+    "services/ifpmic_api/app.py": "a65c3d44a14ecae7b819e5042d4f490ce68c8b9b5f5962d1b5f2bbfe52fef192",
+    "services/ifpmic_api/settings.py": "2974a462c9a60e05faf8ae7c1b684090d33adfddc1f2d24e1b7638074d36eb02"
+  },
+  "findings": [],
+  "review_observations": [
+    {
+      "area": "filesystem publication and safety",
+      "evidence": "WorkspaceFilesystem.open_root walks components from / through dir_fd and O_NOFOLLOW, validates ancestor ownership/write policy and final root mode, and keeps the root descriptor. Child directories use nofollow stat/open plus identity checks. Marker reads reject non-regular files before open, use O_NONBLOCK/O_NOFOLLOW, bound reads to expected length plus one, and compare exact bytes and inode identity. Publication uses a fresh root-level O_EXCL 0600 staging file, complete write/fsync/close, and os.link create-once behavior. Only the current invocation's recorded stage inode is unlinked. The implementation creates the contract's exact four empty children and fsyncs each child, job directory, then root before final validation.",
+      "symbols": [
+        "WorkspaceFilesystem.open_root",
+        "WorkspaceFilesystem.directory",
+        "WorkspaceFilesystem.marker",
+        "WorkspaceFilesystem.publish",
+        "WorkspaceFilesystem.provision"
+      ]
+    },
+    {
+      "area": "claim, state invariants, and fenced completion",
+      "evidence": "WorkspaceService.valid encodes the v2 RESERVED/PROVISIONING/READY invariants. claim selects RESERVED or malformed/expired PROVISIONING rows under FOR UPDATE SKIP LOCKED, then reads state and database clock in a separate statement while retaining the row lock. Malformed state and expired generation overflow transition to ERROR/WORKSPACE_INVALID_STATE without filesystem access. Valid claims commit before provisioning. finish takes the row lock before the conditional live-lease update and performs no DB update if the fence no longer matches.",
+      "symbols": [
+        "WorkspaceService.valid",
+        "WorkspaceService.claim",
+        "WorkspaceService.finish",
+        "WorkspaceService.reconcile_once"
+      ]
+    },
+    {
+      "area": "boundary and integration",
+      "evidence": "Settings adds the contract's optional workspace root and bounded lease/poll settings. create_app constructs a lazy WorkspaceService but does not invoke filesystem work or start a workspace worker; the existing lifespan continues only auth maintenance. The explicit CLI uses configured runtime DSN and strict bounded stdin parsing, prints a fixed JSON DTO, and does not expose filesystem paths or exception text.",
+      "symbols": [
+        "Settings.__post_init__",
+        "create_app",
+        "WorkspaceService.main"
+      ]
+    }
+  ],
+  "cautions_for_test_review": [
+    "Cleanup errors from the invocation-owned staging unlink currently propagate through provisioning and can result in a fenced ERROR even if marker publication and sync already succeeded. This is conservative and preserves the staging object; tests should assert preservation and manual retry convergence, without treating a retained stage as permission to adopt or delete other remnants.",
+    "This is static evidence only. Real filesystem races, independent-process claim behavior, injected syscall errors, crash/restart convergence, PostgreSQL transaction outcomes, CLI privacy, and complete no-side-effect assertions remain unverified until TC's independent tests and the frozen gate pass."
+  ],
+  "review_limits": {
+    "read_only": true,
+    "product_or_test_files_modified": false,
+    "tests_run": false,
+    "database_or_service_calls": false,
+    "acceptance_claim": "none"
+  }
+}

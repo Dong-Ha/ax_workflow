@@ -1,0 +1,63 @@
+{
+  "kind": "ifpmic.b02.g5.gate-observation-contract.v1",
+  "product_contract": "g5-implementation-contract-v2.json",
+  "scope": "Evidence serialization only; product pass criteria and TC independence remain in approved implementation contract.",
+  "environment_variable": "IFPMIC_WORKSPACE_TEST_OBSERVATION_PATH",
+  "observation_kind": "ifpmic.g5.runtime-observation.v1",
+  "cases": {
+    "two_jobs_isolated": true,
+    "durable_layout": true,
+    "active_claim_excluded": true,
+    "malformed_claim_no_fs": true,
+    "stale_claim_fenced": true,
+    "two_worker_processes": true,
+    "crash_recovery": true,
+    "unsafe_entries_preserved": true,
+    "controlled_enospc": true,
+    "controlled_ready_ack_loss": true,
+    "ready_db_only": true,
+    "g4_acceptance_preserved": true,
+    "cli_once": 0,
+    "cli_run_shutdown": 0
+  },
+  "recording": "Record each case only after independent assertions. Evidence markers do not replace exact TC testcase inventory, real PostgreSQL/FS assertions or actual child process proof. Extra cases use additional_cases.",
+  "processes": {
+    "minimum": 2,
+    "allowed_roles": [
+      "cli_run",
+      "reconciler",
+      "crash_worker",
+      "replacement_worker"
+    ],
+    "required_fields": {
+      "role": "allowed role string",
+      "exit_code": "exact int, normal0 or expectedSIGKILLnegative as asserted by TC",
+      "pid_alive": false,
+      "logs": {
+        "stdout": {
+          "sha256": "64 lowercase hex",
+          "bytes": "nonnegative exactint"
+        },
+        "stderr": {
+          "sha256": "64 lowercase hex",
+          "bytes": "nonnegative exactint"
+        }
+      },
+      "private_directory_mode": "0o700",
+      "stdout_mode": "0o600",
+      "stderr_mode": "0o600",
+      "process_identity": {
+        "pid": "positive exactint, private only",
+        "start_ticks": "canonical decimal Linux /proc/<pid>/stat field22 captured from confirmed Popen handle before wait"
+      }
+    },
+    "requirement": "At least one cli_run and one crash_worker plus >=2 independent worker processes in the TC concurrency cases; no PID/path/credential/raw output is promoted.",
+    "identity": "Require unique (pid,start_ticks) per recorded process and at least2 successful reconciler identities; actual live-claim TC case asserts holder/contender are different processes while holder remains alive. Drop identities from published report.",
+    "raw_logs": "Each record i has retained private workspace-process-logs/process-{i:03d}-{stdout,stderr}.log under observation directory. Verify actual regular file mode0600/directory0700, bytes and SHA before publication."
+  },
+  "no_canaries": "true only after actual worker stdout/stderr/private-error scans; raw data remains private0700/0600.",
+  "limits": [
+    "Controlled ENOSPC and committed-PG acknowledgment wrapper exceptions are injected fault proof, not real disk-capacity/network/power-loss evidence.",
+    "Loopback/local synthetic service evidence only; no original AT completion or production workspace policy acceptance."
+  ]
+}

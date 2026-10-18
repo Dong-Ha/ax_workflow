@@ -1,0 +1,70 @@
+{
+  "kind": "ifpmic.b02.g5.pre-gate-review.v1",
+  "decision": "approved_to_start_frozen_full_gate_only",
+  "acceptance": "not_claimed",
+  "reviewed_pins": {
+    "contract": {
+      "path": "docs/ifpmic/evidence/b02/g5-implementation-contract-v2.json",
+      "sha256": "cdbda5b333e0227f7804255d8d430968eec22d89657708fa8c109dea83f73b8b"
+    },
+    "independent_contract_reviews": {
+      "docs/ifpmic/evidence/b02/g5-contract-review-v2.json": "c4200b52bc1dd7d51788750c84a0e38b97b7c5f526e687e1a878447f0205567d",
+      "docs/ifpmic/evidence/b02/g5-tc-contract-review-v2.json": "a908ec47c4e6ac919797cc2d7fc162778251bdec1e827bd61740c4e3f5d05c09"
+    },
+    "runner": {
+      "path": "scripts/verify_ifpmic_g5.py",
+      "sha256": "532e2d29b6c9239f355961a193989b1893e69beaae86aa6d37556cf84e12ac23"
+    },
+    "tc_ledger": {
+      "path": "docs/ifpmic/evidence/b02/g5-tc-ledger.json",
+      "sha256": "90fc78c165c9571ff513fd09ab7a58d46e54ab1a78d038e2b87e15c66bd2b5d6"
+    },
+    "execution_decision": {
+      "path": "docs/ifpmic/evidence/b02/g5-gate-execution-decision.json",
+      "sha256": "c4d47e0f9dc1a948f6e228dc04f9492affd85f0158087be543d177b7000a35c7"
+    },
+    "observation_contract": {
+      "path": "docs/ifpmic/evidence/b02/g5-gate-observation-contract.json",
+      "sha256": "ace8a426ab9ef5d5a12118c5d9e077a4d9c227c2dc4beb2612290001c17c6bf5"
+    },
+    "g5_product_and_test_files": {
+      "tests/ifpmic_api/test_workspace.py": "f8350ef7ecb6bdf77e83da0bc15a2cb2038b46ec00ceb7d8ca9642b8de1fe287",
+      "tests/ifpmic_api/workspace_fixture.py": "5987916779c74a91b4dc44f16b03f27024762b4525ba6f8e9f14a20809e50ff8",
+      "services/ifpmic_api/workspace.py": "ad3e29f27ee20bc82eff9afcf51d9bb5ef6374d50b69bcf8fa508d81ecb60f67",
+      "services/ifpmic_api/workspace_fs.py": "77e22fe789229841b4883fd2d1606964d468760a25d3cac4ea83d557ce3c5893",
+      "services/ifpmic_api/settings.py": "2974a462c9a60e05faf8ae7c1b684090d33adfddc1f2d24e1b7638074d36eb02",
+      "services/ifpmic_api/app.py": "a65c3d44a14ecae7b819e5042d4f490ce68c8b9b5f5962d1b5f2bbfe52fef192"
+    }
+  },
+  "independent_checks": {
+    "ledger_contract_pin_matches": true,
+    "ledger_observation_contract_path_and_sha_match": true,
+    "all_nine_ledger_source_pins_match_current_bytes": true,
+    "approved_contract_and_both_reviews_match_runner_pins": true,
+    "test_inventory": {
+      "accepted_legacy_python_cases": 167,
+      "accepted_g4_python_cases": 91,
+      "g5_python_cases": 93,
+      "g5_case_ids_unique": true,
+      "combined_python_cases": 351,
+      "b01_node_cases": 48,
+      "runner_compares_exact_junit_case_ids_and_zero_failures_errors_skips": true
+    },
+    "accepted_baseline": "The runner checks all captured accepted-G4 source hashes except the three authorized integration/documentation paths README.md, services/ifpmic_api/app.py, and services/ifpmic_api/settings.py. It also compares the protected existing AX/UI/Node and original uploaded/imported specification inventories before and after the run.",
+    "private_candidate_capture": "The runner captures all indexed candidate sources into a mode-0600 private ZIP before testing, records its hash and entry count, validates each entry against the captured source hash, and compares current source/library/original bytes again after all phases.",
+    "runtime_evidence": "The runner requires actual G3 and G4 runtime observations, exact G5 case markers, CLI run success, a SIGKILLed worker, and at least two successful reconcilers. For G5 it verifies unique private (pid,start_ticks) identities, private directory/log file types and modes, and actual stdout/stderr log byte counts and SHA-256 values; it omits process identities and raw output from the promoted report.",
+    "execution_split": "Runner uses fixed separate Python inventories for 167 legacy, 91 G4 and 93 G5 cases with 300-second phase and 30-second case limits, plus the 48-case B01 Node phase at 180 seconds. The execution decision documents why the split is required.",
+    "whitespace_normalization": "The ledger explicitly records the single trailing-LF removal after the 17-case diagnostic, pins the pre- and post-normalization SHA values, and states that no semantic/test change is claimed from that diagnostic. The frozen full 93-case gate is required on the current pinned test bytes."
+  },
+  "remaining_gate_conditions": [
+    "Run the frozen gate against these exact source and ledger bytes; the earlier focused 17-case result is diagnostic only.",
+    "Do not claim G5 acceptance unless all exact inventories and runtime/cleanup/source checks pass and independent final review accepts retained evidence.",
+    "This gate covers only the local G5 workspace prerequisite. It does not complete original AT-21 or B02, and does not establish physical power-loss or production storage guarantees."
+  ],
+  "review_limits": {
+    "read_only": true,
+    "tests_or_verifier_run_by_reviewer": false,
+    "services_or_database_called_by_reviewer": false,
+    "code_or_tests_modified": false
+  }
+}

@@ -17,6 +17,7 @@ from .errors import ApiError
 from .settings import Settings, SettingsError
 from .jobs import JobService
 from .request_contract import idempotency_key, list_query, read_create
+from .workspace import WorkspaceService
 
 
 def json_response(value, status=200):
@@ -154,6 +155,8 @@ def create_app(settings, *, db_factory=None, oidc_transport=None, bridge_runner=
     app.state.auth = auth
     app.state.bridge_runner = bridge_runner
     app.state.filesystem = filesystem
+    app.state.workspaces = WorkspaceService(settings, db_factory=db_factory,
+                                           filesystem=filesystem, fault_hook=fault_hook)
     jobs = JobService(settings, auth, db_factory=db_factory, bridge_runner=bridge_runner, fault_hook=fault_hook)
     app.state.jobs = jobs
 
