@@ -1,0 +1,45 @@
+{
+  "kind": "ifpmic.b03.h2.contract-acceptance.v1",
+  "decision": "approve_h2_authoring_only",
+  "scope": "Exact v2 contract and dual reviews permit main/TC authoring of H2 migration, authenticated outbox/run binding/activation and their tests; no H2 execution or acceptance.",
+  "contract": {
+    "path": "docs/ifpmic/evidence/b03/h2-implementation-contract.json",
+    "sha256": "f63173ac17ebebd34a15d5966d96b79dc1667a713c00b1b92868b137ba93ded3"
+  },
+  "reviews": {
+    "h2-contract-review.json": {
+      "path": "docs/ifpmic/evidence/b03/h2-contract-review.json",
+      "sha256": "3c0ae9f57a698566311accef2bca278fc5ac406f6400e71fb0f0c8bf84836745"
+    },
+    "h2-tc-contract-review.json": {
+      "path": "docs/ifpmic/evidence/b03/h2-tc-contract-review.json",
+      "sha256": "fcee8bd57df060a10e9b53aed73667dfe98e249ec2847d4815bcfb59bb885849"
+    }
+  },
+  "prior_rejection": {
+    "path": "docs/ifpmic/evidence/b03/attempts/h2-contract-review-v1.json",
+    "sha256": "529d26470eb22b05723ac8be9b951d2779bdd71851118511e44f39abacd8513a",
+    "resolved_finding": "H2-DEPLOYMENT-REGISTRY-UNDEFINED; immutable owner deployment registry and pre-job principal/config bootstrap added in v2."
+  },
+  "execution_prerequisites": [
+    "TC exact case-ID ledger with normal/exception/boundary/regression, concrete crash barriers and per-case/phase deadlines.",
+    "Prove accepted-start response loss with independent real Temporal observer plus transport/process barrier, distinct from post-response/pre-admission crash.",
+    "Independent literal deployment digest and effective SCRAM HBA no-trust-fallback oracle.",
+    "Reviewed runner and source-pinned independent pre-gate approval before migration/test/service execution."
+  ],
+  "source_pins_checked": 12,
+  "current_state": {
+    "H0": "verified",
+    "H1": "verified",
+    "H2": "contract_approved_authoring_not_started",
+    "test_or_service_execution_this_increment": false,
+    "original_acceptance": "all32_not_executed",
+    "goal": "active"
+  },
+  "responsibilities": {
+    "main": "H2 product/SQL/runner/integration",
+    "TC": "Independent test fixtures/cases/ledger",
+    "independent_reviewer": "Contract and candidate evidence review"
+  },
+  "boundary": "No device, real Agent/build/publisher/deployment or external submission authorized. Original17+2 and AX read-only server preserved."
+}

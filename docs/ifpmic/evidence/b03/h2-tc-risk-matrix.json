@@ -1,0 +1,204 @@
+{
+  "kind": "ifpmic.b03.h2.tc-risk-matrix.v1",
+  "status": "planning_only_h2_contract_pending",
+  "purpose": "Identify the independent H2 test oracles and evidence needed for PostgreSQL-backed command/outbox delivery and Temporal execution binding. This matrix is a risk inventory, not an implementation contract, test result, or approval.",
+  "inputs": {
+    "plan": {
+      "path": "docs/ifpmic/B03-WORKFLOW.md",
+      "sha256": "38fdd875bc76047ed1e3e46c850277fea1a3d1f825662a13b1c21154925f25ff"
+    },
+    "source_collection": {
+      "path": "docs/ifpmic/evidence/b03/source-collection.json",
+      "sha256": "ba88a0c2b1d4412ff1f8bec84e516fc62b7786662ea7c0715db670336f2a7675"
+    },
+    "original_specs": [
+      {"path": "docs/ifpmic/design-v1/specs/implementation-backlog.json", "sha256": "115e48568e0464b8e67ef17274dba97b3046a8de902e1cf426d9b70e1528e5d0"},
+      {"path": "docs/ifpmic/design-v1/specs/acceptance-cases.json", "sha256": "f7163553edc9e8e753965cb8748ab04aac8f68c1a453f567f62284a01b38b0d5"},
+      {"path": "docs/ifpmic/design-v1/specs/openapi.v1.json", "sha256": "2ed780cfa06349b18f5025937e050fd98a5cefa34b552eb836cfaccad416dd7a"},
+      {"path": "docs/ifpmic/design-v1/specs/workflow.v1.json", "sha256": "bab40a7abb3929896add1ef2cd074893dd2a7de14d200a5d6cea4b7a77eb0e89"},
+      {"path": "docs/ifpmic/design-v1/specs/state-contract.json", "sha256": "0248e130017043539319c56af854f5388a95d33e7e687902a3438fdff414244a"},
+      {"path": "docs/ifpmic/design-v1/specs/agent-contract.json", "sha256": "ca6d4bea7abf0fffe7354c482af0d521c3a2e367217a69923a4bfe43fa27ab64"},
+      {"path": "docs/ifpmic/design-v1/specs/data-model.json", "sha256": "00c84f8a39b1b8959daa8d94b1d67e860d83ad9bdb809065a5cd3b18af07071b"}
+    ],
+    "current_code_and_tests": [
+      {"path": "services/ifpmic_api/migrations/001_initial.sql", "sha256": "cf0437a5f32e1589e4ea821afbb2ef2480d780a276667880aa9a08a0f4c77f12"},
+      {"path": "services/ifpmic_api/migrations/002_auth_retention.sql", "sha256": "95c01f06eb586e0c1067f04672edfed8e0a11215752ad859ac9e4744da5a504e"},
+      {"path": "services/ifpmic_api/jobs.py", "sha256": "bc682d6ea83ef6545b3105b2a9e8e4df75273445ebca1f8193219010bcea79b4"},
+      {"path": "services/ifpmic_api/workspace.py", "sha256": "ad3e29f27ee20bc82eff9afcf51d9bb5ef6374d50b69bcf8fa508d81ecb60f67"},
+      {"path": "tests/ifpmic_api/test_jobs.py", "sha256": "dc96141956bb93ff1d3b06214bf4d176265cea654c3f2235f4e281b071287a28"},
+      {"path": "tests/ifpmic_api/test_workspace.py", "sha256": "0254b67ac0a1da79dad2bf81110ca4d5519bc1dfe0e9c1210e807016b2d7d634"},
+      {"path": "tests/ifpmic_api/test_migrations.py", "sha256": "1f4f7ea3576875222a639447d7ef39177d811883691f807347146fab407e2c12"},
+      {"path": "tests/ifpmic_api/conftest.py", "sha256": "8bb375918a493ab7f18291f8cc2f0a1c13eaaa28170c4a36cdc5f40b0b0b64e1"},
+      {"path": "tests/ifpmic_api/jobs_fixture.py", "sha256": "aa9f4c7baada8617b9b1271fa0a36d6e7c00fae7bfbb6ff24fb2983ff069130a"},
+      {"path": "tests/ifpmic_api/workspace_fixture.py", "sha256": "5987916779c74a91b4dc44f16b03f27024762b4525ba6f8e9f14a20809e50ff8"}
+    ]
+  },
+  "scope": {
+    "requirements": ["B03", "REQ-05", "REQ-14", "REQ-02", "REQ-13"],
+    "acceptance_cases": ["AT-05", "AT-16", "AT-29"],
+    "direct_slice": "H2 database roles, durable command/outbox protocol, Temporal start binding, acknowledgement, projection fencing and recovery; H3/H4 behavior is tested only where required to establish a safe projection boundary.",
+    "environments": ["real isolated PostgreSQL", "real local persistent Temporal server", "separately launched API/dispatcher/projector/worker processes where specified"],
+    "not_claimed": ["B03 acceptance", "original AT-05/16/29 execution", "B05 adapters", "corporate SSO or production topology", "physical power-loss durability", "Paperclip transition authority"]
+  },
+  "risk_groups": [
+    {
+      "id": "H2-ROLE-AUTH",
+      "class": ["normal", "exception", "boundary", "regression"],
+      "purpose": "Prove that each H2 process has only its required database authority and that its login identity is actually authenticated rather than inferred from a caller-controlled session field.",
+      "target": ["new H2 migration and grants", "runtime API", "dispatcher", "projector", "migration owner", "Temporal worker activity connection"],
+      "method": "Use real PostgreSQL connections under distinct runtime, dispatcher, projector/activity, operator and migration-owner LOGIN roles as fixed by the H2 contract. Verify SCRAM/password authentication from independent processes: each intended credential succeeds; missing and wrong passwords and credentials for another role fail; SET ROLE and role membership do not widen authority. Keep bootstrap/migration-owner access isolated. Exercise both allowed and denied SQL operations, including attempts to change immutable snapshots, job ownership, command identity/payload, outbox state, applied receipt, run binding and projection fields. A separate Temporal-worker DB role is not assumed: one candidate is for Temporal workflow activities to use the narrowly scoped projector credential, but the final authenticated process-to-role mapping must be contractually explicit.",
+      "owner": "TC authors independent privilege matrix and credential/process harness; main owns migration and process code; independent reviewer audits role grants and proof.",
+      "pass_criteria": "After H2 contract approval, each role can perform only its enumerated operations; unauthorized operations fail at PostgreSQL; live service connections demonstrate the expected authenticated current_user/session_user. SCRAM evidence is independent of the existing G1 trust-local fixture.",
+      "expected_result": "Legitimate role operations succeed, denied DML/DDL/role escalation fails, wrong or absent credentials cannot authenticate, and no API/Temporal payload or public evidence contains credentials.",
+      "evidence": ["migration/source hashes", "role attributes and membership inventory", "private per-role connection/auth outcomes", "SQL allow/deny results", "sanitized process lifecycle and log canary scan"],
+      "failure_recovery": "Preserve database cluster, exact SQL/migration bytes, private credentials and process logs with restricted permissions; classify SQL grant error separately from authentication bypass. Rebuild a fresh isolated cluster after any migration candidate change and rerun H2 plus G1/G4/G5 regression.",
+      "unresolved_oracles": ["Exact role names and operation matrix must be frozen in H2 contract; dispatcher, API runtime, and projector/activity capabilities must be distinguished.", "Existing G1 uses trust-local bootstrap/runtime setup; it cannot establish SCRAM authentication for any H2 process. Exact narrow bootstrap exception and whether any existing G1 suite must be rerun under SCRAM remain pending.", "A distinct database role for the Temporal worker and projector is not a required assumption. The candidate model is a narrowly scoped projector credential used by Temporal activities, but whether/how that credential is presented and authenticated by the activity process must be fixed in H2 contract.", "Exact worker/activity identity binding (Temporal activity info, process authentication, and run_id fence) and cross-check are pending; a payload-supplied worker name is not sufficient evidence."]
+    },
+    {
+      "id": "H2-MIGRATION-COMPAT",
+      "class": ["normal", "exception", "boundary", "regression"],
+      "purpose": "Add execution/outbox authority without changing accepted B01/B02 migration bytes or invalidating existing jobs, receipts, workspaces or profile snapshots.",
+      "target": ["new migration after 001_initial.sql and 002_auth_retention.sql", "create-command linkage", "execution binding", "outbox/attempt/projection schema", "test_migrations.py"],
+      "method": "Migrate both a fresh database and a database populated by current G4/G5 fixtures. Assert the original create command can be backfilled into the immutable create reference; test duplicate/missing/wrong-route links, foreign keys, uniqueness, nullability, state checks, grants, rerun, drift, rollback and partial migration failure. Exercise allowed human-command linkage without letting it alter the create reference. Use independent SQL expectations derived from the approved contract, not schema introspection as the oracle.",
+      "owner": "Main owns SQL/migration; TC owns migration and compatibility tests; reviewer checks immutable original migration hashes and SQL authority.",
+      "pass_criteria": "001/002 bytes remain exact; migration is deterministic and rerunnable; existing data remains readable; every new constraint/grant matches the approved role matrix; invalid links/duplicate create rows fail atomically.",
+      "expected_result": "Fresh and upgraded schemas expose the approved execution records, old G4/G5 rows and receipts remain unchanged, and malformed or unauthorized linkage cannot be committed.",
+      "evidence": ["before/after migration hashes", "fresh and upgraded PostgreSQL schemas", "seeded old-row before/after fingerprints", "negative FK/unique/grant probes", "migration ledger and rollback/retry records"],
+      "failure_recovery": "Retain failed cluster and migration bytes, never edit 001/002 to make the upgrade pass. Repair only the new migration, then rerun fresh and populated upgrade paths and all G1/G4/G5 regression suites.",
+      "unresolved_oracles": ["Exact new tables, columns, indexes, constraints, ownership and migration version are pending H2 contract.", "Backfill treatment for malformed legacy rows and exact failure code/transaction boundary are pending.", "Exact rollback expectations for partially applied PostgreSQL DDL and migration-source drift classification are pending."]
+    },
+    {
+      "id": "H2-ACCEPT-RELINK",
+      "class": ["normal", "exception", "boundary", "regression"],
+      "purpose": "Verify accepted command and outbox creation remain one atomic group and only the immutable create command is joined as the job's origin.",
+      "target": ["JobService.create", "commands", "commands_outbox", "jobs.create_command_id", "G4 create/list/detail/idempotency tests"],
+      "method": "Use existing real-PG G4 harness, then observe the approved accepted→dispatched→applied lifecycle. Inject failures around each newly specified insert/link boundary; race same idempotency key and distinct sessions; query list/detail after human commands exist. Probe duplicate create, relink to a human command, payload reinterpretation and foreign-project access.",
+      "owner": "TC authors HTTP/PG tests and literal expected rows; main owns API and migration; reviewer verifies OpenAPI DTO compatibility.",
+      "pass_criteria": "The original create receipt is stable; command, job, outbox and workspace-origin invariants are atomic; new commands never duplicate jobs or change create provenance; 202 acceptance is not represented as Temporal dispatch/application.",
+      "expected_result": "Successful create retains its G4 observable DTO and exact receipt; injected failures leave no partial group; list/detail still return each job once after later command rows are present.",
+      "evidence": ["HTTP DTO and status", "database group before/after each fault", "idempotency race outcomes", "list/detail query results and create-link constraint probes"],
+      "failure_recovery": "Preserve request ids, private DB state, and fault-boundary logs. Recreate isolated DB per migration candidate; rerun G4 create/idempotency/cross-project races and G5 workspace gating.",
+      "unresolved_oracles": ["Exact accepted command/outbox states, receipt codes and HTTP replay behavior for H2-created commands need the reviewed contract.", "Exact atomic transaction hook list and create-command relink database representation are pending.", "Whether a create accepted while workspace is not READY remains accepted/pending or receives a specified rejection must be fixed explicitly; READY must never imply execution completion."]
+    },
+    {
+      "id": "H2-OUTBOX-LEASE-FENCE",
+      "class": ["normal", "exception", "boundary", "concurrency"],
+      "purpose": "Show one durable delivery owner at a time and ensure expired/stale dispatcher work cannot acknowledge or overwrite a newer attempt.",
+      "target": ["outbox claim SQL", "dispatcher workers", "claim generation/token/expiry", "attempt ledger", "ack/reject transaction"],
+      "method": "Run at least two independent dispatcher processes against real PostgreSQL. Pause one after claim commit; verify another cannot acquire a live claim; expire/reclaim with the approved database clock; let old and new workers race ack/reject and retry. Include equality-at-expiry, just-before/after expiry, generation boundary/overflow, crash before claim commit and after claim commit.",
+      "owner": "TC owns process-level barriers and literal row/outcome oracle; main owns dispatcher/claim implementation; reviewer checks fencing and database lock ordering.",
+      "pass_criteria": "Exactly one current lease may mutate delivery state; stale token/generation outcomes change no row, command receipt, job projection or Temporal binding. Claims are committed before external RPC and network waits do not hold PG row locks.",
+      "expected_result": "At-least-once delivery attempts may occur, but only a current claim can record the definitive result and duplicate attempts resolve against the same deterministic workflow identity.",
+      "evidence": ["distinct process identities", "claim/attempt rows at each barrier", "DB lock and state snapshots", "stale ack/reject unchanged projections", "bounded worker shutdown/reap logs"],
+      "failure_recovery": "Keep exact DB snapshot and both process logs; stop only the owned process handles; classify lock timeout versus stale-fence defect. Re-run claim, crash and concurrency cases on a clean cluster.",
+      "unresolved_oracles": ["Lease duration, retry schedule, attempt numbering, claim eligibility and stale outcome codes are not yet an H2 contract.", "Whether dispatch rejection is retryable, terminal or operator-visible depends on the approved error taxonomy.", "Exact fencing columns and the source of authoritative database time are pending."]
+    },
+    {
+      "id": "H2-START-CRASH-REPLAY",
+      "class": ["normal", "exception", "boundary", "crash/restart"],
+      "purpose": "Prove AT-16 delivery across each PostgreSQL/Temporal durability cut: accepted command is not lost and the same command does not create a second effective workflow execution.",
+      "target": ["API transaction", "outbox dispatcher", "Temporal start call", "ack transaction", "persistent Temporal history", "run binding"],
+      "method": "With real PG and persistent local Temporal, kill/restart API and dispatcher at: before API commit; after command/outbox commit before claim; after claim commit before RPC; while start response is delayed; after Temporal accepted start but before local ack; after ack before projection; after projection commit before activity response. Restart fresh process instances and replay the same immutable command_id. Assert exact Temporal workflow ID and history, PostgreSQL attempt/ack rows and business transition count after each recovery.",
+      "owner": "TC owns fault barriers, actual process kill/restart and independent receipt/history oracle; main owns API/dispatcher/workflow/activity; reviewer audits crash boundary coverage.",
+      "pass_criteria": "A committed accepted command remains recoverable; an uncommitted command has no durable partial group; start-response uncertainty is reconciled against exact workflow identity; there is one effective business execution and no job transition based solely on 202 or outbox dispatched.",
+      "expected_result": "Precommit failures leave no accepted group; postcommit failures are redelivered/reconciled by the same command/workflow identity; duplicate Temporal start attempts do not duplicate effective projection; projected receipt is durable and replayable.",
+      "evidence": ["process lifecycle identities and kill points", "PG snapshots and command/outbox state", "Temporal workflow ID/run ID/history before and after restart", "effective transition/projection count", "private logs/canary scan and source bundle"],
+      "failure_recovery": "Preserve both PG and Temporal persistent stores before cleanup, all worker/dispatcher logs, and exact fault index. Do not reset Temporal history to hide duplicates. Re-run the failed cut point and then the full H2 crash matrix; retain G4/G5 regression evidence.",
+      "unresolved_oracles": ["Exact ordering and durable meaning of accepted/dispatched/applied, including which transitions write each field, require H2 contract.", "Exact deterministic Temporal ID/type/queue/build binding fields and uniqueness constraints require contract.", "Fault injection mechanism must interrupt real separate processes at the durable cut; in-process exceptions alone are insufficient acceptance evidence."]
+    },
+    {
+      "id": "H2-UNCERTAIN-START-RETENTION",
+      "class": ["exception", "boundary", "reconciliation"],
+      "purpose": "Prevent blind restart when Temporal start outcome is unknown and prevent recreating a workflow when prior history is absent or retention is unverified.",
+      "target": ["dispatcher start timeout/reject mapping", "exact-ID Temporal visibility/history query", "immutable execution binding", "RECONCILING/operator outcome"],
+      "method": "Use a real Temporal server with controlled response loss after acceptance, unavailable server before acceptance, delayed visibility, exact-ID NotFound inside the approved window, expired window, unverified namespace retention and a known run whose history is unavailable. Verify the bounded retry policy uses the same workflow ID and command binding, and assert no fallback UUID/ID reuse. Include restart during every reconciliation decision.",
+      "owner": "TC owns persistent-server behavior and literal bounded window cases; main owns reconciliation state machine; reviewer validates no unsafe re-create path.",
+      "pass_criteria": "Only a contract-authorized, finite reconciliation path may retry the same start; unknown/expired/unverified cases remain isolated for operator action. A known prior run with missing history is never recreated.",
+      "expected_result": "Safe deterministic observation can resolve an accepted start; all ambiguous or unsafe cases stay RECONCILING without second semantic execution or changed binding.",
+      "evidence": ["Temporal retention configuration and query results", "exact ID/run/binding rows", "retry count/window and state snapshots", "assertion that alternate ID and reuse were not attempted"],
+      "failure_recovery": "Retain Temporal DB/history and PG binding. Do not erase a workflow to restore green status. Re-run the exact reconciliation branch on a new isolated namespace/database after correcting implementation.",
+      "unresolved_oracles": ["The plan bounds reconciliation to at most one hour and below verified namespace retention, but exact duration, polling/backoff, NotFound visibility grace and state/error codes remain pending.", "Exact signal for retention verification and known-history-missing detection need H2 contract.", "Physical Temporal history deletion/retention-expiry simulation may not be safely reproducible locally; contract must specify an explicit deterministic test seam or record this limit without claiming coverage."]
+    },
+    {
+      "id": "H2-ACK-PROJECTION-IDEMPOTENCY",
+      "class": ["normal", "exception", "boundary", "replay"],
+      "purpose": "Ensure dispatched, applied, workflow progress and PostgreSQL projection are distinct facts, and that duplicate/stale activity results cannot advance current business state.",
+      "target": ["Temporal workflow main loop", "projection activity", "transition sequence/revision/digest", "command receipt", "step/cycle/attempt projections"],
+      "method": "Drive the synthetic pinned workflow through accepted start and an approved transition. Inject activity retries after PG commit-before-response, duplicate same key/same digest, same key/different digest, old revision, old transition sequence, old run_id, stale cycle/attempt, out-of-order event and crash between projection and next workflow action. Read both Temporal history and PG rows after restart.",
+      "owner": "TC owns independent transition oracle/history assertions; main owns Temporal workflow/activity and PG projector; reviewer audits single-writer/fence.",
+      "pass_criteria": "Same identity and same payload returns the original immutable receipt; conflicting digest is quarantined; stale execution/revision/sequence has no business effect; workflow does not advance to the next business action before projection outcome is durable.",
+      "expected_result": "Each accepted business transition has one effective projection and one stable receipt; Temporal activity replays are idempotent; `dispatched` remains nonterminal until projection records applied/rejected.",
+      "evidence": ["independent literal transition/revision sequence", "Temporal event history", "PG receipt and projection before/after", "duplicate/conflict/stale result outcomes", "restart replay results"],
+      "failure_recovery": "Preserve history and DB snapshot; never manually edit projection to match workflow. Correct the idempotency/fencing boundary, then rerun the same transition/replay matrix plus G4 command and G5 workspace tests.",
+      "unresolved_oracles": ["Exact receipt schema, transition sequence allocation, digest inputs, terminal codes and transaction lock order are pending H2/H3 contract.", "Exact activity retry behavior and whether projection conflict becomes workflow failure or RECONCILING must be specified.", "The exact division between Temporal authoritative state and PostgreSQL query projection needs a reviewed field-by-field mapping."]
+    },
+    {
+      "id": "H2-CURRENT-AUTH-RECEIPT-REPLAY",
+      "class": ["normal", "exception", "regression", "concurrency"],
+      "purpose": "Keep user-facing API authorization distinct from internal projection idempotency: external command/job reads require current authentication and access, while an authenticated and statically scoped projector may replay an already committed exact transition receipt without reevaluating mutable human authority.",
+      "target": ["API idempotency lookup", "membership/eligibility/delegation guards", "command acceptance and application", "job/notification reads"],
+      "method": "Run two explicitly separate paths. (1) External API: accept a command, then revoke/expire the session or membership and repeat the HTTP request/read; assert the current 401/403 denial and no receipt disclosure, preserving the existing G4 ordering in jobs.py where current authentication, membership and ownership checks precede receipt return. A still-authorized exact retry must return its original receipt; changed body/key and stale/foreign scope must not mutate state. (2) Internal projection: under an authenticated machine/activity principal and validated static project/job/run scope, inject a retry of the same already-committed (job_id, transition_sequence, digest) and assert the immutable stored receipt is returned before rechecking mutable human membership/eligibility; on the first apply, assert current human authority is checked and revocation prevents mutation. Race revocation against first apply using the approved lock order.",
+      "owner": "TC owns real-PG/API independent session tests; main owns auth/command application; reviewer checks authority-versus-replay ordering.",
+      "pass_criteria": "External API behavior preserves current G4 auth-before-receipt checks: revoked/expired/unauthorized clients cannot retrieve a receipt. For internal projection only, an authenticated machine principal with valid static scope can replay an exact already-committed receipt without changing it; the first application requires current human authority; conflicting digest or stale run/revision has no business effect.",
+      "expected_result": "The two receipt paths remain distinct: authorized exact API retries are stable, unauthorized external retries are denied, and internal activity retries are idempotent only after machine identity and static scope are validated.",
+      "evidence": ["G4 before/after authority rows", "HTTP response DTO/status", "command/task/projection state", "two-session race outcomes", "exact replay-key/body comparison"],
+      "failure_recovery": "Retain private auth/session/DB evidence; use fresh isolated users/projects for each rerun. Re-run G4 auth and job regressions after any authority-lock change.",
+      "unresolved_oracles": ["Exact H2/H4 command-specific external API status codes and immutable receipt identity are pending contract; current G4 401/403 denial after session/membership revocation must remain authoritative and must not disclose the old receipt.", "Exact internal projection receipt lookup key/digest, static project/job/run scope, machine-principal authentication, and whether a previously accepted command can be applied after human authority changes must be fixed. Receipt-first replay is allowed only within this internal scoped path; do not transfer that ordering to user-facing API handlers.", "Project-guard/job/task/outbox/execution-binding lock order and concurrency result are pending H2/H4 contract."]
+    },
+    {
+      "id": "H2-HUMAN-PENDING-NONEXECUTION",
+      "class": ["normal", "exception", "boundary", "regression"],
+      "purpose": "Guard only the H2 activation boundary around pending human commands; full P07/P21 human workflow, notifications and route acceptance belong to later H3/H4 contracts and tests.",
+      "target": ["H2 command/outbox acceptance for a human route", "workflow activation/inbox boundary", "G5 workspace READY state", "step/command/job projections"],
+      "method": "In H2, verify that a human-command request can only be accepted or rejected according to the approved command contract, that its inbox/outbox linkage is durable and scoped, and that agent completion or workspace READY alone cannot consume a human task or mark the workflow applied. Do not run or claim the full P07/P21 route scenario at this stage. Reserve task creation, durable human wait/restart, supported outcome mapping and notifications for H3/H4 tests.",
+      "owner": "TC owns H2 boundary tests and later separately reviewed H3/H4 human-flow tests; main owns command/workflow integration; reviewer checks the phase boundary.",
+      "pass_criteria": "H2 activation does not turn accepted human commands into applied state and does not advance a human-gated workflow without the later validated human transition. Workspace READY and agent `completed` do not imply step success.",
+      "expected_result": "H2 proves only the durable/non-advancing command boundary; full AT-05 and P07/P21 outcome routing remain deferred and unaccepted until H3/H4.",
+      "evidence": ["API DTOs and authenticated actor", "task/notification DB records", "Temporal wait/signal history", "before/after job revision and transition receipt", "workspace READY comparison"],
+      "failure_recovery": "Preserve human task, command receipt and history. Re-run G4 auth/job tests, G5 workspace gate and H2 delivery cases after fixing task/application ordering.",
+      "unresolved_oracles": ["P07/P21 task creation, outcome mapping, task expiry, notification dedupe, signals and error/status mapping are deferred to reviewed H3/H4 contracts; none is an H2 acceptance oracle.", "AT-05 full scenario is deferred, not established by an H2 accepted-command row. Artifact references remain synthetic until B04 upload.", "Whether H2 persists a human command without creating the task, and the exact task/notification insertion transaction and retry identity, must be decided in H2/H3/H4 contracts."]
+    },
+    {
+      "id": "H2-VERSION-AND-AT29",
+      "class": ["normal", "exception", "boundary", "version compatibility"],
+      "purpose": "Check H2 start-binding rejects incompatible/missing build identity and records immutable workflow-definition metadata; full v1 wait/v2 deployment/resume acceptance is deferred to H5.",
+      "target": ["execution binding fields", "workflow definition/build/task-queue identity", "start request duplicate/collision handling"],
+      "method": "For H2, start only the approved synthetic current-version workflow and probe missing/unknown/mismatched build, snapshot and command bindings, plus attempted ID reuse/fallback. Assert fail-closed behavior and immutable binding. Do not claim H2 has run a v1 human-wait/v2 rollout scenario. H5 will later run real pinned v1 history across a separate v2 worker deployment and compatible v1 resume.",
+      "owner": "TC owns H2 immutable-binding probes and later separate H5 two-build lifecycle tests; main owns registration/worker deployment; reviewer checks phase scope and binding immutability.",
+      "pass_criteria": "H2 rejects unknown or mismatched execution identity and prevents alternate ID/reuse. Full old-history compatibility and resumption are not H2 pass criteria.",
+      "expected_result": "H2 produces only binding-level evidence; AT-29 remains deferred to H5 and is not inferred from current-version replay.",
+      "evidence": ["v1/v2 source, environment, task-queue and bundle hashes", "persistent Temporal history before/after restart", "run binding and job workflow_version", "worker process identity and poll/route outcomes"],
+      "failure_recovery": "Keep both builds and retained history. Do not reset/recreate old workflows. Restore the compatible worker only for diagnosis, then fix version pinning and repeat H2 start-binding plus AT-29 cases.",
+      "unresolved_oracles": ["Exact Temporal worker versioning API, build ID/task queue format, bundle hash contents, and retention/retirement policy are pending approved H2 contract.", "The plan prohibits continue-as-new/workflow retry replacing a pinned run; any future exception requires a separately reviewed handoff contract.", "Full v1 human-wait/v2 deployment/v1 resume and original AT-29 acceptance are explicitly deferred to H5; no H2 binding probe substitutes for that scenario."]
+    },
+    {
+      "id": "H2-G4-G5-REGRESSION-PRIVACY",
+      "class": ["regression", "security", "privacy"],
+      "purpose": "Ensure B03 does not regress the accepted G4 API/auth/receipt rules or G5 READY workspace isolation, and does not expose secrets in Temporal payload/history or evidence.",
+      "target": ["existing 001/002 schemas and all G4/G5 tests", "API auth/session/CSRF/cursors", "workspace intent/filesystem", "Temporal history, task payloads and logs"],
+      "method": "Run pinned G1/G2/G3/G4/G5 suites on the H2 candidate. Assert workspace READY remains separate from command dispatch/application; accepted G4 create receipt and cross-project protections remain unchanged. Seed private canary values in synthetic passwords, DSNs, OAuth/session values, comments and profile text; scan service stdout/stderr, Temporal history, DTOs, audit records and public evidence for raw values.",
+      "owner": "TC owns immutable regression inventory and canary assertions; main owns integrated runner; independent reviewer audits evidence minimization.",
+      "pass_criteria": "All required prior suites pass with exact inventory and zero skip; original migrations remain byte-identical; private canaries are absent from public/Temporal workflow payloads and logs; no server-side behavior claims exceed local tested scope.",
+      "expected_result": "Existing G4/G5 observable behavior and protection boundaries remain intact while new execution fields are separately validated; only sanitized identifiers/counts/hashes are published.",
+      "evidence": ["fresh source/output fingerprints", "exact Python/Node JUnit inventories", "G4/G5 DB and filesystem observations", "private log hashes/permissions and canary-scan summary", "immutable 001/002 hashes"],
+      "failure_recovery": "Preserve failing candidate bundle, raw private logs and DB/workspace state; diagnose the changed boundary, repair, then rerun affected G4/G5 groups and the full frozen regression gate.",
+      "unresolved_oracles": ["Exact required final suite inventory and source/output pin set must be frozen in H2 runner contract.", "No current test proves any Temporal runtime or activity because B03 is not implemented in current local service.", "Original AT-05/16/29 and production/SSO/environment acceptance remain unexecuted until their full endpoint scenario and separate deployment environment are run."]
+    }
+  ],
+  "contract_gaps_before_H2_authoring": [
+    "Freeze exact H2 migration tables/columns/constraints/backfill and byte-preservation checks for migrations 001/002.",
+    "Freeze distinct SCRAM-authenticated LOGIN roles, credential provisioning, DB operation matrix, process identity proof, SET ROLE/membership denial and narrow bootstrap exception; do not reuse G1 trust-local authentication as evidence.",
+    "Freeze immutable command/outbox/attempt/execution-binding schemas, status transitions, claim lease/fencing, retry/backoff, poison/error mapping and HTTP receipt semantics.",
+    "Freeze deterministic Temporal workflow ID/type/task queue/build/snapshot/bundle binding fields, no-reuse behavior, exact unknown-start reconciliation duration/poll policy and retention verification oracle.",
+    "Freeze applied projection/transition identity, digest inputs, lock order, receipt transaction and activity retry/conflict semantics.",
+    "Provide process-level deterministic crash barriers for every PostgreSQL commit / Temporal RPC / acknowledgement / projection cut point and evidence layout with owned-process cleanup.",
+    "Specify whether physical history-missing or retention-expiry cases use a supported local test seam; do not simulate them by mutating unrelated production state or claim untested coverage."
+  ],
+  "review_state": {
+    "plan_approval": "not_requested_in_this_record",
+    "h2_contract": "not_yet_available",
+    "tc_approval": "not_approved",
+    "implementation_or_execution": "not_authorized_by_this_matrix",
+    "acceptance": "not_executed"
+  }
+}

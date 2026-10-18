@@ -1,0 +1,53 @@
+{
+  "kind": "ifpmic.b03.h2.contract-review.v1",
+  "verdict": "reject_authoring",
+  "review_scope": "Independent read-only detailed contract review. This verdict does not approve product/test implementation, service execution, database migration, or acceptance.",
+  "reviewed_candidate": {
+    "path": "docs/ifpmic/evidence/b03/h2-implementation-contract.json",
+    "sha256": "977bddc5f12aaaf46322ce537759ef4c0cc4c415494e31a0a40503eba753937f",
+    "parent_commit": "4fc25fb0c488ddb22ff22127fe3b18946e862a91"
+  },
+  "verified_source_pins": {
+    "docs/ifpmic/B03-WORKFLOW.md": "38fdd875bc76047ed1e3e46c850277fea1a3d1f825662a13b1c21154925f25ff",
+    "docs/ifpmic/evidence/b03/h1-final-review.json": "1ddd9e748961eb1b859ca19838cc2b80046e70e447bf60c1ae39c3ade900e762",
+    "docs/ifpmic/evidence/b03/h2-source-collection.json": "62213046bceb9eb5f528843f1b39443f88f9eeff6ddf54b7171a12f8b438c9f3",
+    "docs/ifpmic/evidence/b03/h2-tc-risk-matrix.json": "cef098ff86faa860881e85da06b9b991ccf5715b7113c1fdb133b37891d1c834",
+    "docs/ifpmic/evidence/b03/h2-security-advice.json": "37215e0b37236149a133722323a28c4c155b649021701e4fa6e8bc9a5b3683e4",
+    "services/ifpmic_api/migrate.py": "3f658907f13f6eab042a7b15f2958e98c65334e995686da434640d100341818d",
+    "services/ifpmic_api/jobs.py": "bc682d6ea83ef6545b3105b2a9e8e4df75273445ebca1f8193219010bcea79b4",
+    "services/ifpmic_api/migrations/001_initial.sql": "cf0437a5f32e1589e4ea821afbb2ef2480d780a276667880aa9a08a0f4c77f12",
+    "services/ifpmic_api/migrations/002_auth_retention.sql": "95c01f06eb586e0c1067f04672edfed8e0a11215752ad859ac9e4744da5a504e",
+    "docs/ifpmic/design-v1/specs/openapi.v1.json": "2ed780cfa06349b18f5025937e050fd98a5cefa34b552eb836cfaccad416dd7a",
+    "docs/ifpmic/design-v1/specs/state-contract.json": "0248e130017043539319c56af854f5388a95d33e7e687902a3438fdff414244a",
+    "docs/ifpmic/source-manifest.json": "8afba9c1fc16ef3a6565f45576792cad51a1aaab59857d3a28666c71ec43007c"
+  },
+  "checks": {
+    "source_pins": "All source_pins in the candidate were recomputed from current local bytes and matched exactly. The pinned H2 source collection transitively pins original B03 backlog, requirements, acceptance cases (including AT-05/16/29 and REQ-05/14), workflow/state/data-model/OpenAPI/agent contracts and original-source manifest.",
+    "original_scope": "The candidate keeps AT-16 durable delivery in H2, scopes activation as a prerequisite rather than complete workflow execution, preserves AT-05 human work and AT-29 v1/v2 wait compatibility for later H3/H4/H5, and expressly keeps all original AT unexecuted. It preserves Paperclip's supervisory role, Temporal as the sole business-transition authority, AX server/ GET-only, and the original 17 contracts plus two uploads.",
+    "schema_and_api": "It directly addresses the present one-command-per-job limitation, create_command_id deferred route-constrained FK/backfill, create-only read joins, multi-command delivery rows, separate dispatcher/projector least privilege, and preserves external G4 current-auth receipt behavior distinct from internal projection receipt-first replay.",
+    "security_and_ordering": "The stated SCRAM login principals, session_user OID+name checks, owner registration, fixed SECURITY DEFINER search path/ACLs, sorted principal FOR SHARE fencing, project guard → membership NOWAIT → job → binding → task → outbox order, no network under DB locks, and static-run-fenced receipt replay align with the reviewed security advice. The explicit trust boundary does not claim SQL attests to Temporal RPC or arbitrary running code.",
+    "recovery_and_phase_boundaries": "The contract specifies finite same-ID unknown-start handling below verified retention, never reuses or replaces an admitted run, and separates H2 activation from H3 business transitions/H4 human APIs/H5 version-rollout acceptance/H6 cumulative regression. Historical 001/002 migration expectations and all351 Python regression IDs are explicitly retained while a current 003-chain gate is added."
+  },
+  "blocking_findings": [
+    {
+      "id": "H2-DEPLOYMENT-REGISTRY-UNDEFINED",
+      "severity": "blocking",
+      "contract_locations": [
+        "docs/ifpmic/evidence/b03/h2-implementation-contract.json#/database_changes/new_tables/execution_role_config",
+        "docs/ifpmic/evidence/b03/h2-implementation-contract.json#/database_changes/new_tables/engine_builds",
+        "docs/ifpmic/evidence/b03/h2-implementation-contract.json#/database_changes/new_tables/worker_principals",
+        "docs/ifpmic/evidence/b03/h2-implementation-contract.json#/sql_surface/read_dispatch_config() -> jsonb",
+        "docs/ifpmic/evidence/b03/h2-implementation-contract.json#/database_changes/new_tables/execution_bindings"
+      ],
+      "evidence": "The argument-free read_dispatch_config() must resolve the caller's own approved deployment, namespace and server_config_sha256 before a new job has any execution_binding. execution_role_config specifies only four role OID/name pairs; engine_builds lists build hashes/type/queue but no explicit deployment/server configuration; worker_principals mentions deployment_id only indirectly in a uniqueness statement and does not define the caller-to-deployment lookup fields. The only stated server_config_sha256 storage is per-job execution_bindings, which is absent during dispatcher bootstrap/new-job selection. Consequently the contract does not identify the immutable owner-approved source of deployment identity/config or how a logged-in dispatcher is resolved to it before reserving a binding. This leaves the no-cross-endpoint/deployment guarantee and read_dispatch_config behavior underspecified at the security boundary.",
+      "required_resolution": "Add an immutable owner-managed deployment registry (or define exact equivalent fields in a named existing table) with deployment_id, namespace and server_config_sha256 plus a uniqueness/immutability policy. Define exact FK associations from dispatcher principal and registered build/projector principal to that deployment, and specify how read_dispatch_config derives exactly one deployment from session_user OID+name and how reserve_execution copies/compares the registered deployment/config values into the binding. Preserve endpoint credentials outside the registry/history/public evidence. Re-pin and review the revised contract at a new SHA before authoring."
+    }
+  ],
+  "decision": {
+    "authoring_allowed": false,
+    "required_next_step": "Resolve H2-DEPLOYMENT-REGISTRY-UNDEFINED in a revised exact-SHA contract and obtain independent plus TC review of that same SHA.",
+    "execution": "not_authorized",
+    "original_acceptance": "AT-05, AT-16, AT-29 and all other original AT remain not_executed."
+  },
+  "method_limits": "Reviewed local contract/source bytes only. No tests, services, database, dependency changes or network activity were performed."
+}

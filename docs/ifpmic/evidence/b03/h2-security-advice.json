@@ -1,0 +1,199 @@
+{
+  "kind": "ifpmic.b03.h2.security-advice.v1",
+  "status": "architecture_advice_not_approved_contract_or_execution",
+  "scope": "Narrow independent senior review of dispatcher/projector authentication, run fencing and migration compatibility. No product/test edit, service execution, test run, provisioning or acceptance.",
+  "source_pins": {
+    "docs/ifpmic/evidence/b03/h2-source-collection.json": "62213046bceb9eb5f528843f1b39443f88f9eeff6ddf54b7171a12f8b438c9f3",
+    "docs/ifpmic/B03-WORKFLOW.md": "38fdd875bc76047ed1e3e46c850277fea1a3d1f825662a13b1c21154925f25ff",
+    "docs/ifpmic/evidence/b03/protocol-advice.json": "ab6221cf292b85b857aae16dc9cb5e60d6570d098bbcf494b6e0176ec9ade2da",
+    "services/ifpmic_api/migrate.py": "3f658907f13f6eab042a7b15f2958e98c65334e995686da434640d100341818d",
+    "services/ifpmic_api/migrations/001_initial.sql": "cf0437a5f32e1589e4ea821afbb2ef2480d780a276667880aa9a08a0f4c77f12",
+    "services/ifpmic_api/migrations/002_auth_retention.sql": "95c01f06eb586e0c1067f04672edfed8e0a11215752ad859ac9e4744da5a504e",
+    "tests/ifpmic_api/conftest.py": "8bb375918a493ab7f18291f8cc2f0a1c13eaaa28170c4a36cdc5f40b0b0b64e1",
+    "tests/ifpmic_api/test_migrations.py": "1f4f7ea3576875222a639447d7ef39177d811883691f807347146fab407e2c12"
+  },
+  "primary_references": [
+    {
+      "url": "https://www.postgresql.org/docs/18/sql-createfunction.html",
+      "supports": "SECURITY DEFINER owner privileges require trusted search_path and restricted execution grants."
+    },
+    {
+      "url": "https://www.postgresql.org/docs/18/functions-info.html",
+      "supports": "session_user is the session identity; current_user changes during SECURITY DEFINER execution."
+    },
+    {
+      "url": "https://www.postgresql.org/docs/18/sql-set-session-authorization.html",
+      "supports": "A non-superuser session cannot replace its authenticated session identity with a different identity."
+    }
+  ],
+  "findings": [
+    {
+      "id": "AUTHENTICATED_SCOPE",
+      "decision": "Adopt separate SCRAM LOGIN dispatcher/projector roles plus owner-registered immutable build and exact job/run scope. This resolves the caller-string credential blocker within the explicit trusted local dispatcher/worker boundary."
+    },
+    {
+      "id": "NOT_CODE_ATTESTATION",
+      "decision": "A registered source/environment hash is deployment metadata, not cryptographic code attestation. A trusted launcher must verify immutable source/environment and inject only that build principal credential. Password possession cannot prove the caller received an actual Temporal activity. Compromised authorized workers are outside this local guarantee."
+    },
+    {
+      "id": "RPC_TRUST_BOUNDARY",
+      "decision": "SQL cannot independently verify a Temporal RPC/history observation. A compromised authorized dispatcher can lie about run ID. Treat dispatcher, launcher and pinned local Temporal server as trusted computing base; hostile same-user local clients and production mTLS/service identity remain unaccepted environment concerns. Task queue names, run-ID strings and caller-provided observation digests are not authentication."
+    },
+    {
+      "id": "OWNER_DERIVED_SCOPE",
+      "decision": "Only owner registers build-to-principal assignment. Admission derives projector identity from this registry, never a dispatcher-selected arbitrary role. Scope is exact environment/namespace/workflow/job/run/build; no wildcard or worker self-enrollment."
+    },
+    {
+      "id": "LIMITED_H2_WRITES",
+      "decision": "H2 exposes typed activation/rejection/receipt functions only. No generic JSON patch, arbitrary status, table name or SQL function. H3/H4 require their separately reviewed transitions/tasks. SQL validates structure/revision/authority; Temporal selects business transitions."
+    }
+  ],
+  "provisioning_and_hardening": [
+    "Provision roles outside migration SQL; migrate as separate non-superuser schema owner. Runtime/operator/dispatcher/projector must be pairwise distinct, distinct from owner, LOGIN, NOSUPERUSER, NOCREATEDB, NOCREATEROLE, NOREPLICATION, NOBYPASSRLS, and have no memberships in either direction. NOINHERIT alone does not block SET ROLE through membership.",
+    "H2 worker sessions require actual SCRAM password authentication. Existing --auth-local=trust verifies SQL role grants, not password possession. Use a dedicated private SCRAM socket fixture or worker-specific SCRAM HBA rules before bootstrap trust rules. Worker connections must never fall through to trust. Correct password succeeds; missing/wrong/another-role password fails.",
+    "Owner registry stores current pg_roles OID AND name, principal kind, environment, immutable build/source/environment hashes, type/queue and enabled state. Each call resolves session_user to current OID and compares both OID/name. Do not use current_user inside SECURITY DEFINER, caller identity arguments, GUCs or application_name. Same-name role recreation must fail registration checks.",
+    "Owner alone registers/disables assignments; immutable build cannot be repointed. V2 uses separate principal/build/queue. Password rotation for the same build is separate. NOLOGIN/password change does not terminate existing sessions. Adopt the stronger main-contract candidate below: principal row FOR SHARE serializes each privileged call against owner UPDATE active=false, including calls from an already connected session. A successful disable commit fences later calls; this does not cancel effects already committed before that barrier.",
+    "Credentials stay outside request bodies, argv, Temporal history, public evidence and logs. Use private configuration/injection with restrictive permissions and sanitized ambient connection settings. No new API provisioning endpoint.",
+    "Workers cannot CREATE in ifpmic, change registry/scope/owner/functions/default privileges, or inherit owner privileges. New functions revoke PUBLIC EXECUTE in their creation transaction and grant exact signatures only. Earlier REVOKE ALL ON ALL FUNCTIONS does not cover future functions.",
+    "SECURITY DEFINER fixes trusted search_path with pg_temp last, schema-qualifies tables/types/functions, parameterizes values and uses no dynamic user SQL. No privileged helper can be called to bypass its top-level checks. Minimum envelope/scope reads only; do not grant dispatcher/projector SELECT on sessions/OIDC/raw unrestricted commands."
+  ],
+  "run_admission_protocol": [
+    "Reserve immutable execution binding before remote RPC: job/create command/snapshot/definition/build/start-input hashes plus environment/namespace/workflow ID/type/queue. Permanent job identity and deterministic workflow ID are independent of claim generation.",
+    "Claim immutable envelope in a short PG transaction; commit before Temporal I/O. Use pinned server/namespace and explicit running-conflict FAIL, closed-reuse REJECT_DUPLICATE. No PG locks or transaction span network I/O.",
+    "Before first admission trusted dispatcher verifies canonical WorkflowExecutionStarted history: exact namespace/workflow/run/type/queue and decoded complete canonical start-input digest. Mutable memo/search attributes alone do not prove input. Keep raw history private.",
+    "Admission validates dispatcher principal/environment, immutable binding and current claim generation/token/lease. Atomically CAS null admitted_run_id and insert exact registry-derived projector scope. Same run/input is idempotent; different run/input/build yields zero writes. No arbitrary principal selection or replacement run.",
+    "Stale claimant may already have started Temporal but cannot bind/ack after lease loss; current claimant reconciles the same execution. Worker arriving before admission receives retriable BINDING_NOT_ADMITTED and zero projection writes. Unknown admission commit reads durable binding/scope; never overwrite.",
+    "Every projection and receipt replay matches admitted run. Missing known-run history quarantines; never restart it. Unknown first-start retry is limited to the preapproved retention-bounded window and exact ID/input. Timeout alone is not remote failure.",
+    "An observation digest cannot protect against a compromised authorized dispatcher. If this becomes in scope, require separately authenticated Temporal/service/launcher evidence or a distinct trusted admission service under a new reviewed contract rather than adding a caller asserted proof field."
+  ],
+  "projection_receipt_order": [
+    "Short READ COMMITTED transaction: authenticate session_user OID+name and take FOR SHARE on all required active principal rows before later lock classes. Validate exact immutable job/run/build scope. These static credential/run checks also apply to historical receipt replay; retain principal locks until transaction end.",
+    "Then look up immutable receipt by full transition identity. Compare payload digest and job/run/build/command/predecessor identity. Same identity/payload returns exact committed outcome before mutable human membership/eligibility/task/revision checks. Mismatched identity/digest fails closed without leaking another scope receipt.",
+    "On absent receipt acquire project guard -> job -> task, never inverse. Recheck receipt after locks so another committed first writer becomes replay rather than stale rejection. Unique/CAS is final arbiter; aborted duplicate insert needs valid transaction retry/read.",
+    "Only genuinely new activation/privileged effects validate current actor capability/membership, eligibility/revocation, exact predecessor/task/evidence. Sample clock_timestamp after locks for expiry/lease authority; transaction-start now() is insufficient. Preserve membership NOWAIT/retry against operator-trigger inversion.",
+    "Validate/recompute canonical digest over all behavior-controlling fields against stored binding/command. A claimed digest cannot authenticate a different payload. H2 only allows DRAFT0->QUEUED1 activation or specified DRAFT0 rejection. Terminal command/projection receipt commits atomically.",
+    "After successful commit with lost activity response, retry same identity. Later human revocation/eligibility expiry cannot turn applied receipt into rejected. Another machine principal/run or disabled principal still fails. External HTTP reads retain current session/ownership/membership checks; internal receipt replay does not waive them."
+  ],
+  "privilege_matrix": {
+    "owner": "Schema/function/registry owner and provisioning authority; outside runtime guarantees.",
+    "runtime": "Existing ingress/read/workspace boundary only; no admission, scope, outbox delivery or projection/outcome writes.",
+    "operator": "Existing membership/mock eligibility only; no new worker admission/scope/outbox/projection privileges.",
+    "dispatcher": "Only exact claim/minimal-envelope/admit/ack/reconcile function EXECUTE; direct table writes zero; cannot project or change outcomes/tasks/receipts.",
+    "projector": "Only exact scoped activation/rejection/receipt function EXECUTE; direct table writes zero; cannot claim/ack/admit/register or patch arbitrary state.",
+    "public_unregistered": "No privileged new function or table access; guessed IDs/role name text provide no authority."
+  },
+  "migration_recommendation": [
+    "Preserve 001/002 bytes and schema_migrations rows. Add reviewed003. Fresh applies001+002+003; accepted001/002 upgrade applies only003. All changes remain under existing advisory-lock transaction.",
+    "Current-chain apply_migrations and CLI explicitly require dispatcher_role/projector_role plus runtime/operator. Validate all four before mutations. No role creation/password handling, implicit runtime reuse, inferred role names or optional production downgrade.",
+    "Prefer owner-only migration_role_bindings table created/populated by003 storing003 version and all four current role names/OIDs. Existing001/002 metadata format stays unchanged. Runner compares003 bindings on rerun, fails MIGRATION_ROLE_DRIFT for role name/OID change or recreation. Do not claim historical001/002 OID evidence that was never recorded.",
+    "Missing binding metadata is expected only while003 unapplied. After003 recorded, missing/inconsistent metadata is drift and cannot be silently rebuilt. Validate owner/schema and applied source hash. Binding insertion and003 source record commit together.",
+    "Fresh003 failure rolls back the entire new001/002/003 application. Upgrade003 failure preserves previously committed001/002 rows/data/grants and leaves no003 objects/grants/metadata. Preserve evidence, correct uncommitted candidate only, rerun reviewed migration gate. Applied source drift never permits edit in place.",
+    "Keep original351 Python case IDs. Update current-chain fixture calls with explicit new roles; retain original assertions as historical001/002 coverage or add dedicated historical cases. Do not delete/skip old IDs or weaken denial tests. Historical G1 archives remain untouched.",
+    "Use existing in-process migration_dir test seam with separate hash-checked copied001/002-only directory for historical coverage, never CLI/runtime switch. It may pass/validate all four roles although old SQL consumes only runtime/operator. Current production always uses full chain. Freeze exact new schema/grant counts; retain historical16-table/two-version expectations.",
+    "Backfill requires exactly one matching original CreateJob for every job; invalid/ambiguous input aborts all003. Deferred route-constrained create FK, immutable linkage, preserved create uniqueness and create-only DTO joins precede multi-command widening. Tests use actual non-owner migrator/worker sessions."
+  ],
+  "required_tc_oracles": [
+    {
+      "id": "H2-SEC-01",
+      "class": "normal_exception",
+      "oracle": "Actual SCRAM correct-password success; missing/wrong/other-role password failure; effective HBA cannot fall through to trust. No secrets in evidence."
+    },
+    {
+      "id": "H2-SEC-02",
+      "class": "exception",
+      "oracle": "Actual role matrix denials for table writes, outcomes, outbox, registry/scope/schema; only exact function signatures execute. SET ROLE/session authorization cannot impersonate. current_user definer change does not replace session_user."
+    },
+    {
+      "id": "H2-SEC-03",
+      "class": "boundary",
+      "oracle": "OID+name mismatch, same-name recreation, caller userId/GUC/application_name spoof, wrong build/job/run/namespace/input/queue and unadmitted scope produce zero writes; old receipt access also fenced."
+    },
+    {
+      "id": "H2-SEC-04",
+      "class": "race_recovery",
+      "oracle": "Early worker waits with zero writes; stale claimant cannot admit/ack; current claimant reconciles same run. Run CAS+scope all-or-none under injected failure. Different second run/arbitrary principal choice changes nothing."
+    },
+    {
+      "id": "H2-SEC-05",
+      "class": "exception_boundary",
+      "oracle": "Dispatcher rejects wrong type/queue/input or ambiguous/missing Started history using real execution and controlled observation faults. Do not claim a compromised authorized dispatcher is prevented from lying."
+    },
+    {
+      "id": "H2-SEC-06",
+      "class": "race_recovery",
+      "oracle": "Commit activation then lose response, revoke actor/eligibility, retry: identical applied receipt/revision1, no second effect. Changed digest/run/principal fails. Two first writers yield exactly one receipt after lock recheck."
+    },
+    {
+      "id": "H2-SEC-07",
+      "class": "exception",
+      "oracle": "pg_temp/public shadow attempts, PUBLIC function execution, helper bypass and arbitrary JSON/SQL-like patch fields cannot escalate. Exact function owner/search_path/signature/ACL inventory checked."
+    },
+    {
+      "id": "H2-SEC-08",
+      "class": "boundary",
+      "oracle": "After enabled=false an already connected worker cannot make a new call. Password rotation/NOLOGIN is not reported as existing-session termination."
+    },
+    {
+      "id": "H2-MIG-01",
+      "class": "normal_regression",
+      "oracle": "Exact historical001/002 chain/schema/grants and exact current001/002/003 chain independently checked; upgrade populated old DB preserves data/metadata and correctly links create commands."
+    },
+    {
+      "id": "H2-MIG-02",
+      "class": "exception_recovery",
+      "oracle": "Missing/duplicate/elevated/member/owner-shared role, changed names/OIDs, missing003 bindings/source and changed applied SHA fail before partial changes. Concurrent migrations serialize."
+    },
+    {
+      "id": "H2-MIG-03",
+      "class": "exception_recovery",
+      "oracle": "Injected003 failure on fresh and upgrade proves actual schema/data/grant/metadata rollback; corrected uncommitted candidate applies once. Invalid/ambiguous create backfill aborts without partial widening."
+    },
+    {
+      "id": "H2-REG-01",
+      "class": "regression",
+      "oracle": "Original351 Python case IDs remain, plus five H1 and newH2 IDs in required combined gates. G4/G5 authority/idempotency/workspace boundaries retained. No actualAT05/16/29 completion from advice/schema-only tests."
+    },
+    {
+      "id": "H2-SEC-09",
+      "class": "race_recovery",
+      "oracle": "FOR SHARE principal fencing vs owner disable is tested with real concurrent sessions. Owner disable commits only after protected older transaction ends; new calls then fail, including old receipt reads. Admission takes multiple principals in sorted OID order before guard; claim/ack never invert outbox to earlier lock classes. Timeout is not reported as successful disable."
+    }
+  ],
+  "recommendation": "Adopt authenticated scoped principals with the stated trust boundary and fail-closed SQL surface. Freeze role/schema/function/error/timeout/oracle details in exact-SHA H2 contract and independent TC review before implementation.",
+  "remaining_uncertainty": [
+    "Exact executable SQL signatures/predicates/canonical encoding/error codes and inventory are pending contract work; this is advice, not approval.",
+    "Actual SCRAM/HBA behavior, privilege negatives, hardening, canonical Temporal history checks and crash/race behavior require execution evidence.",
+    "Trusted launcher source/environment verification and secret injection need concrete local implementation/tests; registry hashes alone do not enforce deployment discipline.",
+    "Production mutual authentication, malicious same-user local clients, compromised trusted credentials/operators, real device/Agent/publisher actions remain unaccepted; this artifact authorizes none."
+  ],
+  "acceptance_boundary": {
+    "H2": "not_implemented_or_verified",
+    "AT-05": "not_executed",
+    "AT-16": "not_executed",
+    "AT-29": "not_executed",
+    "goal": "active_incomplete"
+  },
+  "stronger_principal_revocation_lock_contract": {
+    "status": "Recommended explicit stronger candidate after main draft clarified principal revocation serialization; replaces the earlier initial-check-only alternative.",
+    "order": [
+      "all required principal rows FOR SHARE in ascending role OID order",
+      "project authorization guard",
+      "membership tuple NOWAIT where required",
+      "job",
+      "execution binding",
+      "future task",
+      "outbox"
+    ],
+    "principal_lookup": "Resolve session_user to registered OID+name; fetch/lock active row and re-evaluate active state after any wait. Admission also needs the registry-derived target projector principal; acquire both dispatcher and projector rows in sorted OID order before project guard. No helper may acquire another earlier principal lock after holding a later class.",
+    "minimal_paths": "Claim/ack may take authenticated principal locks then outbox only and must never acquire guard/job/binding afterward. Immutable receipt fast path takes principal locks and checks immutable scope before reading receipt; it need not acquire mutable human-authority locks. Reserve/admit/incident multirow paths follow the full order, revalidating claim/fences after locks.",
+    "owner_updates": "Owner disable/registration routines follow the same principal ordering for multiple rows and must not acquire principal after project/job/outbox. Active=false UPDATE conflicts with worker FOR SHARE and commits only after earlier protected transactions finish. A timeout means disable is not proven committed and must not be reported as successful revocation.",
+    "receipt_semantics": "After machine principal disabled, old receipt replay is denied. If only human membership/eligibility changes, still-active scoped principal replays exact old receipt before those mutable checks. Locking static machine auth does not move current human authorization ahead of receipt.",
+    "deadlock_and_wait_oracles": "Test concurrent activation/receipt replay vs successful disable commit under real sessions: owner waits for in-flight principal lock, then later worker call is denied; no retroactive outcome rewrite. Concurrent admission involving dispatcher+projector plus owner multi-principal disable uses sorted principal OIDs and terminates within frozen lock deadlines. Existing guard/membership NOWAIT order must be consistent across every SQL helper and documented first_apply prose."
+  },
+  "draft_comparison_notes": [
+    "Require exactly one immutable active assignment target per build rather than an ambiguous arbitrary choice among projector principals. If future rotation supports multiple principals, that needs an explicit binding-level assignment generation contract, not arbitrary admission input.",
+    "Pin environment and secret-free server/deployment configuration identity as part of immutable binding/hash and launcher verification; namespace text alone does not distinguish different local Temporal servers. No credential or private endpoint needs to enter public history/evidence.",
+    "Recommend003 role metadata records all four runtime/operator/dispatcher/projector OID+name pairs, while preserving truthful old001/002 name-only history.",
+    "Main stronger principal-lock proposal is reasonable when all helper/provisioner paths obey the declared order, with sorted OIDs for multi-principal operations. It has stronger successful-disable serialization than an initial check alone, without claiming cancellation of earlier committed effects."
+  ]
+}

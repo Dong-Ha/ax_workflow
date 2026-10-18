@@ -1,0 +1,233 @@
+{
+  "kind": "ifpmic.b03.h2.implementation-contract.v2",
+  "status": "candidate_pending_independent_and_tc_same_sha_review",
+  "parent_commit": "4fc25fb0c488ddb22ff22127fe3b18946e862a91",
+  "purpose": "H2 durable command/outbox, authenticated dispatcher/projector and initial activation. Code and tests may be authored only after independent and TC approval of this exact contract SHA. Execution additionally requires a source-pinned test ledger and reviewed bounded runner.",
+  "requirements": [
+    "B03",
+    "REQ-02",
+    "REQ-05",
+    "REQ-13",
+    "REQ-14",
+    "AT-16 prerequisite",
+    "AT-05/AT-29 binding prerequisite"
+  ],
+  "source_pins": {
+    "docs/ifpmic/B03-WORKFLOW.md": "38fdd875bc76047ed1e3e46c850277fea1a3d1f825662a13b1c21154925f25ff",
+    "docs/ifpmic/evidence/b03/h1-final-review.json": "1ddd9e748961eb1b859ca19838cc2b80046e70e447bf60c1ae39c3ade900e762",
+    "docs/ifpmic/evidence/b03/h2-source-collection.json": "62213046bceb9eb5f528843f1b39443f88f9eeff6ddf54b7171a12f8b438c9f3",
+    "services/ifpmic_api/migrate.py": "3f658907f13f6eab042a7b15f2958e98c65334e995686da434640d100341818d",
+    "services/ifpmic_api/jobs.py": "bc682d6ea83ef6545b3105b2a9e8e4df75273445ebca1f8193219010bcea79b4",
+    "services/ifpmic_api/migrations/001_initial.sql": "cf0437a5f32e1589e4ea821afbb2ef2480d780a276667880aa9a08a0f4c77f12",
+    "services/ifpmic_api/migrations/002_auth_retention.sql": "95c01f06eb586e0c1067f04672edfed8e0a11215752ad859ac9e4744da5a504e",
+    "docs/ifpmic/design-v1/specs/openapi.v1.json": "2ed780cfa06349b18f5025937e050fd98a5cefa34b552eb836cfaccad416dd7a",
+    "docs/ifpmic/design-v1/specs/state-contract.json": "0248e130017043539319c56af854f5388a95d33e7e687902a3438fdff414244a",
+    "docs/ifpmic/source-manifest.json": "8afba9c1fc16ef3a6565f45576792cad51a1aaab59857d3a28666c71ec43007c",
+    "docs/ifpmic/evidence/b03/h2-tc-risk-matrix.json": "cef098ff86faa860881e85da06b9b991ccf5715b7113c1fdb133b37891d1c834",
+    "docs/ifpmic/evidence/b03/h2-security-advice.json": "37215e0b37236149a133722323a28c4c155b649021701e4fa6e8bc9a5b3683e4"
+  },
+  "ownership": {
+    "main": "Migration, job queries, SQL functions, dispatcher/worker/activation workflow, private process config, runner and integration.",
+    "TC": "Independent SQL/HTTP/oracle fixtures, SCRAM authentication, PG/Temporal process harness, crash and regression tests, exact test ledger.",
+    "reviewer": "Exact contract and frozen candidate evidence; no test pass from authoring approval.",
+    "boundaries": "Paperclip supervises; Temporal alone decides business transitions. No AX server/ changes. SAM/TEM/SQE/human responsibilities unchanged."
+  },
+  "scope": {
+    "implemented_in_H2": [
+      "Upgrade existing schema without rewriting 001/002; explicit create-command provenance and multi-command schema.",
+      "Real durable create dispatch and permanent job/workflow/run binding; immutable build registration.",
+      "Activation decision: DRAFT0 to QUEUED1 + applied receipt, or immutable rejected create without business progress.",
+      "Only activation is enabled in this development build. Successful H2 workflows wait durably after QUEUED; no P01, adapter, human business outcome or implicit PASS. Later H3/H4 builds are separately pinned and do not rewrite H2 histories.",
+      "Future command routes can be stored/transported as immutable durable IDs; H2 never consumes a human task or fabricates its outcome."
+    ],
+    "deferred_with_reason": {
+      "H3": "29-node execution, step_runs, cycle/attempt, typed adapter evidence and all business routing require the separate approved H3 contract.",
+      "H4": "Actual human submission/plan-decision endpoints, task consumption and notifications require H4. H2 schema support/transport tests do not accept AT-05.",
+      "H5": "Live v1/v2 human-wait compatibility/replay and original AT-29 require full H5 scenario. H2 checks immutable build/queue/run pins only.",
+      "H6": "Fresh full integrated Python351+all additions and Node387+build/UI impact gate. H2 still runs affected G1-G5 and H1 tests; no inherited pass is labeled fresh.",
+      "production": "Company SSO, remote Temporal security/topology, real Agent/build/device/publisher and external submission remain separate environment/approval gates."
+    },
+    "acceptance": "Partial H2 only after actual bounded PG/Temporal crash and regression evidence plus independent final review. All original32 AT remain not_executed."
+  },
+  "identity_and_hashing": {
+    "workflow_id": "ifpmic.job.<canonical lowercase UUID job_id>; namespace/endpoint are deployment configuration pinned in binding. Never include attempt, lease generation, build change or new random suffix.",
+    "workflow_type": "IFPMICJobWorkflow",
+    "build_id": "Lowercase SHA256 of versioned canonical build manifest containing immutable worker source manifest hash, environment manifest hash, workflow type and executable protocol version. The registered SHA is an owner assertion checked by trusted launcher, not cryptographic attestation of arbitrary running code.",
+    "task_queue": "ifpmic.build.<build_id>; trusted workers validate their source/environment manifest and owner registration before polling only that queue. No newer build fallback.",
+    "start_input": "Exactly protocol_version=h2-v1, job_id, project_id, binding_sha256. Binding digest covers namespace, workflow ID/type, build ID/queue, snapshot ID and record SHA, original workflow/state/agent bundle hashes, create command ID and payload SHA. No command bodies, comments, DSN, session, credential, private paths or source content in history. Canonical binding digest additionally covers deployment_id and server_config_sha256 (endpoint text need not enter history).",
+    "canonical_hash": "SHA256(domain UTF-8 bytes + NUL + json.dumps(value,ensure_ascii=True,sort_keys=True,separators=(comma,colon),allow_nan=False). Domain ifpmic.b03.execution-binding.v1 for immutable binding; ifpmic.b03.transition.v1 for proposal. Hash inputs allow only bounded strings/integers/booleans/null/lists/objects, no floats/duplicate JSON keys.",
+    "run_policy": "Explicit start conflict FAIL and ID reuse REJECT_DUPLICATE, no workflow retry policy and no continue-as-new/reset/implicit migration. First admitted run ID is write-once; every effect requires exact job/build/run fence.",
+    "deployment": "Owner registers deployment_id and server_config_sha256 over nonsecret exact Temporal endpoint/namespace/protocol/local CLI server identity config. Dispatcher/projector principals, build registration, execution binding and worker startup all match this deployment. No cross-endpoint fallback; same namespace name at another server is not the same deployment."
+  },
+  "database_changes": {
+    "migration": "New services/ifpmic_api/migrations/003_workflow_execution.sql. 001/002 stay byte-identical. All DDL/backfill/grants/ledger changes are one advisory-locked transaction; owner-only execution. Failure rolls back the whole candidate, preserving prior schema/rows/ledger.",
+    "runner": "Extend apply_migrations with explicit distinct dispatcher_role/projector_role keyword configuration required when 003 is among sources. All four LOGIN roles pre-exist, are non-owner/non-superuser/non-createdb/non-createrole/non-bypassrls/non-replication and have no membership in either direction. Validate names and OIDs, owner and schema ownership; missing/wrong/changed H2 role configuration fails before DDL. Keep 001/002 role/hash ledger semantics; new immutable execution_role_config records dispatcher/projector OID+name and detects drift on every rerun. CLI requires new IFPMIC_DISPATCHER_ROLE and IFPMIC_PROJECTOR_ROLE for full chain, prints only fixed codes. Historical first-two source fixtures explicitly omit 003 and keep legacy two-role API; no production flag skips installed 003.",
+    "jobs_and_commands": [
+      "Backfill jobs.create_command_id from exactly one same-project/job create route command. Missing/multiple/malformed origin aborts entire migration with fixed MIGRATION_IO; preserve private diagnostic separately. Set NOT NULL; jobs.create_route default/CHECK POST /api/v1/jobs.",
+      "Add UNIQUE(command_id,job_id,route) to commands; deferred INITIALLY DEFERRED FK(jobs.create_command_id,job_id,create_route) references it. Preserve existing commands(command_id,job_id) unique key used by workspace FK. Protect immutable create relation against all service UPDATE; new runtime INSERT grants include create_command_id only.",
+      "Remove commands.job_id all-command UNIQUE; keep partial unique CREATE UNIQUE INDEX ON commands(job_id) WHERE route=POST /api/v1/jobs. Existing actor/route/idempotency uniqueness unchanged.",
+      "Allow route exactly POST /api/v1/jobs or POST /api/v1/jobs/<own canonical job_id>/human-submissions or POST /api/v1/jobs/<own canonical job_id>/plan-decision. Original human/plan DTO endpoints remain H4; this SQL widening cannot expose them in H2.",
+      "Bind workspace_intents command_id/job_id to jobs.create_command_id/job_id via matching unique key and deferred FK, preserving workspace token/generation/state. A later human command cannot be its origin.",
+      "Immutable command actor/project/job/route/key/body/hash/created_at enforced against all service UPDATE. Terminal status+applied_revision+error are write-once through projection function. accepted requires applied_revision/error NULL; applied requires revision>=1 and error NULL; rejected requires revision NULL and approved fixed error."
+    ],
+    "new_tables": {
+      "execution_role_config": "Singleton owner-only registration of all four runtime/operator/dispatcher/projector OID+name values and migration003 identity. Original001/002 never recorded role OIDs; record them only on successful003. On rerun compare every current OID/name; missing metadata after003 recorded is drift, never auto-rebuild.",
+      "engine_builds": "PK(deployment_id,build_id), FK deployment_id -> execution_deployments; source_manifest_sha256/environment_manifest_sha256/workflow_type/task_queue/protocol_version immutable, UNIQUE(deployment_id,task_queue). Exactly one projector principal per deployment/build via owner worker_principals registration and matching FK; disabled build blocks new admission without rewriting old binding.",
+      "worker_principals": "role_oid PK and role_name UNIQUE, both match current pg_roles(session_user); kind dispatcher/projector, deployment_id NOT NULL FK execution_deployments, projector build_id required and composite FK(deployment_id,build_id) -> engine_builds, dispatcher build_id NULL. Partial UNIQUE(deployment_id) WHERE kind dispatcher and UNIQUE(deployment_id,build_id) WHERE kind projector. Registration and kind/deployment/build association immutable; active owner-managed. No wildcard/self-enrollment; same-name new OID cannot inherit scopes. UNIQUE(role_oid,role_name,deployment_id,build_id) supports exact composite scope FK; dispatcher build NULL never matches a projector scope.",
+      "execution_bindings": "job_id PK/FK and unique deployment_id+namespace+temporal_workflow_id; create_command_id, snapshot_id/catalog_record_sha256, workflow/state/agent SHA, build_id/type/queue, canonical binding_sha256 immutable; admitted_run_id initially NULL write-once; operational state reserved/admitted/quarantined/closed; first_start_attempt_at, uncertain_until, observed_retention_seconds; quarantine fixed code. Permanent no reuse/deletion by services. deployment_id and server_config_sha256 are immutable binding digest fields; namespace/workflow uniqueness is per deployment. Composite FK(deployment_id,build_id) -> engine_builds and deployment config FK; all identity fields use the same owner deployment record. Unique(deployment_id,namespace,temporal_workflow_id), not a namespace-only global uniqueness assertion. UNIQUE(job_id,admitted_run_id) supports the scope composite FK.",
+      "worker_run_scopes": "projector_role_oid/name, deployment_id, build_id, job_id, admitted_run_id; immutable PK(job_id,admitted_run_id), FK to exact owner worker_principals role/deployment/build and binding. Admission derives sole projector from registry, atomically admits run and scope; it never trusts a caller-selected projector name.",
+      "outbox_extension": "commands_outbox remains one row per command PK; state pending/leased/uncertain/dispatched/quarantined; generation bigint>=0, claim_token uuid nullable, claim_expires_at timestamptz nullable, next_attempt_at, last_error fixed code, observed_run_id nullable, dispatched_at nullable; leased iff live token/expiry structurally present. dispatched is transport or already-committed-receipt reconciliation only, never synonymous with applied.",
+      "delivery_attempts": "PK(command_id,generation); attempted_at, completed_at, result from fixed transport enum, observed_run_id and error code; no raw exception/body/credentials. Command identity never copied with mutable fields.",
+      "projection_receipts": "PK(job_id,transition_sequence>=1), UNIQUE(command_id) for terminal create outcome; admitted_run_id, build_id, proposal_sha256, expected_revision, outcome applied/rejected, result_json, committed_at; immutable. result_json has only approved receipt/projection fields, no credential/source/comment. Each proposed decision sequence including rejection is unique; only actual business state change increments job revision.",
+      "execution_deployments": "deployment_id text PK; namespace text NOT NULL, nonsecret canonical server_endpoint text NOT NULL (scheme/host/port only, no userinfo/query/secret), server_config_sha256 fixed SHA256 over versioned canonical deployment config. All identity/config fields immutable; owner-only registration. Owner can disable new admissions via separate enabled flag, cannot repoint an existing deployment. Credentials are never stored here. Exactly one mapping is required before dispatcher/worker startup; no job binding is needed to read it. UNIQUE(deployment_id,namespace,server_config_sha256) supports immutable binding deployment FK."
+    },
+    "read_model": "Create allocates job/command UUIDs before inserts so deferred cyclic FK commits atomically. JobService.list/snapshot join commands exclusively by create_command_id/job_id/create route. Preserve original Job/Command DTO fields. Validate allowed job status/nonnegative revision/cycle and known node IDs; remove DRAFT-only placeholder. At H2 only DRAFT0 and QUEUED1 are produced, current_step_ids stays [], cycle0/candidate null, steps[] and last_event_id empty. H3 introduces real step/event projection under its own contract."
+  },
+  "worker_security": {
+    "authentication": "Private local Unix-socket PG uses SCRAM-SHA-256 for all H2 service principals. Supply independent per-role password via process-private configuration/env, never argv/Temporal payload/API or persisted public metadata. G1 trust-local cluster is not authentication evidence. Bootstrap/owner exception is restricted to their explicit Unix-socket users and private harness; no generic trust rule can match service users.",
+    "authorization": "SECURITY DEFINER functions authenticate session_user against current pg_roles OID+name and immutable owner registry before any receipt lookup. Active machine principal required. The function current_user is its owner and must never be confused with caller. Projector additionally matches job/run/build in immutable worker_run_scopes and binding. Current human membership/eligibility checks run only on first decision, after receipt lookup.",
+    "functions": "Owner-created fully schema-qualified functions with fixed trusted search_path (pg_catalog,ifpmic,pg_temp), no dynamic unquoted identifiers or caller-provided SQL; REVOKE ALL function EXECUTE FROM PUBLIC in same DDL transaction. Schema CREATE and arbitrary helper execution denied. Public API runtime/operator receive no worker functions.",
+    "role_matrix": {
+      "runtime": "Existing auth/G4/G5 privileges preserved plus INSERT jobs.create_command_id; SELECT only DTO-required new records if explicitly needed, no machine registry/binding/receipt mutation and no dispatcher/projector function execution.",
+      "operator": "Existing mock eligibility/membership authority only; no execution registry/outbox/command/projection authority or worker function execution.",
+      "dispatcher": "EXECUTE read_dispatch_config, claim_delivery, reserve_execution, record_start_attempt, admit_run, record_delivery only; scoped read envelope/registered build/transport data returned by these functions. No direct table INSERT/UPDATE/DELETE, no projection function, no owner/authority/workspace changes. May execute report_dispatch_incident only for its claimed immutable binding; no generic state patch.",
+      "projector": "EXECUTE read_registered_build, read_activation and project_activation only; reads return minimal canonical command/binding/catalog/workspace verification material for authorized job/run, no sessions/credentials. No direct DML, no outbox claim/ack/admission or owner authority mutation. May execute report_projection_incident only for its authenticated assigned job/run/build. Activation functions accept typed fixed fields and derive state, never arbitrary JSON patches or SQL.",
+      "migration_owner": "Trusted schema/registry provisioner; explicit owner transaction registers build/principals. Never used by API/dispatcher/worker activities."
+    },
+    "local_trust_boundary": "Pinned local Temporal and trusted dispatcher/worker binaries are authorized to present observed history and proposals. Dispatcher credentials can present false RPC facts if compromised; SQL is not Temporal attestation. Hostile host users, arbitrary local Temporal clients and compromised trusted service credentials are outside this local proof. Production TLS/mTLS/ACL/secret rotation and deployment attestations require separate environment acceptance.",
+    "credential_revocation": "Disabled/unauthenticated machine principal gets no receipt data or new write; workflow waits/retries, never rewrites an already committed outcome as rejected. Prior human revocation does not invalidate a receipt replay under still-valid scoped machine credentials.",
+    "incident_function": "report_dispatch_incident and report_projection_incident accept only fixed private protocol codes and exact existing binding identity; it can monotonically quarantine that binding/outbox, never clear quarantine, replace run/hash, alter job business state or command terminal receipt. Dispatcher requires current claimed binding; projector requires its exact admitted job/run/build. Existing immutable receipts remain readable to still-active scoped principals despite operational quarantine.",
+    "lock_order": "Each worker SQL function first locks all required principal rows in ascending role OID order FOR SHARE (own dispatcher and target projector for admission; own principal otherwise) and validates active/OID/name; owner disable/update serializes with it. Multi-row functions then acquire project guard -> membership NOWAIT if needed -> job -> execution binding -> future task -> outbox. Receipt lookup is a nonlocking immutable fast path after machine identity/scope; on first apply it is re-read after ordered locks. claim_delivery/record_delivery lock only outbox and must not later acquire any earlier class in the same transaction. reserve_execution/admit_run/incident functions use the published multi-row order, including lease predicate recheck under final outbox lock. No lock or transaction spans remote I/O. Owner multi-principal disable follows the same ascending OID order. A disable lock timeout is not success; only successful committed active=false denies subsequent calls/receipt reads. In-flight function transactions finish before that commit, with no instant-cancellation claim.",
+    "bootstrap_resolution": "Before any job exists, read_dispatch_config resolves session_user -> current pg_roles OID+name -> exactly one active dispatcher worker_principals row -> immutable execution_deployments namespace/endpoint/server_config_sha256 -> only owner-registered engine_builds in that deployment. read_registered_build resolves projector through its own deployment/build composite mapping. Missing/inactive/ambiguous registration or digest mismatch fails startup before claim/network/poll, never guesses defaults or adopts config from a job. Principal/config rows are locked/read under the published order; owner deployment/build/principal identity is immutable. Private launcher config must reproduce exact registered nonsecret server-config digest."
+  },
+  "delivery_protocol": {
+    "claim": "READ COMMITTED transaction with lock_timeout5s and statement_timeout30s; authenticated dispatcher selects due pending/uncertain or expired leased row FOR UPDATE SKIP LOCKED, excluding quarantined/dispatched. generation+1, fresh token, DB-clock lease30s and attempts row; commit before network I/O. Concurrency4; no DB lock/connection transaction held over Temporal RPC.",
+    "reserve": "Create only: canonical command/create relation and immutable snapshot/build/workspace-intent identity verified. RESERVED/PROVISIONING/ERROR workspace does not create terminal business outcome or imply READY; retry after1/5/30s max30s. When READY, verify private filesystem marker/token with existing G5 validator outside SQL lock and recheck DB token/generation/state before reserve. Mismatch is quarantine, not fabricated workspace repair. Reserve same permanent binding idempotently; conflicting hash/ID quarantines.",
+    "start": "Before first possible start RPC, read namespace retention and persist first_start_attempt_at/uncertain_until using DB clock and min(3600s,retention_seconds-1s). Require retention>3600s. Reconciliation polls at1/5/30s; deadline never extends. RPC deadline10s. Start exactly same ID/type/input/queue with explicit no-reuse/conflict policies. Never allocate replacement ID.",
+    "admit": "Outside transaction, trusted dispatcher reads canonical WorkflowExecutionStarted history/type/queue/input and namespace/workflow/run identity. Compare exact binding digest/envelope; mismatch quarantines. In new short PG transaction admit_run CAS only if still matching lease generation/token/unexpired and immutable binding; admitted run cannot be replaced. Atomically create scope for owner-registered active projector/build. A different observed run is quarantine with zero projection.",
+    "unknown_start": "If no admitted run and start result unknown, describe/history exact ID within stored finite window; matching existing run may be admitted. NotFound permits same-ID no-reuse start only while retention verified and window remains. Unknown config/retention, expiry or mismatched input quarantines accepted command. Admitted known run missing history always quarantines; it never starts again even if history is gone.",
+    "ack": "record_delivery locks only its outbox row and checks command_id+generation+token+claim_expires_at>fresh clock_timestamp. Stale ack affects0, no state/receipt overwrite. Confirmed start/signal sets dispatched and observed run; timeout becomes uncertain, command stays accepted unless a projection has independently committed. If exact durable terminal receipt exists, outbox may reconcile dispatched without another start. Dispatcher never writes command terminal outcome.",
+    "other_commands": "Never start a workflow for a non-create command. Require existing admitted binding/run, load canonical command ID/job/route/hash, send command_available signal containing only command_id+payload_sha256 to that exact run. Signal handler only queues validated IDs; H2 does not apply human business commands. Forged/mismatched notifications have no projection authority; future H3/H4 consume authoritative durable inbox, not signal bodies.",
+    "failures": "DB/RPC unavailable, stale lease and workspace wait are operational retry, not business rejection. Retry state never loses accepted commands. Quarantine is explicit durable operator incident on binding/outbox only, not an alternate non-Temporal job-state writer.",
+    "attempt_results": [
+      "started",
+      "signaled",
+      "uncertain",
+      "retry",
+      "receipt_reconciled",
+      "quarantined"
+    ]
+  },
+  "activation_and_projection": {
+    "workflow": "Replay-safe serial loop: await admitted binding via scoped activity; read_activation verifies canonical durable create command, original catalog bundle and READY intent. Only workflow proposes activation, with sequence1, expected_revision0 and immutable proposal digest. Await activity durable result before advancing; on applied wait durably for later supported work; on rejected complete the development workflow without changing DRAFT job. No external I/O in workflow code.",
+    "first_apply_transaction": "After active principal/static job-run-build fence, lookup immutable receipt (job,sequence) before mutable authority. Same digest returns stored result; different digest is collision error/quarantine without overwriting anything. Otherwise take project guard FOR UPDATE, current membership tuple NOWAIT, job/binding row then (future) task; membership NOWAIT avoids guard/tuple inversion; re-read receipt after lock and sample clock after waits. Check expected revision0, DRAFT/cycle0/current_step_ids[], canonical command still accepted, pinned catalog bytes/hash/mode, exact G5 READY identity, current active owner membership/request.create and unrevoked unexpired eligibility.",
+    "normal": "Atomic update jobs DRAFT0->QUEUED1, cycle0/current_step_ids[]/candidate null unchanged; commands accepted->applied/applied_revision1/error null; immutable same proposal receipt commit. P01 is a separate H3 transition, never included implicitly.",
+    "definitive_rejection": "Current active owner membership/request.create missing => rejected FORBIDDEN. Current profile disabled/incomplete/mode-ineligible/eligibility revoked or expired => rejected PROFILE_INELIGIBLE. Persist rejected receipt and command rejected/applied_revision null/error fixed. Job remains DRAFT0, no step/task/adapter and no resurrection after regrant.",
+    "wait_vs_incident": "Workspace not READY returns wait with no receipt/status/revision change. Lost/mismatched immutable catalog/workspace/command/binding, wrong run, proposal collision or workflow predecessor mismatch is invariant incident: no business receipt or job mutation, durable binding quarantine through reviewed scope-constrained incident function. Never turn an internal invariant into browser stale rejection or grant permission.",
+    "replay": "Receipt replay must survive DB commit then activity reply loss followed by user membership/eligibility revocation, workspace ERROR or same-command retry: identical stored outcome/result bytes and no extra revision. Active machine principal and immutable binding/run scope remain required. New decisions still inspect current authority.",
+    "ordering": "read_activation is advisory; project_activation is authorization linearization point. Revocation commits first -> definitive rejection. Activation commits first -> applied1 survives later revoke; future privileged actions must recheck under H3/H4. SQL failure/uncertain commit is retried same proposal, never fabricated rejection.",
+    "public_api_replay": "Existing G4 external API replay/GET always checks current session, active membership and ownership/delegation; a revoked/expired caller cannot obtain an old receipt by replay. Internal committed projection replay is distinct from public API authorization.",
+    "not_yet_admitted": "Worker activity scheduled before admission/scope CAS returns retryable BINDING_NOT_ADMITTED with zero data/projection mutation. Trusted worker retries within bounded activity/RPC scheduling; no fallback caller ID or owner connection. Before scope exists, only owner-registered same-deployment/build principal may receive the fixed no-data wait code for a reserved same-build binding; it cannot read canonical command/catalog or any receipt until exact run admission.",
+    "proposal_fields": "Hash domain ifpmic.b03.transition.v1; object exactly protocol_version h2-v1, kind activate_create, job_id, run_id, build_id, binding_sha256, transition_sequence1, expected_revision0, command_id, command_payload_sha256. Function loads binding/command hashes and recomputes; no caller-supplied terminal outcome or arbitrary JSON result."
+  },
+  "fixed_codes": {
+    "public_terminal_create": [
+      "FORBIDDEN",
+      "PROFILE_INELIGIBLE"
+    ],
+    "private_protocol": [
+      "BINDING_CONFLICT",
+      "BUILD_UNAVAILABLE",
+      "RUN_CONFLICT",
+      "HISTORY_MISSING",
+      "START_WINDOW_EXPIRED",
+      "RETENTION_UNVERIFIED",
+      "WORKSPACE_IDENTITY_CONFLICT",
+      "CATALOG_IDENTITY_CONFLICT",
+      "PROPOSAL_COLLISION",
+      "PREDECESSOR_CONFLICT",
+      "COMMAND_IDENTITY_CONFLICT"
+    ],
+    "operational_wait": [
+      "WORKSPACE_NOT_READY",
+      "DEPENDENCY_UNAVAILABLE",
+      "CLAIM_STALE",
+      "COMMIT_UNCERTAIN",
+      "BINDING_NOT_ADMITTED"
+    ],
+    "policy": "Only existing ApiError public codes reach CommandStatus error DTO. Private exceptions/connection errors never leak to DTO/history/stdout; malformed internal protocol cannot silently downgrade to applied or terminal business failure."
+  },
+  "verification": {
+    "purpose": "Prove actual PG/Temporal delivery and guarded projection, not just a reducer or schema smoke test.",
+    "categories": [
+      "normal",
+      "exception",
+      "boundary",
+      "concurrency",
+      "crash/restart",
+      "regression",
+      "privacy"
+    ],
+    "normal": "Actual CreateJob accepted plus workspace preparation, independent dispatcher and worker with real PG credentials, real local persistent Temporal history; exactly one admitted run and one applied activation at revision1. Replaying create returns original accepted receipt while GET command sees applied.",
+    "crash_barriers": [
+      "API commit before response/outbox claim",
+      "claim commit before Temporal RPC",
+      "Temporal accepted start before client receives response",
+      "start response before run-admission PG commit",
+      "admission commit before ack",
+      "ack commit before worker activation",
+      "projection before PG commit",
+      "projection PG commit before activity result in history",
+      "worker after activity result before subsequent workflow decision",
+      "PG and Temporal independent server restart with existing storage"
+    ],
+    "barrier_method": "TC independent processes coordinate named pipe/file barriers in private mode0700/0600 paths. Root kills only saved PID/start-tick identity, saves command/DB/history state, restarts exact immutable build and storage. Monkeypatching a return or re-running an in-memory object is not a process-crash proof. Hooks are in-process fixture injection only, never HTTP/env production fault switches.",
+    "boundary_oracles": [
+      "Two dispatcher processes, live and expired leases; stale generation/token/unexpired clock predicates, ack affects0 after lease.",
+      "Correct/missing/wrong/other-role SCRAM credentials; SET ROLE/DDL/direct DML/cross-job/cross-run/build and role-OID recreation denied.",
+      "Existing create rows backfill; malformed legacy row fails whole migration; human/plan origin relink and duplicate create denied; list/detail one row after extra command.",
+      "Receipt same ID+digest replays identical bytes before current human auth, different digest collides, different run cannot replay/read.",
+      "Unknown first start within finite retention window; missing config/deadline before/at/after, admitted-history missing, rogue mismatched input/run all fail closed.",
+      "Changing build source/env/queue or trying newer fallback cannot authorize old job/run. Full v1/v2 human wait remains H5.",
+      "Workspace RESERVED/PROVISIONING/ERROR and forged READY marker do not activate; G5 retry alone never applies command.",
+      "Worker activity arriving before admission CAS waits with zero effect; same registered credential succeeds only after the matching immutable run scope is committed.",
+      "Same namespace at another configured endpoint/deployment cannot reserve/admit/project an old binding.",
+      "Activation typed SQL rejects unknown/extra/generic patch fields; temporary/public function shadowing and helpers cannot bypass session_user checks.",
+      "Before any job/binding exists, registered dispatcher reads only its owner deployment/namespace/server digest/builds. Missing/disabled deployment or principal/build, mismatched private endpoint/config and same-name role recreation fail startup before network/claim. No environment default, caller workerId or forged per-job config can select another deployment."
+    ],
+    "real_history_missing": "Use owner-controlled synthetic Temporal execution deletion only through supported pinned CLI/admin API after capturing an admitted synthetic history; preserve before/after. If no supported bounded deletion seam is verified, this destructive test remains pending and H2 acceptance cannot claim it. Do not replace physical deletion with only mocked NotFound. Window boundary can use an explicit TC-injected DB clock seam or owner-set historical synthetic timestamps, never wait an hour.",
+    "regression": "Retain all351 original Python case IDs and all H1 five. Preserve literal 001/002 historical migration coverage while adding full003-chain fresh/upgrade/role tests and current G4/G5 fixtures. No skip/xfail or weakened privacy/auth/atomicity assertions. Main source manifest captures intentional changes vs accepted G6; old348 unchanged condition is retired only for explicitly reviewed H2 paths, original17+2 remain immutable. Full Node387/build/UI proof is mandatory H6, conditionally earlier if actual impact expands.",
+    "limits": "Default case30s includes cleanup; local crash integration exception up to240s with body215s/cleanup25s requires per-case ledger before execution; full Python phase may exceed old300s as additions grow and must be justified/frozen in execution contract before runner authoring. RPC10s, PG lock5s/statement30s, server readiness30s, process graceful10s+forced5s. Timeout is failure evidence, not process termination proof.",
+    "evidence": "Exact source/env/lock/binary fingerprint, independent literal ID ledger, private JUnit/logs/DB before-after/history/owned lifecycle/auth results under mode0700/0600. Public derived counts, hashes, sanitized synthetic DTOs only; raw source ZIP, histories, service logs, credentials and process identities private.",
+    "pass": "Every mandatory H2 ledger case and required affected regression passes, no failures/errors/skips/timeouts, source/env unchanged during gate, original17+2 unchanged, no unowned process cleanup, all owned services absent. Independent final reviewer exact candidate/source/public-private evidence accepts only partial H2.",
+    "failure_recovery": "Preserve failed candidate and DB/history/logs. Diagnose migration/claim/start/admission/ack/projection/auth boundary; return to corresponding contract/test step. Never rewrite committed receipt or reset workflow to hide failure. Patch requires new source fingerprint, updated exact contract review if oracle changes, complete H2 rerun plus affected G1-G5/H1. Never count previous partial pass as current full evidence."
+  },
+  "implementation_order": [
+    "Independent + TC exact-SHA contract approval, plus explicit bounded execution ledger/runner gate before service execution.",
+    "TC owns migration/auth/role tests; main implements003, migrator and create-only query/insert changes. Run only preapproved structural/migration subset after source-pinned subgate review; fullH2 remains incomplete.",
+    "Main implements authenticated binding/outbox/activation code while TC authors process/crash and negative tests.",
+    "Freeze all candidate bytes and exact ID/deadline inventory, get independent pre-gate review, then execute fullH2+affected regression.",
+    "Independent final evidence audit, derivative progress reconciliation, commit and push."
+  ],
+  "sql_surface": {
+    "policy": "All public function names below are in schema ifpmic, SECURITY DEFINER with fixed search_path and exact role EXECUTE grants. Return jsonb only with fixed-key envelopes; no caller identity/session/role name argument. Any internal helper is PUBLIC/worker EXECUTE-denied and cannot be a bypass. Bad input gets fixed private protocol error, zero business writes.",
+    "read_dispatch_config() -> jsonb": "Dispatcher only; exact bootstrap chain session_user OID+name -> worker_principals.deployment_id -> execution_deployments -> registered builds. Returns deployment_id, namespace, canonical nonsecret server_endpoint, server_config_sha256 and approved build IDs/source/env/type/queue, no credentials. Missing/inactive/ambiguous mapping fails before RPC; launcher compares config digest.",
+    "read_registered_build(p_build_id text) -> jsonb": "Projector only; own registered deployment/build source/env/type/queue/digest and enabled status. Launcher verifies actual immutable code/env before polling.",
+    "claim_delivery(p_command_id uuid DEFAULT NULL) -> jsonb": "Dispatcher only. Returns idle or immutable envelope with command ID/job/project/route/payload SHA, generation/token/expiry and current binding/build/workspace identity. Does not return session/OIDC/command raw comments. p_command_id optionally selects exact fixture/operational command but does not skip scope/lease predicates.",
+    "reserve_execution(p_command_id uuid,p_generation bigint,p_claim_token uuid,p_build_id text,p_workspace_token uuid,p_workspace_generation bigint) -> jsonb": "Dispatcher only. Ordered locks; owner-registered deployment/build, command create provenance, exact current READY intent and supplied already validated filesystem identity. Returns reserved binding or operational wait/conflict; not command applied.",
+    "record_start_attempt(p_command_id uuid,p_generation bigint,p_claim_token uuid,p_retention_seconds bigint) -> jsonb": "Dispatcher only. Active lease and immutable binding required. Valid retention>3600. First DB timestamp/deadline set once before any start RPC, never extended by retries; existing timestamp returned verbatim.",
+    "admit_run(p_command_id uuid,p_generation bigint,p_claim_token uuid,p_run_id text,p_observed_binding_sha256 text) -> jsonb": "Dispatcher only. Canonical run UUID, exact verified digest and lease; derive sole projector from owner deployment/build registration. Atomically first-run CAS+scope, idempotent same run, conflict no replacement.",
+    "record_delivery(p_command_id uuid,p_generation bigint,p_claim_token uuid,p_result text,p_run_id text DEFAULT NULL,p_error_code text DEFAULT NULL) -> jsonb": "Dispatcher only. Fixed result enum started/signaled/uncertain/retry/receipt_reconciled; stale predicate affects0. started/signaled require exact admitted run. receipt_reconciled requires exact stored terminal receipt and never changes its outcome. retry backoff1/5/30s, operational errors fixed; no arbitrary next_attempt_at input.",
+    "read_activation(p_job_id uuid,p_run_id text,p_build_id text) -> jsonb": "Projector only. Static scope/binding fence; not-admitted returns retryable code with zero projection. Minimal SQL verification material stays inside trusted activity process; activity result serialized into Temporal history contains only ready/wait, IDs, hashes, revision and fixed code, never catalog bytes/command body/actor text.",
+    "project_activation(p_job_id uuid,p_run_id text,p_build_id text,p_transition_sequence bigint,p_expected_revision bigint,p_command_id uuid,p_proposal_sha256 text) -> jsonb": "Projector only. H2 sequence exactly1, expected_revision exactly0, command must immutable create origin. Recompute complete canonical proposal hash including all arguments and pinned binding. Temporal-selected activation is the only allowed proposal; SQL validates then derives applied QUEUED1 or fixed rejection, not arbitrary patch. Same exact receipt replays before mutable human checks.",
+    "report_dispatch_incident(p_command_id uuid,p_generation bigint,p_claim_token uuid,p_code text) -> jsonb": "Dispatcher only, active exact claim and binding scope; fixed incident code quarantines transport/binding only.",
+    "report_projection_incident(p_job_id uuid,p_run_id text,p_build_id text,p_code text) -> jsonb": "Projector only, exact authenticated admitted scope; fixed incident code quarantines binding/outbox, never job/receipt/command business outcome."
+  },
+  "revision_history": {
+    "previous_contract": {
+      "path": "docs/ifpmic/evidence/b03/attempts/h2-implementation-contract-v1.json",
+      "sha256": "977bddc5f12aaaf46322ce537759ef4c0cc4c415494e31a0a40503eba753937f"
+    },
+    "reason": "Independent rejection H2-DEPLOYMENT-REGISTRY-UNDEFINED: define owner-registered immutable pre-job deployment/principal/build bootstrap and fail-closed lookup. No implementation/tests were authored under rejected v1."
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "kind": "ifpmic.b03.h2.contract-progress-reconciliation.v1",
+  "scope": "Planning metadata only. No product/test/runner/lock/README or original source changes.",
+  "parent_commit": "4fc25fb0c488ddb22ff22127fe3b18946e862a91",
+  "contract_acceptance": {
+    "path": "docs/ifpmic/evidence/b03/h2-contract-acceptance.json",
+    "sha256": "edbefed551cad5fd9293ab48c4037af9041792e3f3d7529063b458e1cfa5eef4"
+  },
+  "progress": {
+    "path": "docs/ifpmic/progress.json",
+    "before_sha256": "bdd105d8c16f27bf6cc664dccec30488b3886e4c6b295d6971ab369ee4269c40",
+    "after_sha256": "07750242bdc4536e6f5e3c24d54fe26fdcaa28e4a20fc94bf1d35fad9859de9b",
+    "changed_semantic_paths": [
+      "stages[B03].scope",
+      "stages[B03].increments[h2_durable_delivery_activation]",
+      "next_step",
+      "updated_at"
+    ]
+  },
+  "parent_tracked_sources": {
+    "count": 943,
+    "unchanged": 942,
+    "changed": [
+      "docs/ifpmic/progress.json"
+    ]
+  },
+  "protected": {
+    "original_imports_unchanged": 17,
+    "uploaded_originals_unchanged": 2
+  },
+  "checks": [
+    "All12 contract source pins match current bytes.",
+    "Both independent/TC reviews approve exact same v2 contract for authoring only.",
+    "Preserved v1 rejection and TC authoring review; no code or execution began under rejected v1.",
+    "All existing tracked files except derived progress remain byte-identical to parent commit.",
+    "JSON/ref/hash and whitespace checks replace service regression for this documentation-only increment; no fresh runtime/test pass is claimed."
+  ],
+  "remaining_risk": "H2 implementation, real authenticated PG/Temporal crash evidence, subsequent full B03/H6 and all original32 AT unexecuted.",
+  "goal_status": "active",
+  "real_acceptance_status": "not_executed"
+}

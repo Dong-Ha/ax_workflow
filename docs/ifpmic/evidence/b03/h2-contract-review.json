@@ -1,0 +1,50 @@
+{
+  "kind": "ifpmic.b03.h2.contract-review.v2",
+  "verdict": "approve_authoring_only",
+  "review_scope": "Independent read-only detailed contract review. Approval permits implementation authoring only after TC approves this exact SHA. It does not approve test execution, migration application, service execution, or acceptance.",
+  "reviewed_candidate": {
+    "path": "docs/ifpmic/evidence/b03/h2-implementation-contract.json",
+    "sha256": "f63173ac17ebebd34a15d5966d96b79dc1667a713c00b1b92868b137ba93ded3",
+    "parent_commit": "4fc25fb0c488ddb22ff22127fe3b18946e862a91"
+  },
+  "prior_review": {
+    "path": "docs/ifpmic/evidence/b03/attempts/h2-contract-review-v1.json",
+    "sha256": "529d26470eb22b05723ac8be9b951d2779bdd71851118511e44f39abacd8513a",
+    "prior_candidate_sha256": "977bddc5f12aaaf46322ce537759ef4c0cc4c415494e31a0a40503eba753937f",
+    "resolution": "The previously blocking deployment bootstrap lookup is explicit in this candidate and verified below."
+  },
+  "verified_source_pins": {
+    "docs/ifpmic/B03-WORKFLOW.md": "38fdd875bc76047ed1e3e46c850277fea1a3d1f825662a13b1c21154925f25ff",
+    "docs/ifpmic/evidence/b03/h1-final-review.json": "1ddd9e748961eb1b859ca19838cc2b80046e70e447bf60c1ae39c3ade900e762",
+    "docs/ifpmic/evidence/b03/h2-source-collection.json": "62213046bceb9eb5f528843f1b39443f88f9eeff6ddf54b7171a12f8b438c9f3",
+    "docs/ifpmic/evidence/b03/h2-tc-risk-matrix.json": "cef098ff86faa860881e85da06b9b991ccf5715b7113c1fdb133b37891d1c834",
+    "docs/ifpmic/evidence/b03/h2-security-advice.json": "37215e0b37236149a133722323a28c4c155b649021701e4fa6e8bc9a5b3683e4",
+    "services/ifpmic_api/migrate.py": "3f658907f13f6eab042a7b15f2958e98c65334e995686da434640d100341818d",
+    "services/ifpmic_api/jobs.py": "bc682d6ea83ef6545b3105b2a9e8e4df75273445ebca1f8193219010bcea79b4",
+    "services/ifpmic_api/migrations/001_initial.sql": "cf0437a5f32e1589e4ea821afbb2ef2480d780a276667880aa9a08a0f4c77f12",
+    "services/ifpmic_api/migrations/002_auth_retention.sql": "95c01f06eb586e0c1067f04672edfed8e0a11215752ad859ac9e4744da5a504e",
+    "docs/ifpmic/design-v1/specs/openapi.v1.json": "2ed780cfa06349b18f5025937e050fd98a5cefa34b552eb836cfaccad416dd7a",
+    "docs/ifpmic/design-v1/specs/state-contract.json": "0248e130017043539319c56af854f5388a95d33e7e687902a3438fdff414244a",
+    "docs/ifpmic/source-manifest.json": "8afba9c1fc16ef3a6565f45576792cad51a1aaab59857d3a28666c71ec43007c"
+  },
+  "checks": {
+    "source_pins": "Every source_pins entry in candidate v2 was recomputed against current local bytes and matched. The pinned source collection transitively pins original B03 backlog, REQ-05/14, AT-05/16/29, workflow/state/data-model/OpenAPI/agent contracts and original-source manifest.",
+    "deployment_registry_resolution": "The v2 adds immutable owner-managed execution_deployments with deployment_id, namespace, a canonical nonsecret endpoint and server_config_sha256; it excludes credentials. worker_principals has a mandatory deployment FK and projector-to-build composite FK, with one dispatcher per deployment and one projector per deployment/build. engine_builds is deployment-scoped. The no-argument read_dispatch_config() now explicitly resolves session_user OID/name → active dispatcher principal → immutable deployment → registered builds and fails closed for missing, inactive, ambiguous or mismatched config before claiming or RPC. Per-job bindings reference the same deployment/config. This resolves H2-DEPLOYMENT-REGISTRY-UNDEFINED from the preserved v1 rejection.",
+    "original_scope": "The candidate keeps AT-16 durable delivery in H2, scopes activation as a prerequisite rather than complete workflow execution, preserves AT-05 human work and AT-29 v1/v2 wait compatibility for later H3/H4/H5, and expressly keeps all original AT unexecuted. Paperclip remains supervisory, Temporal remains the sole business-transition authority, AX server/ remains localhost GET-only, and the original 17 contracts plus two uploads remain protected.",
+    "schema_and_api": "The v2 preserves the reviewed create_command_id deferred route-constrained FK/backfill, CreateJob-only job joins, multi-command schema, exact role separation and current external API authorization. The API replay/current-auth path remains distinct from internal projection receipt-first replay.",
+    "security_and_ordering": "Separate SCRAM principals, session_user OID/name authorization, owner-derived exact deployment/build/run scope, fixed SECURITY DEFINER search path/ACLs, sorted principal FOR SHARE fencing, project guard → membership NOWAIT → job → binding → task → outbox ordering, and no network I/O under DB locks align with the senior security advice. The documented local trusted-computing-base boundary does not overclaim Temporal attestation.",
+    "recovery_migration_and_phase_boundaries": "The contract specifies finite same-ID unknown-start recovery below verified retention, no reuse/replacement of an admitted run, append-only 003 migration with preserved 001/002 history and explicit historical test fixture, all351 prior Python regression IDs, and H2/H3/H4/H5/H6 scope separation. H2 does not claim full AT-05/16/29 completion."
+  },
+  "blocking_findings": [],
+  "decision": {
+    "authoring_allowed": true,
+    "required_conditions": [
+      "TC must approve this exact contract SHA before product/test authoring begins, as required by the contract itself.",
+      "Test/service execution remains gated on a separately pinned H2 test ledger and bounded runner plus independent pre-gate review.",
+      "Implementation must preserve credentials outside deployment registry, API requests, Temporal history, logs and public evidence; actual H2 acceptance requires full process/database evidence and independent final review."
+    ],
+    "execution": "not_authorized_by_this_review",
+    "original_acceptance": "AT-05, AT-16, AT-29 and all other original AT remain not_executed."
+  },
+  "method_limits": "Compared candidate v2 to the preserved v1 bytes and reviewed local source/advice only. No tests, services, database, dependency changes or network activity were performed."
+}

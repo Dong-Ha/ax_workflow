@@ -1,0 +1,76 @@
+{
+  "kind": "ifpmic.b03.h2.tc-contract-review.v1",
+  "status": "reviewed_authoring_only",
+  "verdict": "approve_authoring_only",
+  "contract": {
+    "path": "docs/ifpmic/evidence/b03/h2-implementation-contract.json",
+    "sha256": "977bddc5f12aaaf46322ce537759ef4c0cc4c415494e31a0a40503eba753937f"
+  },
+  "review_inputs": {
+    "plan": {"path": "docs/ifpmic/B03-WORKFLOW.md", "sha256": "38fdd875bc76047ed1e3e46c850277fea1a3d1f825662a13b1c21154925f25ff"},
+    "risk_matrix": {"path": "docs/ifpmic/evidence/b03/h2-tc-risk-matrix.json", "sha256": "cef098ff86faa860881e85da06b9b991ccf5715b7113c1fdb133b37891d1c834"},
+    "security_advice": {"path": "docs/ifpmic/evidence/b03/h2-security-advice.json", "sha256": "37215e0b37236149a133722323a28c4c155b649021701e4fa6e8bc9a5b3683e4"},
+    "source_collection": {"path": "docs/ifpmic/evidence/b03/h2-source-collection.json", "sha256": "62213046bceb9eb5f528843f1b39443f88f9eeff6ddf54b7171a12f8b438c9f3"},
+    "original": [
+      {"path": "docs/ifpmic/design-v1/specs/implementation-backlog.json", "sha256": "115e48568e0464b8e67ef17274dba97b3046a8de902e1cf426d9b70e1528e5d0"},
+      {"path": "docs/ifpmic/design-v1/specs/acceptance-cases.json", "sha256": "f7163553edc9e8e753965cb8748ab04aac8f68c1a453f567f62284a01b38b0d5"},
+      {"path": "docs/ifpmic/design-v1/specs/openapi.v1.json", "sha256": "2ed780cfa06349b18f5025937e050fd98a5cefa34b552eb836cfaccad416dd7a"},
+      {"path": "docs/ifpmic/design-v1/specs/workflow.v1.json", "sha256": "bab40a7abb3929896add1ef2cd074893dd2a7de14d200a5d6cea4b7a77eb0e89"},
+      {"path": "docs/ifpmic/design-v1/specs/state-contract.json", "sha256": "0248e130017043539319c56af854f5388a95d33e7e687902a3438fdff414244a"},
+      {"path": "docs/ifpmic/design-v1/specs/agent-contract.json", "sha256": "ca6d4bea7abf0fffe7354c482af0d521c3a2e367217a69923a4bfe43fa27ab64"},
+      {"path": "docs/ifpmic/design-v1/specs/data-model.json", "sha256": "00c84f8a39b1b8959daa8d94b1d67e860d83ad9bdb809065a5cd3b18af07071b"}
+    ]
+  },
+  "scope": {
+    "decision": "The contract is sufficiently specific to begin authoring H2 code and independent tests against its fixed schema, SQL function surface, role model, status distinctions, and fail-closed activation behavior. This approval does not authorize test/service execution or establish acceptance.",
+    "original_trace": "The H2 scope is bounded to durable create dispatch and initial DRAFT0→QUEUED1 activation, with H2 explicitly not executing P01 or later business steps. AT-16 delivery/recovery is directly targeted; AT-05 is only an activation/human-command boundary prerequisite and full human flow is deferred to H3/H4; AT-29 is limited to immutable build binding in H2 and its full v1 wait/v2 rollout remains H5. The plan's P16 FAIL→new-cycle P07 review→P08–P16 re-evaluation remains a later H3 scenario, not an H2 pass criterion.",
+    "legacy_regression": "The contract explicitly retains the existing 351 Python case IDs, five H1 cases, byte-identical migrations 001/002, the G4/G5 invariants, and exact historical-chain coverage while adding 003-chain checks. It does not relabel prior runs as fresh H2 evidence.",
+    "h2_execution": "Not executed by this review. A separately reviewed exact case ledger and bounded runner are required before PostgreSQL or Temporal services/tests are run."
+  },
+  "review_findings": [
+    {
+      "id": "H2-TC-01",
+      "severity": "nonblocking_execution-condition",
+      "finding": "The required crash cut 'Temporal accepted start before client receives response' is a distinct case from 'start response before run-admission PG commit'. The contract requires real PostgreSQL/Temporal and prohibits treating an in-process fabricated return as crash evidence, but it does not yet prescribe the exact transport cut mechanism.",
+      "recommendation": "Before the case ledger is frozen, name a deterministic mechanism that proves the server persisted the exact start before the client response is withheld/lost (for example, a private test-owned forwarding barrier coordinated with an independent Temporal observer). Preserve the actual server/history evidence. If this cannot be demonstrated, keep that mandatory cut unpassed and do not claim full H2 acceptance."
+    },
+    {
+      "id": "H2-TC-02",
+      "severity": "resolved_by_contract",
+      "finding": "Database worker identity and receipt semantics are now explicit enough for literal tests: dispatcher/projector are authenticated SCRAM LOGIN principals, activity projector credential use is allowed without requiring a redundant worker role, and privileged functions bind session_user OID/name and exact job/run/build scope.",
+      "evidence": "Contract worker_security.authentication/authorization/role_matrix and security-advice findings AUTHENTICATED_SCOPE, OWNER_DERIVED_SCOPE, and NOT_CODE_ATTESTATION. Tests must not claim SQL proves a hostile or compromised trusted worker is genuine Temporal activity."
+    },
+    {
+      "id": "H2-TC-03",
+      "severity": "resolved_by_contract",
+      "finding": "External API authorization is explicitly separate from internal receipt idempotency. Existing user-facing requests and GETs retain current session/membership/ownership checks; only an authenticated and statically scoped machine principal may replay an exact committed internal projection receipt before mutable human authority is reevaluated. First application still checks current authority.",
+      "evidence": "Contract activation_and_projection.public_api_replay, first_apply_transaction, replay; SQL surface project_activation; corrected H2 risk-matrix H2-CURRENT-AUTH-RECEIPT-REPLAY."
+    },
+    {
+      "id": "H2-TC-04",
+      "severity": "resolved_by_contract",
+      "finding": "Start-window, retention and known-history-missing outcomes fail closed: exact deterministic workflow ID, no reuse/fallback, finite window shorter than verified namespace retention, and missing history for an admitted run quarantines rather than recreates. The contract transparently makes physical history deletion a mandatory acceptance case only if a supported local seam can be verified; otherwise H2 acceptance remains pending.",
+      "evidence": "Contract identity_and_hashing.run_policy, delivery_protocol.unknown_start, verification.real_history_missing and verification.crash_barriers."
+    },
+    {
+      "id": "H2-TC-05",
+      "severity": "resolved_by_contract",
+      "finding": "The H2 step scope is constrained to the create activation decision. DRAFT0→QUEUED1 plus receipt is the only positive transition; P01 and all later step runs are explicitly H3. Human command transport cannot consume a task or synthesize outcome, and full human routes/AT-05 are deferred to H3/H4. Full v1/v2 behavior/AT-29 is H5.",
+      "evidence": "Contract scope.implemented_in_H2/deferred_with_reason, activation_and_projection.workflow/normal, and implementation_order."
+    }
+  ],
+  "required_testability_conditions_before_execution": [
+    "Pin exact H2 case IDs, per-case deadlines, owned-process lifecycle rules, private source bundle/log/JUnit/PG lifecycle evidence and cleanup in a separately reviewed ledger/runner.",
+    "For SCRAM tests, use an isolated PostgreSQL HBA/configuration where each H2 service role is forced through password authentication and cannot match a trust rule; test correct, missing, wrong and cross-role credentials in separate actual connections/processes. Preserve G1's trust-local historical tests without claiming they prove H2 authentication.",
+    "Run actual local persistent Temporal and real PG across process crash/restart boundaries; assert exact DB and Temporal history before/after and separately prove effective projection cardinality.",
+    "Test external HTTP replay under revoked/expired session or membership as current 401/403 with no receipt disclosure, separately from internal scoped machine receipt replay; do not merge their authorization oracles.",
+    "Preserve all 351 pre-existing Python IDs and H1 cases, historical 001/002 coverage, and run affected G4/G5 tests. The complete original acceptance set remains unexecuted until separate approved evidence exists."
+  ],
+  "decision_boundary": {
+    "product_code_authorized": true,
+    "test_authoring_authorized": true,
+    "test_or_service_execution_authorized": false,
+    "acceptance_claim": "none",
+    "remaining_original_acceptance": ["AT-05 full human task flow deferred to H3/H4", "AT-16 full crash/replay scenario requires H2 execution evidence", "AT-29 full version compatibility scenario deferred to H5", "all original 32 AT cases remain not_executed"]
+  }
+}

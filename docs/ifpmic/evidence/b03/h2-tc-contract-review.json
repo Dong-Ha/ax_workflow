@@ -1,0 +1,86 @@
+{
+  "kind": "ifpmic.b03.h2.tc-contract-review.v2",
+  "status": "reviewed_authoring_only",
+  "verdict": "approve_authoring_only",
+  "contract": {
+    "path": "docs/ifpmic/evidence/b03/h2-implementation-contract.json",
+    "sha256": "f63173ac17ebebd34a15d5966d96b79dc1667a713c00b1b92868b137ba93ded3"
+  },
+  "review_history": {
+    "previous_contract": {"path": "docs/ifpmic/evidence/b03/attempts/h2-implementation-contract-v1.json", "sha256": "977bddc5f12aaaf46322ce537759ef4c0cc4c415494e31a0a40503eba753937f"},
+    "previous_review": {"path": "docs/ifpmic/evidence/b03/attempts/h2-tc-contract-review-v1.json", "sha256": "2eba545d711bc2865973c5a134076a3bd25ea45ed667e7f927e75522308a181c"},
+    "previous_blocker": "The v1 contract did not define an owner-registered deployment row or a bootstrap path for a dispatcher before a job binding existed. That version was rejected and is preserved unchanged."
+  },
+  "review_inputs": {
+    "plan": {"path": "docs/ifpmic/B03-WORKFLOW.md", "sha256": "38fdd875bc76047ed1e3e46c850277fea1a3d1f825662a13b1c21154925f25ff"},
+    "risk_matrix": {"path": "docs/ifpmic/evidence/b03/h2-tc-risk-matrix.json", "sha256": "cef098ff86faa860881e85da06b9b991ccf5715b7113c1fdb133b37891d1c834"},
+    "security_advice": {"path": "docs/ifpmic/evidence/b03/h2-security-advice.json", "sha256": "37215e0b37236149a133722323a28c4c155b649021701e4fa6e8bc9a5b3683e4"},
+    "source_collection": {"path": "docs/ifpmic/evidence/b03/h2-source-collection.json", "sha256": "62213046bceb9eb5f528843f1b39443f88f9eeff6ddf54b7171a12f8b438c9f3"},
+    "original_specs": [
+      {"path": "docs/ifpmic/design-v1/specs/implementation-backlog.json", "sha256": "115e48568e0464b8e67ef17274dba97b3046a8de902e1cf426d9b70e1528e5d0"},
+      {"path": "docs/ifpmic/design-v1/specs/acceptance-cases.json", "sha256": "f7163553edc9e8e753965cb8748ab04aac8f68c1a453f567f62284a01b38b0d5"},
+      {"path": "docs/ifpmic/design-v1/specs/openapi.v1.json", "sha256": "2ed780cfa06349b18f5025937e050fd98a5cefa34b552eb836cfaccad416dd7a"},
+      {"path": "docs/ifpmic/design-v1/specs/workflow.v1.json", "sha256": "bab40a7abb3929896add1ef2cd074893dd2a7de14d200a5d6cea4b7a77eb0e89"},
+      {"path": "docs/ifpmic/design-v1/specs/state-contract.json", "sha256": "0248e130017043539319c56af854f5388a95d33e7e687902a3438fdff414244a"},
+      {"path": "docs/ifpmic/design-v1/specs/agent-contract.json", "sha256": "ca6d4bea7abf0fffe7354c482af0d521c3a2e367217a69923a4bfe43fa27ab64"},
+      {"path": "docs/ifpmic/design-v1/specs/data-model.json", "sha256": "00c84f8a39b1b8959daa8d94b1d67e860d83ad9bdb809065a5cd3b18af07071b"}
+    ]
+  },
+  "review": {
+    "decision": "v2 resolves the prior pre-job deployment-registry blocker. The contract is sufficiently specific to begin H2 code and independent test authoring against its deployment bootstrap, role and scope model, fixed H2 activation boundary, and delivery/projection oracles.",
+    "deployment_registry": {
+      "result": "resolved",
+      "evidence": [
+        "execution_deployments is owner-registered and immutable, keyed by deployment_id and carrying namespace, nonsecret endpoint and server configuration digest.",
+        "worker_principals has a deployment FK; dispatcher-to-deployment and projector-to-build associations are constrained and immutable.",
+        "read_dispatch_config defines the pre-job bootstrap chain session_user OID/name → worker_principals.deployment_id → execution_deployments → registered builds, with missing/inactive/ambiguous mapping failing before RPC.",
+        "Execution bindings, build rows and worker run scopes use the same deployment identity; another endpoint with the same namespace is not accepted as the original deployment."
+      ]
+    },
+    "scope_and_oracle_checks": [
+      {
+        "id": "H2-REQUIREMENTS",
+        "result": "satisfied_for_authoring",
+        "finding": "The contract ties H2 to durable create delivery and initial activation while explicitly excluding P01/later transitions. Full P07/P21 human workflow is deferred to H3/H4, and full AT-29 v1 wait/v2 deployment/resume is deferred to H5. H2 does not claim AT-05 or AT-29 completion."
+      },
+      {
+        "id": "H2-PG-TEMPORAL",
+        "result": "testable_with_required_real_services",
+        "finding": "The contract requires actual PostgreSQL and persistent local Temporal, real SCRAM logins, owner/process role separation, run binding, process-level crash/restart evidence, and exact DB/history assertions. It preserves all 351 prior Python IDs, five H1 cases, G4/G5 regression and byte-identical 001/002 migrations. G1's trust-local fixture is not accepted as SCRAM proof."
+      },
+      {
+        "id": "H2-STATUS-AND-RECEIPT",
+        "result": "satisfied_for_authoring",
+        "finding": "Accepted, dispatched and applied are distinct. External HTTP replay/GET keeps current session, membership and ownership checks and cannot disclose a receipt to a revoked caller. Internal projection replay is separately scoped to an authenticated machine principal plus exact job/run/build; only there may an immutable committed receipt replay before mutable human authority. First application checks current human authority."
+      },
+      {
+        "id": "H2-UNCERTAIN-START",
+        "result": "fail_closed_oracle_defined",
+        "finding": "The contract fixes deterministic workflow identity, no fallback/reuse, finite start reconciliation below verified retention, and quarantine instead of recreation for an admitted run whose history is missing. It explicitly says history deletion must use a supported local seam and otherwise acceptance remains pending; a mocked NotFound alone is insufficient."
+      },
+      {
+        "id": "H2-SCRAM-IDENTITY",
+        "result": "satisfied_for_authoring",
+        "finding": "Dispatcher and projector/activity credentials are distinct SCRAM LOGIN principals with actual session_user OID/name binding. A separate worker DB role is not assumed; Temporal activities may use the narrowly scoped projector credential. The local trusted-worker/RPC boundary and lack of cryptographic code attestation are explicit."
+      }
+    ],
+    "required_before_execution": [
+      "The exact case ledger and bounded runner must be reviewed before starting PG/Temporal services or running the H2 test suite.",
+      "The ledger must give a real proof for the distinct crash cut 'Temporal accepted start but client response was lost', separate from 'start response arrived but run-admission transaction did not commit'. A viable approach is an opaque test-owned TCP forwarding barrier which passes client→server bytes, holds server→client bytes, uses an independent direct Temporal observer to verify the exact Started history, then terminates the owned dispatcher before any response is delivered. This is a proposed evidence method, not a contract change; if it cannot be demonstrated, that required cut remains unpassed and full H2 acceptance must not be claimed.",
+      "The ledger should pin the exact canonical input/domain for execution_deployments.server_config_sha256. The contract requires a versioned canonical configuration digest over nonsecret endpoint/namespace/protocol/server identity; tests should independently compute it from a fixed literal rather than merely echoing a product-generated digest.",
+      "Use an isolated PostgreSQL HBA setup that forces H2 service roles through SCRAM and cannot match a trust rule; test correct, absent, incorrect and cross-role credentials from actual connections/processes. Keep the historical G1 trust-local tests as regression only.",
+      "Preserve raw PG/Temporal state, process identities and logs privately; only sanitized summaries/hashes may be published. Test timeouts must not be treated as proof that owned services exited."
+    ],
+    "limits": [
+      "This review does not execute or accept H2, AT-16, AT-05, AT-29, or any original 32 AT cases.",
+      "The contract and security advice state that a compromised trusted dispatcher can report false Temporal facts; PostgreSQL ACLs do not attest that a caller is a genuine Temporal activity.",
+      "Production TLS/mTLS, remote Temporal topology, corporate SSO, real Agent/build/SAM/TEM/SQE/device/publisher integrations and full H5/AT-29 rollout remain outside this authorization."
+    ]
+  },
+  "authorization": {
+    "product_code_authoring": true,
+    "independent_test_authoring": true,
+    "test_or_service_execution": false,
+    "acceptance": "none; requires reviewed exact test ledger/runner and fresh evidence"
+  }
+}

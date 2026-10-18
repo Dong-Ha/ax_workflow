@@ -1,0 +1,144 @@
+{
+  "kind": "ifpmic.b03.h2.source-collection.v1",
+  "status": "read_only_source_collection_not_contract_or_acceptance",
+  "purpose": "Pin original B03/17-source and current PostgreSQL/API implementation facts that a later exact-SHA H2 contract must resolve before code or tests.",
+  "method": "Local read-only inspection at the stated HEAD. No product/test edits, services, database, dependency installation, or network access.",
+  "head": "4fc25fb0c488ddb22ff22127fe3b18946e862a91",
+  "source_pins": {
+    "docs/ifpmic/B03-WORKFLOW.md": "38fdd875bc76047ed1e3e46c850277fea1a3d1f825662a13b1c21154925f25ff",
+    "docs/ifpmic/source-manifest.json": "8afba9c1fc16ef3a6565f45576792cad51a1aaab59857d3a28666c71ec43007c",
+    "docs/ifpmic/design-v1/specs/implementation-backlog.json": "115e48568e0464b8e67ef17274dba97b3046a8de902e1cf426d9b70e1528e5d0",
+    "docs/ifpmic/design-v1/specs/requirements.json": "6e1dc87cdbcaa66ed690ffd13d2d70242dff43410c9f822447bd520719ce249b",
+    "docs/ifpmic/design-v1/specs/acceptance-cases.json": "f7163553edc9e8e753965cb8748ab04aac8f68c1a453f567f62284a01b38b0d5",
+    "docs/ifpmic/design-v1/specs/data-model.json": "00c84f8a39b1b8959daa8d94b1d67e860d83ad9bdb809065a5cd3b18af07071b",
+    "docs/ifpmic/design-v1/specs/workflow.v1.json": "bab40a7abb3929896add1ef2cd074893dd2a7de14d200a5d6cea4b7a77eb0e89",
+    "docs/ifpmic/design-v1/specs/state-contract.json": "0248e130017043539319c56af854f5388a95d33e7e687902a3438fdff414244a",
+    "docs/ifpmic/design-v1/specs/agent-contract.json": "ca6d4bea7abf0fffe7354c482af0d521c3a2e367217a69923a4bfe43fa27ab64",
+    "docs/ifpmic/design-v1/specs/openapi.v1.json": "2ed780cfa06349b18f5025937e050fd98a5cefa34b552eb836cfaccad416dd7a",
+    "docs/ifpmic/evidence/b03/source-collection.json": "ba88a0c2b1d4412ff1f8bec84e516fc62b7786662ea7c0715db670336f2a7675",
+    "docs/ifpmic/evidence/b03/tc-risk-matrix.json": "369ef9d3d28935f000fab4aff560945104575d661ba4991b57eb33ed20c8624b",
+    "docs/ifpmic/evidence/b03/protocol-advice.json": "ab6221cf292b85b857aae16dc9cb5e60d6570d098bbcf494b6e0176ec9ade2da",
+    "docs/ifpmic/evidence/b03/h1-verification.json": "0e621d424c9a91ce0b58b982a22da7376262699a91eb9deec612f3fa283b8546",
+    "docs/ifpmic/evidence/b03/h1-final-review.json": "1ddd9e748961eb1b859ca19838cc2b80046e70e447bf60c1ae39c3ade900e762",
+    "services/ifpmic_api/migrations/001_initial.sql": "cf0437a5f32e1589e4ea821afbb2ef2480d780a276667880aa9a08a0f4c77f12",
+    "services/ifpmic_api/migrations/002_auth_retention.sql": "95c01f06eb586e0c1067f04672edfed8e0a11215752ad859ac9e4744da5a504e",
+    "services/ifpmic_api/migrate.py": "3f658907f13f6eab042a7b15f2958e98c65334e995686da434640d100341818d",
+    "services/ifpmic_api/jobs.py": "bc682d6ea83ef6545b3105b2a9e8e4df75273445ebca1f8193219010bcea79b4",
+    "services/ifpmic_api/authority.py": "c1f8c91985f119b6435fc175cf21cc350c54ef2ba47959c4526bb22e6afa6734",
+    "services/ifpmic_api/workspace.py": "ad3e29f27ee20bc82eff9afcf51d9bb5ef6374d50b69bcf8fa508d81ecb60f67",
+    "services/ifpmic_api/app.py": "a65c3d44a14ecae7b819e5042d4f490ce68c8b9b5f5962d1b5f2bbfe52fef192",
+    "tests/ifpmic_api/jobs_fixture.py": "aa9f4c7baada8617b9b1271fa0a36d6e7c00fae7bfbb6ff24fb2983ff069130a",
+    "tests/ifpmic_api/test_jobs.py": "dc96141956bb93ff1d3b06214bf4d176265cea654c3f2235f4e281b071287a28",
+    "tests/ifpmic_api/test_workspace.py": "0254b67ac0a1da79dad2bf81110ca4d5519bc1dfe0e9c1210e807016b2d7d634",
+    "tests/ifpmic_api/test_migrations.py": "1f4f7ea3576875222a639447d7ef39177d811883691f807347146fab407e2c12",
+    "tests/ifpmic_api/conftest.py": "8bb375918a493ab7f18291f8cc2f0a1c13eaaa28170c4a36cdc5f40b0b0b64e1"
+  },
+  "original_scope": {
+    "backlog": {
+      "path": "docs/ifpmic/design-v1/specs/implementation-backlog.json",
+      "pointer": "/2",
+      "id": "B03",
+      "depends_on": ["B01", "B02"],
+      "deliverables": "Temporal workflow, outbox, human wait, version pin",
+      "acceptance_ids": ["AT-05", "AT-16", "AT-29"]
+    },
+    "acceptance": [
+      {"id": "AT-05", "path": "docs/ifpmic/design-v1/specs/acceptance-cases.json#/4", "oracle": "At P07 or P21, an agent completion cannot advance without human submission; the assigned work item exists."},
+      {"id": "AT-16", "path": "docs/ifpmic/design-v1/specs/acceptance-cases.json#/15", "oracle": "After command acceptance and before outbox delivery, server termination/restart redelivers by command_id, deduplicates, and loses no job."},
+      {"id": "AT-29", "path": "docs/ifpmic/design-v1/specs/acceptance-cases.json#/28", "oracle": "A v1 workflow waiting for a human resumes with v1 semantics after v2 deploy, using compatible worker or explicit migration."}
+    ],
+    "requirements": [
+      {"id": "REQ-05", "path": "docs/ifpmic/design-v1/specs/requirements.json#/4", "meaning": "Preserve original human-owned stages P06, P07, P08, P10, P21; directly exercised by AT-05."},
+      {"id": "REQ-14", "path": "docs/ifpmic/design-v1/specs/requirements.json#/13", "meaning": "Human-needed notification and defined recovery route; B03 locally checks P16 FAIL → new-cycle P07 human review → P08–P16 re-evaluation. This is not full B05 AT-09 acceptance."}
+    ],
+    "source_preservation": "B03 plan lines 9, 11, 13, 76, 80, 84 preserve original 17 design files plus two uploads unchanged; H2 must not edit those inputs. Exact source identities and two-upload hashes are already recorded by the pinned B03 source-collection and source-manifest; this artifact contains no raw uploads.",
+    "authority_boundary": "B03 plan lines 9, 31, 37, 39: Paperclip is upper-layer supervisory UI; IFPMIC FastAPI accepts/authenticates and reads commands; PostgreSQL stores durable inbox/outbox and projections; Temporal is the sole business transition authority. AX server/ remains localhost GET-only. No G5 workspace READY implication or alternate executor."
+  },
+  "current_schema_and_migration_facts": {
+    "migration_001_path": "services/ifpmic_api/migrations/001_initial.sql",
+    "migration_001_contract": [
+      {"lines": "12-23", "objects": "authorization_guards; make_project_guard; project_guard trigger", "fact": "One stable guard row per project; project creation installs it."},
+      {"lines": "24-46", "objects": "memberships; lock_project_authority; membership_guard trigger", "fact": "Membership insert/update/delete serializes through project guard. Runtime has UPDATE(lock_version) only so it can SELECT FOR UPDATE without updating authority columns."},
+      {"lines": "102-118", "objects": "jobs", "fact": "Current job has job_id, owner/project/snapshot, workflow_id CHECK ifpmic-sw-v1, initial DRAFT/revision0/cycle0 and existing allowed status set; project/snapshot FK and UNIQUE(project_id,job_id). There is no create_command_id column."},
+      {"lines": "142-158", "objects": "commands", "fact": "One unique job_id per command currently; route CHECK permits only POST /api/v1/jobs; unique(actor_id,route,idempotency_key); FK(project_id,job_id) to jobs; UNIQUE(command_id,job_id) supports current workspace intent composite FK. Payload/identity columns exist but are not declared immutable by a trigger."},
+      {"lines": "159-164", "objects": "commands_outbox", "fact": "Exactly one row per command_id (PK/FK); only pending/dispatched state and created_at. No claim generation/token/expiry, attempt, delivery identity, lease, or multi-message ordinal."},
+      {"lines": "165-175", "objects": "workspace_intents", "fact": "One intent/job and unique command_id; composite FK(command_id,job_id) references commands. This current relation assumes one command per job."},
+      {"lines": "193-227", "objects": "grants", "fact": "Runtime may SELECT tables and INSERT initial job/command/outbox/workspace intent but cannot UPDATE job status, command outcome, or outbox state. Operator cannot read/write commands/outbox; no dispatcher/projector roles are defined. H2 must add purpose-limited non-owner roles and prove privilege denials; do not widen runtime/operator into authority."}
+    ],
+    "migration_002": {"path": "services/ifpmic_api/migrations/002_auth_retention.sql", "lines": "1-5", "fact": "Only authentication/session expiry indexes and cleanup support; preserve its bytes and behavior."}
+  },
+  "migration_runner_and_regression_baseline": {
+    "runner": {
+      "path": "services/ifpmic_api/migrate.py",
+      "symbols": ["apply_migrations", "MigrationError"],
+      "facts": [
+        "apply_migrations sorts and applies every [0-9][0-9][0-9]_*.sql file, recording each version and source SHA in schema_migrations under an advisory lock and one transaction.",
+        "It rejects applied versions absent from the source directory, changed bytes for an applied version (MIGRATION_DRIFT), and changed runtime/operator role identity (MIGRATION_ROLE_DRIFT). Roles must pre-exist and be login, non-superuser, non-createdb/createrole, non-bypass-RLS, non-replication, non-member/non-granted-role.",
+        "A new numbered H2 migration is automatically included. H2 must define behavior for upgrading databases with exactly 001+002 records and for fresh databases, plus rollback/recovery after transactional migration failure; it must not edit 001/002 bytes or pretend their prior SHA records represented H2 schema."
+      ]
+    },
+    "historical_g1_test_contract": {
+      "path": "tests/ifpmic_api/test_migrations.py",
+      "pinned_hash": "1f4f7ea3576875222a639447d7ef39177d811883691f807347146fab407e2c12",
+      "facts": [
+        "The existing historical G1 oracle hard-pins migration 001/002 bytes and expects a fresh schema apply result exactly [001_initial, 002_auth_retention], 16 tables, and literal runtime/operator column-level grant sets.",
+        "Migration tests include rerun, removed-version and changed-file/role drift, least-privilege checks, actual denied mutations, real-grant denial, CLI secrecy, database constraints, transaction rollback and concurrent migration serialization.",
+        "The accepted G1 archive is historical evidence for the original two-migration schema; it must remain unchanged and be distinguished from tests of the current full migration chain. H2 must retain all existing 351 Python regression case IDs while updating current migration expectations and adding a current-chain test for 001+002+H2; keep explicit historical 001/002 coverage/pins so the old migration contract does not disappear. Do not simply drop or skip the old migration/privilege cases to make the new schema pass."
+      ],
+      "related_fixture": {
+        "path": "tests/ifpmic_api/conftest.py",
+        "sha256": "8bb375918a493ab7f18291f8cc2f0a1c13eaaa28170c4a36cdc5f40b0b0b64e1",
+        "facts": "PostgreSQL harness provisions a separate non-owner migrator plus runtime/operator/alternate runtime roles and disposable databases. Preserve this actual non-owner role boundary for new dispatcher/projector roles; tests must use real database roles, not mocked privilege checks."
+      }
+    }
+  },
+  "current_service_and_test_facts": {
+    "api_routes": {
+      "path": "services/ifpmic_api/app.py",
+      "symbols": ["create_job", "list_jobs", "job_snapshot", "command_status"],
+      "routes": ["POST /api/v1/jobs", "GET /api/v1/jobs", "GET /api/v1/jobs/{job_id}", "GET /api/v1/commands/{command_id}"],
+      "absence": "No human submission, plan-decision, notifications, event, dispatcher, or projector API/worker is implemented in this module."
+    },
+    "job_service": {
+      "path": "services/ifpmic_api/jobs.py",
+      "symbols_and_lines": ["JobService.lock_membership:58-69", "replay:72-82", "probe:85-99", "create:140-204", "list:215-231", "snapshot:233-248", "command:250-264"],
+      "facts": [
+        "create closes DB/session locks before external SnapshotBridge capture; then reauthenticates, locks project guard then membership FOR UPDATE NOWAIT, validates eligibility/artifacts, and atomically inserts DRAFT job + accepted CreateJob command + one pending outbox row + RESERVED workspace intent.",
+        "Initial receipt uniqueness is actor/route/idempotency key. A replay probe looks up the receipt, then rechecks current session, active membership and job ownership; that is current API replay policy and must not be silently confused with the B03 projection rule that an already committed applied/rejected terminal receipt is checked before authority revalidation.",
+        "list and snapshot join all commands by project/job; this currently yields one row because commands.job_id is UNIQUE. H2 must change reads to the explicit create_command_id relation to avoid person-command rows duplicating jobs or leaking non-CreateJob payload as profile fields.",
+        "snapshot rejects any job beyond DRAFT/revision0/cycle0 and returns empty steps/last_event_id. It is a G4 placeholder, not an execution projection.",
+        "Job DTO currently exposes workflow_version as the stored workflow_id. B01 workflow_id ifpmic-sw-v1 is distinct from workflow JSON schema_version 1.0.0."
+      ]
+    },
+    "authority_and_workspace": {
+      "authority_path": "services/ifpmic_api/authority.py",
+      "authority_lines": "50-100",
+      "fact": "Operator grant/revoke transaction takes authorization_guards FOR UPDATE and samples time after lock. It does not provide worker/projector credentials or a dispatcher authority path.",
+      "workspace_path": "services/ifpmic_api/workspace.py",
+      "workspace_symbols": ["WorkspaceService.claim", "finish", "reconcile_once"],
+      "fact_workspace": "G5 worker claims only workspace_intents with FOR UPDATE SKIP LOCKED, commits a leased generation/token before filesystem I/O, then token/generation/expiry-fences READY/ERROR. READY is not command applied and this worker must remain separate from Temporal dispatcher/projector capabilities."
+    },
+    "test_fixtures": {
+      "fixture_path": "tests/ifpmic_api/jobs_fixture.py",
+      "fixture_symbols": ["seed_job_rows", "valid_create_job", "client_with"],
+      "fact": "seed_job_rows directly creates one job, one create-route command, one outbox row, one workspace intent per job (lines 268-319); existing fixtures encode current one-command-per-job schema and will need explicit H2-era multi-command coverage.",
+      "test_path": "tests/ifpmic_api/test_jobs.py",
+      "covered": ["original create/list/detail/command DTOs", "same-key same-body replay and different-body conflict", "transaction fault boundaries", "concurrent idempotency races", "authorization/delegation and isolation", "real Uvicorn accepted receipt/restart"],
+      "gap": "No B03 outbox claim/ack, Temporal start, projection/activity, human command/task/notification, or run-binding tests exist yet. test_temporal_toolchain.py is H1 synthetic Temporal API/process qualification only; it does not implement workflow/business dispatch."
+    }
+  },
+  "h2_contract_items_before_implementation": [
+    "Add a new migration; preserve 001/002 bytes. Backfill exactly one existing CreateJob command for every existing job into jobs.create_command_id, then enforce NOT NULL plus a deferred composite reference that proves the target command has the same job and POST /api/v1/jobs route. Define the matching command unique key and immutable/check constraints. Preserve create-command per-job uniqueness while allowing multiple human commands per job; do not weaken actor/route/idempotency uniqueness.",
+    "Replace commands.job_id UNIQUE semantics deliberately, because it currently forbids multi-command jobs and workspace_intents currently assumes its one command is the CreateJob identity. Keep workspace intent tied to create command (or explicitly document a reviewed compatible relation) and prove jobs.create_command_id cannot be relinked by runtime, dispatcher, or projector.",
+    "Specify outbox cardinality and per-command immutable message identity: current command_id primary key only models a single pending/dispatched row, with no claim lease/generation/attempt. H2 plan's SKIP LOCKED claim lease/token/generation, post-commit network call, retry/backoff, stale-ack zero effect, and accepted/dispatched/applied distinctions need precise rows, unique keys, role column grants, failure/error states, and transaction boundaries.",
+    "Define separate least-privilege DB roles/credentials for API runtime, dispatcher and projection activity; explicitly list SELECT/INSERT/UPDATE columns and guarded functions. Current migrations define only runtime/operator. Dispatcher must not write job projections/terminal receipts unless explicitly specified; projector must not claim or acknowledge outbox; neither should mutate create_command_id, snapshot/profile authority, workspace identity, membership, or schema. Include negative privilege tests under actual non-owner credentials.",
+    "Resolve lock order and receipt semantics in SQL/API. Existing job create path uses project guard → membership NOWAIT, then idempotency race probes; workspace uses row lock/lease and performs filesystem work after claim commit. B03 projection requires project guard → job → task, and committed receipt lookup before checking mutable authority. Define how new-command acceptance, activation receipt, projection replay, and command-status read differ, plus exact READ COMMITTED/current clock placement and lock timeout handling. Do not reuse or invert G4 lock order implicitly.",
+    "Tie workflow start to a permanent per-job execution binding and a run-id CAS fence; define immutable workflow/build/task-queue, exact B01 snapshot/bundle/source hashes, deterministic workflow ID and start command association. Recovery after uncertain start must query same execution/history and never create a replacement semantic run. Distinguish Temporal accepted from command applied and require projection activity commit before advancing business action.",
+    "Scope H2 evidence to actual PostgreSQL and local Temporal fault/process tests: before/after schema and role privileges, accepted/outbox/claim/remote-start/ack/projection cuts, stale-token ack, duplicate dispatch, response loss, worker restart, run-ID binding, DB commit uncertainty, and no command loss/effective duplicate execution. H1 evidence is only installed client/server/tool qualification, not this proof."
+  ],
+  "open_observations": [
+    "No current service function or table authenticates a dispatcher/projector as an internal identity; Temporal task queue/process availability alone does not provide DB authorization. Exact credential injection/storage/lifecycle must be decided in H2, without putting credentials in requests, histories, logs, or public evidence.",
+    "The exact 17 original source contracts and two uploaded source files remain controlled by the existing pinned source-manifest/source-collection and B03 plan. This collection does not duplicate or export their contents; verify their current hashes before any gate.",
+    "This artifact records current interfaces only. It does not choose H2's schema, database roles, Temporal message API, or whether a single command-outbox row is extended versus normalized; those choices require the detailed reviewed H2 contract and TC ledger called for by B03 plan line 76."
+  ]
+}
