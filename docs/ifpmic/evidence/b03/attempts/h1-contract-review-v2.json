@@ -1,0 +1,34 @@
+{
+  "kind": "ifpmic.b03.h1.contract-review.v2",
+  "reviewed_contract": {
+    "path": "docs/ifpmic/evidence/b03/h1-execution-contract.json",
+    "sha256": "4c5602be12d05c101b04e7887219a89215232d38dc1795f4b722f84dfa356b4b"
+  },
+  "pinned_inputs_verified": {
+    "tc_plan": "9603dd641f559a05425ce6d4632596d992c883c06c17601debf8f15fe14e9fa5",
+    "cli_source_observations": "6166cbbb26a4204badbd76875639b79b6a3c8b51fe064a0c68a6908413e5cfcf",
+    "resolver_preparation": "a777a09f3a00a24b4dc21a7aa3e649b5237aeec1360fbfd4c19c244b897eb213",
+    "installation_preparation": "277fe057d633759381ddcbba2df22a2772edf928c84d6dc43eb9f0ffa0d849a6",
+    "plan_acceptance": "77bb4d6041fb117e81e3c2ee9dfe268ede7b397696909e21fac12a4e6eaccfc8"
+  },
+  "verdict": "blocked_before_implementation_or_execution",
+  "resolved_prior_findings": [
+    "Pinned official Temporal CLI v1.9.1 source observations record FrontendIP wiring for frontend/internal RPC, HTTP, and metrics listener configuration; actual owned socket inspection remains required. The binary/source observation limitation is disclosed.",
+    "The pinned TC plan now explicitly records the decisions resolved by this contract rather than listing them as pending."
+  ],
+  "findings": [
+    {
+      "severity": "blocking",
+      "topic": "case deadlines are specified but not enforceable from the contract",
+      "evidence": "The contract assigns the integration case a 240-second timeout and ordinary cases 30 seconds, and the gate requires those limits. It only defines a 300-second pytest-phase timeout as an execution watchdog. It does not specify a per-case watchdog or propagated monotonic deadline that bounds the full integration test, nor how test timeout expiry interrupts a blocking worker/client subprocess and proceeds to owned-process cleanup. Individual readiness, probe, and shutdown limits can accumulate beyond 240 seconds, so those component bounds do not establish the integration-case bound.",
+      "required_resolution": "Amend the contract to state how each test's full elapsed time is enforced before execution (including the integration's 240-second deadline), how remaining budget is passed to blocking subprocess/RPC operations, and how expiry triggers exact-handle termination/reaping while preserving failure evidence. The subsequent source pre-gate review must verify the implementation follows that pinned mechanism."
+    }
+  ],
+  "scope_assessment": {
+    "case_inventory": "Five pytest cases are accounted for: one pin check, one wrong-hash negative, two missing/truncated binary parameters, and one persistent-history integration.",
+    "toolchain_and_behavior": "Pins match the installation preparation, and the contract gives concrete duplicate-error, retention, restart/history, and process-identity oracles.",
+    "loopback_boundary": "Prestart source observation plus required actual owned-listener inspection resolves the prior binding ambiguity for this review; no live server was started.",
+    "acceptance_boundary": "H1 toolchain qualification only; no B03 workflow or original AT acceptance is claimed.",
+    "execution_performed_by_reviewer": false
+  }
+}

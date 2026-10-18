@@ -1,0 +1,66 @@
+{
+  "kind": "ifpmic.b03.h1.pre-gate-review.v1",
+  "verdict": "approve_first_frozen_h1_gate",
+  "reviewed_contract": {
+    "path": "docs/ifpmic/evidence/b03/h1-execution-contract.json",
+    "sha256": "f0d94937811b484b9851de7e5081f894beecbc6ae2fb128cd3fd0aab630c26a4"
+  },
+  "source_pins": {
+    "docs/ifpmic/B03-WORKFLOW.md": "38fdd875bc76047ed1e3e46c850277fea1a3d1f825662a13b1c21154925f25ff",
+    "docs/ifpmic/evidence/b03/plan-acceptance.json": "77bb4d6041fb117e81e3c2ee9dfe268ede7b397696909e21fac12a4e6eaccfc8",
+    "docs/ifpmic/evidence/b03/plan-review.json": "2aa73a16dad9adca54e0b9f2a3d3fa668a48d589a70be0cdfcbc5487f5b50fb6",
+    "docs/ifpmic/evidence/b03/h1-execution-contract.json": "f0d94937811b484b9851de7e5081f894beecbc6ae2fb128cd3fd0aab630c26a4",
+    "docs/ifpmic/evidence/b03/h1-contract-review.json": "8180ad753d9694e3a74fdd4ecc375d992e76c66f11913d45071d2284889e2702",
+    "docs/ifpmic/evidence/b03/h1-tc-contract-review.json": "c85f9a379d3ec53df2256453f9dfdcca5a26c747785f88563f493c4cb18a2063",
+    "docs/ifpmic/evidence/b03/h1-tc-plan.json": "9603dd641f559a05425ce6d4632596d992c883c06c17601debf8f15fe14e9fa5",
+    "docs/ifpmic/evidence/b03/tc-plan-review.json": "6936b813585a0aa27094dbb922518bc16495f793f4d9eb06a3ebb77a6e46ec0b",
+    "docs/ifpmic/evidence/b03/protocol-advice.json": "ab6221cf292b85b857aae16dc9cb5e60d6570d098bbcf494b6e0176ec9ade2da",
+    "docs/ifpmic/evidence/b03/h1-resolution-preparation.json": "a777a09f3a00a24b4dc21a7aa3e649b5237aeec1360fbfd4c19c244b897eb213",
+    "docs/ifpmic/evidence/b03/h1-installation-preparation.json": "277fe057d633759381ddcbba2df22a2772edf928c84d6dc43eb9f0ffa0d849a6",
+    "docs/ifpmic/evidence/b03/h1-cli-source-observations.json": "6166cbbb26a4204badbd76875639b79b6a3c8b51fe064a0c68a6908413e5cfcf",
+    "README.md": "0964d4dae840f9a433d88ee92132efedb7e17c77ac815d0e955c6fdbc65c7100",
+    "services/ifpmic_api/requirements.lock": "6c8c950820a8c3ae9dea250e4080bc9dab09db17663e3d50118c5ac29211357e",
+    "services/ifpmic_api/requirements-temporal.lock": "ccbbf7a8aab39cd80861f607afd4994bf461d07cbf592f6acfcc492e63ff85c6",
+    "workflow-artifacts/verification/B03/H1/preparations/2026-10-18T19-40-54Z-uv-resolution-retry/candidate-requirements.lock": "9c6141efe9ccb7cd9a94e3663c2faf9049eb10b883c93f492bb3e46c3a8883f7",
+    "workflow-artifacts/toolchains/B03/H1/2026-10-18T19-43-43-523587Z/installation.json": "a1aa7d0b77b94302064b26796b5df45d24032c73d30080dc91db94d989b80e8d",
+    "workflow-artifacts/toolchains/B03/H1/2026-10-18T19-43-43-523587Z/installation-driver.py": "5f3fdbf128884802c08e3391c16f2114789e8f8d67ad1f78644904f0a2a07449",
+    "workflow-artifacts/toolchains/B03/H1/2026-10-18T19-43-43-523587Z/temporal": "712217694cac9f786a72d4b6c876cd15f3dcf1bf31434d9fed6af25242a327a0",
+    "scripts/ifpmic_temporal_toolchain.py": "8cadab76ccfa1f93392cf759991d6906415c75ed5a116093c53aee9f4a445564",
+    "scripts/verify_ifpmic_b03_h1.py": "1aa2ade53ca5d01cf17d32c75cd8b9ec1c40d6375224e189d7b7f8b5a8c0bf49",
+    "tests/ifpmic_api/test_temporal_toolchain.py": "8fab23a9ead0e9520d891e9ab4ac32c721351fcf6a6f5f3e323e9014e8ffee51",
+    "tests/ifpmic_api/temporal_toolchain_fixture.py": "bbb4ce3b775a8b8deb88c3d516ff27d361aa3bd511b229f785998968a3821d49"
+  },
+  "findings": [
+    {
+      "topic": "Frozen source and independent oracle",
+      "result": "pass",
+      "evidence": "All supplied product, runner, test, fixture, contract, and README hashes match the current bytes. The five expected pytest IDs and package map are fixed in both the contract and runner, not derived from the implementation. The wrong-hash, missing, and truncated artifact cases require no execution or file creation."
+    },
+    {
+      "topic": "Artifact and server boundary",
+      "result": "pass",
+      "evidence": "The launcher checks an absolute regular non-symlink binary and exact SHA before ELF validation or data-directory creation. CLI arguments disable config discovery and use only fixed loopback IP plus three allocated ports, an empty private env file, a unique log, and the one private SQLite directory reused only for restart. The owned-process socket check rejects any non-loopback TCP listener before probes proceed."
+    },
+    {
+      "topic": "SDK behavior and persistence oracle",
+      "result": "pass",
+      "evidence": "The synthetic fixture is isolated from application jobs. It records a fixed workflow/run identity and event-history prefix, requires the pinned typed duplicate-start error while running and after completion, then restarts the server on the same store and requires the same run identity/history before one completion signal and result. The readiness path reads namespace retention and enforces the fixed greater-than-one-hour threshold."
+    },
+    {
+      "topic": "Deadlines and process ownership",
+      "result": "pass",
+      "evidence": "The pytest fixture applies the declared 25-second body plus 5-second cleanup window to normal cases and 215 plus 25 seconds to the two-phase integration. It records monotonic body/cleanup boundaries and timeout outcomes. Cleanup signals all owned handles under one shared deadline; pidfd signaling is gated by the saved /proc start-time identity, and the runner independently records pytest identity and fences failure cleanup to saved identities or proven descendants. The runner rejects missing, duplicate, forced, nonzero, or still-present process observations."
+    },
+    {
+      "topic": "Source, environment, and privacy controls",
+      "result": "pass",
+      "evidence": "The runner captures source hashes before execution, validates the source manifest and G6 preserved-source set, compares the original environment snapshot, and checks the isolated environment and CLI pins after execution. Logs and histories remain within a private gate leaf; publication is a later separately reviewed step."
+    }
+  ],
+  "decision_boundary": {
+    "authorized_next_step": "One frozen first H1 qualification gate using only the pinned source and private installation.",
+    "execution_performed_by_reviewer": false,
+    "acceptance": "Not accepted by this review; requires a passing full five-case gate and independent final evidence audit.",
+    "scope": "H1 local toolchain qualification only. This does not implement or accept B03 workflows, business behavior, or original AT cases."
+  }
+}

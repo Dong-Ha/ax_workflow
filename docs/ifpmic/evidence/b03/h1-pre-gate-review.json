@@ -1,0 +1,114 @@
+{
+  "kind": "ifpmic.b03.h1.pre-gate-review.v3",
+  "verdict": "approve_first_frozen_h1_gate",
+  "reviewed_contract": {
+    "path": "docs/ifpmic/evidence/b03/h1-execution-contract.json",
+    "sha256": "7860ccc5e7527ef37f6e1f26d07b7b2df4bb2f55d721b14ae5e635492153b801"
+  },
+  "source_pins": {
+    "docs/ifpmic/B03-WORKFLOW.md": "38fdd875bc76047ed1e3e46c850277fea1a3d1f825662a13b1c21154925f25ff",
+    "docs/ifpmic/evidence/b03/plan-acceptance.json": "77bb4d6041fb117e81e3c2ee9dfe268ede7b397696909e21fac12a4e6eaccfc8",
+    "docs/ifpmic/evidence/b03/plan-review.json": "2aa73a16dad9adca54e0b9f2a3d3fa668a48d589a70be0cdfcbc5487f5b50fb6",
+    "docs/ifpmic/evidence/b03/h1-execution-contract.json": "7860ccc5e7527ef37f6e1f26d07b7b2df4bb2f55d721b14ae5e635492153b801",
+    "docs/ifpmic/evidence/b03/h1-contract-review.json": "ed59fa8f2641e413aada15e5b490c0c9b6431645167b4b54b0a827b22f3a4e87",
+    "docs/ifpmic/evidence/b03/h1-tc-contract-review.json": "bb8ed8a1e574ce1b29290dc446e473bc64efbf6129fade2632aee7323e8a5f10",
+    "docs/ifpmic/evidence/b03/h1-tc-plan.json": "9603dd641f559a05425ce6d4632596d992c883c06c17601debf8f15fe14e9fa5",
+    "docs/ifpmic/evidence/b03/tc-plan-review.json": "6936b813585a0aa27094dbb922518bc16495f793f4d9eb06a3ebb77a6e46ec0b",
+    "docs/ifpmic/evidence/b03/protocol-advice.json": "ab6221cf292b85b857aae16dc9cb5e60d6570d098bbcf494b6e0176ec9ade2da",
+    "docs/ifpmic/evidence/b03/h1-resolution-preparation.json": "a777a09f3a00a24b4dc21a7aa3e649b5237aeec1360fbfd4c19c244b897eb213",
+    "docs/ifpmic/evidence/b03/h1-installation-preparation.json": "277fe057d633759381ddcbba2df22a2772edf928c84d6dc43eb9f0ffa0d849a6",
+    "docs/ifpmic/evidence/b03/h1-cli-source-observations.json": "6166cbbb26a4204badbd76875639b79b6a3c8b51fe064a0c68a6908413e5cfcf",
+    "README.md": "0964d4dae840f9a433d88ee92132efedb7e17c77ac815d0e955c6fdbc65c7100",
+    "services/ifpmic_api/requirements.lock": "6c8c950820a8c3ae9dea250e4080bc9dab09db17663e3d50118c5ac29211357e",
+    "services/ifpmic_api/requirements-temporal.lock": "ccbbf7a8aab39cd80861f607afd4994bf461d07cbf592f6acfcc492e63ff85c6",
+    "workflow-artifacts/verification/B03/H1/preparations/2026-10-18T19-40-54Z-uv-resolution-retry/candidate-requirements.lock": "9c6141efe9ccb7cd9a94e3663c2faf9049eb10b883c93f492bb3e46c3a8883f7",
+    "workflow-artifacts/toolchains/B03/H1/2026-10-18T19-43-43-523587Z/installation.json": "a1aa7d0b77b94302064b26796b5df45d24032c73d30080dc91db94d989b80e8d",
+    "workflow-artifacts/toolchains/B03/H1/2026-10-18T19-43-43-523587Z/installation-driver.py": "5f3fdbf128884802c08e3391c16f2114789e8f8d67ad1f78644904f0a2a07449",
+    "workflow-artifacts/toolchains/B03/H1/2026-10-18T19-43-43-523587Z/temporal": "712217694cac9f786a72d4b6c876cd15f3dcf1bf31434d9fed6af25242a327a0",
+    "scripts/ifpmic_temporal_toolchain.py": "8cadab76ccfa1f93392cf759991d6906415c75ed5a116093c53aee9f4a445564",
+    "scripts/verify_ifpmic_b03_h1.py": "9c20131082af1467f682d31fabb47daf359867aa5939ad818d97b7ac4c0d5573",
+    "tests/ifpmic_api/test_temporal_toolchain.py": "f9ced9d0acc06dbbdc822b2735430f9767d5bd1cfe80e93d98d82ad911b5af6a",
+    "tests/ifpmic_api/temporal_toolchain_fixture.py": "495278f52a5b6c539cd2b846d59e65c2a9b6cacf87f6e5bdfb36fab1d6ab3906",
+    "docs/ifpmic/evidence/b03/h1-first-gate-failure.json": "8306af44c36bb245d340cd5ee7d00e2ddefd1e892664923e81a33acae6805bb3",
+    "docs/ifpmic/evidence/b03/attempts/h1-pre-gate-review-v1.json": "427a9c5dcf93b794fbbffbd2ace080048151a4016d80e8ef147f98f7cc4e4d19",
+    "workflow-artifacts/verification/B03/H1/gates/2026-10-18T20-05-41-371364Z/candidate-source.zip": "a8f2da8382c15cae706456fb40acb2ab54e6165a3dacab37c16e614e0ca2b021",
+    "docs/ifpmic/evidence/b03/h1-second-gate-failure.json": "b18d1c96a75067cafa39a8129a805be1eef972c1aa22e3053b9582a0f47f3885",
+    "docs/ifpmic/evidence/b03/attempts/h1-pre-gate-review-v2.json": "27f9d8fb4a1426e23694375d7d63726b1dbf4371ade4f05f292c0f78f53b6a57",
+    "docs/ifpmic/evidence/b03/attempts/h1-contract-review-v4.json": "8180ad753d9694e3a74fdd4ecc375d992e76c66f11913d45071d2284889e2702",
+    "workflow-artifacts/verification/B03/H1/gates/2026-10-18T20-08-35-008059Z/candidate-source.zip": "9e4b10f7518ed36c540c0a655ef628f92ebd2363f20f0feaa08cffb6a7b940f0",
+    "workflow-artifacts/toolchains/B03/H1/2026-10-18T19-43-43-523587Z/venv/lib/python3.12/site-packages/temporalio/bridge/services_generated.py": "fff9f37fe0d8627279cd4f1359c667647476a323890852cea9bd0848dd96b623"
+  },
+  "findings": [
+    {
+      "topic": "Frozen source and independent oracle",
+      "result": "pass",
+      "evidence": "All supplied product, runner, test, fixture, contract, and README hashes match the current bytes. The five expected pytest IDs and package map are fixed in both the contract and runner, not derived from the implementation. The wrong-hash, missing, and truncated artifact cases require no execution or file creation."
+    },
+    {
+      "topic": "Artifact and server boundary",
+      "result": "pass",
+      "evidence": "The launcher checks an absolute regular non-symlink binary and exact SHA before ELF validation or data-directory creation. CLI arguments disable config discovery and use only fixed loopback IP plus three allocated ports, an empty private env file, a unique log, and the one private SQLite directory reused only for restart. The owned-process socket check rejects any non-loopback TCP listener before probes proceed."
+    },
+    {
+      "topic": "SDK behavior and persistence oracle",
+      "result": "pass",
+      "evidence": "The synthetic fixture is isolated from application jobs. It records a fixed workflow/run identity and event-history prefix, requires the pinned typed duplicate-start error while running and after completion, then restarts the server on the same store and requires the same run identity/history before one completion signal and result. The readiness path reads namespace retention and enforces the fixed greater-than-one-hour threshold."
+    },
+    {
+      "topic": "Deadlines and process ownership",
+      "result": "pass",
+      "evidence": "The pytest fixture applies the declared 25-second body plus 5-second cleanup window to normal cases and 215 plus 25 seconds to the two-phase integration. It records monotonic body/cleanup boundaries and timeout outcomes. Cleanup signals all owned handles under one shared deadline; pidfd signaling is gated by the saved /proc start-time identity, and the runner independently records pytest identity and fences failure cleanup to saved identities or proven descendants. The runner rejects missing, duplicate, forced, nonzero, or still-present process observations."
+    },
+    {
+      "topic": "Source, environment, and privacy controls",
+      "result": "pass",
+      "evidence": "The runner captures source hashes before execution, validates the source manifest and G6 preserved-source set, compares the original environment snapshot, and checks the isolated environment and CLI pins after execution. Logs and histories remain within a private gate leaf; publication is a later separately reviewed step."
+    }
+  ],
+  "decision_boundary": {
+    "authorized_next_step": "One fresh frozen full five-case H1 gate using the exact current pins; no selective retry or acceptance from earlier failed attempts.",
+    "execution_performed_by_reviewer": false,
+    "acceptance": "Not accepted by this review; a passing fresh full five-case gate and independent final evidence audit are required.",
+    "scope": "H1 local toolchain qualification only. This does not implement or accept B03 workflows, business behavior, or original AT cases."
+  },
+  "retry_review": {
+    "scope": "Fresh exact-source review for a third complete H1 gate after two failed full attempts. The first pre-gate review and second-candidate review remain preserved as attempts/h1-pre-gate-review-v1.json and attempts/h1-pre-gate-review-v2.json.",
+    "second_failure": {
+      "path": "docs/ifpmic/evidence/b03/h1-second-gate-failure.json",
+      "sha256": "b18d1c96a75067cafa39a8129a805be1eef972c1aa22e3053b9582a0f47f3885",
+      "classification": "Four cases passed; the integration failed before workflow/history checks because installed SDK 1.34 WorkflowService.describe_namespace accepts timeout, not rpc_timeout. The pinned installed generated source confirms the signature. All three recorded process identities were absent after failure cleanup; no positive lifecycle is claimed.",
+      "private_source_archive": {
+        "path": "workflow-artifacts/verification/B03/H1/gates/2026-10-18T20-08-35-008059Z/candidate-source.zip",
+        "sha256": "9e4b10f7518ed36c540c0a655ef628f92ebd2363f20f0feaa08cffb6a7b940f0"
+      }
+    },
+    "candidate_delta": [
+      {
+        "path": "scripts/verify_ifpmic_b03_h1.py",
+        "sha256": "9c20131082af1467f682d31fabb47daf359867aa5939ad818d97b7ac4c0d5573",
+        "comparison": "Against the exact second-attempt source archive, the only runner change is the contract SHA pin from v4 to v5."
+      },
+      {
+        "path": "tests/ifpmic_api/temporal_toolchain_fixture.py",
+        "sha256": "495278f52a5b6c539cd2b846d59e65c2a9b6cacf87f6e5bdfb36fab1d6ab3906",
+        "comparison": "The only behavior correction passes timeout=RPC_TIMEOUT to the low-level generated workflow_service.describe_namespace; high-level client/workflow methods retain rpc_timeout. Added failure-only private exception diagnostics in a unique create-once exception-PID JSON file under existing TMPDIR, with 0600 permissions, O_NOFOLLOW where available, sanitized fixed stderr, and diagnostic errors suppressed so they cannot mask exit 2."
+      },
+      {
+        "path": "scripts/ifpmic_temporal_toolchain.py",
+        "sha256": "8cadab76ccfa1f93392cf759991d6906415c75ed5a116093c53aee9f4a445564",
+        "comparison": "Unchanged from the previously reviewed source."
+      },
+      {
+        "path": "tests/ifpmic_api/test_temporal_toolchain.py",
+        "sha256": "f9ced9d0acc06dbbdc822b2735430f9767d5bd1cfe80e93d98d82ad911b5af6a",
+        "comparison": "Unchanged from the first corrected candidate. Five case IDs, expected values, deadlines, duplicate/restart/history oracles remain unchanged."
+      }
+    ],
+    "diagnostic_review": {
+      "result": "pass",
+      "evidence": "The TMPDIR is supplied by the harness as its 0700 private attempt directory. The diagnostic writer rejects absent/nonabsolute/symlink TMPDIR, uses O_CREAT|O_EXCL and O_NOFOLLOW where supported, fchmods the opened file to 0600, fsyncs it, and never writes exception text to stderr. The outer catch suppresses diagnostic-write failures and returns the original fixed error type with exit 2. Raw diagnostics remain private and must not be promoted."
+    },
+    "decision": "The frozen third candidate is suitable for one fresh complete five-case H1 gate. Both earlier failed attempts remain historical and do not count toward acceptance; no selective retry is authorized.",
+    "execution_performed_by_reviewer": false
+  }
+}

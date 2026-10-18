@@ -1,0 +1,148 @@
+{
+  "kind": "ifpmic.b03.h1.tc-plan.v2",
+  "status": "ready_for_exact_sha_execution_contract_review",
+  "scope": "Five H1 qualification cases for the installed, pinned local Temporal toolchain. They verify toolchain behavior and an isolated synthetic workflow only; they do not implement the B03 business workflow/outbox or establish AT-05, AT-16, AT-29, AT-09, or production acceptance.",
+  "inputs": {
+    "plan_path": "docs/ifpmic/B03-WORKFLOW.md",
+    "plan_sha256": "38fdd875bc76047ed1e3e46c850277fea1a3d1f825662a13b1c21154925f25ff",
+    "resolver_candidate_path": "docs/ifpmic/evidence/b03/h1-resolution-preparation.json",
+    "resolver_candidate_sha256": "9c6141efe9ccb7cd9a94e3663c2faf9049eb10b883c93f492bb3e46c3a8883f7",
+    "installed_toolchain": {
+      "toolchain_root": "workflow-artifacts/toolchains/B03/H1/2026-10-18T19-43-43-523587Z",
+      "python": "Pinned CPython 3.12 interpreter at toolchain-root/venv/bin/python; capture exact version and interpreter SHA-256 at execution.",
+      "temporalio": "1.34.0 in the isolated 36-package environment; all 32 pre-existing package versions remain unchanged.",
+      "temporal_cli": "1.9.1, reporting Server 1.32.0; binary SHA-256 712217694cac9f786a72d4b6c876cd15f3dcf1bf31434d9fed6af25242a327a0.",
+      "inspection_already_done": "The installed binary was used only for --version and --help. No server was started. The observed start-dev options include --ip, --port, --http-port, --metrics-port, --db-filename, and --headless; global help exposes --disable-config-env, --disable-config-file, and --env-file.",
+      "cli_global_options_log_sha256": "ab6041c48a585ac75eeb2b2d503d13924339b403560cc8b3bce95678f7608fd9",
+      "cli_start_help_log_sha256": "1f2ad89799c806b612b84a1243ac0c0667e5105a325f5a12b352c39e6fff2bdd"
+    }
+  },
+  "case_inventory": [
+    {
+      "id": "test_installed_toolchain_pins",
+      "kind": "normal",
+      "timeout_seconds": 30,
+      "purpose": "Verify the approved installation matches the candidate package and binary pins.",
+      "target": "Isolated Python environment, 36-package lock, explicit Temporal CLI binary.",
+      "method": "Read package metadata from the pinned interpreter, independently compare the 32 original package versions and four added package records to the reviewed lock, invoke only the explicit CLI path with --version, and hash the executable.",
+      "agent": "TC runs assertions; main owns the isolated installation and artifact manifest; independent reviewer audits the exact execution contract and evidence.",
+      "pass_criteria": [
+        "Exactly 36 locked packages are installed, with all 32 original package versions unchanged and the four additions exactly matching the reviewed lock.",
+        "The explicit Python interpreter is CPython 3.12 and imports temporalio 1.34.0.",
+        "The explicit CLI reports 1.9.1 / Server 1.32.0 and its SHA-256 equals 712217694cac9f786a72d4b6c876cd15f3dcf1bf31434d9fed6af25242a327a0.",
+        "No global package state, repository lock, or source file changes during qualification."
+      ],
+      "expected_result": "All exact versions and hashes match; any mismatch stops the remaining H1 cases before server startup.",
+      "evidence": "Private interpreter/package inventory and artifact hashes; public summary contains only versions, counts, and digests.",
+      "recovery": "Preserve the failed candidate and sanitized result; do not change versions or silently install a fallback. Resolve through same-SHA review.",
+      "scope_impact": "Installation evidence does not by itself establish SDK/CLI runtime compatibility."
+    },
+    {
+      "id": "test_wrong_hash_prevents_execution",
+      "kind": "negative",
+      "timeout_seconds": 30,
+      "purpose": "Prove the launch guard rejects a hash-mismatched executable before it runs.",
+      "target": "Main-owned verified CLI launch guard and a harmless private sentinel executable.",
+      "method": "Provide a syntactically valid but wrong expected hash for the sentinel; call the same launch guard used for actual server startup and assert the fixed hash-mismatch error and a zero sentinel invocation count.",
+      "agent": "TC owns the sentinel and assertions; main owns the verifier/launcher; reviewer checks the guard precedes process creation.",
+      "pass_criteria": [
+        "The launch guard returns the fixed hash mismatch classification.",
+        "The sentinel records zero executions and no server process or data directory is created.",
+        "No PATH fallback, alternate binary, or implicit download is attempted."
+      ],
+      "expected_result": "Fail-closed rejection occurs before execution.",
+      "evidence": "Private sentinel count, expected/actual digest summary, process inventory, and fixed error code without executable contents.",
+      "recovery": "Preserve the negative fixture and failure record; correct only the approved artifact pin or launch guard after review.",
+      "scope_impact": "A negative sentinel cannot replace the positive real CLI integration case."
+    },
+    {
+      "id": "test_missing_and_truncated_binary_prevent_execution",
+      "kind": "negative_parameterized",
+      "parameter_count": 2,
+      "timeout_seconds_each": 30,
+      "purpose": "Verify missing and truncated binaries are rejected before any process launch.",
+      "target": "Main-owned CLI artifact verifier and launch guard.",
+      "method": "Parameterize a nonexistent executable path and a truncated executable with a matching manifest digest. Assert the fixed invalid-artifact classification and zero process/sentinel starts in each case.",
+      "agent": "TC provides independent temporary fixtures; main owns validation; reviewer checks no fallback behavior.",
+      "pass_criteria": [
+        "Both parameters fail before process creation with their contract-pinned error code.",
+        "No server data directory, alternate artifact, or download is created or invoked."
+      ],
+      "expected_result": "Both malformed or absent artifacts fail closed; the collected case count is exactly 2.",
+      "evidence": "Per-parameter digest, fixed result code, process count, and isolated directory summary.",
+      "recovery": "Retain both parameter outcomes; never retry against a default or globally installed executable.",
+      "scope_impact": "These are verifier boundary cases, not CLI server behavior tests."
+    },
+    {
+      "id": "test_temporal_persistent_history_restart_and_duplicate_policy",
+      "kind": "real_process_integration",
+      "timeout_seconds": 240,
+      "purpose": "Prove actual local Temporal persistent history and pinned workflow identity survive a real CLI server restart, and running/closed IDs cannot be reused.",
+      "target": "Actual CLI 1.9.1 process, private SQLite file, SDK 1.34.0 client/worker processes, and one deterministic synthetic signal-wait workflow.",
+      "method": [
+        "Create a fresh mode-0700 private attempt directory and a private persistent SQLite database path. Start the explicit CLI with the observed supported options: --disable-config-env --disable-config-file --env-file <fresh private empty file>, then server start-dev --ip 127.0.0.1 --port <allocated> --http-port <allocated> --metrics-port <allocated> --db-filename <private path> --headless. Use distinct allocated loopback ports and the exact reviewed CLI argv; do not use ambient Temporal env/config files, WorkflowEnvironment, or SDK server-download helpers.",
+        "Readiness is bounded to 30 seconds and requires SDK Client.connect plus workflow_service.describe_namespace. Describe the namespace and assert its retention exceeds 3600 seconds before admitting the fixture workflow.",
+        "Start separate recorded client and worker processes using a literal task queue and workflow ID. The synthetic workflow records a fixed start marker, waits on one named signal, then returns a fixed literal result. Worker/query readiness is bounded to 15 seconds; RPC deadline is 5 seconds.",
+        "Wait up to 30 seconds for history to show the exact blocked signal-wait state. Capture workflow ID, run ID, and a normalized ordered history-event summary. While it is running, attempt a duplicate start using ID_REUSE_POLICY_REJECT_DUPLICATE and ID_CONFLICT_POLICY_FAIL; require the version-pinned typed already-started exception, same original run ID, and unchanged history.",
+        "Stop the exact worker and client processes, then the server, each with a 10-second graceful deadline followed only by a 5-second owned-process cleanup deadline. Assert each recorded PID/start-time handle is gone before restart. Restart the exact CLI binary against the same SQLite path and ports; create new client and worker processes rather than reusing old SDK connections.",
+        "After readiness, retrieve the exact workflow ID and assert the same run ID and unchanged pre-restart history prefix. Start the new worker, signal the existing workflow once, and assert the fixed result and exact appended history. Do not issue another workflow start after restart.",
+        "After completion, try to start the same workflow ID again with the same reject policies; require the typed duplicate/closed-execution error and assert one logical execution/run ID, unchanged completed result, and unchanged history. Stop and reap all exact process handles."
+      ],
+      "agent": "TC owns the synthetic workflow, exact history/run-ID oracles and integration test; main owns explicit-binary verification and service/worker fixture lifecycle; independent reviewer approves exact SDK/CLI error classification and process protocol before execution.",
+      "pass_criteria": [
+        "All server, client and worker processes use the reviewed explicit binaries/interpreter and remain local to allocated loopback endpoints.",
+        "CLI config environment and config file discovery are explicitly disabled; the only env file is the fresh empty private fixture, and ambient TEMPORAL_* settings cannot change ports, storage, namespace, or server mode.",
+        "Namespace DescribeNamespace readback confirms retention strictly greater than 3600 seconds.",
+        "The running duplicate and post-close duplicate are both rejected with the pinned typed SDK exception and cannot create a second run.",
+        "The workflow is blocked before shutdown, then resumes after restart with byte-equivalent normalized history prefix, the same workflow ID/run ID, one signal, and exactly one literal result.",
+        "The restart uses the identical private SQLite path and exact CLI binary, with no replacement in-memory store or new workflow start.",
+        "Every worker/client/server is terminated and its PID plus process start-time is verified absent; no unrelated process is signaled."
+      ],
+      "expected_result": "Exactly one synthetic logical run remains with the same workflow ID and run ID across server restart, and its durable history is extended only by the signal and completion events.",
+      "evidence": "Private argv/stdout/stderr, per-process PID/start-time lifecycle records, private store identity, namespace-retention value, typed duplicate error codes, and before/restart/after normalized history summaries. Public evidence contains hashes/counts only, not raw history or local paths.",
+      "recovery": "The full integration attempt has a 240-second deadline inside the 300-second Python phase. On timeout, retain the SQLite file and all logs, poll/clean only the recorded process handles, and mark the attempt failed. Never erase/recreate history to retry or claim the old run resumed without matching IDs/history.",
+      "scope_impact": "This is one synthetic Temporal primitive. It does not prove IFPMIC PostgreSQL durability, outbox redelivery, the 29-node business workflow, human acceptance, B03 H2-H5, or any original AT case."
+    }
+  ],
+  "case_count": {
+    "pytest_cases": 5,
+    "breakdown": {
+      "normal": 1,
+      "negative": 1,
+      "negative_parameterized": 2,
+      "real_process_integration": 1
+    }
+  },
+  "execution_limits_and_safety": {
+    "ordinary_test_timeout_seconds": 30,
+    "persistent_service_exception_test_timeout_seconds": 240,
+    "python_phase_timeout_seconds": 300,
+    "readiness_seconds": 30,
+    "rpc_seconds": 5,
+    "worker_readiness_seconds": 15,
+    "client_phase_seconds": 30,
+    "graceful_worker_client_server_stop_seconds": 10,
+    "owned_process_cleanup_seconds": 5,
+    "network": "The actual Temporal server, client and worker communicate only over loopback on fresh, allocated ports. No remote Temporal, Paperclip database, company IdP, or public endpoint is used.",
+    "storage": "A new private versioned SQLite file is used for each integration attempt and reused only for that attempt's restart. It is Temporal server storage, never IFPMIC business PostgreSQL.",
+    "process_ownership": "Capture exact PID and process start-time for CLI, worker and client before waiting. On timeout, inspect the same handles; never use process-name matching or infer termination from a port closing.",
+    "implicit_downloads_and_config": "Forbidden. Start the actual verified CLI executable directly with --disable-config-env --disable-config-file and a fresh empty private --env-file plus explicit reviewed server arguments; no WorkflowEnvironment, SDK-managed server installation, ambient Temporal config/env discovery, default PATH fallback, or server download helper.",
+    "source_and_privacy": "Capture source/artifact hashes before execution, private stdout/stderr and lifecycle evidence with restrictive permissions, and public sanitized summaries only. No credentials, unredacted environment, raw history, or private filesystem path is published."
+  },
+  "pending_execution_contract_decisions": [
+    "Pin exact CLI 1.9.1 start-dev argv and whether the three separate loopback ports are all required by the reviewed deployment mode.",
+    "Pin exact Python SDK 1.34.0 DescribeNamespace request/response field and the typed exception class/code for running and closed duplicate starts.",
+    "Pin exact worker/client subprocess entrypoint and how the synthetic workflow module is made importable without adding unreviewed packages or retaining a process across restart.",
+    "Pin readiness polling cadence, retryable startup errors, graceful-stop signal, and exact owned-process kill/reap protocol within the listed deadlines.",
+    "Pin exact normalized history fields/events and storage-path identity check, excluding nondeterministic timestamps while retaining event order and workflow/run identity."
+  ],
+  "acceptance_boundary": {
+    "H1": "Not accepted until all five cases pass, exact toolchain/source pins match, process cleanup and private evidence are independently reviewed.",
+    "H2_to_H7": "Not authorized by this H1 test plan.",
+    "AT-05": "not_executed",
+    "AT-16": "not_executed",
+    "AT-29": "not_executed",
+    "AT-09": "pending_B05_integrated_acceptance_not_executed",
+    "original_AT_01_to_AT_32": "not executed or accepted by H1 qualification"
+  }
+}

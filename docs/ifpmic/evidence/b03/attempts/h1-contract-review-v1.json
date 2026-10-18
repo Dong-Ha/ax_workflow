@@ -1,0 +1,44 @@
+{
+  "kind": "ifpmic.b03.h1.contract-review.v1",
+  "reviewed_contract": {
+    "path": "docs/ifpmic/evidence/b03/h1-execution-contract.json",
+    "sha256": "dca33dc0e60b811b1d1cd42df5d07379f3865c6b4192bdea11d8cedbe2fe41f4"
+  },
+  "pinned_inputs": {
+    "tc_plan": "3afd63f9d82c5ea42c14110051797c2bbc20c462f35e1ff533ff25715ae0299f",
+    "resolver_preparation": "a777a09f3a00a24b4dc21a7aa3e649b5237aeec1360fbfd4c19c244b897eb213",
+    "installation_preparation": "277fe057d633759381ddcbba2df22a2772edf928c84d6dc43eb9f0ffa0d849a6",
+    "plan_acceptance": "77bb4d6041fb117e81e3c2ee9dfe268ede7b397696909e21fac12a4e6eaccfc8"
+  },
+  "verdict": "blocked_before_implementation_or_execution",
+  "findings": [
+    {
+      "severity": "blocking",
+      "topic": "loopback-only listener guarantee",
+      "evidence": "The pinned CLI start-help output says --ip binds the front-end Service; --metrics-port selects a port but help exposes no metrics bind-address option. The contract starts the CLI with --ip 127.0.0.1 and a metrics port, then only requires inspecting sockets after startup and failing if a non-loopback listener is found. That is detection after a potentially externally reachable listener has already been opened, and the contract does not establish that the HTTP API and metrics listeners inherit the front-end bind address.",
+      "source": {
+        "path": "workflow-artifacts/toolchains/B03/H1/2026-10-18T19-43-43-523587Z/cli-start-help.log",
+        "sha256": "1f2ad89799c806b612b84a1243ac0c0667e5105a325f5a12b352c39e6fff2bdd",
+        "relevant_text": "--ip: IP address bound to the front-end Service; --metrics-port: port for the '/metrics' HTTP endpoint"
+      },
+      "required_resolution": "Before a server gate, establish from pinned CLI source or equivalent authoritative behavior that every listener is loopback-bound before external exposure is possible, or amend the reviewed launch design to enforce that guarantee (for example, an appropriately isolated network namespace) and pin its verification. Keep post-start listener inspection as an additional assertion."
+    },
+    {
+      "severity": "nonblocking_for_contract_review_but_resolve_before_test_authoring",
+      "topic": "TC-plan pending decisions remain listed as unresolved",
+      "evidence": "The pinned TC plan's pending_execution_contract_decisions lists the exact CLI argv/ports, DescribeNamespace field, duplicate exception, worker/client entrypoint, polling/cleanup protocol, and history fields as undecided. The execution contract supplies these details, but neither document says that the contract resolves and supersedes that list.",
+      "source": {
+        "path": "docs/ifpmic/evidence/b03/h1-tc-plan.json",
+        "sha256": "3afd63f9d82c5ea42c14110051797c2bbc20c462f35e1ff533ff25715ae0299f"
+      },
+      "required_resolution": "Have the TC plan explicitly point to the approved execution contract as resolving its pending decisions, or remove/update that stale pending section before test authoring and pin the resulting bytes."
+    }
+  ],
+  "scope_assessment": {
+    "five_case_inventory": "consistent: one ordinary case, one wrong-hash case, two missing/truncated parameter cases, and one real-process integration case",
+    "toolchain_pins": "match installation evidence: 36 packages with the original 32 versions preserved, Temporal SDK 1.34.0, CLI 1.9.1 / server 1.32.0, and pinned CLI binary/archive digests",
+    "lifecycle_and_oracles": "The contract concretely specifies SDK readiness and retention checks, typed duplicate rejection, one deterministic signal-wait workflow, exact run identity/history prefix across a persistent-store restart, and bounded owned-process cleanup.",
+    "scope_boundary": "H1 toolchain qualification only; it does not claim B03 workflow implementation, business acceptance, or any original AT acceptance.",
+    "execution_performed_by_reviewer": false
+  }
+}

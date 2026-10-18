@@ -1,0 +1,37 @@
+{
+  "kind": "ifpmic.b03.h1.failed-gate-record.v2",
+  "recorded_at": "2026-10-18T20:10:09.055043+00:00",
+  "scope": "Second frozen full-five-case H1 attempt failed; no acceptance.",
+  "private_gate": "workflow-artifacts/verification/B03/H1/gates/2026-10-18T20-08-35-008059Z",
+  "gate_sha256": "5c57afa08990bd9eaa8c49b8fba0f11a364695761529ca46e8a8889054d63d39",
+  "source_fingerprint": "54a1e70b893a49ae75cdf05594ab4a84b9b8e2304c357e27e62059b7d5dbd995",
+  "private_source_zip_sha256": "9e4b10f7518ed36c540c0a655ef628f92ebd2363f20f0feaa08cffb6a7b940f0",
+  "pytest_exit_code": 1,
+  "command_seconds": 6.489002804999473,
+  "counts": {
+    "passed": 4,
+    "failed": 1,
+    "skipped": 0
+  },
+  "observed_failure": "Both worker and client/probe exited2 and retained fixed TypeError classification before the workflow/history check could proceed.",
+  "cause_analysis": "The root-authored v4 contract and TC fixture pass rpc_timeout to workflow_service.describe_namespace. Installed SDK1.34 generated WorkflowService.describe_namespace accepts timeout, not rpc_timeout. Both subprocesses call this readback immediately after connection. This static signature mismatch explains the shared pre-workflow TypeError; no package upgrade or weaker oracle is warranted.",
+  "installed_primary_source": {
+    "relative_to_toolchain": "venv/lib/python3.12/site-packages/temporalio/bridge/services_generated.py",
+    "sha256": "fff9f37fe0d8627279cd4f1359c667647476a323890852cea9bd0848dd96b623",
+    "method": "WorkflowService.describe_namespace(req,retry=False,metadata={},timeout=None)"
+  },
+  "correction": "Amend the low-level service-call spelling to timeout=RPC_TIMEOUT, retaining five seconds. Preserve private detailed exception traces on future fixture failure rather than only fixed stderr type. Obtain exact-SHA contract and corrected-source review before another fresh full-five-case gate.",
+  "cleanup": {
+    "process_count": 3,
+    "all_absent": true,
+    "forced": 0,
+    "no_positive_lifecycle_claim": true
+  },
+  "raw_private_evidence": {
+    "pytest_log_sha256": "b3398d3becd190c3aa2a95d0c661629627a9f7305de765280f26ddc205cd8d5d",
+    "pytest_xml_sha256": "5f555fd8f3fc460a778b2b0a13d788445d9d8cdfabc048d2c96a6852b5abbc2e",
+    "processes_sha256": "c503c14fd841934a2c32972b9def02ab3e1d5f17f1c699d3aa5192733b4eaf0d",
+    "result_sha256": "96ae257bcaf8985c5fe22cffbfbbb3817a06504de25a53ee4a66a809859608c1"
+  },
+  "remaining": "H1 in_progress; history restart, retention and duplicate policies remain unverified; all original AT stay not_executed."
+}

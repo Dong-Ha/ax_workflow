@@ -1,0 +1,34 @@
+{
+  "kind": "ifpmic.b03.h1.contract-review.v3",
+  "reviewed_contract": {
+    "path": "docs/ifpmic/evidence/b03/h1-execution-contract.json",
+    "sha256": "62dd16e839b5c4cdf8eb928a331413e1d4504007f1f662488ca29b98546c9d47"
+  },
+  "pinned_inputs_verified": {
+    "tc_plan": "9603dd641f559a05425ce6d4632596d992c883c06c17601debf8f15fe14e9fa5",
+    "cli_source_observations": "6166cbbb26a4204badbd76875639b79b6a3c8b51fe064a0c68a6908413e5cfcf",
+    "resolver_preparation": "a777a09f3a00a24b4dc21a7aa3e649b5237aeec1360fbfd4c19c244b897eb213",
+    "installation_preparation": "277fe057d633759381ddcbba2df22a2772edf928c84d6dc43eb9f0ffa0d849a6",
+    "plan_acceptance": "77bb4d6041fb117e81e3c2ee9dfe268ede7b397696909e21fac12a4e6eaccfc8"
+  },
+  "verdict": "approve_for_implementation_and_test_authoring_only",
+  "review_basis": [
+    "The five-case inventory is internally consistent, including two parameterized missing/truncated-artifact outcomes.",
+    "Toolchain pins match the isolated installation evidence: 36 packages, all 32 prior package versions preserved, SDK 1.34.0, CLI 1.9.1 / server 1.32.0, and the pinned CLI archive and binary digests.",
+    "The contract defines the artifact verifier and launch guard, exact synthetic workflow behavior, retention and typed duplicate oracles, same-store restart/history identity, private evidence handling, and owned-process lifecycle.",
+    "The pinned official CLI v1.9.1 source observation documents FrontendIP binding for frontend/internal RPC, HTTP, and metrics configuration; runtime inspection of actual owned listeners remains a required independent assertion. Source-to-binary reproducible-build attestation is explicitly not claimed.",
+    "The TC plan explicitly records the formerly pending execution decisions as resolved by the contract."
+  ],
+  "deadline_review": {
+    "status": "resolved_for_implementation",
+    "mechanism": "The main-thread autouse fixture enforces monotonic per-case deadlines with ITIMER_REAL, reserves 5 seconds for ordinary cleanup and 25 seconds for integration cleanup, and applies each remaining budget to blocking operations. Timeout cleanup signals all saved process handles concurrently, then force-kills/reaps within one shared cleanup deadline. The runner's separate 300-second watchdog snapshots proven pytest descendants before cleanup.",
+    "pre_gate_check": "Before any service or test execution, independently inspect frozen implementation to verify signal/timer setup and restoration, timeout non-catchability/failed status, remaining-budget propagation, unconditional cleanup, shared cleanup deadline, and the runner descendant snapshot/fencing behavior."
+  },
+  "authorization_boundary": {
+    "authorized_next_step": "Implement the H1 helper, fixtures, runner, and five qualification cases against this exact contract.",
+    "not_authorized_by_this_review": "Starting the Temporal server or executing tests. A separate independent source pre-gate review is required after implementation and before first execution.",
+    "h1_acceptance": "not_accepted_pending_full_gate_and_final_evidence_review",
+    "original_acceptance": "No B03 business workflow or original AT acceptance is claimed."
+  },
+  "execution_performed_by_reviewer": false
+}

@@ -1,0 +1,107 @@
+{
+  "kind": "ifpmic.b03.h1.installation-preparation.v1",
+  "status": "installed_pending_qualification",
+  "scope": "H0-authorized isolated tool setup only, not H1 acceptance or B03 implementation.",
+  "approved_parent": {
+    "path": "docs/ifpmic/evidence/b03/plan-acceptance.json",
+    "sha256": "77bb4d6041fb117e81e3c2ee9dfe268ede7b397696909e21fac12a4e6eaccfc8"
+  },
+  "resolver": {
+    "path": "docs/ifpmic/evidence/b03/h1-resolution-preparation.json",
+    "sha256": "a777a09f3a00a24b4dc21a7aa3e649b5237aeec1360fbfd4c19c244b897eb213"
+  },
+  "private_root": "workflow-artifacts/toolchains/B03/H1/2026-10-18T19-43-43-523587Z",
+  "private_installation_sha256": "a1aa7d0b77b94302064b26796b5df45d24032c73d30080dc91db94d989b80e8d",
+  "private_driver_sha256": "5f3fdbf128884802c08e3391c16f2114789e8f8d67ad1f78644904f0a2a07449",
+  "candidate_lock_sha256": "9c6141efe9ccb7cd9a94e3663c2faf9049eb10b883c93f492bb3e46c3a8883f7",
+  "package_count": 36,
+  "installed": {
+    "annotated-doc": "0.0.5",
+    "annotated-types": "0.8.0",
+    "anyio": "4.15.1",
+    "authlib": "1.9.1",
+    "certifi": "2026.7.22",
+    "cffi": "2.1.1",
+    "click": "8.5.0",
+    "cryptography": "50.0.2",
+    "fastapi": "0.144.0",
+    "h11": "0.16.0",
+    "httpcore": "1.0.9",
+    "httpcore2": "2.13.1",
+    "httpx": "0.28.1",
+    "httpx2": "2.13.1",
+    "idna": "3.20",
+    "iniconfig": "2.3.1",
+    "joserfc": "1.7.5",
+    "nexus-rpc": "1.4.0",
+    "opentelemetry-api": "1.45.1",
+    "packaging": "26.3",
+    "pluggy": "1.7.0",
+    "protobuf": "7.36.2",
+    "psycopg": "3.3.6",
+    "psycopg-binary": "3.3.6",
+    "pycparser": "3.11",
+    "pydantic": "2.14.1",
+    "pydantic-core": "2.50.1",
+    "pygments": "2.21.0",
+    "pytest": "9.1.1",
+    "starlette": "1.8.0",
+    "temporalio": "1.34.0",
+    "truststore": "0.10.5",
+    "types-protobuf": "7.35.1.20260906",
+    "typing-extensions": "4.16.0",
+    "typing-inspection": "0.4.4",
+    "uvicorn": "0.54.0"
+  },
+  "old_environment_unchanged": true,
+  "old_environment_files_compared": 2580,
+  "tracked_source_changes_during_setup": [],
+  "archive": {
+    "sha256": "09a0326a51db84d02735e53542b9ebd8c4758daf47482a9ab0abce15844e60d5",
+    "bytes": 45298806,
+    "official_url": "https://github.com/temporalio/cli/releases/download/v1.9.1/temporal_cli_1.9.1_linux_amd64.tar.gz"
+  },
+  "executable": {
+    "sha256": "712217694cac9f786a72d4b6c876cd15f3dcf1bf31434d9fed6af25242a327a0",
+    "mode": "0700",
+    "version": "1.9.1",
+    "embedded_server_version": "1.32.0"
+  },
+  "operations": [
+    {
+      "name": "create-venv",
+      "exit_code": 0,
+      "seconds": 0.11454195699843694,
+      "private_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "install-wheels",
+      "exit_code": 0,
+      "seconds": 4.860385222997138,
+      "private_log_sha256": "7b63b2eed2af1e73cb2035b50ddd3241f6344754949dcf569a9378e786db1898"
+    },
+    {
+      "name": "cli-version",
+      "exit_code": 0,
+      "seconds": 0.11560878000091179,
+      "private_log_sha256": "6251da9d8174d2c0c9211ea0aaad4d5afc5ad93c9824d0ee0222a1653ee6fcde"
+    },
+    {
+      "name": "cli-start-help",
+      "exit_code": 0,
+      "seconds": 0.11475148200042895,
+      "private_log_sha256": "1f2ad89799c806b612b84a1243ac0c0667e5105a325f5a12b352c39e6fff2bdd"
+    }
+  ],
+  "setup_controls": [
+    "Fresh private venv; hash-required wheel-only uv sync with explicit PyPI and sanitized config environment; no system/old-venv mutation.",
+    "Archive size/SHA matched before extracting only the regular temporal member; no archive path extraction.",
+    "Only CLI version/help/options and SDK import/signature introspection; no Temporal/PG server started."
+  ],
+  "remaining": [
+    "Independent exact-SHA H1 test/execution-contract review",
+    "Synthetic client/worker and persistent actual server restart qualification",
+    "Retention/no-reuse/negative-artifact/process cleanup evidence",
+    "Independent final H1 evidence review"
+  ]
+}

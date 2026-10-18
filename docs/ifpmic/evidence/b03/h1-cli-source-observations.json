@@ -1,0 +1,34 @@
+{
+  "kind": "ifpmic.b03.h1.cli-source-isolation-observation.v1",
+  "observed_at": "2026-10-18T19:49:18.839246+00:00",
+  "scope": "Static public official CLI v1.9.1 source inspection, not a live-server proof. Actual owned listener checks remain mandatory.",
+  "sources": [
+    {
+      "official_url": "https://raw.githubusercontent.com/temporalio/cli/v1.9.1/internal/devserver/server.go",
+      "path_in_release_source": "internal/devserver/server.go",
+      "sha256": "d14ca353fdc658911e4b19546f5d89cb580c6b3fa1a1aea4c5a4f17483fc6006",
+      "bytes": 13034,
+      "private_copy": "workflow-artifacts/toolchains/B03/H1/2026-10-18T19-43-43-523587Z/cli-source-server.go"
+    },
+    {
+      "official_url": "https://raw.githubusercontent.com/temporalio/cli/v1.9.1/internal/temporalcli/commands.server.go",
+      "path_in_release_source": "internal/temporalcli/commands.server.go",
+      "sha256": "ce30bd73dd025fb98c94aabfa339d66763e332a34400c94989a1d05fb083060c",
+      "bytes": 8475,
+      "private_copy": "workflow-artifacts/toolchains/B03/H1/2026-10-18T19-43-43-523587Z/cli-source-commands.server.go"
+    }
+  ],
+  "observations": [
+    "The CLI command passes its --ip value into devserver StartOptions.FrontendIP and supplies separate HTTP and metrics ports.",
+    "The devserver constructs the metrics listener address from FrontendIP and MetricsPort.",
+    "Its frontend and internal RPC configurations use FrontendIP as BindOnIP; frontend configuration also sets the explicit HTTP port.",
+    "The CLI maps localhost to127.0.0.1; the H1 command instead passes the literal127.0.0.1.",
+    "H1 still checks actual owned TCP listener addresses at runtime and fails if an observed server listener is non-loopback."
+  ],
+  "binary_binding": {
+    "official_archive_sha256": "09a0326a51db84d02735e53542b9ebd8c4758daf47482a9ab0abce15844e60d5",
+    "extracted_binary_sha256": "712217694cac9f786a72d4b6c876cd15f3dcf1bf31434d9fed6af25242a327a0",
+    "actual_version": "1.9.1 / Server1.32.0",
+    "limitation": "Source observations plus release/binary hashes establish the reviewed launch configuration basis; they are not a reproducible source-to-binary build attestation."
+  }
+}

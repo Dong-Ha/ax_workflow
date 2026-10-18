@@ -1,0 +1,156 @@
+{
+  "kind": "ifpmic.b03.h1.execution-contract.v4",
+  "status": "pending_independent_review_before_implementation_or_execution",
+  "scope": "Five toolchain-qualification pytest cases, not application workflow implementation, original AT acceptance, or production Temporal. H0 separately authorized the preserved isolated installation.",
+  "inputs": [
+    {
+      "path": "docs/ifpmic/evidence/b03/plan-acceptance.json",
+      "sha256": "77bb4d6041fb117e81e3c2ee9dfe268ede7b397696909e21fac12a4e6eaccfc8"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b03/h1-tc-plan.json",
+      "sha256": "9603dd641f559a05425ce6d4632596d992c883c06c17601debf8f15fe14e9fa5"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b03/h1-resolution-preparation.json",
+      "sha256": "a777a09f3a00a24b4dc21a7aa3e649b5237aeec1360fbfd4c19c244b897eb213"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b03/h1-installation-preparation.json",
+      "sha256": "277fe057d633759381ddcbba2df22a2772edf928c84d6dc43eb9f0ffa0d849a6"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b03/h1-cli-source-observations.json",
+      "sha256": "6166cbbb26a4204badbd76875639b79b6a3c8b51fe064a0c68a6908413e5cfcf"
+    },
+    {
+      "path": "README.md",
+      "sha256": "0964d4dae840f9a433d88ee92132efedb7e17c77ac815d0e955c6fdbc65c7100"
+    },
+    {
+      "path": "services/ifpmic_api/requirements-temporal.lock",
+      "sha256": "ccbbf7a8aab39cd80861f607afd4994bf461d07cbf592f6acfcc492e63ff85c6"
+    }
+  ],
+  "case_count": 5,
+  "case_functions": [
+    "test_installed_toolchain_pins",
+    "test_wrong_hash_prevents_execution",
+    "test_missing_and_truncated_binary_prevent_execution",
+    "test_temporal_persistent_history_restart_and_duplicate_policy"
+  ],
+  "owners": {
+    "main": "scripts/ifpmic_temporal_toolchain.py launch/verification/owned-stop helper and scripts/verify_ifpmic_b03_h1.py runner; integration and source/evidence protection.",
+    "tc": "tests/ifpmic_api/test_temporal_toolchain.py and temporal_toolchain_fixture.py; independent sentinel, fixed fixture workflow, SDK client and worker subprocesses, history/retention/duplicate assertions.",
+    "independent_reviewer": "Exact contract review before implementation, exact source pre-gate review before first service/test execution, and separate final evidence audit."
+  },
+  "artifact_pins": {
+    "candidate_lock_sha256": "9c6141efe9ccb7cd9a94e3663c2faf9049eb10b883c93f492bb3e46c3a8883f7",
+    "cli_archive_sha256": "09a0326a51db84d02735e53542b9ebd8c4758daf47482a9ab0abce15844e60d5",
+    "cli_binary_sha256": "712217694cac9f786a72d4b6c876cd15f3dcf1bf31434d9fed6af25242a327a0",
+    "cli_version": "1.9.1",
+    "server_version": "1.32.0",
+    "sdk_version": "1.34.0",
+    "packages": 36,
+    "old_package_versions_preserved": 32,
+    "toolchain_root": "workflow-artifacts/toolchains/B03/H1/2026-10-18T19-43-43-523587Z"
+  },
+  "guard_interface": {
+    "verify_binary": "verify_binary(path, expected_sha256): absolute nonsymlink regular file; compare SHA before ELF checks; require >=64 bytes, ELF magic/class64/little-endian and x86_64 machine62; fixed HASH_MISMATCH or ARTIFACT_INVALID codes; never PATH lookup/download. Approved actual hash comes from the frozen runner, not HTTP/CLI caller input.",
+    "start_server": "start_server(binary, expected_sha256, data_dir, ports, *, log_name): verify_binary before creating data dir/files or spawning; validate exactly three distinct loopback ports1..65535, safe basename log_name; private0700 directory, log0600, literal empty JSON {} env file0600; fixed argv and sanitized env; Popen start_new_session=True with recorded PID/startticks. Same owned data_dir/store reused on second launch; unique log per launch; no deletion of unknown data.",
+    "stop_owned": "stop_owned(Popen): poll same handle and confirm saved PID/startticks before signalling; SIGTERM then wait10s, if still same owned live identity SIGKILL and wait5s. Reap original handle; no name/port-only killing; record forced cleanup and fail positive integration if clean shutdown deadline was exceeded. No source changes or reruns during live gate.",
+    "stop_all_owned": "stop_all_owned(handles,total_timeout): fence each saved PID/starttick, SIGTERM all live handles before any wait, bounded shared wait up to10s, then SIGKILL same still-live identities and reap under one absolute deadline. Return per-handle stopped/forced status; do not rediscover ownership by process name/port. Used by TC finally and runner failure cleanup."
+  },
+  "negative_cases": {
+    "wrong_hash": "Harmless sentinel script with wrong expected64hex digest; require HASH_MISMATCH, sentinel not invoked, no data directory created.",
+    "missing": "Absent path with fixed expected digest; ARTIFACT_INVALID before process/files.",
+    "truncated": "8-byte ELF prefix with its matching expected SHA; ARTIFACT_INVALID due incomplete ELF, no process/files. These test the same main helper used by positive server launch."
+  },
+  "server_launch": {
+    "argv": [
+      "<pinned temporal>",
+      "--disable-config-env",
+      "--disable-config-file",
+      "--env-file",
+      "<owned data_dir>/isolated-env.json",
+      "server",
+      "start-dev",
+      "--ip",
+      "127.0.0.1",
+      "--port",
+      "<frontend>",
+      "--http-port",
+      "<http>",
+      "--metrics-port",
+      "<metrics>",
+      "--db-filename",
+      "<owned data_dir>/temporal.sqlite",
+      "--headless"
+    ],
+    "environment": "Only PATH plus explicitly required no-bytecode/test settings; no ambient TEMPORAL/proxy/cloud/auth/PG variables. Do not repurpose HOME. Env-file literal {} is private, not an ambient user file. No WorkflowEnvironment/server-download helpers.",
+    "network": "Allocate three distinct loopback ports; inspect actual owned listeners (/proc/socket or equivalent) and fail non-loopback server sockets; headless prevents UI/news activity. SDK clients target only explicit127.0.0.1:frontend.",
+    "readiness": "Separate SDK client process Client.connect then workflow_service.describe_namespace(DescribeNamespaceRequest(namespace=\"default\"), rpc_timeout=timedelta(seconds=5)); retry only RPC UNAVAILABLE/DEADLINE_EXCEEDED or connection startup errors under30s/100ms cadence; other errors fail immediately.",
+    "retention": "Read namespace response.config.workflow_execution_retention_ttl seconds+nanos/1e9 and assert >3600 before workflow start; record actual value before/after restart. This reads config, does not prove expiry behavior.",
+    "prestart_loopback_basis": "Pinned official CLI v1.9.1 source observation verifies FrontendIP flows to frontend/internal RPC BindOnIP, frontend HTTP config and metrics listen address. Actual owned socket inspection still required; source observation is not reproducible binary attestation."
+  },
+  "fixture_protocol": {
+    "workflow": "TC-only deterministic class IFPMICH1SyntheticWait. run(marker) stores fixed h1-synthetic-v1 marker, awaits finish signal via workflow.wait_condition, returns fixed h1-finished-v1. query phase returns waiting/finished; signal finish sets flag. No business steps, artifacts or quality PASS.",
+    "entrypoint": "Pinned new venv/bin/python tests/ifpmic_api/temporal_toolchain_fixture.py with subcommands worker/probe; subprocess CLI carries only owned endpoint, queue/workflow IDs and evidence paths, no secrets. Ensure repo root/module importability without extra packages. Worker uses SDK default sandbox.",
+    "phase1": "Create worker process1 and separate client/probe process1. Query confirms wait; namespace retention>3600; start exactly one unique synthetic ID with WorkflowIDReusePolicy.REJECT_DUPLICATE and WorkflowIDConflictPolicy.FAIL. Duplicate while running must raise temporalio.exceptions.WorkflowAlreadyStartedError with original run_id. Capture private full history JSON and normalized ordered event_id/event_type list after wait/duplicate check; no second logical run. Client1 exits0 then stop/reap worker1 and server1, proving their saved process identities absent.",
+    "phase2": "Start server2 using same binary/store/ports; new worker2 and client2. Existing exact ID yields same original run_id, and every recorded phase1 event_id/type remains an identical ordered prefix. Query still waiting; signal finish once; result equals h1-finished-v1. Duplicate closed ID with same reject policies must raise same typed error and preserve original result/run_id; no second run (actual list/describe). Retention remains >3600. Client2 exits0; worker2/server2 stop/reap.",
+    "history": "Actual SDK fetch_history()/WorkflowHistory.to_json(); ordered event IDs strict increasing, first WORKFLOW_EXECUTION_STARTED, before restart no WORKFLOW_EXECUTION_COMPLETED, after signal final WORKFLOW_EXECUTION_COMPLETED and literal fixture result. Preserve raw histories private; public event-type/count/hash summaries only.",
+    "typed_errors": "SDK1.34 _impl.py maps ALREADY_EXISTS with WorkflowExecutionAlreadyStartedFailure detail to WorkflowAlreadyStartedError. Both running and closed tests require exact type and matching run_id; generic exception assertions forbidden.",
+    "processes": "Two distinct actual CLI processes, two distinct actual worker processes, two distinct client/probe processes; record PID/startticks privately and verify old identities absent before reuse of ports/store. pytest is a separate parent. Worker termination may be graceful SDK shutdown handler; no reuse of worker/client objects across server restart."
+  },
+  "deadlines": {
+    "normal_case_seconds": 30,
+    "integration_case_seconds": 240,
+    "integration_exception_justification": "One case includes two actual server/worker/client lifecycles, persistent store recovery, retention/history/RPC polling and exact owned cleanup. A reviewed240s exception is within the unchanged300s Python phase; this is not a threshold waiver after execution.",
+    "pytest_phase_seconds": 300,
+    "server_readiness_seconds_each": 30,
+    "poll_interval_seconds": 0.1,
+    "rpc_seconds": 5,
+    "worker_query_readiness_seconds": 15,
+    "probe_process_seconds": 30,
+    "graceful_shutdown_seconds": 10,
+    "forced_cleanup_seconds": 5
+  },
+  "gate": {
+    "before": "Hard-check approved contract/review/pre-gate hashes, installation/private candidate/archive/binary/pins; capture tracked+new H1 product/test/runner/plan/lock sources and private source ZIP, package inventory/RECORD manifest and old environment hash snapshot. Enforce source fingerprints before execution.",
+    "argv": [
+      "<new venv/bin/python>",
+      "-m",
+      "pytest",
+      "tests/ifpmic_api/test_temporal_toolchain.py",
+      "-q",
+      "-ra",
+      "--junitxml=<private gate>/pytest.xml"
+    ],
+    "environment_inputs": [
+      "IFPMIC_H1_TOOLCHAIN_MANIFEST=<private installation.json>",
+      "IFPMIC_H1_EVIDENCE_ROOT=<fresh private gate>/observations",
+      "PYTHONDONTWRITEBYTECODE=1"
+    ],
+    "after": "Exactly5 passed/0failed/0errors/0skips, each normal<=30s and integration<=240s; fresh JUnit IDs match independent inventory; source/config/lock and old environment unchanged, package/binary pins unchanged; all owned process identities gone and listeners released. Failures preserve candidate/raw logs/history and execute exact-handle cleanup; never restart on observation timeout.",
+    "publication": "Normalized successful pytest summary/JUnit(hostname stripped), gate summary, source/hash/versions/counts, sanitized process counts and history event-type/hash/retention summaries. Never publish raw server/worker/client logs, full histories, raw source/build ZIPs, absolute private paths, environment/auth/PG contents or PID/startticks.",
+    "review": "Independent reviewer must review frozen helper/runner/test/fixture source SHA before first gate and then actual raw evidence after terminal completion. Only after final accept_partial_h1 may H1 be verified.",
+    "impact_scope": "H1 adds isolated verification tooling/tests and a separate normalized36-package qualification lock only; current API/PG/AX UI, original32env and original requirements.lock unchanged. Reviewed README change distinguishes original351 API regression from separately mandatory5-case H1 runner; H6 must still execute original351 plusnew5 and fullNode387. Of349 G6tracked source entries excludingprogress,348 remain byte-identical and only README is an explicit reviewed documentation exception pinned above. This does not permit other source/plan/test/runner/lock changes during the frozen H1 gate; original17+2 remain exact."
+  },
+  "failure_recovery": "Preserve exact failed source+commands+logs/history privately. Reclassify artifact/CLI/API/fixture/protocol failure; fix at relevant H1 step, preserve earlier draft/attempt, independently review changed source/contract before a fresh full5-case gate. Do not weaken original oracle or silently upgrade versions.",
+  "acceptance_boundary": "H1 toolchain qualification only; B03 engine, outbox, real human/business/versions and all original32 AT remain incomplete.",
+  "deadline_enforcement": {
+    "mechanism": "TC autouse pytest fixture in main thread uses signal.setitimer(signal.ITIMER_REAL) plus monotonic absolute deadlines. Ordinary case body budget25s with5s reserved cleanup; integration body215s with25s reserved cleanup. Case total includes fixture teardown and must remain<=30/240s in JUnit. Handler raises a fixed CaseDeadlineExceeded failure, never xfail/skip. Save/restore previous handler/timer.",
+    "propagation": "Every subprocess.run/wait, readiness loop, RPC and worker-query wait uses min(contract sublimit, remaining monotonic body budget); zero remaining raises immediately. Child probe/worker handlers also have fixed internal deadlines; client RPC5s and process phase30s never extend parent case budget. Tests cannot catch the timeout and continue business probes.",
+    "on_timeout": "Enter unconditional finally cleanup with a fresh absolute cleanup deadline within reserved5/25s. First SIGTERM all still-owned handles concurrently after PID/starttick verification, wait at most10s total (or remaining budget for ordinary case), then SIGKILL still-same owned identities and reap within remaining cleanup budget. No serial10s per child accumulation. Retain failure and raw records. Forced cleanup fails positive case.",
+    "cleanup_watchdog": "Arm a separate ITIMER_REAL timer for the reserved cleanup window while cleanup runs; expiration fails case and leaves complete private owned-process ledger for outer runner cleanup. Normal cleanup also consumes the reserved budget and observed total remains checked. Restore timers after cleanup; never reset the primary body deadline per operation.",
+    "outer_watchdog": "Runner independently enforces overall pytest300s. On timeout, snapshot current proven pytest descendants (PPID ancestry +startticks) and recorded owned process identities before signalling/reaping pytest, then fence/terminate/kill/reap only these owned identities. Preserve exact PID/starttick ledger privately. This is cleanup after a failed gate, never acceptance or permission to restart.",
+    "evidence": "JUnit per-case elapsed, body/cleanup start/end and timeout outcome in private ledger; public durations/counts only. Reviewer checks actual implementation before first run."
+  },
+  "documentation_exception": {
+    "path": "README.md",
+    "purpose": "Avoid collecting mandatory isolated Temporal qualification in the original32-package API command, which has no SDK/installation-manifest. Give separate controlled H1 runner instructions and separate lock link.",
+    "old_api_command_scope": "Original351 API cases under existing32-package environment; explicit ignore of H1qualificationfile is scope selection, not skipped test proof.",
+    "h1_command_scope": "Exactly5 cases under pinned36-package isolated environment and reviewedCLI. H1 cannot be marked complete withoutthese5.",
+    "h6_boundary": "Later integrated fixed candidate must run all original351 plus everynewcase (includingH1) andNode387. Neither command replaces or waives that gate."
+  }
+}

@@ -1,0 +1,171 @@
+{
+  "kind": "ifpmic.b03.h1.tc-plan.v1",
+  "status": "draft_for_exact_sha_execution_contract_review",
+  "scope": "H1 local Temporal SDK/CLI qualification only. These tests qualify a toolchain and isolated development server; they do not implement the B03 workflow/outbox or establish AT-05, AT-16, AT-29, AT-09, or production acceptance.",
+  "inputs": {
+    "plan_path": "docs/ifpmic/B03-WORKFLOW.md",
+    "plan_sha256": "38fdd875bc76047ed1e3e46c850277fea1a3d1f825662a13b1c21154925f25ff",
+    "resolver_preparation_path": "docs/ifpmic/evidence/b03/h1-resolution-preparation.json",
+    "resolver_candidate_sha256": "9c6141efe9ccb7cd9a94e3663c2faf9049eb10b883c93f492bb3e46c3a8883f7",
+    "toolchain_candidates": {
+      "python": "CPython 3.12, exact interpreter path/hash to be captured at execution",
+      "temporalio": "1.34.0 base install, no grpc extra or telemetry exporter unless separately approved",
+      "temporal_cli": "1.9.1 Linux amd64 archive, exact archive and extracted binary SHA-256 to be captured",
+      "preserved_python_lock_constraint": "The existing 32 Python package versions must remain unchanged; the H1 candidate has 36 total packages and is not yet accepted or installed."
+    }
+  },
+  "decision_under_test": "The pinned Python SDK and explicit CLI can connect to a loopback-only local Temporal development server whose durable history survives a real server process restart using its private persistent store. The fixture exercises only Temporal primitives and a synthetic workflow; it cannot pass a business step or publish a real result.",
+  "case_groups": [
+    {
+      "id": "H1-PIN",
+      "purpose": "Prove the exact candidate toolchain is installed and invoked, without changing the original 32 pins or relying on implicit downloads.",
+      "target": "Isolated wheel environment, resolver lock, Temporal CLI archive and executable.",
+      "method": "Verify candidate and archive SHA-256 before installation; install only from the reviewed wheel-only lock into an isolated path; compare installed package inventory to the frozen 36-package lock; inspect the executable version and binary hash. All invocations use the explicit executable and environment, never an SDK helper that downloads a server implicitly.",
+      "agent": "TC authors fixtures and independent checks; main owns artifact/lock setup; independent reviewer checks exact hashes before H1 execution.",
+      "pass_criteria": [
+        "Candidate lock SHA and all wheel hashes match the reviewed inputs.",
+        "All 32 pre-existing Python package versions are unchanged and the total installed inventory matches the frozen candidate.",
+        "temporalio reports exactly 1.34.0 and the explicit CLI reports exactly 1.9.1; the extracted binary SHA matches the pinned archive manifest.",
+        "No source distribution build, extra package, global install, implicit download, remote connection, or existing Paperclip/IFPMIC database access occurs."
+      ],
+      "expected_result": "Exact pinned versions and hashes are recorded; any mismatch fails before starting a server or running the SDK compatibility cases.",
+      "evidence": [
+        "Private candidate lock, wheel/binary hashes, interpreter and package inventory.",
+        "Sanitized argv/version/exit summaries and before/after source and lock hashes.",
+        "No raw environment, credentials, DSN, or full unredacted process environment in public evidence."
+      ],
+      "recovery": "Keep the failed candidate and hashes in a private immutable attempt directory. Do not install or run the mismatched artifact; revise the resolver/contract and obtain same-SHA review before another H1 run.",
+      "scope_impact": "No product source or existing package lock may change silently. Any required change to the existing 32 pins returns to plan review."
+    },
+    {
+      "id": "H1-IMPORT-API",
+      "purpose": "Catch SDK/import/runtime incompatibilities against the exact installed Python and CLI candidates.",
+      "target": "Temporal Python SDK import, client connection, worker registration and history APIs used by the synthetic qualification fixture.",
+      "method": "Run a small independent fixture using only the reviewed SDK APIs and the explicit local endpoint. Assert one uniquely named synthetic workflow type/task queue, signal/query mechanism, stable workflow ID and run ID, and history retrieval. Pin exact API surface in the execution contract after inspecting the installed SDK/CLI.",
+      "agent": "TC owns the fixture and literal assertions; main resolves exact API options; independent reviewer approves the execution contract first.",
+      "pass_criteria": [
+        "Imports and client/worker startup succeed with no network access beyond the isolated local server.",
+        "The fixture workflow waits in a known state until its explicit signal, then returns only its literal synthetic result.",
+        "The SDK returns a canonical workflow ID and nonempty run ID, and history contains the exact fixture event sequence asserted by the test."
+      ],
+      "expected_result": "The pinned SDK can perform the minimal client, worker, signal, query and history operations without depending on unreviewed APIs.",
+      "evidence": [
+        "Fixture source/hash, package inventory, sanitized workflow/run identifiers, history event-type summary, and test result.",
+        "Worker/server process start and stop records with PID/start-time identity and exit status."
+      ],
+      "recovery": "Preserve the complete failed test output privately and stop only the exact fixture processes. Any unsupported API requires plan/contract review; do not upgrade the SDK or replace Temporal with a fake.",
+      "scope_impact": "A synthetic workflow proves SDK compatibility only, not the 29-node engine, PostgreSQL outbox, human API, or business evidence rules."
+    },
+    {
+      "id": "H1-ISOLATION-CLI",
+      "purpose": "Prove the development server is launched from the pinned binary with explicit, isolated configuration and no implicit download or external service access.",
+      "target": "Actual Temporal CLI 1.9.1 process, private persistent store, loopback endpoint and worker process.",
+      "method": "Start the server with the verified CLI path and a fresh private data directory on an allocated loopback-only port. Capture exact argv and a sanitized allowlist of relevant environment keys; observe readiness using the CLI-supported health/readiness mechanism selected in the reviewed contract. Run the pinned SDK fixture against that endpoint. Assert the CLI is the actual process owner and no endpoint resolves to Paperclip, company IdP, external Temporal, or the business PostgreSQL instance.",
+      "agent": "Main owns isolated artifact/server lifecycle; TC asserts process identity, endpoint and fixture observations; independent reviewer approves CLI flags/readiness and cleanup semantics.",
+      "pass_criteria": [
+        "Executable path and hash match the reviewed CLI artifact; all server data is beneath a newly created private test directory.",
+        "Bind address and SDK target are loopback only, and the chosen port is not an existing Paperclip or IFPMIC service port.",
+        "The launch uses explicit storage/configuration arguments supported by CLI 1.9.1 and causes no server binary auto-download.",
+        "The Temporal server uses its own private persistence; the IFPMIC PostgreSQL fixture and existing Paperclip database are not read, modified, or used as Temporal storage.",
+        "Every server and worker is stopped by its recorded handle; PID plus process start-time is checked and the port is released before the case passes."
+      ],
+      "expected_result": "An isolated local server starts from the exact CLI binary, accepts the SDK fixture, and exits cleanly with no leaked process or port.",
+      "evidence": [
+        "CLI archive/executable hashes, exact sanitized argv, private lifecycle manifest, PID/start-time and exit codes.",
+        "Private directory modes, server storage identity, loopback bind/target evidence, and before/after checks of unrelated service/database fingerprints."
+      ],
+      "recovery": "On startup timeout, inspect and clean only the recorded server process/data directory. Never kill by process-name pattern, reuse a failed server directory, or retry while the prior handle remains live.",
+      "scope_impact": "This verifies local tool operation only; it does not qualify production topology, TLS, high availability, deployment, or operational backup."
+    },
+    {
+      "id": "H1-PERSIST-RESTART",
+      "purpose": "Distinguish durable server history from in-memory state and prove a running execution retains the same identity through a real server restart.",
+      "target": "A real CLI Temporal server with private persistent storage, one SDK worker and one synthetic signal-wait workflow.",
+      "method": "Start server and worker, start the fixture under one literal workflow ID, wait until history proves it is blocked at the signal wait, and record the SDK run ID plus ordered history summary. Stop the worker and server using recorded handles, prove both terminated, then restart the same pinned CLI against the same private data directory. Reconnect the SDK, retrieve the same workflow ID/run ID and pre-restart history, start the compatible worker, send the unique signal, and assert the fixture completes with the expected appended history. No new workflow start is issued after restart.",
+      "agent": "TC owns exact event/run identity assertions; main owns real service/worker lifecycle; independent reviewer approves stop/restart deadlines and supported persistence flags.",
+      "pass_criteria": [
+        "The first phase reaches the exact blocked fixture point before stopping the server.",
+        "After restart with the same persistent store, workflow ID and run ID are identical; the pre-restart event prefix is unchanged and ordered.",
+        "The existing execution resumes only after the explicit signal, completes once, and appends the expected fixture events.",
+        "No duplicate execution or second run ID is created, no SDK in-memory client/worker survives the server stop, and cleanup proves all recorded processes exited."
+      ],
+      "expected_result": "The same durable history and execution continue across a real server process restart; loss of history, changed run ID, duplicate start or silent fresh execution fails the case.",
+      "evidence": [
+        "Before/after sanitized history summaries, workflow ID/run ID equality assertions, signal/result summary, process lifecycle records and storage-directory identity/hash manifest.",
+        "Private raw CLI/server output and exact source/artifact hashes with restrictive file permissions."
+      ],
+      "recovery": "If a stop/start times out, preserve the private data directory and exact process handles; do not delete/recreate history to turn the case green. Diagnose in a new attempt after the failed one is closed.",
+      "scope_impact": "The fixture is not the IFPMIC workflow. It establishes a toolchain persistence primitive only and cannot count as AT-05, AT-16, AT-29 or business workflow replay acceptance."
+    },
+    {
+      "id": "H1-ID-RETENTION",
+      "purpose": "Check actual local namespace retention and reject duplicate workflow starts while an execution is running and after it closes.",
+      "target": "The actual CLI-created namespace and SDK start semantics under the pinned server build.",
+      "method": "Read the exact namespace retention through the supported CLI/SDK administration surface and preserve a sanitized result. Require configured retention greater than one hour. Under one test namespace, start a long-running fixture and verify a second start with the same workflow ID is rejected while running; then complete it and verify a new start with the same ID is rejected as closed/existing. Do not wait one hour or claim empirical post-expiry retention from a shorter test; the configured retention value and actual namespace readback are the oracle.",
+      "agent": "TC obtains and compares literal configured/readback retention; main supplies the isolated namespace; independent reviewer approves the exact CLI/SDK readback API and duplicate error classification.",
+      "pass_criteria": [
+        "The real namespace reports retention strictly greater than 3600 seconds (or the exact supported duration equivalent) before any run is admitted.",
+        "The running-ID duplicate is rejected without a second run ID or altered original history.",
+        "The closed-ID duplicate is rejected without reopening/replacing the original closed execution or changing its result/history.",
+        "Error classification is pinned from observed CLI/SDK exception type/code for this exact version; no generic exception-only assertion is accepted."
+      ],
+      "expected_result": "Readback proves the configured retention margin, and both running and closed duplicate starts are rejected while the first execution identity/history remains intact.",
+      "evidence": [
+        "Sanitized namespace retention readback and exact SDK error type/code.",
+        "Before/after execution identity and history summaries, no-second-run assertion, and process cleanup proof."
+      ],
+      "recovery": "If retention cannot be queried, is at most one hour, or duplicate semantics differ, stop H1 acceptance and return for contract/tooling review. Do not infer retention from a default or wait duration.",
+      "scope_impact": "This is a local CLI namespace check, not a claim that production retention is configured the same way. H1/H2 still must verify the operational configuration and quarantine behavior; no known-history ID may be reused after history loss."
+    },
+    {
+      "id": "H1-NEGATIVE-ARTIFACT",
+      "purpose": "Prove wrong or altered tool binaries fail closed before server startup.",
+      "target": "Test wrapper and pinned CLI artifact verification path.",
+      "method": "Use an independently generated wrong-hash manifest and a harmless sentinel executable in a private fixture. Assert validation rejects the mismatch before sentinel execution; repeat for a missing/truncated artifact without launching any server.",
+      "agent": "TC supplies literal negative fixtures and sentinel assertion; main owns the verification wrapper; reviewer checks no implicit fallback path.",
+      "pass_criteria": [
+        "Wrong hash and missing/truncated artifact produce the fixed pre-execution failure result.",
+        "Sentinel invocation count remains zero and no server/data directory is created.",
+        "No fallback search on PATH, remote download, or alternate version is attempted."
+      ],
+      "expected_result": "All invalid artifacts are rejected before execution and do not trigger an alternate acquisition path.",
+      "evidence": [
+        "Private sentinel count, artifact-manifest hashes, sanitized fixed error code and no-process/no-data-directory assertions."
+      ],
+      "recovery": "Preserve the negative fixture and logs; correct only the reviewed artifact pins or verification implementation before a new same-SHA reviewed attempt.",
+      "scope_impact": "Negative wrapper tests do not replace the positive real CLI and persistent server cases."
+    }
+  ],
+  "execution_limits_and_safety": {
+    "single_test_timeout_seconds": 30,
+    "python_phase_timeout_seconds": 300,
+    "server_fixture_total_deadline_seconds": 300,
+    "startup_readiness_deadline_seconds": "Must be set in the exact-SHA execution contract before running; recommend a bounded 30 seconds within the 300-second fixture budget.",
+    "worker_startup_and_shutdown_deadlines_seconds": "Must be fixed in the exact-SHA execution contract before running; each must fit the 300-second fixture budget.",
+    "server_shutdown_deadline_seconds": "Must be fixed in the exact-SHA execution contract before running; timeout preserves the failed attempt and requires exact-handle cleanup.",
+    "test_commands": "No command is authorized by this draft. The reviewed contract must pin argv and distinguish any H1-specific qualification command from the later full H6 regression gate.",
+    "network_policy": "No remote Temporal, Paperclip DB, company IdP, or public workflow endpoint. Artifact download only after the reviewed pin and through the explicitly approved artifact source; server/client traffic is loopback only.",
+    "data_policy": "Private fresh directories with restrictive permissions, synthetic fixture inputs only, no production profile/job/task/evidence data, and no raw credentials or unredacted environment in public evidence.",
+    "process_cleanup": "Record PID plus process start-time and exact owned handles for CLI/worker; poll the same live handle after any timeout. Do not infer termination from timeout, process-name matching, or port disappearance alone."
+  },
+  "known_boundaries": [
+    "The resolver output is a candidate only; wheel/artifact installation and runtime evidence remain pending.",
+    "Namespace retention is validated from actual local configuration/readback, not by waiting for an hour to elapse.",
+    "Temporal server persistence does not imply IFPMIC PostgreSQL persistence or application projection correctness.",
+    "A synthetic workflow is not the 29-node IFPMIC workflow and cannot satisfy the pending H2-H5 contracts.",
+    "No original AT-01 through AT-32 is executed or accepted by H1."
+  ],
+  "open_execution_contract_questions": [
+    "Which exact CLI 1.9.1 flags select persistent storage, namespace retention, loopback bind, readiness check and graceful shutdown, and how will unsupported flags fail before startup?",
+    "Which supported CLI/SDK API reports namespace retention and classifies duplicate starts for the pinned version?",
+    "What exact bounded deadlines and readiness polling cadence apply to CLI startup, worker startup, graceful stop and post-restart history visibility within the 300-second fixture budget?",
+    "Which process owns the worker across server restart, and what exact sequence proves the worker and SDK client were terminated/recreated rather than retained in-process?",
+    "How will evidence prove the private Temporal store is distinct from the existing Paperclip DB and the IFPMIC PostgreSQL test cluster without exposing connection strings or private paths?"
+  ],
+  "approval_boundary": {
+    "current_authorization": "Draft H1 test plan only. Await exact-SHA execution-contract review before tests, dependency installation, or Temporal server execution.",
+    "H1_acceptance": "Requires all listed cases, pinned artifacts, actual local persistent-server evidence, cleanup evidence and independent result review.",
+    "B03_acceptance": "not_claimed",
+    "original_acceptance_cases": "AT-05, AT-16, AT-29 and AT-09 are not established by this qualification plan."
+  }
+}

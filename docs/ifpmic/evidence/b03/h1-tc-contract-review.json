@@ -1,0 +1,101 @@
+{
+  "kind": "ifpmic.b03.h1.tc-contract-review.v5",
+  "reviewer_role": "independent TC contract reviewer; not H1 or B03 acceptance",
+  "reviewed_contract": {
+    "path": "docs/ifpmic/evidence/b03/h1-execution-contract.json",
+    "sha256": "7860ccc5e7527ef37f6e1f26d07b7b2df4bb2f55d721b14ae5e635492153b801"
+  },
+  "reviewed_tc_plan": {
+    "path": "docs/ifpmic/evidence/b03/h1-tc-plan.json",
+    "sha256": "9603dd641f559a05425ce6d4632596d992c883c06c17601debf8f15fe14e9fa5"
+  },
+  "reviewed_loopback_source_observations": {
+    "path": "docs/ifpmic/evidence/b03/h1-cli-source-observations.json",
+    "sha256": "6166cbbb26a4204badbd76875639b79b6a3c8b51fe064a0c68a6908413e5cfcf",
+    "scope": "Static official CLI 1.9.1 source observation for FrontendIP wiring; the contract still requires runtime inspection of actual owned listener addresses."
+  },
+  "inputs": {
+    "plan_acceptance_sha256": "77bb4d6041fb117e81e3c2ee9dfe268ede7b397696909e21fac12a4e6eaccfc8",
+    "toolchain_lock_sha256": "9c6141efe9ccb7cd9a94e3663c2faf9049eb10b883c93f492bb3e46c3a8883f7",
+    "toolchain_installation_preparation_sha256": "277fe057d633759381ddcbba2df22a2772edf928c84d6dc43eb9f0ffa0d849a6",
+    "cli_version": "1.9.1",
+    "server_version": "1.32.0",
+    "python_sdk_version": "1.34.0",
+    "normalized_temporal_lock_sha256": "ccbbf7a8aab39cd80861f607afd4994bf461d07cbf592f6acfcc492e63ff85c6",
+    "readme_sha256": "0964d4dae840f9a433d88ee92132efedb7e17c77ac815d0e955c6fdbc65c7100",
+    "second_gate_failure_sha256": "b18d1c96a75067cafa39a8129a805be1eef972c1aa22e3053b9582a0f47f3885",
+    "sdk_services_generated_sha256": "fff9f37fe0d8627279cd4f1359c667647476a323890852cea9bd0848dd96b623"
+  },
+  "decision": "approved_for_h1_test_authoring_and_separately_reviewed_pre_gate; no H1 execution or B03 acceptance",
+  "findings": [
+    {
+      "topic": "Five-case inventory and independent expected values",
+      "result": "pass",
+      "evidence": "The four pytest function IDs expand to exactly five collected cases because the absent and truncated binary case has two parameters. The contract pins package versions, fixed verifier errors, synthetic workflow result/history, workflow/run ID equality, retention greater than 3600 seconds, and typed duplicate-start failures. The expected values are literal and are not derived from the implementation under test."
+    },
+    {
+      "topic": "CLI provenance and loopback configuration basis",
+      "result": "pass",
+      "evidence": "The contract pins the CLI archive and binary hashes and includes the reviewed official 1.9.1 source observations that FrontendIP is applied to frontend/internal RPC BindOnIP and the metrics listener. It explicitly treats this as a configuration basis, not runtime proof or source-to-binary attestation, and separately requires the actual owned TCP listener addresses to be inspected and rejected if any are non-loopback. It disables ambient config/env discovery and supplies a private env file containing exactly the empty JSON object {}."
+    },
+    {
+      "topic": "SDK and server duplicate behavior",
+      "result": "pass",
+      "evidence": "The readiness path calls Client.connect and DescribeNamespaceRequest for the default namespace, converts the reported workflow_execution_retention_ttl to seconds, and checks it is strictly greater than 3600 before starting. The running duplicate uses FAIL conflict policy; the closed duplicate uses REJECT_DUPLICATE reuse policy. Each must raise the pinned WorkflowAlreadyStartedError and preserve the original run identity/history."
+    },
+    {
+      "topic": "Persistent server and client/worker recreation",
+      "result": "pass",
+      "evidence": "The test blocks a deterministic synthetic workflow on a signal, records workflow/run IDs and an ordered history prefix, then stops and reaps the first CLI server, worker and client. It restarts the exact CLI against the same private SQLite file and ports, creates fresh client and worker processes, and requires the same run ID and prior history prefix before signaling the already-running execution. It prohibits a second start after restart and verifies the completed-ID duplicate is rejected."
+    },
+    {
+      "topic": "Timeouts, process ownership and evidence handling",
+      "result": "pass",
+      "evidence": "Ordinary tests are limited to 30 seconds and the single multi-process integration has a declared 240-second exception within the unchanged 300-second Python phase. Startup, RPC, worker readiness, query, graceful shutdown and owned cleanup have individual limits. Cleanup checks saved PID/start-time identities and avoids name-based process killing. Raw history/logs remain private; publication is sanitized."
+    },
+    {
+      "topic": "Authorization and acceptance boundary",
+      "result": "pass",
+      "evidence": "The exact contract continues to authorize only H1 tool qualification after the separate source pre-gate review. It does not claim business workflow implementation or acceptance of AT-05, AT-16, AT-29, AT-09, or original AT-01 through AT-32."
+    },
+    {
+      "topic": "Bounded test and cleanup watchdogs",
+      "result": "pass",
+      "evidence": "The contract now gives each ordinary case a 25-second body plus 5-second cleanup reserve (30 seconds total), and the one integration case a 215-second body plus 25-second cleanup reserve (240 seconds total), under the unchanged 300-second Python phase. Operations must consume one monotonic deadline rather than resetting per call. The TC main-thread ITIMER_REAL deadline raises a fixed failure; finally cleanup uses its own timer, signals all still-owned processes concurrently, waits against one shared budget, then fences and reaps only the same PID/start-time identities. The outer runner independently bounds pytest at 300 seconds and records owned descendants before cleanup."
+    },
+    {
+      "topic": "Separate qualification lock and README scope boundary",
+      "result": "pass",
+      "evidence": "The plan pins the dedicated services/ifpmic_api/requirements-temporal.lock and README bytes. The first literal test hashes the normalized lock and independently parses its 36 name/version entries against a fixed expected mapping, while the candidate resolver lock and the unchanged original 32-package environment remain independently checked. README states that the old 351 API cases remain in their existing environment, H1 is a separate required five-case run, and H6 still requires original351+H1 five+Node387. This makes the documentation exception and package boundary reviewable without folding H1 into or replacing the original regression."
+    },
+    {
+      "topic": "Correct low-level RPC timeout keyword",
+      "result": "pass",
+      "evidence": "The v5 contract distinguishes the generated low-level WorkflowService.describe_namespace(req, retry=False, metadata={}, timeout=None) signature from the high-level Client/WorkflowHandle methods that accept rpc_timeout. The pinned installed services_generated.py exposes timeout, so the correction is executable and keeps the five-second RPC bound without weakening the readiness deadline. The preserved second-gate failure evidence attributes the TypeError to the old keyword mismatch."
+    },
+    {
+      "topic": "Private fixture failure diagnostics",
+      "result": "pass",
+      "evidence": "On worker/probe exception, stderr remains a fixed exception-class-only line. The fixture writes a unique exception-<pid>.json in the already-owned TMPDIR with class, message and traceback at mode0600; write failure is best-effort and cannot replace the original fixed exit code. The contract explicitly keeps this raw diagnostic out of public artifacts. It adds no endpoint, service behavior, test case or acceptance claim."
+    }
+  ],
+  "conditions": [
+    "Before runtime execution, the independent pre-gate review must compare frozen launcher, runner, tests and fixture hashes with this exact contract and confirm the private installation still matches the artifact pins.",
+    "The actual server process must expose only loopback listeners. The source observation cannot substitute for that runtime socket assertion.",
+    "Any CLI/SDK behavior, typed error, retention, listener or history discrepancy is a review finding; do not relax the oracle to match observed behavior.",
+    "Use a new private attempt directory and store; only the two restart phases may reuse that one store. Keep raw logs and full history private.",
+    "Before first execution, independently inspect the actual timer fixture and cleanup path against these fixed budgets, including timeout during blocking subprocess operations and cleanup expiration; a timeout is a failure and cannot be skipped, xfailed, or restarted.",
+    "Before execution, verify the normalized lock and README hashes equal the v4 pins; the normalized lock inventory must remain exactly the independent36-package literal map, and the original 32-package environment must remain unchanged.",
+    "Keep high-level rpc_timeout uses unchanged; only the low-level describe_namespace call uses timeout. Validate exception sidecars are private, create-once, and excluded from public output; diagnostic-write failures must preserve the original exit2 behavior."
+  ],
+  "acceptance_boundary": {
+    "runtime_or_tests_executed_by_this_review": false,
+    "H1": "not accepted; requires frozen implementation, test execution, owned-process cleanup proof and independent evidence audit",
+    "B03": "not accepted",
+    "AT-05": "not_executed",
+    "AT-16": "not_executed",
+    "AT-29": "not_executed",
+    "AT-09": "pending_B05_integrated_acceptance_not_executed",
+    "original_AT_01_to_AT_32": "not executed or accepted"
+  }
+}

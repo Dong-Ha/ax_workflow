@@ -1,0 +1,72 @@
+{
+  "kind": "ifpmic.b03.h1.failed-gate-record.v1",
+  "recorded_at": "2026-10-18T20:07:19.833680+00:00",
+  "scope": "First frozen H1 gate failure, not acceptance. Preserve source and raw evidence before a separately reviewed fresh full-five-case retry.",
+  "gate": {
+    "private_path": "workflow-artifacts/verification/B03/H1/gates/2026-10-18T20-05-41-371364Z",
+    "sha256": "66d7780d8587a56b0005ca381c2dcc1f8dbcdec06e92a6fab67147ee4540d5fc",
+    "source_fingerprint": "998321e4e590a6e2b77ec454ce40a97e7b2e13917867df10599cbcd35e88ef6d",
+    "private_source_zip_sha256": "a8f2da8382c15cae706456fb40acb2ab54e6165a3dacab37c16e614e0ca2b021",
+    "pytest_exit_code": 1,
+    "command_seconds": 6.152314734998072
+  },
+  "pre_gate_review": {
+    "path": "docs/ifpmic/evidence/b03/attempts/h1-pre-gate-review-v1.json",
+    "sha256": "427a9c5dcf93b794fbbffbd2ace080048151a4016d80e8ef147f98f7cc4e4d19"
+  },
+  "cases": [
+    {
+      "name": "test_installed_toolchain_pins",
+      "seconds": 1.186,
+      "status": "passed",
+      "failure_message": null
+    },
+    {
+      "name": "test_wrong_hash_prevents_execution",
+      "seconds": 0.009,
+      "status": "passed",
+      "failure_message": null
+    },
+    {
+      "name": "test_missing_and_truncated_binary_prevent_execution[missing]",
+      "seconds": 0.008,
+      "status": "passed",
+      "failure_message": null
+    },
+    {
+      "name": "test_missing_and_truncated_binary_prevent_execution[truncated]",
+      "seconds": 0.006,
+      "status": "passed",
+      "failure_message": null
+    },
+    {
+      "name": "test_temporal_persistent_history_restart_and_duplicate_policy",
+      "seconds": 3.151,
+      "status": "failed",
+      "failure_message": "TypeError: _fixture_argv() got multiple values for argument 'action'"
+    }
+  ],
+  "counts": {
+    "passed": 4,
+    "failed": 1,
+    "skipped": 0
+  },
+  "cause": "The TC argv builder named its positional subcommand argument action, colliding with the forwarded probe option action=phase1 before the client process was spawned. This is a test-harness call construction defect, not a passed restart/history check or evidence of a Temporal server defect.",
+  "correction": "Rename only the helper positional parameter to subcommand; keep the five-case inventory, versions, timeouts and all history/retention/duplicate-start oracles.",
+  "owned_cleanup": {
+    "observed_processes": 2,
+    "all_recorded_identities_absent": true,
+    "forced_kill_count": 0,
+    "positive_zero_exit_claim": false,
+    "note": "Server exited0; worker received TERM before the probe/worker readiness sequence. No clean-positive-lifecycle acceptance is claimed for this failed attempt."
+  },
+  "raw_evidence": {
+    "pytest_log_sha256": "76e64de8e3d4f8494dd57d1294863a3e20f6f309ff1f54e49d02c0fe14953692",
+    "pytest_xml_sha256": "6c18f1aa1d8560fa59c046020d0cd622f01d11a40603ca226703b01767201390",
+    "private_processes_sha256": "daa6aba7185596e7c953b73f97b47381847d1e97ed3c696bf5e55356451f5cac",
+    "private_result_sha256": "1c06bff5817c2a1e5d119caa0e1a9e99be2d43ca294034931cb66100e1113bf2",
+    "publication": "Hashes and synthetic case/failure summary only. Raw service/worker logs, database, source ZIP and process identities remain private."
+  },
+  "parent_preflight_correction": "An additional parent Git-index check incorrectly included four deliberately untracked private artifacts and failed. Corrected read-only audit proved all23 disk pins,19 tracked index pins and4 local-private pins. The runner independently validated the approved pins before service start; no private artifact was staged. This check error did not authorize any fallback or restart.",
+  "required_reverification": "Independent source-pinned approval of the corrected test and unchanged runner/helper, then a new full five-case gate with fresh private store/processes and all original assertions. H1 remains in_progress."
+}

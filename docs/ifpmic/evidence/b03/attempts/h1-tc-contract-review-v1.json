@@ -1,0 +1,68 @@
+{
+  "kind": "ifpmic.b03.h1.tc-contract-review.v1",
+  "reviewer_role": "independent TC contract reviewer; not H1 or B03 acceptance",
+  "reviewed_contract": {
+    "path": "docs/ifpmic/evidence/b03/h1-execution-contract.json",
+    "sha256": "dca33dc0e60b811b1d1cd42df5d07379f3865c6b4192bdea11d8cedbe2fe41f4"
+  },
+  "reviewed_tc_plan": {
+    "path": "docs/ifpmic/evidence/b03/h1-tc-plan.json",
+    "sha256": "3afd63f9d82c5ea42c14110051797c2bbc20c462f35e1ff533ff25715ae0299f"
+  },
+  "inputs": {
+    "plan_acceptance_sha256": "77bb4d6041fb117e81e3c2ee9dfe268ede7b397696909e21fac12a4e6eaccfc8",
+    "toolchain_lock_sha256": "9c6141efe9ccb7cd9a94e3663c2faf9049eb10b883c93f492bb3e46c3a8883f7",
+    "toolchain_installation_preparation_sha256": "277fe057d633759381ddcbba2df22a2772edf928c84d6dc43eb9f0ffa0d849a6",
+    "cli_version": "1.9.1",
+    "server_version": "1.32.0",
+    "python_sdk_version": "1.34.0"
+  },
+  "decision": "approved_for_h1_test_authoring_and_separately_reviewed_pre_gate; no runtime or tests are authorized by this record before the required pre-gate source review",
+  "findings": [
+    {
+      "topic": "Case inventory and independent expected values",
+      "result": "pass",
+      "evidence": "The four listed pytest function IDs expand to exactly five cases because the absent and truncated binary test is parameterized twice. The tests assert pinned package versions, fixed verifier error classes, literal synthetic workflow result/history, strict workflow/run ID equality, configured retention greater than 3600 seconds, and typed duplicate-start errors; they do not derive expected outcomes from the product helper."
+    },
+    {
+      "topic": "CLI binary and launch isolation",
+      "result": "pass",
+      "evidence": "The contract pins archive and executable hashes, verifies the explicit executable before creating the data directory or spawning, disallows PATH fallback/download, uses the observed start-dev flags, binds the service/client to loopback, disables config environment/file discovery, supplies a private empty env file, and uses a fresh private SQLite store. The installed CLI was previously inspected only with --version/help; this contract contains no claim that a server has already run."
+    },
+    {
+      "topic": "SDK/CLI API and duplicate policy",
+      "result": "pass",
+      "evidence": "The readiness path uses the SDK client plus DescribeNamespaceRequest and explicitly reads workflow_execution_retention_ttl. The integration case applies FAIL conflict policy while the ID is running and REJECT_DUPLICATE reuse policy after close, requiring WorkflowAlreadyStartedError and preservation of the original run ID/history. Those are distinct server boundaries and the contract fixes the expected typed error rather than accepting any exception."
+    },
+    {
+      "topic": "Persistent server and worker restart",
+      "result": "pass",
+      "evidence": "The workflow is a deterministic signal-wait fixture, not the IFPMIC business workflow. The contract stops and reaps the first client, worker, and CLI server before restarting the exact CLI against the same store; it then creates new client/worker processes and requires the same workflow ID, run ID and ordered history prefix before signaling the existing execution. It forbids a second workflow start after restart and verifies the final closed-ID rejection."
+    },
+    {
+      "topic": "Timeouts, lifecycle evidence and privacy",
+      "result": "pass",
+      "evidence": "The normal tests are limited to 30 seconds; the one multi-process integration receives a predeclared 240-second limit within the unchanged 300-second Python phase. Startup, query readiness, RPC, graceful stop, and owned cleanup have explicit bounds. The contract records PID plus process start-time, requires cleanup of the same handles, keeps raw history/logs private, and limits public output to sanitized summaries."
+    },
+    {
+      "topic": "Acceptance boundary",
+      "result": "pass",
+      "evidence": "The contract confines evidence to H1 tool qualification and explicitly leaves H2-H7, all business workflow semantics, AT-05, AT-16, AT-29, AT-09 and original AT-01 through AT-32 unaccepted. This matches the approved B03 plan's H0/H1 boundary."
+    }
+  ],
+  "conditions": [
+    "Before executing the five cases, an independent reviewer must verify the frozen helper, runner, tests and fixture source hashes against this contract and ensure the actual private installation still matches all pins.",
+    "Any difference in CLI/SDK typed errors, retention field, history API, launch flags, or process behavior is a contract/source discrepancy; do not relax the literal assertions to fit observed behavior.",
+    "Use a fresh private data directory for the integration attempt and reuse it only for its two server processes. Preserve raw process logs/history privately and publish only the reviewed sanitized evidence."
+  ],
+  "acceptance_boundary": {
+    "runtime_or_tests_executed_by_this_review": false,
+    "H1": "not accepted; requires frozen implementation, test execution, cleanup proof, and independent result audit",
+    "B03": "not accepted",
+    "AT-05": "not_executed",
+    "AT-16": "not_executed",
+    "AT-29": "not_executed",
+    "AT-09": "pending_B05_integrated_acceptance_not_executed",
+    "original_AT_01_to_AT_32": "not executed or accepted"
+  }
+}

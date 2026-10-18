@@ -1,0 +1,230 @@
+{
+  "kind": "ifpmic.b03.h1.verification.v1",
+  "decision": "h1_pass_pending_independent_final_review",
+  "scope": "Local pinned toolchain qualification only. Actual synthetic Temporal server/worker/client processes and retained histories; no B03 job/outbox/human engine or original AT acceptance.",
+  "requirements": [
+    "B03 H1 prerequisite for AT-05/AT-16/AT-29; not acceptance of those cases"
+  ],
+  "execution_contract": {
+    "path": "docs/ifpmic/evidence/b03/h1-execution-contract.json",
+    "sha256": "7860ccc5e7527ef37f6e1f26d07b7b2df4bb2f55d721b14ae5e635492153b801"
+  },
+  "pre_gate_review": {
+    "path": "docs/ifpmic/evidence/b03/h1-pre-gate-review.json",
+    "sha256": "95a3282bcf571831e3d4eba0a2dd0a8d98826f90d25a5c4531f1b68949e48e30"
+  },
+  "candidate_fingerprint": "9dca5ee09c16461a1abc2c1ca3b0fb1b484d232bf8da2a8ea9fbd902d8db16bf",
+  "private_gate": {
+    "path": "workflow-artifacts/verification/B03/H1/gates/2026-10-18T20-13-38-965363Z",
+    "sha256": "31aeb0352cffef30fd353cc699a53273f4da30108ee21cacd9c01cd1be4244d5",
+    "private_source_zip_sha256": "409e123790a3670a3a4d7730b57b6802c124733502a1076f9e569eb588caec0a",
+    "captured_sources": 939
+  },
+  "archive": {
+    "path": "docs/ifpmic/evidence/b03/h1-gate.zip",
+    "sha256": "7b478bf9d14caf6c5620a2d09bb7af89a72f615466dfda1436dcd61e18fc4016",
+    "entries": {
+      "gate/summary.json": {
+        "sha256": "93bb822f27190a2c4264a2671aeaba1945227b55f38046f19a83f72070e60cfe",
+        "bytes": 124317
+      },
+      "gate/pytest.xml": {
+        "sha256": "d7c50211e325779d10dbd6220eada8c5d056f3ecaac22366fdba4a4cb48bd96b",
+        "bytes": 903
+      },
+      "gate/pytest.log": {
+        "sha256": "0ccfbf5323ed891c1cffcac0b2c80a7d9321890531f8ed4cd0ecfe74244da794",
+        "bytes": 99
+      },
+      "gate/runtime-summary.json": {
+        "sha256": "3ea734c5a50320e4cb7150d94f333c81aec3626ed5f4b605d3dcf78ee2133d58",
+        "bytes": 2870
+      },
+      "gate/timings.json": {
+        "sha256": "ae6248e1e024f8ad9543fea4326c1800b0cc230c74733825318bace6cf50004d",
+        "bytes": 1110
+      },
+      "environment/manifest.json": {
+        "sha256": "36eae78c6d39ad73f77d650e4f9cf479000179813be46db977b2f862397cfa1e",
+        "bytes": 1511
+      }
+    }
+  },
+  "tests": {
+    "passed": 5,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "cases": [
+      {
+        "name": "test_installed_toolchain_pins",
+        "seconds": 0.513
+      },
+      {
+        "name": "test_wrong_hash_prevents_execution",
+        "seconds": 0.007
+      },
+      {
+        "name": "test_missing_and_truncated_binary_prevent_execution[missing]",
+        "seconds": 0.006
+      },
+      {
+        "name": "test_missing_and_truncated_binary_prevent_execution[truncated]",
+        "seconds": 0.005
+      },
+      {
+        "name": "test_temporal_persistent_history_restart_and_duplicate_policy",
+        "seconds": 18.715
+      }
+    ],
+    "phase_seconds": 20.64047320899772
+  },
+  "runtime": {
+    "scope": "Synthetic Temporal primitives only; no IFPMIC workflow/AT acceptance.",
+    "processes": {
+      "servers": 2,
+      "workers": 2,
+      "clients": 2,
+      "all_unique_identities": true,
+      "all_absent": true,
+      "all_exit0": true,
+      "forced": 0
+    },
+    "same_run_across_restart": true,
+    "run_identity_sha256": "833eebcc58a3f914ec97201c23116facb0aac41511bc63ac33986d024515b55e",
+    "phases": {
+      "phase1": {
+        "events": [
+          {
+            "event_id": 1,
+            "event_type": "workflow_execution_started_event_attributes"
+          },
+          {
+            "event_id": 2,
+            "event_type": "workflow_task_scheduled_event_attributes"
+          },
+          {
+            "event_id": 3,
+            "event_type": "workflow_task_started_event_attributes"
+          },
+          {
+            "event_id": 4,
+            "event_type": "workflow_task_completed_event_attributes"
+          }
+        ],
+        "retention_seconds": 86400.0,
+        "running_duplicate_rejected": true,
+        "waiting": true,
+        "owned_listener_count": 5,
+        "all_listeners_loopback": true
+      },
+      "phase2": {
+        "closed_duplicate_rejected": true,
+        "events": [
+          {
+            "event_id": 1,
+            "event_type": "workflow_execution_started_event_attributes"
+          },
+          {
+            "event_id": 2,
+            "event_type": "workflow_task_scheduled_event_attributes"
+          },
+          {
+            "event_id": 3,
+            "event_type": "workflow_task_started_event_attributes"
+          },
+          {
+            "event_id": 4,
+            "event_type": "workflow_task_completed_event_attributes"
+          },
+          {
+            "event_id": 5,
+            "event_type": "workflow_execution_signaled_event_attributes"
+          },
+          {
+            "event_id": 6,
+            "event_type": "workflow_task_scheduled_event_attributes"
+          },
+          {
+            "event_id": 7,
+            "event_type": "workflow_task_started_event_attributes"
+          },
+          {
+            "event_id": 8,
+            "event_type": "workflow_task_completed_event_attributes"
+          },
+          {
+            "event_id": 9,
+            "event_type": "workflow_execution_completed_event_attributes"
+          }
+        ],
+        "logical_execution_count": 1,
+        "retention_seconds": 86400.0,
+        "same_history_prefix": true,
+        "signal_completed": true,
+        "owned_listener_count": 5,
+        "all_listeners_loopback": true
+      }
+    },
+    "private_history_files": {
+      "history-phase1.json": {
+        "sha256": "f1cb440f6b7c8afaca298868e4b3b7f6e2b802d9cf064f3d0ff5abf24a36361d",
+        "bytes": 1800
+      },
+      "history-phase2-after.json": {
+        "sha256": "a4d10fa477f38f3a747c2c82112666eb5c1c6074a41f5454ca9c76c4ac2071fa",
+        "bytes": 3416
+      },
+      "history-phase2-before.json": {
+        "sha256": "f1cb440f6b7c8afaca298868e4b3b7f6e2b802d9cf064f3d0ff5abf24a36361d",
+        "bytes": 1800
+      }
+    }
+  },
+  "source_changes": [],
+  "protected": {
+    "original_imports": 17,
+    "uploaded_originals": 2,
+    "old_g6_source_entries_preserved": 348,
+    "reviewed_readme_exception": true,
+    "original_api32_env_unchanged": true,
+    "new36_env_unchanged": true,
+    "old_environment_private_manifest_sha256": "bb1cb9b9235ccdd08bdc6df2be0237c8d1211206ef20ea4bfcc5d648fe190fcf",
+    "installed_environment_private_manifest_sha256": "f656b9c46bc09b12a586c2dd00a0213556529825b0830446b060e8403be8b52c"
+  },
+  "history": {
+    "failed_attempts": [
+      "docs/ifpmic/evidence/b03/h1-first-gate-failure.json",
+      "docs/ifpmic/evidence/b03/h1-second-gate-failure.json"
+    ],
+    "acceptance_source": "Only the final full five-case gate is used for qualification; failures are not counted as passes.",
+    "preimplementation_review_history": "Rejected contracts, preserved source drafts and authoring corrections remain under attempts/ and h1-authoring-history.json."
+  },
+  "publication": {
+    "retained_private": [
+      "source ZIP",
+      "raw gate JSON with private identities",
+      "full histories/SQLite DB",
+      "service/worker/client/exception logs",
+      "process PID/starttick ledger",
+      "full environment file manifests"
+    ],
+    "normalized_public": [
+      "selected gate/source hashes",
+      "successful pytest log with path aliases",
+      "JUnit hostname removed",
+      "runtime identities hashed; process counts/cleanup flags only",
+      "event types/IDs and private history file hashes",
+      "case durations without absolute monotonic times",
+      "package/version/hash manifest"
+    ],
+    "no_private_environment_or_original_upload_content_published": true
+  },
+  "post_gate_metadata_policy": "After independent final review, derive progress status/evidence/next-step and a reconciliation record. Keep product/test/runner/plan/locks/README and captured evidence bytes frozen; original AT32 remains not_executed.",
+  "limitations": [
+    "Namespace retention readback is86400seconds; no empirical expiry test or production retention acceptance.",
+    "Local Temporal dev-server SQLite is separate from IFPMIC PostgreSQL; no business PG operation in H1.",
+    "No original API351/Node387/UI regression rerun is claimed in H1; isolated tooling/docs impact only. H6 must run original351 plus all new cases andNode387.",
+    "B03 H2-H7 application implementation/integration and all32 original acceptance tests remain incomplete."
+  ]
+}

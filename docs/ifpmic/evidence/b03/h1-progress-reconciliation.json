@@ -1,0 +1,46 @@
+{
+  "kind": "ifpmic.b03.h1.progress-reconciliation.v1",
+  "scope": "Derived progress metadata after independent partial H1 acceptance; no product/test/runner/plan/lock/README changes after the passing gate.",
+  "candidate_fingerprint": "9dca5ee09c16461a1abc2c1ca3b0fb1b484d232bf8da2a8ea9fbd902d8db16bf",
+  "verification": {
+    "path": "docs/ifpmic/evidence/b03/h1-verification.json",
+    "sha256": "0e621d424c9a91ce0b58b982a22da7376262699a91eb9deec612f3fa283b8546"
+  },
+  "independent_acceptance": {
+    "path": "docs/ifpmic/evidence/b03/h1-final-review.json",
+    "sha256": "1ddd9e748961eb1b859ca19838cc2b80046e70e447bf60c1ae39c3ade900e762",
+    "verdict": "accept_partial_h1"
+  },
+  "progress": {
+    "path": "docs/ifpmic/progress.json",
+    "before_sha256": "e868352aa39e8320b4b348d4649f2f22ba9e8edf5b34636f3c6a719fa427ce24",
+    "after_sha256": "bdd105d8c16f27bf6cc664dccec30488b3886e4c6b295d6971ab369ee4269c40",
+    "changed_semantic_paths": [
+      "stages[B03].scope",
+      "stages[B03].increments[h1_temporal_toolchain_qualification]",
+      "next_step",
+      "updated_at"
+    ]
+  },
+  "frozen_gate_source_reconciliation": {
+    "captured": 939,
+    "unchanged": 938,
+    "changed": [
+      "docs/ifpmic/progress.json"
+    ],
+    "product_test_runner_plan_lock_readme_changes": []
+  },
+  "protected": {
+    "g6_source_entries_unchanged": 348,
+    "reviewed_readme_exception_captured_in_h1": true,
+    "original_imports_unchanged": 17,
+    "uploaded_originals_unchanged": 2
+  },
+  "remaining": [
+    "B03 H2-H7 application implementation and integrated regression",
+    "All original32 acceptance cases",
+    "Full B02 environment/AT21 acceptance"
+  ],
+  "goal_status": "active",
+  "real_acceptance_status": "not_executed"
+}

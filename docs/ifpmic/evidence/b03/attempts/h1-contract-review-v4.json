@@ -1,0 +1,44 @@
+{
+  "kind": "ifpmic.b03.h1.contract-review.v4",
+  "reviewed_contract": {
+    "path": "docs/ifpmic/evidence/b03/h1-execution-contract.json",
+    "sha256": "f0d94937811b484b9851de7e5081f894beecbc6ae2fb128cd3fd0aab630c26a4"
+  },
+  "pinned_inputs_verified": {
+    "tc_plan": "9603dd641f559a05425ce6d4632596d992c883c06c17601debf8f15fe14e9fa5",
+    "cli_source_observations": "6166cbbb26a4204badbd76875639b79b6a3c8b51fe064a0c68a6908413e5cfcf",
+    "resolver_preparation": "a777a09f3a00a24b4dc21a7aa3e649b5237aeec1360fbfd4c19c244b897eb213",
+    "installation_preparation": "277fe057d633759381ddcbba2df22a2772edf928c84d6dc43eb9f0ffa0d849a6",
+    "plan_acceptance": "77bb4d6041fb117e81e3c2ee9dfe268ede7b397696909e21fac12a4e6eaccfc8",
+    "README": "0964d4dae840f9a433d88ee92132efedb7e17c77ac815d0e955c6fdbc65c7100",
+    "temporal_lock": "ccbbf7a8aab39cd80861f607afd4994bf461d07cbf592f6acfcc492e63ff85c6"
+  },
+  "verdict": "approve_for_implementation_and_test_authoring_only",
+  "contract_delta_review": {
+    "README_exception": {
+      "result": "approved",
+      "baseline_sha256": "98222ce440cfed2e480e7d9cfc4558326d77d7aaa346f1422cde005ca59a7d02",
+      "candidate_sha256": "0964d4dae840f9a433d88ee92132efedb7e17c77ac815d0e955c6fdbc65c7100",
+      "diff_scope": "Only the existing API regression command adds an explicit ignore for the new H1 test file; a separate section documents the mandatory five-case H1 command and its isolated manifest/CLI requirements.",
+      "boundary": "The ignore option does not waive H1. The contract still requires the original 351 API cases plus all new cases and Node 387 for H6."
+    },
+    "separate_temporal_lock": {
+      "result": "approved",
+      "path": "services/ifpmic_api/requirements-temporal.lock",
+      "sha256": "ccbbf7a8aab39cd80861f607afd4994bf461d07cbf592f6acfcc492e63ff85c6",
+      "comparison": "Parsed candidate pins and all per-package SHA-256 requirement hashes exactly match the resolver candidate lock. It contains 36 pins: all 32 original package versions and hashes unchanged, plus only nexus-rpc 1.4.0, protobuf 7.36.2, temporalio 1.34.0, and types-protobuf 7.35.1.20260906.",
+      "original_lock": "services/ifpmic_api/requirements.lock remains SHA-256 6c8c950820a8c3ae9dea250e4080bc9dab09db17663e3d50118c5ac29211357e and is unchanged."
+    }
+  },
+  "deadline_review": {
+    "status": "resolved",
+    "basis": "The reviewed contract pins main-thread ITIMER_REAL plus monotonic per-case deadlines, body and reserved cleanup budgets, remaining-budget propagation to blocking operations, concurrent owned-process termination under one cleanup deadline, and an outer watchdog that snapshots owned descendant identities before cleanup."
+  },
+  "scope_assessment": {
+    "case_inventory": "Five H1 cases remain fully mandatory: one pin check, wrong-hash negative, two missing/truncated artifact parameters, and one persistent-history integration.",
+    "loopback": "Pinned v1.9.1 source observation supports FrontendIP listener configuration; runtime inspection of actual owned listeners remains required.",
+    "scope": "The contract adds isolated toolchain qualification only. It claims no B03 business workflow or original AT acceptance.",
+    "authorization": "This approval permits H1 helper/runner/test implementation and documentation changes only as explicitly hash-pinned by the contract. First service/test execution still requires an independent review of the frozen implementation and runner. Full H1 acceptance still requires a passing gate and final evidence review.",
+    "execution_performed_by_reviewer": false
+  }
+}

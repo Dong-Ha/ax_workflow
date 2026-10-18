@@ -1,0 +1,62 @@
+{
+  "kind": "ifpmic.b03.h1.contract-review.v5",
+  "reviewed_contract": {
+    "path": "docs/ifpmic/evidence/b03/h1-execution-contract.json",
+    "sha256": "7860ccc5e7527ef37f6e1f26d07b7b2df4bb2f55d721b14ae5e635492153b801"
+  },
+  "pinned_inputs_verified": {
+    "tc_plan": "9603dd641f559a05425ce6d4632596d992c883c06c17601debf8f15fe14e9fa5",
+    "cli_source_observations": "6166cbbb26a4204badbd76875639b79b6a3c8b51fe064a0c68a6908413e5cfcf",
+    "resolver_preparation": "a777a09f3a00a24b4dc21a7aa3e649b5237aeec1360fbfd4c19c244b897eb213",
+    "installation_preparation": "277fe057d633759381ddcbba2df22a2772edf928c84d6dc43eb9f0ffa0d849a6",
+    "plan_acceptance": "77bb4d6041fb117e81e3c2ee9dfe268ede7b397696909e21fac12a4e6eaccfc8",
+    "README": "0964d4dae840f9a433d88ee92132efedb7e17c77ac815d0e955c6fdbc65c7100",
+    "temporal_lock": "ccbbf7a8aab39cd80861f607afd4994bf461d07cbf592f6acfcc492e63ff85c6",
+    "second_gate_failure": "b18d1c96a75067cafa39a8129a805be1eef972c1aa22e3053b9582a0f47f3885"
+  },
+  "verdict": "approve_for_implementation_and_test_authoring_only",
+  "contract_delta_review": {
+    "prior_v4_sha256": "f0d94937811b484b9851de7e5081f894beecbc6ae2fb128cd3fd0aab630c26a4",
+    "v4_review_preserved": "docs/ifpmic/evidence/b03/attempts/h1-contract-review-v4.json",
+    "result": "approved",
+    "changes": [
+      {
+        "topic": "Low-level SDK method keyword",
+        "result": "pass",
+        "evidence": "The v5 change is limited to workflow_service.describe_namespace using timeout=RPC_TIMEOUT. The installed SDK 1.34 generated source SHA-256 fff9f37fe0d8627279cd4f1359c667647476a323890852cea9bd0848dd96b623 shows describe_namespace(req, retry=False, metadata={}, timeout=None); rpc_timeout is not accepted by this low-level method. The second failed-gate record pins this source and observed TypeError. High-level Client/WorkflowHandle rpc_timeout calls remain unchanged."
+      },
+      {
+        "topic": "Failure-only private diagnostics",
+        "result": "pass_with_pre_gate_verification_condition",
+        "evidence": "The v5 contract narrowly adds a create-once exception-<pid>.json in the already-provided owned TMPDIR, mode 0600, with type/message/traceback, while keeping fixed stderr classification and exit 2. It explicitly forbids diagnostic-write failure from masking the original failure and requires raw diagnostics to remain unpublished. This is implementable without changing the five acceptance case IDs or runtime/business scope."
+      },
+      {
+        "topic": "Second failed attempt and recovery boundary",
+        "result": "pass",
+        "evidence": "Pinned h1-second-gate-failure.json records four passing pin/negative cases and an integration failure before workflow/history checks, with all three recorded process identities absent and no positive-lifecycle claim. The correction is an SDK-signature compatibility fix, not a dependency upgrade or weakened oracle; a new full five-case gate remains required."
+      }
+    ],
+    "remaining_conditions": [
+      "Before the next gate, the exact-source pre-gate review must verify the corrected low-level call and the failure diagnostic implementation against v5.",
+      "The private diagnostic path must be create-once and mode 0600 under the provided private TMPDIR, preserve fixed stderr/exit classification if diagnostic writing fails, and be excluded from publication. Verify this with a bounded private-only diagnostic check or equivalent direct implementation-level oracle; it does not replace or expand the required full five-case gate.",
+      "No service execution or runtime acceptance is authorized by this contract review."
+    ]
+  },
+  "deadline_review": {
+    "status": "resolved",
+    "basis": "The reviewed contract pins main-thread ITIMER_REAL plus monotonic per-case deadlines, body and reserved cleanup budgets, remaining-budget propagation to blocking operations, concurrent owned-process termination under one cleanup deadline, and an outer watchdog that snapshots owned descendant identities before cleanup."
+  },
+  "scope_assessment": {
+    "case_inventory": "Five H1 cases remain fully mandatory: one pin check, wrong-hash negative, two missing/truncated artifact parameters, and one persistent-history integration.",
+    "loopback": "Pinned v1.9.1 source observation supports FrontendIP listener configuration; runtime inspection of actual owned listeners remains required.",
+    "scope": "The contract adds isolated toolchain qualification only. It claims no B03 business workflow or original AT acceptance.",
+    "authorization": "This v5 review permits H1 fixture/helper implementation and test authoring only. Before any new execution, the independent pre-gate review must verify the corrected low-level call, private diagnostics, exact frozen sources and installation pins. H1 acceptance still requires a fresh full five-case gate and independent final evidence review.",
+    "execution_performed_by_reviewer": false
+  },
+  "execution_performed_by_reviewer": false,
+  "acceptance_boundary": {
+    "H1": "not accepted; implementation, fresh full five-case gate, owned-process cleanup proof, and independent final evidence audit remain required",
+    "B03": "not accepted",
+    "original_AT": "not executed or accepted"
+  }
+}

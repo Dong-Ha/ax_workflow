@@ -334,7 +334,7 @@
         ]
       },
       "plan": "B03-WORKFLOW.md",
-      "scope": "H0 plan independently accepted. H1 resolver preparation succeeded with 32 original versions preserved and four additions; installation, SDK/CLI API qualification and persistent Temporal restart/retention/cleanup tests remain pending. No B03 implementation or original AT acceptance claimed.",
+      "scope": "H0 plan and H1 local pinned Temporal toolchain qualification independently accepted. Five synthetic toolchain tests passed, including actual persistent history/restart, configured retention readback, duplicate rejection and clean process shutdown. B03 H2-H7 application workflows and all original AT acceptance remain incomplete.",
       "increments": [
         {
           "id": "h0_preimplementation_plan",
@@ -347,9 +347,20 @@
         },
         {
           "id": "h1_temporal_toolchain_qualification",
-          "status": "in_progress",
-          "scope": "Wheel-only resolver candidate generated successfully: 32 existing versions unchanged plus four pinned base-SDK dependencies. No install, import, binary/server execution or H1 acceptance yet.",
-          "preparation_evidence": "evidence/b03/h1-resolution-preparation.json"
+          "status": "verified",
+          "scope": "Pinned isolated CLI/SDK toolchain only; two actual server/worker/client cycles retained the same execution and history, rejected running/closed duplicate starts, and cleaned all six processes. No business workflow or original AT acceptance.",
+          "preparation_evidence": "evidence/b03/h1-resolution-preparation.json",
+          "evidence": "evidence/b03/h1-verification.json",
+          "independent_acceptance": "evidence/b03/h1-final-review.json",
+          "decision": "accept_partial_h1",
+          "candidate_fingerprint": "9dca5ee09c16461a1abc2c1ca3b0fb1b484d232bf8da2a8ea9fbd902d8db16bf",
+          "tests": {
+            "passed": 5,
+            "failed": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "installation_preparation": "evidence/b03/h1-installation-preparation.json"
         }
       ]
     },
@@ -526,12 +537,12 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "B03 H1: review the preserved resolver candidate, install hash-verified wheels/CLI into isolated paths, and author/review/run TC qualification tests for actual SDK APIs and persistent Temporal history/restart/retention/cleanup. H2-H4 still require exact-SHA detailed contracts and TC-ledger reviews before code. Full B02 environment/AT21 and original32 AT remain incomplete.",
+  "next_step": "B03 H2: prepare the exact-SHA authenticated worker/outbox/PostgreSQL transition contract and obtain independent and TC reviews before implementation. H2-H7, full B02 environment/AT21 and all32 original AT remain incomplete; H6 must run original351 API cases plus all new cases and Node387.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",
     "Approved Bedrock/Claude runtime profile"
   ],
   "publication_policy": "Only authorized git repository documentation, source and synthetic verification summaries/screenshots; never runtime credentials or application logs.",
-  "updated_at": "2026-10-18T19:42:27.332425+00:00"
+  "updated_at": "2026-10-18T20:20:08.600079+00:00"
 }

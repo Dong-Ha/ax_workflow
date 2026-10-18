@@ -1,0 +1,60 @@
+{
+  "kind": "ifpmic.b03.h1.authoring-history.v1",
+  "scope": "Pre-execution review findings and corrections only, recorded before the first full H1 gate. Later runtime failures/results are separate execution records; this authoring history is not H1 acceptance.",
+  "review_revisions": [
+    {
+      "contract": "v1",
+      "finding": "Pin official CLI source evidence for loopback HTTP/metrics wiring and close stale TC pending questions.",
+      "outcome": "v2 pins source observations and updated TC plan; actual listener inspection remains mandatory."
+    },
+    {
+      "contract": "v2",
+      "finding": "Per-case deadlines lacked an enforcement mechanism.",
+      "outcome": "v3 fixes main-thread timer/monotonic budget propagation, reserved concurrent cleanup and outer watchdog."
+    },
+    {
+      "contract": "v3",
+      "finding": "New H1 tests require isolated SDK/manifest and would otherwise be collected by the documented old API-only command.",
+      "outcome": "v4 pins a narrow README scope exception and separate normalized36-package lock; H1 remains mandatory and H6 still includes all original/new tests."
+    }
+  ],
+  "static_source_findings": [
+    {
+      "source": "TC initial fixture/tests",
+      "findings": [
+        "Immediate listener check before CLI readiness",
+        "Client.start_workflow handle.run_id is unset in actual SDK; pin result_run_id",
+        "Retention must be asserted before workflow admission",
+        "Visibility list requires bounded eventual-consistency polling, never accepting zero or duplicate runs",
+        "Bound SDK connect/RPC/probe waits and narrow known connection-startup exception retries"
+      ],
+      "correction": "TC preserves initial source bytes and corrects fixture/API use without changing accepted oracles."
+    },
+    {
+      "source": "TC independent literal inventory",
+      "finding": "Literal EXPECTED_PACKAGES contained35 items; typing-inspection from the original32-package lock was missing. A lock-parser count check alone did not cover the literal.",
+      "correction": "Return to TC source and derive the omitted accepted pin from original requirements.lock; require independent AST literal32+4 comparison before freezing."
+    },
+    {
+      "source": "main runner",
+      "finding": "TC result/process journal is nested in observations/integration, not at observations root.",
+      "correction": "Runner reads actual integration schema and asserts six distinct expected process roles/identities and successful clean exits."
+    },
+    {
+      "source": "main runner/helper cleanup",
+      "finding": "Failure cleanup could rediscover descendants from an already-reaped pytest PID, and separate PID checking/signalling has a reuse race.",
+      "correction": "Save pytest startticks at launch, require matching root before/after descendant snapshot, use saved journal identities after exit, and open/validate pidfds before atomic pidfd_send_signal. Never signal a reused unrelated PID."
+    },
+    {
+      "source": "main runner evidence",
+      "finding": "Old environment file hash map was only held in memory.",
+      "correction": "Persist private old-environment-before.json and its gate digest so before/after unchanged claims can be audited."
+    },
+    {
+      "source": "TC timing evidence",
+      "finding": "Watchdog enforcement existed but private per-case body/cleanup timestamps and timeout flags were missing.",
+      "correction": "Return to TC fixture to record actual five-case timing and timeout fields; JUnit remains test-outcome authority."
+    }
+  ],
+  "recovery": "Preserve rejected contracts/reviews and initial source versions under attempts; complete code review and an exact-SHA pre-gate approval before the first service/test run. Runtime failures, if any, require a fresh retained gate and relevant re-review."
+}

@@ -1,0 +1,177 @@
+{
+  "kind": "ifpmic.b03.h1.final-independent-review.v1",
+  "verdict": "accept_partial_h1",
+  "scope": "Local pinned Temporal toolchain qualification only. This review does not accept B03 application workflows, business behavior, production Temporal, or original acceptance tests.",
+  "reviewed_evidence": {
+    "plan": {
+      "path": "docs/ifpmic/B03-WORKFLOW.md",
+      "sha256": "38fdd875bc76047ed1e3e46c850277fea1a3d1f825662a13b1c21154925f25ff"
+    },
+    "execution_contract": {
+      "path": "docs/ifpmic/evidence/b03/h1-execution-contract.json",
+      "sha256": "7860ccc5e7527ef37f6e1f26d07b7b2df4bb2f55d721b14ae5e635492153b801"
+    },
+    "pre_gate_review": {
+      "path": "docs/ifpmic/evidence/b03/h1-pre-gate-review.json",
+      "sha256": "95a3282bcf571831e3d4eba0a2dd0a8d98826f90d25a5c4531f1b68949e48e30"
+    },
+    "gate_report": {
+      "path": "docs/ifpmic/evidence/b03/h1-verification.json",
+      "sha256": "0e621d424c9a91ce0b58b982a22da7376262699a91eb9deec612f3fa283b8546"
+    },
+    "public_archive": {
+      "path": "docs/ifpmic/evidence/b03/h1-gate.zip",
+      "sha256": "7b478bf9d14caf6c5620a2d09bb7af89a72f615466dfda1436dcd61e18fc4016"
+    },
+    "private_gate": {
+      "path": "workflow-artifacts/verification/B03/H1/gates/2026-10-18T20-13-38-965363Z",
+      "gate_json_sha256": "31aeb0352cffef30fd353cc699a53273f4da30108ee21cacd9c01cd1be4244d5",
+      "source_zip_sha256": "409e123790a3670a3a4d7730b57b6802c124733502a1076f9e569eb588caec0a",
+      "candidate_fingerprint": "9dca5ee09c16461a1abc2c1ca3b0fb1b484d232bf8da2a8ea9fbd902d8db16bf",
+      "captured_source_count": 939
+    },
+    "helper": {
+      "path": "scripts/ifpmic_temporal_toolchain.py",
+      "sha256": "8cadab76ccfa1f93392cf759991d6906415c75ed5a116093c53aee9f4a445564"
+    },
+    "runner": {
+      "path": "scripts/verify_ifpmic_b03_h1.py",
+      "sha256": "9c20131082af1467f682d31fabb47daf359867aa5939ad818d97b7ac4c0d5573"
+    },
+    "test": {
+      "path": "tests/ifpmic_api/test_temporal_toolchain.py",
+      "sha256": "f9ced9d0acc06dbbdc822b2735430f9767d5bd1cfe80e93d98d82ad911b5af6a"
+    },
+    "fixture": {
+      "path": "tests/ifpmic_api/temporal_toolchain_fixture.py",
+      "sha256": "495278f52a5b6c539cd2b846d59e65c2a9b6cacf87f6e5bdfb36fab1d6ab3906"
+    },
+    "first_failed_attempt": {
+      "path": "docs/ifpmic/evidence/b03/h1-first-gate-failure.json",
+      "sha256": "8306af44c36bb245d340cd5ee7d00e2ddefd1e892664923e81a33acae6805bb3"
+    },
+    "second_failed_attempt": {
+      "path": "docs/ifpmic/evidence/b03/h1-second-gate-failure.json",
+      "sha256": "b18d1c96a75067cafa39a8129a805be1eef972c1aa22e3053b9582a0f47f3885"
+    },
+    "source_manifest": {
+      "path": "docs/ifpmic/source-manifest.json",
+      "sha256": "8afba9c1fc16ef3a6565f45576792cad51a1aaab59857d3a28666c71ec43007c"
+    },
+    "accepted_g6_baseline": {
+      "path": "docs/ifpmic/evidence/b02/g6-gate.zip",
+      "sha256": "41ad9f806216b0d29896a54b40c7e7ec0db5f574908a949216a484050456b647"
+    },
+    "original_api_lock": {
+      "path": "services/ifpmic_api/requirements.lock",
+      "sha256": "6c8c950820a8c3ae9dea250e4080bc9dab09db17663e3d50118c5ac29211357e"
+    },
+    "qualification_lock": {
+      "path": "services/ifpmic_api/requirements-temporal.lock",
+      "sha256": "ccbbf7a8aab39cd80861f607afd4994bf461d07cbf592f6acfcc492e63ff85c6"
+    }
+  },
+  "independent_checks": {
+    "archive_integrity": {
+      "result": "pass",
+      "entry_count": 6,
+      "entries": {
+        "gate/summary.json": {
+          "sha256": "93bb822f27190a2c4264a2671aeaba1945227b55f38046f19a83f72070e60cfe",
+          "bytes": 124317
+        },
+        "gate/pytest.xml": {
+          "sha256": "d7c50211e325779d10dbd6220eada8c5d056f3ecaac22366fdba4a4cb48bd96b",
+          "bytes": 903
+        },
+        "gate/pytest.log": {
+          "sha256": "0ccfbf5323ed891c1cffcac0b2c80a7d9321890531f8ed4cd0ecfe74244da794",
+          "bytes": 99
+        },
+        "gate/runtime-summary.json": {
+          "sha256": "3ea734c5a50320e4cb7150d94f333c81aec3626ed5f4b605d3dcf78ee2133d58",
+          "bytes": 2870
+        },
+        "gate/timings.json": {
+          "sha256": "ae6248e1e024f8ad9543fea4326c1800b0cc230c74733825318bace6cf50004d",
+          "bytes": 1110
+        },
+        "environment/manifest.json": {
+          "sha256": "36eae78c6d39ad73f77d650e4f9cf479000179813be46db977b2f862397cfa1e",
+          "bytes": 1511
+        }
+      },
+      "validation": "The archive has exactly the six declared entries. Every member's independently computed byte count and SHA-256 matches h1-verification.json. Its normalized JUnit has exactly the five expected IDs and zero failures, errors, or skips; the public JUnit hostname attribute is absent."
+    },
+    "temporal_history_and_duplicate_policy": {
+      "result": "pass",
+      "workflow_id": "ifpmic-h1-qualification-fixed",
+      "run_id_publication": "sha256 only; raw value remains private",
+      "run_identity_sha256": "833eebcc58a3f914ec97201c23116facb0aac41511bc63ac33986d024515b55e",
+      "retention_seconds_both_phases": 86400,
+      "running_and_closed_duplicates": "Both raw client outputs show WorkflowAlreadyStartedError, typed-error flag true, and the original run ID.",
+      "logical_execution_count_after_restart": 1,
+      "history": "Privately retained phase1 and phase2-before histories are byte-identical and have the same four ordered events. The full phase2-after event objects preserve that prefix and end with WORKFLOW_EXECUTION_COMPLETED after one finish signal. Reported hashes match the three private history files; private files are mode 0600."
+    },
+    "owned_runtime_processes": {
+      "result": "pass",
+      "servers": 2,
+      "workers": 2,
+      "clients": 2,
+      "distinct_pid_start_tick_pairs": 6,
+      "all_six_absent": true,
+      "all_six_exit_code_zero": true,
+      "forced_kills": 0,
+      "listeners": "Both server phases observed five owned listeners, all bound to loopback."
+    },
+    "deadlines": {
+      "result": "pass",
+      "case_count": 5,
+      "all_timeout_outcomes_none": true,
+      "all_body_and_cleanup_timeout_flags_false": true,
+      "integration_case_seconds": 18.712,
+      "pytest_phase_seconds": 20.6405,
+      "basis": "Five private timing records match the five JUnit names; all body and cleanup monotonic boundaries are ordered and within the approved 30/240-second per-case limits and 300-second phase limit."
+    },
+    "captured_sources_and_protected_inputs": {
+      "result": "pass",
+      "captured_files": 939,
+      "fingerprint_matches_report": true,
+      "private_source_zip_entry_set_matches_manifest": true,
+      "private_source_zip_hashes_match_manifest": true,
+      "captured_source_bytes_match_current_worktree": true,
+      "g6_baseline_entries_preserved": 348,
+      "changed_protected_g6_entries": 0,
+      "readme_exception": "Current README differs from accepted G6 only by the documented H1 test-ignore and separate H1 runner/lock section; SHA-256 is 0964d4dae840f9a433d88ee92132efedb7e17c77ac815d0e955c6fdbc65c7100.",
+      "original_imports_unchanged": 17,
+      "uploaded_originals_unchanged": 2,
+      "original_environment_files": 1777,
+      "qualification_environment_files": 3072,
+      "both_private_environment_snapshots_match_current_contents": true,
+      "original_32_package_lock_unchanged": true,
+      "qualification_36_package_environment_unchanged": true
+    },
+    "failed_attempts_and_privacy": {
+      "result": "pass",
+      "failed_attempts_preserved": [
+        "docs/ifpmic/evidence/b03/h1-first-gate-failure.json",
+        "docs/ifpmic/evidence/b03/h1-second-gate-failure.json"
+      ],
+      "private_gate_modes": "The final gate directory and every nested directory are mode 0700; all files are mode 0600.",
+      "public_archive": "Contains only normalized summary, JUnit, pytest log, runtime summary, relative case timings, and package manifest. It contains no private source ZIP, full histories, SQLite store, raw service/worker/client/exception logs, PID/start ticks, raw run ID, host name, absolute workspace path, or private gate path.",
+      "marker_scan": "Independent byte scan found no raw workflow run ID, process PID/start ticks, host name, workspace/gate path, SQLite filename, or worker/client identity in public members. Only the intended run-ID hash and private history filenames/hashes are disclosed.",
+      "raw_private_exceptions": "No exception trace is part of the public archive; raw diagnostic/log material remains private."
+    }
+  },
+  "decision_boundary": {
+    "accepted": "H1 qualification of the pinned local Temporal CLI 1.9.1 / embedded server 1.32.0 and Python SDK 1.34.0 using the approved synthetic persistence/restart fixture.",
+    "not_accepted": [
+      "B03 business workflows, jobs, outbox, human approvals, or production Temporal",
+      "AT-05, AT-16, AT-29 or any other original AT-01 through AT-32",
+      "Empirical workflow-expiry behavior; the gate only reads the configured 86400-second retention",
+      "The original API351/Node387 full H6 regression"
+    ],
+    "next_required_gate": "H2 implementation requires its own exact contract and independent review before code or execution; H6 must later run the original 351 API cases plus all added cases and Node 387.",
+    "reviewer_executed_tests_or_services": false
+  }
+}
