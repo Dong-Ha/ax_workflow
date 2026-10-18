@@ -1,0 +1,277 @@
+{
+  "kind": "ifpmic_b02_g6_verification",
+  "decision": "g6_pass_pending_independent_final_review",
+  "requirements": [
+    "REQ-13",
+    "B02-G6"
+  ],
+  "scope": "Fresh local G1-G5 prerequisite regression plus unchanged AX/IFPMIC full Node and rebuilt frontend/native-plugin equivalence. G7 remains required; no original AT acceptance.",
+  "execution_contract": {
+    "path": "docs/ifpmic/evidence/b02/g6-execution-contract-v2.json",
+    "sha256": "e45256f8f942046645af1f61cbc3c91a504780cb3d8c408a8d35702753c8cd63"
+  },
+  "candidate_fingerprint": "b845f54ee3757e7ddd8cc2130267587e358ea2e57e7f210be6c87942f29bdc43",
+  "gate_archive": {
+    "path": "docs/ifpmic/evidence/b02/g6-gate.zip",
+    "sha256": "41ad9f806216b0d29896a54b40c7e7ec0db5f574908a949216a484050456b647",
+    "entries": {
+      "gate/gate.json": {
+        "sha256": "60f98fefbae436f4ad660be4870e2ef7bd416fe8d8efafaff02dc4f9aa73d584",
+        "bytes": 230799
+      },
+      "api/gate.json": {
+        "sha256": "b070337a0ae1d8117fcd8222500a53b57d7abad14b6dad006282b24e1886e5f6",
+        "bytes": 119253
+      },
+      "api/legacy_python-pytest.xml": {
+        "sha256": "8c3d8d63387a44eb926aa7a4b1a0be084e29a91b781d88a3065f88c9e76b4cfe",
+        "bytes": 33391
+      },
+      "api/g4_python-pytest.xml": {
+        "sha256": "1b8a4669c35cfaa862f09d7693f09a6506768170ab4593822426a79ce7b4eeaf",
+        "bytes": 15117
+      },
+      "api/g5_python-pytest.xml": {
+        "sha256": "6ac3ee829007a0d1eeb94002cb330e989d90682b2d2a9cc50ca54db9e27140e7",
+        "bytes": 15357
+      },
+      "api/legacy_python.log": {
+        "sha256": "8048ebff56fb374a0849f15182b6a445d8624fd93d4390e7a215c02d8637844a",
+        "bytes": 272
+      },
+      "api/g4_python.log": {
+        "sha256": "240a65731ddef5f4e1f13cacece1a0d9faef188ed741367330ae8e08bcef47bf",
+        "bytes": 659
+      },
+      "api/g5_python.log": {
+        "sha256": "51565829eefdfd2e7110ee3bdb7b1a1a4229ed2bdd583c22cb6e13e266223dda",
+        "bytes": 191
+      },
+      "api/b01_node.log": {
+        "sha256": "83e4dc848ffa023d767c8c504465dbd43a65e784d756f8639295aac89defbad1",
+        "bytes": 11057
+      },
+      "gate/full-node.log": {
+        "sha256": "78b6a8d3eb6a58b9f2e0562da30d3d09e2d74d6077a3e9c3682ebb662bb6b3fd",
+        "bytes": 41013
+      },
+      "gate/build.log": {
+        "sha256": "365860e6e26c683f94cb95255e60467df959e619ac6d94c8c208b9f2913c76a0",
+        "bytes": 596
+      },
+      "gate/plugin-build.log": {
+        "sha256": "e8264a2643dc26ecfa01fbf7bfa695f449060da8c0c52e4727f8f0fe7f680da8",
+        "bytes": 180
+      },
+      "gate/source-uploads.log": {
+        "sha256": "b492da2b1f01db8326f2198d4eac6b76e77fac56c4deacfafb60398c45da90c4",
+        "bytes": 152
+      }
+    }
+  },
+  "private_source_archive": {
+    "sha256": "788f72ca52a19a9da30c49cc45a114a9f8e2639edef14ae97fd0f4809967c850",
+    "entries": 352
+  },
+  "api_regression": {
+    "gate_path": "workflow-artifacts/verification/B02/G5/gates/2026-10-18T19-08-19-351591Z/gate.json",
+    "gate_sha256": "b070337a0ae1d8117fcd8222500a53b57d7abad14b6dad006282b24e1886e5f6",
+    "source_fingerprint": "cad8a42f22ea36cea58057a1ac47cb68e6c638572370fcfff2d953b9bc90867c",
+    "private_source_archive": {
+      "sha256": "f590dc9d7f3b8116c3c9825ccb43326df30fd08cb7f412c079617efe4b59dfef",
+      "entries": 148
+    },
+    "counts": {
+      "legacy_python": {
+        "tests": 167,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0,
+        "passed": 167
+      },
+      "g4_python": {
+        "tests": 91,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0,
+        "passed": 91
+      },
+      "g5_python": {
+        "tests": 93,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0,
+        "passed": 93
+      },
+      "b01_node": {
+        "tests": 48,
+        "pass": 48,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    "maximum_targeted_node_seconds": 1.841397431,
+    "all_three_postgres_stopped": true,
+    "actual_auth_jobs_workspace_observations_verified": true,
+    "private_identities_and_raw_logs_excluded": true
+  },
+  "tests": {
+    "python": 351,
+    "targeted_node": 48,
+    "full_node": 387,
+    "targeted_node_is_subset_of_full_node": true,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "full_node_maximum_case_seconds": 20.115621383999997
+  },
+  "build_outputs_before": {
+    ".paperclip-lab/ifpmic-plugin/dist/manifest.js": "b97837792de4a4c3134470f8bd775128d734f79ec43d6e3ec8469e591956d01e",
+    ".paperclip-lab/ifpmic-plugin/dist/ui/index.js": "d078b1c82b5d7e0e9f62c1199755ddd7a6a693100db53ffad95334b5097bab8e",
+    ".paperclip-lab/ifpmic-plugin/dist/worker.js": "a28019a206135c594bb59a6f60011b6be2fc37a80b1b42bfe1cde55a16dc31ce",
+    ".paperclip-lab/ifpmic-plugin/package.json": "9e5921e12ad8f363c36ff31ec69afc43a132c7b532869249b9c9d78b822836df",
+    "dist/assets/client-CAHGjawS.js": "5fa7239379911c904db9b9302fd405a3b9e95325a502751ff2e1cb005e6ec769",
+    "dist/assets/ifpmic-lFe-uYV3.js": "cf6014835215be2da9a71f336d19db9e7cb3e55bc8e0fce3bceb1a7f33d32c6e",
+    "dist/assets/main-CylYjkUS.js": "ddbb9ffd85519b9bebb4689f7cac226a376fbc3cc1cca57dcbadeff28f4dc377",
+    "dist/assets/main-Drfl24f5.css": "5f130778329164918b89101b7ff8ae176d4f44800f424819c3a4add2d2911814",
+    "dist/ifpmic.html": "7a8a47f4bb100ee7905396cd2a0ed041a71df8937277f04d18625780b5b0cf0b",
+    "dist/index.html": "f0c4ef087190c0cfe694cf7cf27837494f3fc22ee4bcc05ee2c14a244056890f"
+  },
+  "build_outputs_after": {
+    ".paperclip-lab/ifpmic-plugin/dist/manifest.js": "b97837792de4a4c3134470f8bd775128d734f79ec43d6e3ec8469e591956d01e",
+    ".paperclip-lab/ifpmic-plugin/dist/ui/index.js": "d078b1c82b5d7e0e9f62c1199755ddd7a6a693100db53ffad95334b5097bab8e",
+    ".paperclip-lab/ifpmic-plugin/dist/worker.js": "a28019a206135c594bb59a6f60011b6be2fc37a80b1b42bfe1cde55a16dc31ce",
+    ".paperclip-lab/ifpmic-plugin/package.json": "9e5921e12ad8f363c36ff31ec69afc43a132c7b532869249b9c9d78b822836df",
+    "dist/assets/client-CAHGjawS.js": "5fa7239379911c904db9b9302fd405a3b9e95325a502751ff2e1cb005e6ec769",
+    "dist/assets/ifpmic-lFe-uYV3.js": "cf6014835215be2da9a71f336d19db9e7cb3e55bc8e0fce3bceb1a7f33d32c6e",
+    "dist/assets/main-CylYjkUS.js": "ddbb9ffd85519b9bebb4689f7cac226a376fbc3cc1cca57dcbadeff28f4dc377",
+    "dist/assets/main-Drfl24f5.css": "5f130778329164918b89101b7ff8ae176d4f44800f424819c3a4add2d2911814",
+    "dist/ifpmic.html": "7a8a47f4bb100ee7905396cd2a0ed041a71df8937277f04d18625780b5b0cf0b",
+    "dist/index.html": "f0c4ef087190c0cfe694cf7cf27837494f3fc22ee4bcc05ee2c14a244056890f"
+  },
+  "source_changes": [],
+  "protected_sources_verified_before_and_after": true,
+  "protected_inventory": {
+    "protected_source_count": 96,
+    "protected_inventory_count": 89,
+    "original_imported_files": 17,
+    "original_uploads": 2,
+    "scope": "Byte/inventory comparison only. Full Node/build/browser G6 remains pending."
+  },
+  "owned_children_absent": true,
+  "conditional_ui_omission": {
+    "decision": "eligible_under_approved_parent_plan_condition",
+    "basis": "Exact51sources/46UIinventory and existing lock resolutions unchanged; all10outputs equal controls after actual rebuild; no frontend/API connection added.",
+    "omitted": "Existing11-command browser/native-host gate only.",
+    "residual_risks": [
+      "Native UI has not accepted real IFPMIC authentication/user operation or live API rendering.",
+      "CorporateSSO/TLS/proxy/production DB/storage policy remainunaccepted.",
+      "B03Temporal/outbox andB04SSE/artifact/log/userUI plusB09device isolation andoriginal32AT remainpending."
+    ],
+    "revalidation_trigger": "Any UI/source/inventory/dependency resolution/output/connection/state/catalog semantics drift. Source changes require new reviewed candidate; visual semantics drift requires originalfull11command gate."
+  },
+  "publication": {
+    "passing_logs": [
+      {
+        "entry": "api/legacy_python.log",
+        "raw_private_sha256": "8048ebff56fb374a0849f15182b6a445d8624fd93d4390e7a215c02d8637844a",
+        "published_sha256": "8048ebff56fb374a0849f15182b6a445d8624fd93d4390e7a215c02d8637844a",
+        "transformation": "Absolute child API/G6 gate and workspace paths replaced with fixed placeholders; other successful log bytes unchanged."
+      },
+      {
+        "entry": "api/g4_python.log",
+        "raw_private_sha256": "c4145f3019ceac981f6bf085ddbd4b3e3996b6c506efe88335d239c04bf5714a",
+        "published_sha256": "240a65731ddef5f4e1f13cacece1a0d9faef188ed741367330ae8e08bcef47bf",
+        "transformation": "Absolute child API/G6 gate and workspace paths replaced with fixed placeholders; other successful log bytes unchanged."
+      },
+      {
+        "entry": "api/g5_python.log",
+        "raw_private_sha256": "51565829eefdfd2e7110ee3bdb7b1a1a4229ed2bdd583c22cb6e13e266223dda",
+        "published_sha256": "51565829eefdfd2e7110ee3bdb7b1a1a4229ed2bdd583c22cb6e13e266223dda",
+        "transformation": "Absolute child API/G6 gate and workspace paths replaced with fixed placeholders; other successful log bytes unchanged."
+      },
+      {
+        "entry": "api/b01_node.log",
+        "raw_private_sha256": "83e4dc848ffa023d767c8c504465dbd43a65e784d756f8639295aac89defbad1",
+        "published_sha256": "83e4dc848ffa023d767c8c504465dbd43a65e784d756f8639295aac89defbad1",
+        "transformation": "Absolute child API/G6 gate and workspace paths replaced with fixed placeholders; other successful log bytes unchanged."
+      },
+      {
+        "entry": "gate/full-node.log",
+        "raw_private_sha256": "78b6a8d3eb6a58b9f2e0562da30d3d09e2d74d6077a3e9c3682ebb662bb6b3fd",
+        "published_sha256": "78b6a8d3eb6a58b9f2e0562da30d3d09e2d74d6077a3e9c3682ebb662bb6b3fd",
+        "transformation": "Absolute child API/G6 gate and workspace paths replaced with fixed placeholders; other successful log bytes unchanged."
+      },
+      {
+        "entry": "gate/build.log",
+        "raw_private_sha256": "365860e6e26c683f94cb95255e60467df959e619ac6d94c8c208b9f2913c76a0",
+        "published_sha256": "365860e6e26c683f94cb95255e60467df959e619ac6d94c8c208b9f2913c76a0",
+        "transformation": "Absolute child API/G6 gate and workspace paths replaced with fixed placeholders; other successful log bytes unchanged."
+      },
+      {
+        "entry": "gate/plugin-build.log",
+        "raw_private_sha256": "e8264a2643dc26ecfa01fbf7bfa695f449060da8c0c52e4727f8f0fe7f680da8",
+        "published_sha256": "e8264a2643dc26ecfa01fbf7bfa695f449060da8c0c52e4727f8f0fe7f680da8",
+        "transformation": "Absolute child API/G6 gate and workspace paths replaced with fixed placeholders; other successful log bytes unchanged."
+      },
+      {
+        "entry": "gate/source-uploads.log",
+        "raw_private_sha256": "b492da2b1f01db8326f2198d4eac6b76e77fac56c4deacfafb60398c45da90c4",
+        "published_sha256": "b492da2b1f01db8326f2198d4eac6b76e77fac56c4deacfafb60398c45da90c4",
+        "transformation": "Absolute child API/G6 gate and workspace paths replaced with fixed placeholders; other successful log bytes unchanged."
+      }
+    ],
+    "pytest_junit": {
+      "legacy_python": {
+        "raw_private_sha256": "44d4df8578d2c58d608a76a13c40512b66421027a2a743f620fe269303c08616",
+        "published_sha256": "8c3d8d63387a44eb926aa7a4b1a0be084e29a91b781d88a3065f88c9e76b4cfe",
+        "transformation": "Only hostname replaced with redacted-local-host; XML serialized."
+      },
+      "g4_python": {
+        "raw_private_sha256": "afdb87a6418acb1c8d9df0e2da13115e6208bc6f76a7cd7c799794809de7a25d",
+        "published_sha256": "1b8a4669c35cfaa862f09d7693f09a6506768170ab4593822426a79ce7b4eeaf",
+        "transformation": "Only hostname replaced with redacted-local-host; XML serialized."
+      },
+      "g5_python": {
+        "raw_private_sha256": "6684b0fde86277acde8efe295ea92f2fe81345e5b0c80180926c12f90d29f251",
+        "published_sha256": "6ac3ee829007a0d1eeb94002cb330e989d90682b2d2a9cc50ca54db9e27140e7",
+        "transformation": "Only hostname replaced with redacted-local-host; XML serialized."
+      }
+    },
+    "excluded": [
+      "Raw private JUnit/source/build ZIPs, actual service/worker logs and PID/start_ticks, private config/authentication values, PostgreSQL logs and all failure output."
+    ]
+  },
+  "development_history": {
+    "pre_gate_review": "g6-pre-gate-review.json",
+    "source_baseline": "g6-source-baseline.json",
+    "route_acceptance_matrix": "g6-tc-api-acceptance-matrix.json",
+    "node_inventory": "g6-node-inventory.json",
+    "v1_contract_reviews": [
+      "g6-contract-review.json",
+      "g6-tc-contract-review.json"
+    ],
+    "v1_resolution": "Pin actual historical SPEC callback names; explicit Node flags before operands; distinguish Python32 distributions and Node79lock/9directpackages. No product/test source changed.",
+    "unapproved_preplan_diagnostic": "g6-preplan-diagnostic-record.json; filtered two callbacks with unavailable underlying process exit/raw-before-source evidence, excluded from G6 acceptance."
+  },
+  "post_gate_metadata_policy": "Progress status/evidence links may be updated only after independent acceptance. Captured progress bytes describe the frozen pre-acceptance state; product/tests/runner/plan/lock bytes must remain exact.",
+  "limitations": [
+    "G7 final independent B02 audit remains required. B03-B13 and all original32 AT remain pending/not_executed.",
+    "The11-command existing browser/native-host gate is conditionally omitted based on identical51sources/46inventory, unchanged prior dependency resolution and all10post-rebuild output bytes; real IFPMIC API/auth/control UI is still unconnected and unaccepted.",
+    "Actual corporate SSO/TLS/proxy/production DB/storage/workspace policy remain environment acceptance work. No Temporal/outbox consumption, real Agent, build execution of IFPMIC source, device, publisher, deployment or external submission ran.",
+    "Local controlled syscall/commit-ack faults do not establish physical power loss, actual disk exhaustion or real network/NFS/privileged-mount behavior.",
+    "Current387callback timing compliance underconcurrency2 is this run evidence, not a guarantee of all future scheduling conditions. Historical G5 timing outlier and corrected TC fixtures remain preserved in their G5 evidence."
+  ],
+  "source_capture_scope": {
+    "private_snapshot_entries": 352,
+    "tracked_source_entries_matching_index": 350,
+    "untracked_original_uploads": [
+      "IFPMIC_AX_Design_Package_v1.zip",
+      "IFPMIC_AX_Design_v1.docx"
+    ],
+    "original_uploads_are_private_snapshot_inputs_not_commit_content": true,
+    "private_source_zip_is_excluded_from_public_archive_and_Git": true
+  }
+}

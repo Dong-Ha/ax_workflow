@@ -1,0 +1,75 @@
+{
+  "kind": "ifpmic.b02.g6.final-review.v1",
+  "reviewed_candidate": {
+    "contract": {
+      "path": "docs/ifpmic/evidence/b02/g6-execution-contract-v2.json",
+      "sha256": "e45256f8f942046645af1f61cbc3c91a504780cb3d8c408a8d35702753c8cd63"
+    },
+    "pre_gate_review": {
+      "path": "docs/ifpmic/evidence/b02/g6-pre-gate-review.json",
+      "sha256": "30453ce21073904c9fb190fca9bb31cb2a8cecc5a0ea219ce3e6dd7112c0c036"
+    },
+    "runner": {
+      "path": "scripts/verify_ifpmic_g6.py",
+      "sha256": "fad5e8ee667de531147cd5664513b159737859750d274ad02aeb57488b8e468e"
+    },
+    "baseline_helper": {
+      "path": "scripts/ifpmic_g6_baseline.py",
+      "sha256": "aff452fcc75805fb1bc32676fb79104ee793a403fef20e3e0b1fcabe31d98dd0"
+    },
+    "node_inventory": {
+      "path": "docs/ifpmic/evidence/b02/g6-node-inventory.json",
+      "sha256": "e26e02a584c9cdeca983c03093c4a77577cb83f86ff26a32c5705eaa6b5a2c57"
+    }
+  },
+  "execution": {
+    "private_gate_path": "workflow-artifacts/verification/B02/G6/gates/2026-10-18T19-08-17-685381Z",
+    "private_child_g5_gate_path": "workflow-artifacts/verification/B02/G5/gates/2026-10-18T19-08-19-351591Z",
+    "gate_archive": {
+      "path": "docs/ifpmic/evidence/b02/g6-gate.zip",
+      "sha256": "41ad9f806216b0d29896a54b40c7e7ec0db5f574908a949216a484050456b647",
+      "entries": 13,
+      "gate_entry_sha256": "60f98fefbae436f4ad660be4870e2ef7bd416fe8d8efafaff02dc4f9aa73d584",
+      "child_g5_gate_entry_sha256": "b070337a0ae1d8117fcd8222500a53b57d7abad14b6dad006282b24e1886e5f6"
+    },
+    "verification": {
+      "path": "docs/ifpmic/evidence/b02/g6-verification.json",
+      "sha256": "1f997503a29bc283942652befa30a41c7b2a24e38695ecde5b9578ce334847ae",
+      "candidate_fingerprint": "b845f54ee3757e7ddd8cc2130267587e358ea2e57e7f210be6c87942f29bdc43"
+    }
+  },
+  "verdict": "accept_partial_g6",
+  "independent_checks": {
+    "archive_integrity": "All 13 ZIP entries exactly match the verification manifest's byte counts and SHA-256 values. The archive contains no private source/build ZIP or original source upload files. No raw PID/start-tick keys, workspace-root strings, or raw worker/service log entries were found in its JSON/XML/log entries.",
+    "test_results": {
+      "python": {
+        "total": 351,
+        "phases": {
+          "legacy": {"passed": 167, "failed": 0, "errors": 0, "skipped": 0, "maximum_seconds": 4.194},
+          "g4": {"passed": 91, "failed": 0, "errors": 0, "skipped": 0, "maximum_seconds": 8.192},
+          "g5": {"passed": 93, "failed": 0, "errors": 0, "skipped": 0, "maximum_seconds": 3.808}
+        }
+      },
+      "targeted_b01_node": {"passed": 48, "failed": 0, "skipped": 0, "maximum_seconds": 1.841397431},
+      "full_node": {
+        "tests": 387,
+        "passed": 387,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "unique_names_match_pinned_inventory": true,
+        "maximum_callback_seconds": 20.115621384,
+        "command_seconds": 113.365670226,
+        "concurrency": 2
+      }
+    },
+    "runtime_and_cleanup": "All three PostgreSQL test fixtures reported stopped with PID absent. Fresh G3/G4/G5 service observations passed. The private workspace observation contains 42 unique process identities, all stopped; its 84 retained worker stdout/stderr files have mode 0600 under a mode 0700 directory and match every recorded byte count and digest. The outer gate reports no owned children remaining.",
+    "build_and_scope": "Build, plugin build, and source-upload verification exited successfully. All ten postbuild outputs equal the accepted controls. Baseline checks passed for 334 accepted source bytes, 51 relevant UI/build files including the 46-file UI/server/plugin inventory, 79 npm lock records with five accepted additive records, 32 locked Python distributions, and zero frontend/backend connection matches. Original 17 imported files and two uploaded originals remain byte-identical.",
+    "source_capture": "The private candidate ZIP has SHA-256 788f72ca52a19a9da30c49cc45a114a9f8e2639edef14ae97fd0f4809967c850 and 352 entries. Every entry matches the current workspace bytes; 350 tracked entries match the Git index. The two original uploads are untracked, remain only in the mode-0600 private source ZIP, and are absent from the public gate archive. The captured candidate fingerprint matches the gate report.",
+    "scope_and_limitations": "The 11 existing browser/native-host/UI commands were omitted only under the reviewed unchanged-source/dependency/output condition. This does not accept real IFPMIC UI authentication or control behavior. G7 remains required; original AT-01..AT-32 and B03-B13 remain pending. The unapproved filtered preplan diagnostic is excluded from acceptance; no failed full G6 candidate was used as evidence.",
+    "source_changes": [],
+    "tests_run_by_reviewer": false
+  },
+  "decision_boundary": "Accept G6 as a local partial verification milestone only. This does not accept or complete B02 as a whole; G7 must independently audit the cumulative G1-G6 evidence and preserve the remaining requirements and original acceptance tests as pending."
+}

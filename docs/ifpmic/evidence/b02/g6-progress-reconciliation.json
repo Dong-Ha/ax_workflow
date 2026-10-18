@@ -1,0 +1,30 @@
+{
+  "kind": "ifpmic.b02.g6.post-gate-progress-reconciliation.v1",
+  "scope": "Derivative progress/evidence metadata only, under the frozen G6 post_gate_metadata_policy. G7 is still pending.",
+  "gate_sha256": "60f98fefbae436f4ad660be4870e2ef7bd416fe8d8efafaff02dc4f9aa73d584",
+  "progress": {
+    "path": "docs/ifpmic/progress.json",
+    "captured_sha256": "082727fbade5804c0d09be44c36c0b0cfb064317c91f91e4bcffe82c7db831bc",
+    "current_sha256": "49edfb9dc1151a6259869fb065d940032ea8ded654ce54c470d416f7ab4c1709",
+    "changed_semantic_paths": [
+      "stages[B02].scope",
+      "stages[B02].increments[g6_fixed_candidate_regression]",
+      "next_step",
+      "updated_at"
+    ]
+  },
+  "frozen_source_check": {
+    "captured_entries": 352,
+    "unchanged_entries": 351,
+    "changed_entries": [
+      "docs/ifpmic/progress.json"
+    ],
+    "product_test_runner_plan_lock_changes": []
+  },
+  "acceptance_boundary": {
+    "g6": "accept_partial_g6",
+    "g7": "pending",
+    "b02": "in_progress",
+    "original_32_acceptance_tests": "not_executed"
+  }
+}

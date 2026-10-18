@@ -1,0 +1,29 @@
+{
+  "kind": "ifpmic.b02.g6.pre-gate-review.v1",
+  "reviewed_contract": {
+    "path": "docs/ifpmic/evidence/b02/g6-execution-contract-v2.json",
+    "sha256": "e45256f8f942046645af1f61cbc3c91a504780cb3d8c408a8d35702753c8cd63"
+  },
+  "reviewed_candidate": {
+    "scripts/verify_ifpmic_g6.py": "fad5e8ee667de531147cd5664513b159737859750d274ad02aeb57488b8e468e",
+    "scripts/ifpmic_g6_baseline.py": "aff452fcc75805fb1bc32676fb79104ee793a403fef20e3e0b1fcabe31d98dd0",
+    "docs/ifpmic/evidence/b02/g6-node-inventory.json": "e26e02a584c9cdeca983c03093c4a77577cb83f86ff26a32c5705eaa6b5a2c57",
+    "docs/ifpmic/evidence/b02/g6-contract-review-v2.json": "dc60fec3366914494729fb650f45c20dbca1c869906f93367bba064c18109b6b",
+    "docs/ifpmic/evidence/b02/g6-tc-contract-review-v2.json": "1204d724f789a3848532d9bdd2b766455f870481bb0f5abc3ba34a692645c1bb",
+    "docs/ifpmic/evidence/b02/g6-source-baseline.json": "e6f8a41f1b33b21e4e903636eb2c404d6ef0da95b673294f5d17b686cf38d8bf",
+    "docs/ifpmic/evidence/b02/g6-tc-api-acceptance-matrix.json": "b003d59057d64a211faae36fe23cd0c2a1e679dc2b4148f45decca19be79cda2",
+    "docs/ifpmic/evidence/b02/g5-gate.zip": "c299d6c0c03fe28692a012916923325e406d6bb606ccf0c1203921f6b82df7ab",
+    "scripts/verify_ifpmic_g5.py": "ee137621450b4a28d0be30708981bebaa012d9f282db9816e45e6b78325c427b"
+  },
+  "verdict": "approve_first_frozen_g6_gate",
+  "findings": [],
+  "review": {
+    "baseline_checks": "The helper recomputes the pinned 334-source baseline plus current source inventory, verifies the exact 51 relevant UI/build files and 46-file UI/server/plugin set, exact ten output files, controls-to-B01 lock additions/current B01 package records, resolved tool file digests, accepted artifact pins, G5 source bytes, and no frontend/backend connection. Missing, changed, extra, non-regular, or unreadable entries fail closed before tests/builds.",
+    "capture_and_privacy": "The runner captures the exact source map and verifies every captured ZIP entry against it before execution, captures the ten current outputs privately, and rechecks source/tool/protected/output inventories after execution. Raw command logs, child G5 report, and source/build archives remain in a 0700 gate leaf; private files are changed to 0600 in finalization. The promoted report contains hashes, counts, case names/timings and relative paths, not credentials, PIDs, start ticks, or raw service/worker logs.",
+    "execution_and_limits": "The unchanged G5 orchestrator is invoked in-process, preserving its three separate 300-second Python commands and targeted 48-case Node command without a larger wrapper timeout. The runner enforces exact Python counts/statuses, PG stopped/PID-false lifecycle, the 48-case TAP timing ceiling, then the sorted full test glob with concurrency/reporter flags before operands, exact pinned 387-name inventory, zero non-pass outcomes, 30 seconds per callback and 180 seconds total. Build, plugin build, and source verification use the approved separate limits and output equality check.",
+    "failure_handling": "Command timeouts/nonzero exits become gate failures with private raw output retained. The inherited G4 owned-process/subreaper cleanup is invoked on failed runs; G5 keeps its own cluster and child cleanup. Failure paths capture any changed build outputs and private permissions are finalized. The gate never retries tests or relaxes thresholds.",
+    "scope": "Conditional omission remains limited to the existing 11 browser/native-host/UI commands and is only reported eligible after the accepted source/dependency/output checks. The report explicitly leaves G7, original AT and B03-B13 pending.",
+    "execution_status": "Static review only. No G6 tests, builds, services, or PostgreSQL were executed."
+  },
+  "approval_boundary": "This review authorizes one fresh G6 frozen-candidate gate on the exact reviewed bytes. It is not a G6 pass or acceptance; acceptance still requires the complete passing run, archive/source audit, and independent final review."
+}

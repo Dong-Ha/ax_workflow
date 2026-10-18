@@ -196,7 +196,7 @@
       "requirements": [
         "REQ-13"
       ],
-      "scope": "B02 G1-G5 partial local foundations independently accepted. Explicit workspace provisioning/recovery now verified with isolated PostgreSQL, private POSIX filesystems and actual worker kill/restart evidence. G6/G7 final B02 checks and original AT-21 remain pending.",
+      "scope": "B02 G1-G6 partial local foundations independently accepted. Local PostgreSQL, identity/session/CSRF, scoped durable commands and workspace recovery passed fresh integrated regression. G7 cumulative final local audit, corporate SSO and full original AT-21 remain pending.",
       "increments": [
         {
           "id": "g1_python_postgres_migrations",
@@ -277,12 +277,23 @@
         },
         {
           "id": "g6_fixed_candidate_regression",
-          "status": "in_progress",
+          "status": "verified",
           "contract": "evidence/b02/g6-execution-contract-v2.json",
           "independent_plan_review": "evidence/b02/g6-contract-review-v2.json",
           "tc_plan_review": "evidence/b02/g6-tc-contract-review-v2.json",
           "verification_plan": "evidence/b02/g6-tc-api-acceptance-matrix.json",
-          "scope": "Execution contract reviewed; fresh351Python+48targetedNode, full387Node and frontend/plugin rebuild remain unexecuted. Conditional11-browser-command omission requires exact before/after source, lock and ten rebuilt output checks; no G6 acceptance claimed."
+          "scope": "Fresh local regression accepted independently: 351 Python tests and all 387 Node tests passed; 48 targeted Node tests are a subset of 387. Frontend/plugin rebuild outputs match accepted controls. Conditional browser-command omission verified; original AT and real IFPMIC UI remain pending.",
+          "evidence": "evidence/b02/g6-verification.json",
+          "independent_acceptance": "evidence/b02/g6-final-review.json",
+          "candidate_fingerprint": "b845f54ee3757e7ddd8cc2130267587e358ea2e57e7f210be6c87942f29bdc43",
+          "tests": {
+            "python_total": 351,
+            "whole_node": 387,
+            "targeted_node_subset": 48,
+            "failed": 0,
+            "errors": 0,
+            "skipped": 0
+          }
         }
       ]
     },
@@ -476,12 +487,12 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "B02: implement and independently review the G6 fixed-candidate runner, execute all required regressions/builds and conditional UI scope checks, then G7 final local B02 review. B03-B13 and32original AT remain pending.",
+  "next_step": "B02 G7: independently audit cumulative G0-G6 local foundation evidence and reconcile remaining requirements. B03-B13 and all 32 original acceptance tests remain pending.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",
     "Approved Bedrock/Claude runtime profile"
   ],
   "publication_policy": "Only authorized git repository documentation, source and synthetic verification summaries/screenshots; never runtime credentials or application logs.",
-  "updated_at": "2026-10-18T17:46:16.339130+00:00"
+  "updated_at": "2026-10-18T19:25:59.872434+00:00"
 }
