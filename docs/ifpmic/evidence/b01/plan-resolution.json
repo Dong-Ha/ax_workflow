@@ -1,0 +1,39 @@
+{
+  "kind": "b01_preimplementation_resolution_record",
+  "implementation_started": false,
+  "plan": {
+    "path": "docs/ifpmic/B01-PROFILES.md",
+    "sha256": "b94ca888ae8781317fe67125990509ae67b5cf5b9443cb4a6a70a1c9b89bead4"
+  },
+  "historical_review_target": {
+    "review_path": "docs/ifpmic/evidence/b01/plan-review.json",
+    "original_target_path": "docs/ifpmic/B01-PROFILES.md",
+    "preserved_target_path": "docs/ifpmic/evidence/b01/attempts/plan-v1.md",
+    "sha256": "0bbf7c807c2280b792b5fd362f8c5b9050ed234887ae295642dd6af3eaefa18c",
+    "note": "The first review pins the historical draft, not the current revised plan. A generic current-path hash verifier initially rejected that intentional historical pin; no product test was run or changed."
+  },
+  "reviews": [
+    {
+      "path": "docs/ifpmic/evidence/b01/plan-review-v2.json",
+      "sha256": "0d96395050ac3bc3c5d1fc92c68d6748467c21a4d2911bec844814a4025abb57"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b01/tc-plan-review.json",
+      "sha256": "063efedd3b74043b65c7441770bb2fee9e73d1659db4b9f40f2c538601e5fd5d"
+    }
+  ],
+  "resolved_findings": {
+    "B01-PLAN-01": "Snapshot binds exact workflow/state/agent raw hashes and canonical bundle hash.",
+    "B01-PLAN-02": "All five named arrays must be nonempty for completeness, uniformly across all release modes; markers and sanitized paths specified.",
+    "B01-PLAN-03": "Pinned accepted archive and embedded gate, all169 source hashes and10 build outputs in controls-baseline.json."
+  },
+  "preimplementation_baseline_check": {
+    "archive_and_gate_pin_match": true,
+    "source_matches": 169,
+    "source_mismatches": [],
+    "build_output_matches": 10,
+    "build_output_mismatches": []
+  },
+  "approval_integration": "Both independent reviews now exist and pin the same current plan SHA. The TC review observed the other file absent while reviews ran concurrently; main verified its completed approval before implementation.",
+  "acceptance_boundary": "Only preimplementation plan acceptance. Product, tests, B01 integration and original AT04/28 are not yet accepted."
+}

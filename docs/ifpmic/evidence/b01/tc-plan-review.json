@@ -1,0 +1,96 @@
+{
+  "kind": "b01_independent_tc_plan_review",
+  "reviewer_role": "independent TC plan reviewer",
+  "reviewed_plan": {
+    "path": "docs/ifpmic/B01-PROFILES.md",
+    "sha256": "b94ca888ae8781317fe67125990509ae67b5cf5b9443cb4a6a70a1c9b89bead4"
+  },
+  "decision": "approve_tc_plan",
+  "scope": "Read-only review of B01 testability, oracle independence, source fidelity, and conditional controls UI gate skip. No product or test code was implemented.",
+  "reviewed_evidence": {
+    "source_collection": {
+      "path": "docs/ifpmic/evidence/b01/source-collection.json",
+      "sha256": "15c2571bb495efcb89aa5b94eb51bd44167a2b22f5ddb5dbbc3f5918bfc66c72"
+    },
+    "snapshot_architecture_advice": {
+      "path": "docs/ifpmic/evidence/b01/snapshot-architecture-advice.json",
+      "sha256": "2bdc222b1121b8af0dc6d715bed3fbbd285c823ada5956289cd989cd17466ec7"
+    },
+    "prior_plan_review": {
+      "path": "docs/ifpmic/evidence/b01/plan-review.json",
+      "sha256": "a345f195e9d7e83a8dc70c39508104201d2ce3f7802ce4e3259d1d312627373a",
+      "blocking_findings_resolved_in_reviewed_plan": [
+        "Snapshot identity binds raw workflow, state-contract, and agent-contract SHA256 values in a versioned bundle.",
+        "Real-mode incompleteness rules explicitly name the five collections; all release modes share the same rule and fixed marker policy.",
+        "The conditional UI-gate omission pins the accepted controls archive, report, review, gate, source inventory, and build/plugin artifacts; equality is required or the full 11-command gate runs."
+      ]
+    },
+    "accepted_controls_baseline": {
+      "path": "docs/ifpmic/evidence/b01/controls-baseline.json",
+      "pins": {
+        "archive_sha256": "b33b53c5ca378a5b2881301f7f07f3ce839c21e39d2bc2359421374d015a8ec0",
+        "verification_report_sha256": "e3f64565629e55288ec9eec0ce59033729c8e7d825149c3f84fe5d24bce30386",
+        "independent_review_sha256": "f596744589b21e9f56242c49dcda897692aebca125fb67daa07851d73ad44f52",
+        "gate_sha256": "ceb5e97c8411e225c9e450ad1f2ff692f0c2bffd7b19595c52929a7b4392fcdc"
+      },
+      "scope": "Accepted synthetic controls UI baseline only; not B01 or original acceptance evidence."
+    },
+    "original_sources": {
+      "workflow_sha256": "bab40a7abb3929896add1ef2cd074893dd2a7de14d200a5d6cea4b7a77eb0e89",
+      "state_contract_sha256": "0248e130017043539319c56af854f5388a95d33e7e687902a3438fdff414244a",
+      "agent_contract_sha256": "ca6d4bea7abf0fffe7354c482af0d521c3a2e367217a69923a4bfe43fa27ab64",
+      "profile_example_sha256": "37301c6ff5c9cae237b6037a3106368cfd07e4582462d52a35dfee39de7839f2",
+      "acceptance_cases_sha256": "f7163553edc9e8e753965cb8748ab04aac8f68c1a453f567f62284a01b38b0d5",
+      "implementation_backlog_sha256": "115e48568e0464b8e67ef17274dba97b3046a8de902e1cf426d9b70e1528e5d0"
+    }
+  },
+  "review_findings": {
+    "original_scope": {
+      "result": "pass_with_acceptance_boundary",
+      "details": "The plan matches B01's workflow registry, validators, and immutable profile snapshot deliverable. It keeps B02 authorization/database/workspaces and B03 durable execution separate, preserves the AX GET-only server boundary, and retains AT-04 and AT-28 as not executed."
+    },
+    "resolved_prior_blockers": {
+      "result": "pass",
+      "details": "The new plan binds the immutable reference to the three original contract byte hashes; defines the five real-mode empty-array rules and placeholder markers without making release-mode exceptions; and names the accepted controls evidence and exact UI/source/build pins for the conditional gate omission."
+    },
+    "testability_and_oracle_independence": {
+      "result": "pass",
+      "details": "The public exports and fixed error-code families give tests observable contracts. The injectable fs/promises-compatible seam permits deterministic barriers and single-boundary faults while independent child processes exercise real link and directory-sync races. The plan explicitly prohibits using validator fields or decisions as the expected-value oracle and assigns TC-owned literal fixtures and hash vectors."
+    },
+    "required_test_coverage": [
+      "P1: independent valid example/mock and real fixtures; missing/null/extra/type/enum and boolean cases; each release mode; empty-array and marker completeness; duplicate and escaped-duplicate keys; UTF-8 errors; root/type errors; depth 64/65 and byte limit boundary; exact issue ordering and safe DTO output.",
+      "P2: raw source pins and bundle identity; canonical key-order versus array-order vectors; profile and whole-payload digests; project/version/workflow rebinding and conflict; snapshot filename identity; caller mutation after invocation; deep-frozen detached return values; corrupt and mismatched records.",
+      "P3: separate-process same-key equal and conflicting publications; pre-directory-sync EEXIST barrier; temp write/file-sync/close/link/directory-sync faults; post-link uncertain result and idempotent recovery; no rollback or overwrite; orphan temp isolation; symlink, non-directory, oversized, corrupt, and wrong-identity final records.",
+      "P4: subprocess CLI exit 0/2/3 matrix, valid and invalid flag combinations, default example, require-real-config, snapshot/read/init; stdout/stderr exact allowlisted DTOs with path/secret sentinels; no network, child execution, hardware, publisher, or transcript API effects.",
+      "P5: prove the 169-source inventory and 10 build/plugin outputs against the accepted candidate before omitting the existing UI gate; otherwise run all 11 commands. Preserve intended Ajv/package-lock-only changes with explicit review and verify imported originals remain byte-identical."
+    ],
+    "profile_schema_boundary": {
+      "result": "pass",
+      "details": "The document correctly treats the field-level JSON Schema as a new implementation contract, not an original schema. Exact object fields, enums, required booleans, string behavior, collection completeness, parser limits, and stable issue/error DTOs are specified sufficiently for fixed independent expected values."
+    },
+    "fault_and_concurrency_oracle": {
+      "result": "pass_with_residual_limit",
+      "details": "The file seam plus actual subprocesses can verify the planned atomicity and race outcomes. These tests establish process-level behavior on the stated Node 24/Linux local-filesystem target; they cannot establish power-loss durability, multiuser authorization, or distributed filesystem semantics, which the plan explicitly leaves outside scope."
+    },
+    "conditional_ui_gate_skip": {
+      "result": "pass_with_strict_condition",
+      "details": "The skip is acceptable only when current relevant source inventory and built frontend/plugin outputs match the pinned accepted candidate. Any mismatch, import into protected runtime paths, or UI/replay/server behavior change requires the full 11-command gate. This review does not pre-approve that later equality result."
+    }
+  },
+  "implementation_gate": {
+    "tc_plan_approved": true,
+    "separate_plan_review_required": true,
+    "separate_plan_review_expected_path": "docs/ifpmic/evidence/b01/plan-review-v2.json",
+    "may_start_product_implementation_before_that_review": false,
+    "reason": "The reviewed plan itself requires both plan-review-v2.json and this TC review to approve the exact plan SHA before product implementation. This record approves only TC feasibility and oracle coverage."
+  },
+  "remaining_acceptance_boundary": {
+    "B01_only": true,
+    "AT-04": "not_executed; B01 preflight does not implement X01 same-baseline skip approval/evidence behavior.",
+    "AT-28": "not_executed; B01 mock/profile mechanics cannot establish real-release enforcement.",
+    "B02_to_B13": "remain separately tracked; this review does not accept their implementation.",
+    "power_loss_or_production_storage": "not proven by process-fault tests or local hashes.",
+    "original_source_modification": "none permitted; workflow/state/agent/profile example and imported design package remain immutable inputs."
+  },
+  "reviewer_verdict": "Approve the TC plan for the exact SHA above. Product implementation remains gated on the separately required plan-review-v2 approval against the same SHA."
+}
