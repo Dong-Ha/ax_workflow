@@ -24,6 +24,7 @@ import time
 from uuid import uuid4
 
 import psycopg
+from tests.ifpmic_api.h2_native_bounds import bounded_connect, bounded_harness
 import pytest
 from temporalio.client import Client
 
@@ -55,7 +56,7 @@ CASE_IDS = (
 
 @pytest.fixture
 def h2_crash_harness(workflow_scram_hba, workspace_environment):
-    return workspace_environment
+    return bounded_harness(workspace_environment)
 
 
 @pytest.fixture
@@ -507,7 +508,7 @@ def test_h2_api_commit_before_response_sigkill_retry_applies_once(h2_crash_harne
         request_thread.start()
         event = _wait_file(barrier / "reached.json", api_process, deadline.deadline)
         assert event["phase"] == "job_after_commit"
-        with psycopg.connect(owner_dsn(harness["database"])) as owner:
+        with bounded_connect(owner_dsn(harness["database"])) as owner:
             row = owner.execute(
                 "SELECT j.job_id::text,j.create_command_id::text,j.status,j.revision,c.status,o.state,"
                 "w.state,w.generation FROM ifpmic.jobs j JOIN ifpmic.commands c "
@@ -575,7 +576,7 @@ def _run_projection_crash(harness, deadline, *, phase: str, label: str, ctx):
 
 def _revoke_authority_after_projection(harness, ctx) -> None:
     """Revoke mutable authorization only after the durable projection receipt exists."""
-    with psycopg.connect(operator_dsn(harness["database"])) as operator:
+    with bounded_connect(operator_dsn(harness["database"])) as operator:
         operator.execute(
             "UPDATE ifpmic.memberships SET active=false WHERE user_id=%s AND project_id=%s",
             (harness["user_id"], harness["project_id"]),

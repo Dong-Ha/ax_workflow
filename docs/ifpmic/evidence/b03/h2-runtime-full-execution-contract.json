@@ -1,0 +1,390 @@
+{
+  "kind": "ifpmic.b03.h2.runtime-full-execution-contract.v1",
+  "status": "candidate_pending_exact_independent_and_tc_contract_review",
+  "purpose": "Freshly verify full approved H2 scope before implementation acceptance, retaining all407 regressions and all83 additions.",
+  "requirements": [
+    "B03 H2 full25 obligations",
+    "REQ-02",
+    "REQ-13",
+    "REQ-14 preservation",
+    "AT-16 prerequisite only; no originalAT completion claim"
+  ],
+  "authority": {
+    "approved_plan": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-full-verification-plan.json",
+      "sha256": "c6964bccff0d4cec1ac00f18fbb267d5d1a4a5887e53844c604333b7c059486c"
+    },
+    "integrated_ledger": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger.json",
+      "sha256": "cf4f3bfc023341c22e0c8fc7c072c54838d62f7adeb39d817a4ce3b6589f8d60"
+    }
+  },
+  "counts": {
+    "retained_ids": 407,
+    "new_unexecuted_ids": 83,
+    "expected_full_union": 490,
+    "approved_obligation_groups": 25,
+    "groups_with_draft_ids": 25,
+    "fixture_failure_prerequisites": 5,
+    "extended215_25_ids": 49,
+    "default25_5_ids": 34
+  },
+  "responsibility": "Code-dev manages integration and runner; TC authors tests; independent Agent reviews methods/source/evidence. SAM/TEM/SQE/human approval boundaries remain unchanged.",
+  "stages": [
+    {
+      "id": "FULL-ATTEST",
+      "purpose": "Verify exact source, original-design integrity, toolchain identity and isolation before SDK/service actions.",
+      "target": "Current ledger source closure, protected AX96/inventory89, imported17/upload2, original32 and qualified36 Python environments, pinned Temporal CLI.",
+      "method": "Check all reviewed bytes, environment/package/binary inventories and approvals; capture private candidate bundle and before manifest. Reuse accepted environment identities but verify current bytes; install/download nothing.",
+      "pass_criteria": "All pinned artifacts, binary hashes and source/environment inventories match. Final independent+TC pre-gate approve_execution for exact contract/ledger/runner/review hashes. No ambient auth/cloud or unreviewed drift.",
+      "expected": "Exact isolated candidate ready; no test pass claim.",
+      "evidence": "Private before-source/environment manifests and candidate archive/hash; normalized comparison counts/hash only.",
+      "agent": "Code-dev manages integration and runner; TC authors tests; independent Agent reviews methods/source/evidence. SAM/TEM/SQE/human approval boundaries remain unchanged.",
+      "recovery": "Retain failed candidate and private evidence; stop only proven owned identities, diagnose the failing boundary, repin and rereview changes, then repeat the full fresh gate and affected regressions. No silent retry, history/receipt rewrite or inherited pass."
+    },
+    {
+      "id": "FULL-COLLECT",
+      "purpose": "Prove literal full inventory matches the candidate.",
+      "target": "All490 IDs across nine additions and six retained phases.",
+      "method": "After runner/pre-gate approval, collect selected files in each exact phase interpreter with the documented plugin set. Preserve collection output privately and require one-to-one IDs before cases run.",
+      "pass_criteria": "No missing/extra/duplicate IDs, no collection errors/skips; all25 groups and all5 fixture prerequisites represented.",
+      "expected": "490 exact unique collected IDs; all407 retained parameter suffixes unchanged.",
+      "evidence": "Private collection output/hash, exact per-phase ID comparison.",
+      "agent": "Code-dev manages integration and runner; TC authors tests; independent Agent reviews methods/source/evidence. SAM/TEM/SQE/human approval boundaries remain unchanged.",
+      "recovery": "Retain failed candidate and private evidence; stop only proven owned identities, diagnose the failing boundary, repin and rereview changes, then repeat the full fresh gate and affected regressions. No silent retry, history/receipt rewrite or inherited pass."
+    },
+    {
+      "id": "FULL-EXECUTE",
+      "purpose": "Prove normal, exception, boundary, crash, concurrency and regression behavior.",
+      "target": "All new83 and retained407 cases, including every25 business obligation and fixture prerequisites.",
+      "method": "Execute literal phase order and individual methods/budgets from ledger; actual SQL/RPC/history/threads/sockets where required. Fixture probe handles apply only to explicitly labeled fault mechanism tests. Require whole-case timing and last-item session cleanup; observe live handles rather than infer death from timeouts.",
+      "pass_criteria": "490 passes, zero missing/extra/duplicate/failure/error/skip; every literal causal oracle and per-call/case/phase bound passes; unexpected forced cleanup fails acceptance.",
+      "expected": "Fresh complete H2 candidate result; prior407 evidence supplies no current pass.",
+      "evidence": "Private JUnit/progress/per-case watchdog files, raw SQL/history/fault observations, actual resource lifecycle and exact config/source/environment pins.",
+      "agent": "Code-dev manages integration and runner; TC authors tests; independent Agent reviews methods/source/evidence. SAM/TEM/SQE/human approval boundaries remain unchanged.",
+      "recovery": "Retain failed candidate and private evidence; stop only proven owned identities, diagnose the failing boundary, repin and rereview changes, then repeat the full fresh gate and affected regressions. No silent retry, history/receipt rewrite or inherited pass."
+    },
+    {
+      "id": "FULL-AUDIT",
+      "purpose": "Confirm scope integrity, resource absence and private/public evidence fidelity.",
+      "target": "Before/after source inventories, every owned process/thread/socket and prospective public six-member archive.",
+      "method": "Compare before/after source/protected/original bytes; independently inspect PID/start-tick lifecycle and saved thread/socket handles including failures. Transform only fixed normalized allowlist, verify counts/hashes against private originals, scan for private material. Rehash both complete installed environment file/symlink maps and resolved binaries after execution and compare to pinned accepted baselines and before capture.",
+      "pass_criteria": "No unreviewed source/environment drift or unknown resource in a positive acceptance path. Expected unknown fixture-fault state stays explicitly unknown; all actually started threads/helpers and allocated sockets are subsequently verified stopped/closed, while unstarted ambiguous handles remain retained. No secret/raw history/log/source ZIP/process identity in public artifacts.",
+      "expected": "Reviewable normalized evidence with private raw proof preserved.",
+      "evidence": "Private raw evidence and privacy audit; exact public member lengths/hashes and archive hash.",
+      "agent": "Code-dev manages integration and runner; TC authors tests; independent Agent reviews methods/source/evidence. SAM/TEM/SQE/human approval boundaries remain unchanged.",
+      "recovery": "Retain failed candidate and private evidence; stop only proven owned identities, diagnose the failing boundary, repin and rereview changes, then repeat the full fresh gate and affected regressions. No silent retry, history/receipt rewrite or inherited pass."
+    },
+    {
+      "id": "FULL-FINAL-REVIEW",
+      "purpose": "Prevent completion based on intent, static review or partial evidence.",
+      "target": "Entire current full H2 contract/ledger/candidate/results and all requirement mappings.",
+      "method": "Independent Agent compares actual raw results to every case, obligation, timing, original-source and privacy predicate; TC checks test evidence. Any contradiction returns to the failing stage and requires a newly reviewed full gate.",
+      "pass_criteria": "Exact approved candidate with all490 actual passes and full25 obligations proven; no omitted current regression or unresolved critical finding.",
+      "expected": "Only full H2 acceptance may be proposed; B03/H3-H7/originalAT32/fullAX remain incomplete.",
+      "evidence": "Independent final review pinned to exact source fingerprint, ledger/contract, raw gate result and public archive; explicit remaining scope.",
+      "agent": "Code-dev manages integration and runner; TC authors tests; independent Agent reviews methods/source/evidence. SAM/TEM/SQE/human approval boundaries remain unchanged.",
+      "recovery": "Retain failed candidate and private evidence; stop only proven owned identities, diagnose the failing boundary, repin and rereview changes, then repeat the full fresh gate and affected regressions. No silent retry, history/receipt rewrite or inherited pass."
+    }
+  ],
+  "execution_order": [
+    "dispatcher_crashes",
+    "worker_api_crashes",
+    "startup",
+    "window",
+    "activity_runtime",
+    "transport",
+    "workspace",
+    "started_deployment",
+    "fixture_failure",
+    "h2_runtime_python",
+    "h1_python",
+    "g5_python",
+    "h2_schema_python",
+    "g4_python",
+    "legacy_python"
+  ],
+  "phase_caps_seconds": {
+    "dispatcher_crashes": 1980,
+    "worker_api_crashes": 1020,
+    "startup": 690,
+    "window": 750,
+    "activity_runtime": 2730,
+    "transport": 780,
+    "workspace": 2700,
+    "started_deployment": 2460,
+    "fixture_failure": 210,
+    "h2_runtime_python": 300,
+    "h1_python": 300,
+    "g5_python": 600,
+    "h2_schema_python": 300,
+    "g4_python": 300,
+    "legacy_python": 300
+  },
+  "limits": {
+    "extended_setup_body_cleanup": [
+      215,
+      25
+    ],
+    "default_setup_body_cleanup": [
+      25,
+      5
+    ],
+    "phase_cap_rule": "Exact case total allowances plus60s phase overhead; per-case clock never resets.",
+    "phase_caps_sum_seconds": 15420,
+    "sql_body_lock_seconds": 5,
+    "sql_body_statement_seconds": 30,
+    "rpc_seconds": 10,
+    "outer_gate_seconds": 16020,
+    "case_timing_predicate": "Finite ordered unique start/setup/call/teardown/finish progress and exact JUnit plus independent watchdog records; timeout flags always fail. New49 extended215+25, new34 default25+5. Retained407 timing rules remain identical to historical contract, including its two240s integration exceptions. A caught expected injected expiration uses a separate probe controller and must never poison the actual case watchdog.",
+    "cleanup": "One original cleanup epoch including all fixtures and last-item session PG. No fresh timeout after alarm; failed cleanup retains ownership/error and outer subreaper recovers only proven descendants. Parent recovery is never case success.",
+    "driver_observation": "Real pg_sleep30/localSQLtimeout30 exceeds worker selfwatchdog15. Worker exit3/absence12..18s and exact actual backend absence by pre-query event+40s are distinct assertions. No parent SQL cancellation or early recovery substitutes for rollback."
+  },
+  "environment": {
+    "no_install_or_download": true,
+    "h1_and_runtime_interpreter": "PinnedH1toolchain/venv/bin/python using qualified36; verify sys.prefix and inventory plusinterpreterSHA.",
+    "sql_interpreter": "Original32 .ifpmic-venv/bin/python; baseline401 files selected explicitly.",
+    "network": "Only explicit127.0.0.1 Temporaltestendpoint and privateUnixsocketPG. Never remoteTemporal, realPaperclipDB, companyIdP/cloud/device.",
+    "isolation": "New private0700/0600 retained evidence/tempdirs perphase; actualruntime configs/source/env manifests and operationlogs stayprivate. NoHOMEoverride. No ambientcloud/proxy/TEMPORAL/PG/auth/userconfig; outerSQLfixture fallbackfiles explicitempty and actualruntimechild env contains noPG*.",
+    "server_launch": "Use the existing H1 verified binary helper and exact pinned SHA, --disable-config-env/--disable-config-file, private literal empty env-file, --ip127.0.0.1, unique private persistent SQLite data path, three owned loopback listeners. A port collision fails before use; no endpoint or process fallback."
+  },
+  "runner": {
+    "path": "scripts/verify_ifpmic_b03_h2_runtime_full.py",
+    "status": "not_authored",
+    "authoring_gate": "Independent and TC exact contract+ledger approvals required before runner authoring.",
+    "execution_gate": "Final exact runner source review and independent/TC pre-gate approval required before imports/collection/tests/services."
+  },
+  "publication": {
+    "policy": "Private rawlogs/histories/credentials/processidentity/sourceZIP/absolutepaths never published. Only exact allowlisted counts/IDs/durations/hash/version/syntheticstatus summaries and sanitizedJUnit.",
+    "review": "Specify final archive allowlist and transformation in runner/source review before execution; final independent auditor compares everypublicmember to rawexactevidence.",
+    "archive_members": [
+      "gate/summary.json",
+      "gate/pytest.xml",
+      "gate/case-timings.json",
+      "gate/postgres-lifecycle.json",
+      "gate/temporal-summary.json",
+      "gate/source-manifest.json"
+    ],
+    "transformation": "Exactly these six relative members with fixed2000-01-01 ZIP timestamp/mode0644. Summary contains counts, phase durations/caps, candidate/hash invariants and scoped limitations. JUnit contains only classname/name/time and successful count fields, never captured output/hostname/private paths. Case timings contain normalized case IDs, elapsed deltas, body/cleanup limits and no absolute monotonic timestamps. PG lifecycle contains phase/version/binary hashes/operation exit+durations/stopped boolean, no paths or PIDs. Temporal summary contains pinned versions, H1 asserted retention and event-type/history hashes, runtime execution/receipt counts, queued/open status, source/env/build/history hashes and normalized owned process role/count/expected-exit-and-signal/absence flags; no raw inputs, command/catalog bytes, UUID/process IDs, raw history/error/log text. Source manifest contains only relative repository paths and SHA256. Each member byte length and SHA and ZIP SHA are independently verified.",
+    "privacy_check": "Fail publication on actual root/toolchain/private temporary absolute prefixes, DSN/password/private-key markers, raw log/history/source ZIP members or process PID/start-tick fields. Do not reject harmless synthetic negative-test literals as actual paths. Final independent reviewer checks private raw records against the six public members; public evidence is not a replacement for raw private proof.",
+    "negative_case_policy": "Normalized expected child failures/SIGKILL codes are controlled test oracles, never pytest failures. Fixture simulated handles remain labeled mechanism evidence; do not publish PIDs/raw identities or call simulated absence physical proof."
+  },
+  "omissions": [
+    {
+      "item": "Node/build/browser execution now",
+      "technical_reason": "Only Python test/support and IFPMIC documentation change; protected existing AX/Node96 files and89 inventory are bytechecked.",
+      "residual_risk": "No new rendered AX workflow proven; H6 fresh Node/build/browser impact validation remains mandatory."
+    },
+    {
+      "item": "Real agents/devices/companySSO/cloud/deployment/external submission",
+      "technical_reason": "This gate uses only synthetic owned local PostgreSQL/Temporal and preserves original role responsibilities.",
+      "residual_risk": "Human device actions and final deployment/external submission approvals remain required; full IFPMIC AX objective is active."
+    }
+  ],
+  "authorization": {
+    "runner_authoring": false,
+    "test_or_service_execution": false,
+    "h2_acceptance": false,
+    "full_goal_acceptance": false
+  },
+  "reviews_required": [
+    "Independent full inventory/source review",
+    "TC full inventory review",
+    "Independent exact full execution contract review",
+    "TC exact full execution contract review",
+    "Independent final runner source review and independent/TC pre-gate",
+    "Independent final actual-evidence review"
+  ],
+  "goal_status": "active",
+  "runtime_pass_evidence": null,
+  "approval_rule": "False authorization flags describe this candidate document alone. Exact independent+TC contract/ledger approval may authorize runner authoring; only separately reviewed final runner and independent+TC pre-gate may authorize test/service execution. Keep candidate bytes fixed and record approvals separately.",
+  "attestation_inputs": {
+    "original_design_manifest": {
+      "path": "docs/ifpmic/source-manifest.json",
+      "sha256": "8afba9c1fc16ef3a6565f45576792cad51a1aaab59857d3a28666c71ec43007c"
+    },
+    "protected_AX_baseline": {
+      "path": "docs/ifpmic/evidence/b01/local-profile-gate.zip",
+      "sha256": "486d153780df2121cd9d57a56a9ad794ac8829ca25945954ed71b522f6c0fab1"
+    },
+    "original32_lock": {
+      "path": "services/ifpmic_api/requirements.lock",
+      "sha256": "6c8c950820a8c3ae9dea250e4080bc9dab09db17663e3d50118c5ac29211357e"
+    },
+    "temporal_input": {
+      "path": "services/ifpmic_api/requirements-temporal.lock",
+      "sha256": "ccbbf7a8aab39cd80861f607afd4994bf461d07cbf592f6acfcc492e63ff85c6"
+    },
+    "qualified36_candidate_lock": {
+      "path": "workflow-artifacts/verification/B03/H1/preparations/2026-10-18T19-40-54Z-uv-resolution-retry/candidate-requirements.lock",
+      "sha256": "9c6141efe9ccb7cd9a94e3663c2faf9049eb10b883c93f492bb3e46c3a8883f7"
+    },
+    "qualified_resolution": {
+      "path": "docs/ifpmic/evidence/b03/h1-resolution-preparation.json",
+      "sha256": "a777a09f3a00a24b4dc21a7aa3e649b5237aeec1360fbfd4c19c244b897eb213"
+    },
+    "qualified_preparation": {
+      "path": "docs/ifpmic/evidence/b03/h1-installation-preparation.json",
+      "sha256": "277fe057d633759381ddcbba2df22a2772edf928c84d6dc43eb9f0ffa0d849a6"
+    },
+    "qualified_private_installation": {
+      "path": "workflow-artifacts/toolchains/B03/H1/2026-10-18T19-43-43-523587Z/installation.json",
+      "sha256": "a1aa7d0b77b94302064b26796b5df45d24032c73d30080dc91db94d989b80e8d"
+    },
+    "accepted407_environment_inventory": {
+      "path": "workflow-artifacts/verification/B03/H2/runtime-normal/gates/2026-10-19T13-14-17-430254Z/environment-before.json",
+      "sha256": "b68aa30da8886fad1e0b2266c05b1f1393875b8f56ca47e04be77e578319d269"
+    },
+    "accepted407_verification": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-normal-verification.json",
+      "sha256": "0662ec41f3b5b6bf2f00fd48e88803f55f692da48178c4f79f3068802c3ba328"
+    },
+    "accepted407_final_review": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-normal-final-review.json",
+      "sha256": "f18f65d9d155609141d0fa073e529cbf6009a625dcbbc7a731594bb99b2b0784"
+    },
+    "accepted407_archive": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-normal-gate.zip",
+      "sha256": "ad9b085e1cfa25b7d6109354a57f9f6e07c660281f9255fef5669fe160f13c16"
+    },
+    "historical407_timing_contract": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-normal-execution-contract.json",
+      "sha256": "7e730a5936a39d364821df4b1e92afabc36813211f97cbd920aad7db2018260b"
+    },
+    "independent_inventory_source_review": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-full-inventory-source-review.json",
+      "sha256": "4fda632e7eed5ee10f8aad0ffa13443d169f0dc9d4469991d9af75cc192f123a"
+    },
+    "TC_inventory_review": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-full-inventory-tc-review.json",
+      "sha256": "cd8752ab97742e829a920de827a09ca2c113b563e87a69560d8d8549ef2da388"
+    },
+    "protected_comparison_algorithm": {
+      "path": "scripts/verify_ifpmic_g1.py",
+      "sha256": "0f6603de4b0de546ccf2c23bc663c0568c2a178c8c19e31812c68b10a61e6d9b"
+    },
+    "environment_comparison_algorithm": {
+      "path": "scripts/verify_ifpmic_b03_h1.py",
+      "sha256": "9c20131082af1467f682d31fabb47daf359867aa5939ad818d97b7ac4c0d5573"
+    },
+    "live_temporal_lifecycle_helper": {
+      "path": "scripts/ifpmic_temporal_toolchain.py",
+      "sha256": "8cadab76ccfa1f93392cf759991d6906415c75ed5a116093c53aee9f4a445564"
+    },
+    "live_gate_descendant_helper": {
+      "path": "scripts/verify_ifpmic_g4.py",
+      "sha256": "ad9b66b7463b84f22227d8ba924b42628f8abb463d0873ac9a90ab013708c13a"
+    }
+  },
+  "binary_inputs": {
+    "original32_python": {
+      "path": ".ifpmic-venv/bin/python",
+      "sha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f",
+      "symlink_target_sha256": "31f2aee4e71d21fbe5cf8b01ff0e069b9275f58929596ceb00d14d90e3e16cd6"
+    },
+    "qualified36_python": {
+      "path": "workflow-artifacts/toolchains/B03/H1/2026-10-18T19-43-43-523587Z/venv/bin/python",
+      "sha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f",
+      "symlink_target_sha256": "42f2b28d8258c41a63374ac4365007738900f66a9b62a7eb1a2041a2e091d41b"
+    },
+    "temporal_cli": {
+      "path": "workflow-artifacts/toolchains/B03/H1/2026-10-18T19-43-43-523587Z/temporal",
+      "sha256": "712217694cac9f786a72d4b6c876cd15f3dcf1bf31434d9fed6af25242a327a0",
+      "symlink_target_sha256": null
+    },
+    "initdb": {
+      "path": ".paperclip-lab/runtime/node_modules/@embedded-postgres/linux-x64/native/bin/initdb",
+      "sha256": "7cba14094c5f505f492fd243c5eda04f0dc3be05f12b7bd278f150f1e03b721f",
+      "symlink_target_sha256": null
+    },
+    "pg_ctl": {
+      "path": ".paperclip-lab/runtime/node_modules/@embedded-postgres/linux-x64/native/bin/pg_ctl",
+      "sha256": "24a1f166819e0924319ff3faf752ad2a1ac594e223e2f3b1a2038dc84a2969de",
+      "symlink_target_sha256": null
+    },
+    "postgres": {
+      "path": ".paperclip-lab/runtime/node_modules/@embedded-postgres/linux-x64/native/bin/postgres",
+      "sha256": "c85fa9c977d9e641c2d22d93675a9b7097764b7df2c4c9ea021f5780522b2af2",
+      "symlink_target_sha256": null
+    },
+    "fixture_node": {
+      "path": "~/.nvm/versions/node/v24.17.0/bin/node",
+      "path_kind": "current_user_home_relative",
+      "sha256": "62d66443847de1f527f74afe715900b12884ace52136dc9cd8e91e61acc2f527",
+      "expected_version": "v24.17.0",
+      "path_policy": "Only explicit home-relative path, no PATH fallback. Resolved absolute path remains private."
+    }
+  },
+  "attestation_policy": {
+    "environment_roots": {
+      "original32": ".ifpmic-venv",
+      "qualified36": "workflow-artifacts/toolchains/B03/H1/2026-10-18T19-43-43-523587Z/venv"
+    },
+    "environment_inventory": "Before and after compare exact relative regular-file SHA and symlink-target-string SHA maps to pinned accepted407 environment-before.json:1777 original32 entries and3072 qualified36 entries. Ignore only __pycache__ descendants and.pyc per pinned environment_hashes. Added/removed/changed files/links fail. Rehash resolved interpreter binaries independently; never modify environments.",
+    "source_inventory": "Before and after compare every ledger path/hash and exact current service/test closure inventory. Reject source symlinks and resolved escape paths. Additional runner/review artifacts are frozen separately in pre-gate manifest; they cannot replace ledger source pins.",
+    "protected_inventory": "Extract exact96 protected hashes and89 file inventory from pinned B01 gate/gate.json member SHA597c3ada698cd20ff9c93a318e1177fe55e43e68844d08a6c56281cf940cb2c6 using pinned check_unchanged_sources prefixes/explicitfiles. Before/after reject additions/removals/changes/symlinks.",
+    "original_design": "Before and after compare imported17 and uploads2 to pinned source-manifest.json. Uploads remain unstaged/private and never enter public artifacts.",
+    "postgres_binaries": "Explicit PG18.1 hashes must also match accepted407 archive gate/postgres-lifecycle.json. Disconnect detection during a query is not assumed immediate; official18 documentation https://www.postgresql.org/docs/18/runtime-config-connection.html#GUC-CLIENT-CONNECTION-CHECK-INTERVAL supports separate actual backend observation.",
+    "no_new_baseline": "Runner cannot choose new baselines or replace reviewed pinned inventories with a capture of current state; captures are compared to these exact anchors."
+  },
+  "review_protocol": {
+    "contract_reviews": [
+      {
+        "path": "docs/ifpmic/evidence/b03/h2-runtime-full-execution-contract-review.json",
+        "reviewer": "Independent from Code-dev contract and TC test authors"
+      },
+      {
+        "path": "docs/ifpmic/evidence/b03/h2-runtime-full-execution-tc-review.json",
+        "reviewer": "TC; own test authorship declared; independent review required separately"
+      }
+    ],
+    "required_contract_verdict": "approve_runner_authoring_only",
+    "required_target_fields": [
+      "contract_sha256",
+      "ledger_sha256"
+    ],
+    "contract_effect": "Both exact approvals permit runner authoring only; neither authorizes imports/collection/tests/services. Target fields equal exact bytes of this contract and authority.integrated_ledger.",
+    "pre_gate_reviews": [
+      "docs/ifpmic/evidence/b03/h2-runtime-full-pre-gate-review.json",
+      "docs/ifpmic/evidence/b03/h2-runtime-full-pre-gate-tc-review.json"
+    ],
+    "required_pre_gate_verdict": "approve_execution",
+    "pre_gate_target_fields": [
+      "contract_sha256",
+      "ledger_sha256",
+      "runner_sha256",
+      "independent_contract_review_sha256",
+      "tc_contract_review_sha256",
+      "runner_source_review_sha256"
+    ],
+    "runner_source_review_path": "docs/ifpmic/evidence/b03/h2-runtime-full-runner-source-review.json",
+    "non_circularity": "This contract pins authorities/ledger, never reviews of itself. Separate final pre-gate pins runner+both contract reviews+final runner source review. Changed bytes invalidate affected approvals; retain superseded/rejected attempts."
+  },
+  "collection_policy": {
+    "mode": "all15_phase_collections_before_any_case_execution",
+    "per_collection_seconds": 30,
+    "total_collection_seconds": 450,
+    "overhead_budget": {
+      "collections": 450,
+      "attestation_and_post_audit": 150,
+      "total": 600
+    },
+    "accounting": "All15 collections share outer600s overhead; never reuse phase caps for collection. Each later execution phase gets its single listed cap. Outer16020s includes every action, overhead and recovery; a timeout fails and requires actual owned cleanup evidence.",
+    "side_effects": "Collection imports occur only after final runner/pre-gate approval. No services/testcases may start during collection; source review must audit import side effects. Capture output privately and match all490 IDs before first case."
+  },
+  "revision_history": [
+    {
+      "version": 1,
+      "contract_sha256": "d3e6f9a0a9900f19ff41a9eb7a75efad344cd2182be14db12905bb0e305bc8b8",
+      "archive": "attempts/h2-runtime-full-execution-v1-before-attestation-anchors",
+      "reason": "Independent review required exact attestation/timing anchors, review layers and collection/before-after-env accounting. Old TC approval applies only to archived bytes.",
+      "runner_authored": false,
+      "execution_performed": false
+    },
+    {
+      "version": 2,
+      "reason": "Pin19 attestation inputs and7 binary identities including live lifecycle/descendant helpers; specify all15 collections within outer600 overhead and non-circular exact review gates. Paired revised reviews pending.",
+      "execution_performed": false
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "kind": "ifpmic.b03.h2.runtime-full-execution-tc-review.v1",
+  "verdict": "approve_contract_for_runner_authoring_gate_only",
+  "reviewer": "TC execution-contract reviewer; also authored some included test cases",
+  "review_scope": "Static contract authoring review against the approved full H2 plan and integrated inventory. This is not independent source review, runner review, pre-gate, execution authorization, or acceptance.",
+  "reviewed_inputs": {
+    "contract": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-full-execution-contract.json",
+      "sha256": "d3e6f9a0a9900f19ff41a9eb7a75efad344cd2182be14db12905bb0e305bc8b8"
+    },
+    "integrated_ledger": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger.json",
+      "sha256": "cf4f3bfc023341c22e0c8fc7c072c54838d62f7adeb39d817a4ce3b6589f8d60"
+    },
+    "approved_plan": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-full-verification-plan.json",
+      "sha256": "c6964bccff0d4cec1ac00f18fbb267d5d1a4a5887e53844c604333b7c059486c"
+    }
+  },
+  "checks": {
+    "authority_and_scope": {
+      "result": "pass_static",
+      "evidence": "The contract pins the exact approved plan and integrated-ledger hashes. It preserves the approved full 25-obligation H2 scope, 407 retained cases, 83 additions and 490-case union. The stage predicates require exact collection and 490 fresh passes, with no narrower H2 substitution."
+    },
+    "stage_fields_and_sequence": {
+      "result": "pass_static",
+      "evidence": "All five stages (FULL-ATTEST, FULL-COLLECT, FULL-EXECUTE, FULL-AUDIT, FULL-FINAL-REVIEW) contain purpose, target, method, agent, pass_criteria, expected, evidence and recovery. Collection precedes execution; full privacy/resource audit and independent final review follow it."
+    },
+    "inventory_execution_mapping": {
+      "result": "pass_static",
+      "evidence": "The 15-phase execution order and every phase cap match the integrated ledger exactly. The caps sum to 15,420 seconds, and the outer gate is 16,020 seconds, allowing the stated 600-second outer margin. Case-level collection, execution and timing requirements defer to the hash-pinned literal ledger."
+    },
+    "budget_and_cleanup": {
+      "result": "pass_static",
+      "evidence": "The contract preserves 49 new 215+25-second cases and 34 new 25+5-second cases, the 60-second per-phase allowance, 5-second SQL lock and 30-second SQL statement limits, and 10-second RPC limit. It requires a single shared cleanup epoch including fixture and final-session teardown, rejects timeout flags, retains ownership on cleanup failure, and does not count parent recovery as a passing case."
+    },
+    "hung_driver_oracle": {
+      "result": "pass_static_with_runtime_uncertainty_retained",
+      "evidence": "It distinguishes the real pg_sleep/local-statement timeout from the worker self-watchdog and requires independent actual backend disappearance by the pre-query event plus 40 seconds before rollback/recovery assertions. No parent SQL cancellation or early restart can satisfy this oracle. The pinned amendment explicitly says this timing remains unexecuted."
+    },
+    "environment_and_isolation": {
+      "result": "pass_static",
+      "evidence": "The contract prohibits installs/downloads and remote/company services, pins existing interpreters and binaries, limits endpoints to owned loopback Temporal and private Unix-socket PostgreSQL, and requires explicit environment isolation and unique owned storage."
+    },
+    "evidence_privacy_and_publication": {
+      "result": "pass_static_pending_runner_review",
+      "evidence": "Publication is restricted to six fixed archive members with deterministic metadata and explicit transformations. Raw histories, logs, credentials, source archives, process identities and absolute paths remain private; the contract requires independent comparison of every public member against the raw private evidence."
+    },
+    "authorization_separation": {
+      "result": "pass_static",
+      "evidence": "All candidate authorization flags remain false. Exact paired independent/TC contract-and-ledger approvals may authorize only runner authoring. Test/service execution still requires exact final runner source review and independent/TC pre-gate approval; H2 acceptance and full-goal acceptance remain separate."
+    },
+    "requirements_and_omissions": {
+      "result": "pass_static",
+      "evidence": "B03 H2, REQ-02, REQ-13, REQ-14 preservation and AT-16 prerequisite-only are named. Node/build/browser validation, actual agents/devices/company SSO/cloud/deployment/submission and broader B03/H3-H7/AT32/full AX remain explicitly outside this candidate gate with residual risks retained."
+    }
+  },
+  "limitations": [
+    "I authored some included test cases. This verdict is a static contract review and does not independently establish that source methods reach their asserted cuts or satisfy product behavior; the separate senior review is required.",
+    "No imports, collection, tests, SQL, service startup or network operations were performed. The runner is not authored, and no environment or runtime behavior is qualified by this report.",
+    "The NEG-WINDOW exact-deadline clock seam remains conditional on its approved isolated single-assignment method and independent source review. The real unmodified-runtime before/after cases remain mandatory and cannot be replaced by seam results.",
+    "The native PostgreSQL hung-driver disappearance deadline, Temporal/SDK history behavior, subprocess cleanup, fixture finalization and publication transformation remain unexecuted risks that must be proven by the later reviewed runner and full gate."
+  ],
+  "authority": {
+    "runner_authoring": "This TC review approves the contract for the paired runner-authoring gate only; runner authoring is not authorized until the independent exact contract and ledger reviews also approve.",
+    "test_or_service_execution": false,
+    "h2_acceptance": false,
+    "full_goal_acceptance": false,
+    "next_gate": "Independent exact contract review and paired source/ledger approvals, followed by runner authoring, exact runner review, and independent/TC pre-gate before any imports, collection, tests or services."
+  }
+}

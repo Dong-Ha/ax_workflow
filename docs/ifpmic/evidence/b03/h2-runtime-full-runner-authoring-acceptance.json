@@ -1,0 +1,40 @@
+{
+  "kind": "ifpmic.b03.h2.full-runner-authoring-acceptance.v1",
+  "decision": "accept_exact_candidate_for_runner_authoring_only",
+  "references": {
+    "docs/ifpmic/evidence/b03/h2-runtime-full-execution-contract.json": "c10c7cb329ea82b758cfa7db34ac330e4b7ec472320b5904e8086f8067865a2d",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger.json": "cf4f3bfc023341c22e0c8fc7c072c54838d62f7adeb39d817a4ce3b6589f8d60",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-inventory-source-review.json": "4fda632e7eed5ee10f8aad0ffa13443d169f0dc9d4469991d9af75cc192f123a",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-inventory-tc-review.json": "cd8752ab97742e829a920de827a09ca2c113b563e87a69560d8d8549ef2da388"
+  },
+  "paired_contract_reviews": [
+    {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-full-execution-contract-review.json",
+      "sha256": "481604abb4cfe602e16cbd65fae8f290f5a61f3ec405d350c9ebbbf6b7fe7c79"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-full-execution-tc-review.json",
+      "sha256": "17da5950d52deed48d454b026e152415d4e3eadd9eba20da4503009a41bf46b9"
+    }
+  ],
+  "counts": {
+    "retained_ids": 407,
+    "new_unexecuted_ids": 83,
+    "expected_full_union": 490,
+    "approved_obligation_groups": 25,
+    "groups_with_draft_ids": 25,
+    "fixture_failure_prerequisites": 5,
+    "extended215_25_ids": 49,
+    "default25_5_ids": 34
+  },
+  "verification": "Compared exact paired verdict/contract/ledger fields, current84 ledger source hashes and19 attestation artifacts by static file reads. No product/SDK imports, collection, tests, SQL, services or network execution.",
+  "authorization": {
+    "runner_authoring": true,
+    "test_or_service_execution": false,
+    "h2_acceptance": false,
+    "full_goal_acceptance": false
+  },
+  "next_gate": "Author scripts/verify_ifpmic_b03_h2_runtime_full.py to enforce this contract; final exact runner source review and independent+TC pre-gate must precede any execution.",
+  "historical_attempt": "V1 contract/TC review remains archived and grants nothing to revised bytes.",
+  "goal_status": "active"
+}

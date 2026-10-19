@@ -91,8 +91,11 @@ def g4_oidc_provider(request) -> SyntheticOIDCProvider:
     finally:
         active = cleanup.controller(request.config)
         try:
-            provider.close(remaining_time=(None if active is None else
-                                          lambda maximum: cleanup.remaining(request.config, maximum)))
+            if active is None:
+                provider.close()
+            else:
+                cleanup.restore_preserving_error(lambda: provider.close(
+                    remaining_time=lambda maximum: cleanup.remaining(request.config, maximum)))
         finally:
             cleanup.record_finalizer(request.config, "oidc_closed",
                            serving_threads_alive=sum(thread.is_alive() for thread in provider._threads),

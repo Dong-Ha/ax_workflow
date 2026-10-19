@@ -8,6 +8,7 @@ import time
 from uuid import uuid4
 
 import psycopg
+from tests.ifpmic_api.h2_native_bounds import bounded_connect, bounded_harness
 import pytest
 
 from tests.ifpmic_api import h2_dispatcher_crash_support as crash
@@ -33,6 +34,7 @@ def _case_name(node_id: str) -> str:
 
 def _prepare_sql_case(harness, case_name: str):
     """Prepare a real accepted command and reservation without a Temporal service."""
+    harness = bounded_harness(harness)
     accepted = normal.accept_workspace_job(harness, key=case_name)
     job_id = accepted["job_id"]
     group = normal.workspace_rows(harness, job_id)
@@ -83,7 +85,7 @@ def _claim_and_reserve(case):
     harness = case["harness"]
     command_id = case["group"][18]
     workspace = case["workspace"]
-    with psycopg.connect(normal._private_dsn(harness["database"], "dispatcher"), autocommit=True) as dispatcher:
+    with bounded_connect(normal._private_dsn(harness["database"], "dispatcher"), autocommit=True) as dispatcher:
         claim = dispatcher.execute(
             "SELECT ifpmic.claim_delivery(%s)", (command_id,),
         ).fetchone()[0]
@@ -107,7 +109,7 @@ def _claim_and_reserve(case):
 
 
 def _owner_window(case, first_start, uncertain_until, retention=3601):
-    with psycopg.connect(owner_dsn(case["harness"]["database"])) as owner:
+    with bounded_connect(owner_dsn(case["harness"]["database"])) as owner:
         before = owner.execute(
             "SELECT first_start_attempt_at,uncertain_until,observed_retention_seconds "
             "FROM ifpmic.execution_bindings WHERE job_id=%s", (case["job_id"],),
@@ -125,7 +127,7 @@ def _owner_window(case, first_start, uncertain_until, retention=3601):
 
 
 def _owner_window_snapshot(case):
-    with psycopg.connect(owner_dsn(case["harness"]["database"])) as owner:
+    with bounded_connect(owner_dsn(case["harness"]["database"])) as owner:
         return owner.execute(
             "SELECT first_start_attempt_at,uncertain_until,observed_retention_seconds "
             "FROM ifpmic.execution_bindings WHERE job_id=%s", (case["job_id"],),
@@ -177,7 +179,7 @@ def _assert_function_metadata_unchanged(before, current):
 
 
 def _claim_live_at_frozen_instant(case, claim, instant):
-    with psycopg.connect(owner_dsn(case["harness"]["database"])) as owner:
+    with bounded_connect(owner_dsn(case["harness"]["database"])) as owner:
         row = owner.execute(
             "SELECT state,generation,claim_token::text,claim_expires_at>%s,claim_expires_at "
             "FROM ifpmic.commands_outbox WHERE command_id=%s",
@@ -189,7 +191,7 @@ def _claim_live_at_frozen_instant(case, claim, instant):
 
 
 def _invoke_record_attempt(case, claim, retention):
-    with psycopg.connect(normal._private_dsn(case["harness"]["database"], "dispatcher"),
+    with bounded_connect(normal._private_dsn(case["harness"]["database"], "dispatcher"),
                          autocommit=True) as dispatcher:
         session_user = dispatcher.execute("SELECT session_user").fetchone()[0]
         expected_user = case["harness"]["database"][0].roles.dispatcher
@@ -202,7 +204,7 @@ def _invoke_record_attempt(case, claim, retention):
 
 def _wait_old_lease_expiry(case, claim, deadline):
     while time.monotonic() < deadline:
-        with psycopg.connect(owner_dsn(case["harness"]["database"])) as owner:
+        with bounded_connect(owner_dsn(case["harness"]["database"])) as owner:
             row = owner.execute(
                 "SELECT state,generation,claim_token::text,claim_expires_at<=clock_timestamp() "
                 "FROM ifpmic.commands_outbox WHERE command_id=%s", (claim["command_id"],),
@@ -300,7 +302,7 @@ def test_h2_window_partial_shape_constraint(workflow_scram_hba, workspace_enviro
             "observed_retention_seconds=3601",
             "uncertain_until=clock_timestamp()+interval '30 minutes',observed_retention_seconds=3601",
         )
-        with psycopg.connect(owner_dsn(case["harness"]["database"])) as owner:
+        with bounded_connect(owner_dsn(case["harness"]["database"])) as owner:
             original = owner.execute(
                 "SELECT first_start_attempt_at,uncertain_until,observed_retention_seconds "
                 "FROM ifpmic.execution_bindings WHERE job_id=%s", (case["job_id"],),
@@ -354,7 +356,7 @@ def test_h2_window_exact_deadline_with_isolated_clock_seam(
     try:
         claim = _claim_and_reserve(case)
         before_cut = normal._read_owner_snapshot(case["harness"], case["job_id"])
-        with psycopg.connect(owner_dsn(case["harness"]["database"]), autocommit=True) as owner:
+        with bounded_connect(owner_dsn(case["harness"]["database"]), autocommit=True) as owner:
             before = _read_function_snapshot(owner)
             original = before["definition"]
             assert before["owner_name"] == case["harness"]["database"][0].roles.migration
@@ -409,7 +411,7 @@ def test_h2_window_exact_deadline_with_isolated_clock_seam(
         try:
             if original is not None:
                 try:
-                    with psycopg.connect(owner_dsn(case["harness"]["database"]), autocommit=True) as owner:
+                    with bounded_connect(owner_dsn(case["harness"]["database"]), autocommit=True) as owner:
                         owner.execute(original)
                         restored = _read_function_snapshot(owner)
                     _assert_function_metadata_unchanged(before, restored)
@@ -464,11 +466,11 @@ def test_h2_window_actual_dispatcher_boundary(boundary, expired, workflow_scram_
                                               workspace_environment, h2_window_case_deadline):
     deadline = h2_window_case_deadline
     case = crash.prepare_case(workspace_environment, deadline.body_deadline,
-                              "neg-window-actual-" + boundary)
+                              "neg-window-actual-" + boundary, cleanup_controller=deadline)
     process = None
     try:
         claim = _claim_and_reserve(case)
-        with psycopg.connect(owner_dsn(case["harness"]["database"])) as owner:
+        with bounded_connect(owner_dsn(case["harness"]["database"])) as owner:
             now = owner.execute("SELECT clock_timestamp()").fetchone()[0]
         if expired:
             uncertain_until = now - timedelta(minutes=1)

@@ -59,7 +59,7 @@ def test_postgres_and_temporal_restart_preserve_same_execution_and_receipt(
 ):
     deadline = h2_crash_case_deadline
     case = crash.prepare_case(workspace_environment, deadline.body_deadline,
-                              "runtime-independent-storage-restarts")
+                              "runtime-independent-storage-restarts", cleanup_controller=deadline)
     case["case_name"] = "test_postgres_and_temporal_restart_preserve_same_execution_and_receipt"
     cluster = case["harness"]["database"][1]
     expected_run_id = None

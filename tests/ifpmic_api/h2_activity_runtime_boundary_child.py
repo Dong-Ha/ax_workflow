@@ -66,8 +66,8 @@ class _HungCursor:
         # This is a real server-side statement in the actual uncommitted
         # project_activation transaction. The local timeout is deliberately
         # longer than execution_runtime's 15-second self-termination bound.
-        self.connection.execute("SET LOCAL statement_timeout='60s'")
-        self.connection.execute("SELECT pg_sleep(60)")
+        self.connection.execute("SET LOCAL statement_timeout='30s'")
+        self.connection.execute("SELECT pg_sleep(30)")
         return value
 
     def __getattr__(self, name):

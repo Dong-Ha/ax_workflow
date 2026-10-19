@@ -235,18 +235,29 @@ class SyntheticOIDCProvider:
             remaining_time(3)
             errors = []
 
-            def stop(server):
+            def stop(server, serving_thread):
                 try:
-                    server.shutdown()
-                    server.server_close()
+                    # shutdown waits for serve_forever's completion event. A
+                    # partially started fixture may never have entered that loop.
+                    if serving_thread is None or serving_thread.ident is None:
+                        errors.append("SERVING_THREAD_START_UNCONFIRMED")
+                    else:
+                        server.shutdown()
                 except BaseException as error:
                     errors.append(type(error).__name__)
+                finally:
+                    try:
+                        server.server_close()
+                    except BaseException as error:
+                        errors.append(type(error).__name__)
 
             # All servers share the caller's one cleanup epoch. Retain both
             # helper and serving thread handles if shutdown is unconfirmed.
             self._shutdown_threads = [
-                threading.Thread(target=stop, args=(server,), daemon=True,
-                                 name="ifpmic-h2-oidc-close") for server in self._servers
+                threading.Thread(target=stop,
+                                 args=(server, self._threads[index] if index < len(self._threads) else None),
+                                 daemon=True, name="ifpmic-h2-oidc-close")
+                for index, server in enumerate(self._servers)
             ]
             with self._lock:
                 self._last_h2_threads = (*self._shutdown_threads, *self._threads, *self._request_threads)
@@ -269,6 +280,9 @@ class SyntheticOIDCProvider:
                     pass  # The peer/handler may already have closed it.
                 connection.close()
             for thread in (*self._threads, *request_threads):
+                if thread.ident is None:
+                    errors.append("THREAD_START_UNCONFIRMED")
+                    continue
                 thread.join(timeout=remaining_time(3))
             if errors or any(thread.is_alive() for thread in
                              (*self._shutdown_threads, *self._threads, *request_threads)):

@@ -6,203 +6,278 @@
     "path": "docs/ifpmic/evidence/b03/h2-runtime-full-verification-plan.json",
     "sha256": "c6964bccff0d4cec1ac00f18fbb267d5d1a4a5887e53844c604333b7c059486c"
   },
-  "scope": "Full25-obligation plan remains mandatory. These derivative ledgers are authoring inputs, not an approved complete execution inventory.",
+  "scope": "All25 groups now have literal IDs. Inventory/source reviews are bounded static evidence only; no current runtime passes or full H2 acceptance.",
   "counts": {
     "obligation_groups": 25,
-    "groups_with_existing_or_draft_literal_ids": 22,
-    "groups_without_literal_ids": 3,
-    "new_unexecuted_draft_case_ids": 57,
+    "groups_with_existing_or_draft_literal_ids": 25,
+    "groups_without_literal_ids": 0,
+    "new_unexecuted_draft_case_ids": 83,
     "retained_case_ids_required_fresh": 407,
-    "current_union_minimum_before_remaining_variants": 464,
-    "final_execution_inventory_frozen": false
+    "current_union_minimum_before_remaining_variants": 490,
+    "final_execution_inventory_frozen": true,
+    "fixture_failure_prerequisite_ids": 5
   },
   "obligations": [
     {
       "obligation": "CRASH-01",
-      "status": "draft_case_ids_unexecuted",
+      "status": "literal_inventory_source_reviewed_not_executed",
       "literal_pytest_node_ids": [
         "tests/ifpmic_api/test_accepted_start_response_loss.py::test_actual_started_event_survives_lost_start_response_and_recovers_same_run"
       ],
-      "tc_ledger": null,
+      "tc_ledger": {
+        "path": "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger.json",
+        "sha256": "cf4f3bfc023341c22e0c8fc7c072c54838d62f7adeb39d817a4ce3b6589f8d60"
+      },
       "execution_pass_evidence": null
     },
     {
       "obligation": "CRASH-02",
-      "status": "draft_case_ids_unexecuted",
+      "status": "literal_inventory_source_reviewed_not_executed",
       "literal_pytest_node_ids": [
         "tests/ifpmic_api/test_h2_dispatcher_crashes.py::test_claim_commit_crash_reclaims_only_after_expiry"
       ],
-      "tc_ledger": null,
+      "tc_ledger": {
+        "path": "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger.json",
+        "sha256": "cf4f3bfc023341c22e0c8fc7c072c54838d62f7adeb39d817a4ce3b6589f8d60"
+      },
       "execution_pass_evidence": null
     },
     {
       "obligation": "CRASH-03",
-      "status": "draft_case_ids_unexecuted",
+      "status": "literal_inventory_source_reviewed_not_executed",
       "literal_pytest_node_ids": [
         "tests/ifpmic_api/test_h2_dispatcher_crashes.py::test_start_response_before_admission_crash_recovers_same_run"
       ],
-      "tc_ledger": null,
+      "tc_ledger": {
+        "path": "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger.json",
+        "sha256": "cf4f3bfc023341c22e0c8fc7c072c54838d62f7adeb39d817a4ce3b6589f8d60"
+      },
       "execution_pass_evidence": null
     },
     {
       "obligation": "CRASH-04",
-      "status": "draft_case_ids_unexecuted",
+      "status": "literal_inventory_source_reviewed_not_executed",
       "literal_pytest_node_ids": [
         "tests/ifpmic_api/test_h2_dispatcher_crashes.py::test_admission_before_ack_crash_recovers_same_run"
       ],
-      "tc_ledger": null,
+      "tc_ledger": {
+        "path": "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger.json",
+        "sha256": "cf4f3bfc023341c22e0c8fc7c072c54838d62f7adeb39d817a4ce3b6589f8d60"
+      },
       "execution_pass_evidence": null
     },
     {
       "obligation": "CRASH-05",
-      "status": "draft_case_ids_unexecuted",
+      "status": "literal_inventory_source_reviewed_not_executed",
       "literal_pytest_node_ids": [
         "tests/ifpmic_api/test_h2_dispatcher_crashes.py::test_ack_before_worker_activation_projects_once"
       ],
-      "tc_ledger": null,
+      "tc_ledger": {
+        "path": "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger.json",
+        "sha256": "cf4f3bfc023341c22e0c8fc7c072c54838d62f7adeb39d817a4ce3b6589f8d60"
+      },
       "execution_pass_evidence": null
     },
     {
       "obligation": "CRASH-06",
-      "status": "draft_case_ids_unexecuted",
+      "status": "literal_inventory_source_reviewed_not_executed",
       "literal_pytest_node_ids": [
         "tests/ifpmic_api/test_h2_dispatcher_crashes.py::test_two_live_dispatchers_stale_ack_cannot_change_recovered_run"
       ],
-      "tc_ledger": null,
+      "tc_ledger": {
+        "path": "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger.json",
+        "sha256": "cf4f3bfc023341c22e0c8fc7c072c54838d62f7adeb39d817a4ce3b6589f8d60"
+      },
       "execution_pass_evidence": null
     },
     {
       "obligation": "CRASH-07",
-      "status": "draft_case_ids_unexecuted",
+      "status": "literal_inventory_source_reviewed_not_executed",
       "literal_pytest_node_ids": [
         "tests/ifpmic_api/test_h2_dispatcher_crashes.py::test_admitted_missing_history_is_quarantined_without_replacement"
       ],
-      "tc_ledger": null,
+      "tc_ledger": {
+        "path": "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger.json",
+        "sha256": "cf4f3bfc023341c22e0c8fc7c072c54838d62f7adeb39d817a4ce3b6589f8d60"
+      },
       "execution_pass_evidence": null
     },
     {
       "obligation": "CRASH-08",
-      "status": "draft_case_ids_unexecuted",
+      "status": "literal_inventory_source_reviewed_not_executed",
       "literal_pytest_node_ids": [
         "tests/ifpmic_api/test_h2_runtime_restart_and_history.py::test_postgres_and_temporal_restart_preserve_same_execution_and_receipt"
       ],
-      "tc_ledger": null,
+      "tc_ledger": {
+        "path": "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger.json",
+        "sha256": "cf4f3bfc023341c22e0c8fc7c072c54838d62f7adeb39d817a4ce3b6589f8d60"
+      },
       "execution_pass_evidence": null
     },
     {
       "obligation": "CRASH-09",
-      "status": "draft_case_ids_unexecuted",
+      "status": "literal_inventory_source_reviewed_not_executed",
       "literal_pytest_node_ids": [
         "tests/ifpmic_api/test_h2_worker_api_crashes.py::test_h2_api_commit_before_response_sigkill_retry_applies_once"
       ],
-      "tc_ledger": null,
+      "tc_ledger": {
+        "path": "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger.json",
+        "sha256": "cf4f3bfc023341c22e0c8fc7c072c54838d62f7adeb39d817a4ce3b6589f8d60"
+      },
       "execution_pass_evidence": null
     },
     {
       "obligation": "CRASH-10",
-      "status": "draft_case_ids_unexecuted",
+      "status": "literal_inventory_source_reviewed_not_executed",
       "literal_pytest_node_ids": [
         "tests/ifpmic_api/test_h2_worker_api_crashes.py::test_h2_worker_projection_before_pg_commit_sigkill_rolls_back_then_retries"
       ],
-      "tc_ledger": null,
+      "tc_ledger": {
+        "path": "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger.json",
+        "sha256": "cf4f3bfc023341c22e0c8fc7c072c54838d62f7adeb39d817a4ce3b6589f8d60"
+      },
       "execution_pass_evidence": null
     },
     {
       "obligation": "CRASH-11",
-      "status": "draft_case_ids_unexecuted",
+      "status": "literal_inventory_source_reviewed_not_executed",
       "literal_pytest_node_ids": [
         "tests/ifpmic_api/test_h2_worker_api_crashes.py::test_h2_worker_projection_after_pg_commit_sigkill_replays_receipt"
       ],
-      "tc_ledger": null,
+      "tc_ledger": {
+        "path": "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger.json",
+        "sha256": "cf4f3bfc023341c22e0c8fc7c072c54838d62f7adeb39d817a4ce3b6589f8d60"
+      },
       "execution_pass_evidence": null
     },
     {
       "obligation": "CRASH-12",
-      "status": "draft_case_ids_unexecuted",
+      "status": "literal_inventory_source_reviewed_not_executed",
       "literal_pytest_node_ids": [
         "tests/ifpmic_api/test_h2_worker_api_crashes.py::test_h2_activity_completed_before_workflow_decision_sigkill_replays_history"
       ],
-      "tc_ledger": null,
+      "tc_ledger": {
+        "path": "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger.json",
+        "sha256": "cf4f3bfc023341c22e0c8fc7c072c54838d62f7adeb39d817a4ce3b6589f8d60"
+      },
       "execution_pass_evidence": null
     },
     {
       "obligation": "NEG-STARTUP",
-      "status": "tc_draft_variants_unexecuted",
+      "status": "literal_inventory_source_reviewed_not_executed",
       "literal_pytest_node_ids": [
-        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[no_job_missing_registration]",
-        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[missing_deployment_dispatcher]",
-        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[disabled_deployment_dispatcher]",
-        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[missing_dispatcher_principal]",
-        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[disabled_dispatcher_principal]",
-        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[missing_projector_principal]",
-        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[disabled_projector_principal]",
-        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[missing_dispatcher_build]",
-        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[disabled_dispatcher_build]",
-        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[disabled_projector_build]",
-        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[wrong_dispatcher_role]",
-        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[wrong_projector_role]",
-        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[wrong_dispatcher_password]",
-        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[recreated_dispatcher_role_oid]",
-        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[endpoint_mismatch]",
-        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[namespace_mismatch]",
-        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[deployment_mismatch]",
         "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[build_mismatch_dispatcher]",
         "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[build_mismatch_projector]",
+        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[deployment_mismatch]",
+        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[disabled_deployment_dispatcher]",
+        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[disabled_dispatcher_build]",
+        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[disabled_dispatcher_principal]",
+        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[disabled_projector_build]",
+        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[disabled_projector_principal]",
+        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[endpoint_mismatch]",
+        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[environment_manifest_mismatch]",
+        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[missing_deployment_dispatcher]",
+        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[missing_dispatcher_build]",
+        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[missing_dispatcher_principal]",
+        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[missing_projector_principal]",
+        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[namespace_mismatch]",
+        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[no_job_missing_registration]",
+        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[recreated_dispatcher_role_oid]",
         "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[source_manifest_mismatch]",
-        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[environment_manifest_mismatch]"
+        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[wrong_dispatcher_password]",
+        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[wrong_dispatcher_role]",
+        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[wrong_projector_role]"
       ],
       "tc_ledger": {
-        "path": "docs/ifpmic/evidence/b03/h2-runtime-startup-tc-ledger.json",
-        "sha256": "b6752ef8bf241b461add6981a3a05720548c07a1cba3c62dc9ee280c86d40c81"
+        "path": "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger.json",
+        "sha256": "cf4f3bfc023341c22e0c8fc7c072c54838d62f7adeb39d817a4ce3b6589f8d60"
       },
       "execution_pass_evidence": null
     },
     {
       "obligation": "NEG-MACHINE-RACE",
-      "status": "tc_draft_variants_unexecuted_source_review_pending",
+      "status": "literal_inventory_source_reviewed_not_executed",
       "literal_pytest_node_ids": [
-        "tests/ifpmic_api/test_h2_transport_boundaries.py::test_h2_machine_authority_disable_serializes_with_claim[disable-before-claim]",
-        "tests/ifpmic_api/test_h2_transport_boundaries.py::test_h2_machine_authority_disable_serializes_with_claim[claim-before-disable]"
+        "tests/ifpmic_api/test_h2_transport_boundaries.py::test_h2_machine_authority_disable_serializes_with_claim[claim-before-disable]",
+        "tests/ifpmic_api/test_h2_transport_boundaries.py::test_h2_machine_authority_disable_serializes_with_claim[disable-before-claim]"
       ],
       "tc_ledger": {
-        "path": "docs/ifpmic/evidence/b03/h2-runtime-transport-tc-ledger.json",
-        "sha256": "c024a1618cba7ff14699616af0ddcb1095320e7bb107fabc7b2631959cba56ef"
+        "path": "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger.json",
+        "sha256": "cf4f3bfc023341c22e0c8fc7c072c54838d62f7adeb39d817a4ce3b6589f8d60"
       },
       "execution_pass_evidence": null
     },
     {
       "obligation": "NEG-STARTED",
-      "status": "literal_cases_not_authored",
-      "literal_pytest_node_ids": [],
-      "tc_ledger": null,
+      "status": "literal_inventory_source_reviewed_not_executed",
+      "literal_pytest_node_ids": [
+        "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[binding_digest]",
+        "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[build_id]",
+        "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[extra_input]",
+        "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[job_id]",
+        "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[malformed_input]",
+        "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[missing_input]",
+        "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[project_id]",
+        "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[task_queue]",
+        "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[workflow_type]"
+      ],
+      "tc_ledger": {
+        "path": "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger.json",
+        "sha256": "cf4f3bfc023341c22e0c8fc7c072c54838d62f7adeb39d817a4ce3b6589f8d60"
+      },
       "execution_pass_evidence": null
     },
     {
       "obligation": "NEG-FOREIGN-DEPLOYMENT",
-      "status": "literal_cases_not_authored",
-      "literal_pytest_node_ids": [],
-      "tc_ledger": null,
+      "status": "literal_inventory_source_reviewed_not_executed",
+      "literal_pytest_node_ids": [
+        "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_foreign_deployment_cannot_start_old_binding"
+      ],
+      "tc_ledger": {
+        "path": "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger.json",
+        "sha256": "cf4f3bfc023341c22e0c8fc7c072c54838d62f7adeb39d817a4ce3b6589f8d60"
+      },
       "execution_pass_evidence": null
     },
     {
       "obligation": "NEG-WORKSPACE",
-      "status": "literal_cases_not_authored",
-      "literal_pytest_node_ids": [],
-      "tc_ledger": null,
+      "status": "literal_inventory_source_reviewed_not_executed",
+      "literal_pytest_node_ids": [
+        "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py::test_expired_cleanup_budget_performs_no_new_lifecycle_action",
+        "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py::test_partial_oidc_start_fails_closed_for_unstarted_thread_handle",
+        "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py::test_restore_error_keeps_exact_primary_and_notes_secondary",
+        "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py::test_restore_only_failure_escapes_by_identity",
+        "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py::test_unconfirmed_testclient_exit_records_unknown_ownership",
+        "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_invalid_ready_fails_closed[marker-forged]",
+        "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_invalid_ready_fails_closed[marker-missing]",
+        "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_invalid_ready_fails_closed[marker-symlink]",
+        "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_invalid_ready_fails_closed[marker-wrong-token]",
+        "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_nonready_blocks_admitted_worker[state-error]",
+        "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_nonready_blocks_admitted_worker[state-provisioning]",
+        "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_nonready_blocks_admitted_worker[state-reserved]",
+        "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_nonready_blocks_dispatcher_before_start[state-error]",
+        "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_nonready_blocks_dispatcher_before_start[state-provisioning]",
+        "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_nonready_blocks_dispatcher_before_start[state-reserved]",
+        "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_stale_generation_claim_is_fenced"
+      ],
+      "tc_ledger": {
+        "path": "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger.json",
+        "sha256": "cf4f3bfc023341c22e0c8fc7c072c54838d62f7adeb39d817a4ce3b6589f8d60"
+      },
       "execution_pass_evidence": null
     },
     {
       "obligation": "NEG-AUTHORITY",
-      "status": "tc_draft_variants_unexecuted_source_review_pending",
+      "status": "literal_inventory_source_reviewed_not_executed",
       "literal_pytest_node_ids": [
-        "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_authority_revoked_before_first_projection[membership]",
         "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_authority_revoked_before_first_projection[eligibility]",
-        "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_committed_receipt_replays_after_authority_revoke[membership]",
-        "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_committed_receipt_replays_after_authority_revoke[eligibility]"
+        "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_authority_revoked_before_first_projection[membership]",
+        "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_committed_receipt_replays_after_authority_revoke[eligibility]",
+        "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_committed_receipt_replays_after_authority_revoke[membership]"
       ],
       "tc_ledger": {
-        "path": "docs/ifpmic/evidence/b03/h2-runtime-activity-runtime-tc-ledger.json",
-        "sha256": "d379c31c07d3cadfaa29370b1ec0f5e898138df6d1f9843f9102c0f36f8980ac"
+        "path": "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger.json",
+        "sha256": "cf4f3bfc023341c22e0c8fc7c072c54838d62f7adeb39d817a4ce3b6589f8d60"
       },
       "execution_pass_evidence": null
     },
@@ -215,112 +290,129 @@
         "tests/ifpmic_api/test_workflow_schema.py::test_h2_four_role_oid_recreation_is_drift_and_does_not_rebind",
         "tests/ifpmic_api/test_workflow_schema.py::test_h2_service_roles_use_scram_without_trust_fallthrough"
       ],
-      "tc_ledger": null,
+      "tc_ledger": {
+        "path": "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger.json",
+        "sha256": "cf4f3bfc023341c22e0c8fc7c072c54838d62f7adeb39d817a4ce3b6589f8d60"
+      },
       "execution_pass_evidence": null
     },
     {
       "obligation": "NEG-PREADMISSION",
-      "status": "tc_draft_variants_unexecuted_source_review_pending",
+      "status": "literal_inventory_source_reviewed_not_executed",
       "literal_pytest_node_ids": [
         "tests/ifpmic_api/test_h2_transport_boundaries.py::test_h2_activity_waits_until_admission_same_run"
       ],
       "tc_ledger": {
-        "path": "docs/ifpmic/evidence/b03/h2-runtime-transport-tc-ledger.json",
-        "sha256": "c024a1618cba7ff14699616af0ddcb1095320e7bb107fabc7b2631959cba56ef"
+        "path": "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger.json",
+        "sha256": "cf4f3bfc023341c22e0c8fc7c072c54838d62f7adeb39d817a4ce3b6589f8d60"
       },
       "execution_pass_evidence": null
     },
     {
       "obligation": "NEG-WINDOW",
-      "status": "tc_draft_variants_unexecuted",
+      "status": "literal_inventory_source_reviewed_not_executed",
       "literal_pytest_node_ids": [
-        "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_retention[retention-null]",
+        "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_actual_dispatcher_boundary[actual-after-deadline]",
+        "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_actual_dispatcher_boundary[actual-before-deadline]",
+        "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_exact_deadline_with_isolated_clock_seam[after-deadline]",
+        "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_exact_deadline_with_isolated_clock_seam[at-deadline]",
+        "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_exact_deadline_with_isolated_clock_seam[before-deadline]",
+        "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_partial_shape_constraint",
         "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_retention[retention-3600]",
         "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_retention[retention-3601]",
-        "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_partial_shape_constraint",
-        "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_exact_deadline_with_isolated_clock_seam[before-deadline]",
-        "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_exact_deadline_with_isolated_clock_seam[at-deadline]",
-        "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_exact_deadline_with_isolated_clock_seam[after-deadline]",
-        "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_actual_dispatcher_boundary[actual-before-deadline]",
-        "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_actual_dispatcher_boundary[actual-after-deadline]"
+        "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_retention[retention-null]"
       ],
       "tc_ledger": {
-        "path": "docs/ifpmic/evidence/b03/h2-runtime-window-tc-ledger.json",
-        "sha256": "3baf07cf336868b7c8bfbdfbb7b233f49d4f606660aefb14dffe93cfee965153"
+        "path": "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger.json",
+        "sha256": "cf4f3bfc023341c22e0c8fc7c072c54838d62f7adeb39d817a4ce3b6589f8d60"
       },
       "execution_pass_evidence": null
     },
     {
       "obligation": "NEG-RETENTION-RPC",
-      "status": "tc_draft_variants_unexecuted_source_review_pending",
+      "status": "literal_inventory_source_reviewed_not_executed",
       "literal_pytest_node_ids": [
         "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_missing_history_then_retention_rpc_failure_never_starts"
       ],
       "tc_ledger": {
-        "path": "docs/ifpmic/evidence/b03/h2-runtime-activity-runtime-tc-ledger.json",
-        "sha256": "d379c31c07d3cadfaa29370b1ec0f5e898138df6d1f9843f9102c0f36f8980ac"
+        "path": "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger.json",
+        "sha256": "cf4f3bfc023341c22e0c8fc7c072c54838d62f7adeb39d817a4ce3b6589f8d60"
       },
       "execution_pass_evidence": null
     },
     {
       "obligation": "NEG-NONCREATE",
-      "status": "tc_draft_variants_unexecuted_source_review_pending",
+      "status": "literal_inventory_source_reviewed_not_executed",
       "literal_pytest_node_ids": [
-        "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_noncreate_waits_until_admission",
-        "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_noncreate_signal_targets_admitted_run_without_business_consumption"
+        "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_noncreate_signal_targets_admitted_run_without_business_consumption",
+        "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_noncreate_waits_until_admission"
       ],
       "tc_ledger": {
-        "path": "docs/ifpmic/evidence/b03/h2-runtime-activity-runtime-tc-ledger.json",
-        "sha256": "d379c31c07d3cadfaa29370b1ec0f5e898138df6d1f9843f9102c0f36f8980ac"
+        "path": "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger.json",
+        "sha256": "cf4f3bfc023341c22e0c8fc7c072c54838d62f7adeb39d817a4ce3b6589f8d60"
       },
       "execution_pass_evidence": null
     },
     {
       "obligation": "NEG-RUNTIME-FAILURE",
-      "status": "tc_draft_variants_unexecuted_source_review_pending",
+      "status": "literal_inventory_source_reviewed_not_executed",
       "literal_pytest_node_ids": [
-        "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_execution_runtime_surfaces_unrequested_worker_exit[runtime-return]",
-        "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_execution_runtime_surfaces_unrequested_worker_exit[runtime-fatal]",
+        "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_execution_runtime_normal_sigterm_control",
         "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_execution_runtime_surfaces_unrequested_worker_exit[runtime-concurrent-fatal]",
-        "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_execution_runtime_normal_sigterm_control"
+        "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_execution_runtime_surfaces_unrequested_worker_exit[runtime-fatal]",
+        "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_execution_runtime_surfaces_unrequested_worker_exit[runtime-return]"
       ],
       "tc_ledger": {
-        "path": "docs/ifpmic/evidence/b03/h2-runtime-activity-runtime-tc-ledger.json",
-        "sha256": "d379c31c07d3cadfaa29370b1ec0f5e898138df6d1f9843f9102c0f36f8980ac"
+        "path": "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger.json",
+        "sha256": "cf4f3bfc023341c22e0c8fc7c072c54838d62f7adeb39d817a4ce3b6589f8d60"
       },
       "execution_pass_evidence": null
     },
     {
       "obligation": "NEG-HUNG-DRIVER",
-      "status": "tc_draft_variants_unexecuted_source_review_pending",
+      "status": "literal_inventory_source_reviewed_not_executed",
       "literal_pytest_node_ids": [
         "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_execution_runtime_kills_hung_real_driver_and_rolls_back"
       ],
       "tc_ledger": {
-        "path": "docs/ifpmic/evidence/b03/h2-runtime-activity-runtime-tc-ledger.json",
-        "sha256": "d379c31c07d3cadfaa29370b1ec0f5e898138df6d1f9843f9102c0f36f8980ac"
+        "path": "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger.json",
+        "sha256": "cf4f3bfc023341c22e0c8fc7c072c54838d62f7adeb39d817a4ce3b6589f8d60"
       },
       "execution_pass_evidence": null
     }
   ],
-  "missing_literal_groups": [
-    "NEG-STARTED",
-    "NEG-FOREIGN-DEPLOYMENT",
-    "NEG-WORKSPACE"
-  ],
+  "missing_literal_groups": [],
   "execution_authorized": false,
   "runtime_acceptance": "No new runtime passing results. Historical407 passes apply only to their previously accepted candidate.",
   "remaining_gates": [
-    "Finish NEG-STARTED, NEG-FOREIGN-DEPLOYMENT and NEG-WORKSPACE literal cases; independently review all current drafts and reconcile historical fixture pins into one complete current ledger.",
-    "Resolve hung-driver backend-disconnect timing assumption before execution: native pg_sleep may outlive the worker process; current post-exit backend-gone allowance is unqualified.",
-    "Independently review complete exact ledger/contract, then runner and pre-gate before execution.",
-    "Fresh complete gate407+allmandatoryadditions, private raw evidence/public privacy audit and independent final acceptance.",
-    "Full B03/H3-H7/originalAT32/AX visualization and authorized deployment remain later goal obligations."
+    "Author exact reviewed490-case runner; final independent runner review and independent/TC pre-gate before any collection/tests/services.",
+    "Fresh all490 execution:407 retained+83 additions, all25 business obligations and5 fixture prerequisites, with private raw proof and independently reviewed public evidence.",
+    "Full B03/H3-H7/originalAT32/AX visualization and authorized deployment remain later mandatory goal obligations."
   ],
   "bounded_static_review": {
     "path": "docs/ifpmic/evidence/b03/h2-runtime-startup-window-static-review.json",
     "sha256": "ac4e7c09048a4f6a4ea513bacc41d1db2ef3178945ae3d686aae6bc46b5c4a1a",
     "scope": "30 startup/window draft IDs only; no full ledger, runner, execution or acceptance approval"
   },
-  "fixture_pin_transition": "Shared fixture integration changes the candidate. Older partial ledgers/reviews and 407 passing evidence preserve historical hashes; current additions pin the new fixture bytes. No old evidence qualifies the new candidate."
+  "fixture_pin_transition": "Shared fixture integration changes the candidate. Older partial ledgers/reviews and 407 passing evidence preserve historical hashes; current additions pin the new fixture bytes. No old evidence qualifies the new candidate.",
+  "full_integrated_ledger": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger.json",
+    "sha256": "cf4f3bfc023341c22e0c8fc7c072c54838d62f7adeb39d817a4ce3b6589f8d60"
+  },
+  "full_inventory_source_review": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-full-inventory-source-review.json",
+    "sha256": "4fda632e7eed5ee10f8aad0ffa13443d169f0dc9d4469991d9af75cc192f123a"
+  },
+  "full_inventory_tc_review": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-full-inventory-tc-review.json",
+    "sha256": "cd8752ab97742e829a920de827a09ca2c113b563e87a69560d8d8549ef2da388"
+  },
+  "execution_contract": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-full-execution-contract.json",
+    "sha256": "c10c7cb329ea82b758cfa7db34ac330e4b7ec472320b5904e8086f8067865a2d"
+  },
+  "runner_authoring_acceptance": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-full-runner-authoring-acceptance.json",
+    "sha256": "09509b02d3743119babaf175a4cc8d160428daeacc3fa8dbbdebb5d2529791ef"
+  }
 }

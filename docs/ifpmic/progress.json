@@ -442,28 +442,28 @@
           "runtime_normal_progress_reconciliation": "evidence/b03/h2-runtime-normal-progress-reconciliation.json",
           "runtime_next_steps": "evidence/b03/h2-runtime-normal-next-steps.json",
           "runtime_full_preparation": {
-            "status": "fixture_integration_and_negative_drafts_static_checkpoint_no_execution",
+            "status": "exact490_candidate_frozen_paired_runner_authoring_approved_execution_not_started",
             "authoring_checkpoint_commit": "ed2d09983977407320dc9ed23cf0e6e46c9fc221",
             "verification_plan": "evidence/b03/h2-runtime-full-verification-plan.json",
             "plan_review_status": "independent_and_tc_approved_authoring_only",
             "planned_obligation_groups": 25,
             "authored_draft_crash_case_functions": 12,
             "tests_executed": false,
-            "static_changes": "Shared cleanup clock covers fixture closure and current restarted-PG identity; actual attempt rows ordered without value changes; 15 authority/runtime/transport draft variants added. No new runtime pass evidence.",
-            "pending": "Author remaining three groups; independently review current drafts and reconcile all25 groups into exact complete ledger. Review execution contract, runner and pre-gate before fresh full execution.",
+            "static_changes": "Authored all25 groups plus5 cleanup prerequisites; integrated490 literal IDs with exact budgets and preserved407 retained IDs. Independent source review repaired SDK/SQL/deadline/foreign-authority oracles, bounded new native calls and partial-start cleanup. No imports, collection, runtime tests or services executed.",
+            "pending": "Author and independently review exact490 runner, obtain independent/TC pre-gate, then execute full490 and audit actual evidence. No current runtime passes.",
             "acceptance_boundary": "407-case evidence remains historical only for its frozen candidate. No new crash/negative passes; fullH2, B03, originalAT and finalAX remain incomplete.",
             "plan_sha256": "c6964bccff0d4cec1ac00f18fbb267d5d1a4a5887e53844c604333b7c059486c",
             "plan_acceptance": "evidence/b03/h2-runtime-full-plan-acceptance.json",
             "independent_plan_review": "evidence/b03/h2-runtime-full-plan-review.json",
             "tc_plan_review": "evidence/b03/h2-runtime-full-tc-plan-review.json",
             "static_checkpoint": "evidence/b03/h2-runtime-crash-static-checkpoint.json",
-            "literal_draft_new_case_ids": 57,
+            "literal_draft_new_case_ids": 83,
             "startup_draft_case_ids": 21,
             "window_draft_case_ids": 9,
             "startup_tc_ledger": "evidence/b03/h2-runtime-startup-tc-ledger.json",
             "window_tc_ledger": "evidence/b03/h2-runtime-window-tc-ledger.json",
             "coverage_progress": "evidence/b03/h2-runtime-full-coverage-progress.json",
-            "remaining_groups_without_literal_ids": 3,
+            "remaining_groups_without_literal_ids": 0,
             "startup_window_static_review": "evidence/b03/h2-runtime-startup-window-static-review.json",
             "startup_window_static_review_sha256": "ac4e7c09048a4f6a4ea513bacc41d1db2ef3178945ae3d686aae6bc46b5c4a1a",
             "activity_runtime_draft_case_ids": 12,
@@ -472,7 +472,16 @@
             "transport_tc_ledger": "evidence/b03/h2-runtime-transport-tc-ledger.json",
             "fixture_integration_contract": "evidence/b03/h2-runtime-fixture-integration-contract.json",
             "fixture_integration_source_review": "evidence/b03/h2-runtime-fixture-integration-source-review.json",
-            "fixture_negative_static_checkpoint": "evidence/b03/h2-runtime-fixture-negative-static-checkpoint.json"
+            "fixture_negative_static_checkpoint": "evidence/b03/h2-runtime-fixture-negative-static-checkpoint.json",
+            "workspace_draft_case_ids": 11,
+            "started_deployment_draft_case_ids": 10,
+            "fixture_failure_prerequisite_ids": 5,
+            "full_candidate_case_ids": 490,
+            "full_integrated_ledger": "evidence/b03/h2-runtime-full-integrated-ledger.json",
+            "full_inventory_source_review": "evidence/b03/h2-runtime-full-inventory-source-review.json",
+            "full_inventory_tc_review": "evidence/b03/h2-runtime-full-inventory-tc-review.json",
+            "full_execution_contract": "evidence/b03/h2-runtime-full-execution-contract.json",
+            "runner_authoring_acceptance": "evidence/b03/h2-runtime-full-runner-authoring-acceptance.json"
           }
         }
       ]
@@ -650,12 +659,12 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "H2: author NEG-STARTED, NEG-FOREIGN-DEPLOYMENT, NEG-WORKSPACE; independently review drafts and complete all25-group exact ledger. Then review execution contract/runner/pre-gate and execute fresh407 retained IDs plus all mandatory additions.57 new draft IDs are unexecuted; no fullH2/B03/originalAT/fullAX completion.",
+  "next_step": "H2: author/review the exact490-case runner and obtain independent/TC pre-gate; execute407 retained+83 additions and independently audit actual full25 obligations plus5 cleanup prerequisites. FullH2/B03/H3-H7/originalAT32/fullAX remain incomplete.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",
     "Approved Bedrock/Claude runtime profile"
   ],
   "publication_policy": "Only authorized git repository documentation, source and synthetic verification summaries/screenshots; never runtime credentials or application logs.",
-  "updated_at": "2026-10-19T14:35:25.402671+00:00"
+  "updated_at": "2026-10-19T15:13:09.474133+00:00"
 }

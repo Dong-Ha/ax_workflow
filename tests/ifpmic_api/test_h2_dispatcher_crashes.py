@@ -233,7 +233,7 @@ def test_claim_commit_crash_reclaims_only_after_expiry(
     workflow_scram_hba, workspace_environment, h2_crash_case_deadline,
 ):
     deadline = h2_crash_case_deadline
-    case = crash.prepare_case(workspace_environment, deadline.body_deadline, "dispatcher-claim-commit")
+    case = crash.prepare_case(workspace_environment, deadline.body_deadline, "dispatcher-claim-commit", cleanup_controller=deadline)
     case["case_name"] = "test_claim_commit_crash_reclaims_only_after_expiry"
     try:
         child, snapshot, _cut = _kill_cut(case, deadline.body_deadline, "after_claim_commit")
@@ -268,7 +268,7 @@ def test_start_response_before_admission_crash_recovers_same_run(
     workflow_scram_hba, workspace_environment, h2_crash_case_deadline,
 ):
     deadline = h2_crash_case_deadline
-    case = crash.prepare_case(workspace_environment, deadline.body_deadline, "dispatcher-response-before-admission")
+    case = crash.prepare_case(workspace_environment, deadline.body_deadline, "dispatcher-response-before-admission", cleanup_controller=deadline)
     case["case_name"] = "test_start_response_before_admission_crash_recovers_same_run"
     try:
         child, cut_snapshot, _cut = _kill_cut(case, deadline.body_deadline, "after_start_response")
@@ -300,7 +300,7 @@ def test_admission_before_ack_crash_recovers_same_run(
     workflow_scram_hba, workspace_environment, h2_crash_case_deadline,
 ):
     deadline = h2_crash_case_deadline
-    case = crash.prepare_case(workspace_environment, deadline.body_deadline, "dispatcher-admitted-before-ack")
+    case = crash.prepare_case(workspace_environment, deadline.body_deadline, "dispatcher-admitted-before-ack", cleanup_controller=deadline)
     case["case_name"] = "test_admission_before_ack_crash_recovers_same_run"
     try:
         _child, cut_snapshot, _cut = _kill_cut(case, deadline.body_deadline, "after_run_admitted")
@@ -332,7 +332,7 @@ def test_ack_before_worker_activation_projects_once(
     workflow_scram_hba, workspace_environment, h2_crash_case_deadline,
 ):
     deadline = h2_crash_case_deadline
-    case = crash.prepare_case(workspace_environment, deadline.body_deadline, "dispatcher-ack-before-worker")
+    case = crash.prepare_case(workspace_environment, deadline.body_deadline, "dispatcher-ack-before-worker", cleanup_controller=deadline)
     case["case_name"] = "test_ack_before_worker_activation_projects_once"
     try:
         _child, cut_snapshot, _cut = _kill_cut(case, deadline.body_deadline, "after_delivery_ack")
@@ -361,7 +361,7 @@ def test_two_live_dispatchers_stale_ack_cannot_change_recovered_run(
 ):
     """The old generation's actual production ack is stale after a live reclaim."""
     deadline = h2_crash_case_deadline
-    case = crash.prepare_case(workspace_environment, deadline.body_deadline, "dispatcher-two-live-stale-ack")
+    case = crash.prepare_case(workspace_environment, deadline.body_deadline, "dispatcher-two-live-stale-ack", cleanup_controller=deadline)
     case["case_name"] = "test_two_live_dispatchers_stale_ack_cannot_change_recovered_run"
     try:
         first, pre_ack, barrier = crash.start_barrier_dispatcher(case, "after_run_admitted")
@@ -410,7 +410,7 @@ def test_admitted_missing_history_is_quarantined_without_replacement(
 ):
     """Delete only the exact synthetic admitted run before projection/ack."""
     deadline = h2_crash_case_deadline
-    case = crash.prepare_case(workspace_environment, deadline.body_deadline, "dispatcher-admitted-history-deleted")
+    case = crash.prepare_case(workspace_environment, deadline.body_deadline, "dispatcher-admitted-history-deleted", cleanup_controller=deadline)
     case["case_name"] = "test_admitted_missing_history_is_quarantined_without_replacement"
     try:
         _child, before_delete, _cut = _kill_cut(case, deadline.body_deadline, "after_run_admitted")

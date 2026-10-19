@@ -1,0 +1,75 @@
+{
+  "kind": "ifpmic.b03.h2.full-inventory-static-checkpoint.v1",
+  "decision": "record_exact490_candidate_and_paired_runner_authoring_approval",
+  "previous_goal_turn": {
+    "classification": "progress",
+    "commit": "8f20eb0",
+    "evidence": "Reviewed source/test drafts committed and pushed; this turn extends them to full25-group inventory plus fixture prerequisites."
+  },
+  "source_pins": {
+    "tests/ifpmic_api/h2_activity_runtime_boundary_child.py": "8ff853ce784f4e7d9f9dc9205675b14deb91688156410656fa9a83970b9a9347",
+    "tests/ifpmic_api/h2_dispatcher_crash_support.py": "1cb2d9ba3f12d2cd0d73843fbdd778211467f82ec6c67fcd0fdb9f3eb4a3fe9a",
+    "tests/ifpmic_api/h2_fixture_failure_case_budget.py": "503a1fc22d2ddece87fa83336fc5c26b003c094a7cf793339d3dbe0d61a06791",
+    "tests/ifpmic_api/h2_foreign_dispatcher_child.py": "4a3bcf89bc86892f259f47f868e734885e3ed26a4c7cfe30274aa90bdf5bb913",
+    "tests/ifpmic_api/h2_native_bounds.py": "deaae9cfc75ac6021bde78f66122ddfaca02283f8f29a49a2d1bff9d2fe7a3fb",
+    "tests/ifpmic_api/h2_started_deployment_case_budget.py": "305e2991d642804cf23f223ec875783a1df3517ba58f88e805cdbf121d7f1f35",
+    "tests/ifpmic_api/h2_workspace_activation_case_budget.py": "3ac6604aa1921b011bd6b7016129e94c918776f5b97eefa4a1e1bb1eee8c9ff8",
+    "tests/ifpmic_api/jobs_fixture.py": "b8fefc39f3005b3a662124ae3182cee4e7a293e18dd4e84d18facd09c0e0d539",
+    "tests/ifpmic_api/oidc_provider.py": "38c4e014c16cf43bc28ff384999dcc8468d0e6ac0cbcc92c1a69b2d4cccd84e0",
+    "tests/ifpmic_api/test_accepted_start_response_loss.py": "6db41f1b0d7ebaf2b9c60cfd9528a6e2b1b92db8cc6fdf7efb025e9fae15afa8",
+    "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py": "1c9a565e6a81c79aedf64173798f99d720b63f3f3de42b182e0f8cb067abef1b",
+    "tests/ifpmic_api/test_h2_dispatcher_crashes.py": "7e2431c6bfadb22242a1f9e9f87cb5c639d6d6d2675255114b70d7636b376596",
+    "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py": "88f69b44ca25894f620375f2fda8a83a1afd996cb58ccbed765d988a114b6d90",
+    "tests/ifpmic_api/test_h2_reconciliation_window.py": "7fe6f3856b408d8d1f1e9fefc58ae47db00cfe1f8f5b45b41836523c63881a01",
+    "tests/ifpmic_api/test_h2_runtime_restart_and_history.py": "606db627f5efd4ba6f9158da6ef538b95fe70d77444cb0775191265a10a2b546",
+    "tests/ifpmic_api/test_h2_runtime_startup_rejections.py": "6893b1c989909801b38be54db322adcb7c589694ea9230b3785d9705786b397b",
+    "tests/ifpmic_api/test_h2_started_deployment_boundaries.py": "bcaa885a61e33a6bd3fc3c2e83d16380d32d9e1676ba1a36e76e7f1c1ad70125",
+    "tests/ifpmic_api/test_h2_transport_boundaries.py": "059b7f61e6da19f9177bb0ab833dd2ebbf0409d88bfdd9ebf914166688525ad2",
+    "tests/ifpmic_api/test_h2_worker_api_crashes.py": "b72814e85ba31ad97c27f01bc4f5f92d171ff066b097541f0e4d66da80244a76",
+    "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py": "31a990fd06c4b90fed2bb152ef6aceb765bb2ec12dc8d358abea675658547b52"
+  },
+  "references": {
+    "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger.json": "cf4f3bfc023341c22e0c8fc7c072c54838d62f7adeb39d817a4ce3b6589f8d60",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-inventory-source-review.json": "4fda632e7eed5ee10f8aad0ffa13443d169f0dc9d4469991d9af75cc192f123a",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-inventory-tc-review.json": "cd8752ab97742e829a920de827a09ca2c113b563e87a69560d8d8549ef2da388",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-execution-contract.json": "c10c7cb329ea82b758cfa7db34ac330e4b7ec472320b5904e8086f8067865a2d",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-execution-contract-review.json": "481604abb4cfe602e16cbd65fae8f290f5a61f3ec405d350c9ebbbf6b7fe7c79",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-execution-tc-review.json": "17da5950d52deed48d454b026e152415d4e3eadd9eba20da4503009a41bf46b9",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-runner-authoring-acceptance.json": "09509b02d3743119babaf175a4cc8d160428daeacc3fa8dbbdebb5d2529791ef"
+  },
+  "counts": {
+    "retained_ids": 407,
+    "new_unexecuted_ids": 83,
+    "expected_full_union": 490,
+    "approved_obligation_groups": 25,
+    "groups_with_draft_ids": 25,
+    "fixture_failure_prerequisites": 5,
+    "extended215_25_ids": 49,
+    "default25_5_ids": 34
+  },
+  "static_checks": {
+    "python_ast": "passed",
+    "json_parse": "passed",
+    "source_derivative_hashes": "passed",
+    "literal_unique_case_union": 490,
+    "independent_and_TC_inventory": "passed_bounded_static_review",
+    "paired_exact_contract_reviews": "approve_runner_authoring_only",
+    "protected_AX_byte_inventory": "96 files/89 inventory unchanged",
+    "original_design": "17 imported/2 uploads unchanged",
+    "git_diff_check": "passed"
+  },
+  "execution": {
+    "product_or_SDK_imports": false,
+    "pytest_collection": false,
+    "tests": false,
+    "SQL_or_services": false,
+    "runtime_pass_evidence": null
+  },
+  "authorization": {
+    "runner_authoring": true,
+    "execution": false,
+    "h2_or_goal_acceptance": false
+  },
+  "remaining": "Author exact runner; independent runner review and independent/TC pre-gate, fresh all490 actual results, private/public audit and independent final acceptance. FullB03/H3-H7/originalAT32/finalAX remain active.",
+  "privacy": "Original uploads and private raw evidence are never staged; current artifacts contain source methods, synthetic IDs and static hashes only."
+}

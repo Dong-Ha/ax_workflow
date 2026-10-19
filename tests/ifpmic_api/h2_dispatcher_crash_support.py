@@ -19,10 +19,11 @@ import time
 from uuid import uuid4
 
 import psycopg
+from tests.ifpmic_api.h2_native_bounds import bounded_connect, bounded_harness
 
 from tests.ifpmic_api import test_accepted_start_response_loss as accepted_start
 from tests.ifpmic_api import test_h2_runtime_normal_flow as normal
-from tests.ifpmic_api.h2_fixture_cleanup import ordered_attempt_snapshot
+from tests.ifpmic_api.h2_fixture_cleanup import ordered_attempt_snapshot, restore_preserving_error
 
 
 def read_owner_snapshot(harness, job_id):
@@ -99,12 +100,13 @@ class PhaseBarrier:
         if self.error is not None:
             raise AssertionError("dispatcher phase barrier failed") from self.error
 
-    def release(self):
+    def release(self, *, remaining_time=None):
         self.release_requested.set()
-        if not self.released.wait(2.0):
+        timeout = 2.0 if remaining_time is None else remaining_time(2.0)
+        if not self.released.wait(timeout):
             raise TimeoutError("dispatcher did not leave production hook")
 
-    def close(self):
+    def close(self, *, remaining_time=None):
         self.release_requested.set()
         if self.connection is not None:
             try:
@@ -115,7 +117,7 @@ class PhaseBarrier:
         if self.listener is not None:
             self.listener.close()
         if self.thread is not None:
-            self.thread.join(timeout=2.0)
+            self.thread.join(timeout=2.0 if remaining_time is None else remaining_time(2.0))
             if self.thread.is_alive():
                 raise TimeoutError("phase barrier thread did not stop")
         try:
@@ -124,13 +126,33 @@ class PhaseBarrier:
             pass
 
 
+def _case_remaining(case, maximum):
+    active = case.get("cleanup_controller")
+    return float(maximum) if active is None else active.cleanup_remaining(maximum)
+
+
+
+def _fallback_signal(case, process, sig, maximum):
+    _case_remaining(case, maximum)
+    if case.get("cleanup_controller") is not None:
+        saved = getattr(process, "_ifpmic_start_ticks", None)
+        if saved is None or normal.process_identity(process.pid) != saved:
+            raise AssertionError("fallback process identity mismatch")
+    process.send_signal(sig)
+
+
+def _close_case_barrier(case, barrier):
+    active = case.get("cleanup_controller")
+    barrier.close(remaining_time=None if active is None else active.cleanup_remaining)
+
+
 def _cleanup_failed_prepare(ownership, primary_error):
     root = ownership.get("root")
     journal = ownership.get("journal")
     cleanup_error_types = []
     for barrier, _barrier_dir in ownership.get("barriers", []):
         try:
-            barrier.close()
+            _close_case_barrier(ownership, barrier)
         except BaseException as error:
             cleanup_error_types.append(type(error).__name__)
     processes = ownership.get("processes", [])
@@ -147,13 +169,13 @@ def _cleanup_failed_prepare(ownership, primary_error):
         try:
             forced = False
             if process.poll() is None:
-                process.terminate()
+                _fallback_signal(ownership, process, signal.SIGTERM, 5)
                 try:
-                    process.wait(timeout=5)
+                    process.wait(timeout=_case_remaining(ownership, 5))
                 except subprocess.TimeoutExpired:
                     forced = True
-                    process.kill()
-                    process.wait(timeout=5)
+                    _fallback_signal(ownership, process, signal.SIGKILL, 5)
+                    process.wait(timeout=_case_remaining(ownership, 5))
             outcome = {
                 "returncode": process.poll(), "forced": forced,
                 "absent": normal.process_identity(process.pid) !=
@@ -244,8 +266,11 @@ def start_owned_temporal_server(binary, expected_sha256, data_dir, ports, *, log
     return process
 
 
-def prepare_case(harness, deadline: float, case_name: str) -> dict[str, object]:
-    ownership = {"processes": [], "records": [], "barriers": []}
+def prepare_case(harness, deadline: float, case_name: str, *, cleanup_controller=None) -> dict[str, object]:
+    if cleanup_controller is not None:
+        harness = bounded_harness(harness)
+    ownership = {"processes": [], "records": [], "barriers": [],
+                 "cleanup_controller": cleanup_controller}
     try:
         return _prepare_case_impl(harness, deadline, case_name, ownership)
     except BaseException as error:
@@ -331,6 +356,7 @@ def _prepare_case_impl(harness, deadline: float, case_name: str, ownership) -> d
             "dispatcher_config": dispatcher_config, "worker_config": worker_config,
             "processes": ownership["processes"], "records": ownership["records"],
             "barriers": ownership["barriers"],
+            "cleanup_controller": ownership["cleanup_controller"],
             "deadline": deadline}
 
 
@@ -424,7 +450,7 @@ def wait_claim_expired(case, claim, timeout):
     command_id = case["group"][18]
     stop = time.monotonic() + timeout
     while time.monotonic() < stop:
-        with psycopg.connect(normal.owner_dsn(case["harness"]["database"])) as conn:
+        with bounded_connect(normal.owner_dsn(case["harness"]["database"])) as conn:
             row = conn.execute(
                 "SELECT state,generation,claim_token::text,claim_expires_at<=clock_timestamp() "
                 "FROM ifpmic.commands_outbox WHERE command_id=%s", (command_id,),
@@ -437,11 +463,18 @@ def wait_claim_expired(case, claim, timeout):
 
 
 def cleanup_case(case: dict[str, object], expected_killed=(), expected_exit_codes=None):
+    action = lambda: _cleanup_case_impl(case, expected_killed, expected_exit_codes)
+    if case.get("cleanup_controller") is None:
+        return action()
+    return restore_preserving_error(action)
+
+
+def _cleanup_case_impl(case: dict[str, object], expected_killed=(), expected_exit_codes=None):
     expected_exit_codes = expected_exit_codes or {}
     cleanup_errors = []
     for barrier, _barrier_dir in case["barriers"]:
         try:
-            barrier.close()
+            _close_case_barrier(case, barrier)
         except BaseException as error:
             cleanup_errors.append(type(error).__name__)
         try:
@@ -461,7 +494,7 @@ def cleanup_case(case: dict[str, object], expected_killed=(), expected_exit_code
         except BaseException as error:
             cleanup_errors.append(type(error).__name__)
     try:
-        outcomes = normal.stop_all_owned(case["processes"], total_timeout=15)
+        outcomes = normal.stop_all_owned(case["processes"], total_timeout=_case_remaining(case, 15))
     except BaseException as error:
         cleanup_errors.append(type(error).__name__)
         outcomes = []
@@ -469,13 +502,13 @@ def cleanup_case(case: dict[str, object], expected_killed=(), expected_exit_code
             forced = False
             try:
                 if process.poll() is None:
-                    process.terminate()
+                    _fallback_signal(case, process, signal.SIGTERM, 4)
                     try:
-                        process.wait(timeout=4)
+                        process.wait(timeout=_case_remaining(case, 4))
                     except subprocess.TimeoutExpired:
                         forced = True
-                        process.kill()
-                        process.wait(timeout=4)
+                        _fallback_signal(case, process, signal.SIGKILL, 4)
+                        process.wait(timeout=_case_remaining(case, 4))
                 outcomes.append({
                     "returncode": process.poll(), "forced": forced,
                     "absent": normal.process_identity(process.pid) !=

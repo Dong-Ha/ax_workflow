@@ -1,0 +1,297 @@
+{
+  "approved_plan_obligation": {
+    "agent": "TC",
+    "case_ids": [],
+    "category": "exception/boundary",
+    "evidence": [
+      "Private literal SQL before/cut/after snapshots",
+      "Direct framed Temporal protobuf history where applicable",
+      "Private process PID/start-tick lifecycle and bounded case timing",
+      "Exact source/environment pins and JUnit ID; reviewed normalized public summary only"
+    ],
+    "execution_authorized": false,
+    "expected_result": "G5 preparation and filesystem markers do not imply activation success.",
+    "failure_recovery": "Preserve failed source, SQL/history and process journal; stop only owned identities; diagnose the named boundary, update exact pins/reviews, rerun full H2 and affected G1-G5/H1. Never reset history or rewrite a receipt.",
+    "id": "NEG-WORKSPACE",
+    "method": "Actual dispatcher/worker variants RESERVED, PROVISIONING, ERROR, missing/forged marker, wrong token/generation and symlink. Use synthetic private fixture trees and literal SQL state; never repair during validator call.",
+    "pass_criteria": "Non-READY stays accepted DRAFT0 without Start; forged READY quarantines or waits using documented fixed code and no effect. Owner confirms tree unchanged and no unauthorized file following. Current valid generation control is normal CLI case.",
+    "purpose": "Only authentic current READY workspace may activate",
+    "requirements": [
+      "B03 H2",
+      "REQ-02",
+      "REQ-13",
+      "REQ-14 preservation",
+      "AT-16 prerequisite only"
+    ],
+    "status": "pending_not_executed",
+    "target": "Only authentic current READY workspace may activate"
+  },
+  "approved_plan_sha256": "c6964bccff0d4cec1ac00f18fbb267d5d1a4a5887e53844c604333b7c059486c",
+  "case_ids": [
+    "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_nonready_blocks_dispatcher_before_start[state-reserved]",
+    "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_nonready_blocks_dispatcher_before_start[state-provisioning]",
+    "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_nonready_blocks_dispatcher_before_start[state-error]",
+    "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_invalid_ready_fails_closed[marker-missing]",
+    "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_invalid_ready_fails_closed[marker-forged]",
+    "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_invalid_ready_fails_closed[marker-wrong-token]",
+    "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_invalid_ready_fails_closed[marker-symlink]",
+    "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_stale_generation_claim_is_fenced",
+    "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_nonready_blocks_admitted_worker[state-reserved]",
+    "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_nonready_blocks_admitted_worker[state-provisioning]",
+    "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_nonready_blocks_admitted_worker[state-error]"
+  ],
+  "cases": [
+    {
+      "agent": "TC",
+      "budget_seconds": {
+        "cleanup": 25,
+        "setup_and_body": 215
+      },
+      "case_id": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_nonready_blocks_dispatcher_before_start[state-reserved]",
+      "evidence": "Private independent owner-role SQL snapshots; direct Temporal history where relevant; lstat-only workspace tree and external symlink sentinel; PID/start-tick journal; unique 215+25 case timing record; source pins and literal JUnit ID.",
+      "execution_authorized": false,
+      "expected": "One actual retry attempt, exact stable DRAFT0 rows, zero workflow runs, unchanged marker tree and stopped owned processes.",
+      "method": "Use actual private manifests, registered deployment, real PostgreSQL SCRAM roles and Temporal server through test-only dispatcher/worker barriers. Independently read owner SQL and direct Temporal history; no fake projection/SDK result. The whole-case watchdog starts before fixtures and the shared cleanup window includes fixture teardown. Seed the real fixture workspace to RESERVED, release the dispatcher after-claim barrier, and inspect independent owner SQL plus Temporal list.",
+      "pass_criteria": "Actual code is pending/WORKSPACE_NOT_READY (attempt result retry); job remains DRAFT revision 0 with no binding/scope/receipt and no Temporal run; workspace state/tree remain unchanged.",
+      "purpose": "Prove a RESERVED workspace cannot admit dispatcher execution.",
+      "recovery": "Preserve private SQL/history/tree/process evidence and the failed case. Stop only saved owned process identities, retain failed artifacts, update exact pins/reviews, then rerun the full frozen H2 gate and affected regressions. Never reset history, repair the marker during validation, or rewrite a receipt.",
+      "status": "draft_not_executed",
+      "target": "Actual dispatcher after durable outbox claim, before workspace admission."
+    },
+    {
+      "agent": "TC",
+      "budget_seconds": {
+        "cleanup": 25,
+        "setup_and_body": 215
+      },
+      "case_id": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_nonready_blocks_dispatcher_before_start[state-provisioning]",
+      "evidence": "Private independent owner-role SQL snapshots; direct Temporal history where relevant; lstat-only workspace tree and external symlink sentinel; PID/start-tick journal; unique 215+25 case timing record; source pins and literal JUnit ID.",
+      "execution_authorized": false,
+      "expected": "One actual retry attempt, exact stable DRAFT0 rows, zero workflow runs, unchanged marker tree and stopped owned processes.",
+      "method": "Use actual private manifests, registered deployment, real PostgreSQL SCRAM roles and Temporal server through test-only dispatcher/worker barriers. Independently read owner SQL and direct Temporal history; no fake projection/SDK result. The whole-case watchdog starts before fixtures and the shared cleanup window includes fixture teardown. Seed the real fixture workspace to PROVISIONING, release the dispatcher after-claim barrier, and inspect independent owner SQL plus Temporal list.",
+      "pass_criteria": "Actual code is pending/WORKSPACE_NOT_READY (attempt result retry); job remains DRAFT revision 0 with no binding/scope/receipt and no Temporal run; workspace state/tree remain unchanged.",
+      "purpose": "Prove a PROVISIONING workspace cannot admit dispatcher execution.",
+      "recovery": "Preserve private SQL/history/tree/process evidence and the failed case. Stop only saved owned process identities, retain failed artifacts, update exact pins/reviews, then rerun the full frozen H2 gate and affected regressions. Never reset history, repair the marker during validation, or rewrite a receipt.",
+      "status": "draft_not_executed",
+      "target": "Actual dispatcher after durable outbox claim, before workspace admission."
+    },
+    {
+      "agent": "TC",
+      "budget_seconds": {
+        "cleanup": 25,
+        "setup_and_body": 215
+      },
+      "case_id": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_nonready_blocks_dispatcher_before_start[state-error]",
+      "evidence": "Private independent owner-role SQL snapshots; direct Temporal history where relevant; lstat-only workspace tree and external symlink sentinel; PID/start-tick journal; unique 215+25 case timing record; source pins and literal JUnit ID.",
+      "execution_authorized": false,
+      "expected": "One actual retry attempt, exact stable DRAFT0 rows, zero workflow runs, unchanged marker tree and stopped owned processes.",
+      "method": "Use actual private manifests, registered deployment, real PostgreSQL SCRAM roles and Temporal server through test-only dispatcher/worker barriers. Independently read owner SQL and direct Temporal history; no fake projection/SDK result. The whole-case watchdog starts before fixtures and the shared cleanup window includes fixture teardown. Seed the real fixture workspace to ERROR, release the dispatcher after-claim barrier, and inspect independent owner SQL plus Temporal list.",
+      "pass_criteria": "Actual code is pending/WORKSPACE_NOT_READY (attempt result retry); job remains DRAFT revision 0 with no binding/scope/receipt and no Temporal run; workspace state/tree remain unchanged.",
+      "purpose": "Prove a ERROR workspace cannot admit dispatcher execution.",
+      "recovery": "Preserve private SQL/history/tree/process evidence and the failed case. Stop only saved owned process identities, retain failed artifacts, update exact pins/reviews, then rerun the full frozen H2 gate and affected regressions. Never reset history, repair the marker during validation, or rewrite a receipt.",
+      "status": "draft_not_executed",
+      "target": "Actual dispatcher after durable outbox claim, before workspace admission."
+    },
+    {
+      "agent": "TC",
+      "budget_seconds": {
+        "cleanup": 25,
+        "setup_and_body": 215
+      },
+      "case_id": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_invalid_ready_fails_closed[marker-missing]",
+      "evidence": "Private independent owner-role SQL snapshots; direct Temporal history where relevant; lstat-only workspace tree and external symlink sentinel; PID/start-tick journal; unique 215+25 case timing record; source pins and literal JUnit ID.",
+      "execution_authorized": false,
+      "expected": "Independent SQL attempt/error and outbox status, no binding/run, byte/inode/mode lstat tree unchanged from damaged pre-call state, external target unchanged, process journal.",
+      "method": "Use actual private manifests, registered deployment, real PostgreSQL SCRAM roles and Temporal server through test-only dispatcher/worker barriers. Independently read owner SQL and direct Temporal history; no fake projection/SDK result. The whole-case watchdog starts before fixtures and the shared cleanup window includes fixture teardown. Apply only marker absent to the private fixture before claim; release at after-claim barrier and inspect real result, rows and lstat snapshots.",
+      "pass_criteria": "Actual result is quarantined/WORKSPACE_IDENTITY_CONFLICT; DRAFT0 remains without binding/scope/receipt or Temporal run; validator does not mutate tree or follow the symlink target.",
+      "purpose": "Prove READY workspace identity validation rejects marker absent.",
+      "recovery": "Preserve private SQL/history/tree/process evidence and the failed case. Stop only saved owned process identities, retain failed artifacts, update exact pins/reviews, then rerun the full frozen H2 gate and affected regressions. Never reset history, repair the marker during validation, or rewrite a receipt.",
+      "status": "draft_not_executed",
+      "target": "Actual dispatcher on a real READY G5 workspace with one controlled marker defect."
+    },
+    {
+      "agent": "TC",
+      "budget_seconds": {
+        "cleanup": 25,
+        "setup_and_body": 215
+      },
+      "case_id": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_invalid_ready_fails_closed[marker-forged]",
+      "evidence": "Private independent owner-role SQL snapshots; direct Temporal history where relevant; lstat-only workspace tree and external symlink sentinel; PID/start-tick journal; unique 215+25 case timing record; source pins and literal JUnit ID.",
+      "execution_authorized": false,
+      "expected": "Independent SQL attempt/error and outbox status, no binding/run, byte/inode/mode lstat tree unchanged from damaged pre-call state, external target unchanged, process journal.",
+      "method": "Use actual private manifests, registered deployment, real PostgreSQL SCRAM roles and Temporal server through test-only dispatcher/worker barriers. Independently read owner SQL and direct Temporal history; no fake projection/SDK result. The whole-case watchdog starts before fixtures and the shared cleanup window includes fixture teardown. Apply only invalid canonical marker bytes to the private fixture before claim; release at after-claim barrier and inspect real result, rows and lstat snapshots.",
+      "pass_criteria": "Actual result is quarantined/WORKSPACE_IDENTITY_CONFLICT; DRAFT0 remains without binding/scope/receipt or Temporal run; validator does not mutate tree or follow the symlink target.",
+      "purpose": "Prove READY workspace identity validation rejects invalid canonical marker bytes.",
+      "recovery": "Preserve private SQL/history/tree/process evidence and the failed case. Stop only saved owned process identities, retain failed artifacts, update exact pins/reviews, then rerun the full frozen H2 gate and affected regressions. Never reset history, repair the marker during validation, or rewrite a receipt.",
+      "status": "draft_not_executed",
+      "target": "Actual dispatcher on a real READY G5 workspace with one controlled marker defect."
+    },
+    {
+      "agent": "TC",
+      "budget_seconds": {
+        "cleanup": 25,
+        "setup_and_body": 215
+      },
+      "case_id": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_invalid_ready_fails_closed[marker-wrong-token]",
+      "evidence": "Private independent owner-role SQL snapshots; direct Temporal history where relevant; lstat-only workspace tree and external symlink sentinel; PID/start-tick journal; unique 215+25 case timing record; source pins and literal JUnit ID.",
+      "execution_authorized": false,
+      "expected": "Independent SQL attempt/error and outbox status, no binding/run, byte/inode/mode lstat tree unchanged from damaged pre-call state, external target unchanged, process journal.",
+      "method": "Use actual private manifests, registered deployment, real PostgreSQL SCRAM roles and Temporal server through test-only dispatcher/worker barriers. Independently read owner SQL and direct Temporal history; no fake projection/SDK result. The whole-case watchdog starts before fixtures and the shared cleanup window includes fixture teardown. Apply only valid marker format with another UUID token to the private fixture before claim; release at after-claim barrier and inspect real result, rows and lstat snapshots.",
+      "pass_criteria": "Actual result is quarantined/WORKSPACE_IDENTITY_CONFLICT; DRAFT0 remains without binding/scope/receipt or Temporal run; validator does not mutate tree or follow the symlink target.",
+      "purpose": "Prove READY workspace identity validation rejects valid marker format with another UUID token.",
+      "recovery": "Preserve private SQL/history/tree/process evidence and the failed case. Stop only saved owned process identities, retain failed artifacts, update exact pins/reviews, then rerun the full frozen H2 gate and affected regressions. Never reset history, repair the marker during validation, or rewrite a receipt.",
+      "status": "draft_not_executed",
+      "target": "Actual dispatcher on a real READY G5 workspace with one controlled marker defect."
+    },
+    {
+      "agent": "TC",
+      "budget_seconds": {
+        "cleanup": 25,
+        "setup_and_body": 215
+      },
+      "case_id": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_invalid_ready_fails_closed[marker-symlink]",
+      "evidence": "Private independent owner-role SQL snapshots; direct Temporal history where relevant; lstat-only workspace tree and external symlink sentinel; PID/start-tick journal; unique 215+25 case timing record; source pins and literal JUnit ID.",
+      "execution_authorized": false,
+      "expected": "Independent SQL attempt/error and outbox status, no binding/run, byte/inode/mode lstat tree unchanged from damaged pre-call state, external target unchanged, process journal.",
+      "method": "Use actual private manifests, registered deployment, real PostgreSQL SCRAM roles and Temporal server through test-only dispatcher/worker barriers. Independently read owner SQL and direct Temporal history; no fake projection/SDK result. The whole-case watchdog starts before fixtures and the shared cleanup window includes fixture teardown. Apply only marker path is a symlink to an external private target to the private fixture before claim; release at after-claim barrier and inspect real result, rows and lstat snapshots.",
+      "pass_criteria": "Actual result is quarantined/WORKSPACE_IDENTITY_CONFLICT; DRAFT0 remains without binding/scope/receipt or Temporal run; validator does not mutate tree or follow the symlink target.",
+      "purpose": "Prove READY workspace identity validation rejects marker path is a symlink to an external private target.",
+      "recovery": "Preserve private SQL/history/tree/process evidence and the failed case. Stop only saved owned process identities, retain failed artifacts, update exact pins/reviews, then rerun the full frozen H2 gate and affected regressions. Never reset history, repair the marker during validation, or rewrite a receipt.",
+      "status": "draft_not_executed",
+      "target": "Actual dispatcher on a real READY G5 workspace with one controlled marker defect."
+    },
+    {
+      "agent": "TC",
+      "budget_seconds": {
+        "cleanup": 25,
+        "setup_and_body": 215
+      },
+      "case_id": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_stale_generation_claim_is_fenced",
+      "evidence": "Private independent owner-role SQL snapshots; direct Temporal history where relevant; lstat-only workspace tree and external symlink sentinel; PID/start-tick journal; unique 215+25 case timing record; source pins and literal JUnit ID.",
+      "execution_authorized": false,
+      "expected": "Before/cut SQL with claim generation 1 and current workspace generation 2, live lease, exact quarantined attempt, unchanged token/tree and empty Temporal workflow list.",
+      "method": "Use actual private manifests, registered deployment, real PostgreSQL SCRAM roles and Temporal server through test-only dispatcher/worker barriers. Independently read owner SQL and direct Temporal history; no fake projection/SDK result. The whole-case watchdog starts before fixtures and the shared cleanup window includes fixture teardown. Observe generation 1 claim, use actual WorkspaceService retry_error/reconcile_once from ERROR to READY generation 2, then release the unchanged dispatcher claim. Verify lease remains live, owner SQL and no Temporal run.",
+      "pass_criteria": "Actual dispatcher is quarantined/WORKSPACE_IDENTITY_CONFLICT by SQL generation fence; workspace is READY generation 2 with same token/tree; no binding/scope/receipt or workflow run.",
+      "purpose": "Prove a previously claimed READY workspace generation cannot activate after the real workspace generation advances.",
+      "recovery": "Preserve private SQL/history/tree/process evidence and the failed case. Stop only saved owned process identities, retain failed artifacts, update exact pins/reviews, then rerun the full frozen H2 gate and affected regressions. Never reset history, repair the marker during validation, or rewrite a receipt.",
+      "status": "draft_not_executed",
+      "target": "Actual dispatcher paused after claim commit; real G5 owner recovery advances generation while preserving workspace token/tree."
+    },
+    {
+      "agent": "TC",
+      "budget_seconds": {
+        "cleanup": 25,
+        "setup_and_body": 215
+      },
+      "case_id": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_nonready_blocks_admitted_worker[state-reserved]",
+      "evidence": "Private independent owner-role SQL snapshots; direct Temporal history where relevant; lstat-only workspace tree and external symlink sentinel; PID/start-tick journal; unique 215+25 case timing record; source pins and literal JUnit ID.",
+      "execution_authorized": false,
+      "expected": "Actual started history and scheduled/completed read_activation event with decoded result; no project_activation schedule; independent SQL with one binding/scope, no receipt and unchanged state; PID/tick cleanup journal.",
+      "method": "Use actual private manifests, registered deployment, real PostgreSQL SCRAM roles and Temporal server through test-only dispatcher/worker barriers. Independently read owner SQL and direct Temporal history; no fake projection/SDK result. The whole-case watchdog starts before fixtures and the shared cleanup window includes fixture teardown. Pause after_run_admitted, change the current workspace state to RESERVED through independent owner fixture, release dispatcher and start real CLI worker; inspect direct activity history and SQL.",
+      "pass_criteria": "Exactly one existing run/binding/scope; read_activation returns wait/DEPENDENCY_UNAVAILABLE; project_activation is never scheduled, no receipt is produced, accepted job remains DRAFT0 and state is unchanged.",
+      "purpose": "Prove an already admitted worker waits safely while workspace is RESERVED.",
+      "recovery": "Preserve private SQL/history/tree/process evidence and the failed case. Stop only saved owned process identities, retain failed artifacts, update exact pins/reviews, then rerun the full frozen H2 gate and affected regressions. Never reset history, repair the marker during validation, or rewrite a receipt.",
+      "status": "draft_not_executed",
+      "target": "Actual dispatcher admits one workflow; actual Temporal worker executes read_activation against real non-READY workspace."
+    },
+    {
+      "agent": "TC",
+      "budget_seconds": {
+        "cleanup": 25,
+        "setup_and_body": 215
+      },
+      "case_id": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_nonready_blocks_admitted_worker[state-provisioning]",
+      "evidence": "Private independent owner-role SQL snapshots; direct Temporal history where relevant; lstat-only workspace tree and external symlink sentinel; PID/start-tick journal; unique 215+25 case timing record; source pins and literal JUnit ID.",
+      "execution_authorized": false,
+      "expected": "Actual started history and scheduled/completed read_activation event with decoded result; no project_activation schedule; independent SQL with one binding/scope, no receipt and unchanged state; PID/tick cleanup journal.",
+      "method": "Use actual private manifests, registered deployment, real PostgreSQL SCRAM roles and Temporal server through test-only dispatcher/worker barriers. Independently read owner SQL and direct Temporal history; no fake projection/SDK result. The whole-case watchdog starts before fixtures and the shared cleanup window includes fixture teardown. Pause after_run_admitted, change the current workspace state to PROVISIONING through independent owner fixture, release dispatcher and start real CLI worker; inspect direct activity history and SQL.",
+      "pass_criteria": "Exactly one existing run/binding/scope; read_activation returns wait/DEPENDENCY_UNAVAILABLE; project_activation is never scheduled, no receipt is produced, accepted job remains DRAFT0 and state is unchanged.",
+      "purpose": "Prove an already admitted worker waits safely while workspace is PROVISIONING.",
+      "recovery": "Preserve private SQL/history/tree/process evidence and the failed case. Stop only saved owned process identities, retain failed artifacts, update exact pins/reviews, then rerun the full frozen H2 gate and affected regressions. Never reset history, repair the marker during validation, or rewrite a receipt.",
+      "status": "draft_not_executed",
+      "target": "Actual dispatcher admits one workflow; actual Temporal worker executes read_activation against real non-READY workspace."
+    },
+    {
+      "agent": "TC",
+      "budget_seconds": {
+        "cleanup": 25,
+        "setup_and_body": 215
+      },
+      "case_id": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_nonready_blocks_admitted_worker[state-error]",
+      "evidence": "Private independent owner-role SQL snapshots; direct Temporal history where relevant; lstat-only workspace tree and external symlink sentinel; PID/start-tick journal; unique 215+25 case timing record; source pins and literal JUnit ID.",
+      "execution_authorized": false,
+      "expected": "Actual started history and scheduled/completed read_activation event with decoded result; no project_activation schedule; independent SQL with one binding/scope, no receipt and unchanged state; PID/tick cleanup journal.",
+      "method": "Use actual private manifests, registered deployment, real PostgreSQL SCRAM roles and Temporal server through test-only dispatcher/worker barriers. Independently read owner SQL and direct Temporal history; no fake projection/SDK result. The whole-case watchdog starts before fixtures and the shared cleanup window includes fixture teardown. Pause after_run_admitted, change the current workspace state to ERROR through independent owner fixture, release dispatcher and start real CLI worker; inspect direct activity history and SQL.",
+      "pass_criteria": "Exactly one existing run/binding/scope; read_activation returns wait/DEPENDENCY_UNAVAILABLE; project_activation is never scheduled, no receipt is produced, accepted job remains DRAFT0 and state is unchanged.",
+      "purpose": "Prove an already admitted worker waits safely while workspace is ERROR.",
+      "recovery": "Preserve private SQL/history/tree/process evidence and the failed case. Stop only saved owned process identities, retain failed artifacts, update exact pins/reviews, then rerun the full frozen H2 gate and affected regressions. Never reset history, repair the marker during validation, or rewrite a receipt.",
+      "status": "draft_not_executed",
+      "target": "Actual dispatcher admits one workflow; actual Temporal worker executes read_activation against real non-READY workspace."
+    }
+  ],
+  "execution_authorized": false,
+  "fixture_closure": {
+    "cleanup": "h2_fixture_cleanup.installed_controller + restore_preserving_error; test finalizers call begin_cleanup and cleanup_remaining; shared fixture cleanup is inside same original cleanup epoch.",
+    "runtime": "workspace_fixture/workflow_schema_fixture/jobs_fixture plus h2_dispatcher_crash_support prepares real PostgreSQL/Temporal and owned process identities. Prep helper has its own failure cleanup. Runtime closure/source pins and root fixture integration remain subject to review.",
+    "watchdog": "h2_workspace_activation_case_budget.WorkspaceDeadline; each owned literal ID uses setup/body 215s and cleanup 25s; protocol hook starts before fixture setup and wraps deadline.start/yield/restoration."
+  },
+  "kind": "ifpmic.b03.h2.runtime-workspace-tc-ledger.v1",
+  "limits_and_uncertainties": [
+    "All cases are unexecuted drafts; no assertion is a pass claim.",
+    "Full source pins, runner integration, independent review and final ledger reconciliation remain pending.",
+    "Worker state variants change workspace state using owner fixture SQL after actual admission; dispatcher mutation expectations and worker activity response codes are based on current source and require actual runtime qualification.",
+    "Only marker damage variants currently cover missing/forged/wrong token/symlink. Workspace directory replacement, permissions/inode/path races are outside this partial obligation unless separately required by final exact review.",
+    "Generation race uses real WorkspaceService methods after owner-seeded ERROR; behavior and trigger compatibility require runtime qualification.",
+    "The accepted normal control is a separate existing literal and must not be counted as one of these 11 nodes."
+  ],
+  "obligation_id": "NEG-WORKSPACE",
+  "retained_control": {
+    "case_id": "tests/ifpmic_api/test_h2_runtime_normal_flow.py::test_h2_runtime_real_cli_create_ready_admits_one_run_and_queues_one_receipt",
+    "role": "Valid READY/current marker actual CLI normal path control; must be included in final 407-regression inventory and fresh full gate, not charged to this new 215+25 budget plugin.",
+    "status": "existing_literal_control_retained_not_reauthored_here"
+  },
+  "review_state": {
+    "independent_review": "pending",
+    "runner_authorization": "not_started",
+    "runtime_execution": "forbidden until frozen full ledger, exact reviews and runner pregate",
+    "tc_review": "pending"
+  },
+  "scope": "Literal authoring for dispatcher pre-admission state/identity/generation cuts and admitted-worker wait cuts. This partial ledger does not authorize collection, test execution, services, DB, network or H2 acceptance.",
+  "source_pins": {
+    "docs/ifpmic/evidence/b03/h2-runtime-full-verification-plan.json": "c6964bccff0d4cec1ac00f18fbb267d5d1a4a5887e53844c604333b7c059486c",
+    "services/ifpmic_api/execution_activities.py": "ac81ad4ba4f5fad22bb2880f65cf0a833b78e4c8f8e90729833b60d14cdf9c2c",
+    "services/ifpmic_api/execution_dispatcher.py": "7baf91290938b3159b2e200e6fde8f81db5ec2d7b117351e03f689bbc75db209",
+    "services/ifpmic_api/execution_store.py": "2bdbc8b457a2da1f78d73c8e3ddda5059962a5931b154423a681a7cbb88d71bd",
+    "services/ifpmic_api/execution_workflow.py": "78f1a408ac6e80d56294c488e8bde434b03bddb1d17ed19278bfb87d5e85b3d7",
+    "services/ifpmic_api/execution_workspace.py": "d2794d8a8f20b78c6fe71ea36d2563c876a7372a14acd2e0a1944e2aff5fab05",
+    "services/ifpmic_api/migrations/001_initial.sql": "cf0437a5f32e1589e4ea821afbb2ef2480d780a276667880aa9a08a0f4c77f12",
+    "services/ifpmic_api/migrations/003_workflow_execution.sql": "5ef29521944e18551728dd285ce3ae21fa03c2b06f77c25430da6acb0ce1f102",
+    "services/ifpmic_api/migrations/004_prebinding_incident.sql": "9a7651ab063901e69a77f4b825dd21544dc018ed01941dc3a1bc76f8a65b541f",
+    "services/ifpmic_api/workspace.py": "ad3e29f27ee20bc82eff9afcf51d9bb5ef6374d50b69bcf8fa508d81ecb60f67",
+    "services/ifpmic_api/workspace_fs.py": "77e22fe789229841b4883fd2d1606964d468760a25d3cac4ea83d557ce3c5893",
+    "tests/ifpmic_api/accepted_start_dispatcher_child.py": "87c6cf61d94188f5733e73fc02e8d3d2caeb78f4a802a6455a501317a6f859eb",
+    "tests/ifpmic_api/h2_dispatcher_crash_support.py": "1cb2d9ba3f12d2cd0d73843fbdd778211467f82ec6c67fcd0fdb9f3eb4a3fe9a",
+    "tests/ifpmic_api/h2_fixture_cleanup.py": "99b277b7532ebc0e12d80dacd40d7b3e6a2af7f7aebfc46c93b35c3a04c50500",
+    "tests/ifpmic_api/h2_workspace_activation_case_budget.py": "3ac6604aa1921b011bd6b7016129e94c918776f5b97eefa4a1e1bb1eee8c9ff8",
+    "tests/ifpmic_api/jobs_fixture.py": "b8fefc39f3005b3a662124ae3182cee4e7a293e18dd4e84d18facd09c0e0d539",
+    "tests/ifpmic_api/test_h2_runtime_normal_flow.py": "fa34210fff8deb60b107d738924059999507bb7dcdf41ada91d9be6ce26e30c3",
+    "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py": "31a990fd06c4b90fed2bb152ef6aceb765bb2ec12dc8d358abea675658547b52",
+    "tests/ifpmic_api/workflow_schema_fixture.py": "dd1eba1754a8985dd704f0ed63271cc73beca8b03c72aaa2f14acdd41e5e3681",
+    "tests/ifpmic_api/workspace_fixture.py": "66b0d11faaa343542fe27e1254e0ed28a968d73518a7a1ac2aab106e4ef126b6",
+    "tests/ifpmic_api/h2_native_bounds.py": "deaae9cfc75ac6021bde78f66122ddfaca02283f8f29a49a2d1bff9d2fe7a3fb"
+  },
+  "status": "authoring_draft_not_executed_pending_independent_tc_and_runner_reviews",
+  "revision_history": [
+    {
+      "reason": "Code-dev corrected all three process wait call sites to pass the shared deadline controller, as required by the helper interface. Independent source review found this before execution.",
+      "execution_performed": false
+    },
+    {
+      "reason": "Independent review aligned serialized dispatcher ack status pending with actual SQL, while preserving literal attempt result retry and pending outbox oracle.",
+      "execution_performed": false
+    }
+  ],
+  "integration_notes": [
+    "Code-dev integrated independent source-review corrections, bounded native SQL/RPC/cleanup and preserved primary errors. These are current authoring pins only; no runtime evidence or execution authority."
+  ]
+}

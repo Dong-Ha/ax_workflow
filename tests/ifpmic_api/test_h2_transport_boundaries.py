@@ -19,6 +19,7 @@ import time
 from datetime import timedelta
 
 import psycopg
+from tests.ifpmic_api.h2_native_bounds import bounded_connect
 import pytest
 from temporalio.client import Client
 
@@ -88,7 +89,13 @@ def _event(case, name: str, deadline: float) -> dict[str, object]:
             assert (stat.S_ISREG(info.st_mode) and info.st_uid == os.getuid()
                     and stat.S_IMODE(info.st_mode) == 0o600 and info.st_nlink == 1
                     and not path.is_symlink())
-            value = json.loads(path.read_text(encoding="ascii"))
+            try:
+                value = json.loads(path.read_text(encoding="ascii"))
+            except json.JSONDecodeError:
+                # The owned writer creates before completing/fsyncing JSON.
+                # Retry partial publication within the original deadline.
+                time.sleep(min(0.01, max(0.0, deadline - time.monotonic())))
+                continue
             assert value["event"] == name and type(value["monotonic"]) is float
             return value
         if any(process.poll() is not None for process in case["processes"]):
@@ -138,7 +145,7 @@ def _spawn_dispatcher(case, *, store_phases=(), dispatcher_phase=""):
 
 
 def _disable_dispatcher(case) -> None:
-    with psycopg.connect(owner_dsn(case["harness"]["database"]), autocommit=True) as owner:
+    with bounded_connect(owner_dsn(case["harness"]["database"]), autocommit=True) as owner:
         changed = owner.execute(
             "UPDATE ifpmic.worker_principals SET active=false "
             "WHERE kind='dispatcher' AND deployment_id=%s AND active RETURNING role_oid::bigint",
@@ -227,7 +234,7 @@ def _cleanup_case(deadline, case, *, expected_codes=None):
 
 
 def _prepare(harness, deadline, label):
-    case = crash.prepare_case(harness, deadline.body_deadline, label)
+    case = crash.prepare_case(harness, deadline.body_deadline, label, cleanup_controller=deadline)
     case["case_name"] = label
     case["dispatcher_config"] = case["dispatcher_config"]
     case["control"] = _private_dir(case["root"] / "transport-control")
@@ -282,7 +289,7 @@ def test_h2_machine_authority_disable_serializes_with_claim(
 
         def disable_waiter():
             try:
-                with psycopg.connect(owner_dsn(case["harness"]["database"])) as owner:
+                with bounded_connect(owner_dsn(case["harness"]["database"])) as owner:
                     waiter_data["pid"] = owner.execute("SELECT pg_backend_pid()").fetchone()[0]
                     waiter_ready.set()
                     changed = owner.execute(
@@ -304,7 +311,7 @@ def test_h2_machine_authority_disable_serializes_with_claim(
         assert waiter_ready.wait(deadline.remaining(5)) and "error" not in waiter_data
         blocked = False
         while time.monotonic() < deadline.body_deadline:
-            with psycopg.connect(owner_dsn(case["harness"]["database"])) as observer:
+            with bounded_connect(owner_dsn(case["harness"]["database"])) as observer:
                 rows = observer.execute(
                     "SELECT blocker.pid,blocker.usename,waiter.wait_event_type,waiter.wait_event "
                     "FROM pg_stat_activity waiter "
@@ -356,6 +363,11 @@ async def _wait_pre_admission_activity(case, run_id, deadline_seconds):
             history = await handle.fetch_history(rpc_timeout=timedelta(seconds=5))
             read_waits = []
             projected = []
+            scheduled = {
+                int(event.event_id): event.activity_task_scheduled_event_attributes.activity_type.name
+                for event in history.events
+                if event.HasField("activity_task_scheduled_event_attributes")
+            }
             for event in history.events:
                 if event.HasField("activity_task_scheduled_event_attributes"):
                     name = event.activity_task_scheduled_event_attributes.activity_type.name
@@ -363,10 +375,12 @@ async def _wait_pre_admission_activity(case, run_id, deadline_seconds):
                         projected.append(event.event_id)
                 elif event.HasField("activity_task_completed_event_attributes"):
                     attrs = event.activity_task_completed_event_attributes
+                    if scheduled.get(int(attrs.scheduled_event_id)) != "ifpmic.h2.read_activation":
+                        continue
                     decoded = await client.data_converter.decode_wrapper(attrs.result)
-                    if type(decoded) is dict and decoded.get("status") == "wait":
+                    if decoded == [{"status": "wait", "code": "DEPENDENCY_UNAVAILABLE"}]:
                         read_waits.append(event.event_id)
-            phase = await handle.query("phase", str, rpc_timeout=timedelta(seconds=5))
+            phase = await handle.query("phase", result_type=str, rpc_timeout=timedelta(seconds=5))
             if read_waits and not projected and phase == "admission_wait":
                 raw = b"".join(
                     len(encoded).to_bytes(8, "big") + encoded

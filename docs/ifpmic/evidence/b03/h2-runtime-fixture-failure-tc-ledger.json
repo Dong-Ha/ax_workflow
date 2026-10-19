@@ -1,0 +1,132 @@
+{
+  "approved_plan_sha256": "c6964bccff0d4cec1ac00f18fbb267d5d1a4a5887e53844c604333b7c059486c",
+  "budget_rule": "Each literal ID gets a 25 second setup/body + 5 second cleanup whole-case watchdog, installed before fixtures. Restore handler/timer with restore_preserving_error; fixture cleanup consumes only the original shared cleanup epoch.",
+  "case_ids": [
+    "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py::test_restore_error_keeps_exact_primary_and_notes_secondary",
+    "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py::test_restore_only_failure_escapes_by_identity",
+    "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py::test_expired_cleanup_budget_performs_no_new_lifecycle_action",
+    "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py::test_partial_oidc_start_fails_closed_for_unstarted_thread_handle",
+    "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py::test_unconfirmed_testclient_exit_records_unknown_ownership"
+  ],
+  "cases": [
+    {
+      "agent": "TC",
+      "budget_seconds": {
+        "cleanup": 5,
+        "setup_and_body": 25
+      },
+      "case_id": "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py::test_restore_error_keeps_exact_primary_and_notes_secondary",
+      "evidence": "Private case timing record, exact exception identity/type where applicable, saved thread/socket/resource identities, and private cleanup journal row with status and alive/unknown state.",
+      "execution_authorized": false,
+      "expected": "Primary identity preserved; secondary summarized as OSError without changing primary failure.",
+      "method": "Exercise the real test-only cleanup entry point and saved resource handles under the same case clock; private fixture evidence only, with no claim that an unconfirmed handle is absent. Raise a unique primary LookupError, call the real helper with a restore callback that raises a unique OSError, then compare object identity and the exact secondary-type note.",
+      "pass_criteria": "The original exception object remains primary by identity and carries exactly the documented secondary-type note; no secondary exception escapes.",
+      "purpose": "Ensure deadline restoration failure cannot replace an already propagating body/setup exception.",
+      "recovery": "Retain original exception identity and private ownership/evidence. Any unconfirmed thread/socket/process remains explicitly unknown; do not discard its handle or claim absence. Runtime results remain pending the frozen H2 full gate.",
+      "status": "draft_not_executed",
+      "target": "h2_fixture_cleanup.restore_preserving_error in the actual finally-style exception context."
+    },
+    {
+      "agent": "TC",
+      "budget_seconds": {
+        "cleanup": 5,
+        "setup_and_body": 25
+      },
+      "case_id": "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py::test_restore_only_failure_escapes_by_identity",
+      "evidence": "Private case timing record, exact exception identity/type where applicable, saved thread/socket/resource identities, and private cleanup journal row with status and alive/unknown state.",
+      "execution_authorized": false,
+      "expected": "The unique restore RuntimeError escapes by identity.",
+      "method": "Exercise the real test-only cleanup entry point and saved resource handles under the same case clock; private fixture evidence only, with no claim that an unconfirmed handle is absent. Pass a unique RuntimeError instance from the restore callback and assert the exact same object escapes.",
+      "pass_criteria": "The callback exception escapes unchanged by object identity and is not converted or suppressed.",
+      "purpose": "Ensure restoration failure remains visible when no earlier exception exists.",
+      "recovery": "Retain original exception identity and private ownership/evidence. Any unconfirmed thread/socket/process remains explicitly unknown; do not discard its handle or claim absence. Runtime results remain pending the frozen H2 full gate.",
+      "status": "draft_not_executed",
+      "target": "h2_fixture_cleanup.restore_preserving_error with restore as the sole failure."
+    },
+    {
+      "agent": "TC",
+      "budget_seconds": {
+        "cleanup": 5,
+        "setup_and_body": 25
+      },
+      "case_id": "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py::test_expired_cleanup_budget_performs_no_new_lifecycle_action",
+      "evidence": "Private case timing record, exact exception identity/type where applicable, saved thread/socket/resource identities, and private cleanup journal row with status and alive/unknown state.",
+      "execution_authorized": false,
+      "expected": "No identity lookup, signal or wait after expiration; the original case watchdog remains intact and private failure evidence retains unknown ownership.",
+      "method": "Exercise the real test-only cleanup entry point and saved resource handles under the same case clock; private fixture evidence only, with no claim that an unconfirmed handle is absent. Inject a stop_all_owned failure and a separate exhausted cleanup controller into the actual crash.cleanup_case controller branch. Its real fallback calls the real _fallback_signal, which must recheck the injected remaining callback before any process identity lookup, signal or wait. Retain a private process journal and handle probe.",
+      "pass_criteria": "The cleanup_case primary stop path is forced to fail, then the real fallback checks exhausted remaining before process identity lookup; signal and wait counters stay zero, the fake owned handle remains retained, and private outcome records absent=false rather than claiming cleanup.",
+      "purpose": "Ensure an exhausted shared cleanup allowance cannot fall back to new signal or wait work and preserves unknown ownership evidence.",
+      "recovery": "Retain original exception identity and private ownership/evidence. Any unconfirmed thread/socket/process remains explicitly unknown; do not discard its handle or claim absence. Runtime results remain pending the frozen H2 full gate.",
+      "status": "draft_not_executed",
+      "target": "h2_dispatcher_crash_support.cleanup_case fallback branch and _fallback_signal ordering under an exhausted cleanup controller."
+    },
+    {
+      "agent": "TC",
+      "budget_seconds": {
+        "cleanup": 5,
+        "setup_and_body": 25
+      },
+      "case_id": "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py::test_partial_oidc_start_fails_closed_for_unstarted_thread_handle",
+      "evidence": "Private case timing record, exact exception identity/type where applicable, saved thread/socket/resource identities, and private cleanup journal row with status and alive/unknown state.",
+      "execution_authorized": false,
+      "expected": "Bounded partial-start cleanup closes sockets, stops all started work and deliberately preserves the unstarted handle plus explicit unknown status.",
+      "method": "Exercise the real test-only cleanup entry point and saved resource handles under the same case clock; private fixture evidence only, with no claim that an unconfirmed handle is absent. Inject one exception immediately before the second registered serving Thread.start. Capture both actually allocated server sockets, the first live serving thread and second retained unstarted thread handle, then call the real bounded provider.close with cleanup.remaining backed by the same case controller.",
+      "pass_criteria": "For the injected unstarted serving-thread cut, close raises the fixed shutdown-unconfirmed error after closing both allocated sockets and joining the actual started serving/helper threads; the unstarted thread handle and server records remain retained as unknown, with no stopped/absent claim.",
+      "purpose": "Prove partial local OIDC startup retains and finalizes real sockets and already-started serving threads.",
+      "recovery": "Retain original exception identity and private ownership/evidence. Any unconfirmed thread/socket/process remains explicitly unknown; do not discard its handle or claim absence. Runtime results remain pending the frozen H2 full gate.",
+      "status": "draft_not_executed",
+      "target": "SyntheticOIDCProvider.start/close and the actual g4_oidc_provider fixture finalization contract."
+    },
+    {
+      "agent": "TC",
+      "budget_seconds": {
+        "cleanup": 5,
+        "setup_and_body": 25
+      },
+      "case_id": "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py::test_unconfirmed_testclient_exit_records_unknown_ownership",
+      "evidence": "Private case timing record, exact exception identity/type where applicable, saved thread/socket/resource identities, and private cleanup journal row with status and alive/unknown state.",
+      "execution_authorized": false,
+      "expected": "Failure evidence reports unknown live ownership at the cut, followed by verified cleanup only after explicit gate release.",
+      "method": "Exercise the real test-only cleanup entry point and saved resource handles under the same case clock; private fixture evidence only, with no claim that an unconfirmed handle is absent. Use a real minimal FastAPI lifespan/maintenance task and actual Starlette TestClient. Hold the actual client exit in a synchronized helper-thread gate, cap each remaining request by the original shared deadline, and inspect private finalizer record and retained helper/portal handles before releasing and joining them within the remaining same epoch.",
+      "pass_criteria": "Bounded finalization raises shutdown-unconfirmed and records status failed with helper_alive true/identity retained; no absent/success claim. After release, both actual helper and portal threads join under the remaining original epoch.",
+      "purpose": "Prove unconfirmed actual TestClient exit cannot be reported as successful or absent.",
+      "recovery": "Retain original exception identity and private ownership/evidence. Any unconfirmed thread/socket/process remains explicitly unknown; do not discard its handle or claim absence. Runtime results remain pending the frozen H2 full gate.",
+      "status": "draft_not_executed",
+      "target": "h2_fixture_cleanup.managed_test_client finally path with a real FastAPI TestClient portal and close helper thread."
+    }
+  ],
+  "execution_authorized": false,
+  "kind": "ifpmic.b03.h2.fixture-failure-tc-ledger.v1",
+  "limits_and_uncertainties": [
+    "All cases are static authoring drafts; no imports, collection, tests, services, SQL, network or runner execution were performed.",
+    "The exhausted-budget test injects an already-expired cleanup callback and a forced stop_all_owned failure into the real crash.cleanup_case fallback branch; it preserves the installed case 25+5 watchdog epoch.",
+    "The partial OIDC fault occurs after the second real listening socket is allocated and its serving-thread handle is registered but before that thread starts. Expected fail-closed result preserves server/thread handles, closes both sockets, joins started/helper threads, raises the fixed shutdown-unconfirmed error and records ownership unknown. The root-owned fixture source now contains this fail-closed behavior; its runtime behavior remains unverified.",
+    "The unconfirmed TestClient test caps calls through the existing real remaining callback; helper/portal lifetime and private record behavior remain unverified.",
+    "Full 25-obligation inventory, all 407 regression IDs, exact source freeze, independent/TC review and runner pre-gate remain pending."
+  ],
+  "obligation_scope": "Five prerequisite fixture-cleanup regression IDs supporting the existing 25 H2 obligation groups; no new business obligation group and no standalone acceptance.",
+  "private_evidence_roots": {
+    "fixture_journal": "IFPMIC_H2_RUNTIME_EVIDENCE_ROOT must be an absolute owner-only 0700 directory supplied by the existing H2 fixture evidence runner.",
+    "timings": "IFPMIC_H2_FIXTURE_FAILURE_TIMINGS_ROOT must be an absolute owner-only 0700 directory supplied by the eventual reviewed runner."
+  },
+  "review_state": {
+    "independent_source_review": "pending",
+    "runner_authorization": "not_started",
+    "runtime_execution": "forbidden_until_full_inventory_freeze_exact_reviews_and_pregate",
+    "tc_review": "pending"
+  },
+  "source_pins": {
+    "docs/ifpmic/evidence/b03/h2-runtime-full-verification-plan.json": "c6964bccff0d4cec1ac00f18fbb267d5d1a4a5887e53844c604333b7c059486c",
+    "tests/ifpmic_api/conftest.py": "dd3885f66ccc29fc987f4fa20dbdba0481a95c377f227c5ac17663f0f63c4b8f",
+    "tests/ifpmic_api/h2_dispatcher_crash_support.py": "1cb2d9ba3f12d2cd0d73843fbdd778211467f82ec6c67fcd0fdb9f3eb4a3fe9a",
+    "tests/ifpmic_api/h2_fixture_cleanup.py": "99b277b7532ebc0e12d80dacd40d7b3e6a2af7f7aebfc46c93b35c3a04c50500",
+    "tests/ifpmic_api/h2_fixture_failure_case_budget.py": "503a1fc22d2ddece87fa83336fc5c26b003c094a7cf793339d3dbe0d61a06791",
+    "tests/ifpmic_api/h2_native_bounds.py": "deaae9cfc75ac6021bde78f66122ddfaca02283f8f29a49a2d1bff9d2fe7a3fb",
+    "tests/ifpmic_api/jobs_fixture.py": "b8fefc39f3005b3a662124ae3182cee4e7a293e18dd4e84d18facd09c0e0d539",
+    "tests/ifpmic_api/oidc_provider.py": "38c4e014c16cf43bc28ff384999dcc8468d0e6ac0cbcc92c1a69b2d4cccd84e0",
+    "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py": "88f69b44ca25894f620375f2fda8a83a1afd996cb58ccbed765d988a114b6d90",
+    "tests/ifpmic_api/test_h2_runtime_normal_flow.py": "fa34210fff8deb60b107d738924059999507bb7dcdf41ada91d9be6ce26e30c3",
+    "tests/ifpmic_api/workspace_fixture.py": "66b0d11faaa343542fe27e1254e0ed28a968d73518a7a1ac2aab106e4ef126b6"
+  },
+  "status": "authoring_draft_not_executed_pending_independent_tc_and_runner_reviews"
+}

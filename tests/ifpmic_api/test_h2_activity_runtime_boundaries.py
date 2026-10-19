@@ -18,6 +18,7 @@ import time
 from uuid import uuid4
 
 import psycopg
+from tests.ifpmic_api.h2_native_bounds import bounded_connect, bounded_harness
 import pytest
 from temporalio.client import Client
 
@@ -39,7 +40,7 @@ CHILD = Path(__file__).with_name("h2_activity_runtime_boundary_child.py")
 
 @pytest.fixture
 def h2_activity_runtime_harness(workflow_scram_hba, workspace_environment):
-    return workspace_environment
+    return bounded_harness(workspace_environment)
 
 
 @pytest.fixture
@@ -80,8 +81,15 @@ def _wait_event(path: Path, case, deadline: float) -> dict[str, object]:
             assert (stat.S_ISREG(info.st_mode) and info.st_uid == os.getuid()
                     and stat.S_IMODE(info.st_mode) == 0o600 and info.st_nlink == 1
                     and not path.is_symlink())
-            value = json.loads(path.read_text(encoding="ascii"))
-            assert type(value) is dict and type(value.get("event")) is str
+            try:
+                value = json.loads(path.read_text(encoding="ascii"))
+            except json.JSONDecodeError:
+                # The owned writer creates before completing/fsyncing JSON.
+                # Retry partial publication within the original deadline.
+                time.sleep(min(0.01, max(0.0, deadline - time.monotonic())))
+                continue
+            assert type(value) is dict and value.get("event") == path.stem
+            assert type(value.get("monotonic")) is float
             return value
         if case["processes"] and all(process.poll() is not None for process in case["processes"]):
             raise AssertionError("owned processes exited before the expected child barrier")
@@ -286,7 +294,7 @@ def _start_pair(case):
 
 def _revoke_authority(case, authority: str):
     harness = case["harness"]
-    with psycopg.connect(operator_dsn(harness["database"])) as operator:
+    with bounded_connect(operator_dsn(harness["database"])) as operator:
         if authority == "membership":
             operator.execute("UPDATE ifpmic.memberships SET active=false "
                              "WHERE project_id=%s AND user_id=%s",
@@ -314,7 +322,7 @@ def _revoke_authority(case, authority: str):
 def _seed_noncreate(case):
     command_id = str(uuid4())
     route = f"POST /api/v1/jobs/{case['job_id']}/human-submissions"
-    with psycopg.connect(owner_dsn(case["harness"]["database"])) as owner:
+    with bounded_connect(owner_dsn(case["harness"]["database"])) as owner:
         actor, project = owner.execute(
             "SELECT actor_id,project_id FROM ifpmic.commands WHERE command_id=%s",
             (case["group"][18],),
@@ -334,7 +342,7 @@ def _wait_noncreate(case, command_id: str, run_id: str, deadline: float):
     while time.monotonic() < deadline:
         if not any(process.poll() is None for process in case["processes"]):
             raise AssertionError("all owned services exited before non-create delivery")
-        with psycopg.connect(owner_dsn(case["harness"]["database"])) as owner:
+        with bounded_connect(owner_dsn(case["harness"]["database"])) as owner:
             rows = owner.execute(
                 "SELECT c.route,c.status,c.applied_revision,c.error_code,o.state,o.generation,"
                 "a.result,a.observed_run_id::text,a.completed_at IS NOT NULL "
@@ -356,7 +364,7 @@ def test_h2_authority_revoked_before_first_projection(
 ):
     deadline = h2_activity_runtime_deadline
     case = crash.prepare_case(h2_activity_runtime_harness, deadline.body_deadline,
-                              "activity-authority-before-" + authority)
+                              "activity-authority-before-" + authority, cleanup_controller=deadline)
     barrier = None
     try:
         barrier = _barrier(case, "authority-before")
@@ -429,7 +437,7 @@ def test_h2_committed_receipt_replays_after_authority_revoke(
 ):
     deadline = h2_activity_runtime_deadline
     case = crash.prepare_case(h2_activity_runtime_harness, deadline.body_deadline,
-                              "activity-receipt-replay-" + authority)
+                              "activity-receipt-replay-" + authority, cleanup_controller=deadline)
     barrier = None
     killed = []
     try:
@@ -503,14 +511,14 @@ def test_h2_noncreate_waits_until_admission(h2_activity_runtime_harness):
     before = normal._read_owner_snapshot(case["harness"], case["job_id"])
     assert before["bindings"] == before["scopes"] == before["receipts"] == before["attempts"] == []
     assert before["accepted"][3:8] == ("DRAFT", 0, 0, [], None)
-    with psycopg.connect(normal._private_dsn(case["harness"]["database"], "dispatcher"),
+    with bounded_connect(normal._private_dsn(case["harness"]["database"], "dispatcher"),
                          autocommit=True) as dispatcher:
         claim = dispatcher.execute("SELECT ifpmic.claim_delivery(%s)", (command["command_id"],)).fetchone()[0]
     assert claim == {"status": "idle"}
     after = normal._read_owner_snapshot(case["harness"], case["job_id"])
     assert after["accepted"] == before["accepted"]
     assert after["bindings"] == after["scopes"] == after["receipts"] == after["attempts"] == []
-    with psycopg.connect(owner_dsn(case["harness"]["database"])) as owner:
+    with bounded_connect(owner_dsn(case["harness"]["database"])) as owner:
         row = owner.execute(
             "SELECT c.status,c.applied_revision,c.error_code,o.state,o.generation,o.claim_token "
             "FROM ifpmic.commands c JOIN ifpmic.commands_outbox o USING(command_id) WHERE c.command_id=%s",
@@ -526,12 +534,12 @@ def test_h2_noncreate_signal_targets_admitted_run_without_business_consumption(
     h2_activity_runtime_harness, h2_activity_runtime_deadline,
 ):
     deadline = h2_activity_runtime_deadline
-    case = crash.prepare_case(h2_activity_runtime_harness, deadline.body_deadline, "noncreate-signal")
+    case = crash.prepare_case(h2_activity_runtime_harness, deadline.body_deadline, "noncreate-signal", cleanup_controller=deadline)
     try:
         _start_pair(case)
         before, run_id = _normal_outcome(case, deadline.body_deadline)
         command = _seed_noncreate(case)
-        with psycopg.connect(owner_dsn(case["harness"]["database"])) as owner:
+        with bounded_connect(owner_dsn(case["harness"]["database"])) as owner:
             owner.execute("UPDATE ifpmic.commands_outbox SET next_attempt_at=clock_timestamp() "
                           "WHERE command_id=%s", (command["command_id"],))
         _start_cli(case, "dispatcher")
@@ -572,7 +580,7 @@ def test_h2_missing_history_then_retention_rpc_failure_never_starts(
     h2_activity_runtime_harness, h2_activity_runtime_deadline,
 ):
     deadline = h2_activity_runtime_deadline
-    case = crash.prepare_case(h2_activity_runtime_harness, deadline.body_deadline, "retention-rpc-failure")
+    case = crash.prepare_case(h2_activity_runtime_harness, deadline.body_deadline, "retention-rpc-failure", cleanup_controller=deadline)
     barrier = None
     expected_codes = {}
     try:
@@ -630,7 +638,7 @@ def test_h2_execution_runtime_surfaces_unrequested_worker_exit(
 ):
     deadline = h2_activity_runtime_deadline
     case = crash.prepare_case(h2_activity_runtime_harness, deadline.body_deadline,
-                              "runtime-exit-" + mode)
+                              "runtime-exit-" + mode, cleanup_controller=deadline)
     barrier = None
     expected_codes = {}
     try:
@@ -666,7 +674,7 @@ def test_h2_execution_runtime_normal_sigterm_control(
     h2_activity_runtime_harness, h2_activity_runtime_deadline,
 ):
     deadline = h2_activity_runtime_deadline
-    case = crash.prepare_case(h2_activity_runtime_harness, deadline.body_deadline, "runtime-normal-sigterm")
+    case = crash.prepare_case(h2_activity_runtime_harness, deadline.body_deadline, "runtime-normal-sigterm", cleanup_controller=deadline)
     barrier = None
     expected_codes = {}
     try:
@@ -690,14 +698,14 @@ def _wait_hung_projector_query(case, backend_pid: int, deadline: float):
     migration = case["harness"]["database"][0]
     role = migration.roles.projector
     while time.monotonic() < deadline:
-        with psycopg.connect(owner_dsn(case["harness"]["database"])) as owner:
+        with bounded_connect(owner_dsn(case["harness"]["database"])) as owner:
             rows = owner.execute(
                 "SELECT pid,usename,datname,state,query,xact_start IS NOT NULL "
                 "FROM pg_stat_activity WHERE datname=%s AND usename=%s AND pid=%s",
                 (migration.name, role, backend_pid),
             ).fetchall()
         if rows == [(backend_pid, role, migration.name, "active",
-                     "SELECT pg_sleep(60)", True)]:
+                     "SELECT pg_sleep(30)", True)]:
             return {"backend_pid": backend_pid, "role": role, "query": rows[0][4],
                     "state": rows[0][3], "transaction_open": rows[0][5]}
         time.sleep(0.05)
@@ -708,13 +716,22 @@ def _wait_projector_backend_gone(case, backend_pid: int, deadline: float):
     migration = case["harness"]["database"][0]
     role = migration.roles.projector
     while time.monotonic() < deadline:
-        with psycopg.connect(owner_dsn(case["harness"]["database"])) as owner:
+        remaining = deadline - time.monotonic()
+        if remaining < 2.5:
+            raise TimeoutError("backend observation has insufficient native-call allowance")
+        statement_ms = min(1000, int((remaining - 2) * 1000))
+        with bounded_connect(owner_dsn(case["harness"]["database"]), connect_timeout=2,
+                options=f"-c statement_timeout={statement_ms} -c lock_timeout={statement_ms}") as owner:
             row = owner.execute(
                 "SELECT count(*) FROM pg_stat_activity WHERE datname=%s AND usename=%s AND pid=%s",
                 (migration.name, role, backend_pid),
             ).fetchone()
+        observed_at = time.monotonic()
+        if observed_at > deadline:
+            raise TimeoutError("backend observation completed after its absolute deadline")
         if row == (0,):
-            return {"backend_pid": backend_pid, "role": role, "absent": True}
+            return {"backend_pid": backend_pid, "role": role, "absent": True,
+                    "observed_monotonic": observed_at}
         time.sleep(0.05)
     raise TimeoutError("killed worker's exact PostgreSQL backend remained in pg_stat_activity")
 
@@ -723,7 +740,7 @@ def test_h2_execution_runtime_kills_hung_real_driver_and_rolls_back(
     h2_activity_runtime_harness, h2_activity_runtime_deadline,
 ):
     deadline = h2_activity_runtime_deadline
-    case = crash.prepare_case(h2_activity_runtime_harness, deadline.body_deadline, "runtime-hung-driver")
+    case = crash.prepare_case(h2_activity_runtime_harness, deadline.body_deadline, "runtime-hung-driver", cleanup_controller=deadline)
     barrier = None
     expected_codes = {}
     try:
@@ -752,8 +769,12 @@ def test_h2_execution_runtime_kills_hung_real_driver_and_rolls_back(
         assert 12 <= self_exit_seconds <= 18
         assert exit_code == 3 and normal.process_identity(worker.pid) is None
         expected_codes[worker.pid] = 3
-        pg_state = _wait_projector_backend_gone(
-            case, backend_pid, min(deadline.body_deadline, time.monotonic() + 10))
+        # A server query can outlive its disconnected client. Keep the worker
+        # self-exit bound separate and observe real rollback before recovery.
+        backend_deadline = min(deadline.body_deadline, event["monotonic"] + 40)
+        pg_state = _wait_projector_backend_gone(case, backend_pid, backend_deadline)
+        backend_absent_at = pg_state["observed_monotonic"]
+        assert backend_absent_at <= backend_deadline
         after = normal._read_owner_snapshot(case["harness"], case["job_id"])
         assert after["accepted"][3:8] == ("DRAFT", 0, 0, [], None) and after["receipts"] == []
         assert after["bindings"] == during["bindings"] and after["scopes"] == during["scopes"]
@@ -780,7 +801,12 @@ def test_h2_execution_runtime_kills_hung_real_driver_and_rolls_back(
         normal._write_private(case["root"] / "hung-driver-rollback.json", normal._canonical({
             "killed_pid": worker.pid, "start_ticks": record["start_ticks"], "exit_code": exit_code,
             "pg_state": pg_during, "pg_backend_after_kill": pg_state,
-            "self_exit_seconds": self_exit_seconds, "receipt_count_after_kill": 0,
+            "self_exit_seconds": self_exit_seconds,
+            "query_event_monotonic": event["monotonic"],
+            "sigterm_monotonic": signal_started,
+            "backend_deadline_monotonic": backend_deadline,
+            "backend_absent_monotonic": backend_absent_at,
+            "receipt_count_after_kill": 0,
             "receipt_count_after_recovery": len(final["receipts"]), "run_id": run_id,
         }) + b"\n")
     finally:

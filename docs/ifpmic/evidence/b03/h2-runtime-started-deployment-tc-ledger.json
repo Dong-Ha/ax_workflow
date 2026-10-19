@@ -1,0 +1,290 @@
+{
+  "kind": "ifpmic.b03.h2.runtime.started-deployment-tc-ledger.v1",
+  "status": "draft_unexecuted",
+  "authority": {
+    "full_plan_path": "docs/ifpmic/evidence/b03/h2-runtime-full-verification-plan.json",
+    "full_plan_sha256": "c6964bccff0d4cec1ac00f18fbb267d5d1a4a5887e53844c604333b7c059486c",
+    "obligation_ids": [
+      "NEG-STARTED",
+      "NEG-FOREIGN-DEPLOYMENT"
+    ],
+    "execution_authorized": false
+  },
+  "scope": {
+    "purpose": "Literal TC inventory for every approved malformed/foreign Started history variant and the two-server deployment isolation boundary.",
+    "case_count": 10,
+    "acceptance_limit": "Derivative source inventory only. No runtime qualification, gate acceptance, or execution authorization is claimed. All 407 retained normal cases and every other full-plan obligation remain mandatory."
+  },
+  "timing": {
+    "body_seconds": 215,
+    "cleanup_seconds": 25,
+    "total_seconds": 240,
+    "basis": "Owned two-server startup, dispatcher CLI, actual history read, SQL evidence, and all fixture teardown use one protocol deadline and one shared cleanup epoch."
+  },
+  "privacy": {
+    "raw_temporal_history": "Private 0700/0600 workflow-artifacts only; never commit raw records.",
+    "credentials": "Private runtime config only; no role password or DSN in normalized output.",
+    "public_summary": "Only literal variant, expected fixed code, counts, and cryptographic digests may leave private evidence storage."
+  },
+  "source_validation": {
+    "method": "Python AST parse, JSON schema-shape checks, SHA-256 source-pin verification and git diff whitespace check only.",
+    "project_imports_or_collection": false,
+    "tests_executed": false,
+    "database_or_sql_executed": false,
+    "service_or_network_started": false,
+    "runtime_result_claimed": false
+  },
+  "agent": "TC owns these tests/helpers/ledger. Code-dev owns full ledger integration, runner/pre-gate and acceptance. Independent reviewer reviews exact source hashes and oracles.",
+  "source_pins": {
+    "docs/ifpmic/evidence/b03/h2-runtime-full-verification-plan.json": "c6964bccff0d4cec1ac00f18fbb267d5d1a4a5887e53844c604333b7c059486c",
+    "tests/ifpmic_api/test_h2_started_deployment_boundaries.py": "bcaa885a61e33a6bd3fc3c2e83d16380d32d9e1676ba1a36e76e7f1c1ad70125",
+    "tests/ifpmic_api/h2_started_deployment_case_budget.py": "305e2991d642804cf23f223ec875783a1df3517ba58f88e805cdbf121d7f1f35",
+    "tests/ifpmic_api/h2_foreign_dispatcher_child.py": "4a3bcf89bc86892f259f47f868e734885e3ed26a4c7cfe30274aa90bdf5bb913",
+    "tests/ifpmic_api/h2_dispatcher_crash_support.py": "1cb2d9ba3f12d2cd0d73843fbdd778211467f82ec6c67fcd0fdb9f3eb4a3fe9a",
+    "tests/ifpmic_api/accepted_start_dispatcher_child.py": "87c6cf61d94188f5733e73fc02e8d3d2caeb78f4a802a6455a501317a6f859eb",
+    "tests/ifpmic_api/h2_fixture_cleanup.py": "99b277b7532ebc0e12d80dacd40d7b3e6a2af7f7aebfc46c93b35c3a04c50500",
+    "tests/ifpmic_api/test_h2_runtime_normal_flow.py": "fa34210fff8deb60b107d738924059999507bb7dcdf41ada91d9be6ce26e30c3",
+    "tests/ifpmic_api/test_accepted_start_response_loss.py": "6db41f1b0d7ebaf2b9c60cfd9528a6e2b1b92db8cc6fdf7efb025e9fae15afa8",
+    "services/ifpmic_api/execution_dispatcher.py": "7baf91290938b3159b2e200e6fde8f81db5ec2d7b117351e03f689bbc75db209",
+    "services/ifpmic_api/execution_temporal.py": "886d40d4dcb0e6e916f5cb76e5d514ce5890d2cd5a7f7069acafe84cfed1cea2",
+    "services/ifpmic_api/execution_store.py": "2bdbc8b457a2da1f78d73c8e3ddda5059962a5931b154423a681a7cbb88d71bd",
+    "services/ifpmic_api/execution_identity.py": "65927a0278db1ba9af218a777d692d87e1a4d847cdce1546a45c7ead8ef564f4",
+    "services/ifpmic_api/migrations/003_workflow_execution.sql": "5ef29521944e18551728dd285ce3ae21fa03c2b06f77c25430da6acb0ce1f102",
+    "services/ifpmic_api/migrations/004_prebinding_incident.sql": "9a7651ab063901e69a77f4b825dd21544dc018ed01941dc3a1bc76f8a65b541f",
+    "tests/ifpmic_api/conftest.py": "dd3885f66ccc29fc987f4fa20dbdba0481a95c377f227c5ac17663f0f63c4b8f",
+    "tests/ifpmic_api/jobs_fixture.py": "b8fefc39f3005b3a662124ae3182cee4e7a293e18dd4e84d18facd09c0e0d539",
+    "tests/ifpmic_api/workspace_fixture.py": "66b0d11faaa343542fe27e1254e0ed28a968d73518a7a1ac2aab106e4ef126b6",
+    "tests/ifpmic_api/workflow_schema_fixture.py": "dd1eba1754a8985dd704f0ed63271cc73beca8b03c72aaa2f14acdd41e5e3681",
+    "tests/ifpmic_api/h2_native_bounds.py": "deaae9cfc75ac6021bde78f66122ddfaca02283f8f29a49a2d1bff9d2fe7a3fb"
+  },
+  "cases": [
+    {
+      "id": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[missing_input]",
+      "purpose": "Fail closed when actual persisted Started event has missing_input mismatch.",
+      "target": "Production Dispatcher once() against an owner-reserved binding and exact workflow ID; one direct rogue start on its owned Temporal server.",
+      "method": "At the real before_start_rpc constructor barrier, independently observe reserved SQL, start exactly one workflow at binding.temporal_workflow_id with only the literal missing_input alteration, fetch actual first-event protobuf history and decode input, then release production dispatcher. Worker remains stopped.",
+      "agent": "TC",
+      "pass_criteria": "Observed history proves the exact literal missing_input alteration; production dispatcher exits 3 after fixed BINDING_CONFLICT quarantine; binding immutable columns unchanged and admitted_run_id NULL; DRAFT revision/cycle/steps, accepted create provenance, scopes, receipts and noncreate count remain unchanged; exactly one attempt is quarantined and no replacement run exists.",
+      "expected": "One actual rogue run is never adopted; BINDING_CONFLICT is the only accepted incident code for this variant.",
+      "evidence": [
+        "Private exact before/cut/after owner SQL snapshots",
+        "Raw framed Temporal event protobuf and independently decoded Started fields",
+        "Owned server/dispatcher PID+start-tick journal and shared case cleanup timing",
+        "Private variant summary with raw-history digest; source pins and exact JUnit ID"
+      ],
+      "recovery": "Preserve raw history, SQL snapshots, process journal and failed source; stop only owned identities using the same cleanup deadline; diagnose the mismatched field and return to exact-case review. Never delete/recreate history or rewrite a receipt."
+    },
+    {
+      "id": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[extra_input]",
+      "purpose": "Fail closed when actual persisted Started event has extra_input mismatch.",
+      "target": "Production Dispatcher once() against an owner-reserved binding and exact workflow ID; one direct rogue start on its owned Temporal server.",
+      "method": "At the real before_start_rpc constructor barrier, independently observe reserved SQL, start exactly one workflow at binding.temporal_workflow_id with only the literal extra_input alteration, fetch actual first-event protobuf history and decode input, then release production dispatcher. Worker remains stopped.",
+      "agent": "TC",
+      "pass_criteria": "Observed history proves the exact literal extra_input alteration; production dispatcher exits 3 after fixed BINDING_CONFLICT quarantine; binding immutable columns unchanged and admitted_run_id NULL; DRAFT revision/cycle/steps, accepted create provenance, scopes, receipts and noncreate count remain unchanged; exactly one attempt is quarantined and no replacement run exists.",
+      "expected": "One actual rogue run is never adopted; BINDING_CONFLICT is the only accepted incident code for this variant.",
+      "evidence": [
+        "Private exact before/cut/after owner SQL snapshots",
+        "Raw framed Temporal event protobuf and independently decoded Started fields",
+        "Owned server/dispatcher PID+start-tick journal and shared case cleanup timing",
+        "Private variant summary with raw-history digest; source pins and exact JUnit ID"
+      ],
+      "recovery": "Preserve raw history, SQL snapshots, process journal and failed source; stop only owned identities using the same cleanup deadline; diagnose the mismatched field and return to exact-case review. Never delete/recreate history or rewrite a receipt."
+    },
+    {
+      "id": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[malformed_input]",
+      "purpose": "Fail closed when actual persisted Started event has malformed_input mismatch.",
+      "target": "Production Dispatcher once() against an owner-reserved binding and exact workflow ID; one direct rogue start on its owned Temporal server.",
+      "method": "At the real before_start_rpc constructor barrier, independently observe reserved SQL, start exactly one workflow at binding.temporal_workflow_id with only the literal malformed_input alteration, fetch actual first-event protobuf history and decode input, then release production dispatcher. Worker remains stopped.",
+      "agent": "TC",
+      "pass_criteria": "Observed history proves the exact literal malformed_input alteration; production dispatcher exits 3 after fixed BINDING_CONFLICT quarantine; binding immutable columns unchanged and admitted_run_id NULL; DRAFT revision/cycle/steps, accepted create provenance, scopes, receipts and noncreate count remain unchanged; exactly one attempt is quarantined and no replacement run exists.",
+      "expected": "One actual rogue run is never adopted; BINDING_CONFLICT is the only accepted incident code for this variant.",
+      "evidence": [
+        "Private exact before/cut/after owner SQL snapshots",
+        "Raw framed Temporal event protobuf and independently decoded Started fields",
+        "Owned server/dispatcher PID+start-tick journal and shared case cleanup timing",
+        "Private variant summary with raw-history digest; source pins and exact JUnit ID"
+      ],
+      "recovery": "Preserve raw history, SQL snapshots, process journal and failed source; stop only owned identities using the same cleanup deadline; diagnose the mismatched field and return to exact-case review. Never delete/recreate history or rewrite a receipt."
+    },
+    {
+      "id": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[binding_digest]",
+      "purpose": "Fail closed when actual persisted Started event has binding_digest mismatch.",
+      "target": "Production Dispatcher once() against an owner-reserved binding and exact workflow ID; one direct rogue start on its owned Temporal server.",
+      "method": "At the real before_start_rpc constructor barrier, independently observe reserved SQL, start exactly one workflow at binding.temporal_workflow_id with only the literal binding_digest alteration, fetch actual first-event protobuf history and decode input, then release production dispatcher. Worker remains stopped.",
+      "agent": "TC",
+      "pass_criteria": "Observed history proves the exact literal binding_digest alteration; production dispatcher exits 3 after fixed BINDING_CONFLICT quarantine; binding immutable columns unchanged and admitted_run_id NULL; DRAFT revision/cycle/steps, accepted create provenance, scopes, receipts and noncreate count remain unchanged; exactly one attempt is quarantined and no replacement run exists.",
+      "expected": "One actual rogue run is never adopted; BINDING_CONFLICT is the only accepted incident code for this variant.",
+      "evidence": [
+        "Private exact before/cut/after owner SQL snapshots",
+        "Raw framed Temporal event protobuf and independently decoded Started fields",
+        "Owned server/dispatcher PID+start-tick journal and shared case cleanup timing",
+        "Private variant summary with raw-history digest; source pins and exact JUnit ID"
+      ],
+      "recovery": "Preserve raw history, SQL snapshots, process journal and failed source; stop only owned identities using the same cleanup deadline; diagnose the mismatched field and return to exact-case review. Never delete/recreate history or rewrite a receipt."
+    },
+    {
+      "id": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[job_id]",
+      "purpose": "Fail closed when actual persisted Started event has job_id mismatch.",
+      "target": "Production Dispatcher once() against an owner-reserved binding and exact workflow ID; one direct rogue start on its owned Temporal server.",
+      "method": "At the real before_start_rpc constructor barrier, independently observe reserved SQL, start exactly one workflow at binding.temporal_workflow_id with only the literal job_id alteration, fetch actual first-event protobuf history and decode input, then release production dispatcher. Worker remains stopped.",
+      "agent": "TC",
+      "pass_criteria": "Observed history proves the exact literal job_id alteration; production dispatcher exits 3 after fixed BINDING_CONFLICT quarantine; binding immutable columns unchanged and admitted_run_id NULL; DRAFT revision/cycle/steps, accepted create provenance, scopes, receipts and noncreate count remain unchanged; exactly one attempt is quarantined and no replacement run exists.",
+      "expected": "One actual rogue run is never adopted; BINDING_CONFLICT is the only accepted incident code for this variant.",
+      "evidence": [
+        "Private exact before/cut/after owner SQL snapshots",
+        "Raw framed Temporal event protobuf and independently decoded Started fields",
+        "Owned server/dispatcher PID+start-tick journal and shared case cleanup timing",
+        "Private variant summary with raw-history digest; source pins and exact JUnit ID"
+      ],
+      "recovery": "Preserve raw history, SQL snapshots, process journal and failed source; stop only owned identities using the same cleanup deadline; diagnose the mismatched field and return to exact-case review. Never delete/recreate history or rewrite a receipt."
+    },
+    {
+      "id": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[project_id]",
+      "purpose": "Fail closed when actual persisted Started event has project_id mismatch.",
+      "target": "Production Dispatcher once() against an owner-reserved binding and exact workflow ID; one direct rogue start on its owned Temporal server.",
+      "method": "At the real before_start_rpc constructor barrier, independently observe reserved SQL, start exactly one workflow at binding.temporal_workflow_id with only the literal project_id alteration, fetch actual first-event protobuf history and decode input, then release production dispatcher. Worker remains stopped.",
+      "agent": "TC",
+      "pass_criteria": "Observed history proves the exact literal project_id alteration; production dispatcher exits 3 after fixed BINDING_CONFLICT quarantine; binding immutable columns unchanged and admitted_run_id NULL; DRAFT revision/cycle/steps, accepted create provenance, scopes, receipts and noncreate count remain unchanged; exactly one attempt is quarantined and no replacement run exists.",
+      "expected": "One actual rogue run is never adopted; BINDING_CONFLICT is the only accepted incident code for this variant.",
+      "evidence": [
+        "Private exact before/cut/after owner SQL snapshots",
+        "Raw framed Temporal event protobuf and independently decoded Started fields",
+        "Owned server/dispatcher PID+start-tick journal and shared case cleanup timing",
+        "Private variant summary with raw-history digest; source pins and exact JUnit ID"
+      ],
+      "recovery": "Preserve raw history, SQL snapshots, process journal and failed source; stop only owned identities using the same cleanup deadline; diagnose the mismatched field and return to exact-case review. Never delete/recreate history or rewrite a receipt."
+    },
+    {
+      "id": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[workflow_type]",
+      "purpose": "Fail closed when actual persisted Started event has workflow_type mismatch.",
+      "target": "Production Dispatcher once() against an owner-reserved binding and exact workflow ID; one direct rogue start on its owned Temporal server.",
+      "method": "At the real before_start_rpc constructor barrier, independently observe reserved SQL, start exactly one workflow at binding.temporal_workflow_id with only the literal workflow_type alteration, fetch actual first-event protobuf history and decode input, then release production dispatcher. Worker remains stopped.",
+      "agent": "TC",
+      "pass_criteria": "Observed history proves the exact literal workflow_type alteration; production dispatcher exits 3 after fixed RUN_CONFLICT quarantine; binding immutable columns unchanged and admitted_run_id NULL; DRAFT revision/cycle/steps, accepted create provenance, scopes, receipts and noncreate count remain unchanged; exactly one attempt is quarantined and no replacement run exists.",
+      "expected": "One actual rogue run is never adopted; RUN_CONFLICT is the only accepted incident code for this variant.",
+      "evidence": [
+        "Private exact before/cut/after owner SQL snapshots",
+        "Raw framed Temporal event protobuf and independently decoded Started fields",
+        "Owned server/dispatcher PID+start-tick journal and shared case cleanup timing",
+        "Private variant summary with raw-history digest; source pins and exact JUnit ID"
+      ],
+      "recovery": "Preserve raw history, SQL snapshots, process journal and failed source; stop only owned identities using the same cleanup deadline; diagnose the mismatched field and return to exact-case review. Never delete/recreate history or rewrite a receipt."
+    },
+    {
+      "id": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[task_queue]",
+      "purpose": "Fail closed when actual persisted Started event has task_queue mismatch.",
+      "target": "Production Dispatcher once() against an owner-reserved binding and exact workflow ID; one direct rogue start on its owned Temporal server.",
+      "method": "At the real before_start_rpc constructor barrier, independently observe reserved SQL, start exactly one workflow at binding.temporal_workflow_id with only the literal task_queue alteration, fetch actual first-event protobuf history and decode input, then release production dispatcher. Worker remains stopped.",
+      "agent": "TC",
+      "pass_criteria": "Observed history proves the exact literal task_queue alteration; production dispatcher exits 3 after fixed RUN_CONFLICT quarantine; binding immutable columns unchanged and admitted_run_id NULL; DRAFT revision/cycle/steps, accepted create provenance, scopes, receipts and noncreate count remain unchanged; exactly one attempt is quarantined and no replacement run exists.",
+      "expected": "One actual rogue run is never adopted; RUN_CONFLICT is the only accepted incident code for this variant.",
+      "evidence": [
+        "Private exact before/cut/after owner SQL snapshots",
+        "Raw framed Temporal event protobuf and independently decoded Started fields",
+        "Owned server/dispatcher PID+start-tick journal and shared case cleanup timing",
+        "Private variant summary with raw-history digest; source pins and exact JUnit ID"
+      ],
+      "recovery": "Preserve raw history, SQL snapshots, process journal and failed source; stop only owned identities using the same cleanup deadline; diagnose the mismatched field and return to exact-case review. Never delete/recreate history or rewrite a receipt."
+    },
+    {
+      "id": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[build_id]",
+      "purpose": "Fail closed when actual persisted Started event has build_id mismatch.",
+      "target": "Production Dispatcher once() against an owner-reserved binding and exact workflow ID; one direct rogue start on its owned Temporal server.",
+      "method": "At the real before_start_rpc constructor barrier, independently observe reserved SQL, start exactly one workflow at binding.temporal_workflow_id with only the literal build_id alteration, fetch actual first-event protobuf history and decode input, then release production dispatcher. Worker remains stopped.",
+      "agent": "TC",
+      "pass_criteria": "Observed history proves the exact literal build_id alteration; production dispatcher exits 3 after fixed RUN_CONFLICT quarantine; binding immutable columns unchanged and admitted_run_id NULL; DRAFT revision/cycle/steps, accepted create provenance, scopes, receipts and noncreate count remain unchanged; exactly one attempt is quarantined and no replacement run exists.",
+      "expected": "One actual rogue run is never adopted; RUN_CONFLICT is the only accepted incident code for this variant.",
+      "evidence": [
+        "Private exact before/cut/after owner SQL snapshots",
+        "Raw framed Temporal event protobuf and independently decoded Started fields",
+        "Owned server/dispatcher PID+start-tick journal and shared case cleanup timing",
+        "Private variant summary with raw-history digest; source pins and exact JUnit ID"
+      ],
+      "recovery": "Preserve raw history, SQL snapshots, process journal and failed source; stop only owned identities using the same cleanup deadline; diagnose the mismatched field and return to exact-case review. Never delete/recreate history or rewrite a receipt."
+    },
+    {
+      "id": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_foreign_deployment_cannot_start_old_binding",
+      "purpose": "Prove namespace equality does not transfer an existing binding across deployments.",
+      "target": "Two owned loopback Temporal servers with distinct private SQLite directories, one shared PostgreSQL fixture, distinct registered deployment/build identities and distinct standalone dispatcher/projector login principals.",
+      "method": "Create two owned loopback Temporal servers with distinct storage and same namespace; register deployment-two identities and standalone logins using bootstrap role administration. Put explicit foreign-role SCRAM rules ahead of trust, verify correct-password session_user and wrong-password rejection. Reserve under deployment one, prove the foreign direct reserve receives 42501, return the old lease to retry, and run deployment two's real Dispatcher CLI against its private config; require successful bootstrap, exact idle JSON, exit 0, and no old-binding generation or foreign-server run change. Then admit the original command through deployment one's real post-admission barrier, independently verify persisted Started history, and leave its actual workflow unprojected. Build the valid activation proposal from that admitted binding/run and accepted payload, independently verify its domain digest, require the foreign projector with identical valid arguments to receive 42501 with no effect, then require the owning projector with those same arguments to apply revision one and create exactly one receipt. Compare immutable binding and original registry rows throughout.",
+      "agent": "TC",
+      "pass_criteria": "Foreign reserve receives SQLSTATE 42501; foreign role auth succeeds only with its correct password; foreign Dispatcher bootstraps and exits 0 with literal idle JSON, preserving old outbox generation/binding and creating zero runs on server two. Deployment one then admits one actual Started run. The foreign projector receives 42501 for a fully valid proposal bound to that admitted run and accepted command, with exact snapshot unchanged; the owning projector accepts the identical proposal as applied and creates one immutable receipt while preserving binding identity and deployment-one registry rows.",
+      "expected": "Namespace equality grants no cross-deployment authority: foreign dispatcher cannot claim or start the old binding, and foreign projector cannot commit a valid proposal. The identical proposal succeeds through the owning deployment's projector.",
+      "evidence": [
+        "Private before/after owner snapshots, deployment/build registry rows, and actual admitted binding/run",
+        "Two owned server PID/start-tick and distinct SQLite device/inode identities",
+        "Foreign role SCRAM positive and negative authentication observations; private config hashes and exact standalone role metadata",
+        "Foreign CLI bootstrap proof, literal idle stdout/exit 0, and actual foreign-server workflow list",
+        "Foreign reserve SQLSTATE and valid-proposal foreign-projector SQLSTATE plus unchanged snapshot",
+        "Owning-projector positive-control result and exact applied receipt digest",
+        "Shared cleanup timing, exact node ID and source pins"
+      ],
+      "recovery": "Preserve both server stores, SQL/role metadata, output digests and process journals; terminate only owned processes under the common cleanup window; drop the isolated fixture database through its bounded finalizer. Correct credential/identity selection and independently review before rerun."
+    }
+  ],
+  "coverage": {
+    "NEG-STARTED": {
+      "literal_variants": [
+        "missing_input",
+        "extra_input",
+        "malformed_input",
+        "binding_digest",
+        "job_id",
+        "project_id",
+        "workflow_type",
+        "task_queue",
+        "build_id"
+      ],
+      "count": 9,
+      "expected_codes": {
+        "BINDING_CONFLICT": [
+          "missing_input",
+          "extra_input",
+          "malformed_input",
+          "binding_digest",
+          "job_id",
+          "project_id"
+        ],
+        "RUN_CONFLICT": [
+          "workflow_type",
+          "task_queue",
+          "build_id"
+        ]
+      }
+    },
+    "NEG-FOREIGN-DEPLOYMENT": {
+      "literal_variants": [
+        "same_namespace_distinct_endpoint_and_storage",
+        "actual_foreign_dispatcher_login_and_private_config",
+        "actual_foreign_projector_login",
+        "no_foreign_run_or_projection"
+      ],
+      "count": 1
+    }
+  },
+  "limitations": [
+    "The cases are authored only and have not been imported, collected, or executed. Temporal SDK field and server behavior, PostgreSQL grants/authentication, cleanup timing, and exact error mapping remain unverified until the independently reviewed full gate.",
+    "The exact full-gate case ledger/runner/pre-gate still must integrate these IDs with all other mandatory obligations and the fresh 407-case retained regression."
+  ],
+  "source_pin_roles": {
+    "docs/ifpmic/evidence/b03/h2-runtime-full-verification-plan.json": "approved H2 obligation source",
+    "tests/ifpmic_api/test_h2_started_deployment_boundaries.py": "TC authored real Started and foreign deployment cases",
+    "tests/ifpmic_api/h2_started_deployment_case_budget.py": "exact node IDs and bounded shared case deadline",
+    "tests/ifpmic_api/h2_foreign_dispatcher_child.py": "real foreign deployment Dispatcher pass with scoped idle outcome",
+    "tests/ifpmic_api/h2_dispatcher_crash_support.py": "owned Temporal/dispatcher process and barrier helpers",
+    "tests/ifpmic_api/accepted_start_dispatcher_child.py": "real Dispatcher process with narrow pre-Start constructor barrier",
+    "tests/ifpmic_api/h2_fixture_cleanup.py": "shared cleanup deadline and controller",
+    "tests/ifpmic_api/test_h2_runtime_normal_flow.py": "frozen G4/Temporal/manifest/private-config/snapshot helpers",
+    "tests/ifpmic_api/test_accepted_start_response_loss.py": "actual Temporal workflow listing and current test fixture helpers",
+    "services/ifpmic_api/execution_dispatcher.py": "actual claim/reserve/observe/admit dispatch sequence",
+    "services/ifpmic_api/execution_temporal.py": "actual Started history validation and fixed conflict codes",
+    "services/ifpmic_api/execution_store.py": "fixed SQL error mapping and dispatcher call surface",
+    "services/ifpmic_api/execution_identity.py": "deployment/build identity checks",
+    "services/ifpmic_api/migrations/003_workflow_execution.sql": "deployment fencing, reservation, incident and projection SQL",
+    "services/ifpmic_api/migrations/004_prebinding_incident.sql": "current migration dependency",
+    "tests/ifpmic_api/conftest.py": "bounded PostgreSQL lifecycle and H2 cleanup integration",
+    "tests/ifpmic_api/jobs_fixture.py": "isolated database, role and owner DSN fixture",
+    "tests/ifpmic_api/workspace_fixture.py": "accepted job and G5 READY workspace fixture",
+    "tests/ifpmic_api/workflow_schema_fixture.py": "current migration lifecycle fixture"
+  }
+}

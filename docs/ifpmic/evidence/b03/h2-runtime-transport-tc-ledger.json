@@ -28,14 +28,14 @@
     "justification": "All three cases create and stop an actual Temporal CLI server and use the real PostgreSQL session fixtures. The bounded allowance includes those owned process and fixture lifecycles; the shared cleanup interval does not reset per process or fixture."
   },
   "source_pins": {
-    "tests/ifpmic_api/test_h2_transport_boundaries.py": "5bc6dfe780074047c9f8f4088122152bc476967561e6b418c6352aa539f0f669",
+    "tests/ifpmic_api/test_h2_transport_boundaries.py": "059b7f61e6da19f9177bb0ab833dd2ebbf0409d88bfdd9ebf914166688525ad2",
     "tests/ifpmic_api/h2_transport_boundary_child.py": "ddac239eb8244b08671922c5cee255e608ad2c4589099499c1f3dd7ccc796300",
     "tests/ifpmic_api/h2_transport_case_budget.py": "a507a9e5a00b0bfbd061ca1bf59693315ad09dcf95d5b9c84bc5a987ad8af19a",
-    "tests/ifpmic_api/h2_dispatcher_crash_support.py": "d1e4b96163d2613dda302edaed46ccb212a8e937a3138e9354d7cd6ccf3da781",
+    "tests/ifpmic_api/h2_dispatcher_crash_support.py": "1cb2d9ba3f12d2cd0d73843fbdd778211467f82ec6c67fcd0fdb9f3eb4a3fe9a",
     "tests/ifpmic_api/test_h2_runtime_normal_flow.py": "fa34210fff8deb60b107d738924059999507bb7dcdf41ada91d9be6ce26e30c3",
-    "tests/ifpmic_api/test_accepted_start_response_loss.py": "faa3bbca7895204f95274826f57ffa45c456642bd740e89eb01942867e7f9a7b",
+    "tests/ifpmic_api/test_accepted_start_response_loss.py": "6db41f1b0d7ebaf2b9c60cfd9528a6e2b1b92db8cc6fdf7efb025e9fae15afa8",
     "tests/ifpmic_api/h2_fixture_cleanup.py": "99b277b7532ebc0e12d80dacd40d7b3e6a2af7f7aebfc46c93b35c3a04c50500",
-    "tests/ifpmic_api/jobs_fixture.py": "774de6d85afb2e1735cc199c3bcd5225233c5f3e52a2b98bab4230d0b7050aad",
+    "tests/ifpmic_api/jobs_fixture.py": "b8fefc39f3005b3a662124ae3182cee4e7a293e18dd4e84d18facd09c0e0d539",
     "tests/ifpmic_api/workspace_fixture.py": "66b0d11faaa343542fe27e1254e0ed28a968d73518a7a1ac2aab106e4ef126b6",
     "tests/ifpmic_api/workflow_schema_fixture.py": "dd1eba1754a8985dd704f0ed63271cc73beca8b03c72aaa2f14acdd41e5e3681",
     "tests/ifpmic_api/conftest.py": "dd3885f66ccc29fc987f4fa20dbdba0481a95c377f227c5ac17663f0f63c4b8f",
@@ -46,7 +46,8 @@
     "services/ifpmic_api/execution_temporal.py": "886d40d4dcb0e6e916f5cb76e5d514ce5890d2cd5a7f7069acafe84cfed1cea2",
     "services/ifpmic_api/execution_workflow.py": "78f1a408ac6e80d56294c488e8bde434b03bddb1d17ed19278bfb87d5e85b3d7",
     "services/ifpmic_api/migrations/003_workflow_execution.sql": "5ef29521944e18551728dd285ce3ae21fa03c2b06f77c25430da6acb0ce1f102",
-    "services/ifpmic_api/migrations/004_prebinding_incident.sql": "9a7651ab063901e69a77f4b825dd21544dc018ed01941dc3a1bc76f8a65b541f"
+    "services/ifpmic_api/migrations/004_prebinding_incident.sql": "9a7651ab063901e69a77f4b825dd21544dc018ed01941dc3a1bc76f8a65b541f",
+    "tests/ifpmic_api/h2_native_bounds.py": "deaae9cfc75ac6021bde78f66122ddfaca02283f8f29a49a2d1bff9d2fe7a3fb"
   },
   "cases": [
     {
@@ -99,6 +100,13 @@
     {
       "reason": "Root integrated shared fixture closure and error-preserving deadline restore, then refreshed current authoring pins. Historical ledgers and passing evidence remain unchanged.",
       "execution_performed": false
+    },
+    {
+      "reason": "Root source integration retries partial JSON barrier publication only within the original observation deadline; malformed final evidence still fails. Activity source additionally separates process termination from bounded actual DB rollback observation.",
+      "execution_performed": false
     }
+  ],
+  "integration_notes": [
+    "Code-dev integrated independent source-review corrections, bounded native SQL/RPC/cleanup and preserved primary errors. These are current authoring pins only; no runtime evidence or execution authority."
   ]
 }

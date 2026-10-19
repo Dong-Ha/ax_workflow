@@ -1,0 +1,25 @@
+{
+  "kind": "ifpmic.b03.h2.hung-driver-observation-amendment.v1",
+  "status": "authoring_only_requires_complete_ledger_review",
+  "purpose": "Independently bound worker self-termination and server transaction rollback without assuming immediate disconnect detection.",
+  "target": "NEG-HUNG-DRIVER actual psycopg projection transaction and runtime15s self-only watchdog.",
+  "method": "Inject real SELECT pg_sleep(30) with SET LOCAL statement_timeout=30s after the real projection function returns within its still-open transaction. Observe exact PID/role/DB/query/open-xact independently before SIGTERM. Retain unchanged worker self-exit3 within12..18s. Observe actual backend disappearance by an absolute deadline40s after the recorded pre-query event, capped by the original215s body deadline; only then verify rollback and restart normal worker. No server disconnect setting, parent query cancellation or fabricated result.",
+  "agent": "Code-dev owns amendment/integration; TC advised separately about server completion and fail-closed observation; complete independent source/ledger review pending.",
+  "pass_criteria": "Actual native query/open transaction observed; exact owned worker self-terminates with3 and identity absent within12..18s, independent backend absence within absolute cap, DRAFT0/no receipt/no activity completion; recovery projects exactly once on the same admitted run. Parent termination/recovery never substitutes for child self-exit.",
+  "expected": "DB backend may survive worker briefly, but actual rollback is observed before recovery; process self-exit bound and original body/cleanup limits stay unchanged.",
+  "evidence": "Private recorded query event time, exact pg_stat_activity observations, SIGTERM time, worker exit time, backend absence observation time, SQL/history before/after/recovery and source/environment pins. Public normalized counts/hashes only.",
+  "recovery": "Any failed observation or cap fails the case. Preserve private evidence and stop only owned identities using original shared25s cleanup. Diagnose and rereview pins/whole ledger before the fresh full gate; no owner cancellation to manufacture a passing rollback.",
+  "rationale": {
+    "official_source": "https://www.postgresql.org/docs/16/runtime-config-connection.html#GUC-CLIENT-CONNECTION-CHECK-INTERVAL",
+    "source_summary": "Default interval0 disables checks during queries; disconnection can be detected at the next socket interaction. This supports avoiding an immediate-backend-death assumption; it does not prove actual test timing.",
+    "statement_bound": "30s remains inside approved full-plan pg_statement_seconds30 and exceeds runtime self-watchdog15s. Timeout or query completion happens in the still-open transaction; no connection context can commit after worker exit.",
+    "review_note": "TC advice agreed separate bounded backend observation and no cancellation; root chose a stricter absolute pre-query40s cap and30s local SQL timeout. Complete independent candidate review remains pending."
+  },
+  "prior_source_pins": {
+    "tests/ifpmic_api/h2_activity_runtime_boundary_child.py": "266698d81767f07d212f0235d5731fa4e597b8a16420731e4f3b3e1c623966cd",
+    "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py": "3d7158dae1cff3a37b6bfb0beb4c7bb2a211da425bff6eeabdc7055a0faff35f",
+    "docs/ifpmic/evidence/b03/h2-runtime-activity-runtime-tc-ledger.json": "d379c31c07d3cadfaa29370b1ec0f5e898138df6d1f9843f9102c0f36f8980ac"
+  },
+  "execution_authorized": false,
+  "runtime_pass_evidence": null
+}

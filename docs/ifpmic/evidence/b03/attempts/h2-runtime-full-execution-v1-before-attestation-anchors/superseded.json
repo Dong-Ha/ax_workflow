@@ -1,0 +1,13 @@
+{
+  "kind": "ifpmic.b03.h2.full-execution-v1-superseded.v1",
+  "decision": "superseded_before_runner_authoring_or_execution",
+  "contract_sha256": "d3e6f9a0a9900f19ff41a9eb7a75efad344cd2182be14db12905bb0e305bc8b8",
+  "tc_review_sha256": "e7952cebdf8199f9c9fc88af021cf6d7eda440890a420683ab552657b16ad91c",
+  "independent_findings": [
+    "No exact environment/protected/interpreter/binary attestation anchors, or pinned historical timing contract.",
+    "Review artifact/verdict/target identities and all15 collection budget accounting were ambiguous.",
+    "Before/after installed environment file/symlink comparison must be explicit."
+  ],
+  "consequence": "TC approved only the old candidate; independent paired approval was not present. Runner authoring and execution never began. Preserve old approval without applying it to the revised contract.",
+  "runtime_tests_executed": false
+}

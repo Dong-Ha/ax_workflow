@@ -6,7 +6,13 @@
     "sha256": "c6964bccff0d4cec1ac00f18fbb267d5d1a4a5887e53844c604333b7c059486c"
   },
   "scope": {
-    "obligations": ["NEG-AUTHORITY", "NEG-NONCREATE", "NEG-RETENTION-RPC", "NEG-RUNTIME-FAILURE", "NEG-HUNG-DRIVER"],
+    "obligations": [
+      "NEG-AUTHORITY",
+      "NEG-NONCREATE",
+      "NEG-RETENTION-RPC",
+      "NEG-RUNTIME-FAILURE",
+      "NEG-HUNG-DRIVER"
+    ],
     "derivative_full_25_obligation_ledger_input": true,
     "standalone_gate": false,
     "runner_authoring_authorized": false,
@@ -15,13 +21,13 @@
     "runtime_status": "not executed; no pass claims"
   },
   "source_pins": {
-    "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py": "3d7158dae1cff3a37b6bfb0beb4c7bb2a211da425bff6eeabdc7055a0faff35f",
-    "tests/ifpmic_api/h2_activity_runtime_boundary_child.py": "266698d81767f07d212f0235d5731fa4e597b8a16420731e4f3b3e1c623966cd",
+    "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py": "1c9a565e6a81c79aedf64173798f99d720b63f3f3de42b182e0f8cb067abef1b",
+    "tests/ifpmic_api/h2_activity_runtime_boundary_child.py": "8ff853ce784f4e7d9f9dc9205675b14deb91688156410656fa9a83970b9a9347",
     "tests/ifpmic_api/h2_activity_runtime_case_budget.py": "34df11020b89f884207fd8ebdb8aef3e0d1acf452c1429bb9ec2d4735af3da4c",
     "tests/ifpmic_api/h2_fixture_cleanup.py": "99b277b7532ebc0e12d80dacd40d7b3e6a2af7f7aebfc46c93b35c3a04c50500",
-    "tests/ifpmic_api/h2_dispatcher_crash_support.py": "d1e4b96163d2613dda302edaed46ccb212a8e937a3138e9354d7cd6ccf3da781",
+    "tests/ifpmic_api/h2_dispatcher_crash_support.py": "1cb2d9ba3f12d2cd0d73843fbdd778211467f82ec6c67fcd0fdb9f3eb4a3fe9a",
     "tests/ifpmic_api/test_h2_runtime_normal_flow.py": "fa34210fff8deb60b107d738924059999507bb7dcdf41ada91d9be6ce26e30c3",
-    "tests/ifpmic_api/jobs_fixture.py": "774de6d85afb2e1735cc199c3bcd5225233c5f3e52a2b98bab4230d0b7050aad",
+    "tests/ifpmic_api/jobs_fixture.py": "b8fefc39f3005b3a662124ae3182cee4e7a293e18dd4e84d18facd09c0e0d539",
     "tests/ifpmic_api/workspace_fixture.py": "66b0d11faaa343542fe27e1254e0ed28a968d73518a7a1ac2aab106e4ef126b6",
     "tests/ifpmic_api/workflow_schema_fixture.py": "dd1eba1754a8985dd704f0ed63271cc73beca8b03c72aaa2f14acdd41e5e3681",
     "services/ifpmic_api/execution_runtime.py": "49c0c6208e62b26e808ecffadf278dd9c7cff45134a47b905d3a4f60987c4b08",
@@ -35,11 +41,18 @@
     "services/ifpmic_api/jobs.py": "0538e460a6be42e3129d2e8d5e9f262bba357e621e0b5e800f4495ebdf99ecf9",
     "services/ifpmic_api/errors.py": "374b49dc97c616d8e4c9432d997d5c9bd9b4a542f236f451a3e43ae92d16e967",
     "services/ifpmic_api/app.py": "a65c3d44a14ecae7b819e5042d4f490ce68c8b9b5f5962d1b5f2bbfe52fef192",
-    "docs/ifpmic/evidence/b03/h2-runtime-full-verification-plan.json": "c6964bccff0d4cec1ac00f18fbb267d5d1a4a5887e53844c604333b7c059486c"
+    "docs/ifpmic/evidence/b03/h2-runtime-full-verification-plan.json": "c6964bccff0d4cec1ac00f18fbb267d5d1a4a5887e53844c604333b7c059486c",
+    "tests/ifpmic_api/h2_native_bounds.py": "deaae9cfc75ac6021bde78f66122ddfaca02283f8f29a49a2d1bff9d2fe7a3fb"
   },
   "budget_policy": {
-    "runtime_cases_body_cleanup_seconds": [215, 25],
-    "sql_only_case_body_cleanup_seconds": [25, 5],
+    "runtime_cases_body_cleanup_seconds": [
+      215,
+      25
+    ],
+    "sql_only_case_body_cleanup_seconds": [
+      25,
+      5
+    ],
     "watchdog": "per exact node ID, starts in pytest_runtest_protocol before fixture setup; same cleanup epoch covers owned process cleanup and all fixture finalizers via installed_controller",
     "runtime_budget_reason": "Private isolated Temporal server startup, registry/config manifests, SCRAM dispatcher/worker processes, direct history plus recovery and bounded shutdown occur within setup/body.",
     "sql_budget_reason": "The unadmitted non-create case uses only actual SCRAM claim_delivery SQL and no Temporal or runtime process; do not wait for a lease timeout.",
@@ -48,7 +61,14 @@
   "evidence_privacy": {
     "private_root": "0700",
     "private_files": "0600",
-    "private_material": ["source/environment manifests", "literal owner SQL snapshots", "raw framed Temporal history", "process PID/start-tick journal", "child logs", "per-case timing"],
+    "private_material": [
+      "source/environment manifests",
+      "literal owner SQL snapshots",
+      "raw framed Temporal history",
+      "process PID/start-tick journal",
+      "child logs",
+      "per-case timing"
+    ],
     "public_summary": "Only independently reviewed normalized synthetic case IDs, outcomes, counts and hashes; never credentials, private manifests, raw SQL/history/logs, or process identities."
   },
   "cases": [
@@ -165,7 +185,7 @@
       "obligation": "NEG-RUNTIME-FAILURE",
       "purpose": "A fatal Worker task racing with SIGTERM is still surfaced instead of being swallowed as normal shutdown.",
       "target": "Actual runtime child with a private Worker subclass that sends SIGTERM to its own saved process and raises a fatal exception in the same task turn.",
-      "method": "Wait for the child’s fatal-armed event, release the action, require the private event ordering (task action, self-SIGTERM, exception path), then inspect actual exit and fixed stdout.",
+      "method": "Wait for the child\u2019s fatal-armed event, release the action, require the private event ordering (task action, self-SIGTERM, exception path), then inspect actual exit and fixed stdout.",
       "agent": "TC",
       "pass_criteria": "Unrequested task failure exits 3, not normal exit 0; output is fixed DEPENDENCY_UNAVAILABLE; no binding is created and owned process is absent.",
       "expected": "215s body/setup + 25s shared cleanup; exact asyncio signal/task scheduling remains an execution uncertainty until run on pinned versions.",
@@ -188,8 +208,8 @@
       "case_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_execution_runtime_kills_hung_real_driver_and_rolls_back",
       "obligation": "NEG-HUNG-DRIVER",
       "purpose": "An uncancellable real PostgreSQL driver thread cannot prevent bounded worker-process termination or commit partial projection state.",
-      "target": "Actual worker activity and project_activation transaction; injected DB connection wrapper executes the actual SQL function and then blocks on real SELECT pg_sleep(60) on the same open transaction.",
-      "method": "Observe private pg_sleep barrier and independent pg_stat_activity evidence for exact projector role/backend PID, active SELECT pg_sleep(60), and non-NULL xact_start, with DRAFT/no-receipt owner SQL state. SIGTERM the exact worker PID after start-tick check; wait for runtime self-exit within 15s+3s and exact backend disappearance; restart normal worker and inspect receipt/history recovery.",
+      "target": "Actual worker activity and project_activation transaction; injected DB connection wrapper executes the actual SQL function and then blocks on real SELECT pg_sleep(30) on the same open transaction.",
+      "method": "Observe private pg_sleep barrier and independent pg_stat_activity evidence for exact projector role/backend PID, active SELECT pg_sleep(30), and non-NULL xact_start, with DRAFT/no-receipt owner SQL state. SIGTERM the exact worker PID after start-tick check; wait for runtime self-exit within 15s+3s, then independently observe exact backend disappearance by pre-query event time+40s (capped by original body deadline); restart normal worker and inspect receipt/history recovery.",
       "agent": "TC",
       "pass_criteria": "Worker exits 3 within 15s+3s and is absent; the exact observed PostgreSQL backend disappears and uncommitted function effects roll back (no receipt or revision), with no activity completion before recovery. Normal restart applies exactly one receipt/revision and one same-run activity completion.",
       "expected": "215s body/setup + 25s shared cleanup includes SIGTERM watchdog, PG rollback observation, real worker restart and history convergence; pinned DB driver/runtime behavior is an explicit runtime uncertainty.",
@@ -201,8 +221,21 @@
     "The full 25-obligation ledger must merge these literal IDs and methods and reconcile every shared fixture/source pin; this derivative ledger is not a gate.",
     "No collection, imports of product or SDK modules, services, database, SQL, or network were executed for this authoring checkpoint.",
     "Temporal activity retry behavior, actual history persistence, concurrent asyncio SIGTERM/fatal scheduling, pg_sleep visibility and driver-thread rollback, and exact fixture cleanup timing remain runtime questions. An event file alone cannot satisfy the hung-driver oracle; exact-role/backend pg_stat_activity evidence is mandatory.",
-    "The post-exit PostgreSQL backend-gone oracle currently polls for 10 seconds. Whether PostgreSQL immediately cancels pg_sleep after client process/socket termination is unverified; do not treat this timeout as qualified, and retain it as an execution blocker until pinned PostgreSQL behavior is observed.",
     "Synthetic human-submission command/outbox covers H2 transport only; H4 API acceptance, task creation/consumption and real human workflow remain pending.",
-    "The cases involving actual worker/task behavior depend on pinned installed SDK/server versions and an independently accepted runner gate before any execution."
+    "The cases involving actual worker/task behavior depend on pinned installed SDK/server versions and an independently accepted runner gate before any execution.",
+    "Native query30s/local timeout30s and separate absolute pre-query40s backend observation are unexecuted. Actual backend rollback, worker self-exit and215s body/25s cleanup require pinned runtime evidence. No parent cancellation or early restart may make this oracle pass."
+  ],
+  "observation_amendment": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-hung-driver-observation-amendment.json",
+    "sha256": "64221818979de7e45931e03b3c1987ad29a413ad78674f0fdeff814e086d0f2c"
+  },
+  "revision_history": [
+    {
+      "reason": "Root source integration retries partial JSON barrier publication only within the original observation deadline; malformed final evidence still fails. Activity source additionally separates process termination from bounded actual DB rollback observation.",
+      "execution_performed": false
+    }
+  ],
+  "integration_notes": [
+    "Code-dev integrated independent source-review corrections, bounded native SQL/RPC/cleanup and preserved primary errors. These are current authoring pins only; no runtime evidence or execution authority."
   ]
 }

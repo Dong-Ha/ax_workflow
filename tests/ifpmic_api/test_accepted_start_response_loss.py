@@ -22,6 +22,7 @@ from datetime import timedelta
 from uuid import uuid4
 
 import psycopg
+from tests.ifpmic_api.h2_native_bounds import bounded_connect, bounded_harness
 import pytest
 from temporalio.client import Client
 from temporalio.api.workflowservice.v1 import DescribeNamespaceRequest
@@ -238,7 +239,7 @@ def _spawn_barrier_dispatcher(config: Path, command_id: str, barrier_socket: Pat
 
 
 def _fresh_clock_claim_state(harness, command_id: str):
-    with psycopg.connect(normal.owner_dsn(harness["database"])) as owner:
+    with bounded_connect(normal.owner_dsn(harness["database"])) as owner:
         return owner.execute(
             "SELECT state,generation,claim_token::text,claim_expires_at<=clock_timestamp() "
             "FROM ifpmic.commands_outbox WHERE command_id=%s", (command_id,),
@@ -386,7 +387,7 @@ def test_actual_started_event_survives_lost_start_response_and_recovers_same_run
     workflow_scram_hba, workspace_environment, accepted_start_case_deadline,
 ):
     """Persisted Started is observed independently before killing the real caller."""
-    harness = workspace_environment
+    harness = bounded_harness(workspace_environment)
     case_deadline = accepted_start_case_deadline
     deadline = case_deadline.body_deadline
     evidence_root = normal._private_dir(_runtime_root() / "accepted-start-loss")

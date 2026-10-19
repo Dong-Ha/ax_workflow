@@ -15,6 +15,7 @@ import time
 from uuid import uuid4
 
 import psycopg
+from tests.ifpmic_api.h2_native_bounds import bounded_connect, bounded_harness
 from psycopg.conninfo import conninfo_to_dict, make_conninfo
 from psycopg import sql
 import pytest
@@ -124,7 +125,7 @@ def _write_journal(path, value):
 def _register_startup_identity(harness, identity, variant):
     migration, _cluster = harness["database"]
     roles = migration.roles
-    with psycopg.connect(owner_dsn(harness["database"]), autocommit=True) as owner:
+    with bounded_connect(owner_dsn(harness["database"]), autocommit=True) as owner:
         role_oids = dict(owner.execute(
             "SELECT rolname,oid::bigint FROM pg_roles WHERE rolname=ANY(%s)",
             ([roles.dispatcher, roles.projector],),
@@ -181,7 +182,7 @@ def _owner_counts(harness):
         "execution_bindings", "worker_run_scopes", "projection_receipts", "delivery_attempts",
     )
     counts = {}
-    with psycopg.connect(owner_dsn(harness["database"])) as owner:
+    with bounded_connect(owner_dsn(harness["database"])) as owner:
         for table in tables:
             counts[table] = owner.execute(
                 sql.SQL("SELECT count(*) FROM ifpmic.{}").format(sql.Identifier(table))
@@ -210,15 +211,15 @@ def _recreate_dispatcher_role(case):
     case["recreated_role"] = {"name": role_name, "password": new_password,
                               "original_password": database.roles.dispatcher_password,
                               "new_oid": None}
-    with psycopg.connect(cluster.dsn(database=database.name), autocommit=True) as bootstrap:
+    with bounded_connect(cluster.dsn(database=database.name), autocommit=True) as bootstrap:
         bootstrap.execute(sql.SQL("DROP OWNED BY {}").format(sql.Identifier(role_name)))
-    with psycopg.connect(cluster.dsn(), autocommit=True) as bootstrap:
+    with bounded_connect(cluster.dsn(), autocommit=True) as bootstrap:
         bootstrap.execute(sql.SQL("DROP ROLE {}").format(sql.Identifier(role_name)))
         bootstrap.execute(sql.SQL(
             "CREATE ROLE {} LOGIN PASSWORD {} NOSUPERUSER NOCREATEDB NOCREATEROLE "
             "NOBYPASSRLS NOINHERIT"
         ).format(sql.Identifier(role_name), sql.Literal(new_password)))
-    with psycopg.connect(owner_dsn(case["harness"]["database"]), autocommit=True) as owner:
+    with bounded_connect(owner_dsn(case["harness"]["database"]), autocommit=True) as owner:
         owner.execute(sql.SQL("GRANT USAGE ON SCHEMA ifpmic TO {}").format(sql.Identifier(role_name)))
         owner.execute(sql.SQL("GRANT EXECUTE ON FUNCTION ifpmic.read_dispatch_config() TO {}").format(
             sql.Identifier(role_name)))
@@ -233,7 +234,7 @@ def _restore_recreated_dispatcher_role(case):
         return
     database, cluster = case["harness"]["database"]
     role_name, password = info["name"], info["original_password"]
-    with psycopg.connect(cluster.dsn(), autocommit=True) as bootstrap:
+    with bounded_connect(cluster.dsn(), autocommit=True) as bootstrap:
         exists = bootstrap.execute("SELECT 1 FROM pg_roles WHERE rolname=%s", (role_name,)).fetchone()
         if exists is None:
             bootstrap.execute(sql.SQL(
@@ -243,13 +244,14 @@ def _restore_recreated_dispatcher_role(case):
         else:
             bootstrap.execute(sql.SQL("ALTER ROLE {} PASSWORD {}").format(
                 sql.Identifier(role_name), sql.Literal(password)))
-    with psycopg.connect(owner_dsn(case["harness"]["database"]), autocommit=True) as owner:
+    with bounded_connect(owner_dsn(case["harness"]["database"]), autocommit=True) as owner:
         owner.execute(sql.SQL("GRANT USAGE ON SCHEMA ifpmic TO {}").format(sql.Identifier(role_name)))
         owner.execute(sql.SQL("GRANT EXECUTE ON FUNCTION ifpmic.read_dispatch_config() TO {}").format(
             sql.Identifier(role_name)))
 
 
 def _make_case(harness, variant, deadline):
+    harness = bounded_harness(harness)
     case = {"harness": harness, "variant": variant, "process": None,
             "listener": None, "listeners": [], "registry_listener": None,
             "recreated_role": None}
@@ -347,7 +349,7 @@ def _make_case(harness, variant, deadline):
             dispatcher_dsn = make_conninfo(**fields)
         if variant == "recreated_dispatcher_role_oid":
             recreated = _recreate_dispatcher_role(case)
-            with psycopg.connect(owner_dsn(harness["database"])) as owner:
+            with bounded_connect(owner_dsn(harness["database"])) as owner:
                 owner.execute(sql.SQL("GRANT USAGE ON SCHEMA ifpmic TO {}").format(
                     sql.Identifier(recreated["name"])))
                 owner.execute(sql.SQL("GRANT EXECUTE ON FUNCTION ifpmic.read_dispatch_config() TO {}").format(
@@ -554,7 +556,7 @@ def test_runtime_cli_rejects_registry_and_identity_mismatches(
             assert after_counts == {table: 0 for table in after_counts}
             case["after_counts"] = after_counts
         else:
-            after = normal._read_owner_snapshot(workspace_environment, case["job_id"])
+            after = normal._read_owner_snapshot(case["harness"], case["job_id"])
             assert after == case["before"]
             assert after["accepted"][12:17] == ("accepted", None, None, "pending", 0)
             assert after["bindings"] == after["scopes"] == after["receipts"] == after["attempts"] == []
