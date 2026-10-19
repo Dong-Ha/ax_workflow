@@ -1,0 +1,121 @@
+{
+  "kind": "ifpmic.b03.h2.runtime-full-tc-plan-review.v1",
+  "status": "approve_authoring_only_with_conditions",
+  "reviewer": {
+    "role": "TC plan reviewer",
+    "scope": "Static review of the exact full H2 verification plan; no execution or source acceptance"
+  },
+  "reviewed_plan": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-full-verification-plan.json",
+    "sha256": "c6964bccff0d4cec1ac00f18fbb267d5d1a4a5887e53844c604333b7c059486c"
+  },
+  "review_inputs": {
+    "docs/ifpmic/evidence/b03/h2-implementation-contract.json": "f63173ac17ebebd34a15d5966d96b79dc1667a713c00b1b92868b137ba93ded3",
+    "docs/ifpmic/evidence/b03/h2-runtime-normal-tc-ledger.json": "ec5c419f853741f2ea0c127bbf8fbd58e3e2bdc7a2ef0d04975a47f7033600c7",
+    "docs/ifpmic/evidence/b03/h2-runtime-normal-final-review.json": "f18f65d9d155609141d0fa073e529cbf6009a625dcbbc7a731594bb99b2b0784",
+    "docs/ifpmic/H2-RUNTIME-CRASH-MATRIX.md": "15fd7238adab625e95f94e0bae62421bbd4d298ad245a4908d5eb6d817abc861",
+    "docs/ifpmic/B03-WORKFLOW.md": "38fdd875bc76047ed1e3e46c850277fea1a3d1f825662a13b1c21154925f25ff",
+    "docs/ifpmic/VERIFICATION.md": "b0f1e0dbe74f1a6aae5e84218f672fcb42d0db6133e072d66e92d21d2bb1ef98",
+    "services/ifpmic_api/execution_runtime.py": "49c0c6208e62b26e808ecffadf278dd9c7cff45134a47b905d3a4f60987c4b08",
+    "services/ifpmic_api/execution_dispatcher.py": "7baf91290938b3159b2e200e6fde8f81db5ec2d7b117351e03f689bbc75db209",
+    "services/ifpmic_api/migrations/003_workflow_execution.sql": "5ef29521944e18551728dd285ce3ae21fa03c2b06f77c25430da6acb0ce1f102",
+    "docs/ifpmic/design-v1/specs/acceptance-cases.json": "f7163553edc9e8e753965cb8748ab04aac8f68c1a453f567f62284a01b38b0d5",
+    "docs/ifpmic/design-v1/specs/implementation-backlog.json": "115e48568e0464b8e67ef17274dba97b3046a8de902e1cf426d9b70e1528e5d0",
+    "docs/ifpmic/design-v1/specs/workflow.v1.json": "bab40a7abb3929896add1ef2cd07489d0d7de14d200a5d6cea4b7a77eb0e89",
+    "docs/ifpmic/design-v1/specs/agent-contract.json": "ca6d4bea7abf0fffe7354c482af0d521c3a2e367217a69923a4bfe43fa27ab64",
+    "docs/ifpmic/design-v1/specs/data-model.json": "00c84f8a39b1b8959daa8d94b1d67e860d83ad9bdb809065a5cd3b18af07071b"
+  },
+  "decision": {
+    "result": "The plan covers the H2 implementation contract's activation/delivery boundary and its mandatory crash, negative, history and process cases. The 25-obligation inventory is adequate to proceed with TC authoring only, provided the exact case ledger expands each obligation into literal variants and evidence before any runner authoring or execution.",
+    "authorization": {
+      "tc_authoring": true,
+      "runner_authoring": false,
+      "test_or_service_execution": false,
+      "h2_acceptance": false,
+      "original_at_acceptance": false
+    }
+  },
+  "scope_alignment": {
+    "result": "aligned_for_partial_H2_only",
+    "evidence": "The plan keeps H2 limited to durable create delivery and initial DRAFT0-to-QUEUED1 activation, separates accepted/dispatched/applied, and does not claim the 29-node business workflow, human task outcomes, H5 compatibility, AT-05, AT-16 completion, AT-29, production readiness, or the final AX workflow visualization. This matches the H2 implementation contract's partial-acceptance boundary.",
+    "source_pin_check": "All nine source_pins in the reviewed plan match the inspected files. Original acceptance/workflow/data-model sources listed above also match their plan pins."
+  },
+  "obligation_review": [
+    {"id":"CRASH-01","result":"covered_for_authoring","condition":"Persisted actual Started event must be observed directly before saved dispatcher PID/start-tick termination; the proxy must withhold server-to-client bytes while forwarding the start request. Do not infer acceptance from a mocked RPC result."},
+    {"id":"CRASH-02","result":"covered_for_authoring","condition":"Freeze the exact committed claim generation/token/expiry and history absence; prove no early reclaim, then prove expiry and newer-generation reclaim. The stale generation/token acknowledgement must affect zero rows."},
+    {"id":"CRASH-03","result":"covered_for_authoring","condition":"Keep this distinct from CRASH-01: observe Start response received, binding still unadmitted, terminate dispatcher, then admit that exact Started run without replacement."},
+    {"id":"CRASH-04","result":"covered_for_authoring","condition":"At cut, record admitted run and scope plus leased/unacknowledged outbox; recovery must acknowledge that same run with no new Start or scope."},
+    {"id":"CRASH-05","result":"covered_for_authoring","condition":"Keep worker stopped through committed acknowledgement; observe dispatched with DRAFT0 and no projection receipt, then release the registered worker and prove one QUEUED1/applied receipt."},
+    {"id":"CRASH-06","result":"covered_for_authoring","condition":"Use two actual dispatcher processes and independent SQL lock/lease observations. Freeze both live-lease and expired-lease controls, exact generation/token transitions, and zero-row stale acknowledgement; do not substitute timing sleeps."},
+    {"id":"CRASH-07","result":"covered_with_explicit_pending_fallback","condition":"Physical deletion of only the owned synthetic execution is required. Use a supported pinned server API, preserve before/after history, confirm exact NotFound and no replacement run. If the API or bounded behavior is unavailable, mark this obligation pending and block H2 acceptance; mocked NotFound is insufficient."},
+    {"id":"CRASH-08","result":"covered_for_authoring","condition":"Specify independent PostgreSQL and Temporal restart order, preserve each existing storage path, and compare the same command/binding/run/history/receipt after each restart. Fail closed if the pinned server cannot restart safely within bounds."},
+    {"id":"CRASH-09","result":"covered_for_authoring","condition":"Observe API commit, create receipt, workspace intent and pending outbox before killing the API child before response. Same authorized retry must return the original receipt and complete one actual activation."},
+    {"id":"CRASH-10","result":"covered_for_authoring","condition":"At the pre-commit barrier, independent owner SQL must show no visible projection effect. Kill the real worker and prove rollback followed by the same run's one applied receipt."},
+    {"id":"CRASH-11","result":"covered_for_authoring","condition":"At the post-commit barrier, preserve the exact receipt, kill before activity result enters history, revoke authority before real worker retry, and prove receipt equality plus one later real completion. Do not assume a particular Temporal retry Started-event count."},
+    {"id":"CRASH-12","result":"covered_for_authoring","condition":"Observe the exact ActivityTaskCompleted event before killing the saved worker, hold all worker-bound response bytes, and prove no later workflow-decision completion exists at the cut. Recover the same history/build without a second projection; byte proxy evidence must not be described as frame decoding."},
+    {"id":"NEG-STARTUP","result":"covered_for_authoring","condition":"Expand missing/disabled/wrong-role/OID-recreated and endpoint/deployment/namespace/build/source/environment variants into literal IDs. Each real CLI must fail before poll/claim; independently prove zero listener connections and unchanged SQL. Preserve a valid production-CLI control."},
+    {"id":"NEG-MACHINE-RACE","result":"covered_for_authoring","condition":"Use two real DB sessions and an owned dispatcher; prove blocking via pg_blocking_pids and lock-state evidence, not sleeps. Include disable-before-claim and claim-before-disable serial orders."},
+    {"id":"NEG-STARTED","result":"covered_for_authoring","condition":"Use one persisted real Started event per malformed/mismatched input variant; compare exact run/build/type/queue/binding input. Keep worker stopped and prove fixed quarantine with no scope or receipt and no fallback ID."},
+    {"id":"NEG-FOREIGN-DEPLOYMENT","result":"covered_for_authoring","condition":"Run two owned Temporal servers with distinct private storage and deployment identities; prove foreign dispatcher/projector credentials cannot reserve, admit or project the old binding even with the same namespace name."},
+    {"id":"NEG-WORKSPACE","result":"covered_for_authoring","condition":"Freeze actual SQL and tree state for each non-READY, forged marker, wrong token/generation and symlink variant. Prove no Start/effect and no validator repair or unauthorized following."},
+    {"id":"NEG-AUTHORITY","result":"covered_for_authoring","condition":"Test both orders: revocation before first projection yields one immutable rejection and no progress; projection first then revocation replays the exact committed receipt. Also prove API reads follow current caller authorization."},
+    {"id":"NEG-PROJECTION-FENCES","result":"covered_with_literal-expansion-required","condition":"The four existing IDs cover useful accepted SQL/ACL/OID/SCRAM cases. Expand the exact matrix for same-digest replay, changed digest collision, foreign job/run/build, typed argument shape, direct DML/SET ROLE/shadow helpers and actual post-revocation activity retry. State which permutations existing IDs discharge and justify any omission."},
+    {"id":"NEG-PREADMISSION","result":"covered_for_authoring","condition":"Pause actual dispatcher after Started before admission, run a real registered worker, and prove read_activation returns wait with no projection effect. After admission, the same run/scope reaches exactly one applied receipt."},
+    {"id":"NEG-WINDOW","result":"revised_method_adequate_for_authoring","condition":"The v2 seam is acceptable only in a dedicated synthetic database and only if the fixture records before/while/after function OID, owner OID/name, ACL including NULL semantics, SECURITY DEFINER and full proconfig/search_path; the only byte-exact function-definition delta is the single clock assignment; finally restore the original definition and metadata. The frozen instant must be inside a live matching claim (claim_expires_at > instant; exact generation/token), otherwise stale-claim behavior could mask the deadline. Abort if any invariant fails. Keep actual unmodified before/after dispatcher cases separate. This is not execution approval."},
+    {"id":"NEG-RETENTION-RPC","result":"covered_for_authoring","condition":"Use a real History NotFound then a causal barrier before namespace retention RPC; stop/block only the owned Temporal endpoint. Prove actual RPC timeout/error, no Start, unchanged business state and RETENTION_UNVERIFIED."},
+    {"id":"NEG-NONCREATE","result":"covered_for_authoring","condition":"Use owner-seeded synthetic durable command/outbox only after real create activation. Prove exact signal to admitted run, no new run/scope/receipt/revision and no H4 task/API acceptance claim; pre-admission notification waits."},
+    {"id":"NEG-RUNTIME-FAILURE","result":"covered_for_authoring","condition":"Use test-only constructor injection in owned children, never a product env switch. Cover normal SIGTERM, unexpected pump/worker return, fatal exception and exception concurrent with stop; verify the real process exit contract and all owned identities absent."},
+    {"id":"NEG-HUNG-DRIVER","result":"covered_for_authoring","condition":"Use an observed real blocked thread and, where claimed, a real uncommitted transaction. Prove self-only termination, rollback and process absence; the parent timeout alone is not evidence."}
+  ],
+  "ledger_and_gate_conditions": {
+    "obligation_count": 25,
+    "current_literal_case_ids": 16,
+    "unassigned_obligations": ["NEG-STARTUP","NEG-MACHINE-RACE","NEG-STARTED","NEG-FOREIGN-DEPLOYMENT","NEG-WORKSPACE","NEG-AUTHORITY","NEG-PREADMISSION","NEG-WINDOW","NEG-RETENTION-RPC","NEG-NONCREATE","NEG-RUNTIME-FAILURE","NEG-HUNG-DRIVER"],
+    "required_eight_case_fields": [
+      "literal_case_id_and_obligation_requirement_link",
+      "frozen_source_and_environment_pins",
+      "private_setup_and_initial_state",
+      "named_causal_cut_and_real_process_or_service_mechanism",
+      "literal_before_cut_and_after_SQL_history_HTTP_or_filesystem_oracles",
+      "saved_process_identity_and_recovery_action",
+      "private_evidence_outputs_and_publicly_allowed_normalization",
+      "body_setup_cleanup_limits_and_expected_failure_codes"
+    ],
+    "407_regression": "Retain and freshly rerun all 407 exact IDs in the accepted normal ledger, in its frozen phase order and source pins; no skips, xfails, omissions or historical-pass substitution. Freeze the exact new-case variant inventory and resulting total separately after authoring; do not describe 407 as the full H2 total.",
+    "exact_ledger_review": "Independent and TC same-SHA review of every literal ID, all eight fields, source pins, variant count and causal/oracle details is required before runner authoring. Runner and pre-gate receive a separate review before execution."
+  },
+  "timing_privacy_and_execution_boundary": {
+    "timing": "The 215-second setup/body and shared 25-second cleanup (240 total) are within the accepted H2 exception. The timing hook must start before session fixtures and the shared cleanup deadline must cover process, proxy, PostgreSQL and all fixture finalizers. Current PostgreSQL stop permits up to 25 seconds; exact fixture/runner integration must show cleanup cannot outlive or leak past the shared limit. Treat this as an execution blocker until demonstrated, not a reason to skip fixture teardown.",
+    "processes": "Every spawned service/child must be journaled immediately with saved PID/start ticks, stopped only by that identity, and verified absent. Graceful/forced deadlines are 10/5 seconds; timeouts are not proof of absence. Preserve failed evidence and never signal a foreign process.",
+    "privacy": "Keep raw SQL, history, service logs, source/environment archives, credentials and process identities in private 0700/0600 evidence. Publish only reviewed normalized synthetic summaries, counts and hashes; verify no secrets or user prompt/raw activity data enter history or public output.",
+    "execution": "No runner authoring, test collection, test execution, SQL/service/DB/network run or H2 acceptance is authorized by this review. Required next gates are exact complete ledger review, separate runner/pre-gate review, bounded execution, fresh 407 regression, and independent raw/private-to-public evidence audit."
+  },
+  "findings": [
+    {
+      "id": "SCOPE-01",
+      "result": "pass_for_partial_H2_authoring",
+      "detail": "The plan maps H2 to the approved durable activation stage and explicitly preserves deferred H3-H7, original acceptance cases and human/SAM/TEM/SQE authority."
+    },
+    {
+      "id": "COVERAGE-01",
+      "result": "pass_for_authoring_with_literal_expansion",
+      "detail": "All ten accepted contract crash boundaries are represented, with additional API/worker cuts, and the required auth, startup, workspace, retention, non-create, concurrency and shutdown negatives are listed. Empty case_ids are acceptable only at this plan-authoring stage; they block execution until assigned and reviewed."
+    },
+    {
+      "id": "CLOCK-01",
+      "result": "resolved_for_authoring_only",
+      "detail": "The v2 additions resolve the prior missing metadata/restoration and live-claim conditions. Actual PostgreSQL catalog restoration remains a runtime proof and the fixture must abort on any mismatch."
+    },
+    {
+      "id": "HISTORY-01",
+      "result": "condition_required",
+      "detail": "Do not assume Temporal retains a separate ActivityTaskStarted event for every retry attempt. Require actual worker restart plus pre-kill absence and post-recovery completion; use only event-count semantics independently supported by the pinned server/history."
+    },
+    {
+      "id": "CLEANUP-01",
+      "result": "execution_blocker",
+      "detail": "The 25-second shared cleanup includes fixture finalizers, while PostgreSQL fixture stop itself allows up to 25 seconds. The final runner/fixture integration must enforce total cleanup and prove owned PostgreSQL/process absence; an alarm that interrupts finalizers is not cleanup evidence."
+    }
+  ],
+  "review_limit": "Authoring-method review only. No tests, imports, services, SQL, network, runtime, product correctness or H2 completion were verified."
+}

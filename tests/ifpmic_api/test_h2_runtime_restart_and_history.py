@@ -10,7 +10,7 @@ import time
 import pytest
 
 from tests.ifpmic_api import h2_dispatcher_crash_support as crash
-from tests.ifpmic_api.test_h2_dispatcher_crashes import _assert_final
+from tests.ifpmic_api.test_h2_dispatcher_crashes import _assert_crash_final
 from tests.ifpmic_api import test_h2_runtime_normal_flow as normal
 
 pytest_plugins = (
@@ -38,6 +38,11 @@ def _pg_ctl(cluster, *args):
 
 
 def _stop_owned(case, process):
+    normal._append_private_journal(case["journal"], {
+        "event": "stop_requested", "pid": process.pid,
+        "start_ticks": process._ifpmic_start_ticks,
+        "pre_stop_exit_code": process.poll(), "mode": "graceful",
+    })
     result = normal.stop_all_owned([process], total_timeout=15)[0]
     assert result["returncode"] == 0 and result["forced"] is False and result["absent"] is True
     normal._append_private_journal(case["journal"], {
@@ -64,7 +69,9 @@ def test_postgres_and_temporal_restart_preserve_same_execution_and_receipt(
         case["processes"].append(dispatcher)
         case["records"].append(dispatcher_record)
         normal._append_private_journal(case["journal"], {"event": "started", **dispatcher_record})
-        initial, initial_temporal, worker = _assert_final(case, deadline.body_deadline)
+        initial, initial_temporal, worker = _assert_crash_final(
+            case, deadline.body_deadline,
+            expected_attempts=lambda run: [(1, "started", run, None, True)])
         expected_run_id = initial_temporal["run_id"]
         assert initial["accepted"][3:8] == ("QUEUED", 1, 0, [], None)
         assert len(initial["receipts"]) == 1 and initial["receipts"][0][1] == 1
@@ -83,9 +90,29 @@ def test_postgres_and_temporal_restart_preserve_same_execution_and_receipt(
         # 18.1 pg_ctl binary. Temporal remains live while SQL is restarted.
         temporal_pid = case["server"].pid
         temporal_ticks = case["server"]._ifpmic_start_ticks
+        pg_old_pid = cluster.server_pid
+        pg_old_ticks = normal.process_identity(pg_old_pid)
+        assert pg_old_ticks is not None
+        normal._append_private_journal(case["journal"], {
+            "event": "service_stop_requested", "role": "postgres",
+            "pid": pg_old_pid, "start_ticks": pg_old_ticks,
+            "pre_stop_alive": True, "data_dir": str(cluster.data_dir),
+        })
         _pg_ctl(cluster, "-m", "fast", "-w", "-t", "15", "stop")
         assert normal.process_identity(temporal_pid) == temporal_ticks
+        assert normal.process_identity(pg_old_pid) is None
+        normal._append_private_journal(case["journal"], {
+            "event": "service_stopped", "role": "postgres",
+            "pid": pg_old_pid, "start_ticks": pg_old_ticks, "absent": True,
+        })
         _pg_ctl(cluster, "-l", str(cluster.log_path), "-w", "-t", "20", "start")
+        pg_new_pid = int((cluster.data_dir / "postmaster.pid").read_text(encoding="ascii").splitlines()[0])
+        pg_new_ticks = normal.process_identity(pg_new_pid)
+        assert pg_new_ticks is not None and (pg_new_pid, pg_new_ticks) != (pg_old_pid, pg_old_ticks)
+        normal._append_private_journal(case["journal"], {
+            "event": "service_started", "role": "postgres", "pid": pg_new_pid,
+            "start_ticks": pg_new_ticks, "data_dir": str(cluster.data_dir),
+        })
         assert (cluster.data_dir.stat().st_dev, cluster.data_dir.stat().st_ino) == pg_data_inode
         after_pg_restart = normal._read_owner_snapshot(case["harness"], case["job_id"])
         assert after_pg_restart == before_restart
@@ -103,6 +130,11 @@ def test_postgres_and_temporal_restart_preserve_same_execution_and_receipt(
         # Temporal restart reuses the exact SQLite path and port; PostgreSQL
         # remains available. Re-registering or changing build/deployment would
         # alter source hashes and is therefore not performed.
+        normal._append_private_journal(case["journal"], {
+            "event": "stop_requested", "role": "temporal", "pid": case["server"].pid,
+            "start_ticks": case["server"]._ifpmic_start_ticks,
+            "pre_stop_exit_code": case["server"].poll(), "mode": "graceful",
+        })
         temporal_stop = normal.stop_all_owned([case["server"]], total_timeout=15)[0]
         assert temporal_stop["returncode"] == 0 and temporal_stop["forced"] is False
         assert temporal_stop["absent"] is True
@@ -112,9 +144,10 @@ def test_postgres_and_temporal_restart_preserve_same_execution_and_receipt(
             "exit_code": temporal_stop["returncode"], "absent": True, "forced": False,
         })
         case["processes"].remove(case["server"])
-        new_server = normal.start_server(
-            Path(normal._read_h1_toolchain()["toolchain_root"]) / "temporal",
-            normal._read_h1_toolchain()["cli_binary_sha256"], case["temporal_root"],
+        toolchain = normal._read_h1_toolchain()
+        new_server = crash.start_owned_temporal_server(
+            Path(toolchain["toolchain_root"]) / "temporal",
+            toolchain["cli_binary_sha256"], case["temporal_root"],
             case["ports"], log_name="temporal-server-restart.log")
         case["server"] = new_server
         case["processes"].append(new_server)

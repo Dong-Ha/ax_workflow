@@ -50,7 +50,9 @@ def _observe_start(case, snapshot, deadline):
     ))
 
 
-def _assert_final(case, deadline, expected_run_id=None, *, start_worker=True):
+def _assert_crash_final(
+    case, deadline, expected_run_id=None, *, expected_attempts=None, start_worker=True,
+):
     harness = case["harness"]
     job_id = case["job_id"]
     processes = case["processes"]
@@ -64,32 +66,139 @@ def _assert_final(case, deadline, expected_run_id=None, *, start_worker=True):
                        if record["role"] == "worker"), None)
         assert worker is not None
     active = [process for process in processes if process.poll() is None]
-    final_snapshot = normal._wait_for_sql_outcome(harness, job_id, deadline, active)
+    def attempts_for(run):
+        if expected_attempts is None:
+            return [(1, "started", run, None, True)]
+        if callable(expected_attempts):
+            return expected_attempts(run)
+        return expected_attempts
+
+    final_snapshot = None
+    while time.monotonic() < deadline:
+        if any(process.poll() is not None for process in active):
+            raise AssertionError("owned runtime CLI exited before crash recovery completed")
+        candidate = normal._read_owner_snapshot(harness, job_id)
+        if candidate["accepted"] and candidate["accepted"][12] == "rejected":
+            raise AssertionError("create command reached rejected terminal state")
+        if candidate["bindings"] and candidate["bindings"][0][20] == "quarantined":
+            raise AssertionError("execution binding was quarantined")
+        candidate_binding = candidate["bindings"]
+        if candidate_binding and candidate_binding[0][19] is not None:
+            candidate_run = candidate_binding[0][19]
+            wanted_attempts = attempts_for(candidate_run)
+            if (candidate["accepted"] and candidate["accepted"][3] == "QUEUED"
+                    and candidate_binding[0][20] == "admitted"
+                    and candidate["accepted"][15] == "dispatched"
+                    and candidate["accepted"][16] == wanted_attempts[-1][0]
+                    and candidate["accepted"][18] == candidate_run
+                    and len(candidate["scopes"]) == len(candidate["receipts"]) == 1
+                    and candidate["attempts"] == wanted_attempts):
+                final_snapshot = candidate
+                expected_attempts = wanted_attempts
+                break
+        time.sleep(min(0.1, max(0.0, deadline - time.monotonic())))
+    if final_snapshot is None:
+        raise TimeoutError("crash recovery did not reach its literal expected SQL state")
     binding = final_snapshot["bindings"][0]
     run_id = binding[19]
     assert run_id is not None and binding[20] == "admitted"
     if expected_run_id is not None:
         assert run_id == expected_run_id
+    # Validate crash-state SQL directly. The frozen normal-flow oracle is
+    # deliberately generation-1-only; manufacturing rows to reuse it would
+    # erase the recovered generation/outbox evidence this suite must prove.
+    rows = final_snapshot["accepted"]
+    assert rows is not None
+    assert rows[0:3] == case["group"][0:3]
+    assert rows[1:8] == (harness["project_id"], harness["record"].snapshot_id,
+                         "QUEUED", 1, 0, [], None)
+    assert case["group"][4:9] == ("DRAFT", 0, 0, [], None)
+    assert case["group"][14:17] == ("accepted", None, None)
+    assert rows[8] == case["group"][18]
+    assert rows[9] == "POST /api/v1/jobs"
+    assert case["accepted"]["payload"] == {
+        "project_id": harness["project_id"], "title": "G4 synthetic job",
+        "request_text": "Validate isolated acceptance", "change_type": "FEATURE",
+        "base_ref": "refs/heads/main", "input_artifact_ids": [],
+        "profile_version": harness["profile_version"], "release_mode": "team_github_tag",
+    }
+    assert type(rows[10]) is str and json.loads(rows[10]) == case["accepted"]["payload"]
+    assert rows[10] == normal._canonical(case["accepted"]["payload"]).decode("ascii")
+    assert rows[10] == case["group"][12]
+    payload_sha = hashlib.sha256(normal._canonical({
+        "format": "ifpmic.create-job.v1", "payload": case["accepted"]["payload"],
+    })).hexdigest()
+    assert rows[11] == payload_sha
+    assert rows[11] == case["group"][13]
+    assert rows[12:15] == ("applied", 1, None)
+    assert rows[15:17] == ("dispatched", expected_attempts[-1][0])
+    assert rows[18] == run_id
+    assert rows[19:23] == (case["group"][18], case["workspace"]["workspace_token"], "READY", 1)
+    assert final_snapshot["noncreate_commands"] == 0
+    assert final_snapshot["attempts"] == expected_attempts
+    expected_binding = normal._expected_binding(
+        job_id, rows, case["workspace"], case["identity"], harness["record"], payload_sha,
+    )
+    assert len(final_snapshot["bindings"]) == 1
+    binding = final_snapshot["bindings"][0]
+    binding_fields = (
+        "job_id", "project_id", "create_command_id", "deployment_id", "namespace",
+        "server_config_sha256", "temporal_workflow_id", "workflow_type", "build_id", "task_queue",
+        "snapshot_id", "catalog_record_sha256", "workflow_sha256", "state_sha256", "agent_sha256",
+        "workspace_token", "workspace_generation", "command_payload_sha256", "binding_sha256",
+    )
+    actual_binding = dict(zip(binding_fields, binding[:19]))
+    assert set(actual_binding) == set(expected_binding)
+    for field in binding_fields:
+        assert type(actual_binding[field]) is type(expected_binding[field])
+        assert actual_binding[field] == expected_binding[field]
+    assert binding[19:21] == (run_id, "admitted")
+    assert binding[21] is not None and binding[22] > binding[21]
+    assert binding[23] > 3600 and binding[24] is True and binding[25] is True
+    assert binding[26] is None
+    assert final_snapshot["scopes"] == [(
+        job_id, run_id, case["roles"]["projector"], harness["database"][0].roles.projector,
+        case["identity"]["deployment_id"], case["identity"]["build_id"],
+    )]
+    assert len(final_snapshot["receipts"]) == 1
+    receipt = final_snapshot["receipts"][0]
+    proposal = {
+        "protocol_version": normal.PROTOCOL_VERSION, "kind": "activate_create", "job_id": job_id,
+        "run_id": run_id, "build_id": case["identity"]["build_id"],
+        "binding_sha256": expected_binding["binding_sha256"], "transition_sequence": 1,
+        "expected_revision": 0, "command_id": rows[8], "command_payload_sha256": payload_sha,
+    }
+    proposal_sha = normal._domain_hash("ifpmic.b03.transition.v1", proposal)
+    assert receipt == (job_id, 1, rows[8], run_id, case["identity"]["build_id"], proposal_sha,
+                       0, "applied", {
+                           "status": "applied", "command_id": rows[8], "applied_revision": 1,
+                           "error_code": None, "job_id": job_id,
+                           "job_status": "QUEUED", "revision": 1,
+                       })
     temporal = normal._observe_temporal(
         case["identity"], job_id, harness["project_id"], run_id,
         {"protocol_version": normal.PROTOCOL_VERSION, "job_id": job_id,
          "project_id": harness["project_id"], "binding_sha256": binding[18]},
         deadline, normal._private_dir(case["root"] / "history-after-projection"),
     )
-    # The shared normal oracle validates the complete business state. Cut tests
-    # additionally retain their literal generation-by-generation attempt rows.
-    oracle_snapshot = dict(final_snapshot)
-    oracle_snapshot["attempts"] = [(1, "started", run_id, None, True)]
-    oracle = normal._assert_runtime_oracles(
-        oracle_snapshot, harness, case["accepted"], case["group"], case["workspace"],
-        case["identity"], case["roles"], temporal,
-    )
+    assert temporal["workflow_id"] == "ifpmic.job." + job_id
+    assert temporal["run_id"] == run_id
+    assert temporal["execution_count"] == temporal["started_event_count"] == 1
+    assert temporal["phase"] == "queued"
+    assert temporal["started_input"] == [{
+        "protocol_version": normal.PROTOCOL_VERSION, "job_id": job_id,
+        "project_id": harness["project_id"], "binding_sha256": expected_binding["binding_sha256"],
+    }]
+    assert temporal["project_id"] == harness["project_id"]
+    assert temporal["observed_retention_seconds"] == binding[23]
     assert normal.tree_fingerprint(Path(harness["workspace_root"]) / job_id) == case["tree_before"]
     assert (case["temporal_store"].stat().st_dev, case["temporal_store"].stat().st_ino) == case["temporal_store_identity"]
     evidence = {"case_id": case["case_name"], "status": "passed",
                 "snapshot_sha256": hashlib.sha256(
                     normal._canonical(final_snapshot)).hexdigest(),
-                "oracle": oracle, "temporal_history_sha256": temporal["raw_history_sha256"],
+                "expected_generation": expected_attempts[-1][0],
+                "proposal_sha256": proposal_sha,
+                "temporal_history_sha256": temporal["raw_history_sha256"],
                 "temporal_run_id": temporal["run_id"], "worker_pid": worker.pid}
     normal._write_private(case["root"] / "case-result.json", normal._canonical(evidence) + b"\n")
     return final_snapshot, temporal, worker
@@ -143,7 +252,10 @@ def test_claim_commit_crash_reclaims_only_after_expiry(
         expired = crash.wait_claim_expired(case, claim, min(30, deadline.remaining(30)))
         assert expired[:3] == ("leased", 1, claim["token"]) and expired[3] is True
         _recover_dispatcher(case, deadline.body_deadline)
-        final, temporal, _worker = _assert_final(case, deadline.body_deadline)
+        final, temporal, _worker = _assert_crash_final(
+            case, deadline.body_deadline,
+            expected_attempts=lambda run: [(1, "expired", None, None, True),
+                                           (2, "started", run, None, True)])
         assert final["accepted"][16] == 2
         assert final["attempts"] == [(1, "expired", None, None, True),
                                     (2, "started", temporal["run_id"], None, True)]
@@ -172,7 +284,10 @@ def test_start_response_before_admission_crash_recovers_same_run(
         assert after_observation == cut_snapshot
         crash.wait_claim_expired(case, claim, min(30, deadline.remaining(30)))
         _recover_dispatcher(case, deadline.body_deadline)
-        final, temporal, _worker = _assert_final(case, deadline.body_deadline, started["run_id"])
+        final, temporal, _worker = _assert_crash_final(
+            case, deadline.body_deadline, started["run_id"],
+            expected_attempts=[(1, "expired", None, None, True),
+                               (2, "started", started["run_id"], None, True)])
         assert final["accepted"][16] == 2
         assert final["attempts"] == [(1, "expired", None, None, True),
                                     (2, "started", started["run_id"], None, True)]
@@ -201,7 +316,10 @@ def test_admission_before_ack_crash_recovers_same_run(
         assert normal._read_owner_snapshot(case["harness"], case["job_id"]) == cut_snapshot
         crash.wait_claim_expired(case, claim, min(30, deadline.remaining(30)))
         _recover_dispatcher(case, deadline.body_deadline)
-        final, temporal, _worker = _assert_final(case, deadline.body_deadline, run_id)
+        final, temporal, _worker = _assert_crash_final(
+            case, deadline.body_deadline, run_id,
+            expected_attempts=[(1, "expired", None, None, True),
+                               (2, "started", run_id, None, True)])
         assert final["accepted"][16] == 2
         assert final["attempts"] == [(1, "expired", None, None, True),
                                     (2, "started", run_id, None, True)]
@@ -228,7 +346,9 @@ def test_ack_before_worker_activation_projects_once(
         assert cut_snapshot["attempts"] == [(1, "started", run_id, None, True)]
         temporal_started = _observe_start(case, cut_snapshot, deadline.body_deadline)
         assert temporal_started["run_id"] == run_id
-        final, temporal, _worker = _assert_final(case, deadline.body_deadline, run_id)
+        final, temporal, _worker = _assert_crash_final(
+            case, deadline.body_deadline, run_id,
+            expected_attempts=[(1, "started", run_id, None, True)])
         assert final["accepted"][16] == 1
         assert final["attempts"] == [(1, "started", run_id, None, True)]
         assert temporal["execution_count"] == temporal["started_event_count"] == 1
@@ -271,7 +391,10 @@ def test_two_live_dispatchers_stale_ack_cannot_change_recovered_run(
         after_old_ack = normal._read_owner_snapshot(case["harness"], case["job_id"])
         assert after_old_ack == recovered
         assert second.poll() is None
-        final, temporal, _worker = _assert_final(case, deadline.body_deadline, run_id)
+        final, temporal, _worker = _assert_crash_final(
+            case, deadline.body_deadline, run_id,
+            expected_attempts=[(1, "expired", None, None, True),
+                               (2, "started", run_id, None, True)])
         assert final["accepted"][16] == 2
         assert final["attempts"] == [(1, "expired", None, None, True),
                                     (2, "started", run_id, None, True)]

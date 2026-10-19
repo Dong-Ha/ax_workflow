@@ -1,0 +1,782 @@
+{
+  "kind": "ifpmic.b03.h2.runtime-full-verification-plan.v1",
+  "status": "candidate_pending_independent_and_tc_review_no_execution",
+  "purpose": "Complete every mandatory H2 crash/boundary obligation and affected regression before any H2 acceptance; preserve original IFPMIC design and later full AX goal.",
+  "baseline_commit": "ed2d09983977407320dc9ed23cf0e6e46c9fc221",
+  "authority": {
+    "Code-dev": "Own integration, product seams, reviewed bounded runner, recovery and final acceptance; cannot declare TC test success from authoring.",
+    "TC": "Own literal tests, subprocess fixtures, exact case ledger and oracles.",
+    "independent_reviewer": "Review this plan and exact ledger/contract/runner/pre-gate/final evidence independently of authors.",
+    "Paperclip": "Supervision and visualization over original IFPMIC FastAPI/PG/Temporal, not a replacement.",
+    "SAM_TEM_SQE_human": "Original responsibilities and human approvals remain unchanged."
+  },
+  "source_pins": {
+    "docs/ifpmic/B03-WORKFLOW.md": "38fdd875bc76047ed1e3e46c850277fea1a3d1f825662a13b1c21154925f25ff",
+    "docs/ifpmic/VERIFICATION.md": "b0f1e0dbe74f1a6aae5e84218f672fcb42d0db6133e072d66e92d21d2bb1ef98",
+    "docs/ifpmic/evidence/b03/h2-implementation-contract.json": "f63173ac17ebebd34a15d5966d96b79dc1667a713c00b1b92868b137ba93ded3",
+    "docs/ifpmic/evidence/b03/h2-runtime-normal-tc-ledger.json": "ec5c419f853741f2ea0c127bbf8fbd58e3e2bdc7a2ef0d04975a47f7033600c7",
+    "docs/ifpmic/evidence/b03/h2-runtime-normal-final-review.json": "f18f65d9d155609141d0fa073e529cbf6009a625dcbbc7a731594bb99b2b0784",
+    "docs/ifpmic/H2-RUNTIME-CRASH-MATRIX.md": "15fd7238adab625e95f94e0bae62421bb97235683cc96b491c7a9ce3222001c6",
+    "services/ifpmic_api/execution_runtime.py": "49c0c6208e62b26e808ecffadf278dd9c7cff45134a47b905d3a4f60987c4b08",
+    "services/ifpmic_api/execution_dispatcher.py": "7baf91290938b3159b2e200e6fde8f81db5ec2d7b117351e03f689bbc75db209",
+    "services/ifpmic_api/migrations/003_workflow_execution.sql": "5ef29521944e18551728dd285ce3ae21fa03c2b06f77c25430da6acb0ce1f102"
+  },
+  "impact": {
+    "changed": "New crash/runtime-negative TC tests and test-only helpers; any necessary product seam requires separate source review and fresh full gate.",
+    "retained": "Fresh rerun of all407 literal normal ledger IDs (351 original Python,50 H2 schema/protocol/workspace/manifest/prebinding,5 H1,1 actual normal). Historical passes do not count as fresh.",
+    "unchanged_contracts": "Original17 design contracts and both uploaded sources immutable; AX localhost GET-only adapters/UI and Node lock unchanged.",
+    "conditional": "Full Node387/build/UI gate remains mandatory H6; bring forward if actual product/UI/Node impact occurs. No H2-only test edits change AX renderer or adapter behavior.",
+    "remaining_goal": "H3-H7, original32AT, 29-node workflow, human wait/version compatibility, original workflow visualization and actual integrations remain incomplete. Device actions need humans; final deployment/external submission needs approval."
+  },
+  "execution_order": [
+    "Independent and TC review of this plan before additional negative authoring; review draft crash tests already recorded under prior contract.",
+    "TC finishes every required variant; no placeholders or narrowed coverage. Freeze exact literal IDs, expected before/cut/after and source pins.",
+    "Independent + TC exact ledger/contract review before runner authoring. Code-dev authors bounded runner, independently review exact runner and pre-gate.",
+    "Run all new crash/negative cases and407 affected regression cases on frozen source/environment. Preserve failed attempts; no partial acceptance.",
+    "Independently audit raw private evidence, public normalization/privacy, unchanged pins, all process cleanup and scope reconciliation before accepting partial H2."
+  ],
+  "limits": {
+    "default_case_seconds": 30,
+    "process_exception_body_seconds": 215,
+    "process_exception_cleanup_seconds": 25,
+    "timing_rule": "Each exception must be individually justified in exact ledger. Watchdog starts before session fixtures; shared25s includes all process/fixture cleanup. Aggregate and phase caps frozen before runner authoring; each case gets unique private timing path.",
+    "rpc_seconds": 10,
+    "pg_lock_seconds": 5,
+    "pg_statement_seconds": 30,
+    "readiness_seconds": 30,
+    "graceful_then_forced_seconds": [
+      10,
+      5
+    ]
+  },
+  "obligations": [
+    {
+      "id": "CRASH-01",
+      "status": "pending_not_executed",
+      "category": "crash/restart/concurrency",
+      "requirements": [
+        "B03 H2",
+        "REQ-02",
+        "REQ-13",
+        "REQ-14 preservation",
+        "AT-16 prerequisite only"
+      ],
+      "purpose": "test_actual_started_event_survives_lost_start_response_and_recovers_same_run",
+      "target": "test_actual_started_event_survives_lost_start_response_and_recovers_same_run",
+      "method": "Use the concrete draft source named by case_ids plus its named process barrier. Independently observe committed SQL and exact history at the cut, kill saved PID/start-tick, recover the same build and storage. Review full literal oracles before execution.",
+      "agent": "TC",
+      "pass_criteria": "The named boundary is actually reached; every real attempt generation/token matches its literal oracle; no unauthorized projection or replacement run. Recovery preserves command/create receipt, G5 tree and one immutable admitted run/scope/sequence-1 receipt. History-deletion case instead quarantines with no replacement; no synthetic oracle substitution counts as proof.",
+      "expected_result": "One actual causal cut with retained before/cut/recovery evidence, bounded cleanup and all owned processes absent.",
+      "evidence": [
+        "Private literal SQL before/cut/after snapshots",
+        "Direct framed Temporal protobuf history where applicable",
+        "Private process PID/start-tick lifecycle and bounded case timing",
+        "Exact source/environment pins and JUnit ID; reviewed normalized public summary only"
+      ],
+      "failure_recovery": "Preserve failed source, SQL/history and process journal; stop only owned identities; diagnose the named boundary, update exact pins/reviews, rerun full H2 and affected G1-G5/H1. Never reset history or rewrite a receipt.",
+      "case_ids": [
+        "tests/ifpmic_api/test_accepted_start_response_loss.py::test_actual_started_event_survives_lost_start_response_and_recovers_same_run"
+      ],
+      "execution_authorized": false
+    },
+    {
+      "id": "CRASH-02",
+      "status": "pending_not_executed",
+      "category": "crash/restart/concurrency",
+      "requirements": [
+        "B03 H2",
+        "REQ-02",
+        "REQ-13",
+        "REQ-14 preservation",
+        "AT-16 prerequisite only"
+      ],
+      "purpose": "test_claim_commit_crash_reclaims_only_after_expiry",
+      "target": "test_claim_commit_crash_reclaims_only_after_expiry",
+      "method": "Use the concrete draft source named by case_ids plus its named process barrier. Independently observe committed SQL and exact history at the cut, kill saved PID/start-tick, recover the same build and storage. Review full literal oracles before execution.",
+      "agent": "TC",
+      "pass_criteria": "The named boundary is actually reached; every real attempt generation/token matches its literal oracle; no unauthorized projection or replacement run. Recovery preserves command/create receipt, G5 tree and one immutable admitted run/scope/sequence-1 receipt. History-deletion case instead quarantines with no replacement; no synthetic oracle substitution counts as proof.",
+      "expected_result": "One actual causal cut with retained before/cut/recovery evidence, bounded cleanup and all owned processes absent.",
+      "evidence": [
+        "Private literal SQL before/cut/after snapshots",
+        "Direct framed Temporal protobuf history where applicable",
+        "Private process PID/start-tick lifecycle and bounded case timing",
+        "Exact source/environment pins and JUnit ID; reviewed normalized public summary only"
+      ],
+      "failure_recovery": "Preserve failed source, SQL/history and process journal; stop only owned identities; diagnose the named boundary, update exact pins/reviews, rerun full H2 and affected G1-G5/H1. Never reset history or rewrite a receipt.",
+      "case_ids": [
+        "tests/ifpmic_api/test_h2_dispatcher_crashes.py::test_claim_commit_crash_reclaims_only_after_expiry"
+      ],
+      "execution_authorized": false
+    },
+    {
+      "id": "CRASH-03",
+      "status": "pending_not_executed",
+      "category": "crash/restart/concurrency",
+      "requirements": [
+        "B03 H2",
+        "REQ-02",
+        "REQ-13",
+        "REQ-14 preservation",
+        "AT-16 prerequisite only"
+      ],
+      "purpose": "test_start_response_before_admission_crash_recovers_same_run",
+      "target": "test_start_response_before_admission_crash_recovers_same_run",
+      "method": "Use the concrete draft source named by case_ids plus its named process barrier. Independently observe committed SQL and exact history at the cut, kill saved PID/start-tick, recover the same build and storage. Review full literal oracles before execution.",
+      "agent": "TC",
+      "pass_criteria": "The named boundary is actually reached; every real attempt generation/token matches its literal oracle; no unauthorized projection or replacement run. Recovery preserves command/create receipt, G5 tree and one immutable admitted run/scope/sequence-1 receipt. History-deletion case instead quarantines with no replacement; no synthetic oracle substitution counts as proof.",
+      "expected_result": "One actual causal cut with retained before/cut/recovery evidence, bounded cleanup and all owned processes absent.",
+      "evidence": [
+        "Private literal SQL before/cut/after snapshots",
+        "Direct framed Temporal protobuf history where applicable",
+        "Private process PID/start-tick lifecycle and bounded case timing",
+        "Exact source/environment pins and JUnit ID; reviewed normalized public summary only"
+      ],
+      "failure_recovery": "Preserve failed source, SQL/history and process journal; stop only owned identities; diagnose the named boundary, update exact pins/reviews, rerun full H2 and affected G1-G5/H1. Never reset history or rewrite a receipt.",
+      "case_ids": [
+        "tests/ifpmic_api/test_h2_dispatcher_crashes.py::test_start_response_before_admission_crash_recovers_same_run"
+      ],
+      "execution_authorized": false
+    },
+    {
+      "id": "CRASH-04",
+      "status": "pending_not_executed",
+      "category": "crash/restart/concurrency",
+      "requirements": [
+        "B03 H2",
+        "REQ-02",
+        "REQ-13",
+        "REQ-14 preservation",
+        "AT-16 prerequisite only"
+      ],
+      "purpose": "test_admission_before_ack_crash_recovers_same_run",
+      "target": "test_admission_before_ack_crash_recovers_same_run",
+      "method": "Use the concrete draft source named by case_ids plus its named process barrier. Independently observe committed SQL and exact history at the cut, kill saved PID/start-tick, recover the same build and storage. Review full literal oracles before execution.",
+      "agent": "TC",
+      "pass_criteria": "The named boundary is actually reached; every real attempt generation/token matches its literal oracle; no unauthorized projection or replacement run. Recovery preserves command/create receipt, G5 tree and one immutable admitted run/scope/sequence-1 receipt. History-deletion case instead quarantines with no replacement; no synthetic oracle substitution counts as proof.",
+      "expected_result": "One actual causal cut with retained before/cut/recovery evidence, bounded cleanup and all owned processes absent.",
+      "evidence": [
+        "Private literal SQL before/cut/after snapshots",
+        "Direct framed Temporal protobuf history where applicable",
+        "Private process PID/start-tick lifecycle and bounded case timing",
+        "Exact source/environment pins and JUnit ID; reviewed normalized public summary only"
+      ],
+      "failure_recovery": "Preserve failed source, SQL/history and process journal; stop only owned identities; diagnose the named boundary, update exact pins/reviews, rerun full H2 and affected G1-G5/H1. Never reset history or rewrite a receipt.",
+      "case_ids": [
+        "tests/ifpmic_api/test_h2_dispatcher_crashes.py::test_admission_before_ack_crash_recovers_same_run"
+      ],
+      "execution_authorized": false
+    },
+    {
+      "id": "CRASH-05",
+      "status": "pending_not_executed",
+      "category": "crash/restart/concurrency",
+      "requirements": [
+        "B03 H2",
+        "REQ-02",
+        "REQ-13",
+        "REQ-14 preservation",
+        "AT-16 prerequisite only"
+      ],
+      "purpose": "test_ack_before_worker_activation_projects_once",
+      "target": "test_ack_before_worker_activation_projects_once",
+      "method": "Use the concrete draft source named by case_ids plus its named process barrier. Independently observe committed SQL and exact history at the cut, kill saved PID/start-tick, recover the same build and storage. Review full literal oracles before execution.",
+      "agent": "TC",
+      "pass_criteria": "The named boundary is actually reached; every real attempt generation/token matches its literal oracle; no unauthorized projection or replacement run. Recovery preserves command/create receipt, G5 tree and one immutable admitted run/scope/sequence-1 receipt. History-deletion case instead quarantines with no replacement; no synthetic oracle substitution counts as proof.",
+      "expected_result": "One actual causal cut with retained before/cut/recovery evidence, bounded cleanup and all owned processes absent.",
+      "evidence": [
+        "Private literal SQL before/cut/after snapshots",
+        "Direct framed Temporal protobuf history where applicable",
+        "Private process PID/start-tick lifecycle and bounded case timing",
+        "Exact source/environment pins and JUnit ID; reviewed normalized public summary only"
+      ],
+      "failure_recovery": "Preserve failed source, SQL/history and process journal; stop only owned identities; diagnose the named boundary, update exact pins/reviews, rerun full H2 and affected G1-G5/H1. Never reset history or rewrite a receipt.",
+      "case_ids": [
+        "tests/ifpmic_api/test_h2_dispatcher_crashes.py::test_ack_before_worker_activation_projects_once"
+      ],
+      "execution_authorized": false
+    },
+    {
+      "id": "CRASH-06",
+      "status": "pending_not_executed",
+      "category": "crash/restart/concurrency",
+      "requirements": [
+        "B03 H2",
+        "REQ-02",
+        "REQ-13",
+        "REQ-14 preservation",
+        "AT-16 prerequisite only"
+      ],
+      "purpose": "test_two_live_dispatchers_stale_ack_cannot_change_recovered_run",
+      "target": "test_two_live_dispatchers_stale_ack_cannot_change_recovered_run",
+      "method": "Use the concrete draft source named by case_ids plus its named process barrier. Independently observe committed SQL and exact history at the cut, kill saved PID/start-tick, recover the same build and storage. Review full literal oracles before execution.",
+      "agent": "TC",
+      "pass_criteria": "The named boundary is actually reached; every real attempt generation/token matches its literal oracle; no unauthorized projection or replacement run. Recovery preserves command/create receipt, G5 tree and one immutable admitted run/scope/sequence-1 receipt. History-deletion case instead quarantines with no replacement; no synthetic oracle substitution counts as proof.",
+      "expected_result": "One actual causal cut with retained before/cut/recovery evidence, bounded cleanup and all owned processes absent.",
+      "evidence": [
+        "Private literal SQL before/cut/after snapshots",
+        "Direct framed Temporal protobuf history where applicable",
+        "Private process PID/start-tick lifecycle and bounded case timing",
+        "Exact source/environment pins and JUnit ID; reviewed normalized public summary only"
+      ],
+      "failure_recovery": "Preserve failed source, SQL/history and process journal; stop only owned identities; diagnose the named boundary, update exact pins/reviews, rerun full H2 and affected G1-G5/H1. Never reset history or rewrite a receipt.",
+      "case_ids": [
+        "tests/ifpmic_api/test_h2_dispatcher_crashes.py::test_two_live_dispatchers_stale_ack_cannot_change_recovered_run"
+      ],
+      "execution_authorized": false
+    },
+    {
+      "id": "CRASH-07",
+      "status": "pending_not_executed",
+      "category": "crash/restart/concurrency",
+      "requirements": [
+        "B03 H2",
+        "REQ-02",
+        "REQ-13",
+        "REQ-14 preservation",
+        "AT-16 prerequisite only"
+      ],
+      "purpose": "test_admitted_missing_history_is_quarantined_without_replacement",
+      "target": "test_admitted_missing_history_is_quarantined_without_replacement",
+      "method": "Use the concrete draft source named by case_ids plus its named process barrier. Independently observe committed SQL and exact history at the cut, kill saved PID/start-tick, recover the same build and storage. Review full literal oracles before execution.",
+      "agent": "TC",
+      "pass_criteria": "The named boundary is actually reached; every real attempt generation/token matches its literal oracle; no unauthorized projection or replacement run. Recovery preserves command/create receipt, G5 tree and one immutable admitted run/scope/sequence-1 receipt. History-deletion case instead quarantines with no replacement; no synthetic oracle substitution counts as proof.",
+      "expected_result": "One actual causal cut with retained before/cut/recovery evidence, bounded cleanup and all owned processes absent.",
+      "evidence": [
+        "Private literal SQL before/cut/after snapshots",
+        "Direct framed Temporal protobuf history where applicable",
+        "Private process PID/start-tick lifecycle and bounded case timing",
+        "Exact source/environment pins and JUnit ID; reviewed normalized public summary only"
+      ],
+      "failure_recovery": "Preserve failed source, SQL/history and process journal; stop only owned identities; diagnose the named boundary, update exact pins/reviews, rerun full H2 and affected G1-G5/H1. Never reset history or rewrite a receipt.",
+      "case_ids": [
+        "tests/ifpmic_api/test_h2_dispatcher_crashes.py::test_admitted_missing_history_is_quarantined_without_replacement"
+      ],
+      "execution_authorized": false
+    },
+    {
+      "id": "CRASH-08",
+      "status": "pending_not_executed",
+      "category": "crash/restart/concurrency",
+      "requirements": [
+        "B03 H2",
+        "REQ-02",
+        "REQ-13",
+        "REQ-14 preservation",
+        "AT-16 prerequisite only"
+      ],
+      "purpose": "test_postgres_and_temporal_restart_preserve_same_execution_and_receipt",
+      "target": "test_postgres_and_temporal_restart_preserve_same_execution_and_receipt",
+      "method": "Use the concrete draft source named by case_ids plus its named process barrier. Independently observe committed SQL and exact history at the cut, kill saved PID/start-tick, recover the same build and storage. Review full literal oracles before execution.",
+      "agent": "TC",
+      "pass_criteria": "The named boundary is actually reached; every real attempt generation/token matches its literal oracle; no unauthorized projection or replacement run. Recovery preserves command/create receipt, G5 tree and one immutable admitted run/scope/sequence-1 receipt. History-deletion case instead quarantines with no replacement; no synthetic oracle substitution counts as proof.",
+      "expected_result": "One actual causal cut with retained before/cut/recovery evidence, bounded cleanup and all owned processes absent.",
+      "evidence": [
+        "Private literal SQL before/cut/after snapshots",
+        "Direct framed Temporal protobuf history where applicable",
+        "Private process PID/start-tick lifecycle and bounded case timing",
+        "Exact source/environment pins and JUnit ID; reviewed normalized public summary only"
+      ],
+      "failure_recovery": "Preserve failed source, SQL/history and process journal; stop only owned identities; diagnose the named boundary, update exact pins/reviews, rerun full H2 and affected G1-G5/H1. Never reset history or rewrite a receipt.",
+      "case_ids": [
+        "tests/ifpmic_api/test_h2_runtime_restart_and_history.py::test_postgres_and_temporal_restart_preserve_same_execution_and_receipt"
+      ],
+      "execution_authorized": false
+    },
+    {
+      "id": "CRASH-09",
+      "status": "pending_not_executed",
+      "category": "crash/restart/concurrency",
+      "requirements": [
+        "B03 H2",
+        "REQ-02",
+        "REQ-13",
+        "REQ-14 preservation",
+        "AT-16 prerequisite only"
+      ],
+      "purpose": "test_h2_api_commit_before_response_sigkill_retry_applies_once",
+      "target": "test_h2_api_commit_before_response_sigkill_retry_applies_once",
+      "method": "Use the concrete draft source named by case_ids plus its named process barrier. Independently observe committed SQL and exact history at the cut, kill saved PID/start-tick, recover the same build and storage. Review full literal oracles before execution.",
+      "agent": "TC",
+      "pass_criteria": "The named boundary is actually reached; every real attempt generation/token matches its literal oracle; no unauthorized projection or replacement run. Recovery preserves command/create receipt, G5 tree and one immutable admitted run/scope/sequence-1 receipt. History-deletion case instead quarantines with no replacement; no synthetic oracle substitution counts as proof.",
+      "expected_result": "One actual causal cut with retained before/cut/recovery evidence, bounded cleanup and all owned processes absent.",
+      "evidence": [
+        "Private literal SQL before/cut/after snapshots",
+        "Direct framed Temporal protobuf history where applicable",
+        "Private process PID/start-tick lifecycle and bounded case timing",
+        "Exact source/environment pins and JUnit ID; reviewed normalized public summary only"
+      ],
+      "failure_recovery": "Preserve failed source, SQL/history and process journal; stop only owned identities; diagnose the named boundary, update exact pins/reviews, rerun full H2 and affected G1-G5/H1. Never reset history or rewrite a receipt.",
+      "case_ids": [
+        "tests/ifpmic_api/test_h2_worker_api_crashes.py::test_h2_api_commit_before_response_sigkill_retry_applies_once"
+      ],
+      "execution_authorized": false
+    },
+    {
+      "id": "CRASH-10",
+      "status": "pending_not_executed",
+      "category": "crash/restart/concurrency",
+      "requirements": [
+        "B03 H2",
+        "REQ-02",
+        "REQ-13",
+        "REQ-14 preservation",
+        "AT-16 prerequisite only"
+      ],
+      "purpose": "test_h2_worker_projection_before_pg_commit_sigkill_rolls_back_then_retries",
+      "target": "test_h2_worker_projection_before_pg_commit_sigkill_rolls_back_then_retries",
+      "method": "Use the concrete draft source named by case_ids plus its named process barrier. Independently observe committed SQL and exact history at the cut, kill saved PID/start-tick, recover the same build and storage. Review full literal oracles before execution.",
+      "agent": "TC",
+      "pass_criteria": "The named boundary is actually reached; every real attempt generation/token matches its literal oracle; no unauthorized projection or replacement run. Recovery preserves command/create receipt, G5 tree and one immutable admitted run/scope/sequence-1 receipt. History-deletion case instead quarantines with no replacement; no synthetic oracle substitution counts as proof.",
+      "expected_result": "One actual causal cut with retained before/cut/recovery evidence, bounded cleanup and all owned processes absent.",
+      "evidence": [
+        "Private literal SQL before/cut/after snapshots",
+        "Direct framed Temporal protobuf history where applicable",
+        "Private process PID/start-tick lifecycle and bounded case timing",
+        "Exact source/environment pins and JUnit ID; reviewed normalized public summary only"
+      ],
+      "failure_recovery": "Preserve failed source, SQL/history and process journal; stop only owned identities; diagnose the named boundary, update exact pins/reviews, rerun full H2 and affected G1-G5/H1. Never reset history or rewrite a receipt.",
+      "case_ids": [
+        "tests/ifpmic_api/test_h2_worker_api_crashes.py::test_h2_worker_projection_before_pg_commit_sigkill_rolls_back_then_retries"
+      ],
+      "execution_authorized": false
+    },
+    {
+      "id": "CRASH-11",
+      "status": "pending_not_executed",
+      "category": "crash/restart/concurrency",
+      "requirements": [
+        "B03 H2",
+        "REQ-02",
+        "REQ-13",
+        "REQ-14 preservation",
+        "AT-16 prerequisite only"
+      ],
+      "purpose": "test_h2_worker_projection_after_pg_commit_sigkill_replays_receipt",
+      "target": "test_h2_worker_projection_after_pg_commit_sigkill_replays_receipt",
+      "method": "Use the concrete draft source named by case_ids plus its named process barrier. Independently observe committed SQL and exact history at the cut, kill saved PID/start-tick, recover the same build and storage. Review full literal oracles before execution.",
+      "agent": "TC",
+      "pass_criteria": "The named boundary is actually reached; every real attempt generation/token matches its literal oracle; no unauthorized projection or replacement run. Recovery preserves command/create receipt, G5 tree and one immutable admitted run/scope/sequence-1 receipt. History-deletion case instead quarantines with no replacement; no synthetic oracle substitution counts as proof.",
+      "expected_result": "One actual causal cut with retained before/cut/recovery evidence, bounded cleanup and all owned processes absent.",
+      "evidence": [
+        "Private literal SQL before/cut/after snapshots",
+        "Direct framed Temporal protobuf history where applicable",
+        "Private process PID/start-tick lifecycle and bounded case timing",
+        "Exact source/environment pins and JUnit ID; reviewed normalized public summary only"
+      ],
+      "failure_recovery": "Preserve failed source, SQL/history and process journal; stop only owned identities; diagnose the named boundary, update exact pins/reviews, rerun full H2 and affected G1-G5/H1. Never reset history or rewrite a receipt.",
+      "case_ids": [
+        "tests/ifpmic_api/test_h2_worker_api_crashes.py::test_h2_worker_projection_after_pg_commit_sigkill_replays_receipt"
+      ],
+      "execution_authorized": false
+    },
+    {
+      "id": "CRASH-12",
+      "status": "pending_not_executed",
+      "category": "crash/restart/concurrency",
+      "requirements": [
+        "B03 H2",
+        "REQ-02",
+        "REQ-13",
+        "REQ-14 preservation",
+        "AT-16 prerequisite only"
+      ],
+      "purpose": "test_h2_activity_completed_before_workflow_decision_sigkill_replays_history",
+      "target": "test_h2_activity_completed_before_workflow_decision_sigkill_replays_history",
+      "method": "Use the concrete draft source named by case_ids plus its named process barrier. Independently observe committed SQL and exact history at the cut, kill saved PID/start-tick, recover the same build and storage. Review full literal oracles before execution.",
+      "agent": "TC",
+      "pass_criteria": "The named boundary is actually reached; every real attempt generation/token matches its literal oracle; no unauthorized projection or replacement run. Recovery preserves command/create receipt, G5 tree and one immutable admitted run/scope/sequence-1 receipt. History-deletion case instead quarantines with no replacement; no synthetic oracle substitution counts as proof.",
+      "expected_result": "One actual causal cut with retained before/cut/recovery evidence, bounded cleanup and all owned processes absent.",
+      "evidence": [
+        "Private literal SQL before/cut/after snapshots",
+        "Direct framed Temporal protobuf history where applicable",
+        "Private process PID/start-tick lifecycle and bounded case timing",
+        "Exact source/environment pins and JUnit ID; reviewed normalized public summary only"
+      ],
+      "failure_recovery": "Preserve failed source, SQL/history and process journal; stop only owned identities; diagnose the named boundary, update exact pins/reviews, rerun full H2 and affected G1-G5/H1. Never reset history or rewrite a receipt.",
+      "case_ids": [
+        "tests/ifpmic_api/test_h2_worker_api_crashes.py::test_h2_activity_completed_before_workflow_decision_sigkill_replays_history"
+      ],
+      "execution_authorized": false
+    },
+    {
+      "id": "NEG-STARTUP",
+      "status": "pending_not_executed",
+      "category": "exception/privacy",
+      "requirements": [
+        "B03 H2",
+        "REQ-02",
+        "REQ-13",
+        "REQ-14 preservation",
+        "AT-16 prerequisite only"
+      ],
+      "purpose": "Reject invalid machine startup before polling or claim",
+      "target": "Reject invalid machine startup before polling or claim",
+      "method": "Parameterize actual production dispatcher and worker CLI with missing/disabled deployment, principal and build; wrong role credentials and recreated same-name OID; private endpoint/deployment/namespace/build/source/environment mismatches. Use a passive owned loopback listener and independent SQL audit. Modify private expected manifest/config copies only, never source or venv. A missing mapping before any job exists is a distinct setup.",
+      "agent": "TC",
+      "pass_criteria": "Every literal variant exits3 with only fixed public code; listener accepts0 connections, command generation/attempts unchanged and no run/scope/receipt. Valid control remains the real normal CLI case.",
+      "expected_result": "Missing/disabled/foreign machine identities cannot connect, claim or poll.",
+      "evidence": [
+        "Private literal SQL before/cut/after snapshots",
+        "Direct framed Temporal protobuf history where applicable",
+        "Private process PID/start-tick lifecycle and bounded case timing",
+        "Exact source/environment pins and JUnit ID; reviewed normalized public summary only"
+      ],
+      "failure_recovery": "Preserve failed source, SQL/history and process journal; stop only owned identities; diagnose the named boundary, update exact pins/reviews, rerun full H2 and affected G1-G5/H1. Never reset history or rewrite a receipt.",
+      "case_ids": [],
+      "execution_authorized": false
+    },
+    {
+      "id": "NEG-MACHINE-RACE",
+      "status": "pending_not_executed",
+      "category": "boundary/concurrency",
+      "requirements": [
+        "B03 H2",
+        "REQ-02",
+        "REQ-13",
+        "REQ-14 preservation",
+        "AT-16 prerequisite only"
+      ],
+      "purpose": "Machine authority disable serializes with authenticated SQL claim",
+      "target": "Machine authority disable serializes with authenticated SQL claim",
+      "method": "Two real DB sessions and owned dispatcher child: hold before_claim_delivery_commit after real principal SHARE lock; independently observe owner disable blocked through pg_blocking_pids. Release claim, pause after_claim_commit, commit disable, then release delivery. Include disable-before-claim control.",
+      "agent": "TC",
+      "pass_criteria": "Observe actual locking order rather than sleeps; denied current machine causes no Start/projection and no privilege inheritance. Record allowed claim generation and fixed retry/failure without mutating business outcome.",
+      "expected_result": "Current principal disable has an explicit serial order and no later unauthorized effect.",
+      "evidence": [
+        "Private literal SQL before/cut/after snapshots",
+        "Direct framed Temporal protobuf history where applicable",
+        "Private process PID/start-tick lifecycle and bounded case timing",
+        "Exact source/environment pins and JUnit ID; reviewed normalized public summary only"
+      ],
+      "failure_recovery": "Preserve failed source, SQL/history and process journal; stop only owned identities; diagnose the named boundary, update exact pins/reviews, rerun full H2 and affected G1-G5/H1. Never reset history or rewrite a receipt.",
+      "case_ids": [],
+      "execution_authorized": false
+    },
+    {
+      "id": "NEG-STARTED",
+      "status": "pending_not_executed",
+      "category": "exception/boundary",
+      "requirements": [
+        "B03 H2",
+        "REQ-02",
+        "REQ-13",
+        "REQ-14 preservation",
+        "AT-16 prerequisite only"
+      ],
+      "purpose": "Foreign or malformed actual Started history fails closed",
+      "target": "Foreign or malformed actual Started history fails closed",
+      "method": "Before released dispatcher Start, use a separate direct client to start exact owned workflow ID with one literal mismatch per variant: missing/extra/malformed input, binding digest, job/project, workflow type, task queue/build. Keep worker stopped; observe actual persisted Started fields and resumed reconciliation.",
+      "agent": "TC",
+      "pass_criteria": "No admitted run, scope or receipt; DRAFT0 and original accepted receipt preserved; fixed BINDING_CONFLICT/RUN_CONFLICT quarantines. Exactly one rogue fixture start, no fallback/new ID.",
+      "expected_result": "Mismatched real history cannot be adopted.",
+      "evidence": [
+        "Private literal SQL before/cut/after snapshots",
+        "Direct framed Temporal protobuf history where applicable",
+        "Private process PID/start-tick lifecycle and bounded case timing",
+        "Exact source/environment pins and JUnit ID; reviewed normalized public summary only"
+      ],
+      "failure_recovery": "Preserve failed source, SQL/history and process journal; stop only owned identities; diagnose the named boundary, update exact pins/reviews, rerun full H2 and affected G1-G5/H1. Never reset history or rewrite a receipt.",
+      "case_ids": [],
+      "execution_authorized": false
+    },
+    {
+      "id": "NEG-FOREIGN-DEPLOYMENT",
+      "status": "pending_not_executed",
+      "category": "exception/boundary",
+      "requirements": [
+        "B03 H2",
+        "REQ-02",
+        "REQ-13",
+        "REQ-14 preservation",
+        "AT-16 prerequisite only"
+      ],
+      "purpose": "Same namespace on another server is not the registered deployment",
+      "target": "Same namespace on another server is not the registered deployment",
+      "method": "Run two owned loopback servers with distinct private storage; owner registers distinct deployment identities. Attempt old binding through foreign actual dispatcher/projector credentials/config and same namespace.",
+      "agent": "TC",
+      "pass_criteria": "Old binding/run/build/source/config remains immutable; no foreign reservation/admission/projection, no fallback connection. Distinct deployment identity, not namespace text alone, fences effects.",
+      "expected_result": "No cross-deployment authority transfer.",
+      "evidence": [
+        "Private literal SQL before/cut/after snapshots",
+        "Direct framed Temporal protobuf history where applicable",
+        "Private process PID/start-tick lifecycle and bounded case timing",
+        "Exact source/environment pins and JUnit ID; reviewed normalized public summary only"
+      ],
+      "failure_recovery": "Preserve failed source, SQL/history and process journal; stop only owned identities; diagnose the named boundary, update exact pins/reviews, rerun full H2 and affected G1-G5/H1. Never reset history or rewrite a receipt.",
+      "case_ids": [],
+      "execution_authorized": false
+    },
+    {
+      "id": "NEG-WORKSPACE",
+      "status": "pending_not_executed",
+      "category": "exception/boundary",
+      "requirements": [
+        "B03 H2",
+        "REQ-02",
+        "REQ-13",
+        "REQ-14 preservation",
+        "AT-16 prerequisite only"
+      ],
+      "purpose": "Only authentic current READY workspace may activate",
+      "target": "Only authentic current READY workspace may activate",
+      "method": "Actual dispatcher/worker variants RESERVED, PROVISIONING, ERROR, missing/forged marker, wrong token/generation and symlink. Use synthetic private fixture trees and literal SQL state; never repair during validator call.",
+      "agent": "TC",
+      "pass_criteria": "Non-READY stays accepted DRAFT0 without Start; forged READY quarantines or waits using documented fixed code and no effect. Owner confirms tree unchanged and no unauthorized file following. Current valid generation control is normal CLI case.",
+      "expected_result": "G5 preparation and filesystem markers do not imply activation success.",
+      "evidence": [
+        "Private literal SQL before/cut/after snapshots",
+        "Direct framed Temporal protobuf history where applicable",
+        "Private process PID/start-tick lifecycle and bounded case timing",
+        "Exact source/environment pins and JUnit ID; reviewed normalized public summary only"
+      ],
+      "failure_recovery": "Preserve failed source, SQL/history and process journal; stop only owned identities; diagnose the named boundary, update exact pins/reviews, rerun full H2 and affected G1-G5/H1. Never reset history or rewrite a receipt.",
+      "case_ids": [],
+      "execution_authorized": false
+    },
+    {
+      "id": "NEG-AUTHORITY",
+      "status": "pending_not_executed",
+      "category": "exception/concurrency",
+      "requirements": [
+        "B03 H2",
+        "REQ-02",
+        "REQ-13",
+        "REQ-14 preservation",
+        "AT-16 prerequisite only"
+      ],
+      "purpose": "First projection rechecks current human membership and eligibility",
+      "target": "First projection rechecks current human membership and eligibility",
+      "method": "Pause actual worker before first projection; revoke membership or eligibility on project guard in independent transaction, resume real activity. Include opposite serialization order with committed receipt replay.",
+      "agent": "TC",
+      "pass_criteria": "Revocation first creates exactly one immutable rejected command receipt and no QUEUED revision; projection first replays identical committed receipt after revoke. API access follows current authorization, accepted receipt never rewritten.",
+      "expected_result": "Current authority and past immutable outcomes retain separate semantics.",
+      "evidence": [
+        "Private literal SQL before/cut/after snapshots",
+        "Direct framed Temporal protobuf history where applicable",
+        "Private process PID/start-tick lifecycle and bounded case timing",
+        "Exact source/environment pins and JUnit ID; reviewed normalized public summary only"
+      ],
+      "failure_recovery": "Preserve failed source, SQL/history and process journal; stop only owned identities; diagnose the named boundary, update exact pins/reviews, rerun full H2 and affected G1-G5/H1. Never reset history or rewrite a receipt.",
+      "case_ids": [],
+      "execution_authorized": false
+    },
+    {
+      "id": "NEG-PROJECTION-FENCES",
+      "status": "pending_not_executed",
+      "category": "boundary/privacy",
+      "requirements": [
+        "B03 H2",
+        "REQ-02",
+        "REQ-13",
+        "REQ-14 preservation",
+        "AT-16 prerequisite only"
+      ],
+      "purpose": "Receipt, run, job, build, typed SQL and service-role fences",
+      "target": "Receipt, run, job, build, typed SQL and service-role fences",
+      "method": "Freshly rerun all accepted real SQL role/ACL/OID/receipt cases, and add actual worker retries with same proposal after revoke. Inspect minimal actual history results. SQL function argument-shape/privilege attacks are real SQL fixtures, not claims of separate Temporal starts.",
+      "agent": "TC",
+      "pass_criteria": "Same proposal receipt bytes identical; changed digest collides without overwrite; foreign job/run/build cannot read or project. No generic state patch, SET ROLE, DML or shadow helper bypass. Every omitted extra runtime permutation is justified against the exact function boundary.",
+      "expected_result": "One effective projection per exact immutable scope; zero raw secrets in history.",
+      "evidence": [
+        "Private literal SQL before/cut/after snapshots",
+        "Direct framed Temporal protobuf history where applicable",
+        "Private process PID/start-tick lifecycle and bounded case timing",
+        "Exact source/environment pins and JUnit ID; reviewed normalized public summary only"
+      ],
+      "failure_recovery": "Preserve failed source, SQL/history and process journal; stop only owned identities; diagnose the named boundary, update exact pins/reviews, rerun full H2 and affected G1-G5/H1. Never reset history or rewrite a receipt.",
+      "case_ids": [
+        "tests/ifpmic_api/test_workflow_schema.py::test_h2_real_create_activation_receipt_replay_and_run_fences",
+        "tests/ifpmic_api/test_workflow_schema.py::test_h2_role_registry_and_function_acl_match_static_contract",
+        "tests/ifpmic_api/test_workflow_schema.py::test_h2_four_role_oid_recreation_is_drift_and_does_not_rebind",
+        "tests/ifpmic_api/test_workflow_schema.py::test_h2_service_roles_use_scram_without_trust_fallthrough"
+      ],
+      "execution_authorized": false
+    },
+    {
+      "id": "NEG-PREADMISSION",
+      "status": "pending_not_executed",
+      "category": "boundary/concurrency",
+      "requirements": [
+        "B03 H2",
+        "REQ-02",
+        "REQ-13",
+        "REQ-14 preservation",
+        "AT-16 prerequisite only"
+      ],
+      "purpose": "A real activity arriving before admission has zero effects",
+      "target": "A real activity arriving before admission has zero effects",
+      "method": "Pause actual dispatcher after Started before admit CAS, start registered worker, independently observe real activity attempts/history and DRAFT0/no scope or receipt. Release admission and recover exact same run.",
+      "agent": "TC",
+      "pass_criteria": "At least one actual read_activation returns wait before admission; no project_activation effect. After scope commit the same worker reaches QUEUED1 once without a new run or workspace.",
+      "expected_result": "Scope admission is a necessary authorization boundary.",
+      "evidence": [
+        "Private literal SQL before/cut/after snapshots",
+        "Direct framed Temporal protobuf history where applicable",
+        "Private process PID/start-tick lifecycle and bounded case timing",
+        "Exact source/environment pins and JUnit ID; reviewed normalized public summary only"
+      ],
+      "failure_recovery": "Preserve failed source, SQL/history and process journal; stop only owned identities; diagnose the named boundary, update exact pins/reviews, rerun full H2 and affected G1-G5/H1. Never reset history or rewrite a receipt.",
+      "case_ids": [],
+      "execution_authorized": false
+    },
+    {
+      "id": "NEG-WINDOW",
+      "status": "pending_not_executed",
+      "category": "boundary",
+      "requirements": [
+        "B03 H2",
+        "REQ-02",
+        "REQ-13",
+        "REQ-14 preservation",
+        "AT-16 prerequisite only"
+      ],
+      "purpose": "Finite reconciliation deadline and retention checks before/at/after boundary",
+      "target": "Finite reconciliation deadline and retention checks before/at/after boundary",
+      "method": "Owner initializes only synthetic binding first-start/deadline fields while NULL, respecting immutable triggers. Before/after use actual DB clock and real dispatcher. For exact equality only, proposed TC clock seam in a dedicated synthetic database: owner reads pg_get_functiondef for ifpmic.record_start_attempt; asserts exactly one instant:=clock_timestamp() assignment; creates a temporary same-identity function definition replacing only that assignment with a frozen timestamptz literal, preserving all authorization, lease and <= predicates. Invoke with real SCRAM dispatcher, preserve before/at/after SQL and literal replacement diff; restore byte-identical original pg_get_functiondef in finally. No triggers disabled and no production clock switch. Both independent and TC reviews must explicitly accept this fixture exception before authoring. Test actual unmodified runtime before/after separately. Retention variants NULL,3600,3601; partial/missing shape constraints use actual unchanged DDL.",
+      "agent": "TC",
+      "pass_criteria": "Before deadline permits same-ID reconciliation without extending first time; at/after quarantines START_WINDOW_EXPIRED and no Start. Unknown/insufficient retention quarantines RETENTION_UNVERIFIED. Fields remain immutable across retries; no one-hour sleep or trigger disable.",
+      "expected_result": "The finite safety window has real unmodified-runtime before/after proof and an explicitly isolated equality-clock proof. The equality seam is not production time behavior evidence.",
+      "evidence": [
+        "Private literal SQL before/cut/after snapshots",
+        "Direct framed Temporal protobuf history where applicable",
+        "Private process PID/start-tick lifecycle and bounded case timing",
+        "Exact source/environment pins and JUnit ID; reviewed normalized public summary only"
+      ],
+      "failure_recovery": "Preserve failed source, SQL/history and process journal; stop only owned identities; diagnose the named boundary, update exact pins/reviews, rerun full H2 and affected G1-G5/H1. Never reset history or rewrite a receipt.",
+      "case_ids": [],
+      "execution_authorized": false
+    },
+    {
+      "id": "NEG-RETENTION-RPC",
+      "status": "pending_not_executed",
+      "category": "exception",
+      "requirements": [
+        "B03 H2",
+        "REQ-02",
+        "REQ-13",
+        "REQ-14 preservation",
+        "AT-16 prerequisite only"
+      ],
+      "purpose": "Unverifiable real namespace configuration never authorizes Start",
+      "target": "Unverifiable real namespace configuration never authorizes Start",
+      "method": "Pause after real history NotFound and before describe_namespace, stop only owned Temporal server or block actual request path, then release. Use a constructor-only hook if existing barriers cannot establish causal order; Code-dev must author/review any new product seam separately.",
+      "agent": "TC",
+      "pass_criteria": "Actual RPC fails/times out within10s; no Start; SQL quarantines RETENTION_UNVERIFIED without job/command business change. Raw network/history evidence retained privately.",
+      "expected_result": "No guessed retention or default fallback.",
+      "evidence": [
+        "Private literal SQL before/cut/after snapshots",
+        "Direct framed Temporal protobuf history where applicable",
+        "Private process PID/start-tick lifecycle and bounded case timing",
+        "Exact source/environment pins and JUnit ID; reviewed normalized public summary only"
+      ],
+      "failure_recovery": "Preserve failed source, SQL/history and process journal; stop only owned identities; diagnose the named boundary, update exact pins/reviews, rerun full H2 and affected G1-G5/H1. Never reset history or rewrite a receipt.",
+      "case_ids": [],
+      "execution_authorized": false
+    },
+    {
+      "id": "NEG-NONCREATE",
+      "status": "pending_not_executed",
+      "category": "normal/boundary",
+      "requirements": [
+        "B03 H2",
+        "REQ-02",
+        "REQ-13",
+        "REQ-14 preservation",
+        "AT-16 prerequisite only"
+      ],
+      "purpose": "Non-create durable command notifies the admitted run without starting another",
+      "target": "Non-create durable command notifies the admitted run without starting another",
+      "method": "Owner seeds a literal synthetic human/plan route command and outbox only for H2 transport, after real create activation. Actual dispatcher signals exact admitted run; observe signal history and workflow query. H4 HTTP endpoint/task acceptance remains pending.",
+      "agent": "TC",
+      "pass_criteria": "One command_available notification, original create provenance unchanged, no new Started/run/scope/receipt/revision or human task consumption. A pre-admission non-create delivery waits.",
+      "expected_result": "Transport can notify without making a business decision.",
+      "evidence": [
+        "Private literal SQL before/cut/after snapshots",
+        "Direct framed Temporal protobuf history where applicable",
+        "Private process PID/start-tick lifecycle and bounded case timing",
+        "Exact source/environment pins and JUnit ID; reviewed normalized public summary only"
+      ],
+      "failure_recovery": "Preserve failed source, SQL/history and process journal; stop only owned identities; diagnose the named boundary, update exact pins/reviews, rerun full H2 and affected G1-G5/H1. Never reset history or rewrite a receipt.",
+      "case_ids": [],
+      "execution_authorized": false
+    },
+    {
+      "id": "NEG-RUNTIME-FAILURE",
+      "status": "pending_not_executed",
+      "category": "exception/concurrency",
+      "requirements": [
+        "B03 H2",
+        "REQ-02",
+        "REQ-13",
+        "REQ-14 preservation",
+        "AT-16 prerequisite only"
+      ],
+      "purpose": "Fatal poller failure concurrent with stop is surfaced",
+      "target": "Fatal poller failure concurrent with stop is surfaced",
+      "method": "Run actual execution_runtime.run in an owned test-only injected child with controlled real exception source and private barriers. Cover unexpected successful pump/worker return, fatal exception, fatal exception concurrent with SIGTERM, normal SIGTERM control. No product environment fault switch.",
+      "agent": "TC",
+      "pass_criteria": "Unsolicited return/exception exits fixed failure3; requested normal shutdown exits0. Exception in completed tasks is not swallowed by stop. Private journal proves injected ordering and all identities absent.",
+      "expected_result": "Actual process behavior supports the prior source-only shutdown review.",
+      "evidence": [
+        "Private literal SQL before/cut/after snapshots",
+        "Direct framed Temporal protobuf history where applicable",
+        "Private process PID/start-tick lifecycle and bounded case timing",
+        "Exact source/environment pins and JUnit ID; reviewed normalized public summary only"
+      ],
+      "failure_recovery": "Preserve failed source, SQL/history and process journal; stop only owned identities; diagnose the named boundary, update exact pins/reviews, rerun full H2 and affected G1-G5/H1. Never reset history or rewrite a receipt.",
+      "case_ids": [],
+      "execution_authorized": false
+    },
+    {
+      "id": "NEG-HUNG-DRIVER",
+      "status": "pending_not_executed",
+      "category": "exception/boundary",
+      "requirements": [
+        "B03 H2",
+        "REQ-02",
+        "REQ-13",
+        "REQ-14 preservation",
+        "AT-16 prerequisite only"
+      ],
+      "purpose": "Uncancellable driver cannot prevent bounded owned-process termination",
+      "target": "Uncancellable driver cannot prevent bounded owned-process termination",
+      "method": "Owned injected child enters a real blocking thread through test-only constructor dependency injection. Send SIGTERM after observed block; retain any real private open SQL transaction and verify rollback after child exit.",
+      "agent": "TC",
+      "pass_criteria": "Self-only15s watchdog terminates process with failure3 within reviewed tolerance; parent records PID/start-tick absence, no foreign signalling and rollback of uncommitted effects. Parent timeout alone is not proof.",
+      "expected_result": "Hung thread cannot leave an indefinite worker or committed partial state.",
+      "evidence": [
+        "Private literal SQL before/cut/after snapshots",
+        "Direct framed Temporal protobuf history where applicable",
+        "Private process PID/start-tick lifecycle and bounded case timing",
+        "Exact source/environment pins and JUnit ID; reviewed normalized public summary only"
+      ],
+      "failure_recovery": "Preserve failed source, SQL/history and process journal; stop only owned identities; diagnose the named boundary, update exact pins/reviews, rerun full H2 and affected G1-G5/H1. Never reset history or rewrite a receipt.",
+      "case_ids": [],
+      "execution_authorized": false
+    }
+  ],
+  "final_gate": {
+    "purpose": "Qualify full H2 local activation/delivery substage against all requirements, not the full original AX goal.",
+    "target": "All obligations, exact new IDs,407 retained IDs, immutable originals and raw/public evidence.",
+    "method": "Bounded frozen candidate gate; independent raw source/environment/SQL/history/process/privacy audit.",
+    "agent": "Code-dev runner + independent final reviewer; TC owns case oracles.",
+    "pass_criteria": "Every mandatory literal ID passes with0fail/0error/0skip/0timeout; unchanged gate pins and original17+2; all owned processes absent; independently accepted evidence for every obligation; no hidden omission or speculative success.",
+    "expected_result": "Only H2 local activation/durable-delivery substage may become verified. B03/fullAX/originalAT remain pending their own complete gates.",
+    "evidence": "Private source ZIP/raw logs/SQL/history/auth/process/timing/JUnit mode0700/0600, reviewed public counts/hashes/synthetic normalized summary and exact independent decision.",
+    "failure_recovery": "Preserve failed source, SQL/history and process journal; stop only owned identities; diagnose the named boundary, update exact pins/reviews, rerun full H2 and affected G1-G5/H1. Never reset history or rewrite a receipt."
+  },
+  "omissions": [
+    {
+      "item": "Remote company SSO, real business Agent/device, real deployment/submission",
+      "reason": "H2 activation-only local boundary; separate original environment and approval stages required.",
+      "residual_risk": "No claim of production availability, actual measurement/quality or deployment readiness."
+    },
+    {
+      "item": "Exact equality TC DB-clock seam is proposed, not approved or authored",
+      "reason": "clock_timestamp cannot deterministically equal a pre-set deadline; the isolated owner replacement alters only the single clock assignment, never the safety comparator.",
+      "residual_risk": "Reviewer may reject this method; NEG-WINDOW remains pending and prevents H2 acceptance until an approved exact method passes. Synthetic clock proof cannot replace actual runtime before/after tests."
+    }
+  ],
+  "execution_authorized": false,
+  "authoring_review_scope": "This review can approve or reject the additional verification methods and TC authoring only. It does not approve execution, source correctness, new test success, runner authoring or H2 completion. Existing12 draft cases remain under their prior authoring contract and require concrete source/oracle review."
+}

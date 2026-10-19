@@ -440,7 +440,24 @@
           },
           "runtime_normal_candidate_fingerprint": "7a66f653bfca7bf04ed84fe89627f3d88c91f608493402c0e48e4ba7a259c49a",
           "runtime_normal_progress_reconciliation": "evidence/b03/h2-runtime-normal-progress-reconciliation.json",
-          "runtime_next_steps": "evidence/b03/h2-runtime-normal-next-steps.json"
+          "runtime_next_steps": "evidence/b03/h2-runtime-normal-next-steps.json",
+          "runtime_full_preparation": {
+            "status": "additional_tc_authoring_methods_approved_no_execution",
+            "authoring_checkpoint_commit": "ed2d09983977407320dc9ed23cf0e6e46c9fc221",
+            "verification_plan": "evidence/b03/h2-runtime-full-verification-plan.json",
+            "plan_review_status": "independent_and_tc_approved_authoring_only",
+            "planned_obligation_groups": 25,
+            "authored_draft_crash_case_functions": 12,
+            "tests_executed": false,
+            "static_changes": "Real generation-specific crash oracles replace synthetic normal-row adaptation; prepare failure cleanup retains owned children; worker/API proxy cut and immutable receipt replay checks tightened. These are static authoring fixes, not runtime proof.",
+            "pending": "Finish all25 obligation groups and exact literal inventory; resolve fixture teardown budget/current restarted-PG identity; freeze ledger/contract and independently review runner/pre-gate before actual tests.",
+            "acceptance_boundary": "407-case evidence remains historical only for its frozen candidate. No new crash/negative passes; fullH2, B03, originalAT and finalAX remain incomplete.",
+            "plan_sha256": "c6964bccff0d4cec1ac00f18fbb267d5d1a4a5887e53844c604333b7c059486c",
+            "plan_acceptance": "evidence/b03/h2-runtime-full-plan-acceptance.json",
+            "independent_plan_review": "evidence/b03/h2-runtime-full-plan-review.json",
+            "tc_plan_review": "evidence/b03/h2-runtime-full-tc-plan-review.json",
+            "static_checkpoint": "evidence/b03/h2-runtime-crash-static-checkpoint.json"
+          }
         }
       ]
     },
@@ -617,12 +634,12 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "H2: integrate and independently review the TC private accepted-start-loss draft as one part of the complete mandatory crash/boundary suite. Complete all ten required crash cuts, real history deletion and runtime negative cases; freeze full ledger/runner before execution and rerun407 retained IDs plus every addition. H2/B03, H3-H7, originalAT32, final workflow visualization and deployment approvals remain incomplete.",
+  "next_step": "H2: TC is authoring actual CLI startup rejections and finite-reconciliation-window cases under independently/TC-approved25-obligation plan. Finish all12 draft crash cases, remaining runtime negatives, literal identity/security/time/cleanup oracles and exact ledger; review contract/runner/pre-gate before execution. Rerun407 retained IDs plus every mandatory addition. H2/B03, H3-H7, originalAT32 and final workflow visualization remain incomplete.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",
     "Approved Bedrock/Claude runtime profile"
   ],
   "publication_policy": "Only authorized git repository documentation, source and synthetic verification summaries/screenshots; never runtime credentials or application logs.",
-  "updated_at": "2026-10-19T13:32:57.865742+00:00"
+  "updated_at": "2026-10-19T13:50:42.140794+00:00"
 }

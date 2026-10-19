@@ -1,0 +1,52 @@
+{
+  "kind": "ifpmic.b03.h2.crash-static-checkpoint.v1",
+  "status": "static_authoring_only_unexecuted",
+  "baseline_commit": "ed2d09983977407320dc9ed23cf0e6e46c9fc221",
+  "checks": {
+    "ast_parsed_files": 11,
+    "draft_test_functions": 12,
+    "whitespace": "pass",
+    "original_imported_files_unchanged": 17,
+    "original_uploads_unchanged": 2,
+    "protected_AX_Node_source_hashes_unchanged": 96,
+    "protected_inventory_unchanged": 89,
+    "product_sources_changed": false
+  },
+  "source_pins": {
+    "tests/ifpmic_api/accepted_start_dispatcher_child.py": "87c6cf61d94188f5733e73fc02e8d3d2caeb78f4a802a6455a501317a6f859eb",
+    "tests/ifpmic_api/h2_api_crash_child.py": "29100b07e82334a2fc3193fbc55c784e7ede69cb4f0aa6dc60a4152e2d0cd4db",
+    "tests/ifpmic_api/h2_crash_case_budget.py": "0a0d9283b35e16e6d19e5adcd111fd2c04916b9ddc90eb74df35d7014b9e08e3",
+    "tests/ifpmic_api/h2_dispatcher_crash_support.py": "6d27c1bb6cd0b87532261689d50aa5dcd0d2d15e9ed5865d407338fbc60e8242",
+    "tests/ifpmic_api/h2_worker_api_case_budget.py": "d339b87062efe3d4c2e43c76f12d08316402bc6899edccbc51327322d84d5c96",
+    "tests/ifpmic_api/h2_worker_crash_child.py": "003ba93a06fb3d5a81c0661e7c68ae4cfc56b95fb70c9bbf8afdd2c45b83b4cd",
+    "tests/ifpmic_api/response_loss_proxy.py": "b6f8ca62f21724bf26aac6395528092257e7c48b729d19df02adf7281b9ed512",
+    "tests/ifpmic_api/test_accepted_start_response_loss.py": "cfd8b3c0f8905563a4a80646bb27f4cd1c11397ae29c25dbe7314a800b112e2e",
+    "tests/ifpmic_api/test_h2_dispatcher_crashes.py": "e2b5f3f8dbb8e1d789c472a3301236cfad1843532dad596d2e6774e4f8419785",
+    "tests/ifpmic_api/test_h2_runtime_restart_and_history.py": "17aa418681aa8a9a10902a88a6d2e799c639a161e4399296ece6fd150156a71a",
+    "tests/ifpmic_api/test_h2_worker_api_crashes.py": "04f44de114bf3db7cc568416e450e47e078cca9d807d3f5b68d0f1794b8600f9",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-verification-plan.json": "c6964bccff0d4cec1ac00f18fbb267d5d1a4a5887e53844c604333b7c059486c",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-plan-review.json": "89ae7100e5fb29081c70137acbe6642d829295f738f3d591688c8e9615ddcc5c",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-tc-plan-review.json": "72483c42d8f6e3490fe3f3446cfdeadc9c137bb79f502608809854de8f58791c",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-plan-acceptance.json": "24cbcad683e0867353706d3e34873711027c0f28b2834935be8670a4b683edaf"
+  },
+  "static_fixes": [
+    "Validate actual recovered generation and literal attempts directly; never manufacture normal-case rows.",
+    "Retain ownership across prepare/readiness/identity failures, journal cleanup outcomes before verdict assertions.",
+    "Worker/API projection and proxy history cut now explicitly checks zero response bytes forwarded while armed.",
+    "Committed receipt replay case revokes current membership/eligibility; no unsupported per-retry Started event count oracle."
+  ],
+  "not_performed": [
+    "Product/SDK imports",
+    "pytest collection or tests",
+    "SQL/migrations/database access",
+    "Temporal/API service execution",
+    "Crash or recovery execution"
+  ],
+  "remaining_conditions": [
+    "Full runtime negative inventory and exact ledger/contract/runner/pre-gate reviews.",
+    "Actual history deletion and restart/event-order semantics remain unverified.",
+    "Shared25s cleanup must include all pytest fixtures and current restarted PostgreSQL PID/start-ticks.",
+    "No H2/B03/originalAT/fullAX completion;407 prior passes qualify only their historical frozen candidate."
+  ],
+  "scope": "Static checks only. New startup/window tests being authored separately are not included in these12 draft functions or qualified by this record."
+}

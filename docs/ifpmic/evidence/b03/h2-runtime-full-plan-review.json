@@ -1,0 +1,82 @@
+{
+  "kind": "ifpmic.b03.h2.runtime-full-plan-review.v1",
+  "verdict": "approve_additional_tc_authoring",
+  "plan_path": "docs/ifpmic/evidence/b03/h2-runtime-full-verification-plan.json",
+  "plan_sha256": "c6964bccff0d4cec1ac00f18fbb267d5d1a4a5887e53844c604333b7c059486c",
+  "reviewer": {
+    "agent_id": "/root/h2_prebinding_gate_audit",
+    "actual_role": "worker_luna",
+    "review_type": "independent static plan review"
+  },
+  "review_scope": "Approve only the methods and additional TC test authoring described by this exact plan. This does not approve execution, exact ledger/contract/runner, source correctness, any test result, H2 acceptance, or original AT acceptance.",
+  "reviewed_inputs": {
+    "implementation_contract_path": "docs/ifpmic/evidence/b03/h2-implementation-contract.json",
+    "implementation_contract_sha256": "f63173ac17ebebd34a15d5966d96b79dc1667a713c00b1b92868b137ba93ded3",
+    "normal_ledger_path": "docs/ifpmic/evidence/b03/h2-runtime-normal-tc-ledger.json",
+    "normal_ledger_sha256": "ec5c419f853741f2ea0c127bbf8fbd58e3e2bdc7a2ef0d04975a47f7033600c7",
+    "normal_final_review_sha256": "f18f65d9d155609141d0fa073e529cbf6009a625dcbbc7a731594bb99b2b0784",
+    "crash_matrix_sha256": "15fd7238adab625e95f94e0bae62421bb97235683cc96b491c7a9ce3222001c6",
+    "execution_runtime_sha256": "49c0c6208e62b26e808ecffadf278dd9c7cff45134a47b905d3a4f60987c4b08",
+    "execution_dispatcher_sha256": "7baf91290938b3159b2e200e6fde8f81db5ec2d7b117351e03f689bbc75db209",
+    "migration_003_sha256": "5ef29521944e18551728dd285ce3ae21fa03c2b06f77c25430da6acb0ce1f102"
+  },
+  "checks": {
+    "core_plan_dimensions_present": [
+      "authority and ownership",
+      "source pins",
+      "impact and retained scope",
+      "execution order and review gates",
+      "limits and timing",
+      "obligations and evidence/recovery criteria",
+      "final gate",
+      "omissions and residual risk"
+    ],
+    "all_obligations_have_complete_fields": true,
+    "crash_obligation_count": 12,
+    "negative_obligation_count": 13,
+    "all_obligation_statuses_pending_not_executed": true,
+    "all_obligations_execution_authorized_false": true,
+    "top_level_execution_authorized_false": true,
+    "all_ten_contract_crash_barriers_mapped": true,
+    "all_407_retained_regression_cases_required_fresh": true,
+    "exact_ledger_contract_runner_reviews_precede_execution": true,
+    "source_pins_match_reviewed_inputs": true,
+    "privacy_and_original_responsibility_limits_preserved": true,
+    "neg_window_clock_seam_safeguards_explicit": true,
+    "no_execution_or_runtime_testing_performed": true
+  },
+  "findings": [
+    {
+      "severity": "resolved_before_approval",
+      "subject": "NEG-WINDOW equality-clock seam",
+      "initial_v1_issue": "The initial plan did not explicitly require before/while/after checks of function OID, owner, ACL, SECURITY DEFINER, complete proconfig/search_path, and the exact one-assignment diff/restore.",
+      "v2_resolution": "The reviewed v2 requires those identity/security metadata oracles before, during, and after replacement; byte-exact restore; a live claim at the frozen instant; and abort on any unmet invariant. It also keeps actual-clock before/after cases separate, limits replacement to one assignment in a dedicated synthetic database, prohibits trigger disable and production clock switches, and requires both independent and TC acceptance before authoring this fixture exception.",
+      "assessment": "Resolved in the exact reviewed v2 plan. The seam remains synthetic equality-boundary evidence only and cannot substitute for actual unmodified-runtime before/after tests."
+    }
+  ],
+  "completeness_findings": {
+    "crash_barriers": [
+      "The 12 named crash obligations cover all ten implementation-contract barriers: API commit/response; claim commit/Temporal RPC; accepted Start/lost response; Start response/admission; admission/ack; ack/worker activation; projection/pre-PG-commit; projection PG commit/activity-history result; activity result/next workflow decision; and independent PostgreSQL/Temporal restart.",
+      "Two additional obligations separately exercise two-live-dispatcher stale fencing and admitted-history deletion fail-closed behavior."
+    ],
+    "negative_obligations": "The 13 distinct NEG obligations cover startup authority/configuration, machine-authority race, Started-input validation, foreign deployment, READY workspace identity, current human authority, SQL/role/projection fences, pre-admission activity, finite start window and retention, retention RPC uncertainty, non-create notification, runtime fatal-stop behavior, and hung-driver bounded shutdown.",
+    "regression_and_scope": "The plan requires a fresh rerun of all 407 retained normal/H1/SQL-local cases, preserves original17 design contracts and two uploads, calls for affected G1-G5/H1 regression, and explicitly leaves H6 and H3-H7/original32 AT incomplete."
+  },
+  "privacy_and_execution_controls": {
+    "raw_SQL_history_auth_process_and_logs_private": true,
+    "public_evidence_limited_to_normalized_summaries": true,
+    "credential_or_actual_process_identity_publication_authorized": false,
+    "execution_blocked_until_exact_ledger_contract_runner_and_pre_gate_reviews": true,
+    "interpretation": "This approval permits additional TC authoring only. New literal IDs, expected before/cut/after states, and source pins still require exact ledger/contract review; execution requires independently reviewed runner and frozen pre-gate."
+  },
+  "method_and_limits": {
+    "methods": ["Read-only JSON parsing", "SHA-256 verification of pinned inputs", "static requirement-to-obligation mapping"],
+    "not_performed": ["Imports", "pytest or other tests", "SQL or database access", "service startup", "network access", "source or test edits"],
+    "blocking_findings": [],
+    "remaining_limits": [
+      "The crash and negative cases are pending; this approval is not evidence that any oracle works or passes.",
+      "The NEG-WINDOW equality seam still requires exact fixture implementation review and proof of all stated invariants before use.",
+      "Full H2, H6, original AT, and broader AX acceptance remain incomplete."
+    ]
+  }
+}

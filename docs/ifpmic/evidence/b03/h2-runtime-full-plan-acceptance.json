@@ -1,0 +1,32 @@
+{
+  "kind": "ifpmic.b03.h2.runtime-full-plan-acceptance.v1",
+  "decision": "accept_additional_tc_authoring_methods_only",
+  "integrator": "Code-dev /root",
+  "plan": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-full-verification-plan.json",
+    "sha256": "c6964bccff0d4cec1ac00f18fbb267d5d1a4a5887e53844c604333b7c059486c"
+  },
+  "independent_review": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-full-plan-review.json",
+    "sha256": "89ae7100e5fb29081c70137acbe6642d829295f738f3d591688c8e9615ddcc5c"
+  },
+  "tc_review": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-full-tc-plan-review.json",
+    "sha256": "72483c42d8f6e3490fe3f3446cfdeadc9c137bb79f502608809854de8f58791c"
+  },
+  "authorization": {
+    "tc_authoring": true,
+    "runner_authoring": false,
+    "test_or_service_execution": false,
+    "h2_acceptance": false,
+    "original_at_acceptance": false
+  },
+  "open_execution_conditions": [
+    "Expand all25 obligation groups into literal reviewed cases;12 groups currently have no IDs.",
+    "Resolve shared25s cleanup including PG fixture and all owned identities, including restarted postmaster PID/start-ticks.",
+    "Verify actual physical history deletion; do not assume server retry-event count semantics.",
+    "Review exact clock fixture identity/ACL/metadata, live lease and exact restoration before its use.",
+    "Freeze source/environment/whole ledger/contract, review before runner authoring; independently review runner and pre-gate before execution."
+  ],
+  "evidence_limit": "Static authoring method approval only; no new crash/negative execution or passing evidence.407 normal passes remain tied to prior frozen candidate. Full H2/B03/originalAT/fullAX not complete."
+}

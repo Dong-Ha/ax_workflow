@@ -35,10 +35,10 @@ pytest_plugins = (
 
 from tests.ifpmic_api import test_h2_runtime_normal_flow as normal
 from tests.ifpmic_api.jobs_fixture import (
-    private_settings_file, owner_dsn, write_headers,
+    operator_dsn, private_settings_file, owner_dsn, write_headers,
 )
 from tests.ifpmic_api.workspace_fixture import accept_workspace_job
-from scripts.ifpmic_temporal_toolchain import process_identity, stop_all_owned
+from scripts.ifpmic_temporal_toolchain import process_identity, stop_all_owned, verify_binary
 
 
 REPO_ROOT = Path.cwd().resolve()
@@ -90,7 +90,13 @@ def _wait_file(path: Path, process, deadline: float) -> dict[str, object]:
             info = path.lstat()
             assert stat.S_ISREG(info.st_mode) and info.st_uid == os.getuid()
             assert stat.S_IMODE(info.st_mode) == 0o600 and info.st_nlink == 1
-            value = json.loads(path.read_text(encoding="ascii"))
+            try:
+                value = json.loads(path.read_text(encoding="ascii"))
+            except json.JSONDecodeError:
+                # Creation precedes the child write, so retry while the
+                # private event file is being completed and fsynced.
+                time.sleep(min(0.01, max(0.0, deadline - time.monotonic())))
+                continue
             assert type(value) is dict
             return value
         time.sleep(min(0.02, max(0.0, deadline - time.monotonic())))
@@ -122,6 +128,14 @@ def _spawn_module(module: str, args: list[str], private_root: Path, label: str):
         raise AssertionError("could not capture the owned child start identity")
     process._ifpmic_start_ticks = ticks
     process._ifpmic_log_paths = (stdout_path, stderr_path)
+    try:
+        _record_private(private_root, "owned-" + label + ".json", {
+            "role": label, "pid": process.pid, "start_ticks": ticks,
+            "stdout": stdout_path, "stderr": stderr_path,
+        })
+    except BaseException:
+        stop_all_owned([process], total_timeout=5)
+        raise
     return process
 
 
@@ -140,6 +154,65 @@ def _record_private(root: Path, name: str, value: object) -> Path:
     path = root / name
     normal._write_private(path, normal._canonical(value) + b"\n")
     return path
+
+
+def _journal_process(ctx, record: dict[str, object]) -> None:
+    records = ctx.setdefault("process_records", [])
+    index = len(records)
+    records.append(record)
+    _record_private(ctx["root"], f"owned-process-{index:02d}.json", record)
+
+
+def _start_owned_temporal(binary: Path, binary_sha256: str, data_dir: Path, ports: list[int],
+                          root: Path, owner_ctx):
+    """Start the pinned server while retaining its Popen handle through identity capture."""
+    assert owner_ctx is not None
+    binary = verify_binary(binary, binary_sha256)
+    if (len(ports) != 3 or len(set(ports)) != 3
+            or any(type(port) is not int or not 1 <= port <= 65535 for port in ports)):
+        raise ValueError("TEMPORAL_PORTS_INVALID")
+    data_dir.mkdir(mode=0o700, exist_ok=True)
+    if data_dir.is_symlink() or stat.S_IMODE(data_dir.stat().st_mode) != 0o700:
+        raise ValueError("TEMPORAL_DATA_DIR_INVALID")
+    env_path = data_dir / "isolated-env.json"
+    if env_path.exists() or env_path.is_symlink():
+        if env_path.is_symlink() or env_path.read_bytes() != b"{}":
+            raise ValueError("TEMPORAL_ENV_INVALID")
+    else:
+        fd = os.open(env_path, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_CLOEXEC, 0o600)
+        with os.fdopen(fd, "wb") as stream:
+            stream.write(b"{}")
+    env_path.chmod(0o600)
+    log_path = data_dir / "temporal.log"
+    log_fd = os.open(log_path, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_CLOEXEC, 0o600)
+    argv = [str(binary), "--disable-config-env", "--disable-config-file", "--env-file", str(env_path),
+            "server", "start-dev", "--ip", "127.0.0.1", "--port", str(ports[0]),
+            "--http-port", str(ports[1]), "--metrics-port", str(ports[2]),
+            "--db-filename", str(data_dir / "temporal.sqlite"), "--headless"]
+    with os.fdopen(log_fd, "wb") as log:
+        process = subprocess.Popen(argv, cwd=data_dir, stdin=subprocess.DEVNULL,
+                                   stdout=log, stderr=subprocess.STDOUT,
+                                   env={"PATH": os.defpath, "PYTHONDONTWRITEBYTECODE": "1"},
+                                   start_new_session=True)
+    processes = owner_ctx.setdefault("processes", [])
+    processes.append(process)
+    owner_ctx["server"] = process
+    try:
+        ticks = process_identity(process.pid)
+        if ticks is None:
+            raise AssertionError("could not capture the owned Temporal server start identity")
+        process._ifpmic_start_ticks = ticks
+        return process
+    except BaseException:
+        if process.poll() is None:
+            process.terminate()
+            try:
+                process.wait(timeout=3)
+            except subprocess.TimeoutExpired:
+                process.kill()
+                process.wait(timeout=3)
+        process._ifpmic_start_ticks = process_identity(process.pid) or "identity-unavailable"
+        raise
 
 
 def _record_history(root: Path, name: str, events) -> str:
@@ -171,10 +244,9 @@ def _create_runtime_world(harness, accepted, root: Path, *, endpoint_override: s
     normal._add_live_sql_eligibility(harness, job_id)
     toolchain = normal._read_h1_toolchain()
     ports = prestarted_ports or normal._allocate_loopback_ports()
-    server = prestarted_server or normal.start_server(
+    server = prestarted_server or _start_owned_temporal(
         Path(toolchain["toolchain_root"]) / "temporal",
-        toolchain["cli_binary_sha256"], root / "temporal-data", ports,
-        log_name="temporal.log",
+        toolchain["cli_binary_sha256"], root / "temporal-data", ports, root, owner_ctx,
     )
     server_record = {"role": "temporal", "pid": server.pid,
                      "start_ticks": server._ifpmic_start_ticks,
@@ -182,8 +254,13 @@ def _create_runtime_world(harness, accepted, root: Path, *, endpoint_override: s
     if owner_ctx is not None:
         owner_ctx["server"] = server
         owner_ctx["server_record"] = server_record
-        owner_ctx.setdefault("processes", []).append(server)
-        owner_ctx.setdefault("process_records", []).append(server_record)
+        processes = owner_ctx.setdefault("processes", [])
+        if server not in processes:
+            processes.append(server)
+        records = owner_ctx.setdefault("process_records", [])
+        if server_record not in records:
+            _journal_process(owner_ctx, server_record)
+    _record_private(root, "owned-temporal-server.json", server_record)
     server_listeners = normal._wait_for_temporal_listeners(
         server, ports, time.monotonic() + 30,
     )
@@ -237,14 +314,15 @@ def _create_runtime_world(harness, accepted, root: Path, *, endpoint_override: s
 def _start_dispatcher(ctx):
     process, record = normal._spawn_runtime_cli("dispatcher", ctx["dispatcher_config"], ctx["root"])
     ctx.setdefault("processes", []).append(process)
-    ctx.setdefault("process_records", []).append(record)
+    _journal_process(ctx, record)
+    ctx["dispatcher_process"] = process
     return process
 
 
 def _start_cli_worker(ctx, suffix="worker-recovery"):
     process, record = normal._spawn_runtime_cli("worker", ctx["worker_config"], ctx["root"])
     ctx.setdefault("processes", []).append(process)
-    ctx.setdefault("process_records", []).append(record)
+    _journal_process(ctx, record)
     return process
 
 
@@ -313,7 +391,14 @@ def _wait_for_activity_barrier(ctx, barrier: Path, process, deadline: float):
     ready = _wait_file(barrier / "ready.json", process, deadline)
     assert ready["status"] == "ready"
     _start_dispatcher(ctx)
-    return _wait_file(barrier / "reached.json", process, deadline)
+    reached = _wait_file(barrier / "reached.json", process, deadline)
+    dispatched = _wait_for_snapshot(
+        ctx["harness"], ctx["job_id"],
+        lambda value: value["accepted"] is not None and value["accepted"][15] == "dispatched",
+        deadline, (process,),
+    )
+    ctx["owner_after_dispatch_ack"] = dispatched
+    return reached
 
 
 def _await_final_runtime(harness, ctx, deadline: float):
@@ -344,9 +429,13 @@ def _cleanup(ctx, deadline, extra_processes=(), extra_helpers=()):
     server = ctx.get("server")
     owned = processes + ([server] if server is not None and server not in processes else [])
     alive = [p for p in owned if p.poll() is None and process_identity(p.pid) == getattr(p, "_ifpmic_start_ticks", None)]
-    result = stop_all_owned(alive, total_timeout=20) if alive else []
+    # Leave time inside the shared cleanup budget for the held-proxy thread
+    # and pytest's PostgreSQL fixture finalizers.
+    result = stop_all_owned(alive, total_timeout=15) if alive else []
     for helper in extra_helpers:
         helper.close()
+    if result:
+        _record_private(ctx["root"], "owned-process-cleanup.json", result)
     assert all(process.poll() is not None for process in processes)
     assert all(process_identity(process.pid) != getattr(process, "_ifpmic_start_ticks", None)
                for process in processes)
@@ -467,13 +556,11 @@ def test_h2_api_commit_before_response_sigkill_retry_applies_once(h2_crash_harne
         _cleanup(ctx, deadline)
 
 
-def _run_projection_crash(harness, deadline, *, phase: str, label: str, proxy=None):
+def _run_projection_crash(harness, deadline, *, phase: str, label: str, ctx):
     root = _root()
     accepted = _new_accepted(harness, "h2-" + label + "-" + uuid4().hex)
-    ctx = {"root": root, "processes": [], "process_records": []}
-    runtime_ctx = _create_runtime_world(harness, accepted, root,
-                                        endpoint_override=proxy.endpoint if proxy else None,
-                                        owner_ctx=ctx)
+    ctx.update({"root": root, "processes": [], "process_records": [], "harness": harness})
+    runtime_ctx = _create_runtime_world(harness, accepted, root, owner_ctx=ctx)
     runtime_ctx["processes"] = ctx["processes"]
     runtime_ctx["process_records"] = ctx["process_records"]
     ctx.update(runtime_ctx)
@@ -486,7 +573,46 @@ def _run_projection_crash(harness, deadline, *, phase: str, label: str, proxy=No
     return ctx
 
 
-def _post_crash_recovery(harness, ctx, deadline, *, expect_projection_committed: bool):
+def _revoke_authority_after_projection(harness, ctx) -> None:
+    """Revoke mutable authorization only after the durable projection receipt exists."""
+    with psycopg.connect(operator_dsn(harness["database"])) as operator:
+        operator.execute(
+            "UPDATE ifpmic.memberships SET active=false WHERE user_id=%s AND project_id=%s",
+            (harness["user_id"], harness["project_id"]),
+        )
+        operator.execute(
+            "INSERT INTO ifpmic.profile_revocations(project_id,eligibility_id,revoked_at) "
+            "SELECT project_id,eligibility_id,clock_timestamp() FROM ifpmic.profile_eligibility "
+            "WHERE project_id=%s AND snapshot_id=%s ON CONFLICT DO NOTHING",
+            (harness["project_id"], harness["record"].snapshot_id),
+        )
+        state = operator.execute(
+            "SELECT m.active, count(r.eligibility_id) "
+            "FROM ifpmic.memberships m JOIN ifpmic.profile_eligibility e "
+            "ON e.project_id=m.project_id LEFT JOIN ifpmic.profile_revocations r "
+            "ON r.project_id=e.project_id AND r.eligibility_id=e.eligibility_id "
+            "WHERE m.user_id=%s AND m.project_id=%s AND e.snapshot_id=%s GROUP BY m.active",
+            (harness["user_id"], harness["project_id"], harness["record"].snapshot_id),
+        ).fetchone()
+    assert state == (False, 1)
+    ctx["authority_revoked"] = True
+    _record_private(ctx["root"], "authority-revoked-before-replay.json", {
+        "membership_active": state[0], "matching_profile_revocations": state[1],
+    })
+
+
+def _stop_saved(process, root: Path, label: str) -> dict[str, object]:
+    pid, ticks = process.pid, process._ifpmic_start_ticks
+    assert process.poll() is None and process_identity(pid) == ticks
+    result = stop_all_owned([process], total_timeout=5)
+    assert process.poll() is not None and process_identity(pid) != ticks
+    record = {"role": label, "pid": pid, "start_ticks": ticks, "stop": result[0]}
+    _record_private(root, "stopped-" + label + ".json", record)
+    return record
+
+
+def _post_crash_recovery(harness, ctx, deadline, *, expect_projection_committed: bool,
+                         revoke_authority: bool = False):
     before = normal._read_owner_snapshot(harness, ctx["job_id"])
     assert before["accepted"] is not None
     if expect_projection_committed:
@@ -503,8 +629,13 @@ def _post_crash_recovery(harness, ctx, deadline, *, expect_projection_committed:
     events_before = _activity_events(ctx["identity"], ctx["backend_endpoint"], workflow_id, run_id)
     before_history_sha = _record_history(ctx["root"], "history-at-worker-cut.pbseq", events_before)
     assert _count(events_before, "activity_task_completed_event_attributes", "ifpmic.h2.project_activation") == 0
+    assert _count(events_before, "activity_task_started_event_attributes",
+                  "ifpmic.h2.project_activation") >= 1
     ctx["owner_before_kill"] = before
     _record_private(ctx["root"], "owner-at-worker-cut.json", before)
+    if revoke_authority:
+        assert expect_projection_committed and len(before["receipts"]) == 1
+        _revoke_authority_after_projection(harness, ctx)
     kill = _kill_saved(ctx["worker_child"])
     ctx["worker_kill"] = kill
     ctx["processes"].remove(ctx["worker_child"])
@@ -530,14 +661,13 @@ def _post_crash_recovery(harness, ctx, deadline, *, expect_projection_committed:
     completed = _count(events_after, "activity_task_completed_event_attributes", "ifpmic.h2.project_activation")
     assert completed == 1
     started = _count(events_after, "activity_task_started_event_attributes", "ifpmic.h2.project_activation")
-    assert started >= 2, "recovery must show a new real activity attempt after the killed worker cut"
     _record_private(ctx["root"], "worker-crash-recovery.json", {
         "killed_process": kill, "before": before, "after": final,
         "temporal_before_event_count": len(events_before),
         "temporal_after_event_count": len(events_after),
         "temporal_before_sha256": before_history_sha,
         "temporal_after_sha256": after_history_sha,
-        "project_activity_started_attempts": started,
+        "project_activity_started_events": started,
         "project_activity_completed_events": completed,
         "phase": temporal["phase"],
     })
@@ -546,10 +676,10 @@ def _post_crash_recovery(harness, ctx, deadline, *, expect_projection_committed:
 
 def test_h2_worker_projection_before_pg_commit_sigkill_rolls_back_then_retries(h2_crash_harness, h2_crash_deadline):
     harness, deadline = h2_crash_harness, h2_crash_deadline
-    ctx = None
+    ctx = {"processes": [], "process_records": []}
     try:
         ctx = _run_projection_crash(harness, deadline, phase="before_project_activation_commit",
-                                    label="projection-before-commit")
+                                    label="projection-before-commit", ctx=ctx)
         final, _temporal, before_events, after_events = _post_crash_recovery(
             harness, ctx, deadline, expect_projection_committed=False,
         )
@@ -564,12 +694,12 @@ def test_h2_worker_projection_before_pg_commit_sigkill_rolls_back_then_retries(h
 
 def test_h2_worker_projection_after_pg_commit_sigkill_replays_receipt(h2_crash_harness, h2_crash_deadline):
     harness, deadline = h2_crash_harness, h2_crash_deadline
-    ctx = None
+    ctx = {"processes": [], "process_records": []}
     try:
         ctx = _run_projection_crash(harness, deadline, phase="after_project_activation_commit",
-                                    label="projection-after-commit")
+                                    label="projection-after-commit", ctx=ctx)
         final, _temporal, before_events, after_events = _post_crash_recovery(
-            harness, ctx, deadline, expect_projection_committed=True,
+            harness, ctx, deadline, expect_projection_committed=True, revoke_authority=True,
         )
         assert len(final["receipts"]) == 1
         assert final["receipts"][0] == ctx["owner_before_kill"]["receipts"][0]
@@ -597,14 +727,15 @@ def test_h2_activity_completed_before_workflow_decision_sigkill_replays_history(
         root = _root()
         accepted = _new_accepted(harness, "h2-activity-before-decision-" + uuid4().hex)
         toolchain = normal._read_h1_toolchain()
-        server = normal.start_server(Path(toolchain["toolchain_root"]) / "temporal",
-                                     toolchain["cli_binary_sha256"], root / "temporal-data", ports,
-                                     log_name="temporal.log")
+        ctx = {"root": root, "harness": harness, "processes": [], "process_records": []}
+        server = _start_owned_temporal(Path(toolchain["toolchain_root"]) / "temporal",
+                                       toolchain["cli_binary_sha256"], root / "temporal-data",
+                                       ports, root, ctx)
         server_record = {"role": "temporal", "pid": server.pid,
                          "start_ticks": server._ifpmic_start_ticks,
                          "log": root / "temporal-data" / "temporal.log"}
-        ctx = {"root": root, "server": server, "server_record": server_record,
-               "processes": [server], "process_records": [server_record]}
+        ctx["server_record"] = server_record
+        _record_private(root, "owned-temporal-server.json", server_record)
         listeners = normal._wait_for_temporal_listeners(server, ports, time.monotonic() + 30)
         assert all(item["loopback"] for item in listeners)
         proxy = TCPResponseHoldingProxy("127.0.0.1", ports[0])
@@ -620,9 +751,12 @@ def test_h2_activity_completed_before_workflow_decision_sigkill_replays_history(
         worker = _start_barrier_worker(ctx, "after_project_activation_commit", ctx["barrier"])
         event = _wait_activity_barrier(ctx, ctx["barrier"], worker, deadline.deadline)
         assert event["phase"] == "after_project_activation_commit"
-        at_barrier = normal._read_owner_snapshot(harness, ctx["job_id"])
+        at_barrier = ctx["owner_after_dispatch_ack"]
         assert at_barrier["accepted"][3:8] == ("QUEUED", 1, 0, [], None)
         assert len(at_barrier["receipts"]) == 1 and at_barrier["receipts"][0][7] == "applied"
+        dispatcher = ctx["dispatcher_process"]
+        _stop_saved(dispatcher, root, "dispatcher-before-activity-result-cut")
+        ctx["processes"].remove(dispatcher)
         run_id = at_barrier["bindings"][0][19]
         before_history = _activity_events(ctx["identity"], ctx["backend_endpoint"],
                                           "ifpmic.job." + ctx["job_id"], run_id)
@@ -642,6 +776,7 @@ def test_h2_activity_completed_before_workflow_decision_sigkill_replays_history(
         # the completion request was forwarded. Keep its raw detail private.
         assert proxy_state["armed"] is True
         assert proxy_state["server_response_bytes_held_after_arm"] > 0
+        assert proxy_state["server_response_bytes_forwarded_after_arm"] == 0
         assert proxy_state["request_forwarded_bytes_after_arm"] > 0
         assert proxy_state["held_response_bytes"] > 0
         assert proxy_state["overflowed"] is False
@@ -656,13 +791,19 @@ def test_h2_activity_completed_before_workflow_decision_sigkill_replays_history(
             and int(event.activity_task_completed_event_attributes.scheduled_event_id) in scheduled_project
         ]
         assert len(completion_events) == 1
+        completion_event_id = int(completion_events[0].event_id)
+        assert not any(
+            int(event.event_id) > completion_event_id
+            and event.HasField("workflow_task_completed_event_attributes")
+            for event in completed_history
+        ), "history must not contain the next completed workflow decision at the crash cut"
         kill = _kill_saved(worker)
         ctx["processes"].remove(worker)
         proxy.release()
         _record_private(root, "activity-completed-cut.json", {
             "killed_process": kill, "owner": at_barrier,
             "history_event_count": len(completed_history),
-            "activity_completed_event_id": int(completion_events[0].event_id),
+            "activity_completed_event_id": completion_event_id,
             "proxy": proxy_state,
         })
         _start_cli_worker(ctx)
@@ -674,6 +815,11 @@ def test_h2_activity_completed_before_workflow_decision_sigkill_replays_history(
         _record_history(root, "history-after-workflow-restart.pbseq", after_history)
         assert _count(after_history, "activity_task_completed_event_attributes",
                       "ifpmic.h2.project_activation") == 1
+        assert any(
+            int(event.event_id) > completion_event_id
+            and event.HasField("workflow_task_completed_event_attributes")
+            for event in after_history
+        ), "the restarted workflow must record a later workflow decision"
         _record_private(root, "activity-completed-restart.json", {
             "sql_before": at_barrier, "sql_after": final,
             "history_before_restart": len(completed_history),

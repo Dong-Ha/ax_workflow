@@ -195,28 +195,35 @@ def _spawn_barrier_dispatcher(config: Path, command_id: str, barrier_socket: Pat
         normal._private_dir(logs)
     stdout_path = logs / "start-loss-child-stdout.log"
     stderr_path = logs / "start-loss-child-stderr.log"
-    out_fd = os.open(stdout_path, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_CLOEXEC, 0o600)
-    err_fd = os.open(stderr_path, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_CLOEXEC, 0o600)
-    env = normal._minimal_runtime_env(private_root, config)
-    argv = [sys.executable, "-B", "-X", "pycache_prefix=" + str(cache), str(child_source),
-            "--command-id", command_id, "--barrier-socket", str(barrier_socket),
-            "--hook-phase", hook_phase,
-            "--repo-root", str(normal.REPO_ROOT)]
+    descriptors = []
+    process = None
     try:
+        out_fd = os.open(stdout_path, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_CLOEXEC, 0o600)
+        descriptors.append(out_fd)
+        err_fd = os.open(stderr_path, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_CLOEXEC, 0o600)
+        descriptors.append(err_fd)
+        env = normal._minimal_runtime_env(private_root, config)
+        argv = [sys.executable, "-B", "-X", "pycache_prefix=" + str(cache), str(child_source),
+                "--command-id", command_id, "--barrier-socket", str(barrier_socket),
+                "--hook-phase", hook_phase,
+                "--repo-root", str(normal.REPO_ROOT)]
         process = subprocess.Popen(argv, cwd=normal.REPO_ROOT, stdin=subprocess.DEVNULL,
                                    stdout=out_fd, stderr=err_fd, env=env, start_new_session=True)
     finally:
-        os.close(out_fd)
-        os.close(err_fd)
+        for descriptor in descriptors:
+            try:
+                os.close(descriptor)
+            except OSError:
+                pass
+    assert process is not None
     ticks = normal.process_identity(process.pid)
     if ticks is None:
         if process.poll() is None:
-            process.terminate()
+            process.kill()
             try:
                 process.wait(timeout=5)
             except subprocess.TimeoutExpired:
-                process.kill()
-                process.wait(timeout=5)
+                raise AssertionError("dispatcher child remained live after direct Popen.kill")
         raise AssertionError("start-loss child identity unavailable")
     process._ifpmic_start_ticks = ticks
     return process, {"role": "start-loss-dispatcher", "pid": process.pid,
