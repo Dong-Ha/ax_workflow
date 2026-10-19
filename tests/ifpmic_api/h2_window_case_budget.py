@@ -11,6 +11,8 @@ import time
 
 import pytest
 
+from tests.ifpmic_api.h2_fixture_cleanup import installed_controller, restore_preserving_error
+
 
 BODY_SECONDS = 215
 CLEANUP_SECONDS = 25
@@ -121,6 +123,14 @@ class WindowCaseDeadline:
         signal.setitimer(signal.ITIMER_REAL, self.cleanup_seconds)
         self._write()
 
+    def cleanup_remaining(self, maximum):
+        self.begin_cleanup()
+        left = min(float(maximum), self.cleanup_at + self.cleanup_seconds - time.monotonic())
+        if left <= 0:
+            self.cleanup_timeout = True
+            raise TimeoutError("H2 window cleanup deadline exceeded")
+        return left
+
     def remaining(self, maximum=30):
         left = min(float(maximum), self.body_deadline - time.monotonic())
         if left <= 0:
@@ -154,11 +164,12 @@ def pytest_runtest_protocol(item, nextitem):
         return
     deadline = WindowCaseDeadline(item.nodeid)
     item._ifpmic_h2_window_deadline = deadline
-    try:
-        deadline.start()
-        yield
-    finally:
-        deadline.restore()
+    with installed_controller(item.config, deadline):
+        try:
+            deadline.start()
+            yield
+        finally:
+            restore_preserving_error(deadline.restore)
 
 
 @pytest.hookimpl(hookwrapper=True, tryfirst=True)

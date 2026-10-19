@@ -8,9 +8,12 @@ from __future__ import annotations
 
 import os
 import json
+import math
 import secrets
 import shutil
 import subprocess
+import stat
+import sys
 import time
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -20,6 +23,8 @@ import pytest
 import psycopg
 from psycopg import sql
 from psycopg.conninfo import make_conninfo
+
+from tests.ifpmic_api import h2_fixture_cleanup as h2_cleanup
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -43,6 +48,9 @@ class PgCluster:
     binary_versions: dict[str, str]
     binary_sha256: dict[str, str]
     server_pid: int
+    server_start_ticks: str | None = None
+    initial_server_pid: int | None = None
+    initial_server_start_ticks: str | None = None
     lifecycle_path: Path | None = None
     lifecycle: list[dict[str, object]] = field(default_factory=list)
 
@@ -57,6 +65,9 @@ class PgCluster:
             "socket_dir": str(self.socket_dir),
             "pg_ctl_path": str(self.binaries["pg_ctl"]),
             "server_pid": self.server_pid,
+            "server_start_ticks": self.server_start_ticks,
+            "initial_server_pid": self.initial_server_pid,
+            "initial_server_start_ticks": self.initial_server_start_ticks,
             "stop_status": stop_status,
             "pid_alive": pid_alive,
             "binary_versions": self.binary_versions,
@@ -186,8 +197,116 @@ def _cleanup_started_cluster(pg_ctl: Path, data_dir: Path, env: dict[str, str]) 
             return True, None
 
 
+def _capture_current_postmaster(cluster):
+    path = cluster.data_dir / "postmaster.pid"
+    try:
+        info = path.lstat()
+    except FileNotFoundError:
+        # Keep the last known identity: missing metadata alone is not absence.
+        return cluster.server_pid, cluster.server_start_ticks
+    if (not stat.S_ISREG(info.st_mode) or info.st_uid != os.getuid() or info.st_nlink != 1):
+        raise RuntimeError("Temporary PostgreSQL identity file invalid")
+    pid = int(path.read_text(encoding="ascii").splitlines()[0])
+    if pid <= 1:
+        raise RuntimeError("Temporary PostgreSQL identity PID invalid")
+    ticks = h2_cleanup.process_start_ticks(pid)
+    if ticks is None:
+        raise RuntimeError("Temporary PostgreSQL current identity unconfirmed")
+    cluster.server_pid, cluster.server_start_ticks = pid, ticks
+    return pid, ticks
+
+
+def _stop_h2_cluster(cluster, env, config):
+    """Last-item session finalization shares that item's existing cleanup clock."""
+    pid, ticks = _capture_current_postmaster(cluster)
+    if ticks is None:
+        raise RuntimeError("Temporary PostgreSQL saved identity unavailable")
+    stop_error = None
+    absent = False
+    try:
+        try:
+            cluster.persist_lifecycle()
+            h2_cleanup.record(config, "postgres_stop_requested", pid=pid, start_ticks=ticks,
+                              initial_pid=cluster.initial_server_pid)
+        except BaseException as error:
+            # Evidence errors still fail the case, after attempting owned stop.
+            stop_error = error
+        available = h2_cleanup.remaining(config, 20)
+        fast_timeout = min(3.0, available * 0.6)
+        for mode in ("fast", "immediate"):
+            if mode == "immediate" and h2_cleanup.process_start_ticks(pid) != ticks:
+                break
+            timeout = (fast_timeout if mode == "fast" else
+                       h2_cleanup.remaining(config, 3))
+            started = time.monotonic()
+            code = None
+            try:
+                result = subprocess.run(
+                    [str(cluster.binaries["pg_ctl"]), "-D", str(cluster.data_dir),
+                     "-m", mode, "-w", "-t", str(max(1, math.ceil(timeout))), "stop"],
+                    stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+                    timeout=timeout, env=env, check=False,
+                )
+                code = result.returncode
+                if code != 0 and stop_error is None:
+                    stop_error = RuntimeError("H2 PostgreSQL stop command failed")
+            except subprocess.TimeoutExpired as error:
+                if stop_error is None:
+                    stop_error = error
+            finally:
+                cluster.lifecycle.append({"operation": "pg_ctl_stop" if mode == "fast" else "pg_ctl_stop_immediate",
+                                          "exit_code": code,
+                                          "duration_ms": round((time.monotonic() - started) * 1000)})
+            if code == 0:
+                break
+        while h2_cleanup.process_start_ticks(pid) == ticks:
+            time.sleep(h2_cleanup.remaining(config, 0.02))
+        absent = True
+        if stop_error is not None:
+            # Successful emergency cleanup does not erase the timeout/failure.
+            raise stop_error
+    finally:
+        primary = sys.exc_info()[0] is not None
+        try:
+            cluster.persist_lifecycle(stop_status="stopped" if absent else "cleanup_unconfirmed",
+                                      pid_alive=not absent)
+        except BaseException:
+            if not primary:
+                raise
+        finally:
+            h2_cleanup.record_finalizer(config, "postgres_stopped", pid=pid, start_ticks=ticks,
+                                        absent=absent, initial_pid=cluster.initial_server_pid)
+
+
+def _stop_legacy_cluster(cluster, env):
+    # Preserve original stop limits; observe the current identity after restarts.
+    current_pid, current_ticks = _capture_current_postmaster(cluster)
+    started = time.monotonic()
+    try:
+        result = subprocess.run(
+            [str(cluster.binaries["pg_ctl"]), "-D", str(cluster.data_dir),
+             "-m", "fast", "-w", "-t", "20", "stop"],
+            stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+            timeout=25, env=env, check=False,
+        )
+        stop_code = result.returncode
+    except subprocess.TimeoutExpired:
+        stop_code = None
+    cluster.lifecycle.append({"operation": "pg_ctl_stop", "exit_code": stop_code,
+                              "duration_ms": round((time.monotonic() - started) * 1000)})
+    if stop_code != 0:
+        running, cleanup_code = _cleanup_started_cluster(cluster.binaries["pg_ctl"], cluster.data_dir, env)
+        if running and cleanup_code != 0:
+            cluster.persist_lifecycle(stop_status=f"cleanup_failed:{cleanup_code}", pid_alive=True)
+            raise RuntimeError("Temporary PostgreSQL cleanup failed; inspect the isolated test process handle")
+    pid_alive = h2_cleanup.process_start_ticks(current_pid) == current_ticks
+    cluster.persist_lifecycle(stop_status="stopped" if not pid_alive else "still_running", pid_alive=pid_alive)
+    if pid_alive:
+        raise RuntimeError("Temporary PostgreSQL server PID remains live after bounded cleanup")
+
+
 @pytest.fixture(scope="session")
-def pg_cluster(tmp_path_factory: pytest.TempPathFactory) -> PgCluster:
+def pg_cluster(tmp_path_factory: pytest.TempPathFactory, request) -> PgCluster:
     """Start and reliably stop a fresh temporary PostgreSQL 18.1 cluster."""
     if os.name != "posix":
         pytest.fail("G1 requires the pinned POSIX PostgreSQL test binary")
@@ -300,6 +419,10 @@ def pg_cluster(tmp_path_factory: pytest.TempPathFactory) -> PgCluster:
             f"verified_running={running}, cleanup_exit={cleanup_code}"
         )
 
+    server_ticks = h2_cleanup.process_start_ticks(server_pid)
+    if server_ticks is None:
+        _cleanup_started_cluster(binaries["pg_ctl"], data_dir, clean_env)
+        pytest.fail("Temporary PostgreSQL startup identity unavailable")
     cluster = PgCluster(
         root=root,
         data_dir=data_dir,
@@ -310,44 +433,20 @@ def pg_cluster(tmp_path_factory: pytest.TempPathFactory) -> PgCluster:
         binary_versions=binary_versions,
         binary_sha256=binary_sha256,
         server_pid=server_pid,
+        server_start_ticks=server_ticks,
+        initial_server_pid=server_pid,
+        initial_server_start_ticks=server_ticks,
         lifecycle_path=(Path(os.environ["IFPMIC_TEST_LIFECYCLE_PATH"]) if os.environ.get("IFPMIC_TEST_LIFECYCLE_PATH") else None),
         lifecycle=lifecycle,
     )
-    cluster.persist_lifecycle()
     try:
+        cluster.persist_lifecycle()
         yield cluster
     finally:
-        started = time.monotonic()
-        try:
-            stop_result = subprocess.run(
-                [str(binaries["pg_ctl"]), "-D", str(data_dir), "-m", "fast", "-w", "-t", "20", "stop"],
-                stdin=subprocess.DEVNULL,
-                stdout=subprocess.DEVNULL,
-                stderr=subprocess.DEVNULL,
-                timeout=25,
-                env=clean_env,
-                check=False,
-            )
-            stop_code = stop_result.returncode
-        except subprocess.TimeoutExpired:
-            stop_code = None
-        cluster.lifecycle.append({"operation": "pg_ctl_stop", "exit_code": stop_code, "duration_ms": round((time.monotonic() - started) * 1000)})
-        if stop_code != 0:
-            running, cleanup_code = _cleanup_started_cluster(binaries["pg_ctl"], data_dir, clean_env)
-            if running and cleanup_code != 0:
-                cluster.persist_lifecycle(stop_status=f"cleanup_failed:{cleanup_code}", pid_alive=True)
-                raise RuntimeError("Temporary PostgreSQL cleanup failed; inspect the isolated test process handle")
-        try:
-            os.kill(server_pid, 0)
-            pid_alive = True
-        except ProcessLookupError:
-            pid_alive = False
-        cluster.persist_lifecycle(
-            stop_status="stopped" if not pid_alive else "still_running",
-            pid_alive=pid_alive,
-        )
-        if pid_alive:
-            raise RuntimeError("Temporary PostgreSQL server PID remains live after bounded cleanup")
+        if h2_cleanup.controller(request.config) is not None:
+            _stop_h2_cluster(cluster, clean_env, request.config)
+        else:
+            _stop_legacy_cluster(cluster, clean_env)
 
 
 @pytest.fixture(scope="session")
@@ -378,7 +477,7 @@ def pg_roles(pg_cluster: PgCluster) -> PgRoles:
 
 
 @pytest.fixture
-def migration_db(pg_cluster: PgCluster, pg_roles: PgRoles, tmp_path: Path) -> MigrationDatabase:
+def migration_db(pg_cluster: PgCluster, pg_roles: PgRoles, tmp_path: Path, request) -> MigrationDatabase:
     """Create an isolated database owned by a non-superuser migration role."""
     name = f"ifpmic_g1_{uuid4().hex[:16]}"
     with psycopg.connect(pg_cluster.dsn(), autocommit=True) as connection:
@@ -396,7 +495,31 @@ def migration_db(pg_cluster: PgCluster, pg_roles: PgRoles, tmp_path: Path) -> Mi
     try:
         yield database
     finally:
-        with psycopg.connect(pg_cluster.dsn(), autocommit=True) as connection:
-            connection.execute(
-                sql.SQL("DROP DATABASE IF EXISTS {} WITH (FORCE)").format(sql.Identifier(name))
-            )
+        active = h2_cleanup.controller(request.config)
+        if active is None:
+            with psycopg.connect(pg_cluster.dsn(), autocommit=True) as connection:
+                connection.execute(
+                    sql.SQL("DROP DATABASE IF EXISTS {} WITH (FORCE)").format(sql.Identifier(name))
+                )
+        else:
+            dropped = False
+            try:
+                # libpq's connect_timeout has a minimum effective value of2s.
+                # Refuse a new connection without room for SQL and PG stop.
+                if h2_cleanup.remaining(request.config, 3) < 2.5:
+                    raise TimeoutError("H2 database cleanup has no connection allowance")
+                with psycopg.connect(pg_cluster.dsn(), autocommit=True, connect_timeout=2,
+                                     options="-c statement_timeout=1000 -c lock_timeout=1000") as connection:
+                    milliseconds = int(min(1.0, h2_cleanup.remaining(request.config, 1)) * 1000)
+                    if milliseconds < 1:
+                        raise TimeoutError("H2 database cleanup SQL allowance exhausted")
+                    connection.execute("SELECT set_config('statement_timeout',%s,false),"
+                                       "set_config('lock_timeout',%s,false)",
+                                       (str(milliseconds), str(milliseconds)))
+                    connection.execute(
+                        sql.SQL("DROP DATABASE IF EXISTS {} WITH (FORCE)").format(sql.Identifier(name))
+                    )
+                    dropped = True
+            finally:
+                h2_cleanup.record_finalizer(request.config, "database_dropped", database=name,
+                                            dropped=dropped)

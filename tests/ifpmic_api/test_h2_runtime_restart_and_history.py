@@ -76,7 +76,7 @@ def test_postgres_and_temporal_restart_preserve_same_execution_and_receipt(
         assert initial["accepted"][3:8] == ("QUEUED", 1, 0, [], None)
         assert len(initial["receipts"]) == 1 and initial["receipts"][0][1] == 1
         assert initial_temporal["execution_count"] == initial_temporal["started_event_count"] == 1
-        before_restart = normal._read_owner_snapshot(case["harness"], case["job_id"])
+        before_restart = crash.read_owner_snapshot(case["harness"], case["job_id"])
         temporal_hash_before = initial_temporal["raw_history_sha256"]
         pg_data_inode = (cluster.data_dir.stat().st_dev, cluster.data_dir.stat().st_ino)
         temporal_inode = (case["temporal_store"].stat().st_dev,
@@ -109,12 +109,15 @@ def test_postgres_and_temporal_restart_preserve_same_execution_and_receipt(
         pg_new_pid = int((cluster.data_dir / "postmaster.pid").read_text(encoding="ascii").splitlines()[0])
         pg_new_ticks = normal.process_identity(pg_new_pid)
         assert pg_new_ticks is not None and (pg_new_pid, pg_new_ticks) != (pg_old_pid, pg_old_ticks)
+        cluster.server_pid = pg_new_pid
+        cluster.server_start_ticks = pg_new_ticks
+        cluster.persist_lifecycle()
         normal._append_private_journal(case["journal"], {
             "event": "service_started", "role": "postgres", "pid": pg_new_pid,
             "start_ticks": pg_new_ticks, "data_dir": str(cluster.data_dir),
         })
         assert (cluster.data_dir.stat().st_dev, cluster.data_dir.stat().st_ino) == pg_data_inode
-        after_pg_restart = normal._read_owner_snapshot(case["harness"], case["job_id"])
+        after_pg_restart = crash.read_owner_snapshot(case["harness"], case["job_id"])
         assert after_pg_restart == before_restart
         pg_history = normal._observe_temporal(
             case["identity"], case["job_id"], case["harness"]["project_id"], expected_run_id,
@@ -160,7 +163,7 @@ def test_postgres_and_temporal_restart_preserve_same_execution_and_receipt(
             new_server, case["ports"], time.monotonic() + min(30, deadline.remaining(30)))
         assert (case["temporal_store"].stat().st_dev,
                 case["temporal_store"].stat().st_ino) == temporal_inode
-        after_temporal_restart = normal._read_owner_snapshot(case["harness"], case["job_id"])
+        after_temporal_restart = crash.read_owner_snapshot(case["harness"], case["job_id"])
         assert after_temporal_restart == before_restart
         temporal_history = normal._observe_temporal(
             case["identity"], case["job_id"], case["harness"]["project_id"], expected_run_id,
@@ -183,7 +186,7 @@ def test_postgres_and_temporal_restart_preserve_same_execution_and_receipt(
             case["records"].append(item)
             normal._append_private_journal(case["journal"], {"event": "started", **item})
         time.sleep(min(1.0, deadline.remaining(1)))
-        final = normal._read_owner_snapshot(case["harness"], case["job_id"])
+        final = crash.read_owner_snapshot(case["harness"], case["job_id"])
         assert final == before_restart
         replayed_history = normal._observe_temporal(
             case["identity"], case["job_id"], case["harness"]["project_id"], expected_run_id,

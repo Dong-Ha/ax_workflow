@@ -16,6 +16,8 @@ from contextlib import contextmanager
 
 import pytest
 
+from tests.ifpmic_api.h2_fixture_cleanup import installed_controller, restore_preserving_error
+
 
 CASE_NODE_IDS = frozenset({
     "tests/ifpmic_api/test_accepted_start_response_loss.py::test_actual_started_event_survives_lost_start_response_and_recovers_same_run",
@@ -121,6 +123,14 @@ class CrashCaseDeadline:
         self.events.append({"event": "cleanup_started", "monotonic": self.cleanup_at})
         self._write()
 
+    def cleanup_remaining(self, maximum):
+        self.begin_cleanup()
+        left = min(float(maximum), self.cleanup_deadline - time.monotonic())
+        if left <= 0:
+            self.cleanup_timeout = True
+            raise TimeoutError("H2 crash cleanup deadline exceeded")
+        return left
+
     def remaining(self, maximum=30):
         left = min(float(maximum), self.body_deadline - time.monotonic())
         if left <= 0:
@@ -171,11 +181,12 @@ def pytest_runtest_protocol(item, nextitem):
     deadline = CrashCaseDeadline(item.nodeid)
     item._ifpmic_h2_crash_deadline = deadline
     item._ifpmic_accepted_start_deadline = deadline
-    try:
-        deadline.start()
-        yield
-    finally:
-        deadline.restore()
+    with installed_controller(item.config, deadline):
+        try:
+            deadline.start()
+            yield
+        finally:
+            restore_preserving_error(deadline.restore)
 
 
 @pytest.hookimpl(hookwrapper=True, tryfirst=True)

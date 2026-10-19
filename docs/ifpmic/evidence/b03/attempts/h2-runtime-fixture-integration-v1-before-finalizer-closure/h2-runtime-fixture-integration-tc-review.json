@@ -1,0 +1,54 @@
+{
+  "kind": "ifpmic.b03.h2.fixture-integration-tc-review.v1",
+  "verdict": "reject",
+  "contract_sha256": "a7a517cf19d740ee9d368ae97dc78c19c7020fb23e6ee81c36196a7367e9ef97",
+  "contract_path": "docs/ifpmic/evidence/b03/h2-runtime-fixture-integration-contract.json",
+  "reviewer": {
+    "agent_id": "/root/h2_tc_query_fix",
+    "actual_role": "TC method reviewer; owner of runtime TC case authoring",
+    "review_type": "Exact-SHA bounded method review; static source inspection only"
+  },
+  "review_scope": "Reviewed cleanup deadline propagation, restarted PostgreSQL identity, multi-generation attempt ordering, authorization and scope limits, and the retained full-gate qualification requirements. No implementation or execution was performed.",
+  "reviewed_inputs": {
+    "contract": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-fixture-integration-contract.json",
+      "sha256": "a7a517cf19d740ee9d368ae97dc78c19c7020fb23e6ee81c36196a7367e9ef97"
+    },
+    "pg_fixtures": {
+      "path": "tests/ifpmic_api/conftest.py",
+      "sha256": "3c39b0491139762d0a3da09397a368558cbe72e5cfebda4a279c76c97ce6ebe5"
+    },
+    "crash_budget": {
+      "path": "tests/ifpmic_api/h2_crash_case_budget.py",
+      "sha256": "0a0d9283b35e16e6d19e5adcd111fd2c04916b9ddc90eb74df35d7014b9e08e3"
+    },
+    "crash_attempt_oracle": {
+      "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+      "sha256": "e2b5f3f8dbb8e1d789c472a3301236cfad1843532dad596d2e6774e4f8419785"
+    }
+  },
+  "checks": {
+    "one_nonresetting_cleanup_epoch_and_finally_restoration": true,
+    "pg_stop_uses_owned_private_datadir_and_current_postmaster_identity": true,
+    "multi_generation_attempts_are_real_rows_and_deterministically_ordered": true,
+    "legacy_watchdogs_and_test_semantics_remain_unchanged": true,
+    "all_407_retained_ids_and_all_25_plan_obligations_remain_required": true,
+    "fixture_cleanup_is_fully_covered_by_shared_budget": false,
+    "execution_performed": false
+  },
+  "findings": [
+    {
+      "id": "TC-FIXTURE-01",
+      "severity": "blocking",
+      "evidence": "tests/ifpmic_api/conftest.py::migration_db has a function-scoped fixture finalizer that executes DROP DATABASE ... WITH (FORCE) through psycopg in autocommit mode, with no timeout and no cleanup_remaining controller check. CLEANUP-CONTROLLER requires one shared deadline across helpers and pytest fixture finalizers, while PG-STOP only specifies timeout allocation for pg_ctl operations. The database-drop finalizer can therefore exceed the contracted cleanup deadline before cluster shutdown begins.",
+      "required_resolution": "Specify and implement controller-aware bounds for the migration_db teardown SQL operation (including connection/statement timeout and failure evidence), or otherwise show that every DB finalizer in the qualified fixture closure is bounded by the same absolute cleanup epoch. Keep legacy behavior unchanged when no H2 controller is installed."
+    }
+  ],
+  "method_assessment": {
+    "cleanup_controller": "The nonresetting cleanup_remaining(maximum) model and restoring temporary config injection in finally are appropriate. The contract must cover the function-scoped migration_db DROP DATABASE finalizer as well as pg_ctl subprocesses to establish its stated all-finalizer bound.",
+    "postgresql_identity": "Reading the current private data directory postmaster.pid and recording PID plus process start ticks addresses the restarted-PID defect. Stopping only through the pinned pg_ctl and exact private data directory is scoped appropriately; ambiguous or timed-out status remains unknown/live and must fail.",
+    "attempt_order": "Ordering actual attempt rows by generation with a uniqueness assertion, while retaining every real field and full snapshots, addresses unspecified scan order without fabricated expectations. The frozen generation-1 normal oracle can remain untouched.",
+    "qualification_and_authorization": "The full 407-case inventory plus all 25 obligations, fresh exact-pinned rerun, independent review, and runner/pre-gate before execution preserve required scope. No test, DB, service, import, collection, or runtime execution occurred."
+  },
+  "execution_boundary": "This review rejects the current method solely because the shared deadline does not yet explicitly bound the migration_db teardown SQL. No authoring implementation or execution is authorized by this review. Other reviewed methods are sound within the stated scope."
+}

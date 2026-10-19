@@ -1,0 +1,62 @@
+{
+  "kind": "ifpmic.b03.h2.fixture-negative-static-checkpoint.v1",
+  "decision": "record_reviewed_fixture_candidate_and_unexecuted_test_drafts",
+  "source_pins": {
+    "tests/ifpmic_api/conftest.py": "dd3885f66ccc29fc987f4fa20dbdba0481a95c377f227c5ac17663f0f63c4b8f",
+    "tests/ifpmic_api/h2_activity_runtime_boundary_child.py": "266698d81767f07d212f0235d5731fa4e597b8a16420731e4f3b3e1c623966cd",
+    "tests/ifpmic_api/h2_activity_runtime_case_budget.py": "34df11020b89f884207fd8ebdb8aef3e0d1acf452c1429bb9ec2d4735af3da4c",
+    "tests/ifpmic_api/h2_crash_case_budget.py": "51a0a85d6126ef422e58c2ac1ab58312ef11e5c8e9e465db27f01459f5614c03",
+    "tests/ifpmic_api/h2_dispatcher_crash_support.py": "d1e4b96163d2613dda302edaed46ccb212a8e937a3138e9354d7cd6ccf3da781",
+    "tests/ifpmic_api/h2_fixture_cleanup.py": "99b277b7532ebc0e12d80dacd40d7b3e6a2af7f7aebfc46c93b35c3a04c50500",
+    "tests/ifpmic_api/h2_startup_case_budget.py": "35e8b7431c0f54e269392f5a958628f39cce1ae1039e1ea37bee318a2ae7a0a7",
+    "tests/ifpmic_api/h2_transport_boundary_child.py": "ddac239eb8244b08671922c5cee255e608ad2c4589099499c1f3dd7ccc796300",
+    "tests/ifpmic_api/h2_transport_case_budget.py": "a507a9e5a00b0bfbd061ca1bf59693315ad09dcf95d5b9c84bc5a987ad8af19a",
+    "tests/ifpmic_api/h2_window_case_budget.py": "da04f059de0e1b487b40a50f997797874e7373947f5dc251fc88a138a5231f19",
+    "tests/ifpmic_api/h2_worker_api_case_budget.py": "afce78ccbb4988dcb9028ba75ddb852f71a74cdfb1a4868d6601dd8823635f35",
+    "tests/ifpmic_api/jobs_fixture.py": "774de6d85afb2e1735cc199c3bcd5225233c5f3e52a2b98bab4230d0b7050aad",
+    "tests/ifpmic_api/oidc_provider.py": "cae34a82acdd6d00563d6584a245bf45092ca179277e261116ab82999e248e6d",
+    "tests/ifpmic_api/test_accepted_start_response_loss.py": "faa3bbca7895204f95274826f57ffa45c456642bd740e89eb01942867e7f9a7b",
+    "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py": "3d7158dae1cff3a37b6bfb0beb4c7bb2a211da425bff6eeabdc7055a0faff35f",
+    "tests/ifpmic_api/test_h2_dispatcher_crashes.py": "a497c2f36f741bef5667afc781dbce5770ea64f90b463b8d8ea6dbea041cecf4",
+    "tests/ifpmic_api/test_h2_runtime_restart_and_history.py": "8679a210a5b86043ec8e9da7127315003be492c4b493243a6215627d602efbc9",
+    "tests/ifpmic_api/test_h2_transport_boundaries.py": "5bc6dfe780074047c9f8f4088122152bc476967561e6b418c6352aa539f0f669",
+    "tests/ifpmic_api/workflow_schema_fixture.py": "dd1eba1754a8985dd704f0ed63271cc73beca8b03c72aaa2f14acdd41e5e3681",
+    "tests/ifpmic_api/workspace_fixture.py": "66b0d11faaa343542fe27e1254e0ed28a968d73518a7a1ac2aab106e4ef126b6"
+  },
+  "references": {
+    "docs/ifpmic/evidence/b03/h2-runtime-fixture-integration-contract.json": "5be7612bbd9be9a8ef251f07ec577386a0c7f5ab4a1f249aa99fdc8f4ff93ed7",
+    "docs/ifpmic/evidence/b03/h2-runtime-fixture-integration-authoring-acceptance.json": "9ea009c244576651dca30839dc9fd6d8ba7a7d57e6408ba03f782a76dba5b216",
+    "docs/ifpmic/evidence/b03/h2-runtime-fixture-integration-source-review.json": "f4f0ba7c3aba47ddc1eb89467c0b8b667fdcb77a9462db80718da806aaf42ebb",
+    "docs/ifpmic/evidence/b03/h2-runtime-activity-runtime-tc-ledger.json": "d379c31c07d3cadfaa29370b1ec0f5e898138df6d1f9843f9102c0f36f8980ac",
+    "docs/ifpmic/evidence/b03/h2-runtime-transport-tc-ledger.json": "c024a1618cba7ff14699616af0ddcb1095320e7bb107fabc7b2631959cba56ef",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-coverage-progress.json": "6a66366224408dc404f3f4c373f999d9437c51f60d865b0228d75e55c94ab0b6"
+  },
+  "verification": {
+    "python_ast": "passed",
+    "json_parse": "passed",
+    "current_tc_ledger_source_pins": "passed",
+    "independent_fixture_source_review_hashes": "passed",
+    "git_diff_check": "passed",
+    "runtime_tests_executed": false,
+    "services_started": false
+  },
+  "draft_inventory": {
+    "previous_new_unexecuted_ids": 42,
+    "added_activity_runtime_ids": 12,
+    "added_transport_ids": 3,
+    "total_new_unexecuted_ids": 57,
+    "remaining_groups": [
+      "NEG-STARTED",
+      "NEG-FOREIGN-DEPLOYMENT",
+      "NEG-WORKSPACE"
+    ],
+    "full_inventory_frozen": false
+  },
+  "limitations": [
+    "Narrow independent review covers shared fixture integration and transport controller wiring only. New TC case semantics need complete independent review.",
+    "Historical startup/window ledgers and 407 passing results keep their original hashes; shared fixture changes require current complete-ledger reconciliation and fresh qualification.",
+    "Native hung-driver backend disappearance timing after worker exit remains unqualified; resolve the documented PostgreSQL disconnect assumption before execution.",
+    "Full ledger/contract, runner/pre-gate reviews and fresh407 plus all mandatory additions remain required. No H2/B03/full AX acceptance."
+  ],
+  "privacy": "Original ZIP/DOCX remain unchanged and unstaged. No private raw runtime evidence, credentials, histories or logs are included."
+}

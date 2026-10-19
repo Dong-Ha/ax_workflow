@@ -17,6 +17,8 @@ from contextlib import contextmanager
 
 import pytest
 
+from tests.ifpmic_api.h2_fixture_cleanup import installed_controller, restore_preserving_error
+
 
 CASE_BASE = (
     "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::"
@@ -105,8 +107,8 @@ class StartupCaseDeadline:
         finally:
             os.close(fd)
 
-    def _record(self, event, *, create=False):
-        current = time.monotonic()
+    def _record(self, event, *, create=False, at=None):
+        current = time.monotonic() if at is None else at
         assert math.isfinite(current)
         self.events.append({"event": event, "monotonic": current})
         self._write(create=create)
@@ -130,6 +132,7 @@ class StartupCaseDeadline:
         if self.cleanup_started:
             return
         self.cleanup_started = True
+        self.cleanup_at = time.monotonic()
         signal.setitimer(signal.ITIMER_REAL, 0)
 
         def cleanup_alarm(_signum, _frame):
@@ -138,7 +141,15 @@ class StartupCaseDeadline:
 
         signal.signal(signal.SIGALRM, cleanup_alarm)
         signal.setitimer(signal.ITIMER_REAL, CLEANUP_SECONDS)
-        self._record("cleanup_start")
+        self._record("cleanup_start", at=self.cleanup_at)
+
+    def cleanup_remaining(self, maximum):
+        self.begin_cleanup()
+        left = min(float(maximum), self.cleanup_at + CLEANUP_SECONDS - time.monotonic())
+        if left <= 0:
+            self.cleanup_timeout = True
+            raise TimeoutError("H2 startup cleanup deadline exceeded")
+        return left
 
     def remaining(self, maximum=30):
         result = min(float(maximum), self.body_deadline - time.monotonic())
@@ -173,11 +184,12 @@ def pytest_runtest_protocol(item, nextitem):
         return
     deadline = StartupCaseDeadline(item.nodeid)
     item._ifpmic_h2_startup_deadline = deadline
-    try:
-        deadline.start()
-        yield
-    finally:
-        deadline.restore()
+    with installed_controller(item.config, deadline):
+        try:
+            deadline.start()
+            yield
+        finally:
+            restore_preserving_error(deadline.restore)
 
 
 @pytest.hookimpl(hookwrapper=True, tryfirst=True)

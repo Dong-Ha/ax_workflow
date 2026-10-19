@@ -22,6 +22,11 @@ import psycopg
 
 from tests.ifpmic_api import test_accepted_start_response_loss as accepted_start
 from tests.ifpmic_api import test_h2_runtime_normal_flow as normal
+from tests.ifpmic_api.h2_fixture_cleanup import ordered_attempt_snapshot
+
+
+def read_owner_snapshot(harness, job_id):
+    return ordered_attempt_snapshot(normal._read_owner_snapshot(harness, job_id))
 from scripts.ifpmic_temporal_toolchain import verify_binary
 
 

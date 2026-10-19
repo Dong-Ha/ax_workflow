@@ -1,0 +1,227 @@
+{
+  "kind": "ifpmic.b03.h2.fixture-integration-contract-independent-review.v2",
+  "status": "approve_method_for_authoring_only_with_conditions",
+  "review_independence": {
+    "independent_from_contract_author": true,
+    "review_scope": "Static authoring-method review of exact fixture-integration contract v2 only.",
+    "candidate_source_review": false,
+    "final_acceptance_review": false,
+    "execution_authorization": false
+  },
+  "contract": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-fixture-integration-contract.json",
+    "sha256": "5be7612bbd9be9a8ef251f07ec577386a0c7f5ab4a1f249aa99fdc8f4ff93ed7",
+    "kind": "ifpmic.b03.h2.fixture-integration-contract.v2"
+  },
+  "parent_full_plan": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-full-verification-plan.json",
+    "sha256": "c6964bccff0d4cec1ac00f18fbb267d5d1a4a5887e53844c604333b7c059486c"
+  },
+  "review_method": {
+    "operations": [
+      "Read exact contract v2 and verified its SHA-256; compared all 15 declared source pins with current bytes using sha256sum.",
+      "Statically reviewed the four bounded integration steps, cleanup-failure semantics, prior v1 blocker closure, pytest last-item teardown scope, privacy constraints and qualification boundaries.",
+      "Read-only review only; no project/SDK imports, test collection, SQL, services, network, runner execution or runtime qualification."
+    ],
+    "not_performed": [
+      "No implementation review, execution authorization or H2 acceptance decision."
+    ]
+  },
+  "verdict": {
+    "authoring_may_proceed": true,
+    "runner_authoring_may_proceed": false,
+    "execution_may_proceed": false,
+    "acceptance_may_proceed": false,
+    "conditions": [
+      "Implement all five v2 steps within the stated shared fixture/runner ownership; do not alter historical normal/H1 watchdog/evidence or production behavior.",
+      "Use one absolute case cleanup clock through the last-item session fixture teardown; every cleanup timeout must be derived from that remaining budget, and exhausted/uncertain cleanup must fail while retaining identities.",
+      "For migration_db DROP, enforce bounded connection, lock and statement timeouts from remaining time; on timeout retain isolated DB identity and report cleanup unknown.",
+      "For PG restart cleanup, capture the current private postmaster PID/start ticks immediately before stop and prove that exact identity absent; stale initial PID disappearance is insufficient.",
+      "For OIDC and TestClient teardown, retain handles and report failure if any thread/task/context exit is unconfirmed; do not detach live resources or let secondary evidence errors mask the primary failure.",
+      "Sort only observed attempt rows by unique generation; do not infer retries or manufacture/normalize SQL or history values.",
+      "Freeze a complete case/source ledger including current shared-fixture pins, exact full-plan/original17+2 pins, historical conftest transition and all literal obligations. Independently review ledger and runner pre-gate before execution.",
+      "Fresh qualification must include all 407 retained IDs plus all 25 full-plan obligations and additions; no skips/errors, no identity leaks, and private/public evidence audit. This method review does not authorize that qualification."
+    ]
+  },
+  "step_reviews": [
+    {
+      "id": "CLEANUP-CONTROLLER",
+      "verdict": "approve_with_conditions",
+      "review": "The item.config-scoped controller can govern helpers and pytest finalizers if installed before fixture setup and remains active through teardown_exact(None), including last-item session fixtures. Restore the prior config attribute in an outer finally, even after setup, evidence or cleanup errors. cleanup_remaining(maximum) must use the existing monotonic epoch, return positive time only, and never renew it. With no controller, legacy behavior must remain unchanged.",
+      "failure_semantics": "An exhausted budget is a failed case, not a pass. Outer-runner recovery is separate evidence and cannot upgrade per-case cleanup."
+    },
+    {
+      "id": "FIXTURE-CLOSURE",
+      "verdict": "approve_with_conditions",
+      "review": "V2 closes the v1 DROP DATABASE gap and includes HBA reload, OIDC provider threads, H2-only TestClient maintenance quiescence before the body, and actual context finalization. The method is adequate for authoring, provided each operation truly receives the same remaining deadline. Implementation must demonstrate that synchronous TestClient/context exit cannot block beyond the remaining budget; if it needs a helper thread, retain and verify that thread and fail if it remains alive. H2 maintenance cancellation/await must complete before the case body; unchanged retained auth/maintenance tests must continue exercising normal behavior.",
+      "failure_semantics": "Any unconfirmed DB operation, reload, thread/task stop or context exit is cleanup failure with retained identity/evidence. Do not detach a live thread and label it stopped; do not claim a per-case pass from outer cleanup."
+    },
+    {
+      "id": "PG-STOP",
+      "verdict": "approve_with_conditions",
+      "review": "The current postmaster.pid plus /proc start ticks after restart is the correct identity. Fast stop, immediate fallback and status checks must each be bounded from one remaining budget with time reserved for later steps. Verify absence of the current identity in addition to recording the initial identity.",
+      "failure_semantics": "If current identity absence cannot be confirmed in time, retain private lifecycle evidence and fail unknown/live; never signal an unrelated or system-wide process."
+    },
+    {
+      "id": "ATTEMPT-ORDER",
+      "verdict": "approve",
+      "review": "Sorting actual rows locally by generation after asserting unique generations, or using a real ORDER BY generation, gives deterministic comparison without inventing retry counts or values."
+    },
+    {
+      "id": "QUALIFICATION",
+      "verdict": "approve_with_conditions",
+      "review": "The installed runner pin supports including teardown_exact(None) and session fixture finalization in the last item protocol. Keep sessionfinish only as abnormal failure recovery. The shared fixture change requires fresh execution of all 407 retained IDs and all full-plan cases after complete ledger/source freeze and independent reviews.",
+      "scope_limit": "Only the explicitly scoped local H2 activation substage can eventually be accepted; parent B03 and downstream H3-H7/AT remain pending."
+    }
+  ],
+  "privacy_and_evidence": {
+    "private": "Raw SQL/history/network, credentials, cookies/tokens, process and postmaster identities, private paths, PG storage and timing stay in owner-only 0700 directories and 0600 files.",
+    "public": "Only independently reviewed normalized synthetic IDs, status/counts and hashes; no credentials, profile/request content, raw traces, private paths or identities.",
+    "failure_preservation": "Capture primary failure before cleanup. Always attempt restoration/cleanup; record secondary cleanup or evidence-write failures without masking the primary error."
+  },
+  "source_pin_reconciliation": {
+    "contract_pins_checked": true,
+    "all_15_current_file_hashes_match_contract": true,
+    "historical_ledgers_may_be_edited": false,
+    "required_candidate_action": "Keep archived normal/H1 evidence unchanged. The new candidate must list exact current source pins and full-plan/original17+2 pins, identify the old conftest pin as historical baseline, and require fresh full qualification after shared-fixture changes.",
+    "checked_source_pins": {
+      "tests/ifpmic_api/conftest.py": "3c39b0491139762d0a3da09397a368558cbe72e5cfebda4a279c76c97ce6ebe5",
+      "tests/ifpmic_api/h2_crash_case_budget.py": "0a0d9283b35e16e6d19e5adcd111fd2c04916b9ddc90eb74df35d7014b9e08e3",
+      "tests/ifpmic_api/h2_worker_api_case_budget.py": "d339b87062efe3d4c2e43c76f12d08316402bc6899edccbc51327322d84d5c96",
+      "tests/ifpmic_api/h2_startup_case_budget.py": "ee84ddd77140f617c0572f1a4bc9714b6a257ead361282bd84341a181ffc0894",
+      "tests/ifpmic_api/h2_window_case_budget.py": "7c64f17995b17c1072dc7106ccc38a3595367ecab8fa96fd43619bba98e85c1e",
+      "tests/ifpmic_api/test_h2_dispatcher_crashes.py": "e2b5f3f8dbb8e1d789c472a3301236cfad1843532dad596d2e6774e4f8419785",
+      "tests/ifpmic_api/test_h2_runtime_restart_and_history.py": "17aa418681aa8a9a10902a88a6d2e799c639a161e4399296ece6fd150156a71a",
+      "tests/ifpmic_api/test_accepted_start_response_loss.py": "cfd8b3c0f8905563a4a80646bb27f4cd1c11397ae29c25dbe7314a800b112e2e",
+      "tests/ifpmic_api/workflow_schema_fixture.py": "5a3450bb4b436ea215ac6ab07b6d3d20d33ff87bdc56e83c5e5c163e7ffaedc4",
+      "tests/ifpmic_api/jobs_fixture.py": "2191f3523e0ddcbb4c7e97d7b74348dc571c432b5df5a01c7436dd57db3bac48",
+      "tests/ifpmic_api/workspace_fixture.py": "5987916779c74a91b4dc44f16b03f27024762b4525ba6f8e9f14a20809e50ff8",
+      "tests/ifpmic_api/oidc_provider.py": "b5e3a70df73245c143bd2e2e9db1ee2dd6061dde0cf1dfa7c02d9cdc4fe8f367",
+      "services/ifpmic_api/app.py": "a65c3d44a14ecae7b819e5042d4f490ce68c8b9b5f5962d1b5f2bbfe52fef192",
+      "services/ifpmic_api/auth.py": "9fef8084e8b11a7e1d0929a1842ab4fdddb0361adcbaa70700529a5e9999a887",
+      ".ifpmic-venv/lib/python3.12/site-packages/_pytest/runner.py": "c8d7fd553c0516f7884502ee0e7954eb5a5b1542f21fcb5c4357500ed2fe1570"
+    }
+  },
+  "budget_and_runner_semantics": {
+    "frozen_full_plan_bounds_seconds": {
+      "process_exception_body": 215,
+      "process_exception_cleanup": 25
+    },
+    "review": "Ordinary cases retain 30 seconds; each 215+25 exception needs a literal case-specific justification. Start the watchdog before fixtures. Use one absolute cleanup clock, not serial helper budgets. Timed-out cleanup remains failed/unknown even if the parent later recovers owned descendants.",
+    "runner_authoring": "Blocked until complete case/source ledger and independent reviews are frozen."
+  },
+  "unresolved_execution_risks": [
+    "No implementation or runtime behavior was verified; actual DROP, HBA, OIDC-thread and TestClient finalization durations remain unknown.",
+    "The contract does not specify the concrete mechanism for enforcing a deadline on potentially blocking synchronous TestClient/context exit. Candidate implementation must prove this under one deadline and retain any helper thread; otherwise the step remains blocked.",
+    "Actual PG fast-stop/fallback/status durations under the 25-second cap remain unmeasured.",
+    "All fixture/controller integration, complete 407+all25 qualification, cleanup inventory and evidence/privacy audit remain pending."
+  ],
+  "revision_history": [
+    {
+      "contract_path": "docs/ifpmic/evidence/b03/attempts/h2-runtime-fixture-integration-v1-before-finalizer-closure.json",
+      "contract_sha256": "a7a517cf19d740ee9d368ae97dc78c19c7020fb23e6ee81c36196a7367e9ef97",
+      "prior_review": {
+        "kind": "ifpmic.b03.h2.fixture-integration-contract-independent-review.v1",
+        "status": "approve_method_for_authoring_only_with_conditions",
+        "review_independence": {
+          "independent_from_contract_author": true,
+          "review_scope": "Static authoring-method review of fixture integration contract only.",
+          "candidate_source_review": false,
+          "final_acceptance_review": false,
+          "execution_authorization": false
+        },
+        "contract": {
+          "path": "docs/ifpmic/evidence/b03/h2-runtime-fixture-integration-contract.json",
+          "sha256": "a7a517cf19d740ee9d368ae97dc78c19c7020fb23e6ee81c36196a7367e9ef97"
+        },
+        "parent_full_plan": {
+          "path": "docs/ifpmic/evidence/b03/h2-runtime-full-verification-plan.json",
+          "sha256": "c6964bccff0d4cec1ac00f18fbb267d5d1a4a5887e53844c604333b7c059486c"
+        },
+        "review_method": {
+          "operations": [
+            "Read the exact contract and frozen full-plan bytes; confirmed both requested SHA-256 values.",
+            "Read-only source-pin hash comparison for all eight listed integration inputs.",
+            "Static source inspection of PG teardown identity and timeout code, protocol watchdog hooks, and multi-generation attempt reads."
+          ],
+          "not_performed": [
+            "No imports, test collection, SQL, service startup, network operation, runner execution, or runtime qualification."
+          ]
+        },
+        "verdict": {
+          "authoring_may_proceed": true,
+          "runner_authoring_may_proceed": false,
+          "execution_may_proceed": false,
+          "acceptance_may_proceed": false,
+          "conditions": [
+            "Implement all four contract steps within the shared fixture/runner integration ownership boundary.",
+            "Freeze a complete case ledger with literal IDs and all eight fields purpose,target,method,agent,pass_criteria,expected,evidence,recovery; preserve every obligation and variant from the exact full plan.",
+            "Independently review the completed candidate ledger, source pins and runner pre-gate before any execution."
+          ]
+        },
+        "step_reviews": [
+          {
+            "id": "CLEANUP-CONTROLLER",
+            "verdict": "approve_with_conditions",
+            "review": "An item.config-scoped optional controller is a suitable bridge for one monotonic cleanup epoch across test helpers and pytest finalizers. The hook must restore the previous config attribute in finally, including fixture-setup and evidence-write failures. Every participating new protocol watchdog must expose the same strictly positive cleanup_remaining(maximum) operation and must not create or renew a second cleanup timer. Common PG fixture behavior without an active controller must remain byte-for-byte or behaviorally compatible with legacy callers. Additional static blocker: migration_db finalization currently calls psycopg DROP DATABASE WITH (FORCE) through a connection without a connect or statement timeout; this can exceed the shared cleanup deadline and must be bounded under the active controller too.",
+            "failure_semantics": "If the remaining budget is exhausted, fail the case and delegate only owned-process cleanup to the outer runner. Never turn an interrupted cleanup into a passing absence assertion. A database-drop timeout is cleanup failure; retain the isolated DB identity and report cleanup unknown rather than waiting unboundedly."
+          },
+          {
+            "id": "PG-STOP",
+            "verdict": "approve_with_conditions",
+            "review": "The current conftest records the initial PG server PID, while restart cases can replace the postmaster. The finalizer must reread the private data directory postmaster.pid immediately before stop, validate its PID and current /proc start ticks, retain both initial and current identities, and verify current identity absence after stop. Timeouts for fast stop, immediate fallback and status must be individually derived from the same remaining cleanup budget, with budget reserved for fallback and final status. If no time remains for proof, persist unknown/live and fail; do not claim stopped from disappearance of the stale initial PID.",
+            "failure_semantics": "A PG stop/status failure is a failed cleanup with private identity evidence. The runner may continue bounded cleanup for owned descendants, but that fallback cannot upgrade the case to pass."
+          },
+          {
+            "id": "ATTEMPT-ORDER",
+            "verdict": "approve",
+            "review": "Sorting real observed attempt rows locally by generation after asserting unique generations is valid test-oracle ordering, as is a real SELECT ORDER BY generation. No row may be synthesized, normalized, omitted or inferred from assumed retry counts. The frozen single-generation helper may remain unchanged; all newly added multi-generation comparisons must use ordered actual rows."
+          },
+          {
+            "id": "QUALIFICATION",
+            "verdict": "approve_with_conditions",
+            "review": "A shared conftest change invalidates prior runtime qualification even though historical files and evidence remain immutable. Preserve archived evidence unchanged, record the before/after conftest source-pin transition in the new candidate ledger/review, and rerun all 407 retained literal IDs plus every newly authored full-plan case on the exact frozen source/environment. Reconcile exact JUnit node IDs, failures/errors/skips, process cleanup, privacy and original immutable pins before acceptance.",
+            "scope_limit": "Any resulting decision may accept only the explicitly scoped local H2 activation substage; the parent full AX/B03 and downstream H3-H7/AT goals remain pending."
+          }
+        ],
+        "privacy_and_evidence": {
+          "private": "Raw SQL snapshots, source/environment archives, PG data directory and postmaster identities, process identities, raw history/network records, timing and JUnit inputs remain in owner-only 0700 directories and 0600 files.",
+          "public": "Only independently reviewed normalized synthetic case IDs, status/counts and hashes; never credentials, cookies/tokens, raw SQL, raw history, private paths, process identities or profile/request content.",
+          "failure_preservation": "Capture primary failure before cleanup; preserve it if secondary evidence writing or cleanup also fails. Record secondary failure types privately without masking the original failure."
+        },
+        "source_pin_reconciliation": {
+          "contract_pins_checked": true,
+          "all_eight_current_file_hashes_match_contract": true,
+          "historical_ledgers_may_be_edited": false,
+          "required_candidate_action": "Do not rewrite archived normal/H1 evidence. New complete candidate records current shared-fixture source and exact immutable old-plan/original17+2 pins, lists the prior conftest pin as historical baseline, and requires fresh 407-case execution because the shared fixture changed.",
+          "checked_source_pins": {
+            "tests/ifpmic_api/conftest.py": "3c39b0491139762d0a3da09397a368558cbe72e5cfebda4a279c76c97ce6ebe5",
+            "tests/ifpmic_api/h2_crash_case_budget.py": "0a0d9283b35e16e6d19e5adcd111fd2c04916b9ddc90eb74df35d7014b9e08e3",
+            "tests/ifpmic_api/h2_worker_api_case_budget.py": "d339b87062efe3d4c2e43c76f12d08316402bc6899edccbc51327322d84d5c96",
+            "tests/ifpmic_api/h2_startup_case_budget.py": "ee84ddd77140f617c0572f1a4bc9714b6a257ead361282bd84341a181ffc0894",
+            "tests/ifpmic_api/h2_window_case_budget.py": "7c64f17995b17c1072dc7106ccc38a3595367ecab8fa96fd43619bba98e85c1e",
+            "tests/ifpmic_api/test_h2_dispatcher_crashes.py": "e2b5f3f8dbb8e1d789c472a3301236cfad1843532dad596d2e6774e4f8419785",
+            "tests/ifpmic_api/test_h2_runtime_restart_and_history.py": "17aa418681aa8a9a10902a88a6d2e799c639a161e4399296ece6fd150156a71a",
+            "tests/ifpmic_api/test_accepted_start_response_loss.py": "cfd8b3c0f8905563a4a80646bb27f4cd1c11397ae29c25dbe7314a800b112e2e"
+          }
+        },
+        "budget_and_runner_semantics": {
+          "frozen_full_plan_bounds_seconds": {
+            "process_exception_body": 215,
+            "process_exception_cleanup": 25
+          },
+          "review": "Keep 30 seconds as the default for ordinary cases. Every process exception using 215+25 needs a literal case-specific justification. Watchdog starts before fixtures. All cleanup participants must obey one absolute 25-second clock; per-helper subprocess timeouts must not be added serially beyond it.",
+          "fallback": "A timed-out helper must preserve failure, leave remaining time for bounded fallback/status where possible, and report unknown/live if proof did not fit. Outer-runner cleanup is recovery only, not per-case success evidence.",
+          "runner_authoring": "Blocked until the complete case/source ledger and independent reviews are frozen."
+        },
+        "unresolved_execution_risks": [
+          "Current migration_db DROP DATABASE WITH (FORCE) finalizer and its psycopg connection have no bound; fixture integration must make this operation obey the same remaining cleanup budget and preserve a cleanup-failure result.",
+          "Actual PG fast-stop, immediate fallback and status durations under the shared 25-second clock are unmeasured.",
+          "Fixture teardown and all process-helper cleanup integration under one active controller remains unimplemented and unverified.",
+          "Full 407 retained plus all 25 obligation coverage, exact JUnit accounting and final private/public evidence audit remain pending."
+        ]
+      },
+      "disposition": "Historical conditional authoring review only. V1 DROP DATABASE unbounded-finalizer blocker is superseded by v2 method; no implementation/execution was authorized under v1."
+    }
+  ]
+}

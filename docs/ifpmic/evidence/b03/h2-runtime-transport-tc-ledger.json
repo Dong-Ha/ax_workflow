@@ -1,0 +1,104 @@
+{
+  "kind": "ifpmic.b03.h2.runtime-transport-tc-ledger.v1",
+  "status": "partial_authoring_checkpoint_not_executed",
+  "purpose": "Freeze the first three actual-process transport cases for machine-authority serialization and pre-admission worker behavior. The remaining transport obligations and full H2 acceptance remain pending.",
+  "plan": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-full-verification-plan.json",
+    "sha256": "c6964bccff0d4cec1ac00f18fbb267d5d1a4a5887e53844c604333b7c059486c"
+  },
+  "scope": {
+    "included": [
+      "NEG-MACHINE-RACE",
+      "NEG-PREADMISSION"
+    ],
+    "pending": [
+      "NEG-STARTED",
+      "NEG-FOREIGN-DEPLOYMENT",
+      "NEG-WORKSPACE",
+      "remaining full-plan obligations"
+    ],
+    "acceptance_limit": "This is a transport-case authoring subledger only. It grants no execution authorization and makes no H2 acceptance claim."
+  },
+  "method": "Run only after the complete full-H2 ledger, contract, runner, independent and TC reviews, and pre-gate approval. The transport phase uses the qualified H1 Python environment and explicitly loads tests.ifpmic_api.h2_transport_case_budget. Its protocol hook begins before session fixture setup, measures the case body/setup to 215 seconds and one shared fixture/process cleanup epoch to 25 seconds, and writes a unique private timing record. Each test uses actual isolated PostgreSQL, G5 physical READY, a real owned Temporal server and production CLI/Dispatcher; constructor-injected barriers pause only the named SQL/Dispatcher edge. Private SQL snapshots, exact barrier event times, process PID/start-tick journals and direct Temporal history observations are retained under the runner-provided private evidence root. Shared fixture pins reflect the current authoring checkpoint; the complete inventory and runtime qualification remain pending.",
+  "agent": "TC owns this test module, test-only child, budget plugin and subledger. Root owns shared fixture closure and full runner/contract integration. No tests, imports, SQL, services or network activity were run for this authoring checkpoint.",
+  "timing": {
+    "case_body_seconds": 215,
+    "shared_cleanup_seconds": 25,
+    "total_seconds": 240,
+    "justification": "All three cases create and stop an actual Temporal CLI server and use the real PostgreSQL session fixtures. The bounded allowance includes those owned process and fixture lifecycles; the shared cleanup interval does not reset per process or fixture."
+  },
+  "source_pins": {
+    "tests/ifpmic_api/test_h2_transport_boundaries.py": "5bc6dfe780074047c9f8f4088122152bc476967561e6b418c6352aa539f0f669",
+    "tests/ifpmic_api/h2_transport_boundary_child.py": "ddac239eb8244b08671922c5cee255e608ad2c4589099499c1f3dd7ccc796300",
+    "tests/ifpmic_api/h2_transport_case_budget.py": "a507a9e5a00b0bfbd061ca1bf59693315ad09dcf95d5b9c84bc5a987ad8af19a",
+    "tests/ifpmic_api/h2_dispatcher_crash_support.py": "d1e4b96163d2613dda302edaed46ccb212a8e937a3138e9354d7cd6ccf3da781",
+    "tests/ifpmic_api/test_h2_runtime_normal_flow.py": "fa34210fff8deb60b107d738924059999507bb7dcdf41ada91d9be6ce26e30c3",
+    "tests/ifpmic_api/test_accepted_start_response_loss.py": "faa3bbca7895204f95274826f57ffa45c456642bd740e89eb01942867e7f9a7b",
+    "tests/ifpmic_api/h2_fixture_cleanup.py": "99b277b7532ebc0e12d80dacd40d7b3e6a2af7f7aebfc46c93b35c3a04c50500",
+    "tests/ifpmic_api/jobs_fixture.py": "774de6d85afb2e1735cc199c3bcd5225233c5f3e52a2b98bab4230d0b7050aad",
+    "tests/ifpmic_api/workspace_fixture.py": "66b0d11faaa343542fe27e1254e0ed28a968d73518a7a1ac2aab106e4ef126b6",
+    "tests/ifpmic_api/workflow_schema_fixture.py": "dd1eba1754a8985dd704f0ed63271cc73beca8b03c72aaa2f14acdd41e5e3681",
+    "tests/ifpmic_api/conftest.py": "dd3885f66ccc29fc987f4fa20dbdba0481a95c377f227c5ac17663f0f63c4b8f",
+    "services/ifpmic_api/execution_dispatcher.py": "7baf91290938b3159b2e200e6fde8f81db5ec2d7b117351e03f689bbc75db209",
+    "services/ifpmic_api/execution_store.py": "2bdbc8b457a2da1f78d73c8e3ddda5059962a5931b154423a681a7cbb88d71bd",
+    "services/ifpmic_api/execution_runtime.py": "49c0c6208e62b26e808ecffadf278dd9c7cff45134a47b905d3a4f60987c4b08",
+    "services/ifpmic_api/execution_activities.py": "ac81ad4ba4f5fad22bb2880f65cf0a833b78e4c8f8e90729833b60d14cdf9c2c",
+    "services/ifpmic_api/execution_temporal.py": "886d40d4dcb0e6e916f5cb76e5d514ce5890d2cd5a7f7069acafe84cfed1cea2",
+    "services/ifpmic_api/execution_workflow.py": "78f1a408ac6e80d56294c488e8bde434b03bddb1d17ed19278bfb87d5e85b3d7",
+    "services/ifpmic_api/migrations/003_workflow_execution.sql": "5ef29521944e18551728dd285ce3ae21fa03c2b06f77c25430da6acb0ce1f102",
+    "services/ifpmic_api/migrations/004_prebinding_incident.sql": "9a7651ab063901e69a77f4b825dd21544dc018ed01941dc3a1bc76f8a65b541f"
+  },
+  "cases": [
+    {
+      "id": "tests/ifpmic_api/test_h2_transport_boundaries.py::test_h2_machine_authority_disable_serializes_with_claim[disable-before-claim]",
+      "purpose": "A disabled dispatcher principal is rejected before it can claim a fresh accepted create.",
+      "target": "Actual production Dispatcher startup against the registered deployment after owner disables that principal; the synthetic accepted job is fresh and has no execution binding.",
+      "method": "Create an accepted job through the real G4/G5 harness, establish physical READY, disable the registered dispatcher principal through the owner role, then start the one-shot production Dispatcher child. Independently compare owner SQL before and after and query the exact workflow ID in the actual isolated Temporal namespace.",
+      "agent": "TC",
+      "pass_criteria": "The CLI exits with fixed dependency-unavailable status before claim; the full job/outbox/workspace snapshot is unchanged; bindings, attempts, scopes and receipts remain empty; independent Temporal listing returns no execution.",
+      "expected": "Startup authorization denies before claim and before any StartWorkflow RPC.",
+      "evidence": "Private before/after SQL snapshots, fixed child exit/output, process identity lifecycle and independent exact-workflow-ID listing.",
+      "recovery": "Preserve the failure evidence and stop only owned children/server; do not reactivate the principal or repair the job to make the case pass."
+    },
+    {
+      "id": "tests/ifpmic_api/test_h2_transport_boundaries.py::test_h2_machine_authority_disable_serializes_with_claim[claim-before-disable]",
+      "purpose": "A principal disable waiting on the claim transaction commits before execution reservation is authorized.",
+      "target": "Fresh accepted create with no binding, a real Dispatcher child paused before and after the claim transaction, and a separate owner SQL session disabling the dispatcher registration.",
+      "method": "Pause at the real ExecutionStore before_claim_delivery_commit hook and observe the owner UPDATE blocked via pg_blocking_pids and lock wait state. Release claim commit, pause at after_claim_delivery_commit before Dispatcher proceeds to deliver/reserve, verify the owner disable committed, then release delivery. Independently verify no reservation, attempt completion, scope, receipt or Temporal execution.",
+      "agent": "TC",
+      "pass_criteria": "The observed database lock ordering is claim transaction before disable commit, but fresh unbound create has no SQL start authorization: the subsequent real reserve_execution rechecks the disabled principal and returns dependency wait. Outbox remains the same generation-1 leased claim, no execution binding or effect is created, and no exact workflow history exists.",
+      "expected": "Principal disable is serialized after claim commit and before reserve authorization; claim alone does not authorize StartWorkflow.",
+      "evidence": "Both literal store-phase barrier events, blocked owner backend PID plus pg_blocking_pids observation, committed disabled-principal row, before/after owner snapshots, dispatcher lifecycle and direct Temporal listing.",
+      "recovery": "Preserve event ordering and snapshots; release every private barrier and clean only owned processes under the shared deadline. Do not assert cancellation of any already-reserved or in-flight authorized RPC."
+    },
+    {
+      "id": "tests/ifpmic_api/test_h2_transport_boundaries.py::test_h2_activity_waits_until_admission_same_run",
+      "purpose": "A real projector activity arriving before dispatcher admission waits without effects, then succeeds for the same run after admission.",
+      "target": "Actual production Dispatcher paused after it observes persisted Started history but before admit_run, plus a separate production Worker CLI on the registered build queue.",
+      "method": "Pause the actual Dispatcher at after_history_observed after its one real Start and independent history read. Start the real registered Worker; independently observe a completed read_activation activity returning wait while workflow phase remains admission_wait. Snapshot SQL to require DRAFT revision 0, reserved binding with no admitted_run_id, generation-1 leased outbox, and no worker scope or receipt. Release the dispatcher, require admission/ack and project_activation to settle, and assert exactly the same Started run is admitted and the one immutable receipt queues the job.",
+      "agent": "TC",
+      "pass_criteria": "Before release, actual worker history proves wait and no project_activation activity is scheduled; SQL business state remains unchanged with no scope or receipt. After release, the same observed run is admitted once, the original command is dispatched, one scope and sequence-1 receipt exist, and the actual workflow remains queued with no replacement Started event.",
+      "expected": "Pre-admission activity has zero business effects; admission later enables projection for the same run only.",
+      "evidence": "Raw first-Started history, actual activity completion/history IDs, pre/post owner snapshots and hashes, exact run ID, G5 tree oracle, process PID/start-tick journal and bounded cleanup record.",
+      "recovery": "Preserve all observations and stop only the owned dispatcher, worker and Temporal server; never synthesize admission, receipt or worker output."
+    }
+  ],
+  "static_review": {
+    "execution_performed": false,
+    "tests_or_imports_performed": false,
+    "pending": [
+      "Independent source review of transport drafts and complete inventory reconciliation before execution",
+      "Independent and TC exact full-ledger/contract/runner review and pre-gate approval"
+    ]
+  },
+  "revision_history": [
+    {
+      "reason": "Initial scoped authoring contains only NEG-MACHINE-RACE (two controls) and NEG-PREADMISSION (one actual worker case). The other three transport categories remain required and pending, not waived. Hashes are current static bytes; shared fixture hashes require refresh after the root-owned fixture checkpoint.",
+      "execution_performed": false
+    },
+    {
+      "reason": "Root integrated shared fixture closure and error-preserving deadline restore, then refreshed current authoring pins. Historical ledgers and passing evidence remain unchanged.",
+      "execution_performed": false
+    }
+  ]
+}

@@ -1,0 +1,208 @@
+{
+  "kind": "ifpmic.b03.h2.activity-runtime-tc-ledger.v1",
+  "status": "authored_pending_independent_review_no_execution",
+  "parent_plan": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-full-verification-plan.json",
+    "sha256": "c6964bccff0d4cec1ac00f18fbb267d5d1a4a5887e53844c604333b7c059486c"
+  },
+  "scope": {
+    "obligations": ["NEG-AUTHORITY", "NEG-NONCREATE", "NEG-RETENTION-RPC", "NEG-RUNTIME-FAILURE", "NEG-HUNG-DRIVER"],
+    "derivative_full_25_obligation_ledger_input": true,
+    "standalone_gate": false,
+    "runner_authoring_authorized": false,
+    "execution_authorized": false,
+    "acceptance_authorized": false,
+    "runtime_status": "not executed; no pass claims"
+  },
+  "source_pins": {
+    "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py": "3d7158dae1cff3a37b6bfb0beb4c7bb2a211da425bff6eeabdc7055a0faff35f",
+    "tests/ifpmic_api/h2_activity_runtime_boundary_child.py": "266698d81767f07d212f0235d5731fa4e597b8a16420731e4f3b3e1c623966cd",
+    "tests/ifpmic_api/h2_activity_runtime_case_budget.py": "34df11020b89f884207fd8ebdb8aef3e0d1acf452c1429bb9ec2d4735af3da4c",
+    "tests/ifpmic_api/h2_fixture_cleanup.py": "99b277b7532ebc0e12d80dacd40d7b3e6a2af7f7aebfc46c93b35c3a04c50500",
+    "tests/ifpmic_api/h2_dispatcher_crash_support.py": "d1e4b96163d2613dda302edaed46ccb212a8e937a3138e9354d7cd6ccf3da781",
+    "tests/ifpmic_api/test_h2_runtime_normal_flow.py": "fa34210fff8deb60b107d738924059999507bb7dcdf41ada91d9be6ce26e30c3",
+    "tests/ifpmic_api/jobs_fixture.py": "774de6d85afb2e1735cc199c3bcd5225233c5f3e52a2b98bab4230d0b7050aad",
+    "tests/ifpmic_api/workspace_fixture.py": "66b0d11faaa343542fe27e1254e0ed28a968d73518a7a1ac2aab106e4ef126b6",
+    "tests/ifpmic_api/workflow_schema_fixture.py": "dd1eba1754a8985dd704f0ed63271cc73beca8b03c72aaa2f14acdd41e5e3681",
+    "services/ifpmic_api/execution_runtime.py": "49c0c6208e62b26e808ecffadf278dd9c7cff45134a47b905d3a4f60987c4b08",
+    "services/ifpmic_api/execution_dispatcher.py": "7baf91290938b3159b2e200e6fde8f81db5ec2d7b117351e03f689bbc75db209",
+    "services/ifpmic_api/execution_temporal.py": "886d40d4dcb0e6e916f5cb76e5d514ce5890d2cd5a7f7069acafe84cfed1cea2",
+    "services/ifpmic_api/execution_store.py": "2bdbc8b457a2da1f78d73c8e3ddda5059962a5931b154423a681a7cbb88d71bd",
+    "services/ifpmic_api/execution_manifest.py": "0f08e5c86992edc9ee9b62b19d50f981282d125e39810e0f0d6e75d39bfd07b6",
+    "services/ifpmic_api/execution_activities.py": "ac81ad4ba4f5fad22bb2880f65cf0a833b78e4c8f8e90729833b60d14cdf9c2c",
+    "services/ifpmic_api/execution_protocol.py": "543c801e902e28b1ada451aa98196275ccb271246c2772837386b7e7aca2c965",
+    "services/ifpmic_api/migrations/003_workflow_execution.sql": "5ef29521944e18551728dd285ce3ae21fa03c2b06f77c25430da6acb0ce1f102",
+    "services/ifpmic_api/jobs.py": "0538e460a6be42e3129d2e8d5e9f262bba357e621e0b5e800f4495ebdf99ecf9",
+    "services/ifpmic_api/errors.py": "374b49dc97c616d8e4c9432d997d5c9bd9b4a542f236f451a3e43ae92d16e967",
+    "services/ifpmic_api/app.py": "a65c3d44a14ecae7b819e5042d4f490ce68c8b9b5f5962d1b5f2bbfe52fef192",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-verification-plan.json": "c6964bccff0d4cec1ac00f18fbb267d5d1a4a5887e53844c604333b7c059486c"
+  },
+  "budget_policy": {
+    "runtime_cases_body_cleanup_seconds": [215, 25],
+    "sql_only_case_body_cleanup_seconds": [25, 5],
+    "watchdog": "per exact node ID, starts in pytest_runtest_protocol before fixture setup; same cleanup epoch covers owned process cleanup and all fixture finalizers via installed_controller",
+    "runtime_budget_reason": "Private isolated Temporal server startup, registry/config manifests, SCRAM dispatcher/worker processes, direct history plus recovery and bounded shutdown occur within setup/body.",
+    "sql_budget_reason": "The unadmitted non-create case uses only actual SCRAM claim_delivery SQL and no Temporal or runtime process; do not wait for a lease timeout.",
+    "execution_risk": "All budgets include fixtures, but actual runner integration and fixture-finalizer duration remain unverified and must be proven before execution authorization."
+  },
+  "evidence_privacy": {
+    "private_root": "0700",
+    "private_files": "0600",
+    "private_material": ["source/environment manifests", "literal owner SQL snapshots", "raw framed Temporal history", "process PID/start-tick journal", "child logs", "per-case timing"],
+    "public_summary": "Only independently reviewed normalized synthetic case IDs, outcomes, counts and hashes; never credentials, private manifests, raw SQL/history/logs, or process identities."
+  },
+  "cases": [
+    {
+      "case_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_authority_revoked_before_first_projection[membership]",
+      "obligation": "NEG-AUTHORITY",
+      "purpose": "Current membership revocation wins when committed before the first worker projection.",
+      "target": "One real admitted create workflow and actual projector worker paused immediately before the first project_activation SQL call.",
+      "method": "Private child validates manifests, then subclasses the actual ExecutionStore to block before delegating the real SQL function. Operator independently deactivates the membership; API read must return 403; release the actual worker.",
+      "agent": "TC",
+      "pass_criteria": "Exactly one rejected immutable receipt whose independently reconstructed proposal digest matches ifpmic.b03.transition.v1; error code FORBIDDEN, no QUEUED revision or business projection. The previously authorized run completes with result code FORBIDDEN; no workflow failure event.",
+      "expected": "215s body/setup + 25s shared cleanup; current API authorization reflects revoked membership while the existing admitted run remains bound.",
+      "evidence": "Private before/revocation/after owner snapshots, API status, direct framed history and process journal with child PID/start-ticks; normalized reviewed summary only.",
+      "recovery": "Always release the barrier; stop only recorded owned process identities, verify absence, preserve failed evidence, and let fixture finalizers dispose the isolated workspace/database. Never edit the receipt."
+    },
+    {
+      "case_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_authority_revoked_before_first_projection[eligibility]",
+      "obligation": "NEG-AUTHORITY",
+      "purpose": "Current profile eligibility revocation wins when committed before the first worker projection.",
+      "target": "One real admitted create workflow paused immediately before its first actual project_activation SQL function call.",
+      "method": "Private child validates manifests, then test-only ExecutionStore subclass blocks before the real call. Operator inserts the real eligibility revocation; API read remains 200/DRAFT; release the worker.",
+      "agent": "TC",
+      "pass_criteria": "Exactly one rejected immutable receipt whose independently reconstructed proposal digest matches ifpmic.b03.transition.v1; error code PROFILE_INELIGIBLE, DRAFT revision remains zero, no QUEUED projection, and the bound workflow completes with the same rejected result.",
+      "expected": "215s body/setup + 25s shared cleanup; API access is independent from profile eligibility while projection rechecks that eligibility.",
+      "evidence": "Private literal SQL snapshots, API result, direct framed workflow history, PID/start-tick journal, source/environment pins and timing.",
+      "recovery": "Always release the barrier; stop and verify only owned processes; preserve evidence and use fixture finalizers. Do not rewrite receipts or history."
+    },
+    {
+      "case_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_committed_receipt_replays_after_authority_revoke[membership]",
+      "obligation": "NEG-AUTHORITY",
+      "purpose": "A committed projection receipt remains authoritative after membership is revoked and the worker loses its activity result.",
+      "target": "Actual worker paused after the real project_activation transaction committed but before returning the Activity result.",
+      "method": "Observe one committed applied receipt and no matching ActivityTaskCompleted in direct history; revoke membership; SIGKILL the journaled PID only after start-tick identity check; start the normal worker on the same build/config/storage and await history completion.",
+      "agent": "TC",
+      "pass_criteria": "Receipt and binding remain byte/value-identical, no duplicate revision/effect occurs, and the same run records one completed project_activation activity after recovery. No attempt-count assumption is made.",
+      "expected": "215s body/setup + 25s shared cleanup including restart and history convergence; API membership revocation does not alter an immutable prior receipt.",
+      "evidence": "Owner snapshots before/after, direct history before kill/after replay, exact PID/start-tick kill journal and owned-process absence evidence.",
+      "recovery": "Release the private result barrier, stop only owned identities, verify absence and preserve the receipt/history evidence; never manufacture a retry or edit state."
+    },
+    {
+      "case_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_committed_receipt_replays_after_authority_revoke[eligibility]",
+      "obligation": "NEG-AUTHORITY",
+      "purpose": "A committed projection receipt remains authoritative after eligibility is revoked and the worker loses its activity result.",
+      "target": "Actual projector paused after PostgreSQL commit and before its activity result reaches Temporal.",
+      "method": "Verify committed applied receipt and absent matching ActivityTaskCompleted; insert eligibility revocation, kill the saved worker PID after start-tick check, restart the normal worker on unchanged storage/build, and observe direct history.",
+      "agent": "TC",
+      "pass_criteria": "Existing receipt/binding is unchanged and the same workflow run completes the activity once after recovery, with no duplicate business effect or revision.",
+      "expected": "215s body/setup + 25s shared cleanup including real worker restart and history convergence.",
+      "evidence": "Private SQL snapshots, pre/post framed history, PID/start-tick lifecycle journal and source/environment hashes.",
+      "recovery": "Release barrier and stop/verify only owned identities. Preserve failed history and receipts without resetting state."
+    },
+    {
+      "case_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_noncreate_waits_until_admission",
+      "obligation": "NEG-NONCREATE",
+      "purpose": "A non-create command cannot be dispatched or consumed before a workflow binding is admitted.",
+      "target": "Synthetic accepted human-submission route/outbox in a real isolated fixture database, with no binding or workflow server.",
+      "method": "Owner seeds only the immutable command and outbox, calls actual claim_delivery through the SCRAM dispatcher role, then reads actual owner tables. The synthetic registered endpoint is never contacted.",
+      "agent": "TC",
+      "pass_criteria": "claim_delivery returns idle; outbox remains pending at generation zero; no claim token, delivery attempt, binding, scope, receipt, revision, or human-task consumption appears.",
+      "expected": "25s body/setup + 5s shared cleanup. SQL-only case must not wait for Temporal or an expiry interval.",
+      "evidence": "Private before/after owner snapshots and literal claim result, source/environment manifests and timing; no raw SQL publicly.",
+      "recovery": "No process is started. Preserve any failed snapshot and allow bounded fixture cleanup to dispose of the isolated DB/workspace."
+    },
+    {
+      "case_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_noncreate_signal_targets_admitted_run_without_business_consumption",
+      "obligation": "NEG-NONCREATE",
+      "purpose": "A durable non-create command signals the already admitted run without creating business state or a second workflow.",
+      "target": "Normally admitted and activated workflow plus one owner-seeded synthetic human-submission command/outbox, delivered by the actual dispatcher.",
+      "method": "Run actual dispatcher/worker and baseline create to completion; seed the non-create route/outbox; make it due; await real signal delivery attempt; compare owner SQL before/after and direct Temporal signal history plus workflow query.",
+      "agent": "TC",
+      "pass_criteria": "Exactly one command_available signal reaches the existing run; accepted create provenance, binding, scope, receipt and revision remain unchanged; one workflow start and notification_count=1. No new run/activity/business effect or human task consumption. H4 endpoint/task acceptance remains pending.",
+      "expected": "215s body/setup + 25s shared cleanup including real Temporal server and dispatcher/worker startup.",
+      "evidence": "Private SQL snapshots, signal payload/history and workflow query result, process PID/start-tick journal, source/environment pins and timing.",
+      "recovery": "Stop and verify only owned processes, preserve actual history and SQL evidence, and dispose through fixture cleanup. Never delete signal/history or reset the command."
+    },
+    {
+      "case_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_missing_history_then_retention_rpc_failure_never_starts",
+      "obligation": "NEG-RETENTION-RPC",
+      "purpose": "A real namespace retention lookup failure after actual history NotFound never authorizes workflow Start.",
+      "target": "Real dispatcher private child observes the isolated Temporal namespace before the owned Temporal server is stopped and retention RPC is attempted.",
+      "method": "Test-only TemporalTransport subclass records actual MissingHistory then waits. Parent confirms no run via actual list RPC, gracefully stops the owned server, releases child to call the unchanged super().retention_seconds() RPC, then queries owner SQL.",
+      "agent": "TC",
+      "pass_criteria": "Actual describe_namespace RPC fails through production handling; binding/outbox/attempt quarantine RETENTION_UNVERIFIED; all start-window fields/run ID remain NULL, and no scope, receipt, job mutation or workflow Start exists.",
+      "expected": "215s body/setup + 25s shared cleanup; real history NotFound and real subsequent retention RPC failure are causally ordered. No guessed retention/default is accepted.",
+      "evidence": "Private direct list/history observation, actual barrier events, literal owner snapshots, Temporal and dispatcher PID/start-tick stop records and exact pins.",
+      "recovery": "Always release the RPC barrier; stop only owned process identities and verify absence. Preserve evidence and run bounded fixture cleanup."
+    },
+    {
+      "case_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_execution_runtime_surfaces_unrequested_worker_exit[runtime-return]",
+      "obligation": "NEG-RUNTIME-FAILURE",
+      "purpose": "An unsolicited successful Worker.run return is treated as runtime failure.",
+      "target": "Actual execution_runtime.main/run in a manifest-validated private child with a narrowly injected Worker subclass.",
+      "method": "After the real child connects to registered PG/Temporal dependencies, private barrier releases the injected Worker.run to return None; inspect process result and fixed stdout.",
+      "agent": "TC",
+      "pass_criteria": "Child exits 3 with only DEPENDENCY_UNAVAILABLE on stdout, no execution binding is created, and the exact child identity is absent.",
+      "expected": "215s body/setup + 25s shared cleanup; injection is private constructor replacement only, not a product environment switch.",
+      "evidence": "Private event/log files, registration/owner snapshot, PID/start-tick lifecycle and exit status; source/environment pins.",
+      "recovery": "Release child barrier and stop/verify only owned processes; preserve failed logs privately and dispose fixtures."
+    },
+    {
+      "case_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_execution_runtime_surfaces_unrequested_worker_exit[runtime-fatal]",
+      "obligation": "NEG-RUNTIME-FAILURE",
+      "purpose": "An unsolicited fatal Worker.run exception is surfaced as a runtime failure.",
+      "target": "Actual execution_runtime.main/run with a privately injected Worker whose run raises after a parent-controlled barrier.",
+      "method": "Child validates manifest/config and real registry before SDK dependency replacement; parent releases the fatal worker action and records the actual process outcome.",
+      "agent": "TC",
+      "pass_criteria": "The exception yields exit 3 and fixed DEPENDENCY_UNAVAILABLE output, no new binding, and child PID/start-tick is absent.",
+      "expected": "215s body/setup + 25s shared cleanup; no SDK return is mocked and production runtime handles task failure.",
+      "evidence": "Private child event/logs, SQL no-binding oracle, lifecycle journal and exact source/environment hashes.",
+      "recovery": "Release barriers, stop only owned identities, verify absence, and preserve failed evidence."
+    },
+    {
+      "case_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_execution_runtime_surfaces_unrequested_worker_exit[runtime-concurrent-fatal]",
+      "obligation": "NEG-RUNTIME-FAILURE",
+      "purpose": "A fatal Worker task racing with SIGTERM is still surfaced instead of being swallowed as normal shutdown.",
+      "target": "Actual runtime child with a private Worker subclass that sends SIGTERM to its own saved process and raises a fatal exception in the same task turn.",
+      "method": "Wait for the child’s fatal-armed event, release the action, require the private event ordering (task action, self-SIGTERM, exception path), then inspect actual exit and fixed stdout.",
+      "agent": "TC",
+      "pass_criteria": "Unrequested task failure exits 3, not normal exit 0; output is fixed DEPENDENCY_UNAVAILABLE; no binding is created and owned process is absent.",
+      "expected": "215s body/setup + 25s shared cleanup; exact asyncio signal/task scheduling remains an execution uncertainty until run on pinned versions.",
+      "evidence": "Private monotonic event records, process lifecycle/exit, SQL no-binding snapshot, source/environment/toolchain pins.",
+      "recovery": "Release any pending barrier and stop/verify only owned identities; preserve event order and logs."
+    },
+    {
+      "case_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_execution_runtime_normal_sigterm_control",
+      "obligation": "NEG-RUNTIME-FAILURE",
+      "purpose": "Requested SIGTERM remains a graceful shutdown control and does not become a false fatal-worker result.",
+      "target": "Actual execution_runtime child with registered worker and private Worker subclass waiting for runtime shutdown().",
+      "method": "Wait for Worker.run entry, signal only the saved child PID after validating start ticks, and observe worker shutdown and process exit.",
+      "agent": "TC",
+      "pass_criteria": "Child exits 0 with no diagnostic stdout, and the journaled PID/start-tick is absent.",
+      "expected": "215s body/setup + 25s shared cleanup; checks normal requested-stop path in contrast with the fatal cases.",
+      "evidence": "Private worker event, exact signal/PID/start-tick journal, stdout and exit status, source/environment hashes.",
+      "recovery": "Stop and verify only the owned child/services; preserve failed evidence and use fixture cleanup."
+    },
+    {
+      "case_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_execution_runtime_kills_hung_real_driver_and_rolls_back",
+      "obligation": "NEG-HUNG-DRIVER",
+      "purpose": "An uncancellable real PostgreSQL driver thread cannot prevent bounded worker-process termination or commit partial projection state.",
+      "target": "Actual worker activity and project_activation transaction; injected DB connection wrapper executes the actual SQL function and then blocks on real SELECT pg_sleep(60) on the same open transaction.",
+      "method": "Observe private pg_sleep barrier and independent pg_stat_activity evidence for exact projector role/backend PID, active SELECT pg_sleep(60), and non-NULL xact_start, with DRAFT/no-receipt owner SQL state. SIGTERM the exact worker PID after start-tick check; wait for runtime self-exit within 15s+3s and exact backend disappearance; restart normal worker and inspect receipt/history recovery.",
+      "agent": "TC",
+      "pass_criteria": "Worker exits 3 within 15s+3s and is absent; the exact observed PostgreSQL backend disappears and uncommitted function effects roll back (no receipt or revision), with no activity completion before recovery. Normal restart applies exactly one receipt/revision and one same-run activity completion.",
+      "expected": "215s body/setup + 25s shared cleanup includes SIGTERM watchdog, PG rollback observation, real worker restart and history convergence; pinned DB driver/runtime behavior is an explicit runtime uncertainty.",
+      "evidence": "Private pg_sleep event, independent exact-role/backend/query/xact_start pg_stat_activity snapshots, owner SQL before/after kill/recovery, direct framed history, PID/start-tick journal and exact pins.",
+      "recovery": "Never signal an unowned process. Stop/verify only owned processes, preserve SQL/history evidence, and allow fixture finalizers to remove isolated resources."
+    }
+  ],
+  "limitations": [
+    "The full 25-obligation ledger must merge these literal IDs and methods and reconcile every shared fixture/source pin; this derivative ledger is not a gate.",
+    "No collection, imports of product or SDK modules, services, database, SQL, or network were executed for this authoring checkpoint.",
+    "Temporal activity retry behavior, actual history persistence, concurrent asyncio SIGTERM/fatal scheduling, pg_sleep visibility and driver-thread rollback, and exact fixture cleanup timing remain runtime questions. An event file alone cannot satisfy the hung-driver oracle; exact-role/backend pg_stat_activity evidence is mandatory.",
+    "The post-exit PostgreSQL backend-gone oracle currently polls for 10 seconds. Whether PostgreSQL immediately cancels pg_sleep after client process/socket termination is unverified; do not treat this timeout as qualified, and retain it as an execution blocker until pinned PostgreSQL behavior is observed.",
+    "Synthetic human-submission command/outbox covers H2 transport only; H4 API acceptance, task creation/consumption and real human workflow remain pending.",
+    "The cases involving actual worker/task behavior depend on pinned installed SDK/server versions and an independently accepted runner gate before any execution."
+  ]
+}

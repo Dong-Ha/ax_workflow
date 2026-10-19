@@ -162,6 +162,12 @@ class StartRPCBarrier:
         }
 
 
+def _read_owner_snapshot(harness, job_id):
+    from tests.ifpmic_api.h2_fixture_cleanup import ordered_attempt_snapshot
+
+    return ordered_attempt_snapshot(normal._read_owner_snapshot(harness, job_id))
+
+
 def _remaining(deadline: float, maximum: float = MAXIMUM_WAIT_PER_OPERATION) -> float:
     result = min(maximum, deadline - time.monotonic())
     if result <= 0:
@@ -333,7 +339,7 @@ async def _list_workflow_runs(endpoint: str, namespace: str, workflow_id: str,
 
 def _await_admitted_run(harness, job_id: str, expected_run_id: str, deadline: float):
     while time.monotonic() < deadline:
-        snapshot = normal._read_owner_snapshot(harness, job_id)
+        snapshot = _read_owner_snapshot(harness, job_id)
         accepted = snapshot["accepted"]
         if accepted and accepted[12] == "rejected":
             raise AssertionError("accepted create command was rejected during reconciliation")
@@ -356,7 +362,7 @@ def _await_admitted_run(harness, job_id: str, expected_run_id: str, deadline: fl
 
 def _await_projection(harness, job_id: str, expected_run_id: str, deadline: float):
     while time.monotonic() < deadline:
-        snapshot = normal._read_owner_snapshot(harness, job_id)
+        snapshot = _read_owner_snapshot(harness, job_id)
         accepted = snapshot["accepted"]
         if accepted and accepted[12] == "rejected":
             raise AssertionError("command rejected instead of projecting original run")
@@ -405,7 +411,7 @@ def test_actual_started_event_survives_lost_start_response_and_recovers_same_run
         workspace_root = Path(harness["workspace_root"])
         workspace, tree_before = normal._workspace_ready(harness, workspace_root, job_id)
         normal._add_live_sql_eligibility(harness, job_id)
-        before = normal._read_owner_snapshot(harness, job_id)
+        before = _read_owner_snapshot(harness, job_id)
         assert before["accepted"] is not None and before["accepted"][3:8] == ("DRAFT", 0, 0, [], None)
         assert before["bindings"] == before["scopes"] == before["receipts"] == before["attempts"] == []
         assert before["noncreate_commands"] == 0
@@ -471,7 +477,7 @@ def test_actual_started_event_survives_lost_start_response_and_recovers_same_run
             evidence_root, "worker", identity,
             normal._private_dsn(harness["database"], "projector"), workspace_root,
             source_path, environment_path)
-        expected_initial = normal._read_owner_snapshot(harness, job_id)
+        expected_initial = _read_owner_snapshot(harness, job_id)
         assert expected_initial == before
         assert expected_initial["bindings"] == expected_initial["scopes"] == expected_initial["receipts"] == []
 
@@ -500,7 +506,7 @@ def test_actual_started_event_survives_lost_start_response_and_recovers_same_run
         assert proxy.response_sequence > held_sequence_before_start_request
         assert proxy.held_response_bytes > 0 and not proxy.overflowed.is_set()
 
-        at_start = normal._read_owner_snapshot(harness, job_id)
+        at_start = _read_owner_snapshot(harness, job_id)
         row = at_start["accepted"]
         assert row is not None and row[3:8] == ("DRAFT", 0, 0, [], None)
         assert type(row[10]) is str
@@ -570,7 +576,7 @@ def test_actual_started_event_survives_lost_start_response_and_recovers_same_run
         assert proxy_cut["http2_or_grpc_frames_decoded"] is False
         normal._write_private(evidence_root / "proxy-before-kill.json",
                               normal._canonical(proxy_cut) + b"\n")
-        assert normal._read_owner_snapshot(harness, job_id) == at_start
+        assert _read_owner_snapshot(harness, job_id) == at_start
         live_claim = _fresh_clock_claim_state(harness, accepted_group[18])
         assert live_claim == ("leased", 1, row[17], False)
         barrier_trace = barrier.snapshot()
@@ -631,7 +637,7 @@ def test_actual_started_event_survives_lost_start_response_and_recovers_same_run
             "returncode": child.returncode, "absent": True,
         })
         assert normal._owned_process_descendants({child.pid}) == []
-        after_kill = normal._read_owner_snapshot(harness, job_id)
+        after_kill = _read_owner_snapshot(harness, job_id)
         assert after_kill == at_start
         normal._write_private(evidence_root / "owner-at-start-attempt.json",
                               normal._canonical(at_start) + b"\n")
@@ -712,7 +718,7 @@ def test_actual_started_event_survives_lost_start_response_and_recovers_same_run
         assert job.json()["job"]["revision"] == 1 and job.json()["steps"] == []
         assert job.json()["job"]["current_step_ids"] == []
         assert job.json()["job"]["candidate_fingerprint"] is None
-        after_replay = normal._read_owner_snapshot(harness, job_id)
+        after_replay = _read_owner_snapshot(harness, job_id)
         assert after_replay == projected
         normal._write_private(evidence_root / "owner-after-projection-replay.json",
                               normal._canonical(after_replay) + b"\n")

@@ -1,0 +1,126 @@
+{
+  "kind": "ifpmic.b03.h2.fixture-integration-source-review.v1",
+  "verdict": "no_remaining_blocking_source_findings_in_reviewed_scope",
+  "reviewer": {
+    "agent_id": "/root/h2_prebinding_advice",
+    "actual_role": "senior_sol",
+    "independence": "Root owns the shared integration patch and repaired both defects reported during this review. Separate TC owns new case/oracle work. Reviewer edited only this review artifact."
+  },
+  "scope": "Static critical review of the14 root-owned integration files named in the request, plus the subsequently requested transport watchdog wrapper/controller/restore wiring only. New activity/transport case semantics and all other TC source are outside this review. Method approval is not implementation proof or execution approval.",
+  "reviewed_source_sha256": {
+    "tests/ifpmic_api/conftest.py": "dd3885f66ccc29fc987f4fa20dbdba0481a95c377f227c5ac17663f0f63c4b8f",
+    "tests/ifpmic_api/h2_fixture_cleanup.py": "99b277b7532ebc0e12d80dacd40d7b3e6a2af7f7aebfc46c93b35c3a04c50500",
+    "tests/ifpmic_api/jobs_fixture.py": "774de6d85afb2e1735cc199c3bcd5225233c5f3e52a2b98bab4230d0b7050aad",
+    "tests/ifpmic_api/workspace_fixture.py": "66b0d11faaa343542fe27e1254e0ed28a968d73518a7a1ac2aab106e4ef126b6",
+    "tests/ifpmic_api/workflow_schema_fixture.py": "dd1eba1754a8985dd704f0ed63271cc73beca8b03c72aaa2f14acdd41e5e3681",
+    "tests/ifpmic_api/oidc_provider.py": "cae34a82acdd6d00563d6584a245bf45092ca179277e261116ab82999e248e6d",
+    "tests/ifpmic_api/h2_crash_case_budget.py": "51a0a85d6126ef422e58c2ac1ab58312ef11e5c8e9e465db27f01459f5614c03",
+    "tests/ifpmic_api/h2_worker_api_case_budget.py": "afce78ccbb4988dcb9028ba75ddb852f71a74cdfb1a4868d6601dd8823635f35",
+    "tests/ifpmic_api/h2_startup_case_budget.py": "35e8b7431c0f54e269392f5a958628f39cce1ae1039e1ea37bee318a2ae7a0a7",
+    "tests/ifpmic_api/h2_window_case_budget.py": "da04f059de0e1b487b40a50f997797874e7373947f5dc251fc88a138a5231f19",
+    "tests/ifpmic_api/h2_dispatcher_crash_support.py": "d1e4b96163d2613dda302edaed46ccb212a8e937a3138e9354d7cd6ccf3da781",
+    "tests/ifpmic_api/test_h2_dispatcher_crashes.py": "a497c2f36f741bef5667afc781dbce5770ea64f90b463b8d8ea6dbea041cecf4",
+    "tests/ifpmic_api/test_h2_runtime_restart_and_history.py": "8679a210a5b86043ec8e9da7127315003be492c4b493243a6215627d602efbc9",
+    "tests/ifpmic_api/test_accepted_start_response_loss.py": "faa3bbca7895204f95274826f57ffa45c456642bd740e89eb01942867e7f9a7b",
+    "tests/ifpmic_api/h2_transport_case_budget.py": "a507a9e5a00b0bfbd061ca1bf59693315ad09dcf95d5b9c84bc5a987ad8af19a"
+  },
+  "reviewed_contract_and_authoring_sha256": {
+    "docs/ifpmic/evidence/b03/h2-runtime-fixture-integration-contract.json": "5be7612bbd9be9a8ef251f07ec577386a0c7f5ab4a1f249aa99fdc8f4ff93ed7",
+    "docs/ifpmic/evidence/b03/h2-runtime-fixture-integration-plan-review.json": "4bc39717cb729179b4472bd975a18d7b524ba23a558d702236e5edefb65947d9",
+    "docs/ifpmic/evidence/b03/h2-runtime-fixture-integration-tc-review.json": "0bbd566b71f658ae17fac485e1d009717cd40036ba766c73abcf9bf78317c0bc",
+    "docs/ifpmic/evidence/b03/h2-runtime-fixture-integration-authoring-acceptance.json": "9ea009c244576651dca30839dc9fd6d8ba7a7d57e6408ba03f782a76dba5b216"
+  },
+  "installed_primary_dependency_sha256": {
+    ".ifpmic-venv/lib/python3.12/site-packages/_pytest/runner.py": "c8d7fd553c0516f7884502ee0e7954eb5a5b1542f21fcb5c4357500ed2fe1570",
+    ".ifpmic-venv/lib/python3.12/site-packages/starlette/testclient.py": "dc228e34cc3753833a20a28eff0f6fa01570e700565270cd79e80e9d12a72cc1",
+    ".ifpmic-venv/lib/python3.12/site-packages/anyio/from_thread.py": "89965b7dc3724a2e3001cc75fdcc40404e09d18642f3ca9130862a43a485f6c7"
+  },
+  "authoring_basis": "Exact v2 contract5be7612bbd9be9a8ef251f07ec577386a0c7f5ab4a1f249aa99fdc8f4ff93ed7 and both linked method reviews/acceptance permit the specified integration authoring only. Runner authoring, test/service execution and acceptance remain separate gates.",
+  "resolved_findings": [
+    {
+      "id": "FIXTURE-RESTORE-PRIMARY-ERROR",
+      "severity_when_found": "blocking_before_refreeze",
+      "problem": "The four protocol finally blocks called deadline.restore directly. A second timing/evidence write error during restore could replace an already propagating start/protocol/evidence exception.",
+      "root_fix": "Common restore_preserving_error snapshots sys.exc_info, always invokes restoration, re-raises a restore-only failure, and attaches only the secondary exception type as a note when a primary is already propagating. Four reviewed budget wrappers and the requested transport wrapper call it inside installed_controller.",
+      "resolution": "resolved_in_final_reviewed_source; failure-injection proof remains pending"
+    },
+    {
+      "id": "FIXTURE-OIDC-THREAD-REGISTRATION",
+      "severity_when_found": "blocking_before_refreeze",
+      "problem": "OIDC serving threads were appended to the retained inventory only after thread.start. An asynchronous deadline between start and registration could leave a started serving thread outside the handles checked during failure cleanup.",
+      "root_fix": "The serving thread object is now appended before start, matching the existing pre-start registration of request and shutdown helper threads.",
+      "resolution": "resolved_in_final_reviewed_source; partial-start failure evidence remains pending"
+    }
+  ],
+  "blocking_findings": [],
+  "checks": [
+    {
+      "id": "FIXTURE-ONE-CLOCK-AND-LAST-ITEM",
+      "result": "no_remaining_blocking_source_issue",
+      "evidence": "The new protocol wrappers install one config-scoped controller before start/setup and retain it through the full yielded protocol. Existing nonresetting begin_cleanup epochs feed cleanup_remaining(maximum); the shared adapter rejects exhausted/nonfinite allowances. Installed pytest runner.py197 calls teardown_exact(nextitem), so nextitemNone runs session finalizers before protocol returns. installed_controller refuses an already-present controller without overwriting it, and removes its own attribute in outer finally even after deadline restoration errors. Sessionfinish is only abnormal fallback and cannot establish a passing per-case cleanup."
+    },
+    {
+      "id": "FIXTURE-RESTORATION-AND-FAILURE-SELECTION",
+      "result": "no_remaining_blocking_source_issue",
+      "evidence": "Timers/handlers remain restored in deadline.restore finally blocks, and restore_preserving_error retains a propagating primary while preserving secondary type information. Without a primary it raises restoration failure, so evidence loss cannot silently pass. record_finalizer similarly avoids replacing an active failure. A cleanup error after a passing case raises; secondary cleanup failure during an already-failing context is retained as failed/unknown evidence rather than success."
+    },
+    {
+      "id": "FIXTURE-ACTUAL-TESTCLIENT-AND-PORTAL",
+      "result": "no_remaining_blocking_source_issue",
+      "evidence": "H2 managed_test_client enters the actual client, obtains the real portal thread, cancels/awaits actual maintenance_task during setup using the existing body allowance, and records task completion before yielding. Teardown retains helper and portal handles before starting a helper that calls actual client.__exit__. It joins under shared remaining cleanup and requires helper dead, portal dead and no captured exit errors. Installed Starlette TestClient.__exit__ calls exit_stack.close; installed AnyIO start_blocking_portal finalization calls portal.stop then thread.join. Thus source does not substitute a fake context exit or label a detached live portal stopped. No-controller path uses the original with-client behavior."
+    },
+    {
+      "id": "FIXTURE-OIDC-SERVERS-REQUESTS-SOCKETS",
+      "result": "no_remaining_blocking_source_issue",
+      "evidence": "Serving, request and shutdown thread handles are registered before start. H2 close launches owned server shutdowns concurrently, joins under one caller remaining-time clock, then snapshots all request threads/sockets after serving shutdown has stopped accepting. Each saved socket is shut down/closed, and serving/request/helper threads must all be dead with no shutdown errors before active inventories are cleared. Failed joins retain handles and fail. Legacy no-controller shutdown policy remains the original sequential server close/join path, with additional resource tracking only."
+    },
+    {
+      "id": "FIXTURE-DROP-HBA-NATIVE-BOUNDS",
+      "result": "no_remaining_blocking_source_issue",
+      "evidence": "H2 migration_db teardown refuses a new connection without its stated allowance, uses explicit connect_timeout2 and initial statement/lock limits, sets bounded remaining milliseconds and executes actual DROP DATABASE WITH FORCE. Failure journals droppedfalse rather than claiming success. HBA restoration writes the original bytes and passes shared remaining time to the pinned pg_ctl reload subprocess. Legacy no-controller DB and reload limits are retained. The common SIGALRM/controller remains active through all of these finalizers; an exhausted budget fails and requires outer recovery."
+    },
+    {
+      "id": "FIXTURE-CURRENT-PG-IDENTITY-AND-BOUNDED-STOP",
+      "result": "no_remaining_blocking_source_issue",
+      "evidence": "PG startup saves initial PID/start ticks; restart test updates current fields while retaining initial identity. Before cleanup the private postmaster.pid is reread and current /proc ticks captured; missing PID metadata falls back to the saved identity rather than proving absence. process_start_ticks returns absence only for FileNotFoundError; malformed/other unreadable metadata raises. H2 fast stop gets a bounded fraction of available time, immediate fallback obtains fresh remaining allowance, and current saved ticks must disappear before absenttrue. A failed/timed-out stop remains an error even if fallback proves absence. Unconfirmed identity/stop does not become stopped. Legacy stop timeout policy is retained while identity observation is strengthened."
+    },
+    {
+      "id": "FIXTURE-ATTEMPT-ORDER-ONLY",
+      "result": "no_remaining_blocking_source_issue",
+      "evidence": "ordered_attempt_snapshot asserts positive integer and unique real generations, sorts only those observed attempt rows and preserves every row field. The reviewed crash/restart/lost-response callers switch to that wrapper; the frozen normal helper and its single-generation values are not rewritten. No retry count, run, result, completion or token is manufactured."
+    },
+    {
+      "id": "FIXTURE-SOURCE-SCOPE-AND-LEGACY-PRESERVATION",
+      "result": "requires_fresh_regression_evidence",
+      "evidence": "Changes are confined to the reviewed test integration: optional H2 paths quiesce maintenance and enforce the shared clock, while no-controller TestClient/OIDC/DB/stop policy follows existing behavior. Initial/current lifecycle fields and current-PID observation are intentional shared-fixture changes. Historical normal/H1 watchdogs and production app/auth/DDL are not modified by the reviewed delta. Static compatibility is not qualification: all407 retained IDs and all25 full-plan obligations plus additions still need a newly reviewed full gate."
+    }
+  ],
+  "risks_and_edge_cases": [
+    "A started thread still alive at its deadline is a failed/unknown cleanup even if an outer runner later reaps the owning pytest process. A failed per-case cleanup cannot be upgraded to pass from parent recovery.",
+    "Shared remaining-time calls, SQL/subprocess limits and SIGALRM form the intended clock boundary, but actual native driver waits, portal exit, OIDC thread completion and PG fallback durations are not measured here.",
+    "PG stop relies on the fixture-owned private directory and pinned pg_ctl, plus the captured current PID/start ticks. This is local owned-resource evidence, not authorization to signal arbitrary PID files or unrelated services.",
+    "The source shows controller presence through normal last-item session teardown. An abnormal sessionfinish path lacks a per-case controller and remains failed-run recovery requiring outer ownership/timing proof.",
+    "H2 maintenance cancellation is explicit fixture-specific isolation. Its privacy/auth compatibility and retained normal maintenance behavior must be demonstrated by the fresh unchanged-oracle regression suite.",
+    "The requested transport budget wrapper/controller wiring was inspected, but transport case bodies, new activity-runtime controller/cases and other TC sources are not certified by this review.",
+    "No raw resource execution evidence was audited. AST validity supplied by root and this source review do not establish successful cleanup, absence, replay or H2 acceptance."
+  ],
+  "recommendation": "Keep the final reviewed integration source as a checkpoint candidate. Freeze its exact hashes in the complete literal full-plan ledger, obtain independent ledger/contract and runner/pre-gate reviews, then perform the required fresh whole gate. No further change is requested within this reviewed scope.",
+  "required_later_evidence": [
+    "Literal failure oracles for primary plus restoration failure, restore-only failure, exhausted shared clock, partial OIDC start and unconfirmed TestClient/helper/portal/thread shutdown.",
+    "Whole-case timings including function and last-item session finalizers, actual DROP/HBA/PG stop/fallback, and current post-restart PID/start-tick absence.",
+    "Complete observed multi-generation attempt rows before/cut/after, original407 IDs plus all25 obligations/additions, unchanged source/environment/original17+2 and private/public evidence review."
+  ],
+  "remaining_uncertainty": [
+    "No product/test/SDK import, collection, execution, SQL, network or service action occurred.",
+    "This is a narrow checkpoint source review and does not approve new case semantics, complete source-ledger coverage, runner execution or any acceptance.",
+    "Actual bounds, thread/socket/process absence and compatibility remain pending runtime evidence."
+  ],
+  "decision": {
+    "remaining_source_blockers": 0,
+    "runner_authoring_authorized": false,
+    "test_or_service_execution_authorized": false,
+    "runtime_certified": false,
+    "acceptance": "none; method/source checkpoint only"
+  },
+  "method_limits": "Read the exact approved method/reviews, designated root-owned source/diffs, requested transport wrapper/controller section and installed pytest/Starlette/AnyIO primary source. Reported two concrete defects and reviewed root corrections. Wrote this JSON only; no other edits, imports, collection, tests, SQL, services or network."
+}

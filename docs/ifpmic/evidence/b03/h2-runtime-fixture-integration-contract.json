@@ -1,0 +1,112 @@
+{
+  "kind": "ifpmic.b03.h2.fixture-integration-contract.v2",
+  "status": "candidate_pending_independent_and_tc_authoring_review",
+  "parent_commit": "fc3d0bebcf2f068a66b0e2e6e95a97b84f3340f9",
+  "parent_full_plan": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-full-verification-plan.json",
+    "sha256": "c6964bccff0d4cec1ac00f18fbb267d5d1a4a5887e53844c604333b7c059486c"
+  },
+  "requirements": [
+    "B03 H2",
+    "REQ-02",
+    "REQ-13",
+    "REQ-14 preservation",
+    "AT-16 prerequisite only"
+  ],
+  "reason": "TC and independent reviews identified an unresolved shared cleanup-budget mismatch; static inspection also found restarted-PG lifecycle originally observes old PID and multi-generation SELECT has no ordering. These gaps must be fixed before whole-gate execution. TC rejected v1 because DROP DATABASE finalization lacked bounds. Closure audit additionally found HBA reload, OIDC provider shutdown and TestClient maintenance barriers. Installed pytest runner source confirms session teardown occurs within last item teardown (nextitem=None), with sessionfinish as abnormal fallback.",
+  "ownership": "Code-dev owns shared fixture/runner integration; TC owns case oracles and private test-child injection. No business Agent, real device or deployment is involved.",
+  "source_pins_before_authoring": {
+    "tests/ifpmic_api/conftest.py": "3c39b0491139762d0a3da09397a368558cbe72e5cfebda4a279c76c97ce6ebe5",
+    "tests/ifpmic_api/h2_crash_case_budget.py": "0a0d9283b35e16e6d19e5adcd111fd2c04916b9ddc90eb74df35d7014b9e08e3",
+    "tests/ifpmic_api/h2_worker_api_case_budget.py": "d339b87062efe3d4c2e43c76f12d08316402bc6899edccbc51327322d84d5c96",
+    "tests/ifpmic_api/h2_startup_case_budget.py": "ee84ddd77140f617c0572f1a4bc9714b6a257ead361282bd84341a181ffc0894",
+    "tests/ifpmic_api/h2_window_case_budget.py": "7c64f17995b17c1072dc7106ccc38a3595367ecab8fa96fd43619bba98e85c1e",
+    "tests/ifpmic_api/test_h2_dispatcher_crashes.py": "e2b5f3f8dbb8e1d789c472a3301236cfad1843532dad596d2e6774e4f8419785",
+    "tests/ifpmic_api/test_h2_runtime_restart_and_history.py": "17aa418681aa8a9a10902a88a6d2e799c639a161e4399296ece6fd150156a71a",
+    "tests/ifpmic_api/test_accepted_start_response_loss.py": "cfd8b3c0f8905563a4a80646bb27f4cd1c11397ae29c25dbe7314a800b112e2e",
+    "tests/ifpmic_api/workflow_schema_fixture.py": "5a3450bb4b436ea215ac6ab07b6d3d20d33ff87bdc56e83c5e5c163e7ffaedc4",
+    "tests/ifpmic_api/jobs_fixture.py": "2191f3523e0ddcbb4c7e97d7b74348dc571c432b5df5a01c7436dd57db3bac48",
+    "tests/ifpmic_api/workspace_fixture.py": "5987916779c74a91b4dc44f16b03f27024762b4525ba6f8e9f14a20809e50ff8",
+    "tests/ifpmic_api/oidc_provider.py": "b5e3a70df73245c143bd2e2e9db1ee2dd6061dde0cf1dfa7c02d9cdc4fe8f367",
+    "services/ifpmic_api/app.py": "a65c3d44a14ecae7b819e5042d4f490ce68c8b9b5f5962d1b5f2bbfe52fef192",
+    "services/ifpmic_api/auth.py": "9fef8084e8b11a7e1d0929a1842ab4fdddb0361adcbaa70700529a5e9999a887",
+    ".ifpmic-venv/lib/python3.12/site-packages/_pytest/runner.py": "c8d7fd553c0516f7884502ee0e7954eb5a5b1542f21fcb5c4357500ed2fe1570"
+  },
+  "steps": [
+    {
+      "id": "CLEANUP-CONTROLLER",
+      "purpose": "Use one actual cleanup deadline across test body, helpers and pytest fixture finalizers.",
+      "target": "New H2 protocol watchdogs and common PG fixture integration only; historical normal/H1 watchdogs unchanged.",
+      "method": "Each new protocol hook temporarily installs its controller on item.config under a private test-only attribute, restoring prior value in finally. Controller exposes cleanup_remaining(maximum), which idempotently begins its existing cleanup clock and returns strictly positive remaining seconds without extending it. No second timer, fresh cleanup epoch or environment switch. Common fixture receives pytest request/config and consults this optional controller; absence preserves legacy limits. Controller stays installed through pytest_runtest_teardown(nextitem=None), which calls teardown_exact(None) and includes session fixture finalizers. It is restored only after the whole protocol. pytest_sessionfinish may perform abnormal remaining cleanup outside a case; such a path cannot count as passing per-case cleanup and needs outer runner proof.",
+      "agent": "Code-dev integration; TC literal watchdog/fixture oracles.",
+      "pass_criteria": "Same monotonic epoch governs every helper and finalizer; SQL25+5 and integration215+25 remain unchanged; timer/handler/config restoration happens even on evidence errors. A remaining-time failure is a failed case with parent-runner owned cleanup, never a pass or claimed absence.",
+      "expected": "Per-case cleanup cannot silently consume15+5+25 seconds under a25s cap.",
+      "evidence": "Exact plugin/fixture source diffs and hashes, reviewed whole-case timing, private lifecycle; final actual full gate.",
+      "recovery": "Preserve original error and owned identities; outer runner reaps only its descendants, records cleanup failure; fix relevant helper and refreeze complete gate."
+    },
+    {
+      "id": "FIXTURE-CLOSURE",
+      "purpose": "Close every resource in the H2 fixture dependency closure under the same cleanup clock, not just PG stop.",
+      "target": "conftest.migration_db; workflow_schema_fixture.workflow_scram_hba/_pg_ctl; jobs_fixture.g4_oidc_provider/g4_harness; oidc_provider.SyntheticOIDCProvider.close; workspace_fixture.workspace_client.",
+      "method": "Propagate optional request.config controller to these test-only finalizers. DB DROP opens with a bounded connection allowance only if sufficient budget remains, then sets lock_timeout and statement_timeout using remaining milliseconds; no unbounded DROP. HBA restore uses existing file bytes then pinned pg_ctl reload with remaining subprocess timeout. OIDC close uses a single absolute deadline for all owned servers/threads, requests shutdown concurrently or otherwise bounds each blocking call, checks every thread stopped and retains handles on failure; no per-thread fresh3s budgets. TestClient contexts must quiesce maintenance deterministically during fixture setup using their existing test portal (cancel/await the actual app.state.maintenance_task) for H2 cases, recording completion before body; this does not change production app behavior. Context exit still runs actual lifespan finalization; bound teardown/portal exit under the same case clock and fail if unconfirmed. Do not detach a live thread and label it stopped. Existing no-controller fixture behavior stays unchanged.",
+      "agent": "Code-dev shared fixture integration; TC resource/timing/failure oracles.",
+      "pass_criteria": "All function and last-item session finalizers are within one clock; no native DB, subprocess, thread or TestClient wait can silently outlive it on a passing case. All owned resources have affirmative termination evidence. Connection/SQL/server/thread uncertainty is failure; retain handles and leave only bounded outer runner cleanup after failure. Original auth tests still exercise production maintenance; H2 quiescence is explicit fixture-specific exception with privacy/auth preservation regression.",
+      "expected": "SQL cases truly fit25+5, integration cases215+25, or fail with retained cleanup evidence.",
+      "evidence": "Literal fixture dependency/finalizer list, exact diff/pins, per-resource phase timing/current identities/thread completion, whole-case timeout and private lifecycle results.",
+      "recovery": "Retain primary error plus cleanup/resource status. Parent subreaper terminates only its owned child process tree on failed/unresponsive pytest; refreeze all impacted fixtures and full407+all25 gate after correction."
+    },
+    {
+      "id": "PG-STOP",
+      "purpose": "Bound PG stop within the remaining shared case budget and observe the current postmaster after restart.",
+      "target": "tests/ifpmic_api/conftest.py PG lifecycle cleanup and private lifecycle metadata.",
+      "method": "Before stop, read the owned private data-directory postmaster.pid and capture current PID/start ticks, including restarted instance. Signal only through pinned pg_ctl for that exact private directory. Under active H2 controller allocate short fast-stop, immediate fallback and status-check timeouts from remaining budget, reserving time for fallback; no individual subprocess gets the old25s allowance after other cleanup. Preserve legacy path if no active controller. Persist initial and current identities and absence check; do not report stopped merely because original pre-restart PID disappeared. No OS-wide kill or service restart during cleanup.",
+      "agent": "Code-dev integration; TC PG restart and timeout/failure oracles.",
+      "pass_criteria": "Current saved identity is absent after actual stop; original and restarted identities retained privately. Every timeout/fallback/status call obeys the same absolute cleanup cap. Failure reports unknown/live rather than false stopped; runner cleanup confirms final absence separately.",
+      "expected": "Restarted PG cannot escape lifecycle proof; bounded cleanup either proves absence or fails explicitly.",
+      "evidence": "Private current-PID/start-tick lifecycle and exact data-directory/binary pins, per-case timing, final runner owned-descendant inventory.",
+      "recovery": "Retain private postmaster/storage/journal evidence, fail case, stop only owned storage/PID through bounded parent cleanup, diagnose and rerun exact full candidate."
+    },
+    {
+      "id": "ATTEMPT-ORDER",
+      "purpose": "Compare actual delivery attempts deterministically without manufacturing values.",
+      "target": "New multi-generation crash/runtime-negative TC oracles; frozen single-generation normal helper remains unchanged.",
+      "method": "TC local helper orders real observed attempt rows by generation and asserts unique generations, or performs a real SELECT with ORDER BY generation. Replace no field values, including run/token/result/completion. Retain raw before/cut/after snapshots and compare complete expected rows.",
+      "agent": "TC source owner; Code-dev reviews integration.",
+      "pass_criteria": "All multi-generation oracles compare complete actual rows independent of unspecified SQL scan order; no generation1 normalization or omitted attempts.",
+      "expected": "Deterministic real attempt history across reclaim/retry and server restarts.",
+      "evidence": "Exact source and literal expected rows in complete ledger, private raw SQL observations and fresh tests.",
+      "recovery": "Fix only oracle ordering, refreeze source/review and rerun full candidate; do not relabel prior failure."
+    },
+    {
+      "id": "QUALIFICATION",
+      "purpose": "Qualify integration against the complete H2 requirements and retained regression.",
+      "target": "All25 full-plan groups and407 retained case IDs plus every addition.",
+      "method": "TC incorporates integration-specific cleanup/failure/current-PID assertions into complete exact ledger. Reconcile intentional common-fixture changes against historical source pins without editing historical evidence. Independently review current full ledger/contract before runner authoring, then runner/pre-gate before execution. No product/SDK imports, collection, SQL or services until then.",
+      "agent": "TC cases; Code-dev runner; independent exact reviews.",
+      "pass_criteria": "No pending literal obligation, missing variant, timeout, failure/error/skip; source/env/original17+2 unchanged during gate, all current owned identities absent, raw/private/public evidence accepted independently.",
+      "expected": "Only full H2 local activation substage can be accepted; original fullAX/B03/H3-H7/AT remain pending.",
+      "evidence": "Private frozen source ZIP/JUnit/timing/SQL/history/process records and reviewed normalized public evidence with exact hashes.",
+      "recovery": "Return to failing boundary, preserve actual attempt, refreeze source/env and reviews, repeat full required gate."
+    }
+  ],
+  "impact": {
+    "changed": "Only test integration, fixture-owned OIDC helper and new H2 watchdogs/oracles. Shared fixture modifications require all407 retained IDs fresh; no production behavior changes.",
+    "unchanged": "Production services, original001/002/003/004DDL, AX server/UI/Node lock and original17+2. No new runtime factories: TC child injects subclasses into module attributes before actual run() imports them; actual SDK/PG calls remain real.",
+    "omitted": "Full Node387/build/UI remains H6 because no JS/UI/product support changes; bring forward if actual scope expands.",
+    "risk": "Cleanup under exhausted budget may need outer subreaper fallback after case failure; it must not be reported as a passing per-case cleanup. Timing and server behavior remain unverified until actual full gate. H2 TestClient background maintenance is deliberately quiesced before case body to isolate runtime tests; normal auth/maintenance behavior must remain covered by unchanged retained original tests. Last-item session PG teardown is included in case clock; abnormal sessionfinish cleanup is failure recovery only."
+  },
+  "authorization": {
+    "integration_authoring": false,
+    "runner_authoring": false,
+    "test_or_service_execution": false,
+    "h2_or_goal_acceptance": false
+  },
+  "revision_history": [
+    {
+      "path": "docs/ifpmic/evidence/b03/attempts/h2-runtime-fixture-integration-v1-before-finalizer-closure.json",
+      "sha256": "a7a517cf19d740ee9d368ae97dc78c19c7020fb23e6ee81c36196a7367e9ef97",
+      "tc_review": "docs/ifpmic/evidence/b03/h2-runtime-fixture-integration-tc-review.json",
+      "reason": "Rejected on uncovered unbounded DROPDB; full fixture closure now explicit, and installed pytest corrects session teardown scope assumption. No implementation/execution under v1."
+    }
+  ]
+}

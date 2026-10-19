@@ -1,0 +1,87 @@
+{
+  "kind": "ifpmic.b03.h2.fixture-integration-tc-review.v1",
+  "verdict": "approve_authoring",
+  "contract_sha256": "5be7612bbd9be9a8ef251f07ec577386a0c7f5ab4a1f249aa99fdc8f4ff93ed7",
+  "contract_path": "docs/ifpmic/evidence/b03/h2-runtime-fixture-integration-contract.json",
+  "reviewer": {
+    "agent_id": "/root/h2_tc_query_fix",
+    "actual_role": "TC method reviewer; owner of runtime TC case authoring",
+    "review_type": "Exact-SHA bounded method review; static source inspection only"
+  },
+  "review_scope": "Reviewed v2 cleanup deadline propagation, complete H2 fixture finalizer closure, restarted PostgreSQL identity, multi-generation attempt ordering, unchanged historical semantics, and full-gate qualification. This approves authoring of the specified fixture integration only; it is not execution approval or runtime evidence.",
+  "reviewed_inputs": {
+    "contract": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-fixture-integration-contract.json",
+      "sha256": "5be7612bbd9be9a8ef251f07ec577386a0c7f5ab4a1f249aa99fdc8f4ff93ed7"
+    },
+    "pg_fixtures": {
+      "path": "tests/ifpmic_api/conftest.py",
+      "sha256": "3c39b0491139762d0a3da09397a368558cbe72e5cfebda4a279c76c97ce6ebe5"
+    },
+    "workflow_fixture": {
+      "path": "tests/ifpmic_api/workflow_schema_fixture.py",
+      "sha256": "5a3450bb4b436ea215ac6ab07b6d3d20d33ff87bdc56e83c5e5c163e7ffaedc4"
+    },
+    "g4_fixture": {
+      "path": "tests/ifpmic_api/jobs_fixture.py",
+      "sha256": "2191f3523e0ddcbb4c7e97d7b74348dc571c432b5df5a01c7436dd57db3bac48"
+    },
+    "workspace_fixture": {
+      "path": "tests/ifpmic_api/workspace_fixture.py",
+      "sha256": "5987916779c74a91b4dc44f16b03f27024762b4525ba6f8e9f14a20809e50ff8"
+    },
+    "oidc_provider": {
+      "path": "tests/ifpmic_api/oidc_provider.py",
+      "sha256": "b5e3a70df73245c143bd2e2e9db1ee2dd6061dde0cf1dfa7c02d9cdc4fe8f367"
+    },
+    "auth_application": {
+      "path": "services/ifpmic_api/app.py",
+      "sha256": "a65c3d44a14ecae7b819e5042d4f490ce68c8b9b5f5962d1b5f2bbfe52fef192"
+    },
+    "auth_service": {
+      "path": "services/ifpmic_api/auth.py",
+      "sha256": "9fef8084e8b11a7e1d0929a1842ab4fdddb0361adcbaa70700529a5e9999a887"
+    },
+    "pytest_runner": {
+      "path": ".ifpmic-venv/lib/python3.12/site-packages/_pytest/runner.py",
+      "sha256": "c8d7fd553c0516f7884502ee0e7954eb5a5b1542f21fcb5c4357500ed2fe1570"
+    },
+    "attempt_oracle": {
+      "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+      "sha256": "e2b5f3f8dbb8e1d789c472a3301236cfad1843532dad596d2e6774e4f8419785"
+    }
+  },
+  "checks": {
+    "exact_v2_contract_sha_verified": true,
+    "all_15_contract_source_pins_match": true,
+    "nonresetting_controller_covers_protocol_and_fixture_finalizers": true,
+    "function_scoped_drop_database_connection_and_sql_bounded": true,
+    "hba_reload_timeout_uses_remaining_cleanup": true,
+    "oidc_shutdown_uses_one_shared_deadline_and_confirms_threads": true,
+    "h2_testclient_maintenance_is_quiesced_before_body": true,
+    "testclient_finalization_is_bounded_and_unconfirmed_threads_fail": true,
+    "last_item_session_fixture_teardown_is_inside_protocol": true,
+    "pg_restart_identity_and_stop_use_current_owned_postmaster": true,
+    "multi_generation_attempt_rows_are_real_and_ordered_without_value_rewrite": true,
+    "legacy_no_controller_behavior_and_original_auth_tests_remain_unchanged": true,
+    "all_407_retained_ids_and_all_25_obligations_remain_required": true,
+    "execution_performed": false
+  },
+  "findings": [],
+  "method_assessment": {
+    "cleanup_budget": "One idempotent cleanup_remaining controller preserves the active monotonic deadline and supplies a strictly positive remaining allowance; no per-helper reset or fresh cleanup epoch is introduced. The controller remains available through pytest_runtest_teardown(nextitem=None), so function and session finalizers for the phase's last item are included. The installed pytest runner source confirms teardown_exact(None) tears down the full fixture stack. Abnormal sessionfinish cleanup remains failure recovery and cannot turn a timed-out case into a pass.",
+    "fixture_closure": "The v2 closure explicitly includes DROP DATABASE connect/lock/statement bounds, HBA restore/reload, shared OIDC server/thread shutdown, both TestClient contexts and maintenance-task quiescence. H2-only maintenance cancellation before body keeps the production auth implementation unchanged and retains original auth/maintenance regressions. Timeouts preserve resource identities and fail when termination cannot be confirmed.",
+    "postgresql_identity": "The current private data-directory postmaster PID and process start ticks are read after restarts; every stop/status/fallback uses the pinned pg_ctl and remaining shared allowance. Unknown/live state fails rather than claiming stopped.",
+    "attempt_order": "Actual multi-generation rows remain complete and unchanged; deterministic generation ordering plus unique-generation assertions do not manufacture or normalize values and leave the frozen one-generation oracle untouched.",
+    "qualification_and_authorization": "The full 407 retained IDs plus all 25 obligations, exact source review, fresh full gate, and independent ledger/contract/runner/pre-gate sequence remain mandatory. No test, import, collection, SQL, service, network, or runtime execution occurred."
+  },
+  "historical_reviews": [
+    {
+      "path": "docs/ifpmic/evidence/b03/attempts/h2-runtime-fixture-integration-v1-before-finalizer-closure/h2-runtime-fixture-integration-tc-review.json",
+      "verdict": "reject",
+      "contract_sha256": "a7a517cf19d740ee9d368ae97dc78c19c7020fb23e6ee81c36196a7367e9ef97",
+      "reason": "V1 did not bind migration_db DROP DATABASE to the shared cleanup deadline; the v2 fixture-closure step addresses that finding and the other closure gaps identified by static audit."
+    }
+  ],
+  "execution_boundary": "Approve authoring of the v2 shared fixture integration under its exact methods. This does not approve implementation, test/SQL/service execution, any individual H2 case, full H2 acceptance, or AT acceptance. Independent review of implementation, a fresh complete exact ledger/contract, reviewed runner and frozen pre-gate remain required before execution."
+}

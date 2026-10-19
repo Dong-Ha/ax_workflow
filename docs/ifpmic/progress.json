@@ -442,30 +442,37 @@
           "runtime_normal_progress_reconciliation": "evidence/b03/h2-runtime-normal-progress-reconciliation.json",
           "runtime_next_steps": "evidence/b03/h2-runtime-normal-next-steps.json",
           "runtime_full_preparation": {
-            "status": "additional_tc_draft_variants_static_reviewed_no_execution",
+            "status": "fixture_integration_and_negative_drafts_static_checkpoint_no_execution",
             "authoring_checkpoint_commit": "ed2d09983977407320dc9ed23cf0e6e46c9fc221",
             "verification_plan": "evidence/b03/h2-runtime-full-verification-plan.json",
             "plan_review_status": "independent_and_tc_approved_authoring_only",
             "planned_obligation_groups": 25,
             "authored_draft_crash_case_functions": 12,
             "tests_executed": false,
-            "static_changes": "Real generation-specific crash oracles replace synthetic normal-row adaptation; prepare failure cleanup retains owned children; worker/API proxy cut and immutable receipt replay checks tightened. These are static authoring fixes, not runtime proof.",
-            "pending": "Finish all25 obligation groups and exact literal inventory; resolve fixture teardown budget/current restarted-PG identity; freeze ledger/contract and independently review runner/pre-gate before actual tests.",
+            "static_changes": "Shared cleanup clock covers fixture closure and current restarted-PG identity; actual attempt rows ordered without value changes; 15 authority/runtime/transport draft variants added. No new runtime pass evidence.",
+            "pending": "Author remaining three groups; independently review current drafts and reconcile all25 groups into exact complete ledger. Review execution contract, runner and pre-gate before fresh full execution.",
             "acceptance_boundary": "407-case evidence remains historical only for its frozen candidate. No new crash/negative passes; fullH2, B03, originalAT and finalAX remain incomplete.",
             "plan_sha256": "c6964bccff0d4cec1ac00f18fbb267d5d1a4a5887e53844c604333b7c059486c",
             "plan_acceptance": "evidence/b03/h2-runtime-full-plan-acceptance.json",
             "independent_plan_review": "evidence/b03/h2-runtime-full-plan-review.json",
             "tc_plan_review": "evidence/b03/h2-runtime-full-tc-plan-review.json",
             "static_checkpoint": "evidence/b03/h2-runtime-crash-static-checkpoint.json",
-            "literal_draft_new_case_ids": 42,
+            "literal_draft_new_case_ids": 57,
             "startup_draft_case_ids": 21,
             "window_draft_case_ids": 9,
             "startup_tc_ledger": "evidence/b03/h2-runtime-startup-tc-ledger.json",
             "window_tc_ledger": "evidence/b03/h2-runtime-window-tc-ledger.json",
             "coverage_progress": "evidence/b03/h2-runtime-full-coverage-progress.json",
-            "remaining_groups_without_literal_ids": 10,
+            "remaining_groups_without_literal_ids": 3,
             "startup_window_static_review": "evidence/b03/h2-runtime-startup-window-static-review.json",
-            "startup_window_static_review_sha256": "ac4e7c09048a4f6a4ea513bacc41d1db2ef3178945ae3d686aae6bc46b5c4a1a"
+            "startup_window_static_review_sha256": "ac4e7c09048a4f6a4ea513bacc41d1db2ef3178945ae3d686aae6bc46b5c4a1a",
+            "activity_runtime_draft_case_ids": 12,
+            "transport_draft_case_ids": 3,
+            "activity_runtime_tc_ledger": "evidence/b03/h2-runtime-activity-runtime-tc-ledger.json",
+            "transport_tc_ledger": "evidence/b03/h2-runtime-transport-tc-ledger.json",
+            "fixture_integration_contract": "evidence/b03/h2-runtime-fixture-integration-contract.json",
+            "fixture_integration_source_review": "evidence/b03/h2-runtime-fixture-integration-source-review.json",
+            "fixture_negative_static_checkpoint": "evidence/b03/h2-runtime-fixture-negative-static-checkpoint.json"
           }
         }
       ]
@@ -643,12 +650,12 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "H2: finish ten remaining runtime-negative obligation groups and review all25 groups as one complete literal ledger; resolve shared fixture cleanup, restarted-PG identity and attempt ordering. Then review execution contract/runner/pre-gate and execute fresh407 retained IDs plus all mandatory additions.42 new draft IDs are unexecuted; no fullH2/B03/originalAT/fullAX completion.",
+  "next_step": "H2: author NEG-STARTED, NEG-FOREIGN-DEPLOYMENT, NEG-WORKSPACE; independently review drafts and complete all25-group exact ledger. Then review execution contract/runner/pre-gate and execute fresh407 retained IDs plus all mandatory additions.57 new draft IDs are unexecuted; no fullH2/B03/originalAT/fullAX completion.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",
     "Approved Bedrock/Claude runtime profile"
   ],
   "publication_policy": "Only authorized git repository documentation, source and synthetic verification summaries/screenshots; never runtime credentials or application logs.",
-  "updated_at": "2026-10-19T14:06:21.964727+00:00"
+  "updated_at": "2026-10-19T14:35:25.402671+00:00"
 }

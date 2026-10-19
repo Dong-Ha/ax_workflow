@@ -102,8 +102,10 @@ def workspace_root(tmp_path: Path) -> Path:
 
 
 @contextmanager
-def workspace_client(harness, workspace_root: Path, *, fault_hook=None):
+def workspace_client(harness, workspace_root: Path, *, fault_hook=None, cleanup_config=None):
     """Create a second API app sharing G4's isolated DB and authenticated session."""
+    from tests.ifpmic_api.h2_fixture_cleanup import managed_test_client
+
     settings = replace(
         harness["settings"],
         workspace_root=str(workspace_root),
@@ -116,7 +118,8 @@ def workspace_client(harness, workspace_root: Path, *, fault_hook=None):
         clock=harness["clock"],
         fault_hook=fault_hook,
     )
-    with TestClient(app, base_url=API_ORIGIN, follow_redirects=False) as client:
+    with managed_test_client(TestClient(app, base_url=API_ORIGIN, follow_redirects=False),
+                             app, cleanup_config) as client:
         client.cookies.set("ax_session", harness["session"], path="/")
         yield {**harness, "app": app, "client": client, "settings": settings,
                "workspace_root": workspace_root}
@@ -200,6 +203,6 @@ def write_workspace_settings(settings, path: Path) -> None:
 
 
 @pytest.fixture
-def workspace_environment(g4_harness, workspace_root):
-    with workspace_client(g4_harness, workspace_root) as harness:
+def workspace_environment(g4_harness, workspace_root, request):
+    with workspace_client(g4_harness, workspace_root, cleanup_config=request.config) as harness:
         yield harness

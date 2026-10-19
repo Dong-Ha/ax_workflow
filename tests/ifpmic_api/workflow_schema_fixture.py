@@ -213,7 +213,9 @@ def pytest_runtest_logfinish(nodeid, location):
     _append_h2_deadline(record)
 
 
-def _pg_ctl(cluster, *args: str) -> subprocess.CompletedProcess:
+def _pg_ctl(cluster, *args: str, cleanup_config=None) -> subprocess.CompletedProcess:
+    from tests.ifpmic_api.h2_fixture_cleanup import remaining
+
     env = {
         "PATH": f"{cluster.binaries['pg_ctl'].parent}{os.pathsep}/usr/bin:/bin",
         "LANG": "C.UTF-8",
@@ -224,20 +226,20 @@ def _pg_ctl(cluster, *args: str) -> subprocess.CompletedProcess:
         stdin=subprocess.DEVNULL,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
-        timeout=10,
+        timeout=remaining(cleanup_config, 10),
         check=False,
         env=env,
     )
 
 
-def _reload_hba(cluster) -> None:
-    completed = _pg_ctl(cluster, "reload")
+def _reload_hba(cluster, *, cleanup_config=None) -> None:
+    completed = _pg_ctl(cluster, "reload", cleanup_config=cleanup_config)
     if completed.returncode != 0:
         raise RuntimeError("private PostgreSQL HBA reload failed")
 
 
 @pytest.fixture
-def workflow_scram_hba(pg_cluster, pg_roles):
+def workflow_scram_hba(pg_cluster, pg_roles, request):
     """Require password authentication for every H2 service principal.
 
     The dedicated rules precede the historical local-trust fallback, so a
@@ -279,8 +281,15 @@ def workflow_scram_hba(pg_cluster, pg_roles):
             )
         yield
     finally:
-        path.write_bytes(original)
-        _reload_hba(pg_cluster)
+        from tests.ifpmic_api import h2_fixture_cleanup as cleanup
+
+        restored = False
+        try:
+            path.write_bytes(original)
+            _reload_hba(pg_cluster, cleanup_config=request.config)
+            restored = True
+        finally:
+            cleanup.record_finalizer(request.config, "hba_restored", restored=restored)
 
 
 @pytest.fixture

@@ -1,0 +1,23 @@
+{
+  "kind": "ifpmic.b03.h2.fixture-integration-authoring-acceptance.v1",
+  "decision": "accept_specified_test_fixture_integration_authoring_only",
+  "contract": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-fixture-integration-contract.json",
+    "sha256": "5be7612bbd9be9a8ef251f07ec577386a0c7f5ab4a1f249aa99fdc8f4ff93ed7"
+  },
+  "tc_review": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-fixture-integration-tc-review.json",
+    "sha256": "0bbd566b71f658ae17fac485e1d009717cd40036ba766c73abcf9bf78317c0bc"
+  },
+  "independent_from_contract_author_review": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-fixture-integration-plan-review.json",
+    "sha256": "4bc39717cb729179b4472bd975a18d7b524ba23a558d702236e5edefb65947d9"
+  },
+  "authorization": {
+    "integration_authoring": true,
+    "runner_authoring": false,
+    "test_or_service_execution": false,
+    "h2_or_goal_acceptance": false
+  },
+  "limits": "Implement five reviewed steps; exact candidate/source/whole-ledger and runner/pre-gate reviews plus actual tests remain mandatory. Static authoring approval is not passing evidence."
+}

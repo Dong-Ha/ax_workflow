@@ -16,6 +16,8 @@ import time
 
 import pytest
 
+from tests.ifpmic_api.h2_fixture_cleanup import installed_controller, restore_preserving_error
+
 
 BODY_SECONDS = 215
 CLEANUP_SECONDS = 25
@@ -141,6 +143,14 @@ class CaseDeadline:
     def cleanup_budget(self):
         self.begin_cleanup()
 
+    def cleanup_remaining(self, maximum):
+        self.begin_cleanup()
+        left = min(float(maximum), self.cleanup_start + CLEANUP_SECONDS - time.monotonic())
+        if left <= 0:
+            self.cleanup_timed_out = True
+            raise TimeoutError("H2 worker/API cleanup deadline exceeded")
+        return left
+
     def remaining(self, maximum: float) -> float:
         left = min(float(maximum), self.deadline - time.monotonic())
         if left <= 0:
@@ -173,11 +183,12 @@ def pytest_runtest_protocol(item, nextitem):
     assert stat.S_ISDIR(info.st_mode) and info.st_uid == os.getuid() and stat.S_IMODE(info.st_mode) == 0o700
     deadline = CaseDeadline(item.nodeid, path / CASE_FILES[item.nodeid])
     item._ifpmic_h2_worker_api_deadline = deadline
-    deadline.start()
-    try:
-        yield
-    finally:
-        deadline.restore()
+    with installed_controller(item.config, deadline):
+        try:
+            deadline.start()
+            yield
+        finally:
+            restore_preserving_error(deadline.restore)
 
 
 @pytest.hookimpl(hookwrapper=True, tryfirst=True)

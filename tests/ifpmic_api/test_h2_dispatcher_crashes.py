@@ -77,7 +77,7 @@ def _assert_crash_final(
     while time.monotonic() < deadline:
         if any(process.poll() is not None for process in active):
             raise AssertionError("owned runtime CLI exited before crash recovery completed")
-        candidate = normal._read_owner_snapshot(harness, job_id)
+        candidate = crash.read_owner_snapshot(harness, job_id)
         if candidate["accepted"] and candidate["accepted"][12] == "rejected":
             raise AssertionError("create command reached rejected terminal state")
         if candidate["bindings"] and candidate["bindings"][0][20] == "quarantined":
@@ -207,7 +207,7 @@ def _assert_crash_final(
 def _kill_cut(case, deadline, phase):
     process, record, barrier = crash.start_barrier_dispatcher(case, phase)
     barrier.wait(min(30, deadline - time.monotonic()))
-    before_kill = normal._read_owner_snapshot(case["harness"], case["job_id"])
+    before_kill = crash.read_owner_snapshot(case["harness"], case["job_id"])
     cut = crash.kill_at_barrier(case, process, record, barrier, 1)
     case["expected_killed"] = [process]
     normal._write_private(case["root"] / "owner-at-cut.json",
@@ -280,7 +280,7 @@ def test_start_response_before_admission_crash_recovers_same_run(
         assert cut_snapshot["attempts"] == [(1, None, None, None, False)]
         started = _observe_start(case, cut_snapshot, deadline.body_deadline)
         assert started["execution_count"] == started["started_event_count"] == 1
-        after_observation = normal._read_owner_snapshot(case["harness"], case["job_id"])
+        after_observation = crash.read_owner_snapshot(case["harness"], case["job_id"])
         assert after_observation == cut_snapshot
         crash.wait_claim_expired(case, claim, min(30, deadline.remaining(30)))
         _recover_dispatcher(case, deadline.body_deadline)
@@ -313,7 +313,7 @@ def test_admission_before_ack_crash_recovers_same_run(
         assert cut_snapshot["receipts"] == []
         started = _observe_start(case, cut_snapshot, deadline.body_deadline)
         assert started["run_id"] == run_id
-        assert normal._read_owner_snapshot(case["harness"], case["job_id"]) == cut_snapshot
+        assert crash.read_owner_snapshot(case["harness"], case["job_id"]) == cut_snapshot
         crash.wait_claim_expired(case, claim, min(30, deadline.remaining(30)))
         _recover_dispatcher(case, deadline.body_deadline)
         final, temporal, _worker = _assert_crash_final(
@@ -366,7 +366,7 @@ def test_two_live_dispatchers_stale_ack_cannot_change_recovered_run(
     try:
         first, pre_ack, barrier = crash.start_barrier_dispatcher(case, "after_run_admitted")
         barrier.wait(min(30, deadline.remaining(30)))
-        pre_ack = normal._read_owner_snapshot(case["harness"], case["job_id"])
+        pre_ack = crash.read_owner_snapshot(case["harness"], case["job_id"])
         claim = _claim(pre_ack)
         assert claim["generation"] == 1 and len(pre_ack["bindings"]) == 1
         run_id = pre_ack["bindings"][0][19]
@@ -388,7 +388,7 @@ def test_two_live_dispatchers_stale_ack_cannot_change_recovered_run(
         except subprocess.TimeoutExpired:
             raise AssertionError("stale generation acknowledgement did not return promptly")
         assert first.returncode == 3
-        after_old_ack = normal._read_owner_snapshot(case["harness"], case["job_id"])
+        after_old_ack = crash.read_owner_snapshot(case["harness"], case["job_id"])
         assert after_old_ack == recovered
         assert second.poll() is None
         final, temporal, _worker = _assert_crash_final(
@@ -423,7 +423,7 @@ def test_admitted_missing_history_is_quarantined_without_replacement(
         assert before_delete["receipts"] == []
         observed = _observe_start(case, before_delete, deadline.body_deadline)
         assert observed["run_id"] == run_id and observed["execution_count"] == 1
-        assert normal._read_owner_snapshot(case["harness"], case["job_id"]) == before_delete
+        assert crash.read_owner_snapshot(case["harness"], case["job_id"]) == before_delete
 
         # The pinned Temporal SDK has no high-level delete convenience method.
         # Use its generated first-party WorkflowService RPC with both synthetic
@@ -473,7 +473,7 @@ def test_admitted_missing_history_is_quarantined_without_replacement(
 
         quarantined = None
         while time.monotonic() < deadline.body_deadline:
-            quarantined = normal._read_owner_snapshot(case["harness"], case["job_id"])
+            quarantined = crash.read_owner_snapshot(case["harness"], case["job_id"])
             binding = quarantined["bindings"]
             if binding and binding[0][20] == "quarantined" and binding[0][26] == "HISTORY_MISSING":
                 break

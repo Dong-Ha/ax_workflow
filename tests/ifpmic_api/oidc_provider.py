@@ -12,6 +12,7 @@ from datetime import datetime, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import hashlib
 import json
+import socket
 import threading
 import time
 from typing import Any
@@ -79,6 +80,8 @@ class SyntheticOIDCProvider:
         self._lock = threading.RLock()
         self._servers: list[ThreadingHTTPServer] = []
         self._threads: list[threading.Thread] = []
+        self._request_threads: list[threading.Thread] = []
+        self._request_sockets: list[socket.socket] = []
         self._origins: dict[str, str] = {}
 
     @property
@@ -95,6 +98,15 @@ class SyntheticOIDCProvider:
 
     def start(self) -> "SyntheticOIDCProvider":
         provider = self
+
+        class OwnedHTTPServer(ThreadingHTTPServer):
+            def process_request(self, request, client_address):
+                thread = threading.Thread(target=self.process_request_thread,
+                                          args=(request, client_address), daemon=self.daemon_threads)
+                with provider._lock:
+                    provider._request_threads.append(thread)
+                    provider._request_sockets.append(request)
+                thread.start()
 
         class Handler(BaseHTTPRequestHandler):
             protocol_version = "HTTP/1.1"
@@ -206,19 +218,67 @@ class SyntheticOIDCProvider:
                 self._send(status, body, headers)
 
         for name in ("authorization", "token", "jwks"):
-            server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+            server = OwnedHTTPServer(("127.0.0.1", 0), Handler)
             server.daemon_threads = True
             server.timeout = 1
             host, port = server.server_address
             self._servers.append(server)
             self._origins[name] = f"http://{host}:{port}"
             thread = threading.Thread(target=server.serve_forever, name=f"ifpmic-g3-{name}", daemon=True)
-            thread.start()
             self._threads.append(thread)
+            thread.start()
         self.issuer = f"{self._origins['authorization']}/issuer"
         return self
 
-    def close(self) -> None:
+    def close(self, *, remaining_time=None) -> None:
+        if remaining_time is not None:
+            remaining_time(3)
+            errors = []
+
+            def stop(server):
+                try:
+                    server.shutdown()
+                    server.server_close()
+                except BaseException as error:
+                    errors.append(type(error).__name__)
+
+            # All servers share the caller's one cleanup epoch. Retain both
+            # helper and serving thread handles if shutdown is unconfirmed.
+            self._shutdown_threads = [
+                threading.Thread(target=stop, args=(server,), daemon=True,
+                                 name="ifpmic-h2-oidc-close") for server in self._servers
+            ]
+            with self._lock:
+                self._last_h2_threads = (*self._shutdown_threads, *self._threads, *self._request_threads)
+            for thread in self._shutdown_threads:
+                thread.start()
+            for thread in self._shutdown_threads:
+                thread.join(timeout=remaining_time(3))
+            if any(thread.is_alive() for thread in self._shutdown_threads):
+                raise RuntimeError("H2 OIDC shutdown unconfirmed")
+            # Shutdown completed accepting requests. Close only this provider's
+            # saved sockets so keep-alive handlers can also finish and be joined.
+            with self._lock:
+                connections = list(self._request_sockets)
+                request_threads = list(self._request_threads)
+            self._last_h2_threads = (*self._shutdown_threads, *self._threads, *request_threads)
+            for connection in connections:
+                try:
+                    connection.shutdown(socket.SHUT_RDWR)
+                except OSError:
+                    pass  # The peer/handler may already have closed it.
+                connection.close()
+            for thread in (*self._threads, *request_threads):
+                thread.join(timeout=remaining_time(3))
+            if errors or any(thread.is_alive() for thread in
+                             (*self._shutdown_threads, *self._threads, *request_threads)):
+                raise RuntimeError("H2 OIDC shutdown unconfirmed")
+            self._servers.clear()
+            self._threads.clear()
+            self._request_threads.clear()
+            self._request_sockets.clear()
+            self._shutdown_threads.clear()
+            return
         for server in self._servers:
             server.shutdown()
             server.server_close()
@@ -226,6 +286,8 @@ class SyntheticOIDCProvider:
             thread.join(timeout=3)
         self._servers.clear()
         self._threads.clear()
+        self._request_threads.clear()
+        self._request_sockets.clear()
 
     def register_authorization(self, query: dict[str, list[str]]) -> None:
         with self._lock:

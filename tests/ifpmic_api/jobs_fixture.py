@@ -81,12 +81,26 @@ def g4_clock() -> FrozenClock:
 
 
 @pytest.fixture
-def g4_oidc_provider() -> SyntheticOIDCProvider:
-    provider = SyntheticOIDCProvider().start()
+def g4_oidc_provider(request) -> SyntheticOIDCProvider:
+    from tests.ifpmic_api import h2_fixture_cleanup as cleanup
+
+    provider = SyntheticOIDCProvider()
     try:
+        provider.start()
         yield provider
     finally:
-        provider.close()
+        active = cleanup.controller(request.config)
+        try:
+            provider.close(remaining_time=(None if active is None else
+                                          lambda maximum: cleanup.remaining(request.config, maximum)))
+        finally:
+            cleanup.record_finalizer(request.config, "oidc_closed",
+                           serving_threads_alive=sum(thread.is_alive() for thread in provider._threads),
+                           request_threads_alive=sum(thread.is_alive() for thread in provider._request_threads),
+                           shutdown_threads_alive=sum(thread.is_alive() for thread in
+                                                      getattr(provider, "_shutdown_threads", ())),
+                           saved_threads=[{"ident": thread.ident, "alive": thread.is_alive()}
+                                          for thread in getattr(provider, "_last_h2_threads", ())])
 
 
 @pytest.fixture
@@ -213,9 +227,10 @@ def login(client: TestClient, provider, clock: FrozenClock,
 
 
 @pytest.fixture
-def g4_harness(tmp_path, g4_database, g4_oidc_provider, g4_clock):
+def g4_harness(tmp_path, g4_database, g4_oidc_provider, g4_clock, request):
     """A real app/PG/Node bridge harness; membership/grant fixtures remain synthetic."""
     from services.ifpmic_api.app import create_app
+    from tests.ifpmic_api.h2_fixture_cleanup import managed_test_client
 
     store_root = tmp_path / "profile-store"
     seed_profile_store(store_root)
@@ -224,7 +239,8 @@ def g4_harness(tmp_path, g4_database, g4_oidc_provider, g4_clock):
     settings = build_settings(g4_oidc_provider, g4_database, store_root)
     bridge = bridge_for(store_root)
     app = create_app(settings, bridge_runner=bridge, clock=g4_clock)
-    with TestClient(app, base_url=API_ORIGIN, follow_redirects=False) as client:
+    with managed_test_client(TestClient(app, base_url=API_ORIGIN, follow_redirects=False),
+                             app, request.config) as client:
         user_id, session, csrf = login(client, g4_oidc_provider, g4_clock)
         seed_membership(g4_database, PROJECT_ID, user_id)
         yield {
