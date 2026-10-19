@@ -1,0 +1,51 @@
+{
+  "kind": "ifpmic.b03.h2.prebinding-tc-review.v1",
+  "status": "reviewed_authoring_only",
+  "verdict": "approve_authoring",
+  "amendment": {
+    "path": "docs/ifpmic/evidence/b03/h2-prebinding-amendment.json",
+    "sha256": "79360620e0d342e2fc25258bffd65ef216fe5b89dc45fd99213c81884ebeb1ff"
+  },
+  "reviewer": {
+    "agent_id": "/root/h2_tc_query_fix",
+    "actual_role": "worker_luna",
+    "scope": "TC authoring review of the exact prebinding amendment; no execution approval."
+  },
+  "reviewed_source_pins": {
+    "docs/ifpmic/evidence/b03/h2-implementation-contract.json": "f63173ac17ebebd34a15d5966d96b79dc1667a713c00b1b92868b137ba93ded3",
+    "docs/ifpmic/evidence/b03/h2-schema-final-review.json": "5a662155c3532e4d97c4fc553af6d4180c1befb4deea61f4731e2a045bff58ca",
+    "docs/ifpmic/evidence/b03/h2-prebinding-advice.json": "69924c3956daf9808dfa7cace3bea5a885406cd40f3d42aca74b74ad80153a23",
+    "services/ifpmic_api/migrations/003_workflow_execution.sql": "5ef29521944e18551728dd285ce3ae21fa03c2b06f77c25430da6acb0ce1f102",
+    "services/ifpmic_api/migrate.py": "36518fdd4d296455947df76fd72bf11d68aa44317549bd527037499b98a9eb86",
+    "services/ifpmic_api/execution_workspace.py": "d2794d8a8f20b78c6fe71ea36d2563c876a7372a14acd2e0a1944e2aff5fab05",
+    "services/ifpmic_api/execution_dispatcher.py": "7baf91290938b3159b2e200e6fde8f81db5ec2d7b117351e03f689bbc75db209"
+  },
+  "review": {
+    "decision": "The amendment narrowly closes the prebinding incident-authority gap by replacing the existing four-argument dispatcher incident function in append-only migration 004. The bounded no-binding CREATE branch is authenticated, constrained to the current accepted DRAFT create command and exact live claim, waits without mutation for a non-READY workspace, and quarantines only the incomplete attempt and its outbox row after definitive invalid READY identity. It creates no binding, worker scope, projection receipt, or business outcome and cannot repair the filesystem. The bound path preserves its existing checks and same-deployment fence.",
+    "security_and_race_boundary": "The amendment keeps the existing function signature and dispatcher grant, adds no table or generic mutation surface, authenticates the active dispatcher, takes the published ordered locks, re-reads binding existence only after the job serialization lock, and locks outbox last with a fresh lease predicate. This makes a concurrent reservation use the bound path or fail closed; stale claims and expired attempts cannot quarantine. The SQL function does not attest filesystem truth; the amendment keeps READY validation in the trusted dispatcher and records the local trusted-computing-base limit.",
+    "filesystem_boundary": "ReadyWorkspace uses the G5 descriptor/inode/owner/mode/marker checks read-only. Definitive missing paths and identity mismatches map to unsafe; operational I/O remains retryable. The amendment prohibits mkdir, marker repair, chmod, link, unlink, or replacement of the accepted G5 provisioner behavior.",
+    "verification_and_regression": "The verification plan has normal, exception, lease-boundary, concurrency, migration rollback/rerun, and regression coverage for the prebinding branch. It preserves the existing 361 H2/schema/API case IDs and five H1 cases and explicitly adds current-schema expectations for 004 without weakening existing assertions. Exact new case IDs and full phase budgets remain prerequisites for the separately reviewed execution ledger; authoring approval does not authorize execution."
+  },
+  "tc_authored_protocol_test_update": {
+    "path": "tests/ifpmic_api/test_execution_protocol.py",
+    "sha256": "deb023553c6e7bf75932a608e3c9e01fe300864291f63fda2f58d23813ba3eef",
+    "change": "Added a literal finite-float rejection case for strict canonical encoding; proposal digest checks now include missing fields and reject bool/float transition_sequence values even though True == 1 and 1.0 == 1 in Python."
+  },
+  "other_tc_test_source": {
+    "path": "tests/ifpmic_api/test_execution_workspace.py",
+    "sha256": "666d8d4f233022b233c928ec6048a1ea7a91c6449331afc2b1d51e0551623bb0"
+  },
+  "blocking_findings": [],
+  "decision": {
+    "authoring_allowed": true,
+    "required_conditions": [
+      "This approval applies only to amendment SHA 79360620e0d342e2fc25258bffd65ef216fe5b89dc45fd99213c81884ebeb1ff.",
+      "It authorizes 004 and TC test authoring; it does not approve migration SQL, test results, service behavior, or runtime execution.",
+      "Freeze and independently review exact new case IDs, deadlines, runner and source pins before any SQL/test/service execution.",
+      "Preserve append-only 003 and historical 001/002 controls, all 361 prior cases, five H1 cases, and prior evidence."
+    ],
+    "execution": "not_authorized_by_this_review",
+    "original_acceptance": "AT-05, AT-16, AT-29 and all other original acceptance cases remain not_executed."
+  },
+  "method_limits": "Read the exact amendment and its pinned source bytes; statically checked amendment scope, lock/race/effect bounds, filesystem semantics, verification plan and TC-authored protocol assertions. Parsed the new TC tests with Python AST only. No SQL, test, service, database or product import/execution was performed."
+}

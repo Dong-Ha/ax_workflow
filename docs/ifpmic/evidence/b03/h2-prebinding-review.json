@@ -1,0 +1,94 @@
+{
+  "kind": "ifpmic.b03.h2.prebinding-review.v1",
+  "verdict": "approve_authoring",
+  "reviewer": {
+    "agent_id": "/root/h2_prebinding_advice",
+    "actual_role": "senior_sol",
+    "independence": "Reviewer did not author the amendment, runtime implementation, migration004 or TC tests. Prior narrow architecture advice was authored by this reviewer and is explicitly pinned."
+  },
+  "review_scope": "Independent exact-SHA authoring review of the narrowly bounded append004 prebinding incident plan. This is not review/approval of actual004 SQL, runtime modules, tests, service execution or acceptance.",
+  "reviewed_candidate": {
+    "path": "docs/ifpmic/evidence/b03/h2-prebinding-amendment.json",
+    "sha256": "79360620e0d342e2fc25258bffd65ef216fe5b89dc45fd99213c81884ebeb1ff",
+    "baseline_commit": "d8249ec9e7aefd7e94c202311ff9d98d03321adb"
+  },
+  "verified_source_pins": {
+    "docs/ifpmic/evidence/b03/h2-implementation-contract.json": "f63173ac17ebebd34a15d5966d96b79dc1667a713c00b1b92868b137ba93ded3",
+    "docs/ifpmic/evidence/b03/h2-schema-final-review.json": "5a662155c3532e4d97c4fc553af6d4180c1befb4deea61f4731e2a045bff58ca",
+    "docs/ifpmic/evidence/b03/h2-prebinding-advice.json": "69924c3956daf9808dfa7cace3bea5a885406cd40f3d42aca74b74ad80153a23",
+    "services/ifpmic_api/migrations/003_workflow_execution.sql": "5ef29521944e18551728dd285ce3ae21fa03c2b06f77c25430da6acb0ce1f102",
+    "services/ifpmic_api/migrate.py": "36518fdd4d296455947df76fd72bf11d68aa44317549bd527037499b98a9eb86",
+    "services/ifpmic_api/execution_workspace.py": "d2794d8a8f20b78c6fe71ea36d2563c876a7372a14acd2e0a1944e2aff5fab05",
+    "services/ifpmic_api/execution_dispatcher.py": "7baf91290938b3159b2e200e6fde8f81db5ec2d7b117351e03f689bbc75db209"
+  },
+  "checks": [
+    {
+      "id": "PREBIND-GAP-NECESSITY",
+      "result": "satisfied",
+      "evidence": "Approved H2 reserve protocol requires a definitive READY filesystem mismatch to quarantine before reserve. Existing003 report_dispatch_incident requires a binding and record_delivery does not permit quarantine. Amendment closes only this missing prebinding route without reserving unvalidated state."
+    },
+    {
+      "id": "PREBIND-MINIMAL-APPEND",
+      "result": "satisfied",
+      "evidence": "Append004 replaces the existing four-argument function, preserves003 and prior contracts, retains003 registry detection and existing owner transaction/hash ledger, and adds no table, credential scope or generic mutation API. Original001/002 reference hashes remain cf0437a5f32e1589e4ea821afbb2ef2480d780a276667880aa9a08a0f4c77f12 and95c01f06eb586e0c1067f04672edfed8e0a11215752ad859ac9e4744da5a504e."
+    },
+    {
+      "id": "PREBIND-AUTHORITY-AND-EFFECT",
+      "result": "satisfied",
+      "evidence": "Unbound authority is active authenticated dispatcher plus enabled owner deployment, exact canonical accepted CREATE/DRAFT0 relation and exact current live lease. Only WORKSPACE_IDENTITY_CONFLICT may complete the current incomplete attempt and quarantine its own outbox; no business, binding, scope, receipt, intent or sibling mutation is authorized."
+    },
+    {
+      "id": "PREBIND-LOCKED-BRANCH",
+      "result": "satisfied",
+      "evidence": "The plan follows principal -> project guard -> membership NOWAIT -> job -> binding -> workspace -> outbox. Binding is re-read after job serialization; concurrent reservation selects bound same-deployment behavior or denies other deployment. Lease expiry is sampled after lock wait; no outbox-first request for earlier classes is permitted."
+    },
+    {
+      "id": "PREBIND-NONREADY-AND-STALE",
+      "result": "satisfied",
+      "evidence": "Current nonREADY intent returns wait/WORKSPACE_NOT_READY without mutation. Stale lease affects0. Missing/completed attempt and malformed code/relation fail closed. Current claim capability is not mistaken for a caller identity string or an unbound deployment ownership record."
+    },
+    {
+      "id": "PREBIND-BOUND-COMPATIBILITY-ACL",
+      "result": "satisfied_for_plan",
+      "evidence": "Existing same-deployment bound incident semantics and allowlist remain, using h2_quarantine only in the bound path. Replacement explicitly preserves SECURITY DEFINER/trusted search_path and PUBLIC denial/exact dispatcher grant; actual SQL/ACL compatibility still requires later source review and TC checks."
+    },
+    {
+      "id": "PREBIND-FILESYSTEM-CLASSIFICATION",
+      "result": "plan_aligned_static_only",
+      "evidence": "Pinned ReadyWorkspace now converts ENOENT/ENOTDIR/ELOOP to WORKSPACE_UNSAFE and adds a final exact job-directory entry-set check. The inspected validator uses read/open/stat/list and inherited inode/marker checks rather than mutating provision/publish. Other I/O still follows fixed operational classification. This resolves the previously identified missing READY path classification in the planned boundary, without runtime execution proof."
+    },
+    {
+      "id": "PREBIND-REGRESSION-AND-RACE-ORACLES",
+      "result": "sufficient_for_authoring",
+      "evidence": "Plan names exact target/sibling/business isolation, lease boundaries and reclaim, principal disable, concurrent reserve/re-read and cross-deployment denial, code/auth/attempt negatives, read-only FS, fresh001-004/003-upgrade/rerun/rollback/ACL and current fixture004 expectations. It preserves all361 existing IDs plus five H1 IDs and original17+2 sources; no inherited pass is claimed for004."
+    },
+    {
+      "id": "PREBIND-GATE-SEPARATION",
+      "result": "satisfied",
+      "evidence": "Both independent and TC must approve this same amendment SHA before004/test authoring. Frozen exact test/source/deadline ledger and reviewed bounded runner remain necessary before execution. Original AT and full H2 remain unexecuted."
+    }
+  ],
+  "blocking_findings": [],
+  "risks_and_edge_cases": [
+    "Actual004 must implement the post-lock binding re-read, fresh exact lease test, current incomplete-attempt requirement and target-only atomic updates exactly; this review cannot certify SQL that has not yet been authored.",
+    "SQL cannot attest a filesystem read. Trusted dispatcher validation outside SQL and the existing READY/token lifecycle invariant remain the local boundary; filesystem/DB atomicity and hostile same-UID replacement are not claimed.",
+    "The fixed-code validator classification and final directory recheck are static observations. Actual dispatcher order, genuine I/O retry behavior, filesystem race coverage and no RPC before validation require TC evidence.",
+    "Bound job-wide quarantine and unbound target-only quarantine intentionally have different mutation scope; tests must catch accidental helper reuse in the unbound path.",
+    "The source pin for execution_dispatcher.py was recomputed only. No semantics of that module, transport/workflow/launcher or other concurrently authored runtime are approved here."
+  ],
+  "decision": {
+    "authoring_approval": "approve_authoring for the exact reviewed amendment SHA only",
+    "authoring_may_begin_only_after": "TC also records approve_authoring for79360620e0d342e2fc25258bffd65ef216fe5b89dc45fd99213c81884ebeb1ff.",
+    "required_later_review": "Review actual004 and its exact source/test ledger independently; execution needs separate bounded-runner/pre-gate approval. Candidate source changes must be reflected in the later frozen gate fingerprint.",
+    "execution_authorized": false,
+    "migration_application_authorized": false,
+    "runtime_certified": false,
+    "acceptance": "none; partial003 foundation remains its prior frozen result, fullH2 and original AT remain not_executed"
+  },
+  "remaining_uncertainty": [
+    "Actual004 SQL and tests were not present within this review scope.",
+    "No tests, services, migration execution, private histories or runtime behavior were evaluated.",
+    "The amendment is an authoring plan, so actual safe behavior still depends on its implementation and separately reviewed evidence."
+  ],
+  "method_limits": "Read the exact amendment, prior advice and narrow003/helper/READY validator sources; recomputed every amendment source pin and original001/002 references. Wrote only this new review JSON. No product/test edits, service/test execution, migration application or network actions."
+}

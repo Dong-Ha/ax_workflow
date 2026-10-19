@@ -1,0 +1,71 @@
+{
+  "kind": "ifpmic.b03.h2.prebinding-amendment.v1",
+  "status": "candidate_pending_independent_and_tc_same_sha_authoring_review",
+  "purpose": "Close the discovered runtime protocol gap: a definitively invalid READY filesystem must be quarantined before any binding reservation or Temporal RPC. Existing authenticated incident API currently requires a binding.",
+  "requirements": [
+    "B03 H2",
+    "REQ-02",
+    "REQ-05 prerequisite",
+    "REQ-13",
+    "REQ-14 preservation",
+    "AT-16 prerequisite only"
+  ],
+  "source_pins": {
+    "docs/ifpmic/evidence/b03/h2-implementation-contract.json": "f63173ac17ebebd34a15d5966d96b79dc1667a713c00b1b92868b137ba93ded3",
+    "docs/ifpmic/evidence/b03/h2-schema-final-review.json": "5a662155c3532e4d97c4fc553af6d4180c1befb4deea61f4731e2a045bff58ca",
+    "docs/ifpmic/evidence/b03/h2-prebinding-advice.json": "69924c3956daf9808dfa7cace3bea5a885406cd40f3d42aca74b74ad80153a23",
+    "services/ifpmic_api/migrations/003_workflow_execution.sql": "5ef29521944e18551728dd285ce3ae21fa03c2b06f77c25430da6acb0ce1f102",
+    "services/ifpmic_api/migrate.py": "36518fdd4d296455947df76fd72bf11d68aa44317549bd527037499b98a9eb86",
+    "services/ifpmic_api/execution_workspace.py": "d2794d8a8f20b78c6fe71ea36d2563c876a7372a14acd2e0a1944e2aff5fab05",
+    "services/ifpmic_api/execution_dispatcher.py": "7baf91290938b3159b2e200e6fde8f81db5ec2d7b117351e03f689bbc75db209"
+  },
+  "scope": "Append004 only; retain003 and all prior immutable contracts/evidence. Same four-argument report_dispatch_incident and grants. No public API, business outcome, command payload, device, human or actual Agent behavior change. Existing bound branch preserves semantics.",
+  "ownership": {
+    "main": "Amendment, append004, runtime/launcher and integration.",
+    "TC": "Independent new migration/incident/race/fixture tests, existing-case latest-schema fixture updates and exact case/deadline ledger.",
+    "independent_reviewer": "Same-SHA authoring approval and later frozen candidate/evidence review; actual role must be recorded."
+  },
+  "authoring_authority": "Main may author004 and TC its tests only after independent + TC reviews approve_authoring for this exact SHA. This is not execution approval. Full runtime gate needs a separately frozen exact ledger/runner and independent pre-gate review.",
+  "implementation": {
+    "migration": "New004_prebinding_incident.sql uses CREATE OR REPLACE FUNCTION on the existing incident signature, explicit SECURITY DEFINER/trusted search_path, REVOKE PUBLIC and exact dispatcher grant in the same owner transaction. No tables, extra credential grants or new generic mutation functions. Migrator003 role registry remains;004 is ordinary append-only hash/role ledger.",
+    "locks": "Authenticate dispatcher principal FOR SHARE; load immutable command identity; h2_lock_job obtains project guard, membership NOWAIT, job, existing binding and workspace SHARE; re-read binding AFTER job lock; enforce same deployment for bound path; lock target outbox last and sample fresh clock lease. No earlier class after outbox.",
+    "bound": "Preserve existing exact live-claim and same-deployment binding checks then h2_quarantine behavior/allowlist. Concurrent first reserve must be observed by the post-lock binding re-read; never take unbound branch for it.",
+    "unbound_scope": "Only enabled owner deployment and authenticated active dispatcher; canonical CREATE route matching job.create_command_id/project/job/owner, jobDRAFT revision0 cycle0 emptycurrentsteps/candidatenull and commandaccepted. No other command route or terminal outcome is eligible. Exact current live claim command/generation/token/expiry remains required.",
+    "unbound_workspace": "Under locked current intent require exact create origin and READY; a current nonREADY intent returns fixed wait/WORKSPACE_NOT_READY without mutation. Do not accept caller-supplied filesystem facts or invent token replacement/repair. Physical validation is trusted dispatcher responsibility outside SQL, not database attestation.",
+    "unbound_code": "Only nonNULL WORKSPACE_IDENTITY_CONFLICT. Other codes/NULL/arbitrary strings fail closed with no writes.",
+    "unbound_effect": "Require the exact current incomplete delivery_attempt; atomically mark only that attempt completed/quarantined/fixedcode and its outbox quarantined with token/expiry cleared and last_error fixed. No binding/scope/receipt inserted, no job/command/intent/authority mutation, no sibling effects. Same result envelope status=quarantined/code only; stale path affected0.",
+    "recovery": "Quarantined rows remain excluded from normal claim. No auto-repair/relink/unquarantine; future explicit operator recovery policy required.",
+    "filesystem": "ReadyWorkspace uses G5 read/open/stat/inode/marker validators without provision/mkdir/link/fsync/unlink/chmod. Definite missing job/child/marker, ENOENT/ENOTDIR/ELOOP and invalid identity are unsafe; genuine storage/config I/O is operational retry. No global rewrite of accepted G5 provisioner."
+  },
+  "verification_plan": {
+    "purpose": "Prove prebinding failure handling cannot start or corrupt an accepted job, while current binding incidents and prior regressions remain intact.",
+    "target": "004 atomic migration/function ACL, no-binding branch, read-only READY validation and actual dispatcher call order with real PG/Temporal in full H2 runtime.",
+    "methods": [
+      "Normal: real accepted create+preparedREADY+actual missing/wrong marker; exact active claim can quarantine only target attempt/outbox, zero start/binding/receipt/business transition.",
+      "Exception: missing/wrong role/OID, disabled principal/deployment, wrong route/create relation, wrong/NULL incident code, absent attempt or already-completed attempt fail with no effects.",
+      "Boundary: before/at/after lease expiry, stale generation/token after reclaim, nonREADY wait, malformed/terminal job/command state, transient filesystem I/O versus definitive identity absence.",
+      "Concurrency: incident delayed behind job lock while another process reserves; re-read chooses bound behavior or rejects different deployment; expired delayed claim cannot write; principal disable serializes.",
+      "Regression: fresh001-004,003-to004 upgrade, unchanged rerun, injected004 failure restores preexisting function/ACL/ledger. Preserve original001/002 bytes and historical controls,003 bytes, all361 existing IDs and five H1 IDs. Current-schema version fixture expectations explicitly add004 without weakening data/authority/atomicity oracles."
+    ],
+    "agents": "Main implements; separate TC writes literal assertions/barriers and ledger; independent reviewer audits frozen sources and actual raw evidence.",
+    "pass_criteria": [
+      "All exact new cases and affected existing361+H1five pass with no skip/xfail/error/timeout.",
+      "InvalidREADY produces outbox-only durable quarantine before reservation/RPC and no implicit repair; ready safe normal flow still works.",
+      "Complete original source/lock/environment/privacy/owned-process invariants hold; original17+2 remain unchanged."
+    ],
+    "expected_results": "DRAFT0/accepted remain; no binding, scope, projection, Temporal start or sibling mutation for prebinding incident. Bound branch remains unchanged.",
+    "evidence": "Private source/SQL before-after/PG+Temporal histories/lifecycle/JUnit/timings and bounded case ledger; public sanitized counts/IDs/hashes and independent review only.",
+    "failure_recovery": "Preserve failed source/DB/history, return to auth/lock/migration/incident/FS boundary. Fix product or fixture without changing expected outcome; source fingerprint/ledger and pre-gate review refresh before complete affected rerun. Change this contract only if scope/oracle/budget changes, not merely for a fixture spelling correction.",
+    "execution_limits": "Existing H2 contract30s default and215+25 crash exception<=240s per named case; exact case inventory, shared process setup and full phase budgets must be frozen before execution. No services/tests authorized by this document."
+  },
+  "omissions": [
+    {
+      "item": "Real business agents, human task consumption, device/build/publisher/final AX UI",
+      "reason": "Separate B03H3-H7 and downstream backlog stages; no business state introduced here.",
+      "remaining_risk": "No full H2 or original AT/visualization acceptance from this amendment."
+    }
+  ],
+  "local_trust_boundary": "Trusted local dispatcher validates the filesystem. SQL cannot attest external filesystem truth. Same-UID hostile host and compromised trusted service credentials remain outside local proof, as in approved H2.",
+  "goal_status": "active",
+  "real_acceptance_status": "not_executed"
+}

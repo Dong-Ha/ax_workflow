@@ -1,0 +1,174 @@
+{
+  "kind": "ifpmic.b03.h2.prebinding-advice.v1",
+  "status": "architecture_advice_only_pending_exact_amendment_review",
+  "reviewer": {
+    "agent_id": "/root/h2_prebinding_advice",
+    "actual_role": "senior_sol",
+    "scope": "Narrow read-only review of prebinding READY filesystem validation and dispatcher incident SQL; advice artifact only."
+  },
+  "baseline_commit": "d8249ec9e7aefd7e94c202311ff9d98d03321adb",
+  "reviewed_source_sha256": {
+    "docs/ifpmic/evidence/b03/h2-implementation-contract.json": "f63173ac17ebebd34a15d5966d96b79dc1667a713c00b1b92868b137ba93ded3",
+    "docs/ifpmic/evidence/b03/h2-contract-review.json": "3c0ae9f57a698566311accef2bca278fc5ac406f6400e71fb0f0c8bf84836745",
+    "docs/ifpmic/evidence/b03/h2-tc-contract-review.json": "fcee8bd57df060a10e9b53aed73667dfe98e249ec2847d4815bcfb59bb885849",
+    "docs/ifpmic/evidence/b03/h2-schema-final-review.json": "5a662155c3532e4d97c4fc553af6d4180c1befb4deea61f4731e2a045bff58ca",
+    "docs/ifpmic/evidence/b03/h2-security-advice.json": "37215e0b37236149a133722323a28c4c155b649021701e4fa6e8bc9a5b3683e4",
+    "services/ifpmic_api/migrations/001_initial.sql": "cf0437a5f32e1589e4ea821afbb2ef2480d780a276667880aa9a08a0f4c77f12",
+    "services/ifpmic_api/migrations/002_auth_retention.sql": "95c01f06eb586e0c1067f04672edfed8e0a11215752ad859ac9e4744da5a504e",
+    "services/ifpmic_api/migrations/003_workflow_execution.sql": "5ef29521944e18551728dd285ce3ae21fa03c2b06f77c25430da6acb0ce1f102",
+    "services/ifpmic_api/migrate.py": "36518fdd4d296455947df76fd72bf11d68aa44317549bd527037499b98a9eb86",
+    "services/ifpmic_api/workspace.py": "ad3e29f27ee20bc82eff9afcf51d9bb5ef6374d50b69bcf8fa508d81ecb60f67",
+    "services/ifpmic_api/workspace_fs.py": "77e22fe789229841b4883fd2d1606964d468760a25d3cac4ea83d557ce3c5893",
+    "services/ifpmic_api/execution_workspace.py": "a30eae76181187de792f7060896c04ebbd291d0cb4d384e232ec4fcfadfb7af3"
+  },
+  "findings": [
+    {
+      "id": "H2-PREBINDING-INCIDENT-GAP",
+      "severity": "blocking_before_complete_runtime",
+      "conclusion": "The approved reserve protocol requires read-only READY marker validation before reserve and durable quarantine on identity mismatch, but the granted report_dispatch_incident function rejects a first CREATE with no execution binding. Reserving an unvalidated workspace merely to obtain quarantine authority violates that ordering.",
+      "evidence": [
+        "h2-implementation-contract.json delivery_protocol.reserve and sql_surface.report_dispatch_incident",
+        "003_workflow_execution.sql:688 report_dispatch_incident requires a same-deployment binding before h2_lock_job or claim validation",
+        "003_workflow_execution.sql:543 record_delivery accepts only started/signaled/uncertain/retry/receipt_reconciled; it cannot record quarantine",
+        "003_workflow_execution.sql:344 h2_quarantine has no explicit binding-existence guard, but is internal/EXECUTE-denied and acts on every applicable job outbox, so it is not an appropriate public unbound-incident bypass"
+      ]
+    },
+    {
+      "id": "H2-PREBINDING-APPEND-ONLY",
+      "severity": "required_boundary",
+      "conclusion": "Keep the accepted 001/002/003 bytes and existing schema-foundation evidence intact. Append 004 with CREATE OR REPLACE of the existing four-argument report_dispatch_incident, with a tightly bounded no-binding CREATE branch. The old evidence proves only its frozen candidate, never the new 004.",
+      "evidence": [
+        "003 source SHA256 in reviewed_source_sha256",
+        "h2-schema-final-review.json verdict accept_partial_h2_sql_foundation and 361-case prior evidence",
+        "migrate.py automatically sorts numbered migration files and pins each source; H2_MIGRATION remains 003_workflow_execution for registry detection"
+      ]
+    },
+    {
+      "id": "H2-LOCKED-BRANCH-CHOICE",
+      "severity": "required_correctness",
+      "conclusion": "Determine whether a binding exists only after taking the job serialization lock, then take the outbox lock and validate a fresh lease clock. An initial unlocked lookup may identify the job but must not decide the no-binding branch. A concurrent reservation must lead to the existing bound-scope path, including cross-deployment denial."
+    }
+  ],
+  "recommendation": {
+    "choice": "Append 004 replacing report_dispatch_incident; do not add a new function or widen record_delivery.",
+    "why_minimal": "Keeps the existing caller signature, EXECUTE surface, transport/business separation and bound incident behavior. A new function duplicates authentication/ACL/locking. A quarantine result in the outbox-only record_delivery path would require broadening its lock and authority model.",
+    "authoring_gate": "Main must first write an exact-SHA amendment to the approved f63173ac17ebebd34a15d5966d96b79dc1667a713c00b1b92868b137ba93ded3 contract; independent reviewer and TC must both approve those same amendment bytes before 004 or its new tests are authored. This advice is not either approval.",
+    "amendment_must_define": [
+      "Append-only 004 source scope and unchanged 001/002/003 hashes; existing 003 role-registry identity remains unchanged.",
+      "Explicit authority for active authenticated dispatchers to quarantine only the exact currently claimed unbound CREATE on definitive READY workspace identity failure.",
+      "Fixed output and zero-business-write semantics, lock order, stale/wait behavior, bound-path compatibility and the mandatory negative/concurrency cases below.",
+      "Updated literal current-version migration expectations for fresh 001+002+003+004, upgrade accepted003 to004, unchanged rerun, drift, rollback and exact-role ACL checks; historical first-two fixtures stay historical.",
+      "Execution remains separately gated on frozen exact source/test ledger and reviewed bounded runner; existing 361 passes do not apply to004/runtime."
+    ],
+    "transaction_order": [
+      "Authenticate session_user OID/name via h2_identity(dispatcher), retaining principal FOR SHARE fence.",
+      "Load immutable command/job relation to identify job; absent command is forbidden.",
+      "Use existing project guard -> membership FOR UPDATE NOWAIT -> job FOR UPDATE -> binding FOR UPDATE if present -> workspace FOR SHARE ordering through h2_lock_job.",
+      "Re-read binding and all branch predicates after serialization. If binding exists, require its deployment to match authenticated dispatcher and use existing bound incident semantics.",
+      "Lock the exact command outbox FOR UPDATE. Check state leased, exact command ID/generation/token and claim_expires_at > freshly sampled clock_timestamp; missing/null lease facts are stale.",
+      "Only in the confirmed no-binding case evaluate the strict prebinding predicates and atomically update the exact active delivery_attempt plus exact outbox. Never lock outbox then request earlier classes."
+    ],
+    "unbound_predicates": [
+      "Authenticated current active dispatcher OID/name; require its owner-registered deployment to exist and remain enabled for this new unbound authority. No caller principal/deployment/build identity is accepted.",
+      "Command is exact jobs.create_command_id, route POST /api/v1/jobs, same job/project/owner actor relation and still accepted; job remains DRAFT revision0. Derive these facts from DB, not caller claims.",
+      "No execution_binding exists under the job lock. No build/namespace/run/receipt/scope is manufactured.",
+      "Exact current workspace_intent belongs to this job and create command. If current intent is not READY, return fixed wait WORKSPACE_NOT_READY with accepted command and leased outbox/attempt unchanged; dispatcher may separately release/retry through record_delivery.",
+      "Only code WORKSPACE_IDENTITY_CONFLICT is accepted in this no-binding branch. All other/NULL/unknown codes fail with fixed private error and zero mutations. Bound branch retains the existing fixed-code allowlist.",
+      "Require exact live lease and its current unfinished attempt. A missing attempt is protocol inconsistency, not permission to fabricate or partially complete a quarantine."
+    ],
+    "unbound_mutations": [
+      "Update only delivery_attempts(command_id,p_generation) with completed_at from DB clock, result quarantined and error_code WORKSPACE_IDENTITY_CONFLICT.",
+      "Update only that command outbox to quarantined, clear claim_token/claim_expires_at and set fixed last_error. Return fixed quarantined envelope; a repeated call after commit is stale and cannot overwrite the first incident.",
+      "Do not invoke job-wide h2_quarantine for this branch; sibling command outboxes/attempts must remain byte-identical.",
+      "Do not insert/update execution binding, run scope, receipt, job, command business outcome, workspace intent, catalog, authority or registry. Do not repair/provision files or make Temporal RPC.",
+      "Transaction rollback or unknown commit is operationally reconciled using durable state; never claim a completed quarantine from a lost connection alone."
+    ],
+    "acl": "Replacement remains owner-created SECURITY DEFINER with fixed search_path pg_catalog,ifpmic,pg_temp. Preserve/reassert exact dispatcher EXECUTE, PUBLIC/runtime/operator/projector denial and helper EXECUTE denial in the same advisory-locked migration transaction.",
+    "trust_boundary": "SQL cannot attest filesystem reads. The registered dispatcher is the trusted local validator and supplies only the fixed incident code; SQL fences durable authority and state. Workspace token is service-immutable, and current WorkspaceWorker does not leave READY or advance its generation. With that preserved invariant, the existing four arguments suffice. If READY replacement/reset becomes supported, amend the protocol again to carry and compare the validated workspace token/generation."
+  },
+  "required_boundary_and_negative_tests": [
+    {
+      "id": "PREBIND-READY-MISMATCH",
+      "oracle": "Accepted DRAFT0 CREATE with READY intent, no binding and bad marker: read-only validator fails; exact live incident call quarantines only own attempt/outbox. All business rows, intent and sibling outboxes unchanged; no binding/start/admission/scope/RPC/filesystem mutation."
+    },
+    {
+      "id": "PREBIND-VALID-READY",
+      "oracle": "Valid marker is checked before reserve; normal first reserve/start flow unchanged and no prebinding incident is emitted."
+    },
+    {
+      "id": "PREBIND-NONREADY",
+      "oracle": "RESERVED/PROVISIONING/ERROR or absent intent returns fixed wait/retry without quarantine, terminal outcome or premature binding; incident function leaves leased outbox/current attempt unchanged."
+    },
+    {
+      "id": "PREBIND-LEASE-FENCES",
+      "oracle": "Wrong command, generation, token; NULL facts; expired lease before/at boundary; old token after reclaim; pending/dispatched/quarantined row: stale/forbidden and affected0, no durable write. Expiry sampled after blocked locks, not transaction start."
+    },
+    {
+      "id": "PREBIND-AUTHORITY",
+      "oracle": "Runtime/operator/projector/PUBLIC execution denied; inactive principal, recreated same-name OID, membership/SET ROLE credential, disabled/missing deployment denied. No-binding non-create and wrong create/job/project/actor relation denied. Exact live token is a capability, not a caller-ID string."
+    },
+    {
+      "id": "PREBIND-CODE-ALLOWLIST",
+      "oracle": "Every other private incident code, operational code, arbitrary text and NULL cannot quarantine an unbound CREATE; existing bound allowlist remains unchanged."
+    },
+    {
+      "id": "PREBIND-CLAIM-RACE",
+      "oracle": "Two live processes, old lease expiring while waiting on job lock and concurrent reclaim: at most current exact claim may quarantine; stale process affects0; attempt completion and outbox update are atomic."
+    },
+    {
+      "id": "PREBIND-RESERVE-RACE",
+      "oracle": "Pause incident after its initial command lookup; another dispatcher reserves binding under job lock. Incident must re-read binding after lock: same-deployment bound path behaves as before, another-deployment binding is forbidden, never unbound-quarantined."
+    },
+    {
+      "id": "PREBIND-BUSINESS-ISOLATION",
+      "oracle": "Snapshot all job/command/receipt/scope/binding/intent rows and sibling command outboxes/attempts. Only target current attempt/outbox changes; public error DTO never exposes WORKSPACE_IDENTITY_CONFLICT or private paths/exception text."
+    },
+    {
+      "id": "PREBIND-MIGRATION",
+      "oracle": "Fresh full chain,003 upgrade and unchanged rerun preserve 003 SHA and role registry; wrong role/OID/drift and injected004 failure roll back DDL/ledger/ACL atomically. Bound incident, receipt replay and original G4/G5 behavior retain their existing oracles."
+    },
+    {
+      "id": "PREBIND-READONLY-FS",
+      "oracle": "Wrong/missing/extra marker bytes, job/child absence, symlink/FIFO/device/wrong mode/owner and inode substitution fail closed; actual I/O unavailable retries without fabricated repair. Compare filesystem tree/inodes/content before/after validation and assert no mutating provision/publish calls."
+    },
+    {
+      "id": "PREBIND-PRINCIPAL-DISABLE",
+      "oracle": "Owner disabling principal waits on the in-flight principal SHARE fence; subsequent calls fail after disable commit. Membership contention returns bounded retry; no lock inversion or broad helper capability."
+    }
+  ],
+  "risks_and_edge_cases": [
+    "Unbound jobs are not deployment-owned yet: claim_delivery currently allows any enabled owner-registered dispatcher to win the first unbound claim. Do not invent a cross-deployment ownership assertion for unbound rows; do enforce exact claim capability and preserve same-deployment scope once a binding exists.",
+    "READY filesystem validation occurs outside SQL locks. This does not provide an atomic filesystem/DB transaction or protect against later same-UID malicious replacement; it follows the approved local trusted-process boundary and DB token/generation recheck at reserve.",
+    "No binding means the durable operator incident resides on outbox/attempt only. Recovery is a separate explicit operator policy; generic claim_delivery must continue excluding quarantined rows.",
+    "Bound incidents retain job-wide quarantine semantics; the narrow unbound branch must not accidentally broaden to sibling commands.",
+    "Preserve definitive identity mismatch versus temporary filesystem I/O unavailable. A missing READY tree is a definite failed READY assertion; arbitrary EIO, permission/configuration and storage failure should not be casually reclassified as proof of forged identity."
+  ],
+  "other_narrow_runtime_blockers_or_followups": [
+    {
+      "id": "READY-MISSING-PATH-CLASSIFICATION",
+      "status": "integration_must_resolve",
+      "evidence": "execution_workspace.py validate_ready wraps OSError with workspace_fs.io_error; io_error maps ENOENT to WORKSPACE_IO. Missing marker is explicitly unsafe, but missing job/child path is therefore currently reported like generic I/O.",
+      "required_resolution": "Define and independently test caller classification so a definite missing READY layout follows quarantine rather than unbounded dependency retry, while transient I/O errors retain operational retry. This does not authorize a broad rewrite of the accepted G5 provisioner."
+    },
+    {
+      "id": "READONLY-VALIDATOR-SCOPE",
+      "status": "not_finally_approved",
+      "evidence": "Uncommitted execution_workspace.py invokes only read/open/stat/list operations in the inspected path, unlike WorkspaceFilesystem.provision which creates/publishes/fsyncs layout.",
+      "required_resolution": "Runtime must call validate_ready before reserve and recheck exact DB token/generation/state at reserve; separate read-only validator review and TC boundary evidence remain required."
+    }
+  ],
+  "remaining_uncertainty": [
+    "No 004 or amendment candidate existed for this advice; exact authored predicates, fixed result envelope and migration SQL need independent/TC review after their authoring gate.",
+    "This review did not execute tests, start services, apply migrations, inspect private histories or approve the new runtime. Existing 361 evidence is cited only as previously accepted partial foundation.",
+    "No existing graphify-out/graph.json was available. The requested narrow scope used direct pinned source reads; no graph build or repository-wide exploration was performed.",
+    "The runtime dispatcher/transport/workflow are being authored independently; their error mapping, retry and no-RPC-before-validation sequence are not certified here."
+  ],
+  "decision": {
+    "recommendation": "proceed_to_exact_amendment_review",
+    "sql_authoring_authorized_by_this_advice": false,
+    "test_authoring_authorized_by_this_advice": false,
+    "execution_authorized": false,
+    "acceptance_claim": "none; original AT remain not_executed"
+  },
+  "work_performed": "Read narrow local source and existing evidence, calculated SHA256 references, wrote this advice JSON only. No product/test edits, service execution, migration application or network activity."
+}
