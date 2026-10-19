@@ -1,0 +1,144 @@
+{
+  "kind": "ifpmic.b03.h2.runtime-normal-pre-gate-review.v1",
+  "verdict": "approve_frozen_runtime_normal_gate",
+  "execution_contract_sha256": "392bc61268092168ccf419e298b4a31b26b76753bd9eb9cf0bc0eb2932067dd4",
+  "reviewer": {
+    "agent_id": "/root/h2_prebinding_gate_audit",
+    "actual_role": "worker_luna",
+    "independence": "Independent exact-source pre-gate reviewer; runner/publisher authored by root and test/ledger by TC."
+  },
+  "scope": "Authorize only the exact frozen 407-case partial normal-runtime gate and its private-to-public normalization. This is not evidence that the runner has executed, that the gate passed, that H2 crash recovery is complete, or that original AT acceptance is complete.",
+  "review_pins": {
+    "h2-runtime-normal-execution-review.json": "48d6d86bee3edc7bbbff0d55bd42844de5a19ddc2849342a784e84ea2a4d8fbb",
+    "h2-runtime-normal-tc-execution-review.json": "4b20a017744e1edb7e023ca99d788778602d14605a25968c02e6ccc1b94013f7"
+  },
+  "runner_pin": {
+    "path": "scripts/verify_ifpmic_b03_h2_runtime_normal.py",
+    "sha256": "01e779e7485c1c8e5e1d77eb62ce8b352275c07c6a0b65a98bb01c059dc05b00"
+  },
+  "publisher_pin": {
+    "path": "scripts/publish_ifpmic_b03_h2_runtime_normal.py",
+    "sha256": "98b651009200d0ba909d9901ec21019634abe395ed9ad47ff33bc40eac72f747"
+  },
+  "ledger_pin": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-normal-tc-ledger.json",
+    "sha256": "c43be1ce5c5542455edfbf49cdcc6fa4fa53d50cc6dbd6f842e2eaa26d8a7802",
+    "source_pin_count": 41
+  },
+  "source_pins": {
+    "README.md": "1aa570dc948ffd83a15097535f3456eb24eea6a947c22a4aa49aa12f5b05605a",
+    "docs/ifpmic/B03-WORKFLOW.md": "38fdd875bc76047ed1e3e46c850277fea1a3d1f825662a13b1c21154925f25ff",
+    "docs/ifpmic/H2-RUNTIME-CRASH-MATRIX.md": "f187a2d40dd46331fb69869f102d910d73b007ab664a3566434e4a8cd4f55f76",
+    "docs/ifpmic/evidence/b01/local-profile-gate.zip": "486d153780df2121cd9d57a56a9ad794ac8829ca25945954ed71b522f6c0fab1",
+    "docs/ifpmic/evidence/b02/g6-gate.zip": "41ad9f806216b0d29896a54b40c7e7ec0db5f574908a949216a484050456b647",
+    "docs/ifpmic/evidence/b03/h1-cli-source-observations.json": "6166cbbb26a4204badbd76875639b79b6a3c8b51fe064a0c68a6908413e5cfcf",
+    "docs/ifpmic/evidence/b03/h1-execution-contract.json": "7860ccc5e7527ef37f6e1f26d07b7b2df4bb2f55d721b14ae5e635492153b801",
+    "docs/ifpmic/evidence/b03/h1-gate.zip": "7b478bf9d14caf6c5620a2d09bb7af89a72f615466dfda1436dcd61e18fc4016",
+    "docs/ifpmic/evidence/b03/h1-installation-preparation.json": "277fe057d633759381ddcbba2df22a2772edf928c84d6dc43eb9f0ffa0d849a6",
+    "docs/ifpmic/evidence/b03/h1-tc-plan.json": "9603dd641f559a05425ce6d4632596d992c883c06c17601debf8f15fe14e9fa5",
+    "docs/ifpmic/evidence/b03/h2-implementation-contract.json": "f63173ac17ebebd34a15d5966d96b79dc1667a713c00b1b92868b137ba93ded3",
+    "docs/ifpmic/evidence/b03/h2-prebinding-amendment.json": "79360620e0d342e2fc25258bffd65ef216fe5b89dc45fd99213c81884ebeb1ff",
+    "docs/ifpmic/evidence/b03/h2-prebinding-final-review.json": "acdf1621405d29f3ffe373e75cae1856cf9417ce9c9caf1437f9db796031228d",
+    "docs/ifpmic/evidence/b03/h2-prebinding-gate.zip": "c7f7d7f775de6c2cdde0daf98a1c6960db4477f4555acd1a7c3360b90d45fb2a",
+    "docs/ifpmic/evidence/b03/h2-prebinding-pre-gate-review.json": "9b4d1b514c43832bf28fbfa83137971a888875729d1f0622814ce7d920e0362a",
+    "docs/ifpmic/evidence/b03/h2-prebinding-verification.json": "fd7d09c2fafc51eab799043ccbb9e39111489b927bb074fe222ce5bda8902a0f",
+    "docs/ifpmic/evidence/b03/h2-runtime-normal-execution-contract.json": "392bc61268092168ccf419e298b4a31b26b76753bd9eb9cf0bc0eb2932067dd4",
+    "docs/ifpmic/evidence/b03/h2-runtime-normal-execution-review.json": "48d6d86bee3edc7bbbff0d55bd42844de5a19ddc2849342a784e84ea2a4d8fbb",
+    "docs/ifpmic/evidence/b03/h2-runtime-normal-tc-execution-review.json": "4b20a017744e1edb7e023ca99d788778602d14605a25968c02e6ccc1b94013f7",
+    "docs/ifpmic/evidence/b03/h2-runtime-normal-tc-ledger.json": "c43be1ce5c5542455edfbf49cdcc6fa4fa53d50cc6dbd6f842e2eaa26d8a7802",
+    "docs/ifpmic/evidence/b03/h2-source-collection.json": "62213046bceb9eb5f528843f1b39443f88f9eeff6ddf54b7171a12f8b438c9f3",
+    "docs/ifpmic/progress.json": "f9fb05aecba5ee4590b4e8c38f9c5271bca39192b670e7b256a71e48f539b4d8",
+    "docs/ifpmic/source-manifest.json": "8afba9c1fc16ef3a6565f45576792cad51a1aaab59857d3a28666c71ec43007c",
+    "scripts/ifpmic_temporal_toolchain.py": "8cadab76ccfa1f93392cf759991d6906415c75ed5a116093c53aee9f4a445564",
+    "scripts/publish_ifpmic_b03_h2_runtime_normal.py": "98b651009200d0ba909d9901ec21019634abe395ed9ad47ff33bc40eac72f747",
+    "scripts/verify_ifpmic_b03_h1.py": "9c20131082af1467f682d31fabb47daf359867aa5939ad818d97b7ac4c0d5573",
+    "scripts/verify_ifpmic_b03_h2_runtime_normal.py": "01e779e7485c1c8e5e1d77eb62ce8b352275c07c6a0b65a98bb01c059dc05b00",
+    "scripts/verify_ifpmic_g1.py": "0f6603de4b0de546ccf2c23bc663c0568c2a178c8c19e31812c68b10a61e6d9b",
+    "scripts/verify_ifpmic_g4.py": "ad9b66b7463b84f22227d8ba924b42628f8abb463d0873ac9a90ab013708c13a",
+    "services/ifpmic_api/execution_identity.py": "65927a0278db1ba9af218a777d692d87e1a4d847cdce1546a45c7ead8ef564f4",
+    "services/ifpmic_api/execution_manifest.py": "0f08e5c86992edc9ee9b62b19d50f981282d125e39810e0f0d6e75d39bfd07b6",
+    "services/ifpmic_api/execution_protocol.py": "543c801e902e28b1ada451aa98196275ccb271246c2772837386b7e7aca2c965",
+    "services/ifpmic_api/execution_runtime.py": "28dd4ffc241d7569439ba2329b89894d21667b6679a2eee956f72b22b488bcaf",
+    "services/ifpmic_api/execution_workspace.py": "d2794d8a8f20b78c6fe71ea36d2563c876a7372a14acd2e0a1944e2aff5fab05",
+    "services/ifpmic_api/jobs.py": "0538e460a6be42e3129d2e8d5e9f262bba357e621e0b5e800f4495ebdf99ecf9",
+    "services/ifpmic_api/migrate.py": "36518fdd4d296455947df76fd72bf11d68aa44317549bd527037499b98a9eb86",
+    "services/ifpmic_api/migrations/001_initial.sql": "cf0437a5f32e1589e4ea821afbb2ef2480d780a276667880aa9a08a0f4c77f12",
+    "services/ifpmic_api/migrations/002_auth_retention.sql": "95c01f06eb586e0c1067f04672edfed8e0a11215752ad859ac9e4744da5a504e",
+    "services/ifpmic_api/migrations/003_workflow_execution.sql": "5ef29521944e18551728dd285ce3ae21fa03c2b06f77c25430da6acb0ce1f102",
+    "services/ifpmic_api/migrations/004_prebinding_incident.sql": "9a7651ab063901e69a77f4b825dd21544dc018ed01941dc3a1bc76f8a65b541f",
+    "services/ifpmic_api/requirements-temporal.lock": "ccbbf7a8aab39cd80861f607afd4994bf461d07cbf592f6acfcc492e63ff85c6",
+    "services/ifpmic_api/requirements-test.in": "738049ca9fcfa198dc9919ebc10d0b877c77c910414f620b68780d0b7195c52e",
+    "services/ifpmic_api/workspace_fs.py": "77e22fe789229841b4883fd2d1606964d468760a25d3cac4ea83d557ce3c5893",
+    "tests/ifpmic_api/conftest.py": "3c39b0491139762d0a3da09397a368558cbe72e5cfebda4a279c76c97ce6ebe5",
+    "tests/ifpmic_api/gate_progress.py": "2f902b38ff0436f3f85d3a9a1341f8b530c8b0d3f5211dfdd56dba37ae8a07e4",
+    "tests/ifpmic_api/h2_runtime_case_budget.py": "d33f8de5ad0e9b85435642c1d974b3c055f47f627d8db45092231d9132dd2ed1",
+    "tests/ifpmic_api/jobs_fixture.py": "2191f3523e0ddcbb4c7e97d7b74348dc571c432b5df5a01c7436dd57db3bac48",
+    "tests/ifpmic_api/temporal_toolchain_fixture.py": "495278f52a5b6c539cd2b846d59e65c2a9b6cacf87f6e5bdfb36fab1d6ab3906",
+    "tests/ifpmic_api/test_auth.py": "a5da4f11401b0da6d43323a28a3fb82708680b2a611d56f62b1b77321d3e190a",
+    "tests/ifpmic_api/test_execution_manifest.py": "7124433d0642afaa7b44a1a7f18b2548aa3adf2497e367843463ddeea8e84c80",
+    "tests/ifpmic_api/test_execution_protocol.py": "e7e80577f40275529957cae9ef352a006c052ab5a27aa4310a65ca137b86535a",
+    "tests/ifpmic_api/test_execution_workspace.py": "666d8d4f233022b233c928ec6048a1ea7a91c6449331afc2b1d51e0551623bb0",
+    "tests/ifpmic_api/test_h2_runtime_normal_flow.py": "394710dcb7359d8b9f9d800e97d779f2676200fd1d4cdbeeaefa854e0f6f8103",
+    "tests/ifpmic_api/test_migrations.py": "c5e9a8419fd6658af961a189f7764baedfd1e3cafce9393efe3d373d7151d2a9",
+    "tests/ifpmic_api/test_prebinding_incident.py": "789ea964c02a52cf9f311225a8d05b2fff0abeb195dedd8da63fccc1ab9f823e",
+    "tests/ifpmic_api/test_snapshot_bridge.py": "1f93fe8b5bf02545f1e04c0c2c555bdf9582d2da477a44a3abac6b51ad26d705",
+    "tests/ifpmic_api/test_temporal_toolchain.py": "b17cd7b100938286ca7f68d3d4e24b9ba68547fd82ee2bd38a8d55abdccd2d6a",
+    "tests/ifpmic_api/test_workflow_schema.py": "92d283ef921d5818649114f6b729c498fe6806d4ada255aa4ffb10063e820cd5",
+    "tests/ifpmic_api/test_workspace.py": "46502aef6e69b3525f44b74e8fac6b9fa6d2ce199285365d7a013e85c30f2552",
+    "tests/ifpmic_api/workflow_schema_fixture.py": "5a3450bb4b436ea215ac6ab07b6d3d20d33ff87bdc56e83c5e5c163e7ffaedc4",
+    "workflow-artifacts/toolchains/B03/H1/2026-10-18T19-43-43-523587Z/installation.json": "a1aa7d0b77b94302064b26796b5df45d24032c73d30080dc91db94d989b80e8d",
+    "workflow-artifacts/toolchains/B03/H1/2026-10-18T19-43-43-523587Z/venv/bin/python": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f"
+  },
+  "checks": [
+    {
+      "id": "exact-contract-reviews-and-sources",
+      "result": "pass",
+      "evidence": "The contract SHA matches both exact execution approvals. All 41 TC ledger source pins were independently recomputed; all supplemental runner, publisher, dependency, historical evidence, H1 metadata, progress/crash worklist, and resolved qualified interpreter binary pins match current bytes."
+    },
+    {
+      "id": "runner-inventory-deadlines-and-isolation",
+      "result": "pass",
+      "evidence": "Static inspection confirms six ordered phases, exact 407 unique case IDs with accepted 401/H1 five/runtime one reconciliation, phase caps 300/300/600/300/300/300, and exact two 240-second cases. Runtime timing has a protocol-level 215+25 watchdog; all case progress/JUnit reports are reconciled. Preflight captures candidate sources and environment first, then checks the source-pinned CPython 3.12.3 resolved interpreter, sys.prefix and exact 36-package inventory in a bounded 30-second no-download child before any runtime service. Interpreter bytes are checked again after the gate."
+    },
+    {
+      "id": "service-evidence-and-cleanup",
+      "result": "pass",
+      "evidence": "The runtime case uses the real API, physical READY workspace, production dispatcher/worker CLI and pinned loopback Temporal; runner requires exact process identities/absence, private history/API/SQL hashes and before/after state invariants. H1 timing/lifecycle and the five PG lifecycle records are checked; runner verifies original32 and qualified36 environments and protected sources remain unchanged and owned children are absent."
+    },
+    {
+      "id": "publication-privacy-and-integrity",
+      "result": "pass",
+      "evidence": "Publisher accepts only a passing terminal private gate, verifies exact live source inventory and protected inputs, checks candidate ZIP names and per-member hashes against the frozen source map, and rechecks current publisher/runner/contract/ledger bytes. It writes exactly the six contract members with fixed ZIP timestamp/mode; JUnit, timing, PG and Temporal transformations contain normalized summaries only and omit raw logs/history/source ZIP, credentials, PIDs/start ticks and absolute private prefixes. Public member and archive hashes are recorded in verification JSON. Raw evidence remains required for the final independent audit."
+    },
+    {
+      "id": "partial-scope-and-no-execution",
+      "result": "pass",
+      "evidence": "Contract, runner and publisher state the scope as partial normal runtime only; all response-loss, crash/recovery, physical history-deletion and remaining H2 barriers remain mandatory. Static read-only review only; no imports, pytest collection/execution, SQL, PostgreSQL, Temporal or other service execution was performed."
+    }
+  ],
+  "resolved_findings": [
+    {
+      "finding": "Initial publisher did not bind current runner bytes to the captured source map.",
+      "resolution": "Final reviewed publisher SHA now verifies sources() equals the captured map and explicitly checks the current runner path alongside itself, contract and ledger; it also verifies exact candidate ZIP members/content hashes."
+    },
+    {
+      "finding": "Initial runner selected qualified36 before checking the installed interpreter environment.",
+      "resolution": "Final reviewed runner SHA pins the resolved venv interpreter binary, validates prefix/version/inventory in a bounded no-download preflight before runtime service startup, and rechecks interpreter bytes after all phases."
+    }
+  ],
+  "method_limits": {
+    "methods": [
+      "SHA-256 verification",
+      "static source, JSON, XML/ZIP contract review"
+    ],
+    "not_performed": [
+      "pytest collection or execution",
+      "product/test imports",
+      "SQL",
+      "PostgreSQL startup",
+      "Temporal startup",
+      "publication helper execution"
+    ]
+  },
+  "execution_authority": "This review approves execution only of the final runner at the pinned SHA with the exact contract, ledger, sources, helper, environment metadata and both exact review pins in source_pins/review_pins. No gate was executed as part of this review."
+}

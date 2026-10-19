@@ -1,0 +1,183 @@
+{
+  "kind": "ifpmic.b03.h2.runtime-normal-pre-gate-review.v1",
+  "verdict": "approve_frozen_runtime_normal_gate",
+  "execution_contract_sha256": "6402ab33563910f91d68277b0aa8a4719b9fca65d96480dfcef727b7708e6912",
+  "reviewer": {
+    "agent_id": "/root/h2_prebinding_gate_audit",
+    "actual_role": "worker_luna",
+    "independence": "Independent exact-source pre-gate reviewer; root owns implementation/runner and TC owns tests/ledger."
+  },
+  "scope": "Authorize only the exact frozen 407-case partial normal-runtime gate. The first runtime attempt remains a failed preserved control and does not count toward acceptance; the full 407-case gate must run freshly. Full H2 and original AT acceptance remain incomplete.",
+  "review_pins": {
+    "h2-runtime-normal-execution-review.json": "69695175bdd2b38d60ceeacb234877d12ce97aa23c8ce598f8efa9aed26a2169",
+    "h2-runtime-normal-tc-execution-review.json": "27c1220e155baa5141e555823bf3126306cafde7a46648983b7a61c2d20aa83d"
+  },
+  "runner_pin": {
+    "path": "scripts/verify_ifpmic_b03_h2_runtime_normal.py",
+    "sha256": "bda3fe8649d3a24904a569836d7b1ca6996b55ef59d5c81396f647eef8a6af96"
+  },
+  "publisher_pin": {
+    "path": "scripts/publish_ifpmic_b03_h2_runtime_normal.py",
+    "sha256": "0b46c8396256251c9fb742b900bac3321534da005eb1e5ed97ba7b3d52ce360c"
+  },
+  "ledger_pin": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-normal-tc-ledger.json",
+    "sha256": "3f8ed9d9a28df02ef8e242d153804f8ceea7092b042915c17ecc188163b61295",
+    "source_pin_count": 41
+  },
+  "failed_attempt_provenance": {
+    "attempts_path": "docs/ifpmic/evidence/b03/h2-runtime-normal-attempts.json",
+    "attempts_sha256": "e353a5c1f9d467dd598880a1b81bde114d605a00def5eda44edafacdc8e00687",
+    "private_gate_path": "workflow-artifacts/verification/B03/H2/runtime-normal/gates/2026-10-19T12-57-37-548379Z/gate.json",
+    "private_gate_sha256": "de56189a89b3e178f254a81cd6ca1560348d63d2e5b853ff08103f76d0f6a4ce",
+    "failure_postmortem_path": "workflow-artifacts/verification/B03/H2/runtime-normal/gates/2026-10-19T12-57-37-548379Z/failure-postmortem.json",
+    "failure_postmortem_sha256": "9887e57e71f4a8ba1c19daf2c649448bd86d49666b430cf44446dcea44071cb4",
+    "archived_controls_path": "docs/ifpmic/evidence/b03/attempts/h2-runtime-normal-v1-before-identity-config-fix",
+    "archived_controls_file_count": 5,
+    "private_failed_gate_file_count": 25
+  },
+  "source_pins": {
+    "README.md": "1aa570dc948ffd83a15097535f3456eb24eea6a947c22a4aa49aa12f5b05605a",
+    "docs/ifpmic/B03-WORKFLOW.md": "38fdd875bc76047ed1e3e46c850277fea1a3d1f825662a13b1c21154925f25ff",
+    "docs/ifpmic/H2-RUNTIME-CRASH-MATRIX.md": "f187a2d40dd46331fb69869f102d910d73b007ab664a3566434e4a8cd4f55f76",
+    "docs/ifpmic/evidence/b01/local-profile-gate.zip": "486d153780df2121cd9d57a56a9ad794ac8829ca25945954ed71b522f6c0fab1",
+    "docs/ifpmic/evidence/b02/g6-gate.zip": "41ad9f806216b0d29896a54b40c7e7ec0db5f574908a949216a484050456b647",
+    "docs/ifpmic/evidence/b03/attempts/h2-runtime-normal-v1-before-identity-config-fix/h2-runtime-normal-execution-contract.json": "392bc61268092168ccf419e298b4a31b26b76753bd9eb9cf0bc0eb2932067dd4",
+    "docs/ifpmic/evidence/b03/attempts/h2-runtime-normal-v1-before-identity-config-fix/h2-runtime-normal-execution-review.json": "48d6d86bee3edc7bbbff0d55bd42844de5a19ddc2849342a784e84ea2a4d8fbb",
+    "docs/ifpmic/evidence/b03/attempts/h2-runtime-normal-v1-before-identity-config-fix/h2-runtime-normal-pre-gate-review.json": "ff96ed1ccf035a79fc21eaa91d69ce0a848734263fbb6a2af53f868fef3c047c",
+    "docs/ifpmic/evidence/b03/attempts/h2-runtime-normal-v1-before-identity-config-fix/h2-runtime-normal-tc-execution-review.json": "4b20a017744e1edb7e023ca99d788778602d14605a25968c02e6ccc1b94013f7",
+    "docs/ifpmic/evidence/b03/attempts/h2-runtime-normal-v1-before-identity-config-fix/h2-runtime-normal-tc-ledger.json": "c43be1ce5c5542455edfbf49cdcc6fa4fa53d50cc6dbd6f842e2eaa26d8a7802",
+    "docs/ifpmic/evidence/b03/h1-cli-source-observations.json": "6166cbbb26a4204badbd76875639b79b6a3c8b51fe064a0c68a6908413e5cfcf",
+    "docs/ifpmic/evidence/b03/h1-execution-contract.json": "7860ccc5e7527ef37f6e1f26d07b7b2df4bb2f55d721b14ae5e635492153b801",
+    "docs/ifpmic/evidence/b03/h1-gate.zip": "7b478bf9d14caf6c5620a2d09bb7af89a72f615466dfda1436dcd61e18fc4016",
+    "docs/ifpmic/evidence/b03/h1-installation-preparation.json": "277fe057d633759381ddcbba2df22a2772edf928c84d6dc43eb9f0ffa0d849a6",
+    "docs/ifpmic/evidence/b03/h1-tc-plan.json": "9603dd641f559a05425ce6d4632596d992c883c06c17601debf8f15fe14e9fa5",
+    "docs/ifpmic/evidence/b03/h2-implementation-contract.json": "f63173ac17ebebd34a15d5966d96b79dc1667a713c00b1b92868b137ba93ded3",
+    "docs/ifpmic/evidence/b03/h2-prebinding-amendment.json": "79360620e0d342e2fc25258bffd65ef216fe5b89dc45fd99213c81884ebeb1ff",
+    "docs/ifpmic/evidence/b03/h2-prebinding-final-review.json": "acdf1621405d29f3ffe373e75cae1856cf9417ce9c9caf1437f9db796031228d",
+    "docs/ifpmic/evidence/b03/h2-prebinding-gate.zip": "c7f7d7f775de6c2cdde0daf98a1c6960db4477f4555acd1a7c3360b90d45fb2a",
+    "docs/ifpmic/evidence/b03/h2-prebinding-pre-gate-review.json": "9b4d1b514c43832bf28fbfa83137971a888875729d1f0622814ce7d920e0362a",
+    "docs/ifpmic/evidence/b03/h2-prebinding-verification.json": "fd7d09c2fafc51eab799043ccbb9e39111489b927bb074fe222ce5bda8902a0f",
+    "docs/ifpmic/evidence/b03/h2-runtime-normal-attempts.json": "e353a5c1f9d467dd598880a1b81bde114d605a00def5eda44edafacdc8e00687",
+    "docs/ifpmic/evidence/b03/h2-runtime-normal-execution-contract.json": "6402ab33563910f91d68277b0aa8a4719b9fca65d96480dfcef727b7708e6912",
+    "docs/ifpmic/evidence/b03/h2-runtime-normal-execution-review.json": "69695175bdd2b38d60ceeacb234877d12ce97aa23c8ce598f8efa9aed26a2169",
+    "docs/ifpmic/evidence/b03/h2-runtime-normal-tc-execution-review.json": "27c1220e155baa5141e555823bf3126306cafde7a46648983b7a61c2d20aa83d",
+    "docs/ifpmic/evidence/b03/h2-runtime-normal-tc-ledger.json": "3f8ed9d9a28df02ef8e242d153804f8ceea7092b042915c17ecc188163b61295",
+    "docs/ifpmic/evidence/b03/h2-source-collection.json": "62213046bceb9eb5f528843f1b39443f88f9eeff6ddf54b7171a12f8b438c9f3",
+    "docs/ifpmic/progress.json": "aa6b01b1743fb79330af1f879ed4ace2ab09f8d5beb9ead622624bc223723818",
+    "docs/ifpmic/source-manifest.json": "8afba9c1fc16ef3a6565f45576792cad51a1aaab59857d3a28666c71ec43007c",
+    "scripts/ifpmic_temporal_toolchain.py": "8cadab76ccfa1f93392cf759991d6906415c75ed5a116093c53aee9f4a445564",
+    "scripts/publish_ifpmic_b03_h2_runtime_normal.py": "0b46c8396256251c9fb742b900bac3321534da005eb1e5ed97ba7b3d52ce360c",
+    "scripts/verify_ifpmic_b03_h1.py": "9c20131082af1467f682d31fabb47daf359867aa5939ad818d97b7ac4c0d5573",
+    "scripts/verify_ifpmic_b03_h2_runtime_normal.py": "bda3fe8649d3a24904a569836d7b1ca6996b55ef59d5c81396f647eef8a6af96",
+    "scripts/verify_ifpmic_g1.py": "0f6603de4b0de546ccf2c23bc663c0568c2a178c8c19e31812c68b10a61e6d9b",
+    "scripts/verify_ifpmic_g4.py": "ad9b66b7463b84f22227d8ba924b42628f8abb463d0873ac9a90ab013708c13a",
+    "services/ifpmic_api/execution_identity.py": "65927a0278db1ba9af218a777d692d87e1a4d847cdce1546a45c7ead8ef564f4",
+    "services/ifpmic_api/execution_manifest.py": "0f08e5c86992edc9ee9b62b19d50f981282d125e39810e0f0d6e75d39bfd07b6",
+    "services/ifpmic_api/execution_protocol.py": "543c801e902e28b1ada451aa98196275ccb271246c2772837386b7e7aca2c965",
+    "services/ifpmic_api/execution_runtime.py": "28dd4ffc241d7569439ba2329b89894d21667b6679a2eee956f72b22b488bcaf",
+    "services/ifpmic_api/execution_workspace.py": "d2794d8a8f20b78c6fe71ea36d2563c876a7372a14acd2e0a1944e2aff5fab05",
+    "services/ifpmic_api/jobs.py": "0538e460a6be42e3129d2e8d5e9f262bba357e621e0b5e800f4495ebdf99ecf9",
+    "services/ifpmic_api/migrate.py": "36518fdd4d296455947df76fd72bf11d68aa44317549bd527037499b98a9eb86",
+    "services/ifpmic_api/migrations/001_initial.sql": "cf0437a5f32e1589e4ea821afbb2ef2480d780a276667880aa9a08a0f4c77f12",
+    "services/ifpmic_api/migrations/002_auth_retention.sql": "95c01f06eb586e0c1067f04672edfed8e0a11215752ad859ac9e4744da5a504e",
+    "services/ifpmic_api/migrations/003_workflow_execution.sql": "5ef29521944e18551728dd285ce3ae21fa03c2b06f77c25430da6acb0ce1f102",
+    "services/ifpmic_api/migrations/004_prebinding_incident.sql": "9a7651ab063901e69a77f4b825dd21544dc018ed01941dc3a1bc76f8a65b541f",
+    "services/ifpmic_api/requirements-temporal.lock": "ccbbf7a8aab39cd80861f607afd4994bf461d07cbf592f6acfcc492e63ff85c6",
+    "services/ifpmic_api/requirements-test.in": "738049ca9fcfa198dc9919ebc10d0b877c77c910414f620b68780d0b7195c52e",
+    "services/ifpmic_api/workspace_fs.py": "77e22fe789229841b4883fd2d1606964d468760a25d3cac4ea83d557ce3c5893",
+    "tests/ifpmic_api/conftest.py": "3c39b0491139762d0a3da09397a368558cbe72e5cfebda4a279c76c97ce6ebe5",
+    "tests/ifpmic_api/gate_progress.py": "2f902b38ff0436f3f85d3a9a1341f8b530c8b0d3f5211dfdd56dba37ae8a07e4",
+    "tests/ifpmic_api/h2_runtime_case_budget.py": "d33f8de5ad0e9b85435642c1d974b3c055f47f627d8db45092231d9132dd2ed1",
+    "tests/ifpmic_api/jobs_fixture.py": "2191f3523e0ddcbb4c7e97d7b74348dc571c432b5df5a01c7436dd57db3bac48",
+    "tests/ifpmic_api/temporal_toolchain_fixture.py": "495278f52a5b6c539cd2b846d59e65c2a9b6cacf87f6e5bdfb36fab1d6ab3906",
+    "tests/ifpmic_api/test_auth.py": "a5da4f11401b0da6d43323a28a3fb82708680b2a611d56f62b1b77321d3e190a",
+    "tests/ifpmic_api/test_execution_manifest.py": "7124433d0642afaa7b44a1a7f18b2548aa3adf2497e367843463ddeea8e84c80",
+    "tests/ifpmic_api/test_execution_protocol.py": "e7e80577f40275529957cae9ef352a006c052ab5a27aa4310a65ca137b86535a",
+    "tests/ifpmic_api/test_execution_workspace.py": "666d8d4f233022b233c928ec6048a1ea7a91c6449331afc2b1d51e0551623bb0",
+    "tests/ifpmic_api/test_h2_runtime_normal_flow.py": "0e31372612d4a6225030e4a4b5f3f533249cd17be1583110c4af4bc8e7fc0ee2",
+    "tests/ifpmic_api/test_migrations.py": "c5e9a8419fd6658af961a189f7764baedfd1e3cafce9393efe3d373d7151d2a9",
+    "tests/ifpmic_api/test_prebinding_incident.py": "789ea964c02a52cf9f311225a8d05b2fff0abeb195dedd8da63fccc1ab9f823e",
+    "tests/ifpmic_api/test_snapshot_bridge.py": "1f93fe8b5bf02545f1e04c0c2c555bdf9582d2da477a44a3abac6b51ad26d705",
+    "tests/ifpmic_api/test_temporal_toolchain.py": "b17cd7b100938286ca7f68d3d4e24b9ba68547fd82ee2bd38a8d55abdccd2d6a",
+    "tests/ifpmic_api/test_workflow_schema.py": "92d283ef921d5818649114f6b729c498fe6806d4ada255aa4ffb10063e820cd5",
+    "tests/ifpmic_api/test_workspace.py": "46502aef6e69b3525f44b74e8fac6b9fa6d2ce199285365d7a013e85c30f2552",
+    "tests/ifpmic_api/workflow_schema_fixture.py": "5a3450bb4b436ea215ac6ab07b6d3d20d33ff87bdc56e83c5e5c163e7ffaedc4",
+    "workflow-artifacts/toolchains/B03/H1/2026-10-18T19-43-43-523587Z/installation.json": "a1aa7d0b77b94302064b26796b5df45d24032c73d30080dc91db94d989b80e8d",
+    "workflow-artifacts/toolchains/B03/H1/2026-10-18T19-43-43-523587Z/venv/bin/python": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f",
+    "workflow-artifacts/verification/B03/H2/runtime-normal/gates/2026-10-19T12-57-37-548379Z/candidate-source.zip": "05cf4e7e57a353ea315c18ef91d31005111fe955b7017c3b7ba6f3dc5cc87fd9",
+    "workflow-artifacts/verification/B03/H2/runtime-normal/gates/2026-10-19T12-57-37-548379Z/environment-before.json": "b68aa30da8886fad1e0b2266c05b1f1393875b8f56ca47e04be77e578319d269",
+    "workflow-artifacts/verification/B03/H2/runtime-normal/gates/2026-10-19T12-57-37-548379Z/failure-postmortem.json": "9887e57e71f4a8ba1c19daf2c649448bd86d49666b430cf44446dcea44071cb4",
+    "workflow-artifacts/verification/B03/H2/runtime-normal/gates/2026-10-19T12-57-37-548379Z/gate.json": "de56189a89b3e178f254a81cd6ca1560348d63d2e5b853ff08103f76d0f6a4ce",
+    "workflow-artifacts/verification/B03/H2/runtime-normal/gates/2026-10-19T12-57-37-548379Z/h2_runtime_python/case-progress.jsonl": "e8e2245a7e96e37af0326d790652254dde47a5f2d44b2bb213a435b42c06677b",
+    "workflow-artifacts/verification/B03/H2/runtime-normal/gates/2026-10-19T12-57-37-548379Z/h2_runtime_python/case-timings.json": "9ec902b14860b82fb196d2663dc34dfd9c0d1723a00d27bc63c29bf09158b868",
+    "workflow-artifacts/verification/B03/H2/runtime-normal/gates/2026-10-19T12-57-37-548379Z/h2_runtime_python/empty-pg-service.conf": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "workflow-artifacts/verification/B03/H2/runtime-normal/gates/2026-10-19T12-57-37-548379Z/h2_runtime_python/empty-pgpass": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "workflow-artifacts/verification/B03/H2/runtime-normal/gates/2026-10-19T12-57-37-548379Z/h2_runtime_python/lifecycle.json": "3d0fff1936f1d554846698b42b728eabe70f761e39233d2ad89cd024a9b4b3ee",
+    "workflow-artifacts/verification/B03/H2/runtime-normal/gates/2026-10-19T12-57-37-548379Z/h2_runtime_python/observations/runtime-normal-flow/dispatcher-config.json": "dad5d6ae758767b23759167695db5b65d9c69b3fd7a047926485cd9d61e09fc2",
+    "workflow-artifacts/verification/B03/H2/runtime-normal/gates/2026-10-19T12-57-37-548379Z/h2_runtime_python/observations/runtime-normal-flow/environment-manifest.json": "c15071825b6de5a6f4ac44f4e080174d1efbf806f57607228ee689702f1c7da0",
+    "workflow-artifacts/verification/B03/H2/runtime-normal/gates/2026-10-19T12-57-37-548379Z/h2_runtime_python/observations/runtime-normal-flow/owner-before.json": "4df9ced78ebee612e8bea2daa9eaea217cb154216ad88faa29f36535bb5d26b2",
+    "workflow-artifacts/verification/B03/H2/runtime-normal/gates/2026-10-19T12-57-37-548379Z/h2_runtime_python/observations/runtime-normal-flow/process-journal.jsonl": "c19ae680638aa0f976d83c50d942520f4f1553972171945ef869f7fb97c18960",
+    "workflow-artifacts/verification/B03/H2/runtime-normal/gates/2026-10-19T12-57-37-548379Z/h2_runtime_python/observations/runtime-normal-flow/process-logs/dispatcher-stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "workflow-artifacts/verification/B03/H2/runtime-normal/gates/2026-10-19T12-57-37-548379Z/h2_runtime_python/observations/runtime-normal-flow/process-logs/dispatcher-stdout.log": "c6b882d11d1787fe6c2834ef42a738da0dcceed000ea05fb0b521917a2e801da",
+    "workflow-artifacts/verification/B03/H2/runtime-normal/gates/2026-10-19T12-57-37-548379Z/h2_runtime_python/observations/runtime-normal-flow/process-logs/worker-stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "workflow-artifacts/verification/B03/H2/runtime-normal/gates/2026-10-19T12-57-37-548379Z/h2_runtime_python/observations/runtime-normal-flow/process-logs/worker-stdout.log": "c6b882d11d1787fe6c2834ef42a738da0dcceed000ea05fb0b521917a2e801da",
+    "workflow-artifacts/verification/B03/H2/runtime-normal/gates/2026-10-19T12-57-37-548379Z/h2_runtime_python/observations/runtime-normal-flow/source-manifest.json": "e7d7cd8970c68c78e33ab39b0e90e6df3705da52a1c4b15f22dac3e1442ac5a2",
+    "workflow-artifacts/verification/B03/H2/runtime-normal/gates/2026-10-19T12-57-37-548379Z/h2_runtime_python/observations/runtime-normal-flow/temporal-data/isolated-env.json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "workflow-artifacts/verification/B03/H2/runtime-normal/gates/2026-10-19T12-57-37-548379Z/h2_runtime_python/observations/runtime-normal-flow/temporal-data/server.log": "e9a136b54ef797c957a5f242285a24d310ff9f161533bd05e427467eb48904ec",
+    "workflow-artifacts/verification/B03/H2/runtime-normal/gates/2026-10-19T12-57-37-548379Z/h2_runtime_python/observations/runtime-normal-flow/temporal-data/temporal.sqlite": "99b2126bd7e123763d21ec646ba002431f3998f8824b2a181b505e264b47a7c0",
+    "workflow-artifacts/verification/B03/H2/runtime-normal/gates/2026-10-19T12-57-37-548379Z/h2_runtime_python/observations/runtime-normal-flow/worker-config.json": "e2e8c598538dc7a2bdf367a0a93ba0c51d0ba4526750700e5f9c8c9b210d464c",
+    "workflow-artifacts/verification/B03/H2/runtime-normal/gates/2026-10-19T12-57-37-548379Z/h2_runtime_python/pytest.log": "7147c559838c33b184158cdfed23c6ecf92bc72140939331d68596fb7d595bb8",
+    "workflow-artifacts/verification/B03/H2/runtime-normal/gates/2026-10-19T12-57-37-548379Z/h2_runtime_python/pytest.xml": "a7b191620b28ef3030e19ec2397c43c7b33e37cc030812e9c438c5730eb009bf",
+    "workflow-artifacts/verification/B03/H2/runtime-normal/gates/2026-10-19T12-57-37-548379Z/qualified-interpreter-preflight.log": "e99844b7186d164cb83943577d20d1f97e450cf17b0964f7ea0b253cf70c0be3"
+  },
+  "checks": [
+    {
+      "id": "exact-current-contract-and-reviews",
+      "result": "pass",
+      "evidence": "The final contract and TC ledger hashes match their references. Both exact-SHA execution reviews approve this contract. The contract retains the first failed actual attempt and explicitly requires a fresh full407 rerun."
+    },
+    {
+      "id": "fixture-delta-and-preserved-oracles",
+      "result": "pass",
+      "evidence": "Independent diff against the candidate-source ZIP confirms only the new fixture identity shape and cleanup evidence ordering changed; the runtime runner changed only its contract SHA and publisher adds failure-provenance hash. protocol_version remains in canonical deployment/build hash inputs but is excluded from the seven-field ExecutionIdentity config object. All cleanup outcomes are persisted before aggregate checks; unknown/forced/nonzero/missing processes still make the observation failed and cannot pass runner evidence checks."
+    },
+    {
+      "id": "failure-is-preserved-and-not-overclaimed",
+      "result": "pass",
+      "evidence": "The original failed gate, postmortem, candidate bundle and phase/runtime records are individually source-pinned, along with all five archived v1 controls and the current attempts ledger. The prior run showed the fixed dependency error and worker exit3; its cleanup stack masked any earlier body exception. The review therefore does not claim this was the sole runtime issue, and the failure remains failed."
+    },
+    {
+      "id": "inventory-deadlines-and-bounds",
+      "result": "pass",
+      "evidence": "The current ledger and archived v1 ledger have identical 407 case IDs, phase files and phase timeout values. All 41 current ledger source pins match; accepted401 IDs still match the frozen prebinding archive. The approved 215+25 runtime watchdog, two exact 240-second integration exceptions, unchanged normal-case 30-second bounds, phase order/caps and total budget remain unchanged."
+    },
+    {
+      "id": "environment-cleanup-and-publication",
+      "result": "pass",
+      "evidence": "The exact final runner/helper pins retain source/env checks, qualified-interpreter preflight, process/PG cleanup, and six-member normalized publication verification. The new failed-attempt reference is hash/path provenance only; raw failure records are not copied to the public archive."
+    },
+    {
+      "id": "no-execution-and-partial-scope",
+      "result": "pass",
+      "evidence": "This review used static source, JSON/ZIP and SHA checks only. No pytest collection/import, SQL, PostgreSQL, Temporal, service or publication execution occurred. All remaining crash/history-loss and full H2 obligations remain pending."
+    }
+  ],
+  "findings": [],
+  "execution_authority": "This frozen pre-gate review authorizes one fresh run of the exact current runner, sources, test ledger, helpers and same-SHA execution reviews pinned here. Any changed pin invalidates this approval. It does not accept the first failed attempt or waive independent final evidence/privacy review.",
+  "method_limits": {
+    "methods": [
+      "SHA-256 validation",
+      "static source diff",
+      "JSON/ZIP ledger comparison"
+    ],
+    "not_performed": [
+      "pytest collection or execution",
+      "imports",
+      "SQL",
+      "PostgreSQL startup",
+      "Temporal startup",
+      "publisher execution"
+    ]
+  }
+}

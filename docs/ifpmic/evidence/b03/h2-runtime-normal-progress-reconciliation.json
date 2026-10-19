@@ -1,0 +1,31 @@
+{
+  "kind": "ifpmic.b03.h2.runtime-normal-progress-reconciliation.v1",
+  "decision": "accept_partial_h2_normal_runtime",
+  "goal_status": "active",
+  "real_acceptance_status": "not_executed",
+  "frozen_candidate_fingerprint": "7a66f653bfca7bf04ed84fe89627f3d88c91f608493402c0e48e4ba7a259c49a",
+  "verification": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-normal-verification.json",
+    "sha256": "0662ec41f3b5b6bf2f00fd48e88803f55f692da48178c4f79f3068802c3ba328"
+  },
+  "independent_final_review": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-normal-final-review.json",
+    "sha256": "f18f65d9d155609141d0fa073e529cbf6009a625dcbbc7a731594bb99b2b0784"
+  },
+  "post_gate_documentation": {
+    "path": "docs/ifpmic/progress.json",
+    "captured_sha256": "c400ac4453ce1d5c215221d0ba0856e0771e7fcbe7ce83a7d514018af6aa3307",
+    "accepted_status_sha256": "5b3044acd0ae5fa0d7c2b439f50fd4143b7b2f927bbba665509ecd4800ace72a",
+    "reason": "Record actual407 passing cases and independent partial normal acceptance only after terminal run and publication; keep fullH2/B03/goal active."
+  },
+  "added_next_steps": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-normal-next-steps.json",
+    "sha256": "6d8d84ca2854dd5fc635c8587d3a65e388a5dc6ca5f720dfe604185830863dd1",
+    "status": "Future authoring metadata only, not executed or accepted."
+  },
+  "source_map_recheck": {
+    "only_changed_captured_path": "docs/ifpmic/progress.json",
+    "all_product_test_runner_publisher_and_other_captured_files_unchanged": true
+  },
+  "evidence_rule": "Frozen verification, source snapshot, prior failures and final review remain unchanged. Later acceptance/status metadata is recorded separately; it is not part of the tested candidate."
+}

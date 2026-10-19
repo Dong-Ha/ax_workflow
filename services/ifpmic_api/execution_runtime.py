@@ -91,9 +91,12 @@ async def run(config, identity):
         done, _ = await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
         for task in done:
             if task is not stop_task:
-                # A stopped poller is operational failure, never workflow PASS.
+                # A requested stop may complete pumps alongside stop_task.
+                # Still surface their actual failures before accepting normal
+                # shutdown; an unsolicited successful return is also failure.
                 task.result()
-                raise RuntimeError('DEPENDENCY_UNAVAILABLE')
+                if not stopping.is_set():
+                    raise RuntimeError('DEPENDENCY_UNAVAILABLE')
     finally:
         # Fatal poller/worker failures need the same bound as a requested stop;
         # cancelling a to_thread await does not stop its underlying DB call.

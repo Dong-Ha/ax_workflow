@@ -1,0 +1,88 @@
+{
+  "kind": "ifpmic.b03.h2.runtime-normal-execution-review.v1",
+  "verdict": "approve_execution",
+  "contract_path": "docs/ifpmic/evidence/b03/h2-runtime-normal-execution-contract.json",
+  "contract_sha256": "6402ab33563910f91d68277b0aa8a4719b9fca65d96480dfcef727b7708e6912",
+  "reviewer": {
+    "agent_id": "/root/h2_prebinding_gate_audit",
+    "actual_role": "worker_luna",
+    "review_type": "independent exact-contract/source-delta execution review"
+  },
+  "review_scope": "Approve authoring and freezing the corrected runner/pre-gate package, then execution only for the exact 407-case partial normal-runtime increment. This is not a pass claim for the failed first attempt, not full H2 acceptance, and not original AT acceptance.",
+  "reviewed_inputs": {
+    "prior_contract_sha256": "392bc61268092168ccf419e298b4a31b26b76753bd9eb9cf0bc0eb2932067dd4",
+    "contract_sha256": "6402ab33563910f91d68277b0aa8a4719b9fca65d96480dfcef727b7708e6912",
+    "ledger_path": "docs/ifpmic/evidence/b03/h2-runtime-normal-tc-ledger.json",
+    "ledger_sha256": "3f8ed9d9a28df02ef8e242d153804f8ceea7092b042915c17ecc188163b61295",
+    "ledger_source_pin_count": 41,
+    "runtime_test": {
+      "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+      "sha256": "0e31372612d4a6225030e4a4b5f3f533249cd17be1583110c4af4bc8e7fc0ee2"
+    },
+    "deadline_plugin": {
+      "path": "tests/ifpmic_api/h2_runtime_case_budget.py",
+      "sha256": "d33f8de5ad0e9b85435642c1d974b3c055f47f627d8db45092231d9132dd2ed1"
+    },
+    "runner": {
+      "path": "scripts/verify_ifpmic_b03_h2_runtime_normal.py",
+      "sha256": "bda3fe8649d3a24904a569836d7b1ca6996b55ef59d5c81396f647eef8a6af96"
+    },
+    "publisher": {
+      "path": "scripts/publish_ifpmic_b03_h2_runtime_normal.py",
+      "sha256": "0b46c8396256251c9fb742b900bac3321534da005eb1e5ed97ba7b3d52ce360c"
+    },
+    "failed_attempt": {
+      "gate_path": "workflow-artifacts/verification/B03/H2/runtime-normal/gates/2026-10-19T12-57-37-548379Z/gate.json",
+      "gate_sha256": "de56189a89b3e178f254a81cd6ca1560348d63d2e5b853ff08103f76d0f6a4ce",
+      "postmortem_path": "workflow-artifacts/verification/B03/H2/runtime-normal/gates/2026-10-19T12-57-37-548379Z/failure-postmortem.json",
+      "postmortem_sha256": "9887e57e71f4a8ba1c19daf2c649448bd86d49666b430cf44446dcea44071cb4",
+      "attempts_path": "docs/ifpmic/evidence/b03/h2-runtime-normal-attempts.json",
+      "attempts_sha256": "e353a5c1f9d467dd598880a1b81bde114d605a00def5eda44edafacdc8e00687"
+    },
+    "archived_prior_review_path": "docs/ifpmic/evidence/b03/attempts/h2-runtime-normal-v1-before-identity-config-fix/h2-runtime-normal-execution-review.json",
+    "archived_prior_review_sha256": "48d6d86bee3edc7bbbff0d55bd42844de5a19ddc2849342a784e84ea2a4d8fbb"
+  },
+  "checks": [
+    {
+      "id": "failure-diagnosis-and-test-only-repair",
+      "result": "pass",
+      "evidence": "Read-only comparison of the frozen candidate source ZIP, both private CLI configs/logs, traceback, product constructor/parser and corrected test shows the prior config serialized eight identity keys although ExecutionIdentity has seven fields and load_config calls ExecutionIdentity(**identity). protocol_version remains in canonical deployment/build documents; only the runtime identity object now explicitly lists its seven constructor fields. Product files and runtime validators are unchanged."
+    },
+    {
+      "id": "cleanup-evidence-and-oracles",
+      "result": "pass",
+      "evidence": "The revised finally block captures whether a body exception is active, stops all owned processes under the same deadline, records each outcome and writes the normalized failed observation before aggregate cleanup assertions. Cleanup failures/nonzero/forced/unknown/missing identities still add violations; a passing observation requires body_passed and no violations, and the runner independently requires passed status, zero exits, absence and no force. This retains positive cleanup oracles while preserving primary failure evidence."
+    },
+    {
+      "id": "exact-case-inventory-and-budgets",
+      "result": "pass",
+      "evidence": "Current and archived prior ledger each contain 407 unique IDs with identical per-phase IDs/files/timeouts: H2 runtime 1, H1 5, G5 93, H2 schema 50, G4 91, legacy 167. All 41 current source pins match. Accepted401 remains equal to the accepted prebinding JUnit inventory; no case, budget, phase, or plugin limit was relaxed."
+    },
+    {
+      "id": "failure-provenance-and-scope",
+      "result": "pass",
+      "evidence": "The first attempt remains recorded as failed with exact gate/postmortem hashes and an archived controls/review package; current contract adds revision history and requires a fresh full407 rerun. The failed observation did not complete projection and the final traceback masked any earlier body exception, so this review does not assert that the config mismatch is the only possible runtime issue. No prior failure is converted to pass."
+    }
+  ],
+  "findings": [],
+  "execution_authority": "Both independent and fresh TC exact-SHA execution reviews plus a separate frozen pre-gate approval remain required before any pytest collection/import, database, service or Temporal execution. This review performed static source/JSON/ZIP/hash checks only; no test or service was run.",
+  "remaining_limits": [
+    "No corrected runtime execution has occurred.",
+    "The full 407-case rerun is required; the previous attempt remains failed.",
+    "Full H2 crash/recovery/history-deletion suite and original AT acceptance remain pending."
+  ],
+  "method_limits": {
+    "methods": [
+      "SHA-256 checks",
+      "static JSON/ZIP/source diff and call-path inspection"
+    ],
+    "not_performed": [
+      "pytest collection or execution",
+      "imports",
+      "SQL",
+      "PostgreSQL startup",
+      "Temporal startup",
+      "product or test edits"
+    ]
+  }
+}

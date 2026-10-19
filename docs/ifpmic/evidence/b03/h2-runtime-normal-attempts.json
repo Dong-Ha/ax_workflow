@@ -1,0 +1,115 @@
+{
+  "kind": "ifpmic.b03.h2.runtime-normal-attempts.v1",
+  "goal_status": "active",
+  "attempts": [
+    {
+      "id": "runtime-normal-001",
+      "status": "fail",
+      "gate": {
+        "path": "workflow-artifacts/verification/B03/H2/runtime-normal/gates/2026-10-19T12-57-37-548379Z/gate.json",
+        "sha256": "de56189a89b3e178f254a81cd6ca1560348d63d2e5b853ff08103f76d0f6a4ce"
+      },
+      "candidate_fingerprint": "5fc9e0cd4f159b589d2420c6c5ca43e1fda62a51c75586c77bdabb82087392f4",
+      "candidate_source_zip_sha256": "05cf4e7e57a353ea315c18ef91d31005111fe955b7017c3b7ba6f3dc5cc87fd9",
+      "controls_archive": "docs/ifpmic/evidence/b03/attempts/h2-runtime-normal-v1-before-identity-config-fix",
+      "phase_results": [
+        {
+          "name": "h2_runtime_python",
+          "counts": {
+            "tests": 1,
+            "failed": 1,
+            "errors": 0,
+            "skipped": 0
+          },
+          "exit_code": 1,
+          "seconds": 26.10867408499871
+        }
+      ],
+      "not_run": [
+        "h1_python",
+        "g5_python",
+        "h2_schema_python",
+        "g4_python",
+        "legacy_python"
+      ],
+      "observed": "Both production CLI processes emitted only fixed DEPENDENCY_UNAVAILABLE and exited3 before SQL projection; normal case failed. Cleanup asserted positive worker exit0 before writing remaining stop records, leaving the per-case failure observation incomplete.",
+      "diagnosis": "Retained runtime configs contain an extra protocol_version identity key. ExecutionIdentity has exactly seven constructor fields and load_config constructs it from that object, so this config is rejected. protocol_version belongs in canonical deployment/build hash documents, not the constructor object. This is a test configuration defect; the product must keep rejecting extra fields.",
+      "limits_of_diagnosis": "Operational CLI intentionally hides internal exception text. The constructor/config mismatch is established statically from frozen source and retained config; no new diagnostic service or product import was executed.",
+      "cleanup": {
+        "postgres_stop_status": "stopped",
+        "postgres_pid_alive": false,
+        "outer_owned_cleanup": {
+          "result": "stopped",
+          "signalled_count": 0,
+          "pid_alive": false
+        },
+        "saved_runtime_identities_checked_absent": 3,
+        "postmortem_path": "workflow-artifacts/verification/B03/H2/runtime-normal/gates/2026-10-19T12-57-37-548379Z/failure-postmortem.json",
+        "postmortem_sha256": "9887e57e71f4a8ba1c19daf2c649448bd86d49666b430cf44446dcea44071cb4"
+      },
+      "postmortem_source_environment": {
+        "captured_sources_unchanged_before_repair": true,
+        "original32_and_qualified36_unchanged": true
+      },
+      "next_action": "Correct test identity shape and evidence ordering, refresh ledger/contract pins and exact independent reviews, then rerun all407 cases. Preserve original failure and no pass claim."
+    },
+    {
+      "id": "runtime-normal-002",
+      "status": "fail",
+      "gate": {
+        "path": "workflow-artifacts/verification/B03/H2/runtime-normal/gates/2026-10-19T13-06-15-179644Z/gate.json",
+        "sha256": "860521e95542673cd984125313783242dd10e80cf59240596a1862a3b2f22ca5"
+      },
+      "candidate_fingerprint": "1b0b3afbedb52f456d181fc6480bd5d120f44cb5db97593b7df7de1f80cf79a5",
+      "candidate_source_zip_sha256": "cf1631dba6efafb64307ab859eabede351911890684b2d46978830eb638cd462",
+      "controls_archive": "docs/ifpmic/evidence/b03/attempts/h2-runtime-normal-v2-before-payload-and-stop-fix",
+      "phase_results": [
+        {
+          "name": "h2_runtime_python",
+          "counts": {
+            "tests": 1,
+            "failed": 1,
+            "errors": 0,
+            "skipped": 0
+          },
+          "exit_code": 1,
+          "seconds": 27.193780064000748
+        }
+      ],
+      "not_run": [
+        "h1_python",
+        "g5_python",
+        "h2_schema_python",
+        "g4_python",
+        "legacy_python"
+      ],
+      "observed": "Startup progressed through real SQL QUEUED1/receipt and independent Temporal queued/history probe, then a test oracle compared canonical command_payload_json TEXT with a Python dict and failed. Complete failed observation and all three stop outcomes were preserved; dispatcher exit3 was also observed during cleanup.",
+      "diagnosis": "The database column and G4 fixture preserve canonical JSON text. The independent oracle must compare exact canonical text and its hash, while separately checking the decoded payload. A static dispatcher shutdown race also exists: FIRST_COMPLETED may return normal pump completion together with the requested stopping task, which is currently treated as a fatal poller exit.",
+      "limits_of_diagnosis": "The dispatcher exit3 is not yet attributed directly to that race; current evidence lacks its pre-shutdown exit observation. No full normal-path or runtime acceptance is claimed.",
+      "cleanup": {
+        "postgres_stop_status": "stopped",
+        "postgres_pid_alive": false,
+        "outer_owned_cleanup": {
+          "result": "stopped",
+          "signalled_count": 0,
+          "pid_alive": false
+        },
+        "saved_runtime_identities_checked_absent": 3,
+        "all_runtime_absent": true,
+        "forced_runtime_cleanup": false,
+        "runtime_exit_codes_by_role": {
+          "temporal": 0,
+          "worker": 0,
+          "dispatcher": 3
+        },
+        "postmortem_path": "workflow-artifacts/verification/B03/H2/runtime-normal/gates/2026-10-19T13-06-15-179644Z/failure-postmortem.json",
+        "postmortem_sha256": "2e84f17f87ded4927b0df6d153cadf4326ff9f84557f7c30b2c5ff1279f724e9"
+      },
+      "postmortem_source_environment": {
+        "captured_sources_unchanged_before_repair": true,
+        "original32_and_qualified36_unchanged": true
+      },
+      "next_action": "Repair exact text oracle and add pre-stop process evidence. Review and fix graceful-stop classification without suppressing actual poller failures; refresh ledger/contract/source approvals and rerun all407."
+    }
+  ]
+}

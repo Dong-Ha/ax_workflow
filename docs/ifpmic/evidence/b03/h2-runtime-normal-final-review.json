@@ -1,0 +1,137 @@
+{
+  "kind": "ifpmic.b03.h2.runtime-normal-final-review.v1",
+  "verdict": "approve_actual_partial_normal_runtime_evidence",
+  "reviewer": {
+    "agent_id": "/root/h2_prebinding_gate_audit",
+    "actual_role": "worker_luna",
+    "review_type": "independent read-only audit of frozen terminal run, raw phase evidence, and public archive"
+  },
+  "scope": {
+    "approved_claim": "The frozen local production-CLI normal activation case, five fresh H1 cases, and 401 SQL/local regression cases completed in one 407-case run with no failures, errors, or skips; cleanup, source/environment integrity, and sanitized six-member publication checks passed.",
+    "not_approved_or_claimed": [
+      "Full H2 runtime acceptance or mandatory crash/recovery/history-loss boundary acceptance",
+      "Fatal-poller plus concurrent-stop or hung-driver behavior from actual fault injection; current source review is static for these cases",
+      "H6 Node/build/UI acceptance, original AT acceptance, H3-H7, device, deployment, or external submission",
+      "Any success for either of the two retained failed attempts"
+    ]
+  },
+  "execution": {
+    "private_gate_path": "workflow-artifacts/verification/B03/H2/runtime-normal/gates/2026-10-19T13-14-17-430254Z/gate.json",
+    "private_gate_sha256": "27963ed280374771c18630f6db2a42799caace35fad4173d3bb24d03755807f1",
+    "started_at": "2026-10-19T13:14:17.430817+00:00",
+    "finished_at": "2026-10-19T13:27:27.151753+00:00",
+    "verdict": "pass",
+    "candidate_fingerprint": "7a66f653bfca7bf04ed84fe89627f3d88c91f608493402c0e48e4ba7a259c49a",
+    "candidate_source_zip_sha256": "e603a05a56e5bd5ed76402af64f9e909d7657f1868103e61369ff70968656a81",
+    "source_hash_count": 1086,
+    "current_source_map_reconciliation": {
+      "mismatching_path_count": 0,
+      "current_source_map_matches_frozen_candidate": true,
+      "assessment": "The private candidate ZIP has 1086 entries and its recorded fingerprint matches the gate. I independently recomputed current repository hashes for all 1086 pinned paths; none differ."
+    },
+    "environment": {
+      "environment_before_sha256": "b68aa30da8886fad1e0b2266c05b1f1393875b8f56ca47e04be77e578319d269",
+      "gate_environment_unchanged": true,
+      "original_python": "CPython 3.12.3 with 32 locked distributions",
+      "qualified_python": "CPython 3.12.3 with 36 locked distributions",
+      "qualified_interpreter_sha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f",
+      "temporal_cli_sha256": "712217694cac9f786a72d4b6c876cd15f3dcf1bf31434d9fed6af25242a327a0",
+      "original_and_qualified_environment_files_recomputed_match": true
+    }
+  },
+  "case_and_timing_audit": {
+    "total_cases": 407,
+    "unique_case_ids": 407,
+    "passed": 407,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "phase_order": ["h2_runtime_python", "h1_python", "g5_python", "h2_schema_python", "g4_python", "legacy_python"],
+    "phase_evidence": [
+      {"name": "h2_runtime_python", "count": 1, "seconds": 22.481669, "cap_seconds": 300, "max_case_elapsed_seconds": 16.392519, "progress_sha256": "defdea8b9caf81f0e7c393a9dc1e027dc657a110d2fc34406afbde4b097a2247"},
+      {"name": "h1_python", "count": 5, "seconds": 20.401371, "cap_seconds": 300, "max_case_elapsed_seconds": 16.607301, "progress_sha256": "5343354e8cbe9de3569afa49e26931bbb80b6f1ede3fdbb11b79429cddb2af7a"},
+      {"name": "g5_python", "count": 93, "seconds": 279.882764, "cap_seconds": 600, "max_case_elapsed_seconds": 16.734865, "progress_sha256": "4ef0b0ee5166c9fbff5762701252fb92cd66da6b3f79bbbe964acdf4390797a9"},
+      {"name": "h2_schema_python", "count": 50, "seconds": 54.883262, "cap_seconds": 300, "max_case_elapsed_seconds": 4.924822, "progress_sha256": "2ea9949e74204adeb4741ed500c691b2e29ffe5e6a823b9eefc085c7afa161ec"},
+      {"name": "g4_python", "count": 91, "seconds": 236.474920, "cap_seconds": 300, "max_case_elapsed_seconds": 10.639048, "progress_sha256": "388d3dc2af46afb8e96a308aa0e1b3f0eab84182154063c3273b4bb609f97c53"},
+      {"name": "legacy_python", "count": 167, "seconds": 160.612095, "cap_seconds": 300, "max_case_elapsed_seconds": 5.325792, "progress_sha256": "2e0c8c1c9fd6f1af1c9028d66b8fb49b144548bd17e6369f2e8d2e096a7e718c"}
+    ],
+    "progress_and_junit": "Each phase's progress stream contains the exact ledger ID inventory with passing setup/call/teardown and a terminal finish for every ID. Per-phase JUnit sets and outcomes match the corresponding inventory. All ordinary cases remain within 30 seconds; the two explicitly budgeted integration cases remain within 240 seconds. The H2 schema timing rows satisfy the 25-second body, 5-second cleanup, and 30-second total bounds with no timeout flags.",
+    "aggregate_phase_seconds": 774.736080,
+    "phase_caps_respected": true
+  },
+  "normal_runtime_and_h1_evidence": {
+    "runtime_case_id": "tests.ifpmic_api.test_h2_runtime_normal_flow.test_h2_runtime_real_cli_create_ready_admits_one_run_and_queues_one_receipt",
+    "runtime_case_elapsed_seconds": 16.392519,
+    "runtime_body_seconds": 14.015,
+    "runtime_shared_cleanup_seconds": 2.383,
+    "runtime_raw_history_sha256": "d9b6cd8292c50ff01e6d50f616653f8a941a5bb8b153d4fe89726e8af0ebfcab",
+    "runtime_service_observation_sha256": "b4533cff66d9de88404860b7a84f167d3a0d0d6dcb182f27d556a92e00320c78",
+    "runtime_owner_before_sha256": "ccffda0a4d5e372da70323683af0b619bc336746952ee1d75e8586c6f73de9ea",
+    "runtime_owner_after_sha256": "7ecbf7d1117b981360388e567d7bd56f8837b42afe1db2f661eb1353023a1d51",
+    "runtime_process_lifecycle_sha256": "26c02573cfcc995c63b51a34cae753f1fcb6ca41559d565718d0f1cba36b2cf8",
+    "h1_result_sha256": "f9d481b37b35f981f0a053448e3826d6961a5b1f638db5f7be9388608bc0b4c5",
+    "h1_process_evidence_sha256": "da3d0727b881261abaeb123eeb9a5544f8378c999ef40d0294ef5e617c7459b2",
+    "observed_results": [
+      "The runtime case records one execution and one admitted run, with one queued receipt; owner state transitions from no binding/scope/receipt/attempt to exactly one of each.",
+      "The captured workflow history has 16 frames and exactly one Started event; replay leaves persisted state unchanged, command and job GETs show the applied receipt and queued revision-1 job, and no workflow step is recorded.",
+      "All three runtime-owned processes and all six H1-owned processes reached stopped state with exit code zero and were absent after cleanup; PostgreSQL lifecycle operations also exited zero and clusters were stopped.",
+      "The five fresh H1 IDs passed, including persistence across restart; the H1 history remains on the same run and its persisted retention and duplicate-ID assertions passed."
+    ]
+  },
+  "protected_and_cleanup_invariants": {
+    "source_changes_during_gate": [],
+    "owned_children_absent": true,
+    "postgres_version": "18.1",
+    "postgres_phase_count": 5,
+    "all_postgres_lifecycle_operations_exit_zero": true,
+    "protected_source_count": 96,
+    "protected_inventory_count": 89,
+    "original_imported_files": 17,
+    "original_uploads": 2,
+    "protected_baseline_recomputed_matches": true,
+    "original_and_qualified_environment_files_unchanged": true
+  },
+  "publication_audit": {
+    "verification_path": "docs/ifpmic/evidence/b03/h2-runtime-normal-verification.json",
+    "verification_sha256": "0662ec41f3b5b6bf2f00fd48e88803f55f692da48178c4f79f3068802c3ba328",
+    "archive_path": "docs/ifpmic/evidence/b03/h2-runtime-normal-gate.zip",
+    "archive_sha256": "ad9b085e1cfa25b7d6109354a57f9f6e07c660281f9255fef5669fe160f13c16",
+    "archive_member_count": 6,
+    "archive_members": {
+      "gate/case-timings.json": "7309e9e07d20dfb7a0cd023efacf2b12ff3c481ee700a68e5a7a8ee1e8bff95f",
+      "gate/postgres-lifecycle.json": "a93486086e468b4e27fa0c722027aefd4e66fc609a653acca29f5d14b57983c8",
+      "gate/pytest.xml": "a073ce175e7ca57ce9fc99b672a09ac9a46c9e3a97f53257fbaac673d70438d1",
+      "gate/source-manifest.json": "d779a5d5badf54a1ab97b98b283ba5857569ae44ac1538b9e28f3237d2994139",
+      "gate/summary.json": "6f165b2629465a567e02356e5194bc87c72bfc5b6ca8a681ed39f4c5fbc3ff91",
+      "gate/temporal-summary.json": "e9963ea8deebf93375578ec7a469e641896d40fb1f9a34664d3fd95437d67a3f"
+    },
+    "checks": {
+      "exact_allowlisted_members_and_no_duplicates": true,
+      "member_hashes_match_public_verification_and_private_source_transformations": true,
+      "fixed_zip_timestamp_and_mode": true,
+      "no_raw_logs_histories_source_zip_credentials_absolute_paths_or_process_identity_fields": true,
+      "relative_source_manifest_only": true,
+      "synthetic_negative_test_path_literals_only": true,
+      "verification_decision_remains_pending_review_and_real_acceptance_not_executed": true
+    }
+  },
+  "retained_failure_history": {
+    "attempts_path": "docs/ifpmic/evidence/b03/h2-runtime-normal-attempts.json",
+    "attempts_sha256": "ec114583bd1c58fe968c5e63f0c1bc29de878ae1c7219231700787270c7777cb",
+    "retained_unsuccessful_attempts": [
+      {"gate_path": "workflow-artifacts/verification/B03/H2/runtime-normal/gates/2026-10-19T12-57-37-548379Z/gate.json", "gate_sha256": "de56189a89b3e178f254a81cd6ca1560348d63d2e5b853ff08103f76d0f6a4ce", "postmortem_sha256": "9887e57e71f4a8ba1c19daf2c649448bd86d49666b430cf44446dcea44071cb4"},
+      {"gate_path": "workflow-artifacts/verification/B03/H2/runtime-normal/gates/2026-10-19T13-06-15-179644Z/gate.json", "gate_sha256": "860521e95542673cd984125313783242dd10e80cf59240596a1862a3b2f22ca5", "postmortem_sha256": "2e84f17f87ded4927b0df6d153cadf4326ff9f84557f7c30b2c5ff1279f724e9"}
+    ],
+    "assessment": "Both failures remain failed with their private raw evidence and postmortems retained. The second dispatcher exit code 3 remains unattributed; no causal claim is made."
+  },
+  "method_and_limits": {
+    "methods": ["SHA-256 recomputation", "read-only JSON/XML/JSONL parsing", "read-only ZIP inventory/metadata/content verification", "case-ID and phase-count reconciliation", "source and protected-file hash comparison"],
+    "not_performed": ["pytest execution", "product imports", "SQL execution", "service startup", "file-system cleanup", "product/test edits"],
+    "remaining_risks": [
+      "The run establishes only the scoped normal runtime flow and the 406 supporting cases, not the full mandatory H2 crash and recovery matrix.",
+      "Static graceful-stop review is retained as static evidence; fatal-poller/concurrent-stop and hung-driver fault cases need actual future tests.",
+      "H6 UI validation, original AT acceptance, and H3-H7 remain incomplete."
+    ],
+    "blocking_findings": []
+  }
+}

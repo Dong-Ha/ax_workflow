@@ -1,0 +1,77 @@
+{
+  "kind": "ifpmic.b03.h2.runtime-normal-tc-execution-review.v1",
+  "verdict": "approve_execution",
+  "contract_sha256": "7e730a5936a39d364821df4b1e92afabc36813211f97cbd920aad7db2018260b",
+  "contract_path": "docs/ifpmic/evidence/b03/h2-runtime-normal-execution-contract.json",
+  "reviewer": {
+    "agent_id": "/root/h2_tc_query_fix",
+    "actual_role": "TC execution reviewer and owner of the normal-flow test and ledger",
+    "review_type": "Exact-SHA execution-plan review; static source and evidence interface review only"
+  },
+  "review_scope": "Review the refreshed normal-runtime contract against the TC test, watchdog, ledger and frozen runner journal checker. Approval is limited to this partial 407-case gate plan. It does not claim gate execution, runtime correctness, full H2, or AT acceptance.",
+  "reviewed_inputs": {
+    "execution_contract": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-normal-execution-contract.json",
+      "sha256": "7e730a5936a39d364821df4b1e92afabc36813211f97cbd920aad7db2018260b"
+    },
+    "tc_ledger": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-normal-tc-ledger.json",
+      "sha256": "ec5c419f853741f2ea0c127bbf8fbd58e3e2bdc7a2ef0d04975a47f7033600c7",
+      "source_pin_count": 41,
+      "source_pin_mismatches": 0
+    },
+    "runtime_test": {
+      "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+      "sha256": "fa34210fff8deb60b107d738924059999507bb7dcdf41ada91d9be6ce26e30c3"
+    },
+    "runtime_deadline_plugin": {
+      "path": "tests/ifpmic_api/h2_runtime_case_budget.py",
+      "sha256": "d33f8de5ad0e9b85435642c1d974b3c055f47f627d8db45092231d9132dd2ed1"
+    },
+    "runtime_product_source": {
+      "path": "services/ifpmic_api/execution_runtime.py",
+      "sha256": "49c0c6208e62b26e808ecffadf278dd9c7cff45134a47b905d3a4f60987c4b08"
+    },
+    "runner": {
+      "path": "scripts/verify_ifpmic_b03_h2_runtime_normal.py",
+      "sha256": "e38d62b8c64c2c8ce5e52df04ceac37e90ce802fe3d8c710a69d2b08f23c8728"
+    },
+    "publisher": {
+      "path": "scripts/publish_ifpmic_b03_h2_runtime_normal.py",
+      "sha256": "0b46c8396256251c9fb742b900bac3321534da005eb1e5ed97ba7b3d52ce360c"
+    },
+    "critical_runtime_source_review": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-graceful-stop-source-review.json",
+      "sha256": "be1bc518cd1e26d449676d69f481f8290d219c61f6b445a961b0a1f1242fd08c",
+      "verdict": "no_blocking_source_findings"
+    }
+  },
+  "checks": {
+    "exact_contract_and_ledger_sha_match": true,
+    "all_ledger_source_pins_match": true,
+    "source_pin_count": 41,
+    "exact_407_case_inventory_and_phase_order": true,
+    "phase_counts": {
+      "h2_runtime_python": 1,
+      "h1_python": 5,
+      "g5_python": 93,
+      "h2_schema_python": 50,
+      "g4_python": 91,
+      "legacy_python": 167
+    },
+    "normal_case_payload_text_is_canonical_ascii_and_decodes_to_accepted_payload": true,
+    "payload_digest_oracle_retained": true,
+    "per_process_journal_order_is_start_stop_requested_stopped": true,
+    "pre_stop_exit_code_must_be_null_for_positive_result": true,
+    "runner_reconciles_each_process_journal_and_rejects_nonnull_pre_stop": true,
+    "identity_shape_remains_exact_seven_constructor_fields": true,
+    "215_body_25_shared_cleanup_240_total_watchdog_matches_contract": true,
+    "production_cli_and_independent_temporal_sql_api_oracles_match_scope": true,
+    "graceful_stop_source_review_has_no_blocking_finding": true,
+    "crash_and_history_loss_cases_remain_mandatory": true,
+    "execution_performed": false,
+    "runner_reconciles_role_and_stopped_outcome_against_observation": true
+  },
+  "findings": [],
+  "execution_boundary": "The ledger remains at 407 unique cases in the contracted phase order, and all 41 source pins match. The corrected SQL payload oracle compares the persisted TEXT to the exact canonical ASCII encoding and separately verifies decoded equality, while retaining the payload digest comparison. Each runtime child now has a start, stop_requested and stopped journal sequence; the pre-stop code is captured before stop_all_owned and a positive result requires None, while post-stop exit0/unforced/absent oracles remain enforced. The runner checks the same sequence and null pre-stop status for each exact child. The product shutdown-source review found no blocking source issue, but explicitly does not attribute the earlier dispatcher exit3 or certify runtime behavior. All response-loss, worker-crash, history-deletion and remaining crash barriers remain pending. No pytest collection/execution, imports, DB, service, network or runtime activity was performed. This TC approval is for authoring/freezing the exact gate only; independent exact-SHA review and frozen pre-gate approval remain required before execution."
+}

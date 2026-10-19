@@ -1,0 +1,124 @@
+{
+  "kind": "ifpmic.b03.h2.runtime-normal-execution-review.v1",
+  "verdict": "approve_execution",
+  "contract_path": "docs/ifpmic/evidence/b03/h2-runtime-normal-execution-contract.json",
+  "contract_sha256": "7e730a5936a39d364821df4b1e92afabc36813211f97cbd920aad7db2018260b",
+  "reviewer": {
+    "agent_id": "/root/h2_prebinding_gate_audit",
+    "actual_role": "worker_luna",
+    "review_type": "independent exact-contract and source-delta execution review"
+  },
+  "review_scope": "Approve only the exact 407-case partial normal-runtime execution plan after the separate frozen pre-gate approval. This does not accept either failed prior attempt, certify runtime behavior, claim full H2 acceptance, or claim original AT acceptance.",
+  "reviewed_inputs": {
+    "prior_contract_sha256": "6402ab33563910f91d68277b0aa8a4719b9fca65d96480dfcef727b7708e6912",
+    "contract_sha256": "7e730a5936a39d364821df4b1e92afabc36813211f97cbd920aad7db2018260b",
+    "ledger": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-normal-tc-ledger.json",
+      "sha256": "ec5c419f853741f2ea0c127bbf8fbd58e3e2bdc7a2ef0d04975a47f7033600c7",
+      "source_pin_count": 41,
+      "source_pin_mismatches": 0
+    },
+    "runtime_test": {
+      "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+      "sha256": "fa34210fff8deb60b107d738924059999507bb7dcdf41ada91d9be6ce26e30c3"
+    },
+    "deadline_plugin": {
+      "path": "tests/ifpmic_api/h2_runtime_case_budget.py",
+      "sha256": "d33f8de5ad0e9b85435642c1d974b3c055f47f627d8db45092231d9132dd2ed1"
+    },
+    "runtime_product_source": {
+      "path": "services/ifpmic_api/execution_runtime.py",
+      "sha256": "49c0c6208e62b26e808ecffadf278dd9c7cff45134a47b905d3a4f60987c4b08"
+    },
+    "runner": {
+      "path": "scripts/verify_ifpmic_b03_h2_runtime_normal.py",
+      "sha256": "e38d62b8c64c2c8ce5e52df04ceac37e90ce802fe3d8c710a69d2b08f23c8728"
+    },
+    "publisher": {
+      "path": "scripts/publish_ifpmic_b03_h2_runtime_normal.py",
+      "sha256": "0b46c8396256251c9fb742b900bac3321534da005eb1e5ed97ba7b3d52ce360c"
+    },
+    "critical_runtime_source_review": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-graceful-stop-source-review.json",
+      "sha256": "be1bc518cd1e26d449676d69f481f8290d219c61f6b445a961b0a1f1242fd08c",
+      "verdict": "no_blocking_source_findings"
+    },
+    "tc_execution_review": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-normal-tc-execution-review.json",
+      "sha256": "7c55e2f2228f42bb121023814996f2edfae6a74afadc262b51fc24b8c1bf151f",
+      "contract_sha256": "7e730a5936a39d364821df4b1e92afabc36813211f97cbd920aad7db2018260b",
+      "verdict": "approve_execution"
+    },
+    "failed_attempts_record": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-normal-attempts.json",
+      "sha256": "ec114583bd1c58fe968c5e63f0c1bc29de878ae1c7219231700787270c7777cb"
+    },
+    "failed_attempts": [
+      {
+        "gate_path": "workflow-artifacts/verification/B03/H2/runtime-normal/gates/2026-10-19T12-57-37-548379Z/gate.json",
+        "gate_sha256": "de56189a89b3e178f254a81cd6ca1560348d63d2e5b853ff08103f76d0f6a4ce",
+        "postmortem_path": "workflow-artifacts/verification/B03/H2/runtime-normal/gates/2026-10-19T12-57-37-548379Z/failure-postmortem.json",
+        "postmortem_sha256": "9887e57e71f4a8ba1c19daf2c649448bd86d49666b430cf44446dcea44071cb4"
+      },
+      {
+        "gate_path": "workflow-artifacts/verification/B03/H2/runtime-normal/gates/2026-10-19T13-06-15-179644Z/gate.json",
+        "gate_sha256": "860521e95542673cd984125313783242dd10e80cf59240596a1862a3b2f22ca5",
+        "postmortem_path": "workflow-artifacts/verification/B03/H2/runtime-normal/gates/2026-10-19T13-06-15-179644Z/failure-postmortem.json",
+        "postmortem_sha256": "2e84f17f87ded4927b0df6d153cadf4326ff9f84557f7c30b2c5ff1279f724e9"
+      }
+    ],
+    "archived_controls": [
+      "docs/ifpmic/evidence/b03/attempts/h2-runtime-normal-v1-before-identity-config-fix",
+      "docs/ifpmic/evidence/b03/attempts/h2-runtime-normal-v2-before-payload-and-stop-fix"
+    ]
+  },
+  "checks": [
+    {
+      "id": "second-failure-and-oracle-repair",
+      "result": "pass",
+      "evidence": "Read the second private gate, its retained pytest failure, raw failure postmortem, candidate source ZIP and exact test delta. The failing DB value was canonical JSON TEXT, while the previous assertion expected a Python dict. The repaired test requires a string equal to canonical ASCII JSON, separately checks json.loads(value) against the accepted payload, and retains the payload digest oracle. No product payload or SQL behavior was relaxed. The first actual attempt and its earlier config-shape diagnosis remain separately recorded as failed."
+    },
+    {
+      "id": "pre-stop-process-observation-and-clean-shutdown-oracles",
+      "result": "pass",
+      "evidence": "The fixture records the pre-stop poll result for each saved process identity before calling stop_all_owned, requires every pre-stop result to be None, then records stopped outcomes. A positive result still requires all three owned processes to exit 0, be absent, and avoid forced termination. The runner now requires each exact process journal sequence, null pre-stop value, started role match and typed equality between each stopped row and the corresponding runtime observation fields exit_code/absent/forced. Failure evidence is persisted before cleanup assertions."
+    },
+    {
+      "id": "graceful-stop-source-review-and-limits",
+      "result": "pass_with_explicit_limit",
+      "evidence": "The exact runtime source review finds the requested-stop/poller completion race plausible and its minimal patch preserves task.result() and the unexpected-return failure when stopping is unset. That independent source review does not attribute the prior dispatcher exit code 3. It documents a residual classification edge: a normal worker.run() return concurrent with a requested stop can be accepted, although exceptions still propagate and the integration checks owned processes are running before cleanup. No causal claim about the previous exit code is made here."
+    },
+    {
+      "id": "inventory-budgets-and-fresh-rerun",
+      "result": "pass",
+      "evidence": "Independently compared current ledger phase ID arrays with the archived pre-fix ledger: the five retained phases are identical at H1=5, G5=93, H2 schema=50, G4=91 and legacy=167; the sole new ID is the actual runtime case. The current phase total is 407 unique IDs, and all 41 ledger source pins match. Contract and runner retain the frozen 6-phase order and caps 300/300/600/300/300/300 seconds, 30-second normal case bounds and only the exact H1 persistent/runtime integration exceptions of 240 seconds. A fresh complete 407-case execution is required after pre-gate approval."
+    },
+    {
+      "id": "failure-history-cleanup-and-partial-scope",
+      "result": "pass",
+      "evidence": "Both first and second gate records remain failed, with their exact raw gate and postmortem hashes recorded above. The second attempt's source/environment captures matched before repair; all three saved runtime identities were absent, PostgreSQL was stopped, and the dispatcher exit 3 is not attributed directly to the static race. The contract requires a complete fresh run and explicitly keeps response-loss, worker-crash, history-deletion and remaining crash barriers mandatory. This approval is limited to executing the scoped normal increment; it is not a pass claim."
+    }
+  ],
+  "findings": [],
+  "execution_authority": "This exact contract is approved for a fresh full 407-case gate only after a distinct frozen pre-gate review pins all current source and evidence inputs. Both prior attempts remain failures; no pytest, database, Temporal, or service execution is authorized or represented by this review itself.",
+  "remaining_limits": [
+    "No corrected runtime execution has occurred; both previous attempts remain failed.",
+    "No causal attribution for the second dispatcher exit code 3 is established.",
+    "No runtime fault-injection or signal-delivery test was run during this static review.",
+    "The full H2 crash/recovery/history-deletion suite, H6 UI gate, and original AT acceptance remain pending."
+  ],
+  "method_limits": {
+    "methods": [
+      "SHA-256 checks",
+      "Static JSON/ZIP and source delta inspection",
+      "Comparison of exact current and archived ledger case arrays"
+    ],
+    "not_performed": [
+      "pytest collection or execution",
+      "imports",
+      "SQL",
+      "PostgreSQL or Temporal startup",
+      "product or test edits"
+    ]
+  }
+}

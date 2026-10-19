@@ -1,0 +1,66 @@
+{
+  "kind": "ifpmic.b03.h2.runtime-normal-tc-execution-review.v1",
+  "verdict": "approve_execution",
+  "contract_sha256": "6402ab33563910f91d68277b0aa8a4719b9fca65d96480dfcef727b7708e6912",
+  "contract_path": "docs/ifpmic/evidence/b03/h2-runtime-normal-execution-contract.json",
+  "reviewer": {
+    "agent_id": "/root/h2_tc_query_fix",
+    "actual_role": "TC execution reviewer and owner of the normal-flow test and ledger",
+    "review_type": "Exact-SHA execution-plan review; static interface and evidence review only"
+  },
+  "review_scope": "Review the refreshed exact contract against the current test, watchdog, ledger, and runner/publisher interfaces. This approval is limited to authoring/freezing the specified partial 407-case gate; it is not execution approval by itself, a gate result, or full H2 acceptance.",
+  "reviewed_inputs": {
+    "execution_contract": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-normal-execution-contract.json",
+      "sha256": "6402ab33563910f91d68277b0aa8a4719b9fca65d96480dfcef727b7708e6912"
+    },
+    "tc_ledger": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-normal-tc-ledger.json",
+      "sha256": "3f8ed9d9a28df02ef8e242d153804f8ceea7092b042915c17ecc188163b61295",
+      "source_pin_count": 41,
+      "source_pin_mismatches": 0
+    },
+    "runtime_test": {
+      "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+      "sha256": "0e31372612d4a6225030e4a4b5f3f533249cd17be1583110c4af4bc8e7fc0ee2"
+    },
+    "runtime_deadline_plugin": {
+      "path": "tests/ifpmic_api/h2_runtime_case_budget.py",
+      "sha256": "d33f8de5ad0e9b85435642c1d974b3c055f47f627d8db45092231d9132dd2ed1"
+    },
+    "runner": {
+      "path": "scripts/verify_ifpmic_b03_h2_runtime_normal.py",
+      "sha256": "bda3fe8649d3a24904a569836d7b1ca6996b55ef59d5c81396f647eef8a6af96"
+    },
+    "publisher": {
+      "path": "scripts/publish_ifpmic_b03_h2_runtime_normal.py",
+      "sha256": "0b46c8396256251c9fb742b900bac3321534da005eb1e5ed97ba7b3d52ce360c"
+    }
+  },
+  "checks": {
+    "exact_contract_and_ledger_sha_match": true,
+    "all_ledger_source_pins_match": true,
+    "source_pin_count": 41,
+    "phase_order_matches_contract": true,
+    "phase_counts": {
+      "h2_runtime_python": 1,
+      "h1_python": 5,
+      "g5_python": 93,
+      "h2_schema_python": 50,
+      "g4_python": 91,
+      "legacy_python": 167
+    },
+    "all_407_ids_unique": true,
+    "runtime_and_h1_long_case_ids_exact": true,
+    "runtime_plugin_loaded_for_whole_case_setup_call_teardown": true,
+    "runtime_215_body_25_shared_cleanup_240_total_bounds_match": true,
+    "qualified36_interpreter_and_environment_attestation_checked": true,
+    "production_cli_and_independent_temporal_sql_api_oracles_match_scope": true,
+    "seven_field_runtime_identity_matches_constructor": true,
+    "cleanup_evidence_written_before_positive_process_assertions": true,
+    "crash_and_history_loss_obligations_remain_pending": true,
+    "execution_performed": false
+  },
+  "findings": [],
+  "execution_boundary": "The corrected runtime config uses exactly the seven ExecutionIdentity constructor fields while preserving protocol_version in deployment/build hash documents. The failure path journals process stop outcomes and writes a normalized failed observation before positive exit/absence/no-force checks; the original body exception remains primary when already active. The unchanged 407-case inventory, six-phase order and caps agree with the refreshed ledger and contract. The normal-flow oracles still require actual G4 acceptance, physical G5 READY, separate production dispatcher/worker CLIs, independent Temporal history/query, owner SQL/API evidence and clean owned-process shutdown. Accepted-start response loss and the remaining crash/history-deletion matrix remain mandatory and are not covered by this increment. No test collection, import, SQL, service, network or runtime execution was performed. This TC review authorizes only the frozen runner/pre-gate workflow for this exact contract SHA; a separate exact-SHA independent review and frozen pre-gate approval are still required before execution."
+}

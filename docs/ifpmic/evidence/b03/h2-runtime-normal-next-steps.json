@@ -1,0 +1,59 @@
+{
+  "kind": "ifpmic.b03.h2.runtime-next-steps.v1",
+  "status": "planned_not_executed",
+  "goal_status": "active",
+  "accepted_increment": "The407-case normal-runtime increment only; fullH2, B03 and originalAT remain incomplete.",
+  "requirements": [
+    "B03 H2",
+    "REQ-02",
+    "REQ-05 prerequisite",
+    "REQ-13",
+    "REQ-14 preservation",
+    "AT-16 prerequisite only"
+  ],
+  "responsibility": {
+    "Code-dev": "Own product integration and complete verification gates; Paperclip supervises the original IFPMIC design.",
+    "TC": "Own actual crash/negative tests, exact case ledger and independent oracles.",
+    "SAM_TEM_SQE_humans": "Original duties, artifact contracts and approvals remain unchanged."
+  },
+  "mandatory_crash_worklist": "docs/ifpmic/H2-RUNTIME-CRASH-MATRIX.md",
+  "mandatory_crash_boundaries": [
+    "API commit before response/outbox claim",
+    "claim commit before Temporal RPC",
+    "Temporal accepted start before client receives response",
+    "start response before run-admission PG commit",
+    "admission commit before ack",
+    "ack commit before worker activation",
+    "projection before PG commit",
+    "projection PG commit before activity result in history",
+    "worker after activity result before subsequent workflow decision",
+    "PG and Temporal independent server restart with existing storage"
+  ],
+  "additional_pending_runtime_checks": [
+    "Accepted-start response loss and same-run reconciliation with actual held response path and independent Started history.",
+    "Physical admitted-history deletion, finite reconciliation window/retention boundaries, foreign run/input/build/deployment and stale/live dispatcher leases.",
+    "Current authority revocation and receipt replay, startup rejection before network or claim, non-create delivery without another start.",
+    "Actual fatal-poller exceptions concurrent with stop and hung driver bounded termination; current source review is static for these negatives."
+  ],
+  "private_tc_authoring": {
+    "status": "static_authoring_only_unintegrated_unexecuted",
+    "path": "workflow-artifacts/verification/B03/H2/runtime-authoring/accepted-start-loss",
+    "file_sha256": {
+      "accepted-start-loss-design.md": "c23269b238196f9ac5ee2747edbf8a36ef339e156dcbf177492de8cef5f9a7a8",
+      "accepted_start_case_budget.py": "38684ac5ea129f4df6e3d0c55112c1bd048e88b04749f5ffccf699404c7a210c",
+      "accepted_start_dispatcher_child.py": "4fe63801a2ff95ddefa638d60142f26830635e0fdf6dd4b3fdcff7df03317b60",
+      "response_loss_proxy.py": "b6f8ca62f21724bf26aac6395528092257e7c48b729d19df02adf7281b9ed512",
+      "test_accepted_start_response_loss.py": "ff2bed1479809667aed44f296517da22aa00955c8296bf6c51e42acc6356cc85"
+    },
+    "source_of_report": "/root/h2_tc_query_fix, actual worker_luna",
+    "static_checks": "TC reports AST/symtable/interface checks only; root independently checked file hashes/modes. No service/test or network execution for these drafts.",
+    "case_id": "tests.ifpmic_api.test_accepted_start_response_loss.test_actual_started_event_survives_lost_start_response_and_recovers_same_run",
+    "integration_required": [
+      "Review actual causal proxy ordering and all per-case recovery oracles against the complete crash matrix.",
+      "Integrate tests and exact-case protocol watchdog only after authoring/review; freeze a full crash/boundary ledger and execution contract before running services.",
+      "Retain and freshly rerun the407 accepted IDs plus every new crash/negative case; partial normal evidence never replaces the mandatory cases."
+    ],
+    "causal_limit": "The proxy records no new user-space server-to-client write while armed. It cannot establish delivery time of bytes already written pre-arm or identify an HTTP/2 Start response frame. Proposed named-cut proof uses an acknowledged hold before before_start_rpc release, no subsequent forwarded response bytes, direct persisted Started observation and owned dispatcher kill before RPC timeout. This reasoning and the concrete implementation require independent review before acceptance."
+  },
+  "remaining_goal_scope": "H3-H7 and originalAT32, final AX workflow visualization, real Agent/device/build integration and approved deployment/submission remain pending. Human device actions and final deployment/external submission approval are still required."
+}

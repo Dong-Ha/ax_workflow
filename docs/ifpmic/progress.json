@@ -334,7 +334,7 @@
         ]
       },
       "plan": "B03-WORKFLOW.md",
-      "scope": "H0 plan, H1 local toolchain and partial H2 SQL foundation verified. The new401-case PostgreSQL/local prebinding subgate passed and was independently accepted after two retained unsuccessful attempts. Actual Temporal delivery/worker/crash integration, subsequent workflow stages and original AT acceptance remain incomplete.",
+      "scope": "H0/H1 and partial H2 SQL/local and actual normal-runtime increments verified. Fresh407 cases passed with independent evidence review; two unsuccessful normal attempts retained. Full H2 crash/recovery, subsequent workflow stages and original AT acceptance remain incomplete.",
       "increments": [
         {
           "id": "h0_preimplementation_plan",
@@ -365,7 +365,7 @@
         {
           "id": "h2_durable_delivery_activation",
           "status": "in_progress",
-          "scope": "Historical003 SQL foundation accepted after361 cases. New append004 prebinding incident/authentication plus API regression and protocol/workspace/manifest local tests passed401 cases and independent final evidence review accepted this partial local subgate. Runtime launcher is authored but actual Temporal dispatcher/worker/start-loss/crash integration and fresh H1 proof remain required; full H2 is incomplete.",
+          "scope": "Historical SQL361 and append004/local401 increments remain accepted for their frozen candidates. Fresh407-case real production-CLI normal activation, H1five and all401 retained regressions passed and were independently accepted after two retained failures. Mandatory actual crash/response-loss/history-deletion/restart/negative cases remain required for fullH2.",
           "contract": "evidence/b03/h2-implementation-contract.json",
           "contract_sha256": "f63173ac17ebebd34a15d5966d96b79dc1667a713c00b1b92868b137ba93ded3",
           "plan_acceptance": "evidence/b03/h2-contract-acceptance.json",
@@ -402,7 +402,45 @@
           "prebinding_candidate_fingerprint": "e51d6d4986e7ba2dd6a905ef4af770abc60c3fa2f3791052db6cf128a8197e18",
           "prebinding_final_review": "evidence/b03/h2-prebinding-final-review.json",
           "prebinding_decision": "accept_partial_h2_prebinding_sql_local_foundation",
-          "prebinding_progress_reconciliation": "evidence/b03/h2-prebinding-progress-reconciliation.json"
+          "prebinding_progress_reconciliation": "evidence/b03/h2-prebinding-progress-reconciliation.json",
+          "runtime_normal_preparation": {
+            "status": "partial_normal_runtime_independently_verified",
+            "contract": "evidence/b03/h2-runtime-normal-execution-contract.json",
+            "intended_case_inventory": 407,
+            "fresh_h1_required": true,
+            "new_real_cli_normal_cases": 1,
+            "tests_executed": true,
+            "crash_worklist": "H2-RUNTIME-CRASH-MATRIX.md",
+            "acceptance_boundary": "Only actual normal CLI activation and fresh H1/401 regression are accepted. Both earlier attempts remain failed; mandatory crash/recovery/history-loss/fatal-poller tests remain pending. FullH2 is incomplete.",
+            "contract_sha256": "7e730a5936a39d364821df4b1e92afabc36813211f97cbd920aad7db2018260b",
+            "tc_ledger": "evidence/b03/h2-runtime-normal-tc-ledger.json",
+            "independent_execution_review": "evidence/b03/h2-runtime-normal-execution-review.json",
+            "tc_execution_review": "evidence/b03/h2-runtime-normal-tc-execution-review.json",
+            "runner": "../../scripts/verify_ifpmic_b03_h2_runtime_normal.py",
+            "publication_helper": "../../scripts/publish_ifpmic_b03_h2_runtime_normal.py",
+            "attempt_history": "evidence/b03/h2-runtime-normal-attempts.json",
+            "last_actual_result": {
+              "planned_cases": 407,
+              "executed_cases": 407,
+              "passed": 407,
+              "failed": 0,
+              "errors": 0,
+              "skipped": 0
+            }
+          },
+          "runtime_normal_subgate_status": "verified",
+          "runtime_normal_verification": "evidence/b03/h2-runtime-normal-verification.json",
+          "runtime_normal_final_review": "evidence/b03/h2-runtime-normal-final-review.json",
+          "runtime_normal_decision": "accept_partial_h2_normal_runtime",
+          "runtime_normal_tests": {
+            "errors": 0,
+            "failed": 0,
+            "passed": 407,
+            "skipped": 0
+          },
+          "runtime_normal_candidate_fingerprint": "7a66f653bfca7bf04ed84fe89627f3d88c91f608493402c0e48e4ba7a259c49a",
+          "runtime_normal_progress_reconciliation": "evidence/b03/h2-runtime-normal-progress-reconciliation.json",
+          "runtime_next_steps": "evidence/b03/h2-runtime-normal-next-steps.json"
         }
       ]
     },
@@ -579,12 +617,12 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "H2: integrate the TC-authored actual Temporal normal-flow harness and implement the required accepted-start/response-loss/crash/restart cases; freeze and independently review their ledger and runner before execution. Rerun H1 actual service cases and affected API regression. H2/B03, H3-H7, originalAT32, deployment approvals and final AX workflow visualization remain incomplete.",
+  "next_step": "H2: integrate and independently review the TC private accepted-start-loss draft as one part of the complete mandatory crash/boundary suite. Complete all ten required crash cuts, real history deletion and runtime negative cases; freeze full ledger/runner before execution and rerun407 retained IDs plus every addition. H2/B03, H3-H7, originalAT32, final workflow visualization and deployment approvals remain incomplete.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",
     "Approved Bedrock/Claude runtime profile"
   ],
   "publication_policy": "Only authorized git repository documentation, source and synthetic verification summaries/screenshots; never runtime credentials or application logs.",
-  "updated_at": "2026-10-19T12:31:16.788394+00:00"
+  "updated_at": "2026-10-19T13:32:57.865742+00:00"
 }

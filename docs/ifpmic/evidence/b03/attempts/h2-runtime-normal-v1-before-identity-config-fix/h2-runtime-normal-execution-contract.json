@@ -1,0 +1,196 @@
+{
+  "kind": "ifpmic.b03.h2.runtime-normal-execution-contract.v1",
+  "status": "candidate_pending_exact_independent_and_tc_execution_review",
+  "purpose": "Prove the actual API→G5 READY→production dispatcher/worker CLI→persistent local Temporal→guarded PostgreSQL QUEUED1 normal path, and rerun mandatory H1five plus all401 qualified SQL/local/regression cases. This increment is not full H2 acceptance.",
+  "requirements": [
+    "B03 H2",
+    "REQ-02",
+    "REQ-05 prerequisite",
+    "REQ-13",
+    "REQ-14 preservation",
+    "AT-16 prerequisite only"
+  ],
+  "authoring_basis": {
+    "implementation_contract_sha256": "f63173ac17ebebd34a15d5966d96b79dc1667a713c00b1b92868b137ba93ded3",
+    "accepted_prebinding_verification_sha256": "fd7d09c2fafc51eab799043ccbb9e39111489b927bb074fe222ce5bda8902a0f",
+    "accepted_prebinding_final_review_sha256": "acdf1621405d29f3ffe373e75cae1856cf9417ce9c9caf1437f9db796031228d"
+  },
+  "tc_ledger": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-normal-tc-ledger.json",
+    "sha256": "c43be1ce5c5542455edfbf49cdcc6fa4fa53d50cc6dbd6f842e2eaa26d8a7802"
+  },
+  "responsibility": {
+    "Code-dev/main": "Own full implementation flow, production sources, bounded runner, requirement/evidence integration and final verification.",
+    "TC": "Own new literal runtime tests/deadline plugin, exact407-case ledger and source review of test oracles; no production business implementation.",
+    "independent_reviewer": "Review exact execution contract before runner authoring, then frozen runner/source/test pins before first service/test execution, and terminal actual private/public evidence.",
+    "SAM_TEM_SQE_humans": "Original design duties and approval boundaries unchanged; no business Agent or device execution is part of this synthetic local increment."
+  },
+  "required_review_names": [
+    "h2-runtime-normal-execution-review.json",
+    "h2-runtime-normal-tc-execution-review.json"
+  ],
+  "execution_authority": "Both required independent and TC reviews must approve_execution for the exact contract SHA before authoring the new runner. Then h2-runtime-normal-pre-gate-review.json must approve_frozen_runtime_normal_gate and pin final runner, all test/product/fixture/helper sources, H1 private installation metadata, contracts and reviews before any pytest collection/import/service/SQL execution. Static AST/JSON/source inspection is permitted; no implicit server/download. Historical frozen runners/reviews remain unchanged.",
+  "runner": {
+    "path": "scripts/verify_ifpmic_b03_h2_runtime_normal.py",
+    "command": [
+      ".ifpmic-venv/bin/python",
+      "scripts/verify_ifpmic_b03_h2_runtime_normal.py"
+    ],
+    "source_pin": "Independent pre-gate review pins final runner bytes; no self-referential contract hash."
+  },
+  "inventory": {
+    "total": 407,
+    "accepted_sql_local_ids_retained": 401,
+    "fresh_h1_cases": 5,
+    "new_real_cli_normal_cases": 1,
+    "prior_g6_ids_retained": 351,
+    "case_ids": "Exact literal per-phase IDs in TC ledger; compare401 against accepted prebinding archive, original351 against G6, and H1five against accepted H1 evidence. No unlisted test module or duplicate ID."
+  },
+  "limits": {
+    "phase_order": [
+      "h2_runtime_python",
+      "h1_python",
+      "g5_python",
+      "h2_schema_python",
+      "g4_python",
+      "legacy_python"
+    ],
+    "phase_seconds": {
+      "h2_runtime_python": 300,
+      "h1_python": 300,
+      "g5_python": 600,
+      "h2_schema_python": 300,
+      "g4_python": 300,
+      "legacy_python": 300
+    },
+    "maximum_phase_sum_seconds": 2100,
+    "normal_case_seconds": 30,
+    "integration_case_seconds": 240,
+    "integration_body_seconds": 215,
+    "integration_cleanup_seconds": 25,
+    "integration_exact_ids": [
+      "tests.ifpmic_api.test_h2_runtime_normal_flow.test_h2_runtime_real_cli_create_ready_admits_one_run_and_queues_one_receipt",
+      "tests.ifpmic_api.test_temporal_toolchain.test_temporal_persistent_history_restart_and_duplicate_policy"
+    ],
+    "timing_oracle": "All407 cases require finite ordered private start/report/finish progress records plus exact JUnit IDs/pass results. Each start→finish and JUnit time <=30, except exact two integration IDs <=240. Existing50 H2 cases retain25+5 watchdog; H1five retain their actual deadline evidence; new runtime case uses215+25 watchdog covering fixture setup/body/teardown and records all boundaries/timeout flags. A timeout always fails; phase-cap timeout requires actual saved-owned-process cleanup proof. Require exactly one start, exactly ordered setup/call/teardown reports all with outcome passed and finite nonnegative duration, and exactly one finish for each ledger ID; reject unknown/duplicate/out-of-order events. Each report <=30s except setup<=215s, call<=240s and teardown<=25s for the exact two integration IDs. A pytest call report includes the test function's own finally cleanup; independent watchdog boundaries still enforce setup+body<=215s and all shared cleanup<=25s, with total<=240s. Check JUnit and whole start-to-finish independently.",
+    "justification": "New normal integration includes real PG bootstrap, G5 durable filesystem preparation, source/environment attestation, pinned Temporal readiness, two production CLI processes, independent history/query/SQL/API probes and cleanup. 215+25 follows approved H2 exception and bounds total240. Separate300s phases isolate the normal runtime and originalH1five. Existing401 phase caps are unchanged from accepted contract; G5 was216.50s and all per-case elapsed<=7.911s in the accepted run.",
+    "rpc_seconds": 10,
+    "h1_rpc_seconds": 5,
+    "server_readiness_seconds": 30,
+    "pg_lock_seconds": 5,
+    "pg_statement_seconds": 30,
+    "process_graceful_seconds": 10,
+    "process_forced_seconds": 5,
+    "order_reason": "Resolve new real runtime/SDK/launcher uncertainty first, then freshly qualify H1 and rerun every401 retained case; no inherited partial pass substitutes for fresh required phases.",
+    "cleanup": "Use one absolute25s cleanup deadline for each integration case including all fixture teardown. Record every owned PID/start-ticks immediately after spawn, before readiness or assertions. Signal all saved live owned handles together, shared grace<=10s, SIGKILL only still-matching identities, then reap/verify CLI/worker/dispatcher/descendants and fixture PostgreSQL absent before the same deadline. Forced cleanup fails positive acceptance. Outer runner subreaper captures and cleans only proven descendants on any phase timeout; observation timeout never implies termination."
+  },
+  "stages": [
+    {
+      "id": "RN0_preflight",
+      "purpose": "Reject changed artifacts or unreviewed execution before starting services.",
+      "target": "Exact sources/contracts/ledger/reviews, private installed36 environment and pinnedCLI/PG artifacts, original32 environment and17+2 design files.",
+      "method": "SHA256/source inventory comparisons, installation-manifest/binary validation, static ledger ID reconciliation and minimal environment construction.",
+      "agent": "Code-dev runner; independent exact-source reviewer",
+      "pass_criteria": "All hashes/versions/package inventory match; exact407 uniqueIDs; no pre-existing owned child; no implicit download or ambient credential/config inheritance.",
+      "expected_result": "Frozen candidate/sourceZIP and before-environment/protected manifests captured privately before execution.",
+      "evidence": "Private candidate ZIP/source map,32+36 file maps, installation/binary hashes; public hashes/counts only.",
+      "failure_recovery": "Preserve preflightfailure; repair wrong source/pin/config, refresh exactreviews before any rerun."
+    },
+    {
+      "id": "RN1_real_normal",
+      "purpose": "Prove real production entrypoints and independent durable activation evidence.",
+      "target": "Actual accepted CREATE, real G5 READY, authenticated owner-registered dispatcher/projector, immutable build/source/env, pinned loopback persistent Temporal.",
+      "method": "HTTPaccept/replay; G5 realprovisioner; actualprivate source/envmanifests; distinctproduction -B -Xfreshcache CLI processes with noPYTHONPATH/PG*/cloud/userconfig; independent direct SDK Startedhistory/query/list and ownerSQL/API observations.",
+      "agent": "TC test/helper; Code-dev product/runner; independent finalreview",
+      "pass_criteria": "One exact immutable binding/admittedUUIDrun/scope/transitionreceipt; DRAFT0→QUEUED1 and accepted→appliedrevision1 atomic; outboxdispatched exactrun; originalacceptedHTTPreceipt replay unchanged whileGETcommand reportsapplied; literal independentbinding/proposalSHA and exactfourfieldstartpayload; expectedworkspacebytes/tree unchanged; all3 owned services exit0 gracefully and areabsent; no privatepayload/credentials leaked. Exactly one job and create command; no step, task, adapter or business effects; history has no workflow completion and the workflow remains open/queued. Owner mutations are limited to explicit registry and scoped eligibility fixtures; no job, command, outbox, binding, scope, receipt or history seeding. Require exactly one execution ifpmic.job.<canonical job UUID>, exactly one WorkflowExecutionStarted for the canonical admitted run/type/queue and exactly four input fields; direct phase query equals queued, with no Completed, ContinuedAsNew or second Started event. Independently read namespace retention>3600s and match stored observed retention; the immutable first-start/deadline interval is exactly3600s and unchanged after replay. Product source must commit record_start_attempt before calling start; normal history timestamps may only corroborate that order, while the actual pre-RPC cut remains separately required in the crash suite.",
+      "expected_result": "ActualproductionCLI path reachesQUEUED1 and remainsdurablywaiting withoutP01/businessAgent execution.",
+      "evidence": "Private DBbefore/after/oracles, rawhistory or exact historyobservation+hashes, processjournal/listeners/logs, manifests, timingrecords; normalized allowlisted publicsummary only.",
+      "failure_recovery": "Preserve candidate/logs/history/SQL/processjournal; diagnose manifest/startup/SCRAM/SDK/start/admission/ack/project/query/shutdown boundary; fix at that step, updatepins/reviews and rerunfull407."
+    },
+    {
+      "id": "RN2_h1_fresh",
+      "purpose": "Prove the pinned local service still preserves history/noIDreuse after restart.",
+      "target": "Allfive original H1 cases with unchanged version/oracles.",
+      "method": "Run exact H1 testmodule under qualified36 with fresh private evidence root; actual two server/worker/clientcycles, persistentstorage, wronghash/missing/truncated negatives.",
+      "agent": "TC authored existingH1 suite; Code-dev newrunner",
+      "pass_criteria": "Allfive pass; retention/history/duplicate assertions unchanged; six savedowned identities exit0/unforced/absent; finite timingrows normal25+5/integration215+25.",
+      "expected_result": "Fresh H1 service qualification on this candidate, not inherited historicalpass.",
+      "evidence": "Private H1result/processes/history/deadlines+JUnit/progress; public sanitizedcounts/hashes.",
+      "failure_recovery": "Preserve old+new evidence, returnH1 artifact/API/cleanupstep; no versionupgrade or weakenedassertions; reviewed full407 rerun."
+    },
+    {
+      "id": "RN3_regression401",
+      "purpose": "Preserve authority, atomicity, lease, configuration/privacy and allprior APIbehavior.",
+      "target": "Exactaccepted401 IDs: H250,G491,G593,legacy167.",
+      "method": "Four separate actualPG18.1 phases under original32 environment with exactexistingfixtures, explicitprogressplugin, private fallbackfiles/SCRAM/tempdirs.",
+      "agent": "TC authored existingtests; Code-dev runner",
+      "pass_criteria": "All401 pass/noerror/skip; all50 watchdogrecords valid; each actualcaseelapsed<=30; fourclusters stop and ownedchildren absent; original001/002/003bytes preserved.",
+      "expected_result": "New runtime test/tooling does not weaken SQL/local/APIfences.",
+      "evidence": "ActualJUnit/progress/50timingrows/SQLassertions/PGbinary+lifecycle hashes.",
+      "failure_recovery": "Preserve everyfailure; diagnose auth/lease/lock/migration/workspace/localvalidation; updatepins/reviews, rerunfull407 afterfix."
+    },
+    {
+      "id": "RN4_final_audit",
+      "purpose": "Require traceable actual proof before accepting even this partial increment.",
+      "target": "All6 phases,407 IDs, four baselinePGclusters plus runtimePGcluster, H1/runtime ownedprocesses, source/environment/originaldesign invariants, publication.",
+      "method": "Root comparisons and independent read-only actual evidence/hash/ID/timing/privacy audit after terminal run; normalized allowlist archive.",
+      "agent": "Code-dev integration plus independent reviewer",
+      "pass_criteria": "All407 passing/noerror/skip/timeout; exactsnapshot/sourceZIP; source+32/36env+17/2+protected96 unchanged duringrun; allowned services absent; fixedpublicallowlist contains no rawhistory/log/sourceZIP/DSN/PID/absoluteprivatepath.",
+      "expected_result": "Only partial normal-runtime increment accepted; fullH2/goal remainactive.",
+      "evidence": "Terminalprivate gate/publicnormalizedarchive+verification and independentfinalreview; postgateprogressreconciliation separate.",
+      "failure_recovery": "Rejectacceptance; retainraw/publiccandidate, fix evidenceproducer orproductstep, re-review/re-executeaffectedfull407 asrequired; never editfailedoutcome toPASS."
+    }
+  ],
+  "environment": {
+    "no_install_or_download": true,
+    "h1_and_runtime_interpreter": "PinnedH1toolchain/venv/bin/python using qualified36; verify sys.prefix and inventory plusinterpreterSHA.",
+    "sql_interpreter": "Original32 .ifpmic-venv/bin/python; baseline401 files selected explicitly.",
+    "network": "Only explicit127.0.0.1 Temporaltestendpoint and privateUnixsocketPG. Never remoteTemporal, realPaperclipDB, companyIdP/cloud/device.",
+    "isolation": "New private0700/0600 retained evidence/tempdirs perphase; actualruntime configs/source/env manifests and operationlogs stayprivate. NoHOMEoverride. No ambientcloud/proxy/TEMPORAL/PG/auth/userconfig; outerSQLfixture fallbackfiles explicitempty and actualruntimechild env contains noPG*.",
+    "server_launch": "Use the existing H1 verified binary helper and exact pinned SHA, --disable-config-env/--disable-config-file, private literal empty env-file, --ip127.0.0.1, unique private persistent SQLite data path, three owned loopback listeners. A port collision fails before use; no endpoint or process fallback."
+  },
+  "publication": {
+    "policy": "Private rawlogs/histories/credentials/processidentity/sourceZIP/absolutepaths never published. Only exact allowlisted counts/IDs/durations/hash/version/syntheticstatus summaries and sanitizedJUnit.",
+    "review": "Specify final archive allowlist and transformation in runner/source review before execution; final independent auditor compares everypublicmember to rawexactevidence.",
+    "archive_members": [
+      "gate/summary.json",
+      "gate/pytest.xml",
+      "gate/case-timings.json",
+      "gate/postgres-lifecycle.json",
+      "gate/temporal-summary.json",
+      "gate/source-manifest.json"
+    ],
+    "transformation": "Exactly these six relative members with fixed2000-01-01 ZIP timestamp/mode0644. Summary contains counts, phase durations/caps, candidate/hash invariants and scoped limitations. JUnit contains only classname/name/time and successful count fields, never captured output/hostname/private paths. Case timings contain normalized case IDs, elapsed deltas, body/cleanup limits and no absolute monotonic timestamps. PG lifecycle contains phase/version/binary hashes/operation exit+durations/stopped boolean, no paths or PIDs. Temporal summary contains pinned versions, H1 asserted retention and event-type/history hashes, runtime execution/receipt counts, queued/open status, source/env/build/history hashes and normalized owned process role/count/exit0/absence flags; no raw inputs, command/catalog bytes, UUID/process IDs, raw history/error/log text. Source manifest contains only relative repository paths and SHA256. Each member byte length and SHA and ZIP SHA are independently verified.",
+    "privacy_check": "Fail publication on actual root/toolchain/private temporary absolute prefixes, DSN/password/private-key markers, raw log/history/source ZIP members or process PID/start-tick fields. Do not reject harmless synthetic negative-test literals as actual paths. Final independent reviewer checks private raw records against the six public members; public evidence is not a replacement for raw private proof."
+  },
+  "remaining_mandatory_h2": {
+    "crash_barriers_not_covered_by_this_increment": [
+      "API commit before response/outbox claim",
+      "claim commit before Temporal RPC",
+      "Temporal accepted start before client receives response",
+      "start response before run-admission PG commit",
+      "admission commit before ack",
+      "ack commit before worker activation",
+      "projection before PG commit",
+      "projection PG commit before activity result in history",
+      "worker after activity result before subsequent workflow decision",
+      "PG and Temporal independent server restart with existing storage"
+    ],
+    "additional_required_cases": "Accepted-startresponse-loss through actualnetwork/provenpersistedStarted; workercommit-response-loss; admittedhistoryphysicaldeletion andfailclosed; live/expiredtwodispatcherleasefences; rogueinput/run/build/deployment; startupdisabled/missingconfigprincipals beforepoll/claim; currentauthrevocation/receipt replay; allotherimplementationcontractboundaryoracles notclaimedbythisnormalcase.",
+    "rule": "None waived or replaced by normal-flow/SQL tests. FullH2 cannot beverified until completecrash/negativeledger andactualevidence areindependentlyaccepted."
+  },
+  "omitted_stages": [
+    {
+      "item": "Node387/build/UI now",
+      "reason": "Only newPython runtimeverification/test/runner anddocs; protectedAXUI/server/plugin/Node/dependencies arebytechecked.",
+      "remaining_risk": "No newrendered runtimeviewproven; H6 mandatoryfreshNode387/build/UIimpactgate stillrequired."
+    },
+    {
+      "item": "H3-H7/originalAT32/realAgents/devices/productiondeployment/externalsubmission",
+      "reason": "This increment proves initialactivation only anddoesnotreplaceoriginalIFPMICdesign.",
+      "remaining_risk": "Fullworkflow/P01-P29/humanSAM-TEM-SQE responsibilities, approvalgates, finalvisualization andrealAT remainincomplete. Deviceoperations requirehuman; deployment/externalsubmission requireapproval."
+    }
+  ],
+  "goal_status": "active",
+  "acceptance_status": "not_executed"
+}

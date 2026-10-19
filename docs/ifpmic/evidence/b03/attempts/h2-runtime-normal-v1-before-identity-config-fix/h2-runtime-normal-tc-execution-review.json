@@ -1,0 +1,73 @@
+{
+  "kind": "ifpmic.b03.h2.runtime-normal-tc-execution-review.v1",
+  "verdict": "approve_execution",
+  "contract_sha256": "392bc61268092168ccf419e298b4a31b26b76753bd9eb9cf0bc0eb2932067dd4",
+  "contract_path": "docs/ifpmic/evidence/b03/h2-runtime-normal-execution-contract.json",
+  "reviewer": "TC execution reviewer (/root/h2_tc_query_fix)",
+  "reviewer_role": "TC test and ledger owner; worker_luna delegated execution-focused reviewer",
+  "review_scope": "Static source, ledger and exact-contract review only. No pytest collection/import, database, service or network execution.",
+  "reviewed_inputs": {
+    "execution_contract": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-normal-execution-contract.json",
+      "sha256": "392bc61268092168ccf419e298b4a31b26b76753bd9eb9cf0bc0eb2932067dd4"
+    },
+    "tc_ledger": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-normal-tc-ledger.json",
+      "sha256": "c43be1ce5c5542455edfbf49cdcc6fa4fa53d50cc6dbd6f842e2eaa26d8a7802",
+      "source_pin_count": 41,
+      "source_pin_mismatches": 0
+    },
+    "runtime_test": {
+      "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+      "sha256": "394710dcb7359d8b9f9d800e97d779f2676200fd1d4cdbeeaefa854e0f6f8103"
+    },
+    "runtime_deadline_plugin": {
+      "path": "tests/ifpmic_api/h2_runtime_case_budget.py",
+      "sha256": "d33f8de5ad0e9b85435642c1d974b3c055f47f627d8db45092231d9132dd2ed1"
+    },
+    "h1_test_and_fixture": {
+      "test_path": "tests/ifpmic_api/test_temporal_toolchain.py",
+      "test_sha256": "b17cd7b100938286ca7f68d3d4e24b9ba68547fd82ee2bd38a8d55abdccd2d6a",
+      "fixture_path": "tests/ifpmic_api/temporal_toolchain_fixture.py",
+      "fixture_sha256": "495278f52a5b6c539cd2b846d59e65c2a9b6cacf87f6e5bdfb36fab1d6ab3906",
+      "archive_path": "docs/ifpmic/evidence/b03/h1-gate.zip"
+    }
+  },
+  "checks": {
+    "contract_sha_matches_requested": true,
+    "ledger_sha_matches_contract": true,
+    "all_ledger_source_pins_match": true,
+    "source_pin_count": 41,
+    "exact_prior_401_case_ids_retained": true,
+    "all_case_ids_unique": true,
+    "total_case_count": 407,
+    "phase_order_matches_contract": true,
+    "phase_counts": {
+      "h2_runtime_python": 1,
+      "h1_python": 5,
+      "g5_python": 93,
+      "h2_schema_python": 50,
+      "g4_python": 91,
+      "legacy_python": 167
+    },
+    "phase_budgets_match_contract": {
+      "h2_runtime_python": true,
+      "h1_python": true,
+      "g5_python": true,
+      "h2_schema_python": true,
+      "g4_python": true,
+      "legacy_python": true
+    },
+    "runtime_case_and_h1_persistent_exception_ids_exact": true,
+    "runtime_plugin_explicitly_loaded": true,
+    "runtime_watchdog_covers_fixture_setup_call_and_teardown": true,
+    "body_cleanup_total_limits_match_contract": true,
+    "qualified36_toolchain_and_manifest_are_checked": true,
+    "real_cli_and_independent_history_sql_api_oracles_are_present": true,
+    "h1_case_ids_verified_against_source_and_archived_junit": true,
+    "required_crash_cuts_remain_out_of_scope_and_mandatory": true,
+    "execution_performed": false
+  },
+  "findings": [],
+  "execution_boundary": "The contract accurately matches the current TC ledger and authored test/helper interfaces. The 407 case inventory preserves all 401 accepted SQL/local IDs, then adds the exact five H1 IDs and one H2 normal-flow ID in the stated phase order. Only the exact H1 persistent-history case and exact H2 normal-flow case receive 240-second budgets; the new H2 watchdog starts at pytest protocol entry, covers fixture setup through teardown, enforces 215 seconds before shared cleanup and 25 seconds for process plus fixture cleanup, and writes only private timing evidence. The runtime test uses the qualified36 H1 environment, real production CLI processes, physical G5 READY, independently observed Temporal history/query and owner SQL/API state. The archived H1 JUnit IDs and current test function names agree. This review approves only authoring the frozen runner/pre-gate package for the exact contract SHA; it grants no execution authority by itself. Both required exact-SHA reviews and the frozen pre-gate approval remain required before any test/import/service/SQL execution. Accepted-start response-loss, worker crash/recovery, physical history deletion and all other remaining H2 crash cuts stay mandatory; no full H2 or original AT acceptance is claimed."
+}

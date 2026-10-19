@@ -1,0 +1,201 @@
+{
+  "archive": {
+    "entries": {
+      "gate/case-timings.json": {
+        "bytes": 99756,
+        "sha256": "7309e9e07d20dfb7a0cd023efacf2b12ff3c481ee700a68e5a7a8ee1e8bff95f"
+      },
+      "gate/postgres-lifecycle.json": {
+        "bytes": 5973,
+        "sha256": "a93486086e468b4e27fa0c722027aefd4e66fc609a653acca29f5d14b57983c8"
+      },
+      "gate/pytest.xml": {
+        "bytes": 71792,
+        "sha256": "a073ce175e7ca57ce9fc99b672a09ac9a46c9e3a97f53257fbaac673d70438d1"
+      },
+      "gate/source-manifest.json": {
+        "bytes": 140015,
+        "sha256": "d779a5d5badf54a1ab97b98b283ba5857569ae44ac1538b9e28f3237d2994139"
+      },
+      "gate/summary.json": {
+        "bytes": 3388,
+        "sha256": "6f165b2629465a567e02356e5194bc87c72bfc5b6ca8a681ed39f4c5fbc3ff91"
+      },
+      "gate/temporal-summary.json": {
+        "bytes": 3112,
+        "sha256": "e9963ea8deebf93375578ec7a469e641896d40fb1f9a34664d3fd95437d67a3f"
+      }
+    },
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-normal-gate.zip",
+    "sha256": "ad9b085e1cfa25b7d6109354a57f9f6e07c660281f9255fef5669fe160f13c16"
+  },
+  "candidate_fingerprint": "7a66f653bfca7bf04ed84fe89627f3d88c91f608493402c0e48e4ba7a259c49a",
+  "decision": "pass_pending_independent_final_review",
+  "execution_contract": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-normal-execution-contract.json",
+    "sha256": "7e730a5936a39d364821df4b1e92afabc36813211f97cbd920aad7db2018260b"
+  },
+  "failed_attempts": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-normal-attempts.json",
+    "sha256": "ec114583bd1c58fe968c5e63f0c1bc29de878ae1c7219231700787270c7777cb"
+  },
+  "goal_status": "active",
+  "kind": "ifpmic.b03.h2.runtime-normal-verification.v1",
+  "limitations": [
+    {
+      "item": "Node387/build/UI now",
+      "reason": "Only newPython runtimeverification/test/runner anddocs; protectedAXUI/server/plugin/Node/dependencies arebytechecked.",
+      "remaining_risk": "No newrendered runtimeviewproven; H6 mandatoryfreshNode387/build/UIimpactgate stillrequired."
+    },
+    {
+      "item": "H3-H7/originalAT32/realAgents/devices/productiondeployment/externalsubmission",
+      "reason": "This increment proves initialactivation only anddoesnotreplaceoriginalIFPMICdesign.",
+      "remaining_risk": "Fullworkflow/P01-P29/humanSAM-TEM-SQE responsibilities, approvalgates, finalvisualization andrealAT remainincomplete. Deviceoperations requirehuman; deployment/externalsubmission requireapproval."
+    }
+  ],
+  "phases": [
+    {
+      "case_progress": {
+        "cases": 1,
+        "maximum_elapsed_seconds": 16.392518979999295,
+        "sha256": "defdea8b9caf81f0e7c393a9dc1e027dc657a110d2fc34406afbde4b097a2247"
+      },
+      "counts": {
+        "errors": 0,
+        "failed": 0,
+        "skipped": 0,
+        "tests": 1
+      },
+      "name": "h2_runtime_python",
+      "seconds": 22.481669250000778,
+      "timeout_seconds": 300
+    },
+    {
+      "case_progress": {
+        "cases": 5,
+        "maximum_elapsed_seconds": 16.607301041000028,
+        "sha256": "5343354e8cbe9de3569afa49e26931bbb80b6f1ede3fdbb11b79429cddb2af7a"
+      },
+      "counts": {
+        "errors": 0,
+        "failed": 0,
+        "skipped": 0,
+        "tests": 5
+      },
+      "name": "h1_python",
+      "seconds": 20.401370531000794,
+      "timeout_seconds": 300
+    },
+    {
+      "case_progress": {
+        "cases": 93,
+        "maximum_elapsed_seconds": 16.73486452799989,
+        "sha256": "4ef0b0ee5166c9fbff5762701252fb92cd66da6b3f79bbbe964acdf4390797a9"
+      },
+      "counts": {
+        "errors": 0,
+        "failed": 0,
+        "skipped": 0,
+        "tests": 93
+      },
+      "name": "g5_python",
+      "seconds": 279.8827636469996,
+      "timeout_seconds": 600
+    },
+    {
+      "case_progress": {
+        "cases": 50,
+        "maximum_elapsed_seconds": 4.924821805001557,
+        "sha256": "2ea9949e74204adeb4741ed500c691b2e29ffe5e6a823b9eefc085c7afa161ec"
+      },
+      "counts": {
+        "errors": 0,
+        "failed": 0,
+        "skipped": 0,
+        "tests": 50
+      },
+      "name": "h2_schema_python",
+      "seconds": 54.88326150099965,
+      "timeout_seconds": 300
+    },
+    {
+      "case_progress": {
+        "cases": 91,
+        "maximum_elapsed_seconds": 10.639048087001356,
+        "sha256": "388d3dc2af46afb8e96a308aa0e1b3f0eab84182154063c3273b4bb609f97c53"
+      },
+      "counts": {
+        "errors": 0,
+        "failed": 0,
+        "skipped": 0,
+        "tests": 91
+      },
+      "name": "g4_python",
+      "seconds": 236.47491957400052,
+      "timeout_seconds": 300
+    },
+    {
+      "case_progress": {
+        "cases": 167,
+        "maximum_elapsed_seconds": 5.325792098999955,
+        "sha256": "2e0c8c1c9fd6f1af1c9028d66b8fb49b144548bd17e6369f2e8d2e096a7e718c"
+      },
+      "counts": {
+        "errors": 0,
+        "failed": 0,
+        "skipped": 0,
+        "tests": 167
+      },
+      "name": "legacy_python",
+      "seconds": 160.6120953360005,
+      "timeout_seconds": 300
+    }
+  ],
+  "private_candidate_source_zip_sha256": "e603a05a56e5bd5ed76402af64f9e909d7657f1868103e61369ff70968656a81",
+  "private_gate": {
+    "path": "workflow-artifacts/verification/B03/H2/runtime-normal/gates/2026-10-19T13-14-17-430254Z/gate.json",
+    "sha256": "27963ed280374771c18630f6db2a42799caace35fad4173d3bb24d03755807f1"
+  },
+  "publication": {
+    "archive_members": [
+      "gate/summary.json",
+      "gate/pytest.xml",
+      "gate/case-timings.json",
+      "gate/postgres-lifecycle.json",
+      "gate/temporal-summary.json",
+      "gate/source-manifest.json"
+    ],
+    "policy": "Private rawlogs/histories/credentials/processidentity/sourceZIP/absolutepaths never published. Only exact allowlisted counts/IDs/durations/hash/version/syntheticstatus summaries and sanitizedJUnit.",
+    "privacy_check": "Fail publication on actual root/toolchain/private temporary absolute prefixes, DSN/password/private-key markers, raw log/history/source ZIP members or process PID/start-tick fields. Do not reject harmless synthetic negative-test literals as actual paths. Final independent reviewer checks private raw records against the six public members; public evidence is not a replacement for raw private proof.",
+    "review": "Specify final archive allowlist and transformation in runner/source review before execution; final independent auditor compares everypublicmember to rawexactevidence.",
+    "transformation": "Exactly these six relative members with fixed2000-01-01 ZIP timestamp/mode0644. Summary contains counts, phase durations/caps, candidate/hash invariants and scoped limitations. JUnit contains only classname/name/time and successful count fields, never captured output/hostname/private paths. Case timings contain normalized case IDs, elapsed deltas, body/cleanup limits and no absolute monotonic timestamps. PG lifecycle contains phase/version/binary hashes/operation exit+durations/stopped boolean, no paths or PIDs. Temporal summary contains pinned versions, H1 asserted retention and event-type/history hashes, runtime execution/receipt counts, queued/open status, source/env/build/history hashes and normalized owned process role/count/exit0/absence flags; no raw inputs, command/catalog bytes, UUID/process IDs, raw history/error/log text. Source manifest contains only relative repository paths and SHA256. Each member byte length and SHA and ZIP SHA are independently verified."
+  },
+  "real_acceptance_status": "not_executed",
+  "remaining_mandatory_h2": {
+    "additional_required_cases": "Accepted-startresponse-loss through actualnetwork/provenpersistedStarted; workercommit-response-loss; admittedhistoryphysicaldeletion andfailclosed; live/expiredtwodispatcherleasefences; rogueinput/run/build/deployment; startupdisabled/missingconfigprincipals beforepoll/claim; currentauthrevocation/receipt replay; allotherimplementationcontractboundaryoracles notclaimedbythisnormalcase.",
+    "crash_barriers_not_covered_by_this_increment": [
+      "API commit before response/outbox claim",
+      "claim commit before Temporal RPC",
+      "Temporal accepted start before client receives response",
+      "start response before run-admission PG commit",
+      "admission commit before ack",
+      "ack commit before worker activation",
+      "projection before PG commit",
+      "projection PG commit before activity result in history",
+      "worker after activity result before subsequent workflow decision",
+      "PG and Temporal independent server restart with existing storage"
+    ],
+    "rule": "None waived or replaced by normal-flow/SQL tests. FullH2 cannot beverified until completecrash/negativeledger andactualevidence areindependentlyaccepted."
+  },
+  "scope": "Actual local production-CLI normal activation plus fresh H1 and401 SQL/local regressions only. No full H2 crash/history-loss or original AT acceptance.",
+  "tc_ledger": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-normal-tc-ledger.json",
+    "sha256": "ec5c419f853741f2ea0c127bbf8fbd58e3e2bdc7a2ef0d04975a47f7033600c7"
+  },
+  "tests": {
+    "errors": 0,
+    "failed": 0,
+    "passed": 407,
+    "skipped": 0
+  }
+}

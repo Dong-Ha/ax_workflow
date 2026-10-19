@@ -1,0 +1,64 @@
+{
+  "kind": "ifpmic.b03.h2.runtime-normal-execution-review.v1",
+  "verdict": "approve_execution",
+  "contract_path": "docs/ifpmic/evidence/b03/h2-runtime-normal-execution-contract.json",
+  "contract_sha256": "392bc61268092168ccf419e298b4a31b26b76753bd9eb9cf0bc0eb2932067dd4",
+  "reviewer": {
+    "agent_id": "/root/h2_prebinding_gate_audit",
+    "actual_role": "worker_luna",
+    "review_type": "independent exact-contract and literal-ledger review"
+  },
+  "review_scope": "Authorize authoring and freezing the new bounded runner for the specified 407-case normal-runtime increment only. This is not approval of execution, product correctness, full H2, or original acceptance tests.",
+  "reviewed_inputs": {
+    "implementation_contract_sha256": "f63173ac17ebebd34a15d5966d96b79dc1667a713c00b1b92868b137ba93ded3",
+    "tc_ledger_path": "docs/ifpmic/evidence/b03/h2-runtime-normal-tc-ledger.json",
+    "tc_ledger_sha256": "c43be1ce5c5542455edfbf49cdcc6fa4fa53d50cc6dbd6f842e2eaa26d8a7802",
+    "accepted_prebinding_verification_sha256": "fd7d09c2fafc51eab799043ccbb9e39111489b927bb074fe222ce5bda8902a0f",
+    "accepted_prebinding_final_review_sha256": "acdf1621405d29f3ffe373e75cae1856cf9417ce9c9caf1437f9db796031228d",
+    "planned_crash_matrix_path": "docs/ifpmic/H2-RUNTIME-CRASH-MATRIX.md",
+    "planned_crash_matrix_sha256": "f187a2d40dd46331fb69869f102d910d73b007ab664a3566434e4a8cd4f55f76"
+  },
+  "checks": [
+    {
+      "id": "exact_contract_and_ledger",
+      "result": "pass",
+      "evidence": "The contract pins the exact ledger SHA; the ledger pins the approved H2 implementation contract. All 41 ledger source pins exist and match their recorded SHA-256 values."
+    },
+    {
+      "id": "literal_inventory_and_prior_evidence",
+      "result": "pass",
+      "evidence": "The six frozen phases contain 407 unique IDs: 401 accepted SQL/local IDs, five exact H1 IDs and one new normal-flow runtime ID. All 401 exactly match the accepted prebinding JUnit archive; all 351 G6 IDs exactly match the archived G6 phase JUnit; all five H1 IDs exactly match the accepted H1 JUnit archive."
+    },
+    {
+      "id": "normal_runtime_oracles",
+      "result": "pass",
+      "evidence": "The plan requires actual API create/replay and GET observations; physical G5 READY provisioning; real dispatcher and worker CLI processes; one canonical workflow execution and admitted UUID run; exact four-field Started input; direct queued query; retention greater than one hour and an unchanged exact one-hour first-start deadline; one scoped run, dispatch attempt and applied sequence-1 receipt; atomic QUEUED revision 1; and no workflow completion, second start, business steps, tasks, candidate or human result. Product source ordering before the start RPC remains expressly unproven by this normal-flow case and is reserved for the separate crash cut."
+    },
+    {
+      "id": "bounded_deadlines_and_cleanup",
+      "result": "pass",
+      "evidence": "Only the exact normal runtime case and H1 persistent-history case receive the 240-second exception. Their report limits are setup<=215, call<=240 and teardown<=25; the runtime watchdog independently enforces 215-second setup/body, one shared 25-second cleanup and 240-second total. Other 405 cases retain 30-second completion and report bounds; existing H2 watchdogs retain 25+5. Phase caps are frozen at 300/300/600/300/300/300 seconds (2100 seconds summed). Cleanup journals every PID/start-tick immediately, signals all owned handles under one deadline, uses forced signaling only for matching identities, reaps descendants and fixture PostgreSQL, and rejects forced cleanup."
+    },
+    {
+      "id": "environment_process_and_privacy",
+      "result": "pass",
+      "evidence": "The plan pins the qualified H1 36-package interpreter and CLI, preserves the original 32-package regression environment, prohibits downloads and ambient config/credentials, confines PostgreSQL to private Unix sockets and Temporal to verified loopback listeners, and keeps raw SQL/history/process/config evidence private. Publication is restricted to six normalized allowlisted members with member hashes, excludes paths/PIDs/credentials/raw history/logs/source ZIP, and requires independent raw-to-public comparison."
+    },
+    {
+      "id": "partial_scope_and_future_obligations",
+      "result": "pass",
+      "evidence": "The contract remains not executed and partial. All response-loss, crash-barrier, physical history-deletion, restart, negative-boundary and remaining implementation-contract cases remain mandatory. The separate crash matrix is explicitly marked planned/not executed, supplements the implementation contract, and is linked from progress documentation. No H1 service, full H2, original AT, H3-H7, or final AX acceptance is claimed."
+    }
+  ],
+  "findings": [],
+  "execution_authority": "This exact-contract approval permits authoring the runner. Before any pytest collection/import, service, SQL or Temporal execution, the final runner and all frozen source, fixture, helper, environment and evidence pins require a separate independent frozen-pre-gate approval. No test or service execution was performed for this review.",
+  "remaining_limits": [
+    "The runner is not yet authored or frozen; the pre-gate review remains mandatory.",
+    "TC owns the new literal test/plugin; their authored source and runtime oracles still require final source-pin and pre-gate review.",
+    "The planned crash/history-loss matrix and full H2 runtime remain mandatory and unexecuted."
+  ],
+  "method_limits": {
+    "methods": ["SHA-256 checks", "static JSON/XML/ZIP ledger reconciliation", "read-only source inspection"],
+    "not_performed": ["pytest collection or execution", "imports", "SQL", "PostgreSQL startup", "Temporal startup", "product or test edits"]
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "kind": "ifpmic.b03.h2.runtime-graceful-stop-source-review.v1",
+  "verdict": "no_blocking_source_findings",
+  "reviewer": {
+    "agent_id": "/root/h2_prebinding_advice",
+    "actual_role": "senior_sol",
+    "independence": "Root owns and authored the runtime patch; separate TC owns test/oracle and lifecycle-journal changes. Reviewer read the exact source delta and wrote this review only."
+  },
+  "scope": "Narrow critical concurrency/source review of requested-stop versus normal poller completion classification. This does not review the new TC oracle/journal edits, certify runtime behavior, attribute prior exit codes, approve execution or accept a gate.",
+  "reviewed_source": {
+    "path": "services/ifpmic_api/execution_runtime.py",
+    "sha256": "49c0c6208e62b26e808ecffadf278dd9c7cff45134a47b905d3a4f60987c4b08"
+  },
+  "context_references": {
+    "docs/ifpmic/evidence/b03/h2-runtime-source-review.json": "8da116d7b133c7956c46230aec3fe1894c368495c9cf6ced2fed5836cf84aaa3",
+    "docs/ifpmic/evidence/b03/h2-runtime-normal-attempts.json": "ec114583bd1c58fe968c5e63f0c1bc29de878ae1c7219231700787270c7777cb"
+  },
+  "findings": [],
+  "checks": [
+    {
+      "id": "STOP-RACE-IS-REAL-IN-SOURCE",
+      "result": "satisfied",
+      "locations": ["execution_runtime.py:35", "execution_runtime.py:77", "execution_runtime.py:89"],
+      "reasoning": "SIGINT/SIGTERM request_stop synchronously sets the shared event and arms the self-only watchdog. Pumps waiting on that event then reach the while condition and return normally. asyncio.wait FIRST_COMPLETED may return a set containing both stop_task and one or more completed pumps. Therefore normal pump completion is not sufficient evidence of failure once a stop has been requested."
+    },
+    {
+      "id": "STOP-CLASSIFICATION-MINIMAL-FIX",
+      "result": "no_blocking_source_issue",
+      "locations": ["execution_runtime.py:91", "execution_runtime.py:97", "execution_runtime.py:98"],
+      "reasoning": "The patch retains task.result for each completed non-stop task reached by the loop, then raises the unexpected-return RuntimeError only when stopping is not set. Successful completion during requested stop can now finish normally. An unsolicited successful return still produces operational failure. The loop does not break or return merely because stop_task is present, so it continues inspecting the other completed tasks."
+    },
+    {
+      "id": "STOP-COMPLETED-TASK-FAILURES-PRESERVED",
+      "result": "no_blocking_source_issue",
+      "locations": ["execution_runtime.py:92", "execution_runtime.py:97"],
+      "reasoning": "task.result executes before the stopping predicate. If a completed pump/worker raised an exception, that exception propagates regardless of a concurrently requested stop. Iteration order cannot turn an observed task exception into success: normal completed tasks during stop merely continue; a subsequent failing completed task still raises. If no stop was requested, either an actual exception or the normal-return guard fails the run. This is a source-level classification argument, not a fault-injection test result."
+    },
+    {
+      "id": "STOP-BOUNDED-CLEANUP-PRESERVED",
+      "result": "unchanged_by_patch",
+      "locations": ["execution_runtime.py:42", "execution_runtime.py:100", "execution_runtime.py:106", "execution_runtime.py:109"],
+      "reasoning": "finally still unconditionally invokes request_stop. The15s self-only timer remains armed through cancellation, gathering and interpreter thread joins. Explicit worker.shutdown remains bounded by10s; tasks are then cancelled and the activity executor receives nonwaiting shutdown. request_stop is idempotent and does not extend an already armed deadline. No broader process signalling, timer cancellation or timeout increase was added."
+    },
+    {
+      "id": "STOP-SECURITY-AND-BUSINESS-BOUNDARY",
+      "result": "unchanged_by_patch",
+      "reasoning": "The exact git delta changes only the completed-task comment and normal-return condition. Source/environment/private configuration validation, authenticated registry checks before Temporal connect/claim/poll, immutable identity/build/queue, fixed public error output, role separation, activity/projector behavior and database/Temporal business transitions are untouched. A requested stop event is process control, not workflow completion or domain PASS."
+    }
+  ],
+  "risks_and_edge_cases": [
+    "This fix checks failures in the done set returned by asyncio.wait. Pending tasks cancelled in finally are still gathered with return_exceptions as before; the patch does not introduce a new audit of exceptions arising later during cleanup.",
+    "The stopping flag records whether shutdown has been requested by classification time. It does not reconstruct causal ordering between an SDK worker's independent successful return and a concurrent signal. For the dispatcher pump shown here, normal return follows observing the shared stop event.",
+    "Actual graceful exit0 and bounded forced termination require process evidence. The self-timer/worker-shutdown source alone does not prove PID absence or that an outstanding DB transaction rolled back.",
+    "The failed-attempt summary explicitly says dispatcher exit3 is not directly attributed to this race because pre-stop process evidence was absent. This review preserves that uncertainty and does not reinterpret either failed gate as passing."
+  ],
+  "recommendation": "Keep this minimal source patch. Refresh the exact runtime source fingerprint and any dependent ledger/contract/pre-gate pins before the next separately authorized complete gate. Verify requested dispatcher stop alongside normal pump completion, an actual completed-pump failure during stop, unexpected return without stop, and lifecycle pre-stop/post-stop evidence without weakening positive exit or PID-absence oracles.",
+  "remaining_uncertainty": [
+    "No runtime, test, import, signal delivery, SQL, service or private gate execution was performed by this reviewer.",
+    "No raw private failed gate was audited for exit-code attribution; only the narrow source and preserved public attempt summary were read.",
+    "TC text-versus-dict oracle repairs and new pre-stop journaling are owned and reviewed separately."
+  ],
+  "decision": {
+    "source_blocking_findings": 0,
+    "execution_authorized": false,
+    "runtime_certified": false,
+    "acceptance": "none; failed gates remain failed and actual runtime/407-case results require fresh evidence"
+  },
+  "method_limits": "Read current execution_runtime.py, its exact git delta and narrow existing review/attempt context; recomputed source/context SHA256 values. Wrote only this review JSON. No product/test/runner edits, imports, test/service execution or network actions."
+}
