@@ -1,0 +1,181 @@
+{
+  "kind": "ifpmic.b03.h2.schema-final-review.v1",
+  "verdict": "accept_partial_h2_sql_foundation",
+  "reviewer": "/root/h2_tmp_review",
+  "reviewed_at_utc": "2026-10-19T11:00:37+00:00",
+  "scope": "Final audit of the exact bounded H2 PostgreSQL schema, authentication and initial activation SQL subgate evidence. This decision accepts only that partial foundation.",
+  "candidate_commit": "9fc453825cf0761740bee87fc787a6a86d9c082c",
+  "candidate_source_fingerprint": "a8703df88dae90076bc36788c5228ef052c30cc9f939872679933de55b00a0fb",
+  "inputs": {
+    "execution_contract": {
+      "path": "docs/ifpmic/evidence/b03/h2-schema-execution-contract.json",
+      "sha256": "edd3f7bd89ecc94b3a4d01ec5dde7239bd391667cfbe141bbce23bc7ad9a5197"
+    },
+    "pre_gate_review": {
+      "path": "docs/ifpmic/evidence/b03/h2-schema-pre-gate-review.json",
+      "sha256": "3bbac06d40bade5c9588bf8c8d479f497057e9d9a32d55574b017ef81dfbabcd"
+    },
+    "independent_execution_review": {
+      "path": "docs/ifpmic/evidence/b03/h2-schema-execution-review.json",
+      "sha256": "61c4040922c9c73b0e644d684c47a7bb18bcb4b466638302312feb436b6f7390"
+    },
+    "tc_execution_review": {
+      "path": "docs/ifpmic/evidence/b03/h2-schema-tc-execution-review.json",
+      "sha256": "7610738522c3ec563247552f9f4ace0b45476fd9879e57899c0ee12eadde5073"
+    },
+    "tc_ledger": {
+      "path": "docs/ifpmic/evidence/b03/h2-schema-tc-ledger.json",
+      "sha256": "57f13ae7bf25749de83159eb3c32cacaf486e4eb0e94e250525048a81b75ef86"
+    },
+    "private_gate_report": {
+      "path": "workflow-artifacts/verification/B03/H2/schema/gates/2026-10-19T10-46-11-148980Z/gate.json",
+      "sha256": "653937f9c4705a50add8d2c1b4ceb263015e380685e88af59e1741b447d668b6"
+    },
+    "private_candidate_source_zip": {
+      "path": "workflow-artifacts/verification/B03/H2/schema/gates/2026-10-19T10-46-11-148980Z/candidate-source.zip",
+      "sha256": "c06f524e50873ea598302022efd09ab07b960c8d83e463bf88b864921d441084"
+    },
+    "public_verification": {
+      "path": "docs/ifpmic/evidence/b03/h2-schema-verification.json",
+      "sha256": "4569ca04ad59a85785244c05c4dc3e74307fa2d7ff9974de4b8047b9c8aac402"
+    },
+    "sanitized_evidence_archive": {
+      "path": "docs/ifpmic/evidence/b03/h2-schema-gate.zip",
+      "sha256": "18a2331f4fb0327c202242df84c6d6c1887946a7332bee87be36c4986e0459d4"
+    },
+    "prior_failed_attempt_history": {
+      "path": "docs/ifpmic/evidence/b03/h2-schema-runtime-attempts.json",
+      "sha256": "88316ee212386edeb6e237ab321519806c06a239276b58c2945ea6301b65ff53"
+    },
+    "reviewer_provenance_correction": {
+      "path": "docs/ifpmic/evidence/b03/h2-schema-reviewer-provenance-correction.json",
+      "sha256": "8628be4a82eebc90b43538e2c8f1e44332d9e4251bf25412e280ade1e9cf9f3f"
+    }
+  },
+  "review_method": [
+    "Read the raw private gate report and each phase JUnit, timing and PostgreSQL lifecycle artifact; independently parsed the sanitized JUnit and compared all exact IDs to the pinned TC ledger and the original351 IDs to accepted G6 api/gate.json.",
+    "Verified raw report, public verification and ZIP hashes; exact 29 pre-gate source pins and two same-contract review pins; ledger source pins; private 1009-file candidate source ZIP contents and hashes against both the gate source map and current source bytes.",
+    "Checked source-change list, original32/qualified36 environment unchanged result and before-manifest hash, private TMPDIR roots and modes, all four PostgreSQL stop/PID-absent lifecycle results, and no owned children.",
+    "Recomputed all five public archive entry hashes and reviewed their contents for exact case inventory, timing limits, lifecycle summaries, relative source manifest and privacy filtering. Confirmed four prior failed attempts remain represented in the history artifact.",
+    "No tests, SQL, migrations, databases, or services were run during this review."
+  ],
+  "execution_result": {
+    "private_gate_verdict": "pass",
+    "phases": [
+      {
+        "name": "h2_schema_python",
+        "tests": 10,
+        "passed": 10,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0,
+        "seconds": 29.98124314399979
+      },
+      {
+        "name": "g4_python",
+        "tests": 91,
+        "passed": 91,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0,
+        "seconds": 177.07883739299996
+      },
+      {
+        "name": "g5_python",
+        "tests": 93,
+        "passed": 93,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0,
+        "seconds": 260.56684044400004
+      },
+      {
+        "name": "legacy_python",
+        "tests": 167,
+        "passed": 167,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0,
+        "seconds": 154.99418376100016
+      }
+    ],
+    "total": {
+      "tests": 361,
+      "passed": 361,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "new_case_watchdogs": {
+      "records": 10,
+      "body_limit_seconds": 25,
+      "cleanup_limit_seconds": 5,
+      "total_limit_seconds": 30,
+      "max_body_seconds": 13.89112534800006,
+      "max_total_seconds": 14.128787917999944
+    },
+    "original_case_identity": "All351 legacy/G4/G5 IDs equal accepted G6 archive inventory; all ten new H2 IDs equal the pinned ledger.",
+    "phase_lifecycles": {
+      "postgres_clusters_stopped": 4,
+      "each_pid_alive": false,
+      "owned_children_absent": true
+    },
+    "source_and_environment": {
+      "source_files": 1009,
+      "source_fingerprint": "a8703df88dae90076bc36788c5228ef052c30cc9f939872679933de55b00a0fb",
+      "source_changes": [],
+      "original32_and_qualified36_unchanged": true,
+      "protected_imports": 17,
+      "protected_uploads": 2,
+      "environment_before_manifest_sha256": "b68aa30da8886fad1e0b2266c05b1f1393875b8f56ca47e04be77e578319d269"
+    },
+    "previous_failures": "Four failed/partial attempts remain preserved in the named attempt-history artifact; none was relabeled as a pass."
+  },
+  "publication_audit": {
+    "archive_entries": [
+      "gate/summary.json",
+      "gate/pytest.xml",
+      "gate/h2-case-timings.json",
+      "gate/postgres-lifecycle.json",
+      "gate/source-manifest.json"
+    ],
+    "entry_hashes_match_verification_record": true,
+    "no_raw_logs_sql_credentials_actual_pid_or_hostnames": true,
+    "paths_are_relative_except_fixed_test_vector": "JUnit includes the literal adversarial fixture string /tmp/ATTACKER_PATH in historical parameterized test IDs; it is a fixed test input, not an actual filesystem path or host location.",
+    "private_source_bundle_retained_separately": true
+  },
+  "findings": [
+    {
+      "id": "REVIEWER-PROVENANCE-LABEL",
+      "severity": "metadata",
+      "status": "resolved_by_correction_record",
+      "detail": "The superseded draft inherited a senior reviewer label. Corrected here to the actual independent worker role. No runtime evidence, source pin, or acceptance result changed."
+    }
+  ],
+  "accepted_boundary": {
+    "decision": "accept_partial_h2_sql_foundation",
+    "h2_full_acceptance": "incomplete",
+    "actual_temporal_admission_delivery_worker_crash_recovery": "not_covered",
+    "fresh_integrated_h1_runtime": "still_required",
+    "original_at32": "not_executed",
+    "goal_status": "active"
+  },
+  "limitations": [
+    "This gate establishes only the reviewed SQL/authentication/initial-activation foundation and affected API regression. It does not establish actual Temporal admission, transport-loss handling, worker build attestation, process crash recovery, full H2, or original AT acceptance.",
+    "Full Node/build/browser and final AX visualization checks remain outside this subgate."
+  ],
+  "reviewer_role": "worker_luna",
+  "reviewer_independence": "Independent worker review, separate from main orchestrator and TC author. Senior model escalation was not used for this final evidence audit.",
+  "provenance_correction": {
+    "finding": "The initial final-review draft inherited the senior reviewer label from a template; that label inaccurately attributed the final evidence audit and routine v4-v7 deltas.",
+    "resolution": "This final review names the actual reviewer /root/h2_tmp_review (worker_luna). The correction record preserves hashes of historical execution/pre-gate review files without changing them.",
+    "unchanged_senior_review": {
+      "path": "docs/ifpmic/evidence/b03/h2-schema-code-review.json",
+      "sha256": "ddeeeefc25fb02a625c9cf20300b1f5192e0fcf7f73097952a7f2e89fcd7bad7",
+      "actual_agent": "/root/h2_security_architecture",
+      "actual_role": "senior_sol",
+      "scope": "Critical SQL/authentication architecture static review, including trusted G4 catalog provenance boundary. Earlier execution contract v3 and its pre-gate also received senior review."
+    },
+    "reviewer_requirement": "The reviewed contract requires an independent reviewer and TC review; it does not require a senior model for every routine delta or final evidence audit."
+  }
+}

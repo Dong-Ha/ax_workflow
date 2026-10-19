@@ -1,0 +1,52 @@
+{
+  "kind": "ifpmic.b03.h2.schema-progress-reconciliation.v1",
+  "scope": "Post-audit derived evidence/progress only. No product, tests, runner, execution contract/approval, lock, README or original input changes after pass.",
+  "parent_commit": "9fc453825cf0761740bee87fc787a6a86d9c082c",
+  "accepted_candidate_fingerprint": "a8703df88dae90076bc36788c5228ef052c30cc9f939872679933de55b00a0fb",
+  "private_gate_sha256": "653937f9c4705a50add8d2c1b4ceb263015e380685e88af59e1741b447d668b6",
+  "verification": {
+    "path": "docs/ifpmic/evidence/b03/h2-schema-verification.json",
+    "sha256": "4569ca04ad59a85785244c05c4dc3e74307fa2d7ff9974de4b8047b9c8aac402"
+  },
+  "independent_acceptance": {
+    "path": "docs/ifpmic/evidence/b03/h2-schema-final-review.json",
+    "sha256": "5a662155c3532e4d97c4fc553af6d4180c1befb4deea61f4731e2a045bff58ca",
+    "decision": "accept_partial_h2_sql_foundation",
+    "actual_reviewer": "/root/h2_tmp_review",
+    "actual_role": "worker_luna"
+  },
+  "progress": {
+    "path": "docs/ifpmic/progress.json",
+    "before_sha256": "fb173731a7deb30dab4a99561ddba0512b74a36843324d0e00cf30342cf4137d",
+    "after_sha256": "a2eceb3ab135ce2f79248f4fd4fd743ecdc66b21d1befccd5cbfa343a791aa58",
+    "changed_semantic_paths": [
+      "stages[B03].scope",
+      "stages[B03].increments[h2_durable_delivery_activation]",
+      "next_step",
+      "updated_at"
+    ]
+  },
+  "frozen_sources": {
+    "count": 1009,
+    "unchanged": 1008,
+    "changed": [
+      "docs/ifpmic/progress.json"
+    ]
+  },
+  "added_derived_files": {
+    "docs/ifpmic/evidence/b03/h2-schema-verification.json": "4569ca04ad59a85785244c05c4dc3e74307fa2d7ff9974de4b8047b9c8aac402",
+    "docs/ifpmic/evidence/b03/h2-schema-gate.zip": "18a2331f4fb0327c202242df84c6d6c1887946a7332bee87be36c4986e0459d4",
+    "docs/ifpmic/evidence/b03/h2-schema-final-review.json": "5a662155c3532e4d97c4fc553af6d4180c1befb4deea61f4731e2a045bff58ca",
+    "docs/ifpmic/evidence/b03/h2-schema-reviewer-provenance-correction.json": "8628be4a82eebc90b43538e2c8f1e44332d9e4251bf25412e280ade1e9cf9f3f"
+  },
+  "checks": [
+    "All361 exact cases passed with0fail/error/skip; all10 new per-case watchdog records satisfied25+5 and30total limits.",
+    "All4 PostgreSQL clusters stopped, owned children absent; original32/qualified36 files and all1009 candidate sources unchanged during gate.",
+    "Original17 imported contracts, two supplied originals and original AX/UI/Node inventory preserved.",
+    "Independent final audit accepts only partial H2 SQL foundation. Reviewer template-label correction is separately recorded without rewriting executed/frozen approval hashes.",
+    "After adding derived reports, only progress.json differs among the1009 frozen source paths; product/test/runner/locks/README bytes remain exactly those tested. No repeat runtime test is needed for these metadata-only additions."
+  ],
+  "remaining_risk": "Actual Temporal start/delivery/worker, accepted-start response loss, physical crash/recovery, fresh integrated H1 and full H2/H3-H7/business AT/final AX visualization remain unverified.",
+  "goal_status": "active",
+  "real_acceptance_status": "not_executed"
+}

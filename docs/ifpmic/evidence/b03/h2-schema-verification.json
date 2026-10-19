@@ -1,0 +1,145 @@
+{
+  "archive": {
+    "entries": {
+      "gate/h2-case-timings.json": {
+        "bytes": 2850,
+        "sha256": "432a6b087a29b5b22b02ec845fcaa6c67e9864acb835d5b5e395feba6129dc24"
+      },
+      "gate/postgres-lifecycle.json": {
+        "bytes": 4107,
+        "sha256": "4228bd2a3df3eb72af00279b5b7c706e8a3276d09266ce796988f66dd86adf5e"
+      },
+      "gate/pytest.xml": {
+        "bytes": 64958,
+        "sha256": "b5ab507c87e730679587462f7b8361f7fe4eb653dfb2d6ec8d226ecf8d5cac88"
+      },
+      "gate/source-manifest.json": {
+        "bytes": 128755,
+        "sha256": "16f423543d79280257d5b588e9939ca07d10361e3600eebfa353221e1916e18f"
+      },
+      "gate/summary.json": {
+        "bytes": 55096,
+        "sha256": "cf006f95ed78e832e650dc913295c148f0785893e7132a40f30982ad19ec4424"
+      }
+    },
+    "path": "docs/ifpmic/evidence/b03/h2-schema-gate.zip",
+    "sha256": "18a2331f4fb0327c202242df84c6d6c1887946a7332bee87be36c4986e0459d4"
+  },
+  "candidate_commit": "9fc453825cf0761740bee87fc787a6a86d9c082c",
+  "candidate_fingerprint": "a8703df88dae90076bc36788c5228ef052c30cc9f939872679933de55b00a0fb",
+  "decision": "pass_pending_independent_final_review",
+  "execution_contract": {
+    "path": "docs/ifpmic/evidence/b03/h2-schema-execution-contract.json",
+    "sha256": "edd3f7bd89ecc94b3a4d01ec5dde7239bd391667cfbe141bbce23bc7ad9a5197"
+  },
+  "goal_status": "active",
+  "kind": "ifpmic.b03.h2.schema-verification.v1",
+  "limitations": [
+    "Actual Temporal admission, RPC accepted-start/response-loss/crash recovery, worker process build attestation and H1 fresh runtime rerun remain mandatory for full H2.",
+    "Full Node/build/browser regression omitted under the reviewed SQL-only impact assessment; no UI wiring changed. Full H6 still requires it.",
+    "Original AT32 remain not_executed; no real device, business agent, SSO, deployment or external submission executed."
+  ],
+  "phases": [
+    {
+      "counts": {
+        "errors": 0,
+        "failed": 0,
+        "skipped": 0,
+        "tests": 10
+      },
+      "name": "h2_schema_python",
+      "postgres_lifecycle_sha256": "c1198beea07d1cd525aa9d5cadd169bb8a1b37cbbf8e04aea53f6b54cd8b8577",
+      "seconds": 29.98124314399979,
+      "timeout_seconds": 300
+    },
+    {
+      "counts": {
+        "errors": 0,
+        "failed": 0,
+        "skipped": 0,
+        "tests": 91
+      },
+      "name": "g4_python",
+      "postgres_lifecycle_sha256": "d5a6c163ae01f6accb123c30a01021c303bdbf493a87f4568d131fe11f2af159",
+      "seconds": 177.07883739299996,
+      "timeout_seconds": 300
+    },
+    {
+      "counts": {
+        "errors": 0,
+        "failed": 0,
+        "skipped": 0,
+        "tests": 93
+      },
+      "name": "g5_python",
+      "postgres_lifecycle_sha256": "72866dd6d08ec5d4eaa6d6332bbcbd695881d073a2156fd264d8b8f245e65528",
+      "seconds": 260.56684044400004,
+      "timeout_seconds": 300
+    },
+    {
+      "counts": {
+        "errors": 0,
+        "failed": 0,
+        "skipped": 0,
+        "tests": 167
+      },
+      "name": "legacy_python",
+      "postgres_lifecycle_sha256": "98cb87ea7b71c0ebb1af94af822a8ea4df692044af65b45b56e8790085935c2b",
+      "seconds": 154.99418376100016,
+      "timeout_seconds": 300
+    }
+  ],
+  "pre_gate_review": {
+    "path": "docs/ifpmic/evidence/b03/h2-schema-pre-gate-review.json",
+    "sha256": "3bbac06d40bade5c9588bf8c8d479f497057e9d9a32d55574b017ef81dfbabcd"
+  },
+  "prior_failed_attempt_history": {
+    "path": "docs/ifpmic/evidence/b03/h2-schema-runtime-attempts.json",
+    "retained_failed_attempts": 4,
+    "sha256": "88316ee212386edeb6e237ab321519806c06a239276b58c2945ea6301b65ff53"
+  },
+  "private_gate": {
+    "captured_sources": 1009,
+    "path": "workflow-artifacts/verification/B03/H2/schema/gates/2026-10-19T10-46-11-148980Z",
+    "private_source_zip_sha256": "c06f524e50873ea598302022efd09ab07b960c8d83e463bf88b864921d441084",
+    "sha256": "653937f9c4705a50add8d2c1b4ceb263015e380685e88af59e1741b447d668b6"
+  },
+  "publication": "Only normalized synthetic counts, literal case IDs, sanitized JUnit without hostname/timestamp/output, relative source paths/hashes, timing deltas and process-free PostgreSQL summaries. Raw logs/SQL traces/credentials/source ZIP, absolute temporary paths and PIDs remain private.",
+  "real_acceptance_status": "not_executed",
+  "requirements": [
+    "B03 SQL foundation",
+    "REQ-02",
+    "REQ-05 prerequisite",
+    "REQ-13",
+    "REQ-14 preservation",
+    "AT-16 prerequisite only"
+  ],
+  "scope": "H2 SQL/authentication/initial activation foundation only; no actual Temporal worker/delivery/crash, full H2, full AX UI or original AT acceptance.",
+  "source_environment_and_cleanup": {
+    "original32_and_qualified36_files_unchanged_during_gate": true,
+    "owned_children_absent": true,
+    "postgres_clusters_stopped": 4,
+    "protected": {
+      "original_imported_files": 17,
+      "original_uploads": 2,
+      "protected_inventory_count": 89,
+      "protected_source_count": 96,
+      "scope": "Byte/inventory comparison only. Full Node/build/browser G6 remains pending."
+    },
+    "source_changes_during_gate": []
+  },
+  "tests": {
+    "errors": 0,
+    "failed": 0,
+    "passed": 361,
+    "skipped": 0
+  },
+  "timing": {
+    "body_limit_seconds": 25,
+    "cleanup_limit_seconds": 5,
+    "max_new_body_seconds": 13.89112534800006,
+    "max_new_total_seconds": 14.128787917999944,
+    "new_case_records": 10,
+    "total_limit_seconds": 30
+  }
+}

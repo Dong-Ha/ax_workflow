@@ -1,0 +1,85 @@
+{
+  "kind": "ifpmic.b03.h2.schema-reviewer-provenance-correction.v1",
+  "scope": "Post-gate metadata correction only. Preserve all exact executed approval/source/contract hashes and raw test evidence; no product, tests, runner, acceptance result or gate data change.",
+  "identified_by": "main_orchestrator",
+  "corrections": [
+    {
+      "path": "docs/ifpmic/evidence/b03/h2-schema-execution-review.json",
+      "sha256": "61c4040922c9c73b0e644d684c47a7bb18bcb4b466638302312feb436b6f7390",
+      "recorded_label": "independent_senior_security_architecture_agent",
+      "actual_agent": "/root/h2_tmp_review",
+      "actual_role": "worker_luna",
+      "correction": "The label was inherited from the earlier senior review template. These v4-v7 routine execution-delta/frozen-source reviews were performed by this independent worker; no senior escalation is claimed."
+    },
+    {
+      "path": "docs/ifpmic/evidence/b03/h2-schema-pre-gate-review.json",
+      "sha256": "3bbac06d40bade5c9588bf8c8d479f497057e9d9a32d55574b017ef81dfbabcd",
+      "recorded_label": "independent_senior_security_architecture_agent",
+      "actual_agent": "/root/h2_tmp_review",
+      "actual_role": "worker_luna",
+      "correction": "The label was inherited from the earlier senior review template. These v4-v7 routine execution-delta/frozen-source reviews were performed by this independent worker; no senior escalation is claimed."
+    },
+    {
+      "path": "docs/ifpmic/evidence/b03/attempts/h2-schema-v4-before-query-fix/h2-schema-execution-review.json",
+      "sha256": "c525d82a154b6d964e18f8bbd0614f0f685f9bd28d90d3cad1f03caefd535c59",
+      "recorded_label": "independent_senior_security_architecture_agent",
+      "actual_agent": "/root/h2_tmp_review",
+      "actual_role": "worker_luna",
+      "correction": "The label was inherited from the earlier senior review template. These v4-v7 routine execution-delta/frozen-source reviews were performed by this independent worker; no senior escalation is claimed."
+    },
+    {
+      "path": "docs/ifpmic/evidence/b03/attempts/h2-schema-v4-before-query-fix/h2-schema-pre-gate-review.json",
+      "sha256": "eea7bd08f83ae20240281c9909e13cb24ddf0dafbbf3948fc3de36d3eeb2f4ef",
+      "recorded_label": "independent_senior_security_architecture_agent",
+      "actual_agent": "/root/h2_tmp_review",
+      "actual_role": "worker_luna",
+      "correction": "The label was inherited from the earlier senior review template. These v4-v7 routine execution-delta/frozen-source reviews were performed by this independent worker; no senior escalation is claimed."
+    },
+    {
+      "path": "docs/ifpmic/evidence/b03/attempts/h2-schema-v5-before-watchdog-fix/h2-schema-execution-review.json",
+      "sha256": "7bfad6cacf3a8f9957a58e9ab2f151ed3e85dbc1d326a60d599115ca767d55c9",
+      "recorded_label": "independent_senior_security_architecture_agent",
+      "actual_agent": "/root/h2_tmp_review",
+      "actual_role": "worker_luna",
+      "correction": "The label was inherited from the earlier senior review template. These v4-v7 routine execution-delta/frozen-source reviews were performed by this independent worker; no senior escalation is claimed."
+    },
+    {
+      "path": "docs/ifpmic/evidence/b03/attempts/h2-schema-v5-before-watchdog-fix/h2-schema-pre-gate-review.json",
+      "sha256": "9d2da2a00757d75254e1be1cb96ced9a2feb14c8e107e9703510458f82825d4e",
+      "recorded_label": "independent_senior_security_architecture_agent",
+      "actual_agent": "/root/h2_tmp_review",
+      "actual_role": "worker_luna",
+      "correction": "The label was inherited from the earlier senior review template. These v4-v7 routine execution-delta/frozen-source reviews were performed by this independent worker; no senior escalation is claimed."
+    },
+    {
+      "path": "docs/ifpmic/evidence/b03/attempts/h2-schema-v6-before-seed-fix/h2-schema-execution-review.json",
+      "sha256": "1d45431bf87c2646225b2fa9720f7a39ba747d868f7eda23f46c973deb38be2c",
+      "recorded_label": "independent_senior_security_architecture_agent",
+      "actual_agent": "/root/h2_tmp_review",
+      "actual_role": "worker_luna",
+      "correction": "The label was inherited from the earlier senior review template. These v4-v7 routine execution-delta/frozen-source reviews were performed by this independent worker; no senior escalation is claimed."
+    },
+    {
+      "path": "docs/ifpmic/evidence/b03/attempts/h2-schema-v6-before-seed-fix/h2-schema-pre-gate-review.json",
+      "sha256": "a9d3227896edbc240fe6cf0ea2be277d37f4d59ddd52b491e02283396d38f3ad",
+      "recorded_label": "independent_senior_security_architecture_agent",
+      "actual_agent": "/root/h2_tmp_review",
+      "actual_role": "worker_luna",
+      "correction": "The label was inherited from the earlier senior review template. These v4-v7 routine execution-delta/frozen-source reviews were performed by this independent worker; no senior escalation is claimed."
+    }
+  ],
+  "unchanged_senior_assessment": {
+    "path": "docs/ifpmic/evidence/b03/h2-schema-code-review.json",
+    "sha256": "ddeeeefc25fb02a625c9cf20300b1f5192e0fcf7f73097952a7f2e89fcd7bad7",
+    "actual_agent": "/root/h2_security_architecture",
+    "actual_role": "senior_sol",
+    "scope": "Critical SQL/authentication architecture static review, including trusted G4 catalog provenance boundary. Earlier execution contract v3 and its pre-gate also received senior review."
+  },
+  "process_note": "The implementation contract requires an independent reviewer and a separate TC review, without requiring a senior model for every routine delta or final evidence audit. The actual worker reviewer was independent of main and the TC author. The inherited label does not change the performed checks; final review identifies the actual worker role.",
+  "metadata_authorship_note": "The v7 frozen reviewer also revised derived progress/checkpoint metadata; main inspected and finalized those changes before commit9fc4538. The inherited claim that only the review artifact was authored is inaccurate for that metadata step. Product/test files were not edited by the independent reviewer.",
+  "superseded_uncommitted_final_review_sha256": "c9b68a2bb50efdd9c4c39e7aec68dda21e7b898b67e5e5145eaefe500dd081d8",
+  "final_review_correction": "Replace inherited reviewer label with actual worker agent/role and cite this correction. Earlier executed/frozen records remain byte-identical for historical hash validation.",
+  "runtime_evidence_affected": false,
+  "full_h2_status": "incomplete",
+  "goal_status": "active"
+}

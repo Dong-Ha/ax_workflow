@@ -334,7 +334,7 @@
         ]
       },
       "plan": "B03-WORKFLOW.md",
-      "scope": "H0 plan and H1 toolchain verified. H2 append-only SQL/auth/API foundation is authored and statically reviewed. Four complete or partial schema-gate attempts are retained; the latest passed H2 (10 with timing) and legacy (167), then failed three G4 current-schema seed fixtures because create_command_id was omitted. The seed helper is corrected and the exact 361-case rerun is pending for the approved frozen candidate. Actual Temporal delivery/worker/crash integration and original AT acceptance remain incomplete.",
+      "scope": "H0 plan, H1 local toolchain and partial H2 SQL/authentication foundation verified. The frozen361-case real-PostgreSQL gate passed and independent final review accepted only the SQL foundation after four retained failed attempts. Actual Temporal delivery/worker/crash integration, subsequent workflow stages and original AT acceptance remain incomplete.",
       "increments": [
         {
           "id": "h0_preimplementation_plan",
@@ -365,18 +365,29 @@
         {
           "id": "h2_durable_delivery_activation",
           "status": "in_progress",
-          "scope": "Append-only003, four-role authenticated SQL surface, immutable create origin/run/workspace bindings and initial projection authored. TC authored ten SQL cases plus retained351 regression IDs. Latest retained attempt: H2 10/10 including required timing and legacy167/167 passed; G4 had3 create_command_id seed failures, corrected in the test fixture. G5 did not run. Complete exact361 rerun is pending; no partial H2 acceptance.",
+          "scope": "Append-only003, four-role authenticated SQL surface, immutable create origin/run/workspace binding and initial SQL activation passed10 new cases plus351 retained regression IDs. All361 passed with required timing/source/environment/lifecycle evidence; independent review accepts only the partial SQL foundation. Actual Temporal dispatcher/worker/start-loss/crash and integrated H1 proof remain required.",
           "contract": "evidence/b03/h2-implementation-contract.json",
           "contract_sha256": "f63173ac17ebebd34a15d5966d96b79dc1667a713c00b1b92868b137ba93ded3",
           "plan_acceptance": "evidence/b03/h2-contract-acceptance.json",
           "independent_plan_review": "evidence/b03/h2-contract-review.json",
           "tc_plan_review": "evidence/b03/h2-tc-contract-review.json",
           "verification_status": "in_progress",
-          "schema_subgate_status": "failed_pending_full_rerun",
+          "schema_subgate_status": "verified",
           "schema_execution_contract": "evidence/b03/h2-schema-execution-contract.json",
           "schema_tc_ledger": "evidence/b03/h2-schema-tc-ledger.json",
           "schema_attempt_history": "evidence/b03/h2-schema-runtime-attempts.json",
-          "authoring_checkpoint": "evidence/b03/h2-schema-authoring-checkpoint.json"
+          "authoring_checkpoint": "evidence/b03/h2-schema-authoring-checkpoint.json",
+          "schema_verification": "evidence/b03/h2-schema-verification.json",
+          "schema_final_review": "evidence/b03/h2-schema-final-review.json",
+          "schema_decision": "accept_partial_h2_sql_foundation",
+          "schema_tests": {
+            "errors": 0,
+            "failed": 0,
+            "passed": 361,
+            "skipped": 0
+          },
+          "schema_candidate_fingerprint": "a8703df88dae90076bc36788c5228ef052c30cc9f939872679933de55b00a0fb",
+          "schema_reviewer_provenance_correction": "evidence/b03/h2-schema-reviewer-provenance-correction.json"
         }
       ]
     },
@@ -553,12 +564,12 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "Run the approved frozen corrected candidate through the full361-case schema subgate. Audit source/environment/lifecycle/timing evidence before accepting only partial H2 SQL foundation. Then implement actual Temporal dispatcher/projector/worker, transport-loss/crash evidence and H1+affected full H2 regression. H3-H7, full originalAT32 and final AX visualization remain incomplete.",
+  "next_step": "H2: implement actual Temporal dispatcher/projector/worker integration and named accepted-start/response-loss/crash recovery cases with TC-owned tests. Verify real authenticated role/run/workspace fences and bounded recovery, rerun H1 actual service cases plus affected API regression before full H2 acceptance. H3-H7, full originalAT32, deployment approvals and final AX workflow visualization remain incomplete.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",
     "Approved Bedrock/Claude runtime profile"
   ],
   "publication_policy": "Only authorized git repository documentation, source and synthetic verification summaries/screenshots; never runtime credentials or application logs.",
-  "updated_at": "2026-10-19T10:44:42+00:00"
+  "updated_at": "2026-10-19T11:03:21.460212+00:00"
 }
