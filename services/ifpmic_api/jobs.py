@@ -1,6 +1,7 @@
 """User-scoped durable create commands. Acceptance never executes a workflow."""
 from contextlib import contextmanager
 import json
+import uuid
 
 import psycopg
 
@@ -10,6 +11,15 @@ from .snapshot_bridge import BridgeError, SnapshotBridge, SnapshotRecord
 
 ROUTE = 'POST /api/v1/jobs'
 IDEMPOTENCY_CONSTRAINT = 'commands_actor_id_route_idempotency_key_key'
+JOB_STATUSES = frozenset({
+    'DRAFT', 'QUEUED', 'RUNNING', 'WAITING_HUMAN', 'WAITING_DEVICE', 'PAUSED',
+    'RECONCILING', 'FAILED', 'CANCELED', 'NO_CHANGE', 'RELEASED_PENDING_NOTES', 'COMPLETED',
+})
+WORKFLOW_NODE_IDS = frozenset({
+    'P01', 'P02', 'P03', 'P04', 'P05', 'X01', 'P06', 'P07', 'P08', 'P09',
+    'P10', 'P11', 'P12', 'P13', 'P14', 'P15', 'P16', 'P17', 'P18', 'P19',
+    'P20', 'P21', 'P22', 'P23', 'P24', 'X02', 'X03', 'P25', 'P26',
+})
 CATALOG_COLUMNS = ('project_id', 'version_key', 'snapshot_id', 'record_bytes', 'record_bytes_sha256',
                    'profile_version_json', 'mode', 'enabled', 'configuration_complete')
 JOB_COLUMNS = '''j.job_id,j.owner_id,j.status,j.revision,j.cycle,j.workflow_id,
@@ -164,16 +174,20 @@ class JobService:
                     raise ReplayRace()
                 self.bind_snapshot(db, payload, record, self.auth.now())
                 self.artifacts(db, current.user_id, payload)
+                job_id = uuid.uuid4()
+                command_id = uuid.uuid4()
                 self.hook('job_before_insert')
-                job_id = db.execute('''INSERT INTO ifpmic.jobs(owner_id,project_id,snapshot_id,workflow_id)
-                    VALUES(%s,%s,%s,%s) RETURNING job_id''',
-                                    (current.user_id, payload['project_id'], record.snapshot_id, record.workflow_id)).fetchone()[0]
+                db.execute('''INSERT INTO ifpmic.jobs(job_id,create_command_id,owner_id,project_id,snapshot_id,workflow_id)
+                    VALUES(%s,%s,%s,%s,%s,%s)''',
+                           (job_id, command_id, current.user_id, payload['project_id'],
+                            record.snapshot_id, record.workflow_id))
                 self.hook('job_after_insert')
                 self.hook('command_before_insert')
                 command_id = db.execute('''INSERT INTO ifpmic.commands
-                    (actor_id,route,idempotency_key,project_id,job_id,command_payload_json,payload_sha256)
-                    VALUES(%s,%s,%s,%s,%s,%s,%s) RETURNING command_id''',
-                                        (current.user_id, ROUTE, key, payload['project_id'], job_id, stored, digest)).fetchone()[0]
+                    (command_id,actor_id,route,idempotency_key,project_id,job_id,command_payload_json,payload_sha256)
+                    VALUES(%s,%s,%s,%s,%s,%s,%s,%s) RETURNING command_id''',
+                                        (command_id, current.user_id, ROUTE, key, payload['project_id'],
+                                         job_id, stored, digest)).fetchone()[0]
                 self.hook('command_after_insert')
                 self.hook('outbox_before_insert')
                 db.execute('INSERT INTO ifpmic.commands_outbox(command_id) VALUES(%s)', (command_id,))
@@ -207,6 +221,11 @@ class JobService:
 
     @staticmethod
     def job_dto(row):
+        if (type(row[2]) is not str or row[2] not in JOB_STATUSES or
+                type(row[3]) is not int or row[3] < 0 or
+                type(row[4]) is not int or row[4] < 0 or not isinstance(row[6], list) or
+                any(type(step_id) is not str or step_id not in WORKFLOW_NODE_IDS for step_id in row[6])):
+            raise ApiError('DEPENDENCY_UNAVAILABLE')
         payload = json.loads(row[8])
         return {'job_id': str(row[0]), 'owner_id': str(row[1]), 'status': row[2], 'revision': row[3],
                 'cycle': row[4], 'workflow_version': row[5], 'current_step_ids': row[6],
@@ -223,7 +242,8 @@ class JobService:
                 params.extend(anchor)
             params.append(limit + 1)
             rows = db.execute('SELECT ' + JOB_COLUMNS + ''' FROM ifpmic.jobs j
-                JOIN ifpmic.commands c ON c.project_id=j.project_id AND c.job_id=j.job_id
+                JOIN ifpmic.commands c ON c.command_id=j.create_command_id AND c.job_id=j.job_id
+                    AND c.route='POST /api/v1/jobs'
                 WHERE ''' + VISIBLE + boundary + ' ORDER BY j.created_at DESC,j.job_id DESC LIMIT %s', params).fetchall()
             visible = rows[:limit]
             next_cursor = (make_cursor(self.settings.csrf_key, current.user_id, visible[-1][9], visible[-1][0])
@@ -236,15 +256,13 @@ class JobService:
             if not canonical_uuid(job_id):
                 raise ApiError('FORBIDDEN')
             row = db.execute('SELECT ' + JOB_COLUMNS + ''' FROM ifpmic.jobs j
-                JOIN ifpmic.commands c ON c.project_id=j.project_id AND c.job_id=j.job_id
+                JOIN ifpmic.commands c ON c.command_id=j.create_command_id AND c.job_id=j.job_id
+                    AND c.route='POST /api/v1/jobs'
                 WHERE j.job_id=%s AND ''' + VISIBLE,
                              (job_id, current.user_id, current.user_id, current.user_id, self.auth.now())).fetchone()
             if row is None:
                 raise ApiError('FORBIDDEN')
             job = self.job_dto(row)
-            if (job['status'] != 'DRAFT' or job['revision'] != 0 or job['cycle'] != 0 or
-                    job['current_step_ids'] or job['candidate_fingerprint'] is not None):
-                raise ApiError('DEPENDENCY_UNAVAILABLE')
             return {'job': job, 'steps': [], 'last_event_id': ''}
 
     def command(self, request, command_id):

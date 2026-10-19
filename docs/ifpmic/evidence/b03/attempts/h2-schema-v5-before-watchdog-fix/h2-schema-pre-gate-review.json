@@ -1,0 +1,145 @@
+{
+  "kind": "ifpmic.b03.h2.schema-pre-gate-review.v3",
+  "verdict": "approve_frozen_schema_gate",
+  "execution_contract_sha256": "e3ce56933d89c288d5e7bafc43f73a1220793d2eb719f690a751d2b6d8cfe913",
+  "reviewer": "independent_senior_security_architecture_agent",
+  "scope": "Frozen361-case PostgreSQL schema/auth/API subgate only; no Temporal engine, H1 rerun, physical RPC crash, fullH2 or originalAT acceptance.",
+  "method": "Read-only final runner/source/contract/review/ledger/hash inspection. No product/test changes, pytest collection, database/SQL/parser or service execution. Only this review artifact is authored. Delta v4 frozen-pin refresh: revalidated all 29 prior source pins and both review pins. Exactly runner and execution contract source hashes changed for the approved v4 candidate, and both exact-SHA independent/TC reviews were refreshed; all remaining source pins match. Read-only source/hash/JSON inspection; no DB, pytest, migration, service or dependency execution. v5 frozen-pin refresh: revalidated all 29 predecessor source pins and both review pins. Four expected source pins (TC-updated test, ledger, v5 contract, final runner) and two exact-SHA review pins were refreshed; all other 25 source pins match. Runner embeds the exact v5 contract SHA. Read-only JSON/source/hash verification only; no DB, pytest, migration, service or dependency execution.",
+  "source_pins": {
+    "docs/ifpmic/evidence/b03/h2-implementation-contract.json": "f63173ac17ebebd34a15d5966d96b79dc1667a713c00b1b92868b137ba93ded3",
+    "docs/ifpmic/B03-WORKFLOW.md": "38fdd875bc76047ed1e3e46c850277fea1a3d1f825662a13b1c21154925f25ff",
+    "docs/ifpmic/evidence/b03/h2-source-collection.json": "62213046bceb9eb5f528843f1b39443f88f9eeff6ddf54b7171a12f8b438c9f3",
+    "docs/ifpmic/evidence/b02/g6-gate.zip": "41ad9f806216b0d29896a54b40c7e7ec0db5f574908a949216a484050456b647",
+    "services/ifpmic_api/migrate.py": "36518fdd4d296455947df76fd72bf11d68aa44317549bd527037499b98a9eb86",
+    "services/ifpmic_api/jobs.py": "0538e460a6be42e3129d2e8d5e9f262bba357e621e0b5e800f4495ebdf99ecf9",
+    "services/ifpmic_api/migrations/001_initial.sql": "cf0437a5f32e1589e4ea821afbb2ef2480d780a276667880aa9a08a0f4c77f12",
+    "services/ifpmic_api/migrations/002_auth_retention.sql": "95c01f06eb586e0c1067f04672edfed8e0a11215752ad859ac9e4744da5a504e",
+    "services/ifpmic_api/migrations/003_workflow_execution.sql": "5ef29521944e18551728dd285ce3ae21fa03c2b06f77c25430da6acb0ce1f102",
+    "README.md": "85b9cc35bfca839d16d735865780819528bfcf5b2ac6a99e0bef0c8a8aefad93",
+    "tests/ifpmic_api/conftest.py": "3c39b0491139762d0a3da09397a368558cbe72e5cfebda4a279c76c97ce6ebe5",
+    "tests/ifpmic_api/test_migrations.py": "73a7e1810c5e1807a51bbbd8974ed06370797e6e3325c8f417de48ca74df3506",
+    "tests/ifpmic_api/workflow_schema_fixture.py": "1493233126c171bd8a16a243194ad61c6c95cbc7671cb660a5f9652be5b6007f",
+    "tests/ifpmic_api/test_workflow_schema.py": "a007e02759aab6fa561749d40ff4e2e9fb78fb9832196714eaafecdb91008e6d",
+    "tests/ifpmic_api/jobs_fixture.py": "b906c78397ca71a4e82fe976729b7d7d985224c29c3382745b215a86ece17a26",
+    "tests/ifpmic_api/test_auth.py": "a5da4f11401b0da6d43323a28a3fb82708680b2a611d56f62b1b77321d3e190a",
+    "tests/ifpmic_api/test_snapshot_bridge.py": "1f93fe8b5bf02545f1e04c0c2c555bdf9582d2da477a44a3abac6b51ad26d705",
+    "tests/ifpmic_api/test_temporal_toolchain.py": "0b0c88453b63665f70bd6b9830cd2ebc07b771da1ec97e35791d21a217eef3ec",
+    "scripts/verify_ifpmic_b03_h2_schema.py": "cf08a2c0cf1c16bc393b888076b250268daaca44443c6d26766ba125c7f581a0",
+    "docs/ifpmic/evidence/b03/h2-schema-tc-ledger.json": "713469277523b9db88cca7d9bfd40f6ebeaca6e1d13efae89bd0fdc127035ed2",
+    "docs/ifpmic/evidence/b03/h2-schema-execution-contract.json": "e3ce56933d89c288d5e7bafc43f73a1220793d2eb719f690a751d2b6d8cfe913",
+    "docs/ifpmic/evidence/b03/h2-schema-code-review.json": "ddeeeefc25fb02a625c9cf20300b1f5192e0fcf7f73097952a7f2e89fcd7bad7",
+    "scripts/verify_ifpmic_g1.py": "0f6603de4b0de546ccf2c23bc663c0568c2a178c8c19e31812c68b10a61e6d9b",
+    "scripts/verify_ifpmic_g4.py": "ad9b66b7463b84f22227d8ba924b42628f8abb463d0873ac9a90ab013708c13a",
+    "scripts/verify_ifpmic_b03_h1.py": "9c20131082af1467f682d31fabb47daf359867aa5939ad818d97b7ac4c0d5573",
+    "docs/ifpmic/source-manifest.json": "8afba9c1fc16ef3a6565f45576792cad51a1aaab59857d3a28666c71ec43007c",
+    "docs/ifpmic/evidence/b03/h1-installation-preparation.json": "277fe057d633759381ddcbba2df22a2772edf928c84d6dc43eb9f0ffa0d849a6",
+    "services/ifpmic_api/requirements.lock": "6c8c950820a8c3ae9dea250e4080bc9dab09db17663e3d50118c5ac29211357e",
+    "services/ifpmic_api/requirements-temporal.lock": "ccbbf7a8aab39cd80861f607afd4994bf461d07cbf592f6acfcc492e63ff85c6"
+  },
+  "review_pins": {
+    "h2-schema-execution-review.json": "7bfad6cacf3a8f9957a58e9ab2f151ed3e85dbc1d326a60d599115ca767d55c9",
+    "h2-schema-tc-execution-review.json": "e31217940467c45b83e879782f7e02f983d47a6f90bd970216bf5d255ce1530a"
+  },
+  "checks": [
+    {
+      "id": "EXACT_AUTHORITY",
+      "result": "pass_static",
+      "detail": "Both named execution reviews approve_execution for exact e3ce56933d89c288d5e7bafc43f73a1220793d2eb719f690a751d2b6d8cfe913. Runner EXECUTION_SHA and IMPLEMENTATION_SHA match approved artifacts. Runner cf08a2c0cf1c16bc393b888076b250268daaca44443c6d26766ba125c7f581a0 is pinned here; no source change after this review is authorized as the same candidate."
+    },
+    {
+      "id": "EXACT_SOURCE",
+      "result": "pass_static",
+      "detail": "All18 TC ledger source pins match disk. Updated runner/ledger/contract/static-review, imported helper, original locks/source manifest and H1 installation-location artifact pins are explicit. Gate captures tracked+new H2 sources/ZIP and compares complete map after all phases."
+    },
+    {
+      "id": "INVENTORY",
+      "result": "pass_static",
+      "detail": "Independently read accepted G6 api/gate.json: legacy167+G4_91+G5_93 preserve exact351 original IDs. TC adds ten distinct new schema IDs; total361. Runner compares exact JUnit IDs/results, module inventory and no duplicate IDs before accepting."
+    },
+    {
+      "id": "TIMEOUTS",
+      "result": "pass_static",
+      "detail": "New case25s setup/body plus5s cleanup, exact monotonic timing IDs/flags and total<=30. Original case JUnit<=30; each sequential phase300. Runner uses bounded subprocess ownership/reaper helper; failed/timeout evidence is not discarded or converted to success."
+    },
+    {
+      "id": "PROCESS_AND_DATABASE",
+      "result": "pass_static",
+      "detail": "Pinned private PostgreSQL18.1 Unix-socket fixture has TCP disabled. Runner compares actual binary SHA/lifecycle exit statuses to accepted G6, requires stopped/pid_alive false, reaps adopted children and rejects live descendants. Cleanup helper uses owned descendant identities, pidfds/start ticks; intentional fixture symlinks/hardlinks are not recursively chmodded/followed."
+    },
+    {
+      "id": "MINIMAL_ENV",
+      "result": "pass_static",
+      "detail": "Runner supplies controlled PATH/locale/PYTHONPATH/private TMPDIR, disables plugin autoload/cacheprovider and does not inherit credentials/addopts. Explicit empty private PGPASSFILE/PGSERVICEFILE/PGSYSCONFDIR prevent personal libpq credential/service fallback. No HOME override/install/download. The v4 short /tmp TMPDIR delta is covered by both exact-SHA reviews; runner creates a unique real mode0700 root per phase under umask077, sets it before pytest, retains it, and records its absolute path only in the private gate report."
+    },
+    {
+      "id": "SOURCE_ENV_PROTECTED",
+      "result": "pass_static",
+      "detail": "Original17 imports+two uploaded originals were hash checked now, as were both unchanged original32/H1qualified36 hash locks. Gate rechecks original AX/UI/Node inventory with accepted B01 helper and full original32/qualified36 environment file/symlink maps excluding cache/pyc before/after."
+    },
+    {
+      "id": "SCOPE_AND_ORACLES",
+      "result": "pass_static",
+      "detail": "Revised cases preserve NUL422/no acceptance rows, supported Unicode/lone-surrogate body and profile labels through Node/G4/SQL, immutable catalog mutation denials, canonical binding digest, exact workspace generation fence, receipt replay vs human revocation and external current-auth checks. Synthetic SQL run IDs do not establish Temporal evidence."
+    },
+    {
+      "id": "EVIDENCE_PRIVACY",
+      "result": "pass_static",
+      "detail": "Candidate/source/log/JUnit/auth/SQL/timing/lifecycle remain under private0700 leaf/ancestors and0600 artifacts; public output at execution is only fixed gate result and relative evidence location. Later publication requires derived sanitized evidence and independent final review."
+    }
+  ],
+  "protected_inputs_checked_now": {
+    "imported_files": 17,
+    "uploaded_files": 2,
+    "all_hashes_match": true,
+    "no_raw_input_embedded": true
+  },
+  "conditions": [
+    "Proceed only with these exact pinned source/review/ledger/contract bytes, with all agents frozen during execution. Runner itself revalidates pins immediately before starting.",
+    "This record permits the bounded subgate under the approved contract; it does not assert runtime success. Actual all361 pass, lifecycle cleanup, source/environment equality and later independent evidence audit remain mandatory.",
+    "Any test/runtime failure or source drift must preserve the failed candidate and observations, return to the relevant source/oracle step and obtain updated pins/review before a complete new361-case gate.",
+    "All fullH2 Temporal transport/process/crash gates, H1 integrated rerun, H3-H7, frontend integration and original32 AT remain pending."
+  ],
+  "remaining_uncertainty": "No actual SQL/auth/runtime execution has occurred; syntax, real timing feasibility and runtime outcomes remain unproven until this approved gate runs.",
+  "acceptance_boundary": {
+    "schema_gate": "authorized_frozen_candidate_not_executed",
+    "H2": "incomplete",
+    "original_ATs": "not_executed",
+    "goal": "active"
+  },
+  "v4_frozen_delta": {
+    "contract_sha256": "b1aeac221eb1fc89c4df603549c3a7a5308f63cf5f15039be0452cc69b154dd9",
+    "runner_sha256": "2586e56b1e6beefcb13377258faf23877fddfd399bfece98fe5100e2973cbe7f",
+    "result": "approve_frozen_schema_gate",
+    "review_pins": {
+      "h2-schema-execution-review.json": "c525d82a154b6d964e18f8bbd0614f0f685f9bd28d90d3cad1f03caefd535c59",
+      "h2-schema-tc-execution-review.json": "3e0817b99f833531e21ba740673401460b4dd6b417ba2b5dd7d2d8e2853a65b2"
+    },
+    "verified_prior_source_pin_count": 29,
+    "changed_source_pins": [
+      "scripts/verify_ifpmic_b03_h2_schema.py",
+      "docs/ifpmic/evidence/b03/h2-schema-execution-contract.json"
+    ],
+    "verified_unchanged_source_pin_count": 27,
+    "verification": "All 29 prior source paths were hashed. Only the approved runner contract-pin change and v4 execution-contract bytes differed; product, tests, fixtures, helpers, migration, ledger and remaining source pins match. Both named reviews approve this exact contract SHA. Runner has the exact contract SHA embedded, and actual bytes match the recorded runner SHA.",
+    "runtime_boundary": "Frozen static authority only. No SQL, DB, pytest, migration, service or dependency execution occurred."
+  },
+  "v5_frozen_delta": {
+    "result": "approve_frozen_schema_gate",
+    "execution_contract_sha256": "e3ce56933d89c288d5e7bafc43f73a1220793d2eb719f690a751d2b6d8cfe913",
+    "runner_sha256": "cf08a2c0cf1c16bc393b888076b250268daaca44443c6d26766ba125c7f581a0",
+    "source_pin_count": 29,
+    "refreshed_source_pins": [
+      "docs/ifpmic/evidence/b03/h2-schema-execution-contract.json",
+      "docs/ifpmic/evidence/b03/h2-schema-tc-ledger.json",
+      "scripts/verify_ifpmic_b03_h2_schema.py",
+      "tests/ifpmic_api/test_workflow_schema.py"
+    ],
+    "unchanged_source_pin_count": 25,
+    "review_pins": {
+      "h2-schema-execution-review.json": "7bfad6cacf3a8f9957a58e9ab2f151ed3e85dbc1d326a60d599115ca767d55c9",
+      "h2-schema-tc-execution-review.json": "e31217940467c45b83e879782f7e02f983d47a6f90bd970216bf5d255ce1530a"
+    },
+    "verification": "All 29 inherited source paths were hashed. Exactly four expected test/ledger/contract/runner pins changed; remaining 25 match. Both exact-SHA review artifacts approve the v5 contract. Ledger SHA matches the contract and its source pins; runner bytes match the pinned SHA and embed the exact contract SHA.",
+    "runtime_boundary": "Frozen static authority only. No SQL, DB, pytest, migration, service or dependency execution occurred."
+  }
+}

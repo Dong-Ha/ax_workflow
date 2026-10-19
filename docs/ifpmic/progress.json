@@ -334,7 +334,7 @@
         ]
       },
       "plan": "B03-WORKFLOW.md",
-      "scope": "H0 plan and H1 local Temporal toolchain verified. H2 v2 detailed contract independently and TC approved for authoring only after deployment-registry blocker correction. No H2 implementation/test execution or original AT acceptance yet.",
+      "scope": "H0 plan and H1 toolchain verified. H2 append-only SQL/auth/API foundation is authored and statically reviewed. Four complete or partial schema-gate attempts are retained; the latest passed H2 (10 with timing) and legacy (167), then failed three G4 current-schema seed fixtures because create_command_id was omitted. The seed helper is corrected and the exact 361-case rerun is pending for the approved frozen candidate. Actual Temporal delivery/worker/crash integration and original AT acceptance remain incomplete.",
       "increments": [
         {
           "id": "h0_preimplementation_plan",
@@ -365,13 +365,18 @@
         {
           "id": "h2_durable_delivery_activation",
           "status": "in_progress",
-          "scope": "Preimplementation contract/source/security/TC review only; authoring permitted, product and tests not yet authored. Actual PG/Temporal H2 crash/role/activation and regression gates remain required.",
+          "scope": "Append-only003, four-role authenticated SQL surface, immutable create origin/run/workspace bindings and initial projection authored. TC authored ten SQL cases plus retained351 regression IDs. Latest retained attempt: H2 10/10 including required timing and legacy167/167 passed; G4 had3 create_command_id seed failures, corrected in the test fixture. G5 did not run. Complete exact361 rerun is pending; no partial H2 acceptance.",
           "contract": "evidence/b03/h2-implementation-contract.json",
           "contract_sha256": "f63173ac17ebebd34a15d5966d96b79dc1667a713c00b1b92868b137ba93ded3",
           "plan_acceptance": "evidence/b03/h2-contract-acceptance.json",
           "independent_plan_review": "evidence/b03/h2-contract-review.json",
           "tc_plan_review": "evidence/b03/h2-tc-contract-review.json",
-          "verification_status": "not_executed"
+          "verification_status": "in_progress",
+          "schema_subgate_status": "failed_pending_full_rerun",
+          "schema_execution_contract": "evidence/b03/h2-schema-execution-contract.json",
+          "schema_tc_ledger": "evidence/b03/h2-schema-tc-ledger.json",
+          "schema_attempt_history": "evidence/b03/h2-schema-runtime-attempts.json",
+          "authoring_checkpoint": "evidence/b03/h2-schema-authoring-checkpoint.json"
         }
       ]
     },
@@ -548,12 +553,12 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "H2: main implement append-only003 migration, four-role authenticated SQL surface, create-only API joins and durable dispatcher/run binding/activation. TC author independent tests and exact bounded case ledger, including real accepted-start/response-loss proof. Review runner/frozen candidate before execution; require full H2+affected G1-G5/H1 evidence before partial H2 acceptance. H3-H7, full B02 environment/AT21 and all32 original AT remain incomplete.",
+  "next_step": "Run the approved frozen corrected candidate through the full361-case schema subgate. Audit source/environment/lifecycle/timing evidence before accepting only partial H2 SQL foundation. Then implement actual Temporal dispatcher/projector/worker, transport-loss/crash evidence and H1+affected full H2 regression. H3-H7, full originalAT32 and final AX visualization remain incomplete.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",
     "Approved Bedrock/Claude runtime profile"
   ],
   "publication_policy": "Only authorized git repository documentation, source and synthetic verification summaries/screenshots; never runtime credentials or application logs.",
-  "updated_at": "2026-10-18T20:32:31.046147+00:00"
+  "updated_at": "2026-10-19T10:44:42+00:00"
 }

@@ -68,13 +68,14 @@ class PgCluster:
         temporary.chmod(0o600)
         os.replace(temporary, self.lifecycle_path)
 
-    def dsn(self, *, user: str = PG_BOOTSTRAP_USER, database: str = "postgres") -> str:
+    def dsn(self, *, user: str = PG_BOOTSTRAP_USER, database: str = "postgres", password: str | None = None) -> str:
         """Return a local-socket DSN; callers must not log it."""
         return make_conninfo(
             host=str(self.socket_dir),
             port=self.port,
             dbname=database,
             user=user,
+            password=password,
             connect_timeout=3,
         )
 
@@ -85,21 +86,47 @@ class PgRoles:
     runtime: str = "ifpmic_g1_runtime"
     operator: str = "ifpmic_g1_operator"
     alternate_runtime: str = "ifpmic_g1_runtime_alt"
+    dispatcher: str = "ifpmic_h2_dispatcher"
+    projector: str = "ifpmic_h2_projector"
+    runtime_password: str = field(default="", repr=False)
+    operator_password: str = field(default="", repr=False)
+    dispatcher_password: str = field(default="", repr=False)
+    projector_password: str = field(default="", repr=False)
 
 
 @dataclass(frozen=True)
 class MigrationDatabase:
     name: str
     roles: PgRoles
+    legacy_migration_dir: Path
 
     def owner_dsn(self, cluster: PgCluster) -> str:
         return cluster.dsn(user=self.roles.migration, database=self.name)
 
     def runtime_dsn(self, cluster: PgCluster) -> str:
-        return cluster.dsn(user=self.roles.runtime, database=self.name)
+        return cluster.dsn(user=self.roles.runtime, database=self.name, password=self.roles.runtime_password)
 
     def operator_dsn(self, cluster: PgCluster) -> str:
-        return cluster.dsn(user=self.roles.operator, database=self.name)
+        return cluster.dsn(user=self.roles.operator, database=self.name, password=self.roles.operator_password)
+
+    def dispatcher_dsn(self, cluster: PgCluster) -> str:
+        return cluster.dsn(user=self.roles.dispatcher, database=self.name, password=self.roles.dispatcher_password)
+
+    def projector_dsn(self, cluster: PgCluster) -> str:
+        return cluster.dsn(user=self.roles.projector, database=self.name, password=self.roles.projector_password)
+
+    def migrate_current(self, cluster: PgCluster):
+        """Apply the installed current chain; historical G1 tests use legacy_migration_dir."""
+        from services.ifpmic_api.migrate import apply_migrations
+
+        with psycopg.connect(self.owner_dsn(cluster), autocommit=True) as connection:
+            return apply_migrations(
+                connection,
+                runtime_role=self.roles.runtime,
+                operator_role=self.roles.operator,
+                dispatcher_role=self.roles.dispatcher,
+                projector_role=self.roles.projector,
+            )
 
 
 def _run(argv: list[str], *, timeout: float, env: dict[str, str]) -> tuple[subprocess.CompletedProcess[str], float]:
@@ -326,10 +353,22 @@ def pg_cluster(tmp_path_factory: pytest.TempPathFactory) -> PgCluster:
 @pytest.fixture(scope="session")
 def pg_roles(pg_cluster: PgCluster) -> PgRoles:
     """Create synthetic, least-privileged roles inside the isolated cluster."""
-    roles = PgRoles()
+    roles = PgRoles(
+        runtime_password=secrets.token_urlsafe(32),
+        operator_password=secrets.token_urlsafe(32),
+        dispatcher_password=secrets.token_urlsafe(32),
+        projector_password=secrets.token_urlsafe(32),
+    )
+    passwords = {
+        roles.runtime: roles.runtime_password,
+        roles.operator: roles.operator_password,
+        roles.dispatcher: roles.dispatcher_password,
+        roles.projector: roles.projector_password,
+    }
     with psycopg.connect(pg_cluster.dsn()) as connection:
-        for role_name in (roles.migration, roles.runtime, roles.operator, roles.alternate_runtime):
-            password = secrets.token_urlsafe(32)
+        for role_name in (roles.migration, roles.runtime, roles.operator, roles.alternate_runtime,
+                          roles.dispatcher, roles.projector):
+            password = passwords.get(role_name) or secrets.token_urlsafe(32)
             statement = sql.SQL(
                 "CREATE ROLE {} LOGIN PASSWORD {} NOSUPERUSER NOCREATEDB NOCREATEROLE "
                 "NOBYPASSRLS NOINHERIT"
@@ -339,7 +378,7 @@ def pg_roles(pg_cluster: PgCluster) -> PgRoles:
 
 
 @pytest.fixture
-def migration_db(pg_cluster: PgCluster, pg_roles: PgRoles) -> MigrationDatabase:
+def migration_db(pg_cluster: PgCluster, pg_roles: PgRoles, tmp_path: Path) -> MigrationDatabase:
     """Create an isolated database owned by a non-superuser migration role."""
     name = f"ifpmic_g1_{uuid4().hex[:16]}"
     with psycopg.connect(pg_cluster.dsn(), autocommit=True) as connection:
@@ -348,7 +387,12 @@ def migration_db(pg_cluster: PgCluster, pg_roles: PgRoles) -> MigrationDatabase:
                 sql.Identifier(name), sql.Identifier(pg_roles.migration)
             )
         )
-    database = MigrationDatabase(name=name, roles=pg_roles)
+    repo_root = Path(__file__).resolve().parents[2]
+    legacy_dir = tmp_path / "migrations-001-002"
+    legacy_dir.mkdir(mode=0o700)
+    shutil.copyfile(repo_root / "services/ifpmic_api/migrations/001_initial.sql", legacy_dir / "001_initial.sql")
+    shutil.copyfile(repo_root / "services/ifpmic_api/migrations/002_auth_retention.sql", legacy_dir / "002_auth_retention.sql")
+    database = MigrationDatabase(name=name, roles=pg_roles, legacy_migration_dir=legacy_dir)
     try:
         yield database
     finally:

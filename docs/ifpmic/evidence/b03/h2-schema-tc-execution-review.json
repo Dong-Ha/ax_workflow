@@ -1,0 +1,62 @@
+{
+  "kind": "ifpmic.b03.h2.schema-tc-execution-review.v7",
+  "verdict": "approve_execution",
+  "contract_sha256": "edd3f7bd89ecc94b3a4d01ec5dde7239bd391667cfbe141bbce23bc7ad9a5197",
+  "review_scope": "Read-only TC review of the exact v7 execution contract. The delta moves G4/G5 ahead of the unaffected legacy phase for earlier feedback after the seed fixture correction. Review verifies the linked create-command fixture value, exact source pins, phase identities/counts, and unchanged per-phase timeout. No pytest, migration, database, or service was executed for this review.",
+  "reviewed_inputs": {
+    "execution_contract": {
+      "path": "docs/ifpmic/evidence/b03/h2-schema-execution-contract.json",
+      "sha256": "edd3f7bd89ecc94b3a4d01ec5dde7239bd391667cfbe141bbce23bc7ad9a5197"
+    },
+    "tc_ledger": {
+      "path": "docs/ifpmic/evidence/b03/h2-schema-tc-ledger.json",
+      "sha256": "57f13ae7bf25749de83159eb3c32cacaf486e4eb0e94e250525048a81b75ef86"
+    },
+    "jobs_fixture": {
+      "path": "tests/ifpmic_api/jobs_fixture.py",
+      "sha256": "2191f3523e0ddcbb4c7e97d7b74348dc571c432b5df5a01c7436dd57db3bac48"
+    },
+    "runner": {
+      "path": "scripts/verify_ifpmic_b03_h2_schema.py",
+      "sha256": "2e51d204c4990ce2ae49e8f85fdc093f68ff7ed386c12d578b6095a75e61a7f8"
+    },
+    "prior_tc_review": {
+      "path": "docs/ifpmic/evidence/b03/attempts/h2-schema-v6-before-seed-fix/h2-schema-tc-execution-review.json",
+      "sha256": "1eee170282d8559a2cd20051a49b3e87e9caa521c3a6e17cb0062462ee9c4973"
+    },
+    "prior_gate": {
+      "path": "workflow-artifacts/verification/B03/H2/schema/gates/2026-10-19T10-34-06-842776Z/gate.json",
+      "finding": "H2 10/10 and legacy 167/167 passed; G4 had 3 failures from current-schema seed jobs missing create_command_id. The fixture now writes its preallocated command_id into jobs.create_command_id. This prior run remains a failed gate and is not treated as a pass."
+    }
+  },
+  "delta_review": {
+    "result": "resolved",
+    "evidence": "The v7 contract and runner both order phases as h2_schema_python, g4_python, g5_python, legacy_python. Relative to v6, only the position of legacy_python changed. All four phases retain their exact prior node IDs and counts. Each phase remains bounded at 300 seconds. The corrected seed_job_rows helper carries the preallocated command_id into the jobs row and then uses that same value for its command and workspace intent rows; the test IDs and expected outcomes remain unchanged.",
+    "source_pin_check": {
+      "result": "all_match",
+      "ledger_pin_count": 18,
+      "jobs_fixture_pin_matches": true,
+      "contract_ledger_pin_matches": true,
+      "runner_order_matches_contract": true
+    },
+    "phase_plan": {
+      "order": [
+        "h2_schema_python",
+        "g4_python",
+        "g5_python",
+        "legacy_python"
+      ],
+      "case_counts": {
+        "h2_schema_python": 10,
+        "g4_python": 91,
+        "g5_python": 93,
+        "legacy_python": 167,
+        "total": 361
+      },
+      "timeout_seconds_per_phase": 300,
+      "case_ids_unchanged": true
+    }
+  },
+  "findings": [],
+  "execution_boundary": "Approve the exact v7 contract for the specified schema subgate, subject to the separately required independent frozen-source/pre-gate approval. This approval authorizes a new pinned run; it does not convert the prior G4 failure into a pass. No execution occurred for this review. Temporal integration, full H2, and original AT acceptance remain unproven."
+}

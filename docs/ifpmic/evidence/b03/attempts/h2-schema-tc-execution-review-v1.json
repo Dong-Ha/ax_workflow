@@ -1,0 +1,43 @@
+{
+  "kind": "ifpmic.b03.h2.schema-tc-execution-review.v1",
+  "verdict": "reject_execution",
+  "contract_sha256": "c542a86703219c6fd353991243f84a2fc1d2a26a4bdc7f684f9571737372bad4",
+  "review_scope": "Read-only TC review of the exact H2 schema execution contract, its pinned ledger, test selectors and implementation details. No tests, migrations, database or service were executed.",
+  "reviewed_inputs": {
+    "execution_contract": {
+      "path": "docs/ifpmic/evidence/b03/h2-schema-execution-contract.json",
+      "sha256": "c542a86703219c6fd353991243f84a2fc1d2a26a4bdc7f684f9571737372bad4"
+    },
+    "tc_ledger": {
+      "path": "docs/ifpmic/evidence/b03/h2-schema-tc-ledger.json",
+      "sha256": "a9c3c0b1c3a3a0c54652c3482d871a188431eb1365211612b9dfb63959891856"
+    },
+    "new_test": {
+      "path": "tests/ifpmic_api/test_workflow_schema.py",
+      "sha256": "bfc79580b7dbef85099d749c2f079ab6935828d3973970e4ab28f1ed6c7a9814"
+    },
+    "fixture": {
+      "path": "tests/ifpmic_api/workflow_schema_fixture.py",
+      "sha256": "a98bc69edeab3c0b595a713caa52cdc68f29e4474bc0634160ffcd91c8dea618"
+    },
+    "migration": {
+      "path": "services/ifpmic_api/migrations/003_workflow_execution.sql",
+      "sha256": "2e9afdddb8473ddab629a7991bfa31469001dfb343530b2e95ebfd4e20461ae5"
+    }
+  },
+  "findings": [
+    {
+      "id": "H2-TC-START-WINDOW-ALL-OR-NONE",
+      "severity": "blocking",
+      "location": "execution_bindings first_start_attempt_at / uncertain_until / observed_retention_seconds CHECK; test_h2_real_create_activation_receipt_replay_and_run_fences",
+      "evidence": "The execution contract implementation_details.null_constraints explicitly requires testing the start-window all-or-none constraint. The new activation test only exercises the valid populated tuple through record_start_attempt(..., 3601); it has no assertion that an all-NULL tuple is accepted or that partial-NULL tuples are rejected by the named database CHECK. The SQL defines this compound invariant at execution_bindings CHECK lines 101-103. Existing state tests and valid record_start_attempt do not exercise PostgreSQL CHECK three-valued behavior for the partial shapes.",
+      "required_resolution": "Before execution, add independent real-PostgreSQL assertions against an actual reserved binding: verify the initial all-NULL tuple, then attempt partial tuples (at minimum first_start_attempt_at alone and first_start_attempt_at+uncertain_until without observed_retention_seconds) and assert SQLSTATE 23514 with the expected constraint identity and unchanged binding projection. Keep the existing valid complete-tuple path and all current oracles. Update the source pin, TC ledger and execution contract pin/review chain; obtain a fresh exact-source pre-gate review before running the subgate."
+    }
+  ],
+  "approved_coverage": {
+    "inventory": "The ledger has the correct 351 historical IDs from the accepted archive plus nine literal new cases (360 total), split into the runner's four sequential phases.",
+    "auth_and_rollback": "The HBA fixture requires SCRAM for all four service roles before trust fallback, checks valid/missing/wrong/cross-role credentials, and malformed 003 backfill paths assert migration rollback. Private cause capture is available for expected and unexpected MigrationError failures.",
+    "activation_and_replay": "The real-G4-to-PostgreSQL SQL case checks stale claim/generation fences, READY workspace binding, initial activation and exact receipt replay after authority revocation. Dispatcher lease observation uses owner-only read access; malformed command outcomes are tested using separate accepted rows and the named command_outcome_shape constraint."
+  },
+  "execution_boundary": "This record does not authorize execution. H2 Temporal processes/crash cuts, H1 runtime recheck, full H2, and all original AT acceptance remain unproven and explicitly out of this schema subgate."
+}

@@ -1,0 +1,72 @@
+{
+  "kind": "ifpmic.b03.h2.schema-execution-review.v1",
+  "verdict": "reject_execution",
+  "contract_sha256": "c542a86703219c6fd353991243f84a2fc1d2a26a4bdc7f684f9571737372bad4",
+  "contract_path": "docs/ifpmic/evidence/b03/h2-schema-execution-contract.json",
+  "reviewer": "independent_senior_security_architecture_agent",
+  "method": "Read-only exact execution contract, TC ledger, new test/fixture, runner plan and relevant product/cleanup source inspection. No pytest collection, SQL/parser, DB, dependency change or service execution. Reviewer owns only this JSON.",
+  "source_pins": {
+    "docs/ifpmic/evidence/b03/h2-schema-tc-ledger.json": "a9c3c0b1c3a3a0c54652c3482d871a188431eb1365211612b9dfb63959891856",
+    "scripts/verify_ifpmic_b03_h2_schema.py": "ca3aa143894361cdd4d6f9fa029a4018bad654ed2e3b9c35c4b65cf399c81016",
+    "tests/ifpmic_api/test_workflow_schema.py": "bfc79580b7dbef85099d749c2f079ab6935828d3973970e4ab28f1ed6c7a9814",
+    "tests/ifpmic_api/workflow_schema_fixture.py": "a98bc69edeab3c0b595a713caa52cdc68f29e4474bc0634160ffcd91c8dea618",
+    "tests/ifpmic_api/conftest.py": "3c39b0491139762d0a3da09397a368558cbe72e5cfebda4a279c76c97ce6ebe5",
+    "services/ifpmic_api/request_contract.py": "ad88f756ce4bf526bb3c2d89dab64765bcfc42ab7f8b2832dcb012b271e07fe0",
+    "services/ifpmic_api/errors.py": "374b49dc97c616d8e4c9432d997d5c9bd9b4a542f236f451a3e43ae92d16e967",
+    "services/ifpmic_api/app.py": "a65c3d44a14ecae7b819e5042d4f490ce68c8b9b5f5962d1b5f2bbfe52fef192",
+    "services/ifpmic_api/migrations/003_workflow_execution.sql": "2e9afdddb8473ddab629a7991bfa31469001dfb343530b2e95ebfd4e20461ae5",
+    "docs/ifpmic/evidence/b03/h2-schema-code-review.json": "4d0b62e883a933c1c2ef4226674eb07ae3c33f2b3bb00b2160a7e8113412bd28"
+  },
+  "blocking_findings": [
+    {
+      "id": "H2-SCHEMA-EXEC-NUL-ORACLE",
+      "location": "h2-schema-execution-contract.json implementation_details.command_bytes; test_workflow_schema.py test_h2_real_create_activation_receipt_replay_and_run_fences",
+      "problem": "The test includes an actual U+0000 in request_text and requires HTTP202. Existing create_payload explicitly rejects U+0000 in every non-artifact string with INVALID_REQUEST; errors.py maps it to422. Therefore this test deterministically stops before SQL activation. The contract statement that U+0000 is legal at existing ingress is false.",
+      "required_correction": "Preserve existing G4 ingress behavior. Assert U+0000 yields422 INVALID_REQUEST with no durable rows, and exercise accepted activation with allowed Unicode/astral/quote/backslash text. Correct contract and SQL comment; do not weaken original validation to make the fixture pass.",
+      "reviewer_correction": "An earlier immediate message said400 before checking the status mapping;422 is the supported expected status and is the finding recorded here."
+    },
+    {
+      "id": "H2-SCHEMA-EXEC-UUID-NORMALIZATION",
+      "location": "test_workflow_schema.py test_h2_upgrade_backfills_create_origin_and_keeps_extra_commands_separate normalized_after",
+      "problem": "after[14] is outbox.state and after[15] is workspace_token UUID. The test converts after[14] to string but leaves after[15] native UUID, while expected_after converts the corresponding before[13] workspace UUID to string. UUID and str differ, making the valid upgrade case fail independent of product behavior.",
+      "required_correction": "Normalize the corresponding workspace-token column consistently: tail after[13], after[14], str(after[15]), after[16]. Keep all substantive preserved-row comparisons intact."
+    }
+  ],
+  "other_observations": [
+    {
+      "id": "H2-HBA-READINESS",
+      "severity": "followup_before_frozen_gate",
+      "finding": "workflow_scram_hba sends pg_ctl reload then reads pg_hba_file_rules, which describes the file rather than proving every intended live worker rule is active. Actual missing/wrong password case later prevents a false passing SCRAM claim, but early cases can race asynchronous reload.",
+      "recommendation": "Use a bounded fresh connection probe proving intended correct password success and missing-password failure before yielding the SCRAM fixture; restore rules with bounded readiness in teardown. Freeze its timeout in the reviewed candidate. Do not equate file parsing alone with loaded authentication behavior."
+    },
+    {
+      "id": "H2-SUBGATE-SCOPE",
+      "severity": "accepted_scope_boundary",
+      "finding": "The contract correctly distinguishes synthetic SQL run admission/activation from actual Temporal engine, H1 rerun, AT16 and fullH2. Original351 plus new9 inventory and later source-pinned pre-gate requirement are explicit. This rejection does not require expanding the SQL subgate into a false Temporal acceptance claim."
+    },
+    {
+      "id": "H2-WORKSPACE-RECOVERY",
+      "severity": "accepted_policy_clarification",
+      "finding": "The contract now explicitly states unready waits, READY changed generation quarantines, no silent binding relink, and future operator recovery remains unaccepted. This resolves the static review policy ambiguity."
+    },
+    {
+      "id": "H2-RUNNER-NOT-YET-FINAL",
+      "severity": "expected_pending_step",
+      "finding": "Runner EXECUTION_SHA remains None and cannot execute services/tests. After revised same-SHA independent+TC approval, final runner bytes and source inventory must receive a separate frozen pre-gate review. No execution is authorized by this rejected record."
+    }
+  ],
+  "required_reverification": [
+    "Preserve rejected contract/ledger/test/fixture/runner sources and this review before edits.",
+    "Correct the two deterministic oracles without altering original ingress semantics; update exact TC source pins and execution contract hash.",
+    "TC independently completes missing partial-NULL start-window negative coverage and freezes any resulting inventory/deadline change; this reviewer does not claim to have reviewed those future edits.",
+    "Both reviewers inspect the revised exact contract SHA, followed by final source/runner pre-gate review before any execution.",
+    "A later full360-case runtime pass is required; no static review establishes SQL, SCRAM, migration or activation success."
+  ],
+  "acceptance_boundary": {
+    "execution": "not_authorized_by_this_review",
+    "services_tests": "not_executed",
+    "H2": "incomplete",
+    "original_ATs": "not_executed",
+    "goal": "active"
+  }
+}

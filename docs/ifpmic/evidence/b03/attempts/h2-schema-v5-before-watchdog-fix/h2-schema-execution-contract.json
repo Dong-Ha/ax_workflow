@@ -1,0 +1,167 @@
+{
+  "kind": "ifpmic.b03.h2.schema-execution-contract.v5",
+  "status": "candidate_pending_independent_and_tc_execution_review",
+  "parent_implementation_contract": {
+    "path": "docs/ifpmic/evidence/b03/h2-implementation-contract.json",
+    "sha256": "f63173ac17ebebd34a15d5966d96b79dc1667a713c00b1b92868b137ba93ded3"
+  },
+  "tc_ledger": {
+    "path": "docs/ifpmic/evidence/b03/h2-schema-tc-ledger.json",
+    "sha256": "713469277523b9db88cca7d9bfd40f6ebeaca6e1d13efae89bd0fdc127035ed2"
+  },
+  "purpose": "Mandatory structural/SQL/authentication subgate of H2; validates append-only003 and initial projection SQL plus all351 affected API regressions before building actual Temporal dispatcher/worker integration. Passing this subgate is not H2 completion.",
+  "requirements": [
+    "B03 SQL foundation",
+    "REQ-02",
+    "REQ-05 prerequisite",
+    "REQ-13",
+    "REQ-14 preservation",
+    "AT-16 prerequisite only"
+  ],
+  "responsibility": {
+    "main": "Product/migration/API, bounded runner, evidence publication and integration.",
+    "TC": "Independent tests/literal oracles/IDs/timeout hooks and exact ledger.",
+    "independent_reviewer": "Exact execution contract and frozen source/pre-gate review; later raw evidence audit."
+  },
+  "required_review_names": [
+    "h2-schema-execution-review.json",
+    "h2-schema-tc-execution-review.json"
+  ],
+  "execution_authority": "Both named reviews must approve_execution for this exact contract SHA. Runner then requires independent h2-schema-pre-gate-review.json with approve_frozen_schema_gate, exact execution-contract SHA, runner and product/test/ledger/review source pins. No migration, pytest, service or database execution before these records exist.",
+  "runner": {
+    "path": "scripts/verify_ifpmic_b03_h2_schema.py",
+    "python": ".ifpmic-venv/bin/python",
+    "source_pin": "Independent pre-gate review pins final runner bytes, including this exact contract SHA; contract does not self-pin its reviewer hashes.",
+    "command": [
+      ".ifpmic-venv/bin/python",
+      "scripts/verify_ifpmic_b03_h2_schema.py"
+    ]
+  },
+  "phases": {
+    "order": [
+      "h2_schema_python",
+      "legacy_python",
+      "g4_python",
+      "g5_python"
+    ],
+    "phase_seconds": 300,
+    "original_case_counts": {
+      "legacy_python": 167,
+      "g4_python": 91,
+      "g5_python": 93
+    },
+    "new_case_count": 10,
+    "inventory": "All exact IDs/files come from the pinned TC ledger. Original351 are independently compared to accepted G6 archive api/gate.json; ten new IDs are explicit literal TC cases. No unexpected API test module except separately required H1 may be omitted.",
+    "per_case": "New H2 setup+body alarm25s then teardown alarm5s, monotonic ordered private timing rows and total<=30s; ten exact nodeIDs must match JUnit. Existing351 preserve accepted phase300s + actual JUnit case<=30s check and their bounded subprocess fixtures. Failure/error/skip/xfail or inventory mismatch fails the gate."
+  },
+  "environments": {
+    "python": "Original32-package CPython3.12.3 environment; hash lock unchanged. Retain and hash full original32 and H1qualified36 files/symlinks before/after, excluding cache/pyc only. No install, package upgrade or implicit downloads.",
+    "postgres": "Only pinned PostgreSQL18.1 binaries, actual private Unix-socket fixture, no TCP listeners or Paperclip/external DB. Compare actual lifecycle binary hashes to accepted G6 api/gate.json. Each phase must actually stop its cluster and have no live owned children.",
+    "service_auth": "H2-specific explicit service-user SCRAM rules before historical trust rule; bootstrap/owner access isolated. Actual intended-password success + absent/wrong/other-role-password failures. Parse effective HBA and bound reload readiness; historical trust tests do not establish SCRAM.",
+    "ambient": "Minimal env PATH from current Python/fixture Node + /usr/bin:/bin, LANG/LC_ALL C.UTF-8, explicit PYTHONPATH/test evidence paths/private TMPDIR; no inherited PG/Temporal/IFPMIC credentials or PYTEST_ADDOPTS/plugin autoload. Explicit empty private PGPASSFILE/PGSERVICEFILE and empty PGSYSCONFDIR prevent libpq fallback to personal authentication files. Disable pytest cacheprovider; use a fresh real mode0700 short tempfile root /tmp/ifpmic-h2-<random> as owned private TMPDIR for each phase. No HOME override.",
+    "fixture_scope": "Existing G1 copied001/002 historical controls remain; installed CLI original ID tests current001/002/003 with four roles. New G4-style SQL case uses accepted HTTP create and actual PG scope/admit/projection; its run ID is a synthetic SQL fixture, not proof of actual Temporal admission."
+  },
+  "implementation_details": {
+    "schema_source_sha256": "5ef29521944e18551728dd285ce3ae21fa03c2b06f77c25430da6acb0ce1f102",
+    "static_review": {
+      "path": "docs/ifpmic/evidence/b03/h2-schema-code-review.json",
+      "sha256": "ddeeeefc25fb02a625c9cf20300b1f5192e0fcf7f73097952a7f2e89fcd7bad7"
+    },
+    "workspace_fence": "Binding additionally stores immutable workspace_token+workspace_generation, both included in its full immutable binding digest. Ordered principal->project guard->membership NOWAIT->job->binding->workspace intent SHARE->outbox locks prevent validated READY identity changing before projection commit. G5 locks only intent and does not acquire earlier classes.",
+    "workspace_recovery": "ERROR/RESERVED/PROVISIONING are wait and never apply. A READY intent recovered with a changed generation after binding reservation is an identity conflict and quarantines without relinking or projection. Same committed receipt replays before any later workspace/revocation checks. Automatic binding migration/unquarantine is not implemented or accepted; explicit future operator recovery contract is required.",
+    "command_bytes": "Existing G4 rejects NUL strings with422/INVALID_REQUEST; preserve it and assert zero new job/command rows. Existing G4 accepts supported lone-surrogate/astral semantic text (historical named G4 case), so do not decode/re-serialize the full stored canonical ASCII command in PostgreSQL JSON processing. Hash the fixed original format/payload envelope directly over exact immutable bytes. Verify the contiguous canonical encoded profile_version/project_id/release_mode field boundary using known catalog profile-version JSON and the independently encoded project ID. This relies on trusted G4 strict fixed keys/sorted compact ASCII and immutable commands; embedded user quotes are escaped and cannot forge that raw field boundary. It is not a general JSON/schema validator; changing the DTO/canonicalization or including malicious runtime-credential writers requires a new reviewed boundary. No raw body enters Temporal.",
+    "configuration_hash_domains": {
+      "deployment": {
+        "domain": "ifpmic.b03.deployment.v1",
+        "keys": [
+          "protocol_version",
+          "deployment_id",
+          "namespace",
+          "server_endpoint"
+        ]
+      },
+      "build": {
+        "domain": "ifpmic.b03.build.v1",
+        "keys": [
+          "protocol_version",
+          "source_manifest_sha256",
+          "environment_manifest_sha256",
+          "workflow_type"
+        ]
+      },
+      "encoding": "SHA256(UTF8 domain + NUL + Python ASCII sorted compact integer-only JSON), protocol_version h2-v1. Independent TC fixed literals assert both hashes. Actual worker/launcher source/environment/endpoint checks remain future runtime evidence; registry hash alone is not attestation."
+    },
+    "null_constraints": "Explicit non-NULL applied revision/rejected code and start-window all-or-none checks. TC must distinguish CHECK command_outcome_shape from immutable-terminal trigger by using initially accepted separate rows.",
+    "primary_reference": {
+      "url": "https://www.postgresql.org/docs/18/datatype-json.html",
+      "supports": "JSON processing may decode Unicode escapes and reject unpaired-surrogate data even for json inputs; reference only, actual supported G4-to-SQL path requires test evidence."
+    },
+    "extra_required_oracles": [
+      "Original G4 NUL422 input with zero acceptance rows; positive Unicode/astral/lone-surrogate canonical command bytes.",
+      "Initial all-NULL start window, partial-NULL named CHECK failure with unchanged row, then valid atomic complete window.",
+      "Exact 18-field binding digest independently constructed from literal fixture/request/original source identities.",
+      "Real HTTP list/detail/command and original202 accepted receipt replay after SQL application and extra human command rows; after user revocation external403 while authenticated internal receipt replays.",
+      "READY generation change after reservation/admission yields quarantine/DRAFT0/accepted/receipt0; old applied receipt remains identical after later workspace generation change.",
+      "Actual Node snapshot capture/catalog import with lone-surrogate profile_version, ASCII HTTP202 create, reservation and SQL applied/QUEUED1. Four service role catalog UPDATE/DELETE denial remains checked."
+    ],
+    "catalog_boundary": "G4 trusted Node bridge validates original record/workflow and exactly compares all nine catalog fields before atomically accepting a job. Four service principals cannot UPDATE/DELETE catalog. SQL h2_catalog selects only FK-linked project/snapshot and recalculates raw record SHA; project_activation also compares the immutable binding catalog SHA. Do not decode whole record/profile_version into JSONB: supported lone-surrogate profile names must survive. This is producer provenance based on trusted G4, not hash attestation for arbitrary SQL-created jobs. New direct SQL or alternate accepted-job producers require a reviewed provenance boundary."
+  },
+  "source_policy": {
+    "frozen": "Capture all tracked and new H2 product/tests/scripts/evidence bytes in private source ZIP and deterministic hash map before commands; same source map after. TC source pins must match. No agent writes while gate runs.",
+    "protected": "Original17 imported contracts + two uploads; original001/002 and locks; AX server/UI/Node inventory byte checks from accepted B01 via existing verifier helper. README and H1 test README pin intentionally updated for current four-role setup, with other H1 oracles unchanged.",
+    "gate_metadata": "Only derived progress/evidence may change after independent final audit and must have explicit before/after reconciliation; no changing product/tests after pass."
+  },
+  "evidence": {
+    "private": "Gate report/source ZIP/manifests/JUnit/logs/diagnostics remain in workflow-artifacts/verification/B03/H2/schema/gates/<unique-stamp> mode0700 with files0600. Each phase uses a fresh real /tmp/ifpmic-h2-<random> mode0700 root because nested evidence paths exceed Unix socket length. Retain these roots verbatim for private evidence; their absolute paths are recorded only in the private gate report. They contain isolated synthetic fixtures only. Do not follow/chmod or recursively delete intentional fixture symlinks/hardlinks/unsafe modes. Process cleanup remains saved-owned-descendant only and does not depend on filesystem removal.",
+    "public": "Later normalized synthetic counts/source/env/lock hashes, sanitized JUnit without hostname, SQL outcomes, omission/limits and failure records. No raw logs/SQL traces/credentials/source ZIP/PIDs/absolute paths uploaded.",
+    "root_findings": "Three pre-execution static issues (NULL command shape, workspace validation fence, partial-NULL start window) and their original source are preserved; runtime failures must also be retained, never counted as pass."
+  },
+  "pass_criteria": [
+    "All361 exact tests pass with0fail/error/skip and no timeout; all phases actually exit0.",
+    "Actual PG migrations/upgrade/auth/ACL/initial SQL activation cases plus existing351 pass, original source/hash/env invariants intact.",
+    "Every new case has matching 25+5 timing record; PostgreSQL lifecycle and owned-child cleanup confirmed; no credentials/public raw data.",
+    "Independent final review accepts only a partial SQL foundation increment. Full H2 is still in_progress."
+  ],
+  "omissions": [
+    {
+      "gate": "H1 actual Temporal five cases",
+      "reason": "This subgate changes only SQL/API/schema fixtures plus README hash pin; Temporal binaries/SDK/H1 fixture logic unchanged. No H1 runtime is claimed fresh; rerun all5 in full H2/H6.",
+      "risk": "Current README pin update has static-only validation until later H1 integrated rerun."
+    },
+    {
+      "gate": "Temporal dispatcher/worker/RPC/crash cuts and AT-16",
+      "reason": "Not implemented by SQL subgate; named crash ledger/real transport-loss proof remains mandatory for full H2.",
+      "risk": "SQL synthetic run admission cannot establish actual Temporal uniqueness/recovery."
+    },
+    {
+      "gate": "Node387/build/browser",
+      "reason": "API schema increment is not wired to UI; protected AX/UI/Node source inventory must remain byte-identical. No new full frontend regression is claimed; full H6 still requires Node/build and conditional UI proof.",
+      "risk": "Actual orchestration UI/complete workflow acceptance remains pending."
+    },
+    {
+      "gate": "H3/H4/H5 and originalAT32",
+      "reason": "Keep original29node/human/version and quality/approval boundaries under their separately reviewed stages.",
+      "risk": "No end-to-end business acceptance yet."
+    }
+  ],
+  "failure_recovery": "Retain private failed gate/source/env/DB/history as applicable; stop only saved owned descendants using pidfd/start-tick checks and reap direct handles. Observation timeout is not terminal without same handle recheck. Diagnose and return to schema/auth/projection/fixture step, preserve source diff/oracle history, refresh TC/pre-gate source pins and rerun entire361-case subgate after any source fix. No partial phase pass substitutes for a complete new gate.",
+  "goal_status": "active",
+  "real_acceptance_status": "not_executed",
+  "revision_history": {
+    "previous_contract": {
+      "path": "docs/ifpmic/evidence/b03/attempts/h2-schema-v4-before-query-fix/h2-schema-execution-contract.json",
+      "sha256": "b1aeac221eb1fc89c4df603549c3a7a5308f63cf5f15039be0452cc69b154dd9"
+    },
+    "rejections": [
+      {
+        "path": "docs/ifpmic/evidence/b03/attempts/h2-schema-execution-review-v1.json",
+        "sha256": "8021c594e67c1a06b082492917fa228b01e501f05fa41298e2385b3cf48638ef"
+      },
+      {
+        "path": "docs/ifpmic/evidence/b03/attempts/h2-schema-tc-execution-review-v1.json",
+        "sha256": "d6fc11bf8806bc1b5dd0bf8b63605de030ac2f09808c9be4b872cee07aa4db44"
+      }
+    ],
+    "corrections": "Corrected mistaken NUL-success oracle, UUID comparison index and missing partial-NULL invariant coverage before any execution; strengthened actual HBA readiness, HTTP post-activation/read/replay and independent binding-digest checks. SQL changed to preserve existing supported semantic strings and name constraints, original source/reviews/TC drafts retained. No runtime/test failure or pass yet. v3: root found supported lone-surrogate profile_version JSONB rejection missed in v2 static review; preserve trusted G4 Node/catalog exact-bind producer boundary, raw hash and binding hash without redundant JSON decode; add tenth real HTTP-to-SQL activation oracle. Preserve v2 approvals as historical, require fresh exact-SHA reviews. No runtime execution yet. v4: first actual gate failed before any assertion because the nested private TMPDIR produced a Unix socket path longer than107 bytes. Retain failed gate; use fresh short private real /tmp roots with private retention instead. Product/TC/ledger unchanged; rerun all361 after fresh exact reviews. v5: second actual gate reached all10 H2 cases:9passed, one TC upgrade comparison query failed with AmbiguousColumn before migration due to USING(job_id) after duplicate job columns. Preserve attempt; qualify TC joins only, retain all expected data/oracles and rerun complete361. No product changes. During pre-execution v5 static review, root also identified a fetched UUID compared to a string seed; TC normalizes only the observed ID to text, retaining the exact expected ID/route. No execution occurred under the intermediate v5 draft."
+  }
+}

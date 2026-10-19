@@ -1,0 +1,38 @@
+{
+  "kind": "ifpmic.b03.h2.schema-tc-execution-review.v4",
+  "verdict": "approve_execution",
+  "contract_sha256": "b1aeac221eb1fc89c4df603549c3a7a5308f63cf5f15039be0452cc69b154dd9",
+  "review_scope": "Read-only TC review of the v4 execution contract delta for PostgreSQL temporary-directory/socket-path length. The prior v3 review covers unchanged test/SQL oracles. No additional tests, migrations, database or service were executed for this review.",
+  "reviewed_inputs": {
+    "execution_contract": {
+      "path": "docs/ifpmic/evidence/b03/h2-schema-execution-contract.json",
+      "sha256": "b1aeac221eb1fc89c4df603549c3a7a5308f63cf5f15039be0452cc69b154dd9"
+    },
+    "tc_ledger": {
+      "path": "docs/ifpmic/evidence/b03/h2-schema-tc-ledger.json",
+      "sha256": "a876dd2dbd31cae749f8c364a1da6284a243dc6121f0413d7d0a4bfaf9aedfc9"
+    },
+    "prior_tc_review": {
+      "path": "docs/ifpmic/evidence/b03/attempts/h2-schema-v3-before-short-tmp/h2-schema-tc-execution-review.json",
+      "sha256": "c7fda4843134604b8b44ece1453e2c64290cf34af5450bc53b80e2899284a052"
+    },
+    "failed_gate": {
+      "path": "workflow-artifacts/verification/B03/H2/schema/gates/2026-10-18T21-09-14-258833Z/gate.json",
+      "finding": "10 H2 fixture setup errors before assertions; retained server.log identifies Unix socket path >107-byte limit; PostgreSQL stopped and PID absent."
+    }
+  },
+  "delta_review": {
+    "result": "resolved",
+    "evidence": "The v4 change uses a fresh real mode0700 short /tmp/ifpmic-h2-<random> TMPDIR for each phase, while preserving the original unique private gate directory for source bundle, JUnit, logs, lifecycle and report. It records temporary-root absolute paths only in the private gate report and retains roots for evidence. This addresses the observed PostgreSQL Unix-domain socket path limit without shortening or replacing the gate evidence path.",
+    "safety_conditions": "The runner’s separate frozen-source/pre-gate review must verify actual root creation is unique, real, mode0700 and owned; TMPDIR is set before pytest startup; no unsafe fixture symlink/hardlink/mode is followed, chmodded or recursively deleted; retained temp-root paths remain private; and process cleanup uses the saved owned-process identity rather than deleting roots to infer shutdown."
+  },
+  "unchanged_pins": {
+    "ledger_matches_execution_contract": true,
+    "all_ledger_source_pins_match_current_bytes": true,
+    "case_count": 361,
+    "new_case_count": 10,
+    "schema_source_sha256": "5ef29521944e18551728dd285ce3ae21fa03c2b06f77c25430da6acb0ce1f102"
+  },
+  "findings": [],
+  "execution_boundary": "Approve the exact v4 contract for the specified schema subgate, subject to the separately required independent frozen-source/pre-gate approval. The preserved first gate is a setup failure, not an assertion pass or product/test result. No new execution was performed for this delta review; H2 Temporal integration and original AT acceptance remain unproven."
+}

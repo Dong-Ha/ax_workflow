@@ -1,0 +1,47 @@
+{
+  "kind": "ifpmic.b03.h2.schema-tc-execution-review.v5",
+  "verdict": "approve_execution",
+  "contract_sha256": "e3ce56933d89c288d5e7bafc43f73a1220793d2eb719f690a751d2b6d8cfe913",
+  "review_scope": "Read-only TC review of the exact v5 execution contract and the recorded H2 upgrade-query correction. The review covers the two focused test-only changes, refreshed TC ledger pins, retained oracle and case inventory, and preserved failed gate. No pytest, migration, database, or service was executed for this review.",
+  "reviewed_inputs": {
+    "execution_contract": {
+      "path": "docs/ifpmic/evidence/b03/h2-schema-execution-contract.json",
+      "sha256": "e3ce56933d89c288d5e7bafc43f73a1220793d2eb719f690a751d2b6d8cfe913"
+    },
+    "tc_ledger": {
+      "path": "docs/ifpmic/evidence/b03/h2-schema-tc-ledger.json",
+      "sha256": "713469277523b9db88cca7d9bfd40f6ebeaca6e1d13efae89bd0fdc127035ed2"
+    },
+    "schema_test": {
+      "path": "tests/ifpmic_api/test_workflow_schema.py",
+      "sha256": "a007e02759aab6fa561749d40ff4e2e9fb78fb9832196714eaafecdb91008e6d"
+    },
+    "prior_tc_review": {
+      "path": "docs/ifpmic/evidence/b03/attempts/h2-schema-v4-before-query-fix/h2-schema-tc-execution-review.json",
+      "sha256": "3e0817b99f833531e21ba740673401460b4dd6b417ba2b5dd7d2d8e2853a65b2"
+    },
+    "failed_gate": {
+      "path": "workflow-artifacts/verification/B03/H2/schema/gates/2026-10-19T10-26-57-053751Z/gate.json",
+      "finding": "The retained run records 10 H2 cases, 9 passed and 1 failed. The failing upgrade case stopped at an AmbiguousColumn error from JOIN ... USING(job_id), before migration assertions. The gate source fingerprint predates the focused query correction and must remain a failure record, not a pass."
+    }
+  },
+  "delta_review": {
+    "result": "resolved",
+    "evidence": "The failed comparison query joined commands_outbox and workspace_intents with USING, which attempted to merge job_id columns when the left relation already contained duplicate job_id columns. The corrected query uses explicit ON predicates for command_id and job_id while retaining the selected fields and expected before/after values. A separate product-read-model assertion compares the selected create command UUID after string normalization because seed_legacy_create returns IDs as strings and psycopg returns PostgreSQL UUID values as uuid.UUID. The normalization preserves the literal seeded command ID and route oracle. No product source, migration, expected ID, expected route, or other test oracle changed.",
+    "source_pin_check": {
+      "result": "all_match",
+      "ledger_pin_count": 18,
+      "test_pin_matches": true,
+      "contract_ledger_pin_matches": true
+    },
+    "case_inventory": {
+      "legacy_python": 167,
+      "g4_python": 91,
+      "g5_python": 93,
+      "h2_schema_python": 10,
+      "total": 361
+    }
+  },
+  "findings": [],
+  "execution_boundary": "Approve the exact v5 contract for the specified schema subgate, subject to the separately required independent frozen-source/pre-gate approval. This approval authorizes a new pinned run; it does not convert the preserved failed run into a pass. No execution occurred for this review. Temporal integration, full H2, and original AT acceptance remain unproven."
+}

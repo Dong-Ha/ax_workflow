@@ -1,0 +1,121 @@
+{
+  "kind": "ifpmic.b03.h2.schema-execution-review.v4",
+  "verdict": "approve_execution",
+  "contract_sha256": "b1aeac221eb1fc89c4df603549c3a7a5308f63cf5f15039be0452cc69b154dd9",
+  "contract_path": "docs/ifpmic/evidence/b03/h2-schema-execution-contract.json",
+  "reviewer": "independent_senior_security_architecture_agent",
+  "scope": "Approve the exact bounded SQL/auth/API subgate execution design only. Actual execution still requires both exact-SHA named approvals and the separate independently approved frozen source/runner pre-gate record. This is not evidence of runtime pass or H2 acceptance.",
+  "method": "Read-only review of revised contract, exact TC ledger/pins, changed fixtures/oracles, runner environment isolation and prior critical SQL assessment. JSON/SHA consistency inspected; no pytest collection, DB, SQL/parser, service or dependency execution. Product/test files untouched by reviewer. Delta v4 review additionally compared the exact v3/v4 contract and runner: only the TMPDIR policy and revision/evidence metadata changed; ledger, tests, fixtures, migration, API source and all 361 case IDs/pins are unchanged. Read-only AST/JSON/hash/source inspection only; no DB, pytest, migration, service or dependency execution.",
+  "source_pins": {
+    "docs/ifpmic/evidence/b03/h2-schema-tc-ledger.json": "a876dd2dbd31cae749f8c364a1da6284a243dc6121f0413d7d0a4bfaf9aedfc9",
+    "scripts/verify_ifpmic_b03_h2_schema.py": "9c50eef159f2dec255bb7e841376ef05f14582dfca9ffb9a91bf5587aa0caadc",
+    "tests/ifpmic_api/test_workflow_schema.py": "fe57f0d54aeae1b2902ec9c235d228f577238d425d57fd486e7510a9be7d187a",
+    "tests/ifpmic_api/workflow_schema_fixture.py": "1493233126c171bd8a16a243194ad61c6c95cbc7671cb660a5f9652be5b6007f",
+    "tests/ifpmic_api/conftest.py": "3c39b0491139762d0a3da09397a368558cbe72e5cfebda4a279c76c97ce6ebe5",
+    "services/ifpmic_api/request_contract.py": "ad88f756ce4bf526bb3c2d89dab64765bcfc42ab7f8b2832dcb012b271e07fe0",
+    "services/ifpmic_api/migrations/003_workflow_execution.sql": "5ef29521944e18551728dd285ce3ae21fa03c2b06f77c25430da6acb0ce1f102",
+    "docs/ifpmic/evidence/b03/h2-schema-code-review.json": "ddeeeefc25fb02a625c9cf20300b1f5192e0fcf7f73097952a7f2e89fcd7bad7",
+    "services/ifpmic_api/migrate.py": "36518fdd4d296455947df76fd72bf11d68aa44317549bd527037499b98a9eb86",
+    "services/ifpmic_api/jobs.py": "0538e460a6be42e3129d2e8d5e9f262bba357e621e0b5e800f4495ebdf99ecf9"
+  },
+  "previous_rejected_review": {
+    "path": "docs/ifpmic/evidence/b03/attempts/h2-schema-execution-review-v1.json",
+    "sha256": "8021c594e67c1a06b082492917fa228b01e501f05fa41298e2385b3cf48638ef",
+    "contract_sha256": "c542a86703219c6fd353991243f84a2fc1d2a26a4bdc7f684f9571737372bad4"
+  },
+  "resolved_findings": [
+    {
+      "id": "H2-SCHEMA-EXEC-NUL-ORACLE",
+      "assessment": "Resolved. New case expects422 INVALID_REQUEST for NUL and compares durable job/command counts before/after. Accepted activation uses canonical ASCII bytes containing original supported lone-surrogate/astral/quote/backslash text; original create_payload remains unchanged. Contract/SQL comments no longer claim NUL admission."
+    },
+    {
+      "id": "H2-SCHEMA-EXEC-UUID-NORMALIZATION",
+      "assessment": "Resolved. normalized_after retains outbox.state and string-normalizes the workspace_token column matching expected_after; preserved data assertions remain."
+    },
+    {
+      "id": "H2-PARTIAL-NULL-ORACLE",
+      "assessment": "Resolved for the specified SQL subgate. Tests assert initial all-NULL start metadata, two separate partial assignments fail exactly binding_start_window_shape with unchanged row, then valid service operation populates complete window."
+    },
+    {
+      "id": "H2-HBA-READINESS",
+      "assessment": "Strengthened. Before yielding, fixture parses explicit first four SCRAM rules, proves a fresh dispatcher connection with correct password succeeds and one without password fails using bounded connect_timeout. File parsing alone is not treated as authentication proof. An asynchronous reload not ready by that probe causes setup failure; it cannot produce a passing false SCRAM assertion. Teardown restores the original HBA and sends bounded reload."
+    },
+    {
+      "id": "H2-CATALOG-LONE-PROFILE-COMPATIBILITY",
+      "assessment": "v3 plan addresses the root-discovered unsupported JSONB decode of already supported lone-surrogate profile labels, retains original Node/bridge admission semantics and adds an actual Node-to-HTTP202-to-SQL activation oracle. No prior runtime failure or pass is claimed."
+    }
+  ],
+  "reviewed_plan_properties": [
+    "Original351 exact case IDs are compared against accepted G6 evidence, plus ten independently named H2 cases. Module inventory and JUnit result/identity checks reject missing/unexpected cases, skips/failures/errors/time-limit breaches.",
+    "Each new case has actual setup/body25s and cleanup5s alarm hooks with monotonic evidence matched to exact node IDs. Four phases are sequential and each bounded300s. Existing regression per-case JUnit duration remains bounded30s. Any timeout fails; no partial phase pass can substitute for the whole new gate.",
+    "Actual isolated PostgreSQL18.1 binaries must match accepted binary hashes, private Unix socket only, actual cluster lifecycle and no live owned descendants. SQL fixture run IDs are explicitly synthetic; no claim of Temporal observation/admission is made.",
+    "Complete18-field immutable binding digest is independently assembled from fixed fixture/request/original source identities, including workspace pins. Projection proposal is independently hashed using exact fixed domain/fields.",
+    "Workspace changed READY generation after admission is exercised as quarantine with DRAFT0/accepted/receipt0; exact committed receipt survives later generation changes and mutable authority revocation. No automatic identity relink or operator recovery acceptance.",
+    "Real HTTP create/list/detail/command/replay is checked after SQL application and extra human-route command, preserving create-only DTO provenance. External revoked caller gets403 while active scoped internal principal replays its original receipt.",
+    "Runner starts from minimal environment, no ambient credentials/plugins/addopts, disables cacheprovider and explicitly supplies empty private libpq password/service configuration. No HOME override or dependency installation. Original32 and H1qualified36 file/symlink manifests are retained before/after.",
+    "Protected original17+two uploads,001/002 and accepted AX/UI/Node inventory are checked. Source map/ZIP and before/after equality cover tracked and new H2 material; final runner itself requires independent source pin before execution.",
+    "Private source/log/JUnit/SQL cause/timing/lifecycle evidence stays under0700 ancestors with0600 direct artifacts. Cleanup must not follow/chmod intentional unsafe fixture symlinks/hardlinks. Public evidence is later derived sanitized counts/hashes only.",
+    "H1 runtime rerun, actual Temporal dispatcher/worker/crash protocol, H3-H5, integrated H6, Node/build/browser and originalAT completion are explicitly deferred with reasons/risks. This is a partial foundation verification, not a substitute end state."
+  ],
+  "blocking_findings": [],
+  "remaining_risks_and_execution_conditions": [
+    "Current runner EXECUTION_SHA is still None. Set it only to this approved contract hash, obtain TC approval for the same hash and a separate frozen pre-gate approval covering final runner/product/test/review/ledger pins before any service or pytest execution.",
+    "SQL syntax/name resolution, libpq auth behavior, timing feasibility, role denials and actual concurrency remain unproven until runtime. Any failure preserves evidence and returns to the corresponding source/oracle step with full361-case rerun after changes.",
+    "Fresh HBA login checks are bounded pass/fail probes rather than a polling readiness loop; a transient reload race may fail setup and require diagnosis. It cannot be converted to a pass by weakening credential-negative assertions.",
+    "Trusted fixed G4 DTO/canonical body assumption underlies the ASCII substring identity check; it is not a general JSON validator or protection against compromised runtime SQL credentials. Future producer/DTO changes require renewed review.",
+    "Synthetic READY SQL state does not prove real filesystem validation/Temporal launcher deployment. Actual H2 must still prove trusted source/env/config startup and all named process/RPC/crash/authority gates.",
+    "No new tests/services/SQL were run by this reviewer; approval is permission under the contract process, not acceptance evidence."
+  ],
+  "recommendation": "Proceed to pin the final runner bytes and obtain the exact-SHA frozen-source/pre-gate approval. If all prerequisites match, execute exactly this bounded 361-case SQL/auth/API subgate and judge only its actual evidence.",
+  "acceptance_boundary": {
+    "execution_design": "approved_exact_sha_conditional_on_frozen_pre_gate",
+    "runtime_result": "not_executed",
+    "H2": "incomplete",
+    "original_ATs": "not_executed",
+    "goal": "active"
+  },
+  "previous_approved_review": {
+    "path": "docs/ifpmic/evidence/b03/attempts/h2-schema-v2-before-unicode-fix/h2-schema-execution-review.json",
+    "sha256": "91d4b7b52aed4fdc44bb5c9beccd2d818ed7b76c821bcdbd77287a904208092b",
+    "contract_sha256": "f10d876a76a312969bc8cbd2e34a56f0025a0248d343b35eb8a7a807cfc7b2c9",
+    "scope": "Historical v2 approval before the catalog Unicode compatibility fix; not approval of current changed source."
+  },
+  "v3_delta_assessment": {
+    "result": "approve_execution for the exact v4 contract, conditional on same-SHA TC approval and separate final runner/source pre-gate approval.",
+    "inventory": {
+      "original": 351,
+      "new": 10,
+      "total": 361
+    },
+    "change_scope": "v2 environment/process/privacy/timeout policy retained. SQL replaces redundant catalog JSONB decode with original trusted G4 nine-field producer boundary plus FK/rawSHA/immutable binding checks; new real Node/HTTP/SQL profile compatibility case and catalog mutation negatives cover the change. v4 delta replaces the private long evidence-directory TMPDIR with a fresh real mode0700 tempfile under /tmp per phase; prior roots remain private and retained.",
+    "reviewed_new_case": "test_h2_lone_surrogate_profile_version_survives_real_create_and_activation",
+    "evidence_design": [
+      "Actual Node snapshot seeding/capture preserves escaped lone-surrogate profile_version; catalog import uses that trusted record and checks its canonical ASCII profile label and raw escaped bytes.",
+      "HTTP202 uses lossless ASCII original CreateJob body. The fixture adds a separate actual-PG-clock eligibility grant instead of incorrectly relying only on G4 frozen2030 authorization time.",
+      "Actual SQL claim/reserve/start-window/admit/ack/project functions use independent authenticated DB sessions and synthetic run UUID. The asserted result is applied/QUEUED1 with one receipt and dispatched outbox; this is explicitly not actual Temporal admission evidence.",
+      "All four service roles are checked for table and each catalog column UPDATE denial, DELETE denial, and actual UPDATE/DELETE statements fail under their own sessions. This supports the immutable catalog premise rather than relying on table-level privilege checks alone.",
+      "Static review ddeeeefc...bad7 separately pins corrected SQL5ef29521...f102 and explains why a raw hash is not proof of arbitrary producer trust. Contract explicitly invalidates this boundary for alternate/direct SQL accepted-job producers."
+    ],
+    "limits": "Runtime syntax/auth/timing/canonicalization still unproven. Additional role/lock/crash/Temporal/originalAT proof remains required by later gates; no acceptance from plan approval."
+  },
+  "v4_delta_assessment": {
+    "result": "approve_execution for the exact v4 contract, conditional on same-SHA TC approval and separate final runner/source pre-gate approval.",
+    "contract_sha256": "b1aeac221eb1fc89c4df603549c3a7a5308f63cf5f15039be0452cc69b154dd9",
+    "trigger": "The preserved first gate failed during all ten H2 fixture setups because PostgreSQL Unix socket paths exceeded the 107-byte limit; PostgreSQL stopped and its PID was absent. This was setup failure evidence, not an assertion pass or product/test result.",
+    "delta_review": [
+      "The v4 contract changes the ambient TMPDIR policy to a fresh short /tmp/ifpmic-h2-<random> root per phase while retaining the unique private gate leaf for source bundles, logs, lifecycle and reports.",
+      "The runner creates each root with tempfile.mkdtemp(dir=/tmp), which creates a unique real directory with mode0700 subject to the runner umask; it supplies that path to the phase process before pytest startup and retains it rather than recursively deleting it.",
+      "Absolute roots are written only to the private gate report. Existing cleanup still avoids following/chmodding test fixture symlinks/hardlinks and does not infer shutdown from root removal; lifecycle PID/stop evidence remains the check.",
+      "Contract comparison found no unrelated implementation, fixture, API, migration, ledger, case inventory or source pin changes. TC v4 review independently approves the same exact contract SHA and reports unchanged ledger/source pins."
+    ],
+    "contract_delta": "Only environments.ambient, kind/status and evidence/revision metadata differ from v3.",
+    "unchanged_checks": {
+      "ledger_sha256": "a876dd2dbd31cae749f8c364a1da6284a243dc6121f0413d7d0a4bfaf9aedfc9",
+      "case_count": 361,
+      "new_case_count": 10,
+      "product_and_test_pins_match": true
+    },
+    "findings": [],
+    "execution_boundary": "No SQL, DB, pytest, migration, service or dependency execution was performed. Approval covers this exact bounded schema subgate plan only and remains conditional on independent frozen-source/pre-gate approval."
+  }
+}

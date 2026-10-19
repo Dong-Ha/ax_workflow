@@ -1,0 +1,111 @@
+{
+  "kind": "ifpmic.b03.h2.schema-runtime-attempts.v1",
+  "scope": "Sanitized synthetic SQL subgate attempt history; no original AT execution or full H2 acceptance.",
+  "attempts": [
+    {
+      "private_gate": "workflow-artifacts/verification/B03/H2/schema/gates/2026-10-18T21-09-14-258833Z",
+      "private_gate_sha256": "25cf15f26543c55cd1b6b8695756ab5faa9e5b59761fdc5189a2a0ee079a646e",
+      "execution_contract_sha256": "7d194223df01eccc6de600e3af290495882a29c7d53cdd550a9d6db6fa7f310d",
+      "verdict": "fail",
+      "phase": "h2_schema_python",
+      "counts": {
+        "tests": 10,
+        "failed": 0,
+        "errors": 10,
+        "skipped": 0
+      },
+      "assertions_reached": false,
+      "root_cause": "Nested private TMPDIR exceeded PostgreSQL Unix socket path maximum107 bytes. PostgreSQL stopped before fixture setup completed.",
+      "cleanup": {
+        "result": "stopped",
+        "signalled_count": 0,
+        "pid_alive": false
+      },
+      "correction": "Use fresh short real mode0700 private temporary roots per phase, retain raw fixture trees privately; refresh execution/pre-gate reviews and rerun all361."
+    },
+    {
+      "private_gate": "workflow-artifacts/verification/B03/H2/schema/gates/2026-10-19T10-26-57-053751Z",
+      "private_gate_sha256": "64e437a0a2a4980cabc03f9b76b936e5e50cca67ebccde073f58979a7c7ef0e4",
+      "execution_contract_sha256": "b1aeac221eb1fc89c4df603549c3a7a5308f63cf5f15039be0452cc69b154dd9",
+      "verdict": "fail",
+      "phase": "h2_schema_python",
+      "counts": {
+        "tests": 10,
+        "failed": 1,
+        "errors": 0,
+        "skipped": 0
+      },
+      "passed": 9,
+      "root_cause": "TC upgrade comparison query used USING(job_id) after a join retaining two job_id columns; PostgreSQL reported AmbiguousColumn before comparison assertions.",
+      "cleanup": {
+        "result": "stopped",
+        "signalled_count": 0,
+        "pid_alive": false
+      },
+      "correction": "Qualify comparison joins explicitly without changing expected data/oracles; refresh pins/reviews and rerun all361."
+    },
+    {
+      "private_gate": "workflow-artifacts/verification/B03/H2/schema/gates/2026-10-19T10-31-00-924183Z",
+      "private_gate_sha256": "596f1483e2aac5e54f028a187d5aa671aa909b37e87630b02c6fdd07e968fe55",
+      "execution_contract_sha256": "e3ce56933d89c288d5e7bafc43f73a1220793d2eb719f690a751d2b6d8cfe913",
+      "verdict": "fail",
+      "phase": "h2_schema_python",
+      "counts": {
+        "tests": 10,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "passed": 10,
+      "root_cause": "All10 assertions passed, but required per-case watchdog timing file was absent. TC hook selected by fully qualified module name while pytest imports this namespace test module by basename. Gate failed closed with FileNotFoundError.",
+      "cleanup": {
+        "result": "stopped",
+        "signalled_count": 0,
+        "pid_alive": false
+      },
+      "correction": "Identify H2 test by exact resolved source path; preserve all timing enforcement and rerun full361 with required actual timing records."
+    },
+    {
+      "private_gate": "workflow-artifacts/verification/B03/H2/schema/gates/2026-10-19T10-34-06-842776Z",
+      "private_gate_sha256": "73adfa5e5ec8df46c2abd38c27888ba4f11154140e6aed37024f3c90c2a9eca7",
+      "execution_contract_sha256": "8582b8a3a52416bd96d05df288b5474a9b391743b768d71ccb64607dcc2b2667",
+      "verdict": "fail",
+      "phases": [
+        {
+          "name": "h2_schema_python",
+          "counts": {
+            "tests": 10,
+            "failed": 0,
+            "errors": 0,
+            "skipped": 0
+          }
+        },
+        {
+          "name": "legacy_python",
+          "counts": {
+            "tests": 167,
+            "failed": 0,
+            "errors": 0,
+            "skipped": 0
+          }
+        },
+        {
+          "name": "g4_python",
+          "counts": {
+            "tests": 91,
+            "failed": 3,
+            "errors": 0,
+            "skipped": 0
+          }
+        }
+      ],
+      "root_cause": "G4 seed_job_rows preallocated a create command UUID but omitted create_command_id from its direct jobs INSERT, violating new NOT NULL schema. Three legacy authorization/pagination cases failed in fixture seeding; existing expected security/pagination outcomes unchanged. H2 timings and legacy167 passed, G5 was not run.",
+      "cleanup": {
+        "result": "stopped",
+        "signalled_count": 0,
+        "pid_alive": false
+      },
+      "correction": "Update current-schema fixture INSERT with its exact paired create UUID; inspect remaining direct jobs seed paths. Refresh exact pins/reviews and rerun all361."
+    }
+  ]
+}

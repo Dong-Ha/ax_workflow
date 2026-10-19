@@ -73,6 +73,8 @@ def auth_database(pg_cluster, migration_db):
             connection,
             runtime_role=migration_db.roles.runtime,
             operator_role=migration_db.roles.operator,
+            dispatcher_role=migration_db.roles.dispatcher,
+            projector_role=migration_db.roles.projector,
         )
     return migration_db, pg_cluster
 

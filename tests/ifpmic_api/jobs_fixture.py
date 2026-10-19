@@ -96,6 +96,8 @@ def g4_database(pg_cluster, migration_db):
             connection,
             runtime_role=migration_db.roles.runtime,
             operator_role=migration_db.roles.operator,
+            dispatcher_role=migration_db.roles.dispatcher,
+            projector_role=migration_db.roles.projector,
         )
     return migration_db, pg_cluster
 
@@ -302,9 +304,9 @@ def seed_job_rows(harness, count: int, *, owner_id: str | None = None,
             digest = hashlib.sha256(envelope.encode("utf-8")).hexdigest()
             created_at = FROZEN_NOW - timedelta(minutes=minute)
             connection.execute(
-                "INSERT INTO ifpmic.jobs(job_id,owner_id,project_id,snapshot_id,workflow_id,created_at) "
-                "VALUES(%s,%s,%s,%s,'ifpmic-sw-v1',%s)",
-                (job_id, actor, harness["project_id"], harness["record"].snapshot_id, created_at),
+                "INSERT INTO ifpmic.jobs(job_id,create_command_id,owner_id,project_id,snapshot_id,workflow_id,created_at) "
+                "VALUES(%s,%s,%s,%s,%s,'ifpmic-sw-v1',%s)",
+                (job_id, command_id, actor, harness["project_id"], harness["record"].snapshot_id, created_at),
             )
             connection.execute(
                 """INSERT INTO ifpmic.commands(command_id,actor_id,route,idempotency_key,project_id,job_id,

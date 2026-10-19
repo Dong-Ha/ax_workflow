@@ -839,7 +839,8 @@ def _assert_cli_json(result, *, exit_code, expected):
 
 def test_operator_cli_imports_idempotently_and_never_returns_profile_or_dsn(vector_store, pg_cluster, migration_db):
     with psycopg.connect(migration_db.owner_dsn(pg_cluster), autocommit=True) as owner:
-        apply_migrations(owner, runtime_role=migration_db.roles.runtime, operator_role=migration_db.roles.operator)
+        apply_migrations(owner, runtime_role=migration_db.roles.runtime, operator_role=migration_db.roles.operator,
+                        dispatcher_role=migration_db.roles.dispatcher, projector_role=migration_db.roles.projector)
     with psycopg.connect(migration_db.operator_dsn(pg_cluster)) as operator:
         operator.execute("INSERT INTO ifpmic.projects(project_id) VALUES(%s)", (PROJECT_ID,))
         operator.commit()
@@ -942,7 +943,8 @@ def test_four_active_sixteen_queued_and_next_call_is_busy(vector_store, monkeypa
 
 def test_import_catalog_is_byte_exact_idempotent_conflict_safe_and_never_grants(vector_store, tmp_path, pg_cluster, migration_db):
     with psycopg.connect(migration_db.owner_dsn(pg_cluster), autocommit=True) as connection:
-        apply_migrations(connection, runtime_role=migration_db.roles.runtime, operator_role=migration_db.roles.operator)
+        apply_migrations(connection, runtime_role=migration_db.roles.runtime, operator_role=migration_db.roles.operator,
+                          dispatcher_role=migration_db.roles.dispatcher, projector_role=migration_db.roles.projector)
     record = _run(_bridge(vector_store).read_snapshot(PROJECT_ID, VECTOR_VERSION))
 
     with psycopg.connect(migration_db.operator_dsn(pg_cluster)) as operator:

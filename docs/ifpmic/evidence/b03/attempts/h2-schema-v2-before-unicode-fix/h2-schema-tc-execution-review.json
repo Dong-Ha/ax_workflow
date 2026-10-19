@@ -1,0 +1,43 @@
+{
+  "kind": "ifpmic.b03.h2.schema-tc-execution-review.v2",
+  "verdict": "approve_execution",
+  "contract_sha256": "f10d876a76a312969bc8cbd2e34a56f0025a0248d343b35eb8a7a807cfc7b2c9",
+  "review_scope": "Read-only TC review of the exact H2 schema execution contract v2, its pinned ledger and new PostgreSQL test selectors. No tests, migrations, database, or service were executed.",
+  "reviewed_inputs": {
+    "execution_contract": {
+      "path": "docs/ifpmic/evidence/b03/h2-schema-execution-contract.json",
+      "sha256": "f10d876a76a312969bc8cbd2e34a56f0025a0248d343b35eb8a7a807cfc7b2c9"
+    },
+    "tc_ledger": {
+      "path": "docs/ifpmic/evidence/b03/h2-schema-tc-ledger.json",
+      "sha256": "874ff5c53eb69c2c194ec89f87df04d84738ee0b224fee6695e1bfc0ceceec02"
+    },
+    "new_test": {
+      "path": "tests/ifpmic_api/test_workflow_schema.py",
+      "sha256": "8fbb1c3ae274c99ea14eb8a11ae10082b72e0b4a2595bc2c93ae78f371b47399"
+    },
+    "fixture": {
+      "path": "tests/ifpmic_api/workflow_schema_fixture.py",
+      "sha256": "1493233126c171bd8a16a243194ad61c6c95cbc7671cb660a5f9652be5b6007f"
+    },
+    "migration": {
+      "path": "services/ifpmic_api/migrations/003_workflow_execution.sql",
+      "sha256": "0c79417efd465386d652dfdb96f490fad3532f9caa0347d9ebea1257c5e0bf08"
+    }
+  },
+  "resolution_of_v1_blocker": {
+    "id": "H2-TC-START-WINDOW-ALL-OR-NONE",
+    "result": "resolved",
+    "evidence": "The test now asserts the reserved row starts as (NULL,NULL,NULL), exercises two partial windows against the named binding_start_window_shape CHECK with SQLSTATE CheckViolation, verifies the row remains unchanged after each rejected update, and then uses record_start_attempt to establish the valid complete window. This directly addresses PostgreSQL CHECK null semantics and keeps the accepted full tuple path."
+  },
+  "coverage_review": {
+    "migration_and_roles": "The nine exact new IDs cover upgrade/backfill success and rollback for missing/ambiguous history, schema constraints, role registry/function ACLs, OID/name drift, membership/name drift, SCRAM without trust fallback, and real create-to-activation SQL.",
+    "independent_binding_digest": "The activation test explicitly builds an 18-field expected binding document from fixture inputs and pinned registrations, canonicalizes it independently, and compares the domain-separated SHA-256 to the returned digest.",
+    "command_bytes_and_auth": "The test keeps the established NUL→422/no-row behavior and separately exercises accepted lone-surrogate/astral/quote/backslash content through the immutable ASCII envelope. It checks real HTTP list/detail/command responses and idempotent 202 receipt while authorized, then verifies external 403 after membership/revocation changes while the authenticated internal SQL receipt remains identical.",
+    "workspace_generation_fence": "A second accepted job is reserved/admitted, then its READY workspace generation changes; projection must quarantine without consuming the accepted command or creating a receipt. The first job’s already-applied receipt remains byte-for-byte/equality stable after its later generation change.",
+    "execution_window": "The all-NULL, partial-NULL, unchanged-row and valid-population sequence satisfies the explicit SQL shape oracle and prior review blocker.",
+    "runner_and_scope": "The contract pins the current ledger and implementation/static review, preserves the 351 archived IDs plus nine literal cases, requires 360 passing cases with no skips/timeouts and records the phase/case timing and real PostgreSQL cleanup checks. It explicitly does not claim Temporal dispatcher/worker execution, H1 recheck, full H2, or original AT acceptance."
+  },
+  "findings": [],
+  "execution_boundary": "Approval is for the specified schema/SQL subgate only, and only after the separately required independent frozen-source/pre-gate review approves this exact contract and runner. This review is not evidence that any test or service has run or passed; Temporal integration and all original acceptance tests remain outstanding."
+}

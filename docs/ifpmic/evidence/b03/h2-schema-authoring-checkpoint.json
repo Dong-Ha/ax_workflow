@@ -1,0 +1,48 @@
+{
+  "kind": "ifpmic.b03.h2.schema-authoring-checkpoint.v2",
+  "scope": "Product and test authoring checkpoint with observed failed-run history only; not execution approval, schema-gate pass, full H2 acceptance, or original AT acceptance.",
+  "parent_commit": "ae25ed9e2d9c0c673ade3d84c7fc207122ce760a",
+  "progress": {
+    "before_sha256": "07750242bdc4536e6f5e3c24d54fe26fdcaa28e4a20fc94bf1d35fad9859de9b",
+    "after_sha256": "fb173731a7deb30dab4a99561ddba0512b74a36843324d0e00cf30342cf4137d",
+    "changed_semantic_paths": [
+      "stages[B03].scope",
+      "stages[B03].increments[h2_durable_delivery_activation]",
+      "stages[B03].increments[h2_durable_delivery_activation].authoring_checkpoint",
+      "next_step",
+      "updated_at"
+    ]
+  },
+  "test_status": "Four actual failed/partial attempts retained. Latest passed H2 10/10 including timing and legacy167/167; G4 failed3 due to missing create_command_id in seed helper, now corrected. G5 was not executed. Complete361-case rerun pending; no attempt is recorded as a pass.",
+  "goal_status": "active",
+  "real_acceptance_status": "not_executed",
+  "product_authoring_status": "authored_static_reviewed_runtime_gate_pending",
+  "latest_candidate": {
+    "contract_path": "docs/ifpmic/evidence/b03/h2-schema-execution-contract.json",
+    "contract_sha256": "edd3f7bd89ecc94b3a4d01ec5dde7239bd391667cfbe141bbce23bc7ad9a5197",
+    "runner_path": "scripts/verify_ifpmic_b03_h2_schema.py",
+    "runner_sha256": "4a711255440bc0c02faf8785bbc1d73e8c29196f40d8a2d580674ed91c3d494a",
+    "jobs_fixture_sha256": "2191f3523e0ddcbb4c7e97d7b74348dc571c432b5df5a01c7436dd57db3bac48",
+    "tc_ledger_sha256": "57f13ae7bf25749de83159eb3c32cacaf486e4eb0e94e250525048a81b75ef86",
+    "execution_status": "exact_reviews_approved_full_rerun_pending"
+  },
+  "failed_attempts": [
+    {
+      "path": "workflow-artifacts/verification/B03/H2/schema/gates/2026-10-18T21-09-14-258833Z/gate.json",
+      "result": "10 H2 fixture setups failed due to PostgreSQL Unix socket path length; cluster stopped."
+    },
+    {
+      "path": "workflow-artifacts/verification/B03/H2/schema/gates/2026-10-19T10-26-57-053751Z/gate.json",
+      "result": "H2 9/10; upgrade comparison failed on ambiguous job_id; cluster stopped."
+    },
+    {
+      "path": "workflow-artifacts/verification/B03/H2/schema/gates/2026-10-19T10-31-00-924183Z/gate.json",
+      "result": "H2 10/10 assertions passed but required watchdog timing rows were absent; gate failed closed; cluster stopped."
+    },
+    {
+      "path": "workflow-artifacts/verification/B03/H2/schema/gates/2026-10-19T10-34-06-842776Z/gate.json",
+      "result": "H2 10/10 with timing and legacy167/167 passed; G4 had3 create_command_id seed failures, corrected in current-schema test helper; G5 not run; cluster stopped."
+    }
+  ],
+  "updated_at": "2026-10-19T10:44:55+00:00"
+}

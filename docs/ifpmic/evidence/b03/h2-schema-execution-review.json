@@ -1,0 +1,245 @@
+{
+  "kind": "ifpmic.b03.h2.schema-execution-review.v7",
+  "verdict": "approve_execution",
+  "contract_sha256": "edd3f7bd89ecc94b3a4d01ec5dde7239bd391667cfbe141bbce23bc7ad9a5197",
+  "contract_path": "docs/ifpmic/evidence/b03/h2-schema-execution-contract.json",
+  "reviewer": "independent_senior_security_architecture_agent",
+  "scope": "Approve the exact bounded SQL/auth/API subgate execution design only. Actual execution still requires both exact-SHA named approvals and the separate independently approved frozen source/runner pre-gate record. This is not evidence of runtime pass or H2 acceptance.",
+  "method": "Read-only review of revised contract, exact TC ledger/pins, changed fixtures/oracles, runner environment isolation and prior critical SQL assessment. JSON/SHA consistency inspected; no pytest collection, DB, SQL/parser, service or dependency execution. Product/test files untouched by reviewer. Delta v4 review additionally compared the exact v3/v4 contract and runner: only the TMPDIR policy and revision/evidence metadata changed; ledger, tests, fixtures, migration, API source and all 361 case IDs/pins are unchanged. Read-only AST/JSON/hash/source inspection only; no DB, pytest, migration, service or dependency execution. v5 delta review: read-only comparison of preserved failed gate, v4/v5 contracts, updated TC ledger and test source diff. No tests, migrations, database, SQL/parser, service or dependency execution. v6 delta review: read-only inspection of the preserved third gate, v5/v6 contract and precise fixture diff. No tests, migrations, database, SQL/parser, service or dependency execution. v7 delta review: read-only inspection of the preserved fourth gate, v6/v7 contracts, runner phase order, current-schema seed fixture diff, and remaining direct jobs inserts. No tests, migrations, database, SQL/parser, service or dependency execution.",
+  "source_pins": {
+    "docs/ifpmic/evidence/b03/h2-schema-tc-ledger.json": "57f13ae7bf25749de83159eb3c32cacaf486e4eb0e94e250525048a81b75ef86",
+    "scripts/verify_ifpmic_b03_h2_schema.py": "2e51d204c4990ce2ae49e8f85fdc093f68ff7ed386c12d578b6095a75e61a7f8",
+    "tests/ifpmic_api/test_workflow_schema.py": "a007e02759aab6fa561749d40ff4e2e9fb78fb9832196714eaafecdb91008e6d",
+    "tests/ifpmic_api/workflow_schema_fixture.py": "53711e74c045a1d807c96c5600d9a8d1c15685c0465f46fd5faa65e833b66224",
+    "tests/ifpmic_api/conftest.py": "3c39b0491139762d0a3da09397a368558cbe72e5cfebda4a279c76c97ce6ebe5",
+    "services/ifpmic_api/request_contract.py": "ad88f756ce4bf526bb3c2d89dab64765bcfc42ab7f8b2832dcb012b271e07fe0",
+    "services/ifpmic_api/migrations/003_workflow_execution.sql": "5ef29521944e18551728dd285ce3ae21fa03c2b06f77c25430da6acb0ce1f102",
+    "docs/ifpmic/evidence/b03/h2-schema-code-review.json": "ddeeeefc25fb02a625c9cf20300b1f5192e0fcf7f73097952a7f2e89fcd7bad7",
+    "services/ifpmic_api/migrate.py": "36518fdd4d296455947df76fd72bf11d68aa44317549bd527037499b98a9eb86",
+    "services/ifpmic_api/jobs.py": "0538e460a6be42e3129d2e8d5e9f262bba357e621e0b5e800f4495ebdf99ecf9",
+    "tests/ifpmic_api/jobs_fixture.py": "2191f3523e0ddcbb4c7e97d7b74348dc571c432b5df5a01c7436dd57db3bac48"
+  },
+  "previous_rejected_review": {
+    "path": "docs/ifpmic/evidence/b03/attempts/h2-schema-execution-review-v1.json",
+    "sha256": "8021c594e67c1a06b082492917fa228b01e501f05fa41298e2385b3cf48638ef",
+    "contract_sha256": "c542a86703219c6fd353991243f84a2fc1d2a26a4bdc7f684f9571737372bad4"
+  },
+  "resolved_findings": [
+    {
+      "id": "H2-SCHEMA-EXEC-NUL-ORACLE",
+      "assessment": "Resolved. New case expects422 INVALID_REQUEST for NUL and compares durable job/command counts before/after. Accepted activation uses canonical ASCII bytes containing original supported lone-surrogate/astral/quote/backslash text; original create_payload remains unchanged. Contract/SQL comments no longer claim NUL admission."
+    },
+    {
+      "id": "H2-SCHEMA-EXEC-UUID-NORMALIZATION",
+      "assessment": "Resolved. normalized_after retains outbox.state and string-normalizes the workspace_token column matching expected_after; preserved data assertions remain."
+    },
+    {
+      "id": "H2-PARTIAL-NULL-ORACLE",
+      "assessment": "Resolved for the specified SQL subgate. Tests assert initial all-NULL start metadata, two separate partial assignments fail exactly binding_start_window_shape with unchanged row, then valid service operation populates complete window."
+    },
+    {
+      "id": "H2-HBA-READINESS",
+      "assessment": "Strengthened. Before yielding, fixture parses explicit first four SCRAM rules, proves a fresh dispatcher connection with correct password succeeds and one without password fails using bounded connect_timeout. File parsing alone is not treated as authentication proof. An asynchronous reload not ready by that probe causes setup failure; it cannot produce a passing false SCRAM assertion. Teardown restores the original HBA and sends bounded reload."
+    },
+    {
+      "id": "H2-CATALOG-LONE-PROFILE-COMPATIBILITY",
+      "assessment": "v3 plan addresses the root-discovered unsupported JSONB decode of already supported lone-surrogate profile labels, retains original Node/bridge admission semantics and adds an actual Node-to-HTTP202-to-SQL activation oracle. No prior runtime failure or pass is claimed."
+    }
+  ],
+  "reviewed_plan_properties": [
+    "Original351 exact case IDs are compared against accepted G6 evidence, plus ten independently named H2 cases. Module inventory and JUnit result/identity checks reject missing/unexpected cases, skips/failures/errors/time-limit breaches.",
+    "Each new case has actual setup/body25s and cleanup5s alarm hooks with monotonic evidence matched to exact node IDs. Four phases are sequential and each bounded300s. Existing regression per-case JUnit duration remains bounded30s. Any timeout fails; no partial phase pass can substitute for the whole new gate.",
+    "Actual isolated PostgreSQL18.1 binaries must match accepted binary hashes, private Unix socket only, actual cluster lifecycle and no live owned descendants. SQL fixture run IDs are explicitly synthetic; no claim of Temporal observation/admission is made.",
+    "Complete18-field immutable binding digest is independently assembled from fixed fixture/request/original source identities, including workspace pins. Projection proposal is independently hashed using exact fixed domain/fields.",
+    "Workspace changed READY generation after admission is exercised as quarantine with DRAFT0/accepted/receipt0; exact committed receipt survives later generation changes and mutable authority revocation. No automatic identity relink or operator recovery acceptance.",
+    "Real HTTP create/list/detail/command/replay is checked after SQL application and extra human-route command, preserving create-only DTO provenance. External revoked caller gets403 while active scoped internal principal replays its original receipt.",
+    "Runner starts from minimal environment, no ambient credentials/plugins/addopts, disables cacheprovider and explicitly supplies empty private libpq password/service configuration. No HOME override or dependency installation. Original32 and H1qualified36 file/symlink manifests are retained before/after.",
+    "Protected original17+two uploads,001/002 and accepted AX/UI/Node inventory are checked. Source map/ZIP and before/after equality cover tracked and new H2 material; final runner itself requires independent source pin before execution.",
+    "Private source/log/JUnit/SQL cause/timing/lifecycle evidence stays under0700 ancestors with0600 direct artifacts. Cleanup must not follow/chmod intentional unsafe fixture symlinks/hardlinks. Public evidence is later derived sanitized counts/hashes only.",
+    "H1 runtime rerun, actual Temporal dispatcher/worker/crash protocol, H3-H5, integrated H6, Node/build/browser and originalAT completion are explicitly deferred with reasons/risks. This is a partial foundation verification, not a substitute end state."
+  ],
+  "blocking_findings": [],
+  "remaining_risks_and_execution_conditions": [
+    "Current runner EXECUTION_SHA is still None. Set it only to this approved contract hash, obtain TC approval for the same hash and a separate frozen pre-gate approval covering final runner/product/test/review/ledger pins before any service or pytest execution.",
+    "SQL syntax/name resolution, libpq auth behavior, timing feasibility, role denials and actual concurrency remain unproven until runtime. Any failure preserves evidence and returns to the corresponding source/oracle step with full361-case rerun after changes.",
+    "Fresh HBA login checks are bounded pass/fail probes rather than a polling readiness loop; a transient reload race may fail setup and require diagnosis. It cannot be converted to a pass by weakening credential-negative assertions.",
+    "Trusted fixed G4 DTO/canonical body assumption underlies the ASCII substring identity check; it is not a general JSON validator or protection against compromised runtime SQL credentials. Future producer/DTO changes require renewed review.",
+    "Synthetic READY SQL state does not prove real filesystem validation/Temporal launcher deployment. Actual H2 must still prove trusted source/env/config startup and all named process/RPC/crash/authority gates.",
+    "No new tests/services/SQL were run by this reviewer; approval is permission under the contract process, not acceptance evidence."
+  ],
+  "recommendation": "Proceed only after the named TC review approves this exact v7 contract SHA; pin the final runner and obtain fresh frozen-source/pre-gate approval before executing the full 361-case suite.",
+  "acceptance_boundary": {
+    "execution_design": "approved_exact_sha_conditional_on_tc_and_frozen_pre_gate",
+    "runtime_result": "not_executed_for_v7",
+    "H2": "incomplete",
+    "original_ATs": "not_executed",
+    "goal": "active"
+  },
+  "previous_approved_review": {
+    "path": "docs/ifpmic/evidence/b03/attempts/h2-schema-v2-before-unicode-fix/h2-schema-execution-review.json",
+    "sha256": "91d4b7b52aed4fdc44bb5c9beccd2d818ed7b76c821bcdbd77287a904208092b",
+    "contract_sha256": "f10d876a76a312969bc8cbd2e34a56f0025a0248d343b35eb8a7a807cfc7b2c9",
+    "scope": "Historical v2 approval before the catalog Unicode compatibility fix; not approval of current changed source."
+  },
+  "v3_delta_assessment": {
+    "result": "approve_execution for the exact v4 contract, conditional on same-SHA TC approval and separate final runner/source pre-gate approval.",
+    "inventory": {
+      "original": 351,
+      "new": 10,
+      "total": 361
+    },
+    "change_scope": "v2 environment/process/privacy/timeout policy retained. SQL replaces redundant catalog JSONB decode with original trusted G4 nine-field producer boundary plus FK/rawSHA/immutable binding checks; new real Node/HTTP/SQL profile compatibility case and catalog mutation negatives cover the change. v4 delta replaces the private long evidence-directory TMPDIR with a fresh real mode0700 tempfile under /tmp per phase; prior roots remain private and retained.",
+    "reviewed_new_case": "test_h2_lone_surrogate_profile_version_survives_real_create_and_activation",
+    "evidence_design": [
+      "Actual Node snapshot seeding/capture preserves escaped lone-surrogate profile_version; catalog import uses that trusted record and checks its canonical ASCII profile label and raw escaped bytes.",
+      "HTTP202 uses lossless ASCII original CreateJob body. The fixture adds a separate actual-PG-clock eligibility grant instead of incorrectly relying only on G4 frozen2030 authorization time.",
+      "Actual SQL claim/reserve/start-window/admit/ack/project functions use independent authenticated DB sessions and synthetic run UUID. The asserted result is applied/QUEUED1 with one receipt and dispatched outbox; this is explicitly not actual Temporal admission evidence.",
+      "All four service roles are checked for table and each catalog column UPDATE denial, DELETE denial, and actual UPDATE/DELETE statements fail under their own sessions. This supports the immutable catalog premise rather than relying on table-level privilege checks alone.",
+      "Static review ddeeeefc...bad7 separately pins corrected SQL5ef29521...f102 and explains why a raw hash is not proof of arbitrary producer trust. Contract explicitly invalidates this boundary for alternate/direct SQL accepted-job producers."
+    ],
+    "limits": "Runtime syntax/auth/timing/canonicalization still unproven. Additional role/lock/crash/Temporal/originalAT proof remains required by later gates; no acceptance from plan approval."
+  },
+  "v4_delta_assessment": {
+    "result": "approve_execution for the exact v4 contract, conditional on same-SHA TC approval and separate final runner/source pre-gate approval.",
+    "contract_sha256": "b1aeac221eb1fc89c4df603549c3a7a5308f63cf5f15039be0452cc69b154dd9",
+    "trigger": "The preserved first gate failed during all ten H2 fixture setups because PostgreSQL Unix socket paths exceeded the 107-byte limit; PostgreSQL stopped and its PID was absent. This was setup failure evidence, not an assertion pass or product/test result.",
+    "delta_review": [
+      "The v4 contract changes the ambient TMPDIR policy to a fresh short /tmp/ifpmic-h2-<random> root per phase while retaining the unique private gate leaf for source bundles, logs, lifecycle and reports.",
+      "The runner creates each root with tempfile.mkdtemp(dir=/tmp), which creates a unique real directory with mode0700 subject to the runner umask; it supplies that path to the phase process before pytest startup and retains it rather than recursively deleting it.",
+      "Absolute roots are written only to the private gate report. Existing cleanup still avoids following/chmodding test fixture symlinks/hardlinks and does not infer shutdown from root removal; lifecycle PID/stop evidence remains the check.",
+      "Contract comparison found no unrelated implementation, fixture, API, migration, ledger, case inventory or source pin changes. TC v4 review independently approves the same exact contract SHA and reports unchanged ledger/source pins."
+    ],
+    "contract_delta": "Only environments.ambient, kind/status and evidence/revision metadata differ from v3.",
+    "unchanged_checks": {
+      "ledger_sha256": "a876dd2dbd31cae749f8c364a1da6284a243dc6121f0413d7d0a4bfaf9aedfc9",
+      "case_count": 361,
+      "new_case_count": 10,
+      "product_and_test_pins_match": true
+    },
+    "findings": [],
+    "execution_boundary": "No SQL, DB, pytest, migration, service or dependency execution was performed. Approval covers this exact bounded schema subgate plan only and remains conditional on independent frozen-source/pre-gate approval."
+  },
+  "v5_delta_assessment": {
+    "result": "approve_execution for the exact v5 contract, conditional on the named TC review approving this same SHA and a separate frozen-source/pre-gate review pinning the final runner and sources.",
+    "contract_sha256": "e3ce56933d89c288d5e7bafc43f73a1220793d2eb719f690a751d2b6d8cfe913",
+    "failed_attempt": {
+      "path": "workflow-artifacts/verification/B03/H2/schema/gates/2026-10-19T10-26-57-053751Z/gate.json",
+      "verdict": "fail",
+      "counts": {
+        "tests": 10,
+        "passed": 9,
+        "failed": 1,
+        "errors": 0,
+        "skipped": 0
+      },
+      "failure": "The upgrade comparison query used USING(job_id) with duplicate job_id columns, causing AmbiguousColumn before the migration assertions.",
+      "lifecycle": {
+        "failure_cleanup": "stopped",
+        "pid_alive": false
+      },
+      "interpretation": "Preserved runtime attempt; not a product defect or pass. Later schema phases did not execute."
+    },
+    "delta_review": [
+      "The v4-to-v5 test diff changes two JOIN clauses to qualified ON predicates in the existing upgrade comparison query, resolving ambiguous job_id/command_id references while preserving the selected data and expected tuple.",
+      "It also normalizes only the observed psycopg UUID value with str() before comparison. The seeded expected command ID and expected route remain exact literals; no oracle value is normalized or weakened.",
+      "The test function inventory remains the same ten H2 cases. The complete gate inventory remains 351 accepted historical cases plus ten new cases (361 total).",
+      "Current ledger SHA matches the v5 contract and pins the updated test SHA. Migration, API implementation, fixture, conftest, shared helpers and other preceding product/test pins match their reviewed bytes. The v4 attempt and review remain preserved under attempts/h2-schema-v4-before-query-fix.",
+      "The contract delta is limited to TC ledger and revision/evidence metadata; product implementation and SQL migration are unchanged."
+    ],
+    "unchanged_checks": {
+      "ledger_sha256": "713469277523b9db88cca7d9bfd40f6ebeaca6e1d13efae89bd0fdc127035ed2",
+      "test_sha256": "a007e02759aab6fa561749d40ff4e2e9fb78fb9832196714eaafecdb91008e6d",
+      "runner_sha256": "2586e56b1e6beefcb13377258faf23877fddfd399bfece98fe5100e2973cbe7f",
+      "case_count": 361,
+      "new_case_count": 10,
+      "product_and_fixture_pins_match": true
+    },
+    "findings": [],
+    "execution_boundary": "Approval covers exact v5 execution design only. No SQL, DB, pytest, migration, service or dependency execution was performed. Same-SHA TC approval and fresh frozen-source/pre-gate approval remain required."
+  },
+  "v6_delta_assessment": {
+    "result": "approve_execution for the exact v6 contract, conditional on the named TC review approving this same SHA and a separate frozen-source/pre-gate review pinning final runner and sources.",
+    "contract_sha256": "8582b8a3a52416bd96d05df288b5474a9b391743b768d71ccb64607dcc2b2667",
+    "failed_attempt": {
+      "path": "workflow-artifacts/verification/B03/H2/schema/gates/2026-10-19T10-31-00-924183Z/gate.json",
+      "verdict": "fail",
+      "h2_cases": {
+        "total": 10,
+        "passed": 10,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "finding": "Runner could not read required case-timings.json because no rows were emitted. Test function namespace was imported under a different pytest module name, so the fixture selector returned false for all H2 tests. PostgreSQL cleanup was stopped with pid_alive=false.",
+      "interpretation": "All ten assertions passed, but gate failed required watchdog evidence and is not a pass."
+    },
+    "delta_review": [
+      "The v5-to-v6 diff in tests/ifpmic_api/workflow_schema_fixture.py changes only _is_h2_test selection: it compares the resolved pytest item.path with the resolved sibling test_workflow_schema.py path instead of assuming a particular module __name__.",
+      "The 25-second body and 5-second cleanup watchdogs, signal/timer hooks, monotonic bounds, and evidence serialization are unchanged.",
+      "The current TC ledger SHA matches the v6 contract and pins the changed fixture SHA. Ten H2 case IDs and total 361-case inventory remain unchanged.",
+      "Product code, migration, API, test module, and all other source pins from the preceding approved review match current bytes. The preserved v5 contract and execution review remain under attempts/h2-schema-v5-before-watchdog-fix."
+    ],
+    "unchanged_checks": {
+      "ledger_sha256": "de0656bae3a9548b505ed0bf78c4b9411beac25729065ed2fface4d6f39e78d3",
+      "fixture_sha256": "53711e74c045a1d807c96c5600d9a8d1c15685c0465f46fd5faa65e833b66224",
+      "runner_sha256": "cf08a2c0cf1c16bc393b888076b250268daaca44443c6d26766ba125c7f581a0",
+      "case_count": 361,
+      "new_case_count": 10,
+      "product_and_test_pins_match": true
+    },
+    "findings": [],
+    "execution_boundary": "Approval covers exact v6 execution design only. No SQL, DB, pytest, migration, service or dependency execution was performed. Same-SHA TC approval and fresh frozen-source/pre-gate approval remain required."
+  },
+  "v7_delta_assessment": {
+    "result": "approve_execution for the exact v7 contract, conditional on same-SHA TC execution review and separate frozen-source/pre-gate approval for final runner/source pins.",
+    "contract_sha256": "edd3f7bd89ecc94b3a4d01ec5dde7239bd391667cfbe141bbce23bc7ad9a5197",
+    "failed_attempt": {
+      "path": "workflow-artifacts/verification/B03/H2/schema/gates/2026-10-19T10-34-06-842776Z/gate.json",
+      "verdict": "fail",
+      "checks": {
+        "h2_schema_python": {
+          "tests": 10,
+          "failed": 0,
+          "errors": 0,
+          "timing_evidence_present": true
+        },
+        "legacy_python": {
+          "tests": 167,
+          "failed": 0,
+          "errors": 0
+        },
+        "g4_python": {
+          "tests": 91,
+          "failed": 3,
+          "errors": 0
+        },
+        "g5_python": "not_run"
+      },
+      "failure": "Three current-schema G4 tests failed when seed_job_rows inserted jobs rows with NULL create_command_id, now NOT NULL. The helper had already generated the matching command_id but did not populate jobs.create_command_id. PostgreSQL cleanup reported stopped and pid_alive false.",
+      "interpretation": "Preserved failed candidate, not a pass; only affected G4/G5 and all remaining cases must be rerun under the complete inventory."
+    },
+    "delta_review": [
+      "The v6-to-v7 jobs_fixture.py diff changes only seed_job_rows to set create_command_id to its already allocated matching command_id in the job insert; the subsequently inserted command continues to use that same ID. Seed payloads, assertions and expected outcomes are unchanged.",
+      "A source scan found remaining direct jobs inserts in test_migrations.py for pre-003 historical/negative migration cases, workflow_schema_fixture.py for the intentional legacy backfill source, and test_workflow_schema.py for malformed/missing create-origin negative checks. The one current-schema bulk seed helper is the corrected jobs_fixture.py insertion.",
+      "Runner phase order changes from H2, legacy, G4, G5 to H2, G4, G5, legacy to surface current-schema fixture failures earlier. The contract retains all four separate processes/clusters, every exact case ID, 300-second phase budgets, and full 361-case requirement.",
+      "Current v7 ledger SHA matches the contract and pins the changed jobs_fixture.py hash. Product implementation, SQL migration, tests, shared helpers and all other predecessor pins remain unchanged. The prior v6 contract/review are preserved under attempts/h2-schema-v6-before-seed-fix."
+    ],
+    "unchanged_checks": {
+      "ledger_sha256": "57f13ae7bf25749de83159eb3c32cacaf486e4eb0e94e250525048a81b75ef86",
+      "jobs_fixture_sha256": "2191f3523e0ddcbb4c7e97d7b74348dc571c432b5df5a01c7436dd57db3bac48",
+      "runner_sha256": "2e51d204c4990ce2ae49e8f85fdc093f68ff7ed386c12d578b6095a75e61a7f8",
+      "case_count": 361,
+      "new_case_count": 10,
+      "phase_order": [
+        "h2_schema_python",
+        "g4_python",
+        "g5_python",
+        "legacy_python"
+      ],
+      "phase_seconds": 300,
+      "product_and_oracle_pins_match": true
+    },
+    "findings": [],
+    "execution_boundary": "Approve the exact v7 bounded execution plan only. No SQL, DB, pytest, migration, service or dependency execution was performed. Same-SHA TC approval and fresh frozen-source/pre-gate approval remain required."
+  }
+}

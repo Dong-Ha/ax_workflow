@@ -1,0 +1,109 @@
+{
+  "kind": "ifpmic.b03.h2.schema-code-review.v1",
+  "reviewer": "independent_senior_security_architecture_agent",
+  "decision": "no_remaining_blocking_static_findings_after_correction",
+  "authorization": "Static critical-code review only. Not authorization to execute SQL/tests/services and not H2, subgate, migration, auth or acceptance proof.",
+  "scope": "Read-only inspection of exact pinned003 migration, migrate.py and jobs.py against approved H2 contract. TC is concurrently authoring tests; no claim that a whole candidate is frozen. Reviewer owns only this JSON, did not edit product/tests and ran no DB, pytest, SQL parser or service.",
+  "source_pins": {
+    "services/ifpmic_api/migrations/003_workflow_execution.sql": "2e9afdddb8473ddab629a7991bfa31469001dfb343530b2e95ebfd4e20461ae5",
+    "services/ifpmic_api/migrate.py": "36518fdd4d296455947df76fd72bf11d68aa44317549bd527037499b98a9eb86",
+    "services/ifpmic_api/jobs.py": "0538e460a6be42e3129d2e8d5e9f262bba357e621e0b5e800f4495ebdf99ecf9",
+    "docs/ifpmic/evidence/b03/h2-implementation-contract.json": "f63173ac17ebebd34a15d5966d96b79dc1667a713c00b1b92868b137ba93ded3",
+    "docs/ifpmic/evidence/b03/h2-security-advice.json": "37215e0b37236149a133722323a28c4c155b649021701e4fa6e8bc9a5b3683e4",
+    "services/ifpmic_api/migrations/001_initial.sql": "cf0437a5f32e1589e4ea821afbb2ef2480d780a276667880aa9a08a0f4c77f12",
+    "services/ifpmic_api/migrations/002_auth_retention.sql": "95c01f06eb586e0c1067f04672edfed8e0a11215752ad859ac9e4744da5a504e",
+    "services/ifpmic_api/request_contract.py": "ad88f756ce4bf526bb3c2d89dab64765bcfc42ab7f8b2832dcb012b271e07fe0"
+  },
+  "initial_candidate": {
+    "path": "docs/ifpmic/evidence/b03/attempts/h2-schema-before-static-review.sql",
+    "sha256": "f3df9c0c6df29e9fef5b3adc999dbe6e9da661e82d413df443a8fe3ce2ae1686",
+    "status": "preserved_by_main_after_initial_read_before_corrections",
+    "note": "Reviewer initially read this source before computing its SHA. Main preserved the before-copy; reviewer later verified its SHA and compared exact before/after text. No retrospective claim of a pre-read fingerprint."
+  },
+  "initial_findings": [
+    {
+      "id": "H2-SQL-NULL-OUTCOME",
+      "severity": "blocking",
+      "location": "command_outcome_shape",
+      "problem": "applied_revision>=1 and error_code IN(...) evaluate NULL for missing values; PostgreSQL CHECK accepts UNKNOWN, allowing applied with null applied_revision or rejected with null error_code.",
+      "required_correction": "Explicit non-null predicates on the required applied revision and rejected error.",
+      "resolution": "Corrected candidate adds IS NOT NULL to both branches. Static three-valued-logic review now excludes these malformed shapes. Actual constraint rejection tests remain mandatory."
+    },
+    {
+      "id": "H2-SQL-WORKSPACE-FENCE",
+      "severity": "blocking",
+      "location": "reserve_execution / execution_bindings / h2_lock_job / project_activation",
+      "problem": "Initial reserve read workspace without a locking identity fence after outbox acquisition; binding did not preserve the filesystem-verified token/generation. Activation checked current READY and command only, allowing changed generation to be applied using a prior identity validation.",
+      "required_correction": "Take intent SHARE before outbox and pin verified identity in immutable binding; compare current identity during guarded activation.",
+      "resolution": "Corrected candidate adds non-null immutable workspace_token/workspace_generation to binding and canonical digest, writes them from the checked intent, takes SHARE in h2_lock_job before outbox and compares exact pin during activation. Mismatch quarantines with no business receipt/update. Actual concurrent mutation tests remain mandatory."
+    },
+    {
+      "id": "H2-SQL-NULL-START-WINDOW",
+      "severity": "blocking_schema_invariant",
+      "location": "execution_bindings first-start all-or-none CHECK",
+      "problem": "Initial compound CHECK could evaluate UNKNOWN for partially null start metadata instead of enforcing all-or-none. Existing service functions populated all fields together but the intended schema invariant was incomplete.",
+      "required_correction": "Explicitly require all three populated values in the populated branch.",
+      "resolution": "Corrected candidate adds uncertain_until/observed_retention_seconds IS NOT NULL and retains bounded time/retention predicates. It also strengthens admitted-state/run and delivery-attempt completion shapes."
+    }
+  ],
+  "reviewed_invariants": [
+    {
+      "area": "authenticated_machine_identity",
+      "assessment": "Public worker entry points resolve session_user current OID+name, check role safety/membership and owner-registered active principal. SECURITY DEFINER current_user is not used as caller identity. Admission derives one projector via unique deployment/build assignment; h2_identity sorts dispatcher/projector principal FOR SHARE by OID before lower lock classes."
+    },
+    {
+      "area": "lock_order",
+      "assessment": "Mutating multirow paths first authenticate/lock principals, then h2_lock_job takes project guard, membership NOWAIT, job, binding, intent SHARE; outbox follows. Claim/record_delivery use principal plus outbox and no later blocking earlier-class acquisition. Quarantine callers already own job/binding before sorted outbox locks. G5 workspace-only updates do not introduce a reverse job/guard edge. Runtime proof is still required."
+    },
+    {
+      "area": "receipt_replay",
+      "assessment": "project_activation authenticates static job/run/build scope, recomputes fixed complete proposal hash, then reads immutable receipt before current membership/eligibility/workspace checks. Missing receipt takes ordered locks and rechecks receipt before first-apply validation. Existing receipt remains available despite operational quarantine to an active exact-scope principal."
+    },
+    {
+      "area": "activation_authority",
+      "assessment": "Typed SQL allows only original create activation DRAFT0 to QUEUED1 or fixed rejection retaining DRAFT0. Guarded current owner membership/request.create and unexpired/unrevoked profile eligibility decide first application. Business status, command outcome and immutable receipt are one transaction; dispatch bookkeeping does not advance state."
+    },
+    {
+      "area": "lease_run_admission",
+      "assessment": "Generation/token/expiry checks use IS DISTINCT FROM plus fresh clock checks; run UUID canonicalization and write-once binding reject replacement. First-run update and owner-derived projector scope insertion are in the same transaction. Start window cannot extend once set; retention must exceed3600. Known-run missing history policy needs later Python dispatcher implementation."
+    },
+    {
+      "area": "least_privilege_and_helpers",
+      "assessment": "New table rights revoked from PUBLIC/all four service roles. New privileged helpers receive no service EXECUTE. All functions use fixed trusted search_path, scoped public signatures and exact role grants; values are not interpolated as SQL. No generic state patch or credential material is exposed."
+    },
+    {
+      "area": "schema_and_migrator",
+      "assessment": "001/002 bytes remain pinned.003 backfills one create origin, preserves actor/route/key uniqueness and adds route-constrained deferred create/workspace FKs while allowing other commands. Runner validates distinct safe roles, existing schema ownership and all four OID+name pairs on rerun; config insertion and migration ledger share the transaction."
+    },
+    {
+      "area": "job_read_and_create",
+      "assessment": "jobs.py preallocates job/create UUIDs for the deferred cyclic reference and joins list/snapshot only to the immutable create command. DTO state/revision/cycle/node validation replaces the DRAFT-only placeholder; H2 still produces only DRAFT0/QUEUED1 and does not claim step/event execution."
+    }
+  ],
+  "required_runtime_evidence_before_subgate_acceptance": [
+    "Actual current-chain fresh/upgrade/rollback/concurrent migration tests, historical001/002 preservation and exact role/source drift cases.",
+    "Real SCRAM success/missing/wrong/cross-role password failures, actual helper/function/table privilege denials, OID recreation and search-path shadow tests.",
+    "CHECK NULL/partial-window/outcome/attempt-shape rejection and deferred wrong-route/create/workspace-origin commit failures.",
+    "Principal FOR SHARE vs owner disable concurrency; sorted dual-principal admission vs disable and guard/membership NOWAIT behavior under bounded deadlines.",
+    "Workspace changes between filesystem validation/reserve and activation: exact generation/token mismatch produces zero business effects; intent SHARE serializes concurrent G5 mutation.",
+    "Receipt commit then response loss/revocation/workspaceERROR replays identical result; concurrent first writer produces one immutable receipt; mismatched digest/run fails.",
+    "Canonical SQL/Python binding/proposal digest agreement over every field including new workspace pins, integer/ASCII/Unicode edge cases and fixed create payload envelope.",
+    "Actual Temporal dispatcher/worker/run/history/crash gates remain future work; these SQL foundations cannot establish AT16 or fullH2 acceptance."
+  ],
+  "risks_and_edge_cases": [
+    "Workspace generation is now immutable execution identity: a legitimate G5 recovery after reservation which changes generation cannot silently rebind an existing execution; it waits while unready and quarantines on READY identity mismatch. Contract/TC must document this explicit recovery boundary and residual operational recovery requirement.",
+    "Canonical create payload bytes are hashed directly. Extracted project/profile fields still need runtime Unicode/surrogate edge coverage; no assertion that every otherwise parseable JSON is representable as PostgreSQL jsonb.",
+    "Trusted dispatcher may lie about Temporal observations and trusted projector credential does not attest code. This remains the approved explicit local trust boundary, not a defect solved by task queues or caller hashes.",
+    "No SQL execution occurred, so syntax resolution, privileges, planner/locking behavior and extension/library behavior remain unproven until the independently reviewed execution subgate.",
+    "Any subsequent product-source change invalidates this exact-source assessment and requires impact review; concurrent TC changes are outside these product pins."
+  ],
+  "recommendation": "Keep corrected source frozen for the separate source-pinned schema/auth execution-contract and TC gate review. No additional blocking static issue identified in these exact product bytes. Do not label this review or static compilation as test acceptance.",
+  "acceptance_boundary": {
+    "schema_runtime": "not_executed_by_this_review",
+    "H2": "incomplete",
+    "AT-05": "not_executed",
+    "AT-16": "not_executed",
+    "AT-29": "not_executed",
+    "goal": "active_incomplete"
+  }
+}

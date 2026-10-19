@@ -1,0 +1,57 @@
+{
+  "kind": "ifpmic.b03.h2.schema-tc-execution-review.v3",
+  "verdict": "approve_execution",
+  "contract_sha256": "7d194223df01eccc6de600e3af290495882a29c7d53cdd550a9d6db6fa7f310d",
+  "review_scope": "Read-only TC review of the exact H2 schema execution contract v3, its pinned ledger, tests and migration boundary. No tests, migrations, database or service were executed.",
+  "reviewed_inputs": {
+    "execution_contract": {
+      "path": "docs/ifpmic/evidence/b03/h2-schema-execution-contract.json",
+      "sha256": "7d194223df01eccc6de600e3af290495882a29c7d53cdd550a9d6db6fa7f310d"
+    },
+    "tc_ledger": {
+      "path": "docs/ifpmic/evidence/b03/h2-schema-tc-ledger.json",
+      "sha256": "a876dd2dbd31cae749f8c364a1da6284a243dc6121f0413d7d0a4bfaf9aedfc9"
+    },
+    "new_test": {
+      "path": "tests/ifpmic_api/test_workflow_schema.py",
+      "sha256": "fe57f0d54aeae1b2902ec9c235d228f577238d425d57fd486e7510a9be7d187a"
+    },
+    "fixture": {
+      "path": "tests/ifpmic_api/workflow_schema_fixture.py",
+      "sha256": "1493233126c171bd8a16a243194ad61c6c95cbc7671cb660a5f9652be5b6007f"
+    },
+    "migration": {
+      "path": "services/ifpmic_api/migrations/003_workflow_execution.sql",
+      "sha256": "5ef29521944e18551728dd285ce3ae21fa03c2b06f77c25430da6acb0ce1f102"
+    }
+  },
+  "verifications": [
+    {
+      "id": "H2-UNICODE-PROFILE-VERSION-END-TO-END",
+      "result": "covered",
+      "evidence": "The tenth literal case exercises the pinned Node snapshot creator/bridge with profile_version U+D800 and an ordinary scalar project_id; it asserts the exact escaped profile_version_json and raw record bytes, then imports/grants the catalog record and submits an ASCII-escaped CreateJob request through the actual G4 HTTP app. It proceeds through separate dispatcher/projector SCRAM connections and requires read_activation followed by project_activation status applied with the same job at QUEUED revision 1."
+    },
+    {
+      "id": "H2-UNICODE-CLOCK-BOUNDARY",
+      "result": "covered",
+      "evidence": "The new case keeps seed_catalog_and_eligibility’s frozen G4-clock grant for HTTP acceptance and inserts a separate owner-controlled grant bounded around actual PostgreSQL clock_timestamp() for SQL activation. The fixtures do not assume the G4 frozen clock equals the database clock."
+    },
+    {
+      "id": "H2-CATALOG-TRUST-BOUNDARY",
+      "result": "covered",
+      "evidence": "The contract and SQL change remove redundant JSONB decoding of the already hash-checked, owner-imported snapshot record. The test now asserts profile_catalog table UPDATE/DELETE denial for runtime/operator/dispatcher/projector, all nine column-level UPDATE denials, and real WHERE-false UPDATE/DELETE failures for each SCRAM-authenticated service role. Existing owner-import/bridge validation remains the producer boundary."
+    },
+    {
+      "id": "H2-START-WINDOW-ALL-OR-NONE",
+      "result": "covered",
+      "evidence": "The case asserts the initial all-NULL tuple, partial shapes rejected by named binding_start_window_shape CHECK with unchanged row, and the valid full tuple through record_start_attempt."
+    },
+    {
+      "id": "H2-ORIGINAL-INVENTORY-AND-CLAIMS",
+      "result": "covered",
+      "evidence": "Contract and ledger agree on 351 archived cases plus ten fixed H2 cases (361 total), four phases, no skip/error/xfail, per-case limits and lifecycle evidence. The contract limits its claim to a partial SQL foundation; actual Temporal integration, H1 rerun and original AT acceptance remain pending."
+    }
+  ],
+  "findings": [],
+  "execution_boundary": "Approval applies only to the specified H2 schema/SQL subgate and still depends on the required independent frozen-source/pre-gate approval for this exact contract and runner. This review is not runtime or test evidence. No DB, pytest, migration or service execution occurred."
+}

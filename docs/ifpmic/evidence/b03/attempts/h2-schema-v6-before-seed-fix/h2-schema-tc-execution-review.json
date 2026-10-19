@@ -1,0 +1,47 @@
+{
+  "kind": "ifpmic.b03.h2.schema-tc-execution-review.v6",
+  "verdict": "approve_execution",
+  "contract_sha256": "8582b8a3a52416bd96d05df288b5474a9b391743b768d71ccb64607dcc2b2667",
+  "review_scope": "Read-only TC review of the exact v6 execution contract and the fixture's H2 test-selection correction. The review covers the selection predicate, unchanged per-case body and cleanup watchdog hooks, refreshed source pins, retained oracle and case inventory, and the preserved gate where timing evidence was missing. No pytest, migration, database, or service was executed for this review.",
+  "reviewed_inputs": {
+    "execution_contract": {
+      "path": "docs/ifpmic/evidence/b03/h2-schema-execution-contract.json",
+      "sha256": "8582b8a3a52416bd96d05df288b5474a9b391743b768d71ccb64607dcc2b2667"
+    },
+    "tc_ledger": {
+      "path": "docs/ifpmic/evidence/b03/h2-schema-tc-ledger.json",
+      "sha256": "de0656bae3a9548b505ed0bf78c4b9411beac25729065ed2fface4d6f39e78d3"
+    },
+    "workflow_schema_fixture": {
+      "path": "tests/ifpmic_api/workflow_schema_fixture.py",
+      "sha256": "53711e74c045a1d807c96c5600d9a8d1c15685c0465f46fd5faa65e833b66224"
+    },
+    "prior_tc_review": {
+      "path": "docs/ifpmic/evidence/b03/attempts/h2-schema-v5-before-watchdog-fix/h2-schema-tc-execution-review.json",
+      "sha256": "e31217940467c45b83e879782f7e02f983d47a6f90bd970216bf5d255ce1530a"
+    },
+    "failed_gate": {
+      "path": "workflow-artifacts/verification/B03/H2/schema/gates/2026-10-19T10-31-00-924183Z/gate.json",
+      "finding": "The retained run records 10 H2 cases passed with 0 failures, errors, or skips, then fails gate completion because required case-timings.json is absent. The previous module-name predicate selected no items, so per-case timing records were never produced. This is an evidence/runner failure, not a passing gate."
+    }
+  },
+  "delta_review": {
+    "result": "resolved",
+    "evidence": "The former predicate depended on item.module.__name__ equaling a package-qualified name, which is not guaranteed when pytest imports the test file without a tests package initializer. The corrected predicate selects only items whose resolved item.path equals the resolved sibling test_workflow_schema.py path. This directly selects the intended H2 module independent of pytest's import name. Diff against the preserved v5 fixture is limited to _is_h2_test. The existing setup, call, teardown, and logfinish hooks remain unchanged, including the 25-second test body alarm, 5-second fixture cleanup alarm, and required per-case timing record publication.",
+    "source_pin_check": {
+      "result": "all_match",
+      "ledger_pin_count": 18,
+      "fixture_pin_matches": true,
+      "contract_ledger_pin_matches": true
+    },
+    "case_inventory": {
+      "legacy_python": 167,
+      "g4_python": 91,
+      "g5_python": 93,
+      "h2_schema_python": 10,
+      "total": 361
+    }
+  },
+  "findings": [],
+  "execution_boundary": "Approve the exact v6 contract for the specified schema subgate, subject to the separately required independent frozen-source/pre-gate approval. This approval authorizes a new pinned run; it does not convert the preserved missing-timing gate into a pass. No execution occurred for this review. Temporal integration, full H2, and original AT acceptance remain unproven."
+}

@@ -32,6 +32,7 @@ RETENTION_MIGRATION_VERSION = "002_auth_retention"
 RETENTION_MIGRATION_FILE = Path(__file__).resolve().parents[2] / "services/ifpmic_api/migrations/002_auth_retention.sql"
 PINNED_RETENTION_MIGRATION_SHA256 = "95c01f06eb586e0c1067f04672edfed8e0a11215752ad859ac9e4744da5a504e"
 MIGRATION_VERSIONS = [MIGRATION_VERSION, RETENTION_MIGRATION_VERSION]
+CURRENT_MIGRATION_VERSIONS = [MIGRATION_VERSION, RETENTION_MIGRATION_VERSION, "003_workflow_execution"]
 AUTH_RETENTION_DELETE_TABLES = {"oidc_login_transactions", "user_sessions"}
 
 REQUIRED_TABLES = {
@@ -94,7 +95,7 @@ def _migrate_with_cluster(pg_cluster, database, *, runtime_role=None, operator_r
             connection,
             runtime_role=runtime_role or database.roles.runtime,
             operator_role=operator_role or database.roles.operator,
-            migration_dir=migration_dir,
+            migration_dir=migration_dir or database.legacy_migration_dir,
         )
 
 
@@ -248,6 +249,7 @@ def test_invalid_role_and_active_transaction_are_refused(pg_cluster, migration_d
                     connection,
                     runtime_role=migration_db.roles.alternate_runtime,
                     operator_role=migration_db.roles.operator,
+                    migration_dir=migration_db.legacy_migration_dir,
                 ),
                 "MIGRATION_OWNER_INVALID",
             )
@@ -259,6 +261,7 @@ def test_invalid_role_and_active_transaction_are_refused(pg_cluster, migration_d
                     connection,
                     runtime_role=migration_db.roles.runtime,
                     operator_role=migration_db.roles.operator,
+                    migration_dir=migration_db.legacy_migration_dir,
                 ),
                 "MIGRATION_TRANSACTION_ACTIVE",
             )
@@ -554,6 +557,8 @@ def test_migration_cli_applies_and_reruns_without_leaking_connection_info(pg_clu
         "IFPMIC_MIGRATION_DSN": dsn,
         "IFPMIC_RUNTIME_ROLE": migration_db.roles.runtime,
         "IFPMIC_OPERATOR_ROLE": migration_db.roles.operator,
+        "IFPMIC_DISPATCHER_ROLE": migration_db.roles.dispatcher,
+        "IFPMIC_PROJECTOR_ROLE": migration_db.roles.projector,
         "IFPMIC_TEST_SENTINEL": sentinel,
     }
     command = [sys.executable, "-m", "services.ifpmic_api.migrate"]
@@ -564,7 +569,7 @@ def test_migration_cli_applies_and_reruns_without_leaking_connection_info(pg_clu
     assert first.returncode == 0
     assert first.stderr == ""
     assert first.stdout.endswith("\n") and first.stdout.count("\n") == 1
-    assert json.loads(first.stdout) == {"applied": MIGRATION_VERSIONS, "unchanged": []}
+    assert json.loads(first.stdout) == {"applied": CURRENT_MIGRATION_VERSIONS, "unchanged": []}
     assert sentinel not in first.stdout + first.stderr and dsn not in first.stdout + first.stderr
 
     second = subprocess.run(
@@ -574,7 +579,7 @@ def test_migration_cli_applies_and_reruns_without_leaking_connection_info(pg_clu
     assert second.returncode == 0
     assert second.stderr == ""
     assert second.stdout.endswith("\n") and second.stdout.count("\n") == 1
-    assert json.loads(second.stdout) == {"applied": [], "unchanged": MIGRATION_VERSIONS}
+    assert json.loads(second.stdout) == {"applied": [], "unchanged": CURRENT_MIGRATION_VERSIONS}
     assert sentinel not in second.stdout + second.stderr and dsn not in second.stdout + second.stderr
 
 
@@ -695,6 +700,7 @@ def test_failed_migration_rolls_back_schema_and_concurrent_migration_is_serializ
                 connection,
                 runtime_role=migration_db.roles.runtime,
                 operator_role=migration_db.roles.operator,
+                migration_dir=migration_db.legacy_migration_dir,
             )
 
     with ThreadPoolExecutor(max_workers=2) as pool:

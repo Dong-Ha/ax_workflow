@@ -1,0 +1,172 @@
+{
+  "kind": "ifpmic.b03.h2.schema-code-review.v3",
+  "reviewer": "independent_senior_security_architecture_agent",
+  "decision": "no_remaining_blocking_static_findings_after_correction",
+  "authorization": "Static critical-code review only. Not authorization to execute SQL/tests/services and not H2, subgate, migration, auth or acceptance proof.",
+  "scope": "Read-only inspection of exact pinned003 migration, migrate.py and jobs.py against approved H2 contract. TC is concurrently authoring tests; no claim that a whole candidate is frozen. Reviewer owns only this JSON, did not edit product/tests and ran no DB, pytest, SQL parser or service.",
+  "source_pins": {
+    "services/ifpmic_api/migrations/003_workflow_execution.sql": "5ef29521944e18551728dd285ce3ae21fa03c2b06f77c25430da6acb0ce1f102",
+    "services/ifpmic_api/migrate.py": "36518fdd4d296455947df76fd72bf11d68aa44317549bd527037499b98a9eb86",
+    "services/ifpmic_api/jobs.py": "0538e460a6be42e3129d2e8d5e9f262bba357e621e0b5e800f4495ebdf99ecf9",
+    "docs/ifpmic/evidence/b03/h2-implementation-contract.json": "f63173ac17ebebd34a15d5966d96b79dc1667a713c00b1b92868b137ba93ded3",
+    "docs/ifpmic/evidence/b03/h2-security-advice.json": "37215e0b37236149a133722323a28c4c155b649021701e4fa6e8bc9a5b3683e4",
+    "services/ifpmic_api/migrations/001_initial.sql": "cf0437a5f32e1589e4ea821afbb2ef2480d780a276667880aa9a08a0f4c77f12",
+    "services/ifpmic_api/migrations/002_auth_retention.sql": "95c01f06eb586e0c1067f04672edfed8e0a11215752ad859ac9e4744da5a504e",
+    "services/ifpmic_api/request_contract.py": "ad88f756ce4bf526bb3c2d89dab64765bcfc42ab7f8b2832dcb012b271e07fe0",
+    "services/ifpmic_api/catalog.py": "65cfaae738728a957ba73587bdc3caaa582a90650624bb1c31bd11f66fb2db1f",
+    "services/ifpmic_api/snapshot_bridge.py": "743f357fed62a37770d4bfef2a3321fab649b25a3a1b040f64d61bec628443e8",
+    "tests/ifpmic_api/test_snapshot_bridge.py": "1f93fe8b5bf02545f1e04c0c2c555bdf9582d2da477a44a3abac6b51ad26d705"
+  },
+  "initial_candidate": {
+    "path": "docs/ifpmic/evidence/b03/attempts/h2-schema-before-static-review.sql",
+    "sha256": "f3df9c0c6df29e9fef5b3adc999dbe6e9da661e82d413df443a8fe3ce2ae1686",
+    "status": "preserved_by_main_after_initial_read_before_corrections",
+    "note": "Reviewer initially read this source before computing its SHA. Main preserved the before-copy; reviewer later verified its SHA and compared exact before/after text. No retrospective claim of a pre-read fingerprint."
+  },
+  "initial_findings": [
+    {
+      "id": "H2-SQL-NULL-OUTCOME",
+      "severity": "blocking",
+      "location": "command_outcome_shape",
+      "problem": "applied_revision>=1 and error_code IN(...) evaluate NULL for missing values; PostgreSQL CHECK accepts UNKNOWN, allowing applied with null applied_revision or rejected with null error_code.",
+      "required_correction": "Explicit non-null predicates on the required applied revision and rejected error.",
+      "resolution": "Corrected candidate adds IS NOT NULL to both branches. Static three-valued-logic review now excludes these malformed shapes. Actual constraint rejection tests remain mandatory."
+    },
+    {
+      "id": "H2-SQL-WORKSPACE-FENCE",
+      "severity": "blocking",
+      "location": "reserve_execution / execution_bindings / h2_lock_job / project_activation",
+      "problem": "Initial reserve read workspace without a locking identity fence after outbox acquisition; binding did not preserve the filesystem-verified token/generation. Activation checked current READY and command only, allowing changed generation to be applied using a prior identity validation.",
+      "required_correction": "Take intent SHARE before outbox and pin verified identity in immutable binding; compare current identity during guarded activation.",
+      "resolution": "Corrected candidate adds non-null immutable workspace_token/workspace_generation to binding and canonical digest, writes them from the checked intent, takes SHARE in h2_lock_job before outbox and compares exact pin during activation. Mismatch quarantines with no business receipt/update. Actual concurrent mutation tests remain mandatory."
+    },
+    {
+      "id": "H2-SQL-NULL-START-WINDOW",
+      "severity": "blocking_schema_invariant",
+      "location": "execution_bindings first-start all-or-none CHECK",
+      "problem": "Initial compound CHECK could evaluate UNKNOWN for partially null start metadata instead of enforcing all-or-none. Existing service functions populated all fields together but the intended schema invariant was incomplete.",
+      "required_correction": "Explicitly require all three populated values in the populated branch.",
+      "resolution": "Corrected candidate adds uncertain_until/observed_retention_seconds IS NOT NULL and retains bounded time/retention predicates. It also strengthens admitted-state/run and delivery-attempt completion shapes."
+    }
+  ],
+  "reviewed_invariants": [
+    {
+      "area": "authenticated_machine_identity",
+      "assessment": "Public worker entry points resolve session_user current OID+name, check role safety/membership and owner-registered active principal. SECURITY DEFINER current_user is not used as caller identity. Admission derives one projector via unique deployment/build assignment; h2_identity sorts dispatcher/projector principal FOR SHARE by OID before lower lock classes."
+    },
+    {
+      "area": "lock_order",
+      "assessment": "Mutating multirow paths first authenticate/lock principals, then h2_lock_job takes project guard, membership NOWAIT, job, binding, intent SHARE; outbox follows. Claim/record_delivery use principal plus outbox and no later blocking earlier-class acquisition. Quarantine callers already own job/binding before sorted outbox locks. G5 workspace-only updates do not introduce a reverse job/guard edge. Runtime proof is still required."
+    },
+    {
+      "area": "receipt_replay",
+      "assessment": "project_activation authenticates static job/run/build scope, recomputes fixed complete proposal hash, then reads immutable receipt before current membership/eligibility/workspace checks. Missing receipt takes ordered locks and rechecks receipt before first-apply validation. Existing receipt remains available despite operational quarantine to an active exact-scope principal."
+    },
+    {
+      "area": "activation_authority",
+      "assessment": "Typed SQL allows only original create activation DRAFT0 to QUEUED1 or fixed rejection retaining DRAFT0. Guarded current owner membership/request.create and unexpired/unrevoked profile eligibility decide first application. Business status, command outcome and immutable receipt are one transaction; dispatch bookkeeping does not advance state. Catalog record semantics/provenance are enforced by trusted G4 Node/bridge nine-field admission; SQL rechecks raw bytes/hash plus immutable binding, without whole-record JSONB decoding."
+    },
+    {
+      "area": "lease_run_admission",
+      "assessment": "Generation/token/expiry checks use IS DISTINCT FROM plus fresh clock checks; run UUID canonicalization and write-once binding reject replacement. First-run update and owner-derived projector scope insertion are in the same transaction. Start window cannot extend once set; retention must exceed3600. Known-run missing history policy needs later Python dispatcher implementation."
+    },
+    {
+      "area": "least_privilege_and_helpers",
+      "assessment": "New table rights revoked from PUBLIC/all four service roles. New privileged helpers receive no service EXECUTE. All functions use fixed trusted search_path, scoped public signatures and exact role grants; values are not interpolated as SQL. No generic state patch or credential material is exposed."
+    },
+    {
+      "area": "schema_and_migrator",
+      "assessment": "001/002 bytes remain pinned.003 backfills one create origin, preserves actor/route/key uniqueness and adds route-constrained deferred create/workspace FKs while allowing other commands. Runner validates distinct safe roles, existing schema ownership and all four OID+name pairs on rerun; config insertion and migration ledger share the transaction. Named start-window/run CHECKs preserve explicit non-null constraints and give TC an exact constraint-name oracle."
+    },
+    {
+      "area": "job_read_and_create",
+      "assessment": "jobs.py preallocates job/create UUIDs for the deferred cyclic reference and joins list/snapshot only to the immutable create command. DTO state/revision/cycle/node validation replaces the DRAFT-only placeholder; H2 still produces only DRAFT0/QUEUED1 and does not claim step/event execution."
+    }
+  ],
+  "required_runtime_evidence_before_subgate_acceptance": [
+    "Actual current-chain fresh/upgrade/rollback/concurrent migration tests, historical001/002 preservation and exact role/source drift cases.",
+    "Real SCRAM success/missing/wrong/cross-role password failures, actual helper/function/table privilege denials, OID recreation and search-path shadow tests.",
+    "CHECK NULL/partial-window/outcome/attempt-shape rejection and deferred wrong-route/create/workspace-origin commit failures.",
+    "Principal FOR SHARE vs owner disable concurrency; sorted dual-principal admission vs disable and guard/membership NOWAIT behavior under bounded deadlines.",
+    "Workspace changes between filesystem validation/reserve and activation: exact generation/token mismatch produces zero business effects; intent SHARE serializes concurrent G5 mutation.",
+    "Receipt commit then response loss/revocation/workspaceERROR replays identical result; concurrent first writer produces one immutable receipt; mismatched digest/run fails.",
+    "Canonical SQL/Python binding/proposal digest agreement over every field including new workspace pins, integer/ASCII/Unicode edge cases and fixed create payload envelope.",
+    "Actual Temporal dispatcher/worker/run/history/crash gates remain future work; these SQL foundations cannot establish AT16 or fullH2 acceptance.",
+    "Accepted allowed lone-surrogate/astral free text survives reserve without PostgreSQL JSON decoding; NUL remains422/no rows; embedded boundary-looking quotes cannot satisfy another project/profile identity.",
+    "Actual trusted Node bridge/import and HTTP202 with supported escaped lone-surrogate profile_version, followed by SQL reserve/admit/activation; verify canonical profile version stays lossless in HTTP read DTO.",
+    "Catalog raw-byte/SHA mismatch before reservation or after binding must fail closed with zero new business receipt/effect. Actual service-role privilege denial must show no UPDATE/DELETE of catalog for runtime/operator/dispatcher/projector."
+  ],
+  "risks_and_edge_cases": [
+    "Workspace generation is now immutable execution identity: a legitimate G5 recovery after reservation which changes generation cannot silently rebind an existing execution; it waits while unready and quarantines on READY identity mismatch. Contract/TC must document this explicit recovery boundary and residual operational recovery requirement.",
+    "Canonical create payload now stays entirely as immutable ASCII text for reserve validation. The adjacent-key boundary check relies on trusted fixed G4 DTO serialization, not arbitrary JSON validation; its changed-input limitations are explicit in current_delta_review.",
+    "Trusted dispatcher may lie about Temporal observations and trusted projector credential does not attest code. This remains the approved explicit local trust boundary, not a defect solved by task queues or caller hashes.",
+    "No SQL execution occurred, so syntax resolution, privileges, planner/locking behavior and extension/library behavior remain unproven until the independently reviewed execution subgate.",
+    "Any subsequent product-source change invalidates this exact-source assessment and requires impact review; concurrent TC changes are outside these product pins."
+  ],
+  "recommendation": "Keep the corrected SQL/source pinned for revised v3 schema/auth execution-contract and TC review. No new blocking static issue identified in these exact product bytes. Prior v2 execution approval is superseded for changed-source execution; no runtime/acceptance claim is made.",
+  "acceptance_boundary": {
+    "schema_runtime": "not_executed_by_this_review",
+    "H2": "incomplete",
+    "AT-05": "not_executed",
+    "AT-16": "not_executed",
+    "AT-29": "not_executed",
+    "goal": "active_incomplete"
+  },
+  "previous_review": {
+    "path": "docs/ifpmic/evidence/b03/attempts/h2-schema-v2-before-unicode-fix/h2-schema-code-review.json",
+    "sha256": "dcc6247cacbfb20a4d36fc27a6de9fff2fdab85ec1a73877f1269f395bbe2f21",
+    "status": "preserved_prior_static_assessment_not_runtime_acceptance"
+  },
+  "command_bytes_delta_review": {
+    "scope": "Read-only review of changed SQL sections against prior pinned source. No product/test/service/SQL execution.",
+    "changes": [
+      "Named binding_start_window_shape and binding_run_shape CHECKs without weakening predicates.",
+      "Removed the incorrect claim that G4 accepts U+0000; original ingress rejects NUL and no validation was relaxed.",
+      "Removed whole-command PostgreSQL JSON parsing so supported ASCII-escaped lone surrogate title/request_text need not be decoded by PostgreSQL.",
+      "Retained original canonical stored-byte envelope SHA and checks exact adjacent canonical profile/project/release key boundary using identity_bytes."
+    ],
+    "substring_boundary_proof": [
+      "The exact existing CreateJob schema has eight fixed keys. Python sort_keys canonical order places profile_version, project_id and release_mode consecutively. The body is produced by G4 create_payload strict DTO plus payload_identity/ascii_json, not caller-controlled serialized SQL text.",
+      "Every scalar field except input_artifact_ids is a string, and input_artifact_ids contains canonical UUID strings. No accepted nested object can create another structural profile/project sequence.",
+      "Inside a JSON string all literal double quotes and backslashes are escaped by the canonical encoder. Therefore the raw comma-plus-unescaped-quote key boundaries in identity_bytes cannot be forged inside title/request_text/another string. A closing string quote cannot match the complete sequence because valid JSON requires a comma or object end immediately afterward.",
+      "catalog.profile_version_json is the already imported canonical ASCII string literal; h2_json_string renders the valid project string with the same ASCII escape form. Both values are non-null schema fields, so identity_bytes cannot silently become NULL. An exception resets expected_hash to NULL; comparison against non-null stored payload SHA rejects it.",
+      "Hashing the complete immutable stored body inside the exact original format/payload envelope preserves all free text bytes, including allowed lone surrogate escapes, without PostgreSQL JSON interpretation. The hash is integrity consistency, not proof of an untrusted producer."
+    ],
+    "trust_and_change_boundary": [
+      "This boundary check is not an independent JSON/schema/canonicality validator for arbitrary SQL-inserted bodies. It relies on the existing trusted G4 ingress fixed DTO and immutable command origin. Possession of a compromised API runtime SQL credential allows arbitrary initial inserts and remains outside this guarantee, as with the existing auth/inbox boundary.",
+      "Any future accepted nested object, renamed/extra keys, canonical encoder change, profile-version representation change or alternate command producer invalidates this proof and requires reviewed replacement/extension. Non-create routes never use reserve_execution.",
+      "Actual runtime SQL/Python agreement must cover quote/backslash boundary-shaped user text, Unicode/astral characters, supported lone surrogates, mismatched profile/project and original NUL422/no-row behavior before acceptance."
+    ],
+    "result": "No new blocking static defect identified in this corrected exact-source delta."
+  },
+  "current_delta_review": {
+    "scope": "Read-only exact diff from preserved SQL0c79417e...bf08 to current SQL5ef29521...f102; change confined to h2_catalog local variables, producer-boundary comment and removal of redundant JSONB decoding. No product edits or runtime execution by reviewer.",
+    "root_found_issue": {
+      "id": "H2-CATALOG-LONE-PROFILE-COMPATIBILITY",
+      "severity": "blocking_existing_supported_input_compatibility",
+      "discovered_by": "main_before_first_runtime_gate_after_prior_static_review",
+      "problem": "Previous h2_catalog decoded whole original record/profile-version via jsonb. The existing named G2 test preserves an accepted escaped lone-surrogate profile_version in B01 record bytes and catalog canonical ASCII field, which PostgreSQL JSONB cannot represent. The extra decode could quarantine a legitimate accepted job.",
+      "review_limitation": "Previous no-additional-blocker static verdict did not identify this distinct catalog/profile-version path; no runtime pass was claimed. Preserve the prior source/review rather than revising history."
+    },
+    "retained_checks": [
+      "h2_catalog still joins jobs to profile_catalog by exact project_id/snapshot_id protected by the existing job FK; absence returns NULL.",
+      "h2_catalog still recomputes SHA256 over exact raw record_bytes and requires equality to non-null record_bytes_sha256; it does not decode or reserialize original B01 bytes.",
+      "reserve_execution still rejects a NULL/mismatching catalog and pins its snapshot_id/raw record SHA into immutable execution binding/digest.",
+      "project_activation still invokes h2_catalog and requires catalog.record_bytes_sha256 equality to immutable binding.catalog_record_sha256 before a new business effect. Receipt replay ordering is unchanged.",
+      "Literal workflow/state/agent source hashes and registered type/build remain in the binding. Their source provenance remains the trusted original B01 Node/bridge validation at G4 admission."
+    ],
+    "producer_boundary_evidence": [
+      "SnapshotBridge.decode_frame checks record structure/project/profile/workflow against exact requested identity and WORKFLOW constants; Node remains authoritative for original B01 canonical/hash semantics.",
+      "JobService.capture obtains that configured trusted bridge record, then bind_snapshot checks requested project/profile and all nine catalog fields against it before atomically accepting job+command+outbox.",
+      "catalog.import_snapshot only inserts the same nine-field trusted record; existing row mismatch fails rather than replacing it. Operator can INSERT but has no UPDATE/DELETE of profile_catalog. Runtime/dispatcher/projector similarly lack those mutations.",
+      "An operator-inserted arbitrary catalog row cannot become a genuine accepted API job unless it equals the independently captured trusted record. Merely supplying a matching stored raw hash is not claimed as Node validation or attestation.",
+      "Thus removing repeated SQL JSON inspection preserves the existing trusted producer responsibility while permitting already supported lone-surrogate profile versions. It does not add a new untrusted general-JSON acceptance path."
+    ],
+    "constraints_and_change_boundaries": [
+      "Guarantee applies to jobs genuinely admitted by trusted G4 or an explicitly equivalent reviewed producer, with immutable catalog/job origin. Compromised runtime SQL credentials, schema owner mutations or arbitrary directly inserted jobs remain outside this boundary.",
+      "Future alternate ingress/direct-import job creation, mutable catalog grants or a changed bridge/workflow contract require renewed provenance and admission review. SHA consistency alone is insufficient for an arbitrary new producer.",
+      "Actual Node-to-import-to-HTTP202-to-SQL reservation/activation with escaped lone profile_version is required before the revised schema subgate can be accepted; existing G2-only bridge evidence does not prove this full path."
+    ],
+    "result": "No blocking static defect identified in this exact corrected delta. The earlier execution review does not authorize this changed source; v3 execution contract and independent/TC/pre-gate review remain required."
+  }
+}
