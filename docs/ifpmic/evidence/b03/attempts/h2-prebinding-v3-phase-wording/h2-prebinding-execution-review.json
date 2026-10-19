@@ -1,0 +1,22 @@
+{
+  "kind": "ifpmic.b03.h2.prebinding-execution-review.v1",
+  "verdict": "reject",
+  "contract_path": "docs/ifpmic/evidence/b03/attempts/h2-prebinding-v3-phase-wording/h2-prebinding-execution-contract.json",
+  "contract_sha256": "d2599527d01932952a45819ab8d8fb9b6432a8fb93f69678d2c6e4799b4b051e",
+  "reviewer": {
+    "agent_id": "/root/h2_prebinding_gate_audit",
+    "actual_role": "worker_luna",
+    "independence": "Independent exact-SHA execution-plan reviewer; no product, runner, test, or ledger edits. Only review artifacts were written."
+  },
+  "review_scope": "Read-only review of the rejected d2599527 execution contract and its phase wording before correction. No test, import, SQL, database, or service execution occurred.",
+  "findings": [
+    {
+      "severity": "contract_text_conflict",
+      "location": "limits.per_new_case and methods",
+      "finding": "The declared phase order puts g5_python first, but the prose assigned the local-unit tests and 25+5 watchdog to the “first phase.” Those units and watchdog rows belong to h2_schema_python, which executes second; leaving the referent ambiguous could change the covered cases or execution interpretation.",
+      "required_resolution": "Name h2_schema_python and its 50 watchdog cases explicitly; issue a new exact contract SHA and obtain fresh reviews."
+    }
+  ],
+  "decision": "Reject this exact contract SHA. It is preserved as review history; the corrected contract is reviewed separately.",
+  "execution_authority": "No execution approved by this review."
+}

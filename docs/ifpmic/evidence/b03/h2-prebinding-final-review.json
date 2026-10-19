@@ -1,0 +1,177 @@
+{
+  "kind": "ifpmic.b03.h2.prebinding-final-review.v1",
+  "verdict": "approve_actual_partial_subgate_evidence",
+  "reviewer": {
+    "agent_id": "/root/h2_prebinding_gate_audit",
+    "actual_role": "worker_luna",
+    "review_type": "independent read-only audit of terminal run and published evidence"
+  },
+  "scope": {
+    "approved_claim": "The frozen append004 PostgreSQL/authentication/API and H2 schema/local Python subgate completed its 401-case inventory with all cases passing, no skips, and the recorded cleanup and publication checks passing.",
+    "not_approved_or_claimed": [
+      "Temporal server, worker, dispatcher, or durable workflow acceptance",
+      "full H2 runtime acceptance",
+      "physical crash or independent restart acceptance",
+      "original AT acceptance",
+      "H1 service acceptance, Node/build/browser G6 acceptance, H3-H7, production, device, deployment, or external submission"
+    ]
+  },
+  "execution": {
+    "private_gate_path": "workflow-artifacts/verification/B03/H2/prebinding/gates/2026-10-19T12-16-37-929856Z/gate.json",
+    "private_gate_sha256": "c7dd1c5bfe5885bb603a0fea080eeeca3ab2caff0f77fbfa3299cf1732b0eeea",
+    "started_at": "2026-10-19T12:16:37.930231+00:00",
+    "finished_at": "2026-10-19T12:26:44.559233+00:00",
+    "verdict": "pass",
+    "candidate_fingerprint": "e51d6d4986e7ba2dd6a905ef4af770abc60c3fa2f3791052db6cf128a8197e18",
+    "candidate_source_zip_sha256": "58c332256f8fddf789c5d953e6e3f519312de46045828164d0c5890b2ccf350b",
+    "source_hash_count": 1060,
+    "source_hash_map_matches_candidate_zip": true,
+    "current_source_map_reconciliation": {
+      "mismatching_path_count": 1,
+      "path": "docs/ifpmic/progress.json",
+      "captured_sha256": "a2eceb3ab135ce2f79248f4fd4fd743ecdc66b21d1befccd5cbfa343a791aa58",
+      "current_sha256": "15ef476fc69b9a9a1b575a7c5ce9c989e89813a4c98dfb3d6c910a3298482ad7",
+      "assessment": "Post-gate documentation status reconciliation only; the exact execution snapshot remains independently verified by the private candidate ZIP and source manifest. The current documentation hash must be recorded in the separate reconciliation evidence."
+    }
+  },
+  "reviewed_source_pins": {
+    "execution_contract": "0a1933427bbfc8e47e71548c55de35d5c418a349a8d807e8f99fd6e0032f3065",
+    "case_ledger": "8430215621dc61672ce158c9af0f2fc9124542539e77b988b138727d0856c442",
+    "independent_execution_review": "fc20fa26337ee5a8a795466712240681f8b558fc05e457b431c095e4d2d3a89a",
+    "TC_execution_review": "e6d51c666530fd4a5f6b8e68dfdd73debccaf99fbcd4a87267828d7c44ba653b",
+    "frozen_pre_gate_review": "9b4d1b514c43832bf28fbfa83137971a888875729d1f0622814ce7d920e0362a",
+    "runner": "b3a63b81cc6fb174d821ad89ec8ca72f3f6e8805b6b86d36ff146f1f46a9594d",
+    "progress_plugin": "2f902b38ff0436f3f85d3a9a1341f8b530c8b0d3f5211dfdd56dba37ae8a07e4",
+    "publication_helper": "e03eb1ce34bf0f1078b11f0b8a050831c924fcc92aa37e8e9cb805266efec62b",
+    "failure_history": "0c0d6eb3b17254cd54b3ebd39ba0375f9c2c9d0d8cfb4b2675a29ba3323412d9"
+  },
+  "case_and_timing_audit": {
+    "total_cases": 401,
+    "unique_case_ids": 401,
+    "phase_order": ["g5_python", "h2_schema_python", "g4_python", "legacy_python"],
+    "passed": 401,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "prior_qualified_id_reconciliation": {
+      "G6_prior_ids": 351,
+      "G6_ids_exactly_match_current_ledger": true,
+      "previous_H2_schema_ids": 10,
+      "previous_H2_schema_ids_retained": true,
+      "prior_unique_ids_retained": 361
+    },
+    "per_case_oracle": "Progress records contain one start, setup/call/teardown reports all passed, and one finish for every ledger ID; each report duration and start-to-finish duration is within 30 seconds. JUnit ID sets and pass outcomes match each phase inventory.",
+    "aggregate_phase_seconds": 598.656708,
+    "per_case_max_elapsed_seconds": {
+      "g5_python": 4.378655,
+      "h2_schema_python": 4.334717,
+      "g4_python": 7.910584,
+      "legacy_python": 2.712309
+    },
+    "h2_schema_timing_rows": 50,
+    "h2_schema_timing_sha256": "e6e175ece28cb6490a72c0ff8f1290a85f822fa5ce3291a6a34b339dbe1fb3e2",
+    "h2_schema_timing_maxima_seconds": {
+      "body": 3.314186,
+      "cleanup": 1.331994,
+      "total": 4.314375
+    },
+    "h2_schema_timing_outcomes": "No body or cleanup timeout flags; all rows satisfy the 25-second body, 5-second cleanup, and 30-second total limits.",
+    "phase_evidence": [
+      {
+        "name": "g5_python",
+        "count": 93,
+        "seconds": 216.502563,
+        "phase_cap_seconds": 600,
+        "progress_sha256": "05600eea253df5727131bb839403e468b000bf90757cf6fd28615f75ee8c0e94",
+        "junit_sha256": "84d27d3d815fdad4a2b6bd6de2eb09efa98f694346428ba47e5102945367d56a",
+        "lifecycle_sha256": "6f192b2fdb817df934fc7bc7f59e210819388a95eb17f5c42272e82d756f4f14"
+      },
+      {
+        "name": "h2_schema_python",
+        "count": 50,
+        "seconds": 63.227506,
+        "phase_cap_seconds": 300,
+        "progress_sha256": "cc9a3352291209df8503a9dc43935625e335c9858aa5b28f383c87dfdc591557",
+        "junit_sha256": "4f62133b1f8071ff95725b1079d9a501859da9f40c12c9c75f9c43e24defe36b",
+        "lifecycle_sha256": "94807618b0cd0a8778be3b8b20861ccc9713fc51b1e9b2b35e1fa96c67c1d719"
+      },
+      {
+        "name": "g4_python",
+        "count": 91,
+        "seconds": 175.825734,
+        "phase_cap_seconds": 300,
+        "progress_sha256": "3d7fcead0f7329f352ba492c2b88b112c55981ede8febe8c8bd83b9777e387a2",
+        "junit_sha256": "ea0f14e5ce06d4e158fe8afefa5e56e3070e014bd663bd5760ea94e78258c0a8",
+        "lifecycle_sha256": "63acffed8f4c554f02af90d376028c17b5d81b27885cf3f26161e548e9466443"
+      },
+      {
+        "name": "legacy_python",
+        "count": 167,
+        "seconds": 143.100907,
+        "phase_cap_seconds": 300,
+        "progress_sha256": "359e802f3bf706f8abedd0c4614d9068b4af1b611d4ce4f00b696a938cfe1092",
+        "junit_sha256": "771678fd535156bc9e118f102afcacb0e5168c426b3929b1b109266ee66b085d",
+        "lifecycle_sha256": "3d44bea15cdfc7723f635531a825c228a39ff06aa16e0539c085b15e805a5fc6"
+      }
+    ]
+  },
+  "environment_and_cleanup": {
+    "gate_environment_unchanged": true,
+    "source_changes_during_gate": [],
+    "owned_children_absent": true,
+    "original32_and_qualified36_files_unchanged_during_gate": true,
+    "protected_inventory_count": 89,
+    "protected_source_count": 96,
+    "postgres_clusters_stopped": 4,
+    "postgres_version": "18.1",
+    "all_recorded_lifecycle_operations_exit_zero": true,
+    "environment_before_sha256": "captured and verified against the private gate record; retained privately"
+  },
+  "publication_audit": {
+    "verification_path": "docs/ifpmic/evidence/b03/h2-prebinding-verification.json",
+    "verification_sha256": "fd7d09c2fafc51eab799043ccbb9e39111489b927bb074fe222ce5bda8902a0f",
+    "archive_path": "docs/ifpmic/evidence/b03/h2-prebinding-gate.zip",
+    "archive_sha256": "c7f7d7f775de6c2cdde0daf98a1c6960db4477f4555acd1a7c3360b90d45fb2a",
+    "archive_members": {
+      "gate/h2-case-timings.json": {
+        "bytes": 14443,
+        "sha256": "e0fa8c0a7a3d7ffbc4386dea33908dbd0c2ccacd88ffe695822d248ffa16e6e1"
+      },
+      "gate/postgres-lifecycle.json": {
+        "bytes": 4773,
+        "sha256": "2cea060745f0a802fec6566b62a3048c299fd006d2da7cc38a42043f78c25157"
+      },
+      "gate/pytest.xml": {
+        "bytes": 70767,
+        "sha256": "6e5bd4b9224ebcd1f2c154a10f1fdc8bde88fafc371329596ff7bddd9c643d15"
+      },
+      "gate/source-manifest.json": {
+        "bytes": 135995,
+        "sha256": "130dac15de6ac19efe7aaa1d26dda75cddecced72c0df0e21da63f16c567d4b3"
+      },
+      "gate/summary.json": {
+        "bytes": 2853,
+        "sha256": "febd7dba4e9a480686a74b9dee87f8f2154009a4640fb72745ffd2e085e6dbe8"
+      }
+    },
+    "normalization": "Exactly five whitelisted relative members; fixed 2000-01-01 timestamps and mode 0644; each member byte count and SHA-256 matches verification JSON.",
+    "privacy": "No actual workspace/private temporary path, private-key marker, raw log, source ZIP, process PID field/value, or credential material found. Lifecycle publication is process-free; source manifest paths are relative. Synthetic /tmp/ATTACKER_PATH negative-test literals are permitted and are not actual paths.",
+    "verification_status": {
+      "decision": "pass_pending_independent_final_review",
+      "goal_status": "active",
+      "real_acceptance_status": "not_executed"
+    }
+  },
+  "retained_failure_history": {
+    "attempts_path": "docs/ifpmic/evidence/b03/h2-prebinding-runtime-attempts.json",
+    "attempts_sha256": "0c0d6eb3b17254cd54b3ebd39ba0375f9c2c9d0d8cfb4b2675a29ba3323412d9",
+    "retained_unsuccessful_attempts": ["prebinding-001: fail", "prebinding-002: fail_timeout"],
+    "prior_failure_evidence_was_not_rewritten": true
+  },
+  "method_and_limits": {
+    "methods": ["SHA-256 verification", "read-only JSON/XML/JSONL parsing", "read-only ZIP member, metadata, and content verification", "case-ID set reconciliation"],
+    "not_performed": ["pytest execution", "product imports", "SQL execution", "service startup", "file-system cleanup", "product/test edits"],
+    "blocking_findings": [],
+    "remaining_uncertainty": "This audit establishes only the frozen local SQL/Python subgate and sanitized evidence described above. Full runtime and system acceptance remains incomplete."
+  }
+}

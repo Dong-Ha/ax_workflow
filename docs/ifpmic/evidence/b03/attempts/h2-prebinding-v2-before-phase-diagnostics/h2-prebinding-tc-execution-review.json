@@ -1,0 +1,43 @@
+{
+  "kind": "ifpmic.b03.h2.prebinding-tc-execution-review.v1",
+  "verdict": "approve_execution",
+  "contract_sha256": "88fb8be3539c8974959bd1f5a5f19046050b997f914cfc05c57d5989961849a4",
+  "contract_path": "docs/ifpmic/evidence/b03/h2-prebinding-execution-contract.json",
+  "reviewer": "TC execution reviewer (/root/h2_tc_query_fix)",
+  "reviewer_role": "TC test and ledger owner; exact execution-plan reviewer",
+  "review_scope": "Read-only review of the exact v2 execution contract, linked ledger, and authorized G5 fixture-only recovery-lease delta. Checked the exact contract and ledger hashes, every ledger source pin, phase inventory/budgets, frozen-case retention, recovery-expiry oracle, and the subgate acceptance boundary. No tests, imports, SQL, database connections, or services were run.",
+  "reviewed_inputs": {
+    "execution_contract": {
+      "path": "docs/ifpmic/evidence/b03/h2-prebinding-execution-contract.json",
+      "sha256": "88fb8be3539c8974959bd1f5a5f19046050b997f914cfc05c57d5989961849a4"
+    },
+    "tc_ledger": {
+      "path": "docs/ifpmic/evidence/b03/h2-prebinding-tc-ledger.json",
+      "sha256": "33ccba15e890c5f55eb00a22ec6ec9dba62e2a3532432fbeb20ec86a28401b5e",
+      "source_pin_count": 31,
+      "source_pin_mismatches": 0
+    },
+    "recovery_lease_fixture": {
+      "path": "tests/ifpmic_api/test_workspace.py",
+      "sha256": "46502aef6e69b3525f44b74e8fac6b9fa6d2ce199285365d7a013e85c30f2552"
+    }
+  },
+  "checks": {
+    "contract_sha_matches_requested": true,
+    "ledger_sha_matches_contract": true,
+    "all_ledger_source_pins_match": true,
+    "phase_case_counts": {
+      "h2_schema_python": 50,
+      "g4_python": 91,
+      "g5_python": 93,
+      "legacy_python": 167
+    },
+    "unique_case_ids": 401,
+    "previous_case_ids_retained": 361,
+    "per_phase_timeout_seconds": 300,
+    "phase_sum_budget_seconds": 1200,
+    "g5_recovery_fix_preserves_crash_oracle": true
+  },
+  "findings": [],
+  "execution_boundary": "Approval covers only the exact 401-case append004 schema/prebinding/local-validation subgate plan. The G5 fixture keeps the killed worker's 1-second lease and SIGKILL evidence, checks the unchanged original claim while polling expiry against fresh PostgreSQL clock_timestamp(), and gives the recovered claim a separate 10-second lease. It retains the ready and exact generation-2 assertions; a slow-storage expiry still fails instead of weakening the product fence. The v1 failed attempt remains preserved. This approval permits a new pinned run only after the runner pins this contract SHA and the separate independent frozen pre-gate review approves the exact final runner/source/ledger/review bytes. No execution or runtime pass is claimed; full Temporal/H1/runtime and original AT acceptance remain pending."
+}

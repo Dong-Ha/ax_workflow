@@ -154,7 +154,8 @@ def test_h2_upgrade_backfills_create_origin_and_keeps_extra_commands_separate(
     assert hashlib.sha256((MIGRATIONS / "001_initial.sql").read_bytes()).hexdigest() == PINNED_001
     assert hashlib.sha256((MIGRATIONS / "002_auth_retention.sql").read_bytes()).hexdigest() == PINNED_002
     assert _apply_current(pg_cluster, migration_db) == {
-        "applied": ["003_workflow_execution"], "unchanged": ["001_initial", "002_auth_retention"],
+        "applied": ["003_workflow_execution", "004_prebinding_incident"],
+        "unchanged": ["001_initial", "002_auth_retention"],
     }
 
     with psycopg.connect(migration_db.owner_dsn(pg_cluster)) as owner:
@@ -216,7 +217,10 @@ def test_h2_upgrade_backfills_create_origin_and_keeps_extra_commands_separate(
         versions = owner.execute(
             "SELECT version FROM ifpmic.schema_migrations ORDER BY version"
         ).fetchall()
-    assert versions == [("001_initial",), ("002_auth_retention",), ("003_workflow_execution",)]
+    assert versions == [
+        ("001_initial",), ("002_auth_retention",),
+        ("003_workflow_execution",), ("004_prebinding_incident",),
+    ]
 
 
 def test_h2_missing_create_origin_rolls_back_all_003_objects(pg_cluster, migration_db, workflow_scram_hba):

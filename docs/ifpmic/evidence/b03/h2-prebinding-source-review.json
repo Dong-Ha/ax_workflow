@@ -1,0 +1,108 @@
+{
+  "kind": "ifpmic.b03.h2.prebinding-source-review.v1",
+  "verdict": "no_blocking_source_findings",
+  "reviewer": {
+    "agent_id": "/root/h2_prebinding_advice",
+    "actual_role": "senior_sol",
+    "independence": "Reviewer authored the prior advice and independent amendment review, but did not author migration004, product runtime or TC tests."
+  },
+  "scope": "Read-only critical source review of migration004 against the exact approved amendment and accepted003 helpers. This is source review only, not execution approval, test evidence or H2 acceptance.",
+  "candidate": {
+    "path": "services/ifpmic_api/migrations/004_prebinding_incident.sql",
+    "sha256": "9a7651ab063901e69a77f4b825dd21544dc018ed01941dc3a1bc76f8a65b541f"
+  },
+  "reviewed_references": {
+    "docs/ifpmic/evidence/b03/h2-prebinding-amendment.json": "79360620e0d342e2fc25258bffd65ef216fe5b89dc45fd99213c81884ebeb1ff",
+    "docs/ifpmic/evidence/b03/h2-prebinding-review.json": "a2d7934e2b2052c7391dfe221d0a3ce7c7587968d157070a6a23d7773e117396",
+    "docs/ifpmic/evidence/b03/h2-prebinding-tc-review.json": "f70c30958938243f7581e1f579d30b12dfd6937025b4897120689d82851f08d4",
+    "services/ifpmic_api/migrations/001_initial.sql": "cf0437a5f32e1589e4ea821afbb2ef2480d780a276667880aa9a08a0f4c77f12",
+    "services/ifpmic_api/migrations/002_auth_retention.sql": "95c01f06eb586e0c1067f04672edfed8e0a11215752ad859ac9e4744da5a504e",
+    "services/ifpmic_api/migrations/003_workflow_execution.sql": "5ef29521944e18551728dd285ce3ae21fa03c2b06f77c25430da6acb0ce1f102",
+    "services/ifpmic_api/migrate.py": "36518fdd4d296455947df76fd72bf11d68aa44317549bd527037499b98a9eb86"
+  },
+  "findings": [],
+  "checks": [
+    {
+      "id": "SOURCE-AUTHORING-GATE",
+      "result": "satisfied",
+      "evidence": "The independent and TC review artifacts both record approve_authoring for amendment SHA79360620e0d342e2fc25258bffd65ef216fe5b89dc45fd99213c81884ebeb1ff. They explicitly exclude execution approval. Candidate004 and amendment hashes match the requested exact bytes."
+    },
+    {
+      "id": "SOURCE-PRINCIPAL-AND-ORDERED-LOCKS",
+      "result": "no_blocking_source_issue",
+      "locations": ["004_prebinding_incident.sql:17", "004_prebinding_incident.sql:26", "004_prebinding_incident.sql:33", "003_workflow_execution.sql:254", "003_workflow_execution.sql:273"],
+      "evidence": "h2_identity authenticates session_user OID/name, registration kind/active status, role safety and membership restrictions, retaining principal FOR SHARE. h2_lock_job takes project guard, membership NOWAIT, job, existing binding and workspace locks in the accepted order. Target outbox is locked last. The unbound path requests no earlier lock class after outbox."
+    },
+    {
+      "id": "SOURCE-POSTLOCK-BINDING-BRANCH",
+      "result": "no_blocking_source_issue",
+      "locations": ["004_prebinding_incident.sql:26", "004_prebinding_incident.sql:27", "004_prebinding_incident.sql:29", "004_prebinding_incident.sql:42"],
+      "evidence": "Binding existence is read after job serialization, saved immediately from FOUND, and checked against authenticated deployment before mutation. A concurrent accepted reserve that wins the job lock must be seen by this subsequent READ COMMITTED statement; an existing different-deployment binding is forbidden. Earlier command lookup is used only to locate the job and does not choose the unbound branch."
+    },
+    {
+      "id": "SOURCE-FRESH-LEASE-FENCE",
+      "result": "no_blocking_source_issue",
+      "locations": ["004_prebinding_incident.sql:33", "004_prebinding_incident.sql:35"],
+      "evidence": "After locking the exact outbox, the function checks existence, leased state, exact generation/token, nonNULL expiry and expiry greater than fresh clock_timestamp. Stale paths return affected0 before any mutation. The locked outbox prevents trusted claim, ack and attempt writers from replacing the claim while the unbound update runs. Existing outbox schema constraints require nonNULL lease token/positive generation for leased rows."
+    },
+    {
+      "id": "SOURCE-CREATE-AND-STATE-ELIGIBILITY",
+      "result": "no_blocking_source_issue",
+      "locations": ["004_prebinding_incident.sql:50", "004_prebinding_incident.sql:52", "004_prebinding_incident.sql:66"],
+      "evidence": "Under serialization, the function re-reads command/job and requires an enabled registered deployment, exact CREATE route, original create command, matching project and actor/owner, accepted command and pristine DRAFT revision0/cycle0/empty current steps/null candidate. UUID types and accepted003 foreign keys/immutable-origin triggers preserve exact job/create identity. Only nonNULL WORKSPACE_IDENTITY_CONFLICT passes the unbound code predicate."
+    },
+    {
+      "id": "SOURCE-WORKSPACE-FENCE",
+      "result": "no_blocking_source_issue",
+      "locations": ["004_prebinding_incident.sql:69", "004_prebinding_incident.sql:73", "003_workflow_execution.sql:273"],
+      "evidence": "The workspace has already been locked FOR SHARE by h2_lock_job. The function re-reads it, requires an existing exact original CREATE intent, and returns fixed WORKSPACE_NOT_READY with no writes for a current nonREADY state. A missing or mismatched intent is forbidden. Filesystem facts are not accepted as SQL arguments or attested by SQL, matching the approved trusted dispatcher boundary."
+    },
+    {
+      "id": "SOURCE-TARGET-ONLY-ATOMIC-EFFECT",
+      "result": "no_blocking_source_issue",
+      "locations": ["004_prebinding_incident.sql:79", "004_prebinding_incident.sql:83", "004_prebinding_incident.sql:87"],
+      "evidence": "The only unbound writes target delivery_attempts by exact command_id/generation with completed_at/result NULL, then the same command outbox. The attempt composite primary key bounds the update to one row; ROW_COUNT must equal1 or an exception rolls back the call. No attempt is inserted. The outbox becomes quarantined, clears token/expiry and stores only the fixed incident code. No job-wide helper, binding, scope, receipt, job, command, workspace, authority or sibling mutation occurs in this branch."
+    },
+    {
+      "id": "SOURCE-BOUND-COMPATIBILITY",
+      "result": "no_blocking_source_issue",
+      "locations": ["004_prebinding_incident.sql:42", "003_workflow_execution.sql:344", "003_workflow_execution.sql:688"],
+      "evidence": "A present same-deployment binding and exact live claim use the unchanged h2_quarantine helper and original status/code envelope. Thus the existing bound fixed-code allowlist and job-wide transport quarantine remain. The new unbound CREATE/state/code restriction is evaluated only after the bound branch returns; it does not accidentally restrict valid bound incidents for other commands."
+    },
+    {
+      "id": "SOURCE-ACL-AND-APPEND-ONLY-MIGRATION",
+      "result": "no_blocking_source_issue",
+      "locations": ["004_prebinding_incident.sql:3", "004_prebinding_incident.sql:95", "003_workflow_execution.sql:715", "services/ifpmic_api/migrate.py:25"],
+      "evidence": "The existing signature is replaced with SECURITY DEFINER and fixed pg_catalog,ifpmic,pg_temp search_path. PUBLIC is explicitly revoked and only the configured dispatcher is granted EXECUTE. CREATE OR REPLACE preserves the accepted003 owner/ACL; runtime/operator/projector have no preexisting grant to inherit in that baseline. No helper/table grants or new function names are added. The current migrator discovers004, validates the existing003 role registry, applies SQL and ledger under its owner advisory-locked transaction, and hash-checks each migration on rerun. Original001/002/003 source hashes remain unchanged."
+    }
+  ],
+  "risks_and_edge_cases": [
+    "Correct source structure is not a proof of PostgreSQL application, SQL compilation, transactional rollback, ACL state or race behavior. These require the approved independent TC cases and frozen execution gate.",
+    "The post-lock binding reasoning relies on the established READ COMMITTED transaction mode and on trusted binding creators taking h2_lock_job. Direct privileged owner writes outside that protocol are not certified by this source review.",
+    "No-binding jobs have no deployment owner yet. The function intentionally uses authenticated enabled dispatcher plus exact claim capability, while every existing binding is deployment-fenced.",
+    "The unchanged bound helper may quarantine multiple job outboxes; the new unbound branch does not call it. TC must verify sibling isolation and both concurrent same-deployment and different-deployment reserve outcomes.",
+    "Workspace token/generation are not caller arguments here, as approved. This relies on immutable service workspace identity and the current READY lifecycle; future READY reset/replacement requires a new contract.",
+    "CREATE OR REPLACE preserves existing ACL rather than repairing arbitrary owner-added grants. The accepted003 baseline and migration owner boundary remain assumptions; inspect actual ACL in execution evidence.",
+    "No dispatcher, transport, workflow, launcher or filesystem runtime behavior is certified by this SQL source review. In particular, actual read-only validation and zero RPC/reserve before definitive READY failure require separate proof."
+  ],
+  "recommendation": "Keep this exact004 source as a candidate for TC verification and the separately reviewed bounded execution gate. No source change is requested by this review.",
+  "required_execution_evidence": [
+    "Fresh001-004,003-to004 upgrade, exact unchanged rerun and induced004 rollback of function/ACL/ledger; original migration hashes and003 registry stay unchanged.",
+    "Real sessions for delayed incident versus reserve/reclaim, post-lock expiry and principal disable; stale/unauthorized paths produce no effects.",
+    "Exact unfinished-attempt requirement, all unbound code/auth/state/workspace negatives, bound allowlist compatibility and byte-identical sibling/business/intent snapshots.",
+    "Actual ACL matrix and read-only READY validator/dispatcher order with no binding or Temporal RPC on invalid READY; all affected preserved case IDs and new literal ledger cases."
+  ],
+  "remaining_uncertainty": [
+    "No SQL was executed or imported, no tests or services ran, and no database/private history was inspected.",
+    "TC test contents and coverage are outside this source-review scope; named required evidence above is not a test-pass claim.",
+    "A separately frozen source/test/deadline ledger and reviewed bounded runner are still required before execution."
+  ],
+  "decision": {
+    "source_blocking_findings": 0,
+    "execution_authorized": false,
+    "migration_application_authorized": false,
+    "runtime_certified": false,
+    "acceptance": "none; no new partial/fullH2 or original AT acceptance"
+  },
+  "work_performed": "Read exact candidate SQL, approved amendment/reviews, narrow accepted003 helper/schema sources and migrator; recomputed referenced SHA256 values. Wrote only this source-review JSON. No product/test edits, product import, SQL execution, tests, services, migration application or network actions."
+}

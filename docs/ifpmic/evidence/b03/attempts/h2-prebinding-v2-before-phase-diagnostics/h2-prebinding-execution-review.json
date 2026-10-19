@@ -1,0 +1,66 @@
+{
+  "kind": "ifpmic.b03.h2.prebinding-execution-review.v1",
+  "verdict": "approve_execution",
+  "contract_path": "docs/ifpmic/evidence/b03/h2-prebinding-execution-contract.json",
+  "contract_sha256": "88fb8be3539c8974959bd1f5a5f19046050b997f914cfc05c57d5989961849a4",
+  "reviewer": {
+    "agent_id": "/root/h2_prebinding_gate_audit",
+    "actual_role": "worker_luna",
+    "independence": "Read-only independent review of the bounded fixture repair and v2 execution contract. No product, runner, test, or ledger edits; only this review artifact was written."
+  },
+  "scope": "Exact-SHA review of the 401-case PostgreSQL SQL/local-validation partial subgate execution plan, with focused review of the preserved v1 failure and SIGKILL recovery fixture delta. No test, import, SQL, PostgreSQL, or service execution occurred.",
+  "reviewed_inputs": {
+    "execution_contract": {
+      "path": "docs/ifpmic/evidence/b03/h2-prebinding-execution-contract.json",
+      "sha256": "88fb8be3539c8974959bd1f5a5f19046050b997f914cfc05c57d5989961849a4"
+    },
+    "tc_ledger": {
+      "path": "docs/ifpmic/evidence/b03/h2-prebinding-tc-ledger.json",
+      "sha256": "33ccba15e890c5f55eb00a22ec6ec9dba62e2a3532432fbeb20ec86a28401b5e",
+      "fixture_pin_matches": true,
+      "fixture_sha256": "46502aef6e69b3525f44b74e8fac6b9fa6d2ce199285365d7a013e85c30f2552",
+      "new_case_count": 50,
+      "unique_new_case_ids": 50,
+      "prior_phase_counts": {
+        "g4_python": 91,
+        "g5_python": 93,
+        "legacy_python": 167
+      }
+    },
+    "failed_v1_attempt": {
+      "path": "docs/ifpmic/evidence/b03/h2-prebinding-runtime-attempts.json",
+      "sha256": "f7c682c2aa29b49651b28ce11f5c92abdd488d9770446d220799bf2da21826ee",
+      "result": "fail",
+      "failed_case": "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_before_marker_publish-True-False-False]"
+    }
+  },
+  "checks": [
+    {
+      "id": "V2-EXACT-SHA-AND-PINS",
+      "result": "satisfied",
+      "evidence": "The v2 contract SHA matches its declared value. Its ledger SHA matches the current ledger, whose test_workspace.py source pin matches the reviewed fixture bytes. The contract preserves the 401-case inventory and 30-second per-new-case, 300-second per-phase, and 1200-second sum limits."
+    },
+    {
+      "id": "PRESERVED-FAILURE-AND-SCOPE",
+      "result": "satisfied",
+      "evidence": "The runtime-attempt record still reports the v1 run as failed: first phase 50/50 passed, G4 91/91 passed, G5 92/93 passed with the named crash-recovery case failing, and legacy 167 was not run. It records the original diagnostic uncertainty, preserved controls, cleanup observations, and that this is not a full subgate pass."
+    },
+    {
+      "id": "CRASH-RECOVERY-DELTA-ORACLES",
+      "result": "sufficient_for_stated_case",
+      "evidence": "The fixture keeps the killed worker's 1-second lease, SIGKILL and empty-output checks, pre-recovery state/generation, marker staging/layout assertions, and final READY/generation-2 oracle. After SIGKILL it snapshots state, generation, token and expiry; while polling PostgreSQL clock_timestamp() with a bounded monotonic deadline, it requires those four values to remain unchanged. Only after the original expiry is observed does it call recovery with a separate 10-second lease. This addresses the v1 lease reuse failure without allowing a live original claim to be rewritten or weakening stale fencing. The changed test body is localized to this fixture branch; test identifiers, assertions outside that branch, and timing budgets are preserved."
+    },
+    {
+      "id": "EXECUTION-BOUNDARY",
+      "result": "satisfied_for_partial_subgate_only",
+      "evidence": "The contract explicitly limits this execution to append-004 PostgreSQL migration/incident coverage, local protocol/workspace/configuration units, and retained SQL/API regressions. It requires both exact-SHA execution reviews and a later independent frozen pre-gate approval pinning final runner and sources before execution. No authorization or claim is made here for Temporal runtime, H1 rerun, original AT acceptance, full H2, or broader AX/UI acceptance."
+    }
+  ],
+  "findings": [],
+  "execution_authority": "This review approves the v2 execution plan only. It does not authorize execution until the required same-SHA TC review and independent frozen pre-gate review approve final runner and source bytes. No execution occurred and no gate result is claimed.",
+  "remaining_limits": [
+    "The v1 401-case attempt failed and remains failed evidence; this review does not convert it into a pass.",
+    "The replacement 401-case run has not occurred.",
+    "Actual Temporal service/worker behavior, durable history/restart, H1 acceptance, full H2, and original AT acceptance remain incomplete."
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "kind": "ifpmic.b03.h2.prebinding-tc-execution-review.v1",
+  "verdict": "approve_execution",
+  "contract_sha256": "5ef240f018aa91b5b4d06563b6574fbf08583d7a09e7d8b4333640fb2f60c143",
+  "contract_path": "docs/ifpmic/evidence/b03/h2-prebinding-execution-contract.json",
+  "reviewer": "TC execution reviewer (/root/h2_tc_query_fix)",
+  "reviewer_role": "TC test and ledger owner; exact execution-plan reviewer",
+  "review_scope": "Read-only review of the exact frozen prebinding execution contract and linked TC ledger. Checked all pinned source hashes, phase order and IDs, H2 watched test set, budgets, inventory, acceptance limits and omitted full-runtime requirements. No test, import, SQL, database, migration or service execution occurred.",
+  "reviewed_inputs": {
+    "execution_contract": {
+      "path": "docs/ifpmic/evidence/b03/h2-prebinding-execution-contract.json",
+      "sha256": "5ef240f018aa91b5b4d06563b6574fbf08583d7a09e7d8b4333640fb2f60c143"
+    },
+    "tc_ledger": {
+      "path": "docs/ifpmic/evidence/b03/h2-prebinding-tc-ledger.json",
+      "sha256": "5279e6d1c0d2857dd53460107d7dc591ff16379cac67522068e8e9a06a8d8218",
+      "source_pin_count": 30
+    }
+  },
+  "checks": {
+    "ledger_sha_matches_contract": true,
+    "all_ledger_source_pins_match": true,
+    "phase_order_matches_contract_and_runner": true,
+    "phase_case_counts": {
+      "h2_schema_python": 50,
+      "g4_python": 91,
+      "g5_python": 93,
+      "legacy_python": 167
+    },
+    "unique_case_ids": 401,
+    "h2_first_phase_cases": 50,
+    "previous_case_ids_retained": 361,
+    "per_phase_timeout_seconds": 300,
+    "phase_sum_budget_seconds": 1200
+  },
+  "findings": [],
+  "execution_boundary": "Approval covers only the exact 401-case schema/prebinding/local-validation subgate plan and permits a new pinned run after the separate independent frozen pre-gate review approves final runner and source bytes. No execution occurred and this approval does not claim a runtime pass, full H2 acceptance, H1 acceptance, or original AT acceptance. Actual Temporal integration, H1 rerun, concurrent foreign-deployment reservation and live principal-disable serialization remain explicitly pending."
+}

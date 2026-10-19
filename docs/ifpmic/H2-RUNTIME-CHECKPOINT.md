@@ -1,5 +1,8 @@
 # H2 runtime authoring checkpoint
 
+Historical snapshot recorded in commit `4108f50`. Later implementation and
+verification state is tracked in [progress.json](./progress.json).
+
 This checkpoint preserves work in progress. It does not qualify the Temporal
 runtime, complete H2/B03, or satisfy the original IFPMIC AX acceptance cases.
 

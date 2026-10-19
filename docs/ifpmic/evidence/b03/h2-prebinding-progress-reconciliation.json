@@ -1,0 +1,28 @@
+{
+  "kind": "ifpmic.b03.h2.prebinding-progress-reconciliation.v1",
+  "decision": "accept_partial_h2_prebinding_sql_local_foundation",
+  "goal_status": "active",
+  "real_acceptance_status": "not_executed",
+  "frozen_candidate_fingerprint": "e51d6d4986e7ba2dd6a905ef4af770abc60c3fa2f3791052db6cf128a8197e18",
+  "verification": {
+    "path": "docs/ifpmic/evidence/b03/h2-prebinding-verification.json",
+    "sha256": "fd7d09c2fafc51eab799043ccbb9e39111489b927bb074fe222ce5bda8902a0f"
+  },
+  "independent_final_review": {
+    "path": "docs/ifpmic/evidence/b03/h2-prebinding-final-review.json",
+    "sha256": "acdf1621405d29f3ffe373e75cae1856cf9417ce9c9caf1437f9db796031228d"
+  },
+  "post_gate_documentation": {
+    "path": "docs/ifpmic/progress.json",
+    "captured_sha256": "a2eceb3ab135ce2f79248f4fd4fd743ecdc66b21d1befccd5cbfa343a791aa58",
+    "reviewed_pending_status_sha256": "15ef476fc69b9a9a1b575a7c5ce9c989e89813a4c98dfb3d6c910a3298482ad7",
+    "accepted_status_sha256": "80c96bca9c3287f7166677a76205ac68113e5ce317d89932592c394f9bd91aa4",
+    "reason": "Record actual401-case result and independent acceptance after terminal execution; keep H2/B03 and full goal incomplete."
+  },
+  "source_map_recheck": {
+    "only_changed_captured_path": "docs/ifpmic/progress.json",
+    "all_product_test_runtime_and_other_captured_files_unchanged": true
+  },
+  "scope": "SQL/authentication/API regression and local Python tests only; actual Temporal startup, H1 rerun, process crash/restart, full H2 and original AT remain unverified.",
+  "evidence_rule": "Frozen verification and independent review remain unchanged; this separate record connects the later progress status to their exact hashes."
+}

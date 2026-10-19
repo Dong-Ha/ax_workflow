@@ -1140,8 +1140,25 @@ def test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage(
         assert recovered["status"] == "ready"
         assert _intent(g4_harness, accepted["job_id"])[0:2] == ("READY", 1)
     else:
-        time.sleep(1.15)
-        recovered = _service(g4_harness, root=workspace_root, lease=1).reconcile_once(accepted["job_id"])
+        # Observe expiry using PostgreSQL's clock, not a wall-clock sleep. Keep
+        # the dead owner's lease identity fixed while waiting; the recovery
+        # claim gets its own longer lease for durable marker/layout work.
+        original = row
+        assert original[2] is not None and original[3] is not None
+        expiry_deadline = time.monotonic() + 5
+        expired = False
+        while time.monotonic() < expiry_deadline:
+            current = _intent(g4_harness, accepted["job_id"])
+            assert current[0:4] == original[0:4]
+            with psycopg.connect(owner_dsn(g4_harness["database"])) as connection:
+                expired = connection.execute(
+                    "SELECT %s::timestamptz <= clock_timestamp()", (original[3],)
+                ).fetchone()[0]
+            if expired:
+                break
+            time.sleep(0.02)
+        assert expired, "killed worker claim did not expire within the bounded wait"
+        recovered = _service(g4_harness, root=workspace_root, lease=10).reconcile_once(accepted["job_id"])
         assert recovered["status"] == "ready"
         assert _intent(g4_harness, accepted["job_id"])[0:2] == ("READY", 2)
     assert bool([path for path in workspace_root.iterdir() if path.name.startswith(".ifpmic-marker-")]) is staging_expected

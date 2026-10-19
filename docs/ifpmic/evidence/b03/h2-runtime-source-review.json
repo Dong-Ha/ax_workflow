@@ -1,0 +1,128 @@
+{
+  "kind": "ifpmic.b03.h2.runtime-source-review.v1",
+  "verdict": "no_remaining_blocking_source_findings_after_two_fixes",
+  "reviewer": {
+    "agent_id": "/root/h2_prebinding_advice",
+    "actual_role": "senior_sol",
+    "independence": "Reviewer read the sources and reported two defects; root authored both product fixes. Reviewer did not edit product code or TC tests."
+  },
+  "scope": "Critical static review of execution_manifest.py, execution_runtime.py, execution_temporal.py and execution_workflow.py with narrow supporting identity/activity/store/dispatcher/SQL and installed SDK1.34.0 source reads. This is not runtime certification, execution approval or acceptance.",
+  "contract": {
+    "path": "docs/ifpmic/evidence/b03/h2-implementation-contract.json",
+    "sha256": "f63173ac17ebebd34a15d5966d96b79dc1667a713c00b1b92868b137ba93ded3"
+  },
+  "reviewed_source_sha256": {
+    "services/ifpmic_api/execution_manifest.py": "0f08e5c86992edc9ee9b62b19d50f981282d125e39810e0f0d6e75d39bfd07b6",
+    "services/ifpmic_api/execution_runtime.py": "28dd4ffc241d7569439ba2329b89894d21667b6679a2eee956f72b22b488bcaf",
+    "services/ifpmic_api/execution_temporal.py": "886d40d4dcb0e6e916f5cb76e5d514ce5890d2cd5a7f7069acafe84cfed1cea2",
+    "services/ifpmic_api/execution_workflow.py": "78f1a408ac6e80d56294c488e8bde434b03bddb1d17ed19278bfb87d5e85b3d7",
+    "services/ifpmic_api/execution_identity.py": "65927a0278db1ba9af218a777d692d87e1a4d847cdce1546a45c7ead8ef564f4",
+    "services/ifpmic_api/execution_activities.py": "ac81ad4ba4f5fad22bb2880f65cf0a833b78e4c8f8e90729833b60d14cdf9c2c",
+    "services/ifpmic_api/execution_store.py": "2bdbc8b457a2da1f78d73c8e3ddda5059962a5931b154423a681a7cbb88d71bd",
+    "services/ifpmic_api/execution_protocol.py": "543c801e902e28b1ada451aa98196275ccb271246c2772837386b7e7aca2c965",
+    "services/ifpmic_api/execution_dispatcher.py": "7baf91290938b3159b2e200e6fde8f81db5ec2d7b117351e03f689bbc75db209",
+    "services/ifpmic_api/execution_workspace.py": "d2794d8a8f20b78c6fe71ea36d2563c876a7372a14acd2e0a1944e2aff5fab05",
+    "services/ifpmic_api/requirements-temporal.lock": "ccbbf7a8aab39cd80861f607afd4994bf461d07cbf592f6acfcc492e63ff85c6",
+    "services/ifpmic_api/migrations/003_workflow_execution.sql": "5ef29521944e18551728dd285ce3ae21fa03c2b06f77c25430da6acb0ce1f102"
+  },
+  "resolved_findings": [
+    {
+      "id": "RUNTIME-DSN-HOSTLIST-FALLBACK",
+      "severity_when_found": "blocking",
+      "found_candidate_sha256": "f6927bbdb2291a629a9a5e46cc6e49feff1c7419288f4e3d4273ca78cd787bff",
+      "problem": "local_dsn checked an absolute host path without rejecting commas. A host such as /tmp/pg,127.0.0.1 passes that path syntax but psycopg splits it into separate Unix/TCP attempts, violating the declared single local socket/no fallback boundary.",
+      "evidence": "Installed psycopg/_conninfo_utils.py:19 split_attempts uses val.split(','); _conninfo_attempts.py:43 iterates those attempts and resolves non-path hosts. No connection was made to demonstrate this; the path follows directly from source.",
+      "root_fix": "The final reviewed local_dsn rejects a comma in host and checks the canonical absolute socket directory with WorkspaceFilesystem.check_root before connecting. Required explicit host/port/database/user/password and PG ambient-variable denial remain. The final wrapper also normalizes parsing/path/socket-root errors to fixed ProtocolError BUILD_UNAVAILABLE without exposing driver or filesystem text.",
+      "resolution": "resolved_in_reviewed_source; actual negative startup case remains required"
+    },
+    {
+      "id": "RUNTIME-FATAL-EXIT-DEADLINE",
+      "severity_when_found": "blocking",
+      "found_candidate_sha256": "946e326218fae59624ea751ae263c0493d3b4e6230cfdd494181a6092f953dea",
+      "problem": "A fatal dispatcher pump or worker path could enter finally without arming the self-exit watchdog. Cancelling a to_thread await does not stop its underlying thread, and interpreter/default-executor shutdown could then wait beyond the intended process deadline.",
+      "root_fix": "The final reviewed finally block calls request_stop unconditionally before worker shutdown and task cancellation. Its self-only daemon timer remains armed for15s through interpreter executor joins; worker.shutdown is separately bounded at10s.",
+      "resolution": "resolved_in_reviewed_source; real process termination/PID absence remains required"
+    }
+  ],
+  "blocking_findings": [],
+  "checks": [
+    {
+      "id": "STARTUP-FILE-SOURCE-ENV-FENCE",
+      "result": "no_remaining_blocking_source_issue",
+      "evidence": "The main entrypoint calls load_config before run. Config and pinned manifests are bounded duplicate-key-rejecting JSON read as same-owner0600 single-link regular files through a checked0700 parent; inode/size/time checks reject replacement during the read. A fresh empty private pycache prefix plus -B is required, and PYTHONPATH/PYTHONHOME/PYTHONSTARTUP are denied. Source manifest hashes all service Python files, migrations and runtime lock; environment manifest hashes venv files, symlink targets, interpreter and Python version. Both actual manifests and their SHA must equal pinned identity values before PG or Temporal connection. The implementation explicitly assumes trusted local launcher and immutable files during the run rather than hostile-host attestation."
+    },
+    {
+      "id": "STARTUP-REGISTRY-BUILD-ENDPOINT-FENCE",
+      "result": "no_remaining_blocking_source_issue",
+      "evidence": "ExecutionIdentity recomputes versioned deployment/build digests and exact queue/type/protocol/source/environment expectations. Launcher restricts Temporal endpoint to canonical127.0.0.1:port. Before any Temporal connect, worker creation, polling or delivery claim, the launcher opens a short authenticated PG transaction for read_dispatch_config or read_registered_build and compares the exact owner deployment/build envelope. These accepted003 functions resolve current session_user through active registered dispatcher/projector identity and enabled deployment/build. No enrollment, default deployment, alternate build or endpoint fallback is present. This necessarily authenticates PG before reading its registry; it does not claim registry verification without a DB connection."
+    },
+    {
+      "id": "STARTUP-DSN-AND-OUTPUT-FENCE",
+      "result": "no_remaining_blocking_source_issue",
+      "evidence": "Final DSN code accepts only explicit host/port/dbname/user/password, rejects ambient PG variables, rejects host lists, validates a canonical private local socket directory and canonical single port, and permits no hostaddr/service/options fallback. Store connection timeout is3s; transactions set lock5s/statement30s and expose only fixed ExecutionUnavailable codes. The launcher supplies a fixed Temporal identity and disables temporalio logger propagation; its main error output is a fixed JSON code. No DSN is supplied through argv or Temporal arguments by these sources."
+    },
+    {
+      "id": "SHUTDOWN-AND-WORKER-SDK-SURFACE",
+      "result": "no_remaining_blocking_source_issue",
+      "evidence": "Worker constructor in installed SDK1.34.0 supports all supplied build_id/identity/use_worker_versioning, task and activity concurrency/executor keywords. Its run/shutdown methods are awaitable and document that shutdown waits for outstanding activities. Final launcher handles SIGINT/SIGTERM, sets a shared stop event, performs explicit worker.shutdown with10s wait, cancels remaining tasks and requests nonwaiting executor shutdown. Both requested stops and fatal finally paths arm the same15s self-only timer, which remains through interpreter joins. This is source evidence of intent, not successful termination evidence."
+    },
+    {
+      "id": "FAILURE-CONVERTER-ACTUAL-WFT-PATH",
+      "result": "prior_documentation_concern_resolved_by_installed_source",
+      "evidence": "Installed temporalio/worker/_workflow_instance.py:585 calls _workflow_context_failure_converter.to_failure for activation_err, including ordinary non-FailureError workflow-task exceptions. _workflow.py:734 passes the client's failure_converter_class into each workflow instance, and its outer activation-error path also calls the configured converter. Activity worker uses DataConverter.encode_failure, whose implementation delegates to the same configured converter. Therefore the claim that an ordinary WFT failure necessarily bypasses this custom converter is false for the pinned SDK1.34.0 source."
+    },
+    {
+      "id": "FAILURE-CONVERTER-PRIVACY",
+      "result": "no_blocking_source_issue",
+      "evidence": "PrivateFailureConverter.to_failure clears the supplied protobuf and writes only fixed message/source/application-type/nonretryablefalse fields. It does not first invoke the default encoder, stringify exception, follow cause, serialize details/args or retain stack trace. DefaultFailureConverter decoding remains inherited, which can decode SDK/server failure structure for ActivityError handling. Literal activity result allowlists keep SQL catalog/workspace/authority material out of history; projector results are reduced to applied/rejected fixed code/quarantined/wait. Real unexpected activity and WFT histories must still be inspected in TC evidence."
+    },
+    {
+      "id": "TEMPORAL-REAL-API-AND-EXACT-START",
+      "result": "no_blocking_source_issue",
+      "evidence": "Installed Client.connect supports data_converter/identity/namespace and defaults lazyfalse. Client.start_workflow supports the string workflow type, one argument, id/task_queue, explicit REJECT_DUPLICATE, FAIL and retry_policyNone used here. Describe exposes id/namespace/run/type/queue; history iteration and signal support rpc_timeout. Started proto includes workflow_id, original_execution_run_id, input/type/task_queue fields. Transport bounds connect and each RPC sequence to10s, pins a discovered run before fetching Started event1, compares the complete decoded start envelope and identity, treats AlreadyStarted as requiring independent observation, and signals only an admitted run with command ID/hash. No workflow retry/reset/continue-as-new or alternate ID appears in these sources."
+    },
+    {
+      "id": "WORKFLOW-SAME-PROPOSAL-RECEIPT-REPLAY",
+      "result": "no_blocking_source_issue",
+      "evidence": "Workflow first waits for admitted ready data, then constructs one deterministic sequence1/revision0 proposal. Its projection loop retries that same proposal after activity waits/failures and never re-enters read_activation/current workspace checks between uncertain projection attempts. ActivationActivities.project_activation deliberately calls only project_activation with that digest. Accepted003 project_activation authenticates static run scope and replays the exact immutable receipt before mutable membership/workspace checks. Thus the source path permits DB-commit/activity-response-loss replay after later human/workspace changes without creating a new decision. Applied waits durably, rejected returns only a fixed code, and quarantine waits; H2 does not enter P01 or consume human notifications."
+    }
+  ],
+  "installed_dependency_evidence": {
+    "base": "workflow-artifacts/toolchains/B03/H1/2026-10-18T19-43-43-523587Z/venv/lib/python3.12/site-packages/",
+    "version_evidence": "temporalio-1.34.0.dist-info/METADATA Name=temporalio Version=1.34.0, also locked in requirements-temporal.lock",
+    "sha256": {
+      "temporalio/worker/_workflow_instance.py": "8a8129d0ac6488a7d06f0acc7fbb380b5286eb009553452856a69e977e55e295",
+      "temporalio/worker/_worker.py": "8322aaed350a9c8d25f264455d32ae66aa83cb73934be8cd63d6e93368efde04",
+      "temporalio/worker/_workflow.py": "caf9fec76b07d327af7f0961ed3439d6c35328b26631320a48d88c1a9e890c93",
+      "temporalio/worker/_activity.py": "1f13fefa69491b22739f376f9072f018e9defe0625ab762f5bb9a5c05ce10b54",
+      "temporalio/converter/_data_converter.py": "6603bcbee9f419e0ab58e4fa327733249510967b11915ead0ffcad95db25e7dd",
+      "temporalio/client/_client.py": "9ecc45b482d116c0bdc4b52df34a5d7cd187491e4c0b17bed1370e2d7e6a0efd",
+      "temporalio/client/_workflow.py": "d3a8b3ecff5e805e702d2e645c7355c11fd416afcbb2f4131e2f6c71fb9982a2",
+      "temporalio/api/history/v1/message_pb2.pyi": "a56f77261d45e0d04f5ac994fd6d6668e565159a70239438bc2b5443597b3753",
+      "psycopg/_conninfo_utils.py": "008bda02cdd0a7c7b029fcfced01ba9fdbbd67da0e862f1089306c799b013575",
+      "psycopg/_conninfo_attempts.py": "9e081d1fe49a639f4cf0f2d54bce359ac6b7524acc2ed9b170cc0dd004fec7d3"
+    }
+  },
+  "risks_and_edge_cases": [
+    "The startup fence is the production main/load_config path. Directly invoking internal run with fabricated objects is not an alternate approved launcher. Trusted local source/environment immutability and private launcher configuration remain assumptions.",
+    "The revised DSN path rejects the discovered host-list bypass in source. Actual SCRAM, private HBA and no trust fallthrough remain separate environment/authentication evidence; a username/password string alone does not prove SCRAM.",
+    "The15s self-timer is not observed process cleanup. TC must prove graceful and forced exits, including a fatal poller with an uncancellable thread, record exit/PID absence and preserve any uncertain transaction state.",
+    "Failure-converter source coverage is established for the installed Python SDK paths, but an actual WFT/activity failure and raw private history audit remain necessary. Server-generated failures, workflow input signals and trusted code intentionally emitting data are outside a converter-only guarantee.",
+    "Exact SDK signatures and protobuf fields do not prove the qualified server populates every expected field in real Started history or that the sandbox loads all project modules. Only actual process/history tests establish compatibility.",
+    "The workflow retries one proposal after an uncertain commit; full crash/restart and revocation-after-commit receipt replay evidence remains required. No test pass or implementation certification is inferred from this reasoning.",
+    "Build/environment/endpoint digests are owner assertions and consistency checks, not cryptographic attestation of an arbitrary remote worker or hostile same-UID host. Production authentication/topology remain outside local H2."
+  ],
+  "recommendation": "Use these final reviewed source hashes in the next frozen ledger/runner candidate. Include regression cases for both resolved defects and actual SDK privacy/replay/start/shutdown paths. No further product change is requested by this source review.",
+  "remaining_uncertainty": [
+    "No product module or SDK was imported or executed, and no test, service, SQL, database connection or network action was performed.",
+    "This source review does not audit the entire repository, independently certify TC test coverage or authorize the SQL/runtime subgate.",
+    "Any later source changes need refreshed exact fingerprints and review of their material effects before the separately approved execution gate."
+  ],
+  "decision": {
+    "remaining_source_blockers": 0,
+    "execution_authorized": false,
+    "runtime_certified": false,
+    "acceptance": "none; fullH2 and original AT remain unexecuted"
+  },
+  "work_performed": "Read local product and installed primary dependency sources; calculated SHA256 references; promptly reported two blocking defects to root, then read and hashed root fixes. Wrote this review JSON only. No product/test edits, product import/execution, SQL, tests, services or network."
+}

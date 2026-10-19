@@ -69,7 +69,7 @@ def test_start_input_rejects_noncanonical_uuid_and_sha256():
         "project_id": "project-a",
         "binding_sha256": BINDING_SHA256,
     }
-    uppercase_uuid = {**valid, "job_id": JOB_ID.upper()}
+    uppercase_uuid = {**valid, "job_id": "AAAAAAAA-AAAA-4AAA-8AAA-AAAAAAAAAAAA"}
     uppercase_sha = {**valid, "binding_sha256": "A" * 64}
 
     for candidate in (uppercase_uuid, uppercase_sha):

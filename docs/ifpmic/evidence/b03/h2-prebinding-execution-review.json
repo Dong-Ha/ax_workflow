@@ -1,0 +1,94 @@
+{
+  "kind": "ifpmic.b03.h2.prebinding-execution-review.v1",
+  "verdict": "approve_execution",
+  "contract_path": "docs/ifpmic/evidence/b03/h2-prebinding-execution-contract.json",
+  "contract_sha256": "0a1933427bbfc8e47e71548c55de35d5c418a349a8d807e8f99fd6e0032f3065",
+  "reviewer": {
+    "agent_id": "/root/h2_prebinding_gate_audit",
+    "actual_role": "worker_luna",
+    "independence": "Independent exact-SHA review. Root owns product/runner and TC owns test/ledger assertions. This reviewer changed no product, runner, test, or ledger bytes; only execution-review artifacts were written."
+  },
+  "scope": "Bounded 401-case append004 PostgreSQL SQL/local-validation subgate plan, including the G5 timeout diagnosis, private case-progress plugin/parser, phase budgets, and corrected h2_schema_python wording. This is not full H2 runtime acceptance.",
+  "reviewed_inputs": {
+    "execution_contract": {
+      "path": "docs/ifpmic/evidence/b03/h2-prebinding-execution-contract.json",
+      "sha256": "0a1933427bbfc8e47e71548c55de35d5c418a349a8d807e8f99fd6e0032f3065"
+    },
+    "tc_ledger": {
+      "path": "docs/ifpmic/evidence/b03/h2-prebinding-tc-ledger.json",
+      "sha256": "8430215621dc61672ce158c9af0f2fc9124542539e77b988b138727d0856c442",
+      "source_pin_count": 32,
+      "source_pin_mismatches": 0
+    },
+    "runner_candidate": {
+      "path": "scripts/verify_ifpmic_b03_h2_prebinding.py",
+      "sha256": "5dcc958919db9990c79d230e6a72fb5b798116f5b41c6e3a91c2342ac5ea8990",
+      "currently_pins_contract_sha256": "2f2b3ba8d12d88243974a84ed814918290a83c7133749819ca276e4ec080b5c5"
+    },
+    "progress_plugin": {
+      "path": "tests/ifpmic_api/gate_progress.py",
+      "sha256": "2f902b38ff0436f3f85d3a9a1341f8b530c8b0d3f5211dfdd56dba37ae8a07e4"
+    },
+    "preserved_v2_timeout_record": {
+      "path": "docs/ifpmic/evidence/b03/h2-prebinding-runtime-attempts.json",
+      "sha256": "0c0d6eb3b17254cd54b3ebd39ba0375f9c2c9d0d8cfb4b2675a29ba3323412d9",
+      "result": "fail_timeout",
+      "timed_out_phase": "g5_python",
+      "completed_cases_before_timeout": 71,
+      "expected_phase_cases": 93,
+      "legacy_phase_run": false
+    },
+    "rejected_predecessor_review": {
+      "path": "docs/ifpmic/evidence/b03/attempts/h2-prebinding-v3-phase-wording/h2-prebinding-execution-review.json",
+      "sha256": "3e8bb47921ab3266a85a121095ae97203416df371e8299dc1a8514f3ade0cc7f",
+      "contract_sha256": "d2599527d01932952a45819ab8d8fb9b6432a8fb93f69678d2c6e4799b4b051e",
+      "verdict": "reject"
+    },
+    "inventory_label_predecessor": {
+      "path": "docs/ifpmic/evidence/b03/attempts/h2-prebinding-v3-before-inventory-label-fix/h2-prebinding-execution-contract.json",
+      "sha256": "2f2b3ba8d12d88243974a84ed814918290a83c7133749819ca276e4ec080b5c5",
+      "delta": "Rename inventory.first_phase_cases to inventory.h2_phase_cases; value remains50 and no other contract field changes."
+    }
+  },
+  "checks": [
+    {
+      "id": "V3-EXACT-SHA-AND-LEDGER",
+      "result": "satisfied",
+      "evidence": "The corrected contract matches its exact SHA and the ledger SHA declared by the contract. All32 ledger source pins match current bytes. The 401 IDs are unique and each phase case array matches the preserved v2 ledger; counts remain H2 50, G4 91, G5 93, legacy 167."
+    },
+    {
+      "id": "V3-WORDING-CORRECTION",
+      "result": "satisfied",
+      "evidence": "The rejected predecessor is preserved with the exact ambiguity finding. The new contract names h2_schema_python for local units, watchdog evidence, and its 50-case 25+5 scope. The phase order and budget are stated separately and remain G5→H2→G4→legacy."
+    },
+    {
+      "id": "V3-PROGRESS-ORACLE",
+      "result": "sufficient_for_completion_observation",
+      "evidence": "The pinned private plugin records only node ID, event kind, monotonic time, pytest report phase/outcome, and report duration to a 0600 single-link owned regular file opened with O_NOFOLLOW/O_APPEND. It emits no raw exception, stdout, or test payload and performs no fsync. The runner parser checks globally nondecreasing finite event times, exact unique ID inventory, one start and finish, setup/call/teardown reports in order, passed outcomes, finite report durations from0 through30 seconds, and total start-to-finish no more than30 seconds; JUnit case duration is independently capped at30 seconds. Missing/partial progress cannot pass: every case must complete all reports and finish."
+    },
+    {
+      "id": "V3-TIMEOUT-AND-BUDGET-RATIONALE",
+      "result": "bounded_and_evidence_based",
+      "evidence": "The v2 actual run remains fail_timeout: 50 H2 and91 G4 passed, then G5 reached the300-second cap after71 of93 progress dots with no JUnit result; legacy167 did not run. Retained setup/config timestamps show multiple cases continuing through the phase cutoff, while the exact slow operation and host-pressure cause remain unproven. G5 receives a600-second fixed phase cap for the remaining measured cumulative suite; H2/G4/legacy stay300 seconds each and aggregate phase cap is1500 seconds. Every completed case still must satisfy JUnit duration and observed start-to-finish <=30 seconds. A hung case can occupy the phase cap before failure; the plan discloses this finite bound and private -vv/progress evidence identifies the active case."
+    },
+    {
+      "id": "V3-PARTIAL-ACCEPTANCE-BOUNDARY",
+      "result": "satisfied",
+      "evidence": "The contract remains limited to real PostgreSQL SQL/migration/API checks and local protocol/workspace/configuration units. It explicitly leaves Temporal runtime/history/restart, H1 rerun, full H2, original AT, and broader AX/UI acceptance pending."
+    },
+    {
+      "id": "V3-INVENTORY-LABEL-DELTA",
+      "result": "satisfied",
+      "evidence": "Compared the exact corrected contract with its preserved predecessor. The sole semantic change renames inventory.first_phase_cases to inventory.h2_phase_cases; its value remains50. All other contract fields, phase order, budgets, source/acceptance scope, and ledger bytes are unchanged."
+    }
+  ],
+  "findings": [],
+  "execution_authority": "This review approves only the exact contract SHA shown above. Execution remains unauthorized until the matching TC execution review approves this SHA, the final runner pins this SHA, and a separate independent frozen pre-gate review approves the exact runner and source bytes. The runner currently pins its predecessor contract; no execution or pass is authorized or claimed here.",
+  "remaining_limits": [
+    "The prior v2 300-second G5 timeout remains failed evidence; it is not converted into a pass.",
+    "The v3 401-case run has not occurred.",
+    "The 600-second G5 cap is a phase bound; a hung case may use the remaining phase time before termination, but every completed case must pass the 30-second elapsed oracle.",
+    "Temporal runtime integration, H1 rerun, full H2, original AT, and full AX acceptance remain incomplete.",
+    "This inventory label correction changes no test IDs or budgets; the previous contract and approvals remain archived at their prior SHA."
+  ]
+}

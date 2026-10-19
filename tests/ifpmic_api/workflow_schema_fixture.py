@@ -17,16 +17,22 @@ import pytest
 from services.ifpmic_api.migrate import MigrationError, apply_migrations
 
 
-CURRENT_VERSIONS = ["001_initial", "002_auth_retention", "003_workflow_execution"]
+CURRENT_VERSIONS = ["001_initial", "002_auth_retention", "003_workflow_execution", "004_prebinding_incident"]
 _H2_DEADLINES: dict[str, dict[str, object]] = {}
 
 
 def _is_h2_test(item) -> bool:
     item_path = getattr(item, "path", None)
-    return (
-        item_path is not None
-        and Path(item_path).resolve() == Path(__file__).with_name("test_workflow_schema.py").resolve()
-    )
+    if item_path is None:
+        return False
+    watched_paths = {
+        Path(__file__).with_name("test_workflow_schema.py").resolve(),
+        Path(__file__).with_name("test_prebinding_incident.py").resolve(),
+        Path(__file__).with_name("test_execution_protocol.py").resolve(),
+        Path(__file__).with_name("test_execution_workspace.py").resolve(),
+        Path(__file__).with_name("test_execution_manifest.py").resolve(),
+    }
+    return Path(item_path).resolve() in watched_paths
 
 
 def _append_h2_deadline(record: dict[str, object]) -> None:

@@ -1,0 +1,106 @@
+{
+  "kind": "ifpmic.b03.h2.prebinding-attempts.v1",
+  "goal_status": "active",
+  "attempts": [
+    {
+      "id": "prebinding-001",
+      "result": "fail",
+      "private_gate": "workflow-artifacts/verification/B03/H2/prebinding/gates/2026-10-19T11-38-47-059617Z/gate.json",
+      "private_gate_sha256": "67136689078abeefd37a8c703988e7685491c6de268247785b3858c5ea1dfc52",
+      "candidate_fingerprint": "feb8718a29b61852f1c469a5a1c024daaa055ac9c39d43993fba9c8fbebab12e",
+      "candidate_source_zip_sha256": "7aa6fd3bb397e74ebaefffcc90d06475e2a7c437ae0599aeaec1488d4d7a7f31",
+      "execution_contract_sha256": "5ef240f018aa91b5b4d06563b6574fbf08583d7a09e7d8b4333640fb2f60c143",
+      "completed_phases": [
+        {
+          "name": "h2_schema_python",
+          "counts": {
+            "tests": 50,
+            "failed": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "seconds": 49.058939817000464,
+          "exit_code": 0
+        },
+        {
+          "name": "g4_python",
+          "counts": {
+            "tests": 91,
+            "failed": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "seconds": 200.9144170999998,
+          "exit_code": 0
+        },
+        {
+          "name": "g5_python",
+          "counts": {
+            "tests": 93,
+            "failed": 1,
+            "errors": 0,
+            "skipped": 0
+          },
+          "seconds": 250.03702452200014,
+          "exit_code": 1
+        }
+      ],
+      "failed_case": "tests.ifpmic_api.test_workspace.test_sigkill_worker_crash_recovers_only_after_lease_and_preserves_stage[workspace_before_marker_publish-True-False-False]",
+      "actual": "Recovery returned stale rather than ready; case duration13.395s. New001–004 SQL/local50 and G4 91 passed, G5 had92 pass/1fail. Legacy167 not run; no full subgate pass.",
+      "diagnosis": "The fixture reused the killed worker1s lease for its fresh recovery claim. Product completion requires matching state/generation/token and claim_expires_at>fresh DB clock; stale is the correct safety fence if durable provisioning outlasts that fresh lease. No competing live worker exists after recorded SIGKILL. Actual completion time/DB row was not captured before fixture database teardown, so exact lease-expiry timing is inferred from the only stale path and retained filesystem, not claimed as a direct SQL observation.",
+      "retained_filesystem": "Private failed fixture retains its orphan staging marker and complete job marker plus source/tc/artifacts/build directories, consistent with completed recovery provisioning before a stale finish.",
+      "cleanup": "All3 actual phase PostgreSQL lifecycle records say stopped; all3 saved server PIDs absent after termination. Gate failure cleanup reports stopped, zero signals, pid_alive=false.",
+      "recovery_plan": "Preserve failure and reviewed v1 controls. Keep killed worker lease1s and SIGKILL/staging/identity assertions, verify original expiry with fresh DB clock without timestamp rewrite, recover with a separately sized10s lease and retain exact ready/generation oracle. Refresh ledger/frozen reviews and rerun all401 cases with unchanged deadlines. Dedicated live/stale lease tests remain.",
+      "controls_snapshot": "docs/ifpmic/evidence/b03/attempts/h2-prebinding-v1-before-recovery-lease-fix",
+      "remaining_risk": "Minimum1s leases can expire during slow storage; product must retain stale fencing. Full Temporal and original AT acceptance remain pending."
+    },
+    {
+      "id": "prebinding-002",
+      "result": "fail_timeout",
+      "private_gate": "workflow-artifacts/verification/B03/H2/prebinding/gates/2026-10-19T11-53-20-818261Z/gate.json",
+      "private_gate_sha256": "cfdf3a2ea1fa5ad848640581633cf8293d4cddd189cfba1dd895a64b57221686",
+      "candidate_fingerprint": "d5a7c9888f7928f8c544c6387671fcf34639f410c07b71f03488aca57dd31f8d",
+      "candidate_source_zip_sha256": "b7c0eaed349a83e1813499162604a2c5bd5e794f392fd59e69910e4c9d6ae186",
+      "execution_contract_sha256": "88fb8be3539c8974959bd1f5a5f19046050b997f914cfc05c57d5989961849a4",
+      "completed_phases": [
+        {
+          "name": "h2_schema_python",
+          "counts": {
+            "tests": 50,
+            "failed": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "seconds": 51.02990436999971,
+          "exit_code": 0
+        },
+        {
+          "name": "g4_python",
+          "counts": {
+            "tests": 91,
+            "failed": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          "seconds": 213.317496226,
+          "exit_code": 0
+        },
+        {
+          "name": "g5_python",
+          "counts": null,
+          "seconds": null,
+          "exit_code": null
+        }
+      ],
+      "actual": "H250 and G4 91 passed; G5 exceeded its300s phase cap after71 completed progress dots. No G5 JUnit, no full G5 result or legacy167 run. Previous crash-fixture repair is not accepted from this incomplete run.",
+      "diagnosis": "Retained private fixture timestamps show cumulative progress: first crash-worker config at phase+212.05s, subsequent configs through+293.78s with5–12s gaps, next case started setup before timeout. V1 first crash config was+143.89s, before the changed recovery branch, so increased elapsed time is not isolated to the recovery repair. This supports cumulative runtime exceeding the phase cap, not a demonstrated single hung case. Exact setup blocking operation and host-pressure cause remain unproven.",
+      "cleanup": {
+        "result": "stopped",
+        "signalled_count": 13,
+        "pid_alive": false
+      },
+      "recovery_plan": "Add exact per-case node start/report/finish timing journal and verbose private output. Review evidence-justified G5-only phase cap before execution while preserving every401 ID and30s per-case requirement; all other phase caps remain300s. Preserve timeout as failed and rerun the full subgate.",
+      "controls_snapshot": "docs/ifpmic/evidence/b03/attempts/h2-prebinding-v2-before-phase-diagnostics"
+    }
+  ]
+}

@@ -1,0 +1,101 @@
+{
+  "kind": "ifpmic.b03.h2.prebinding-execution-review.v1",
+  "verdict": "approve_execution",
+  "contract_sha256": "5ef240f018aa91b5b4d06563b6574fbf08583d7a09e7d8b4333640fb2f60c143",
+  "contract_path": "docs/ifpmic/evidence/b03/h2-prebinding-execution-contract.json",
+  "reviewer": {
+    "agent_id": "/root/h2_prebinding_advice",
+    "actual_role": "senior_sol",
+    "independence": "Reviewer authored prior critical advice/source reviews and reported test-oracle defects; root owns product/runner and separate TC owns all test/ledger repairs. Reviewer edited no product, runner or test source."
+  },
+  "scope": "Independent exact-SHA execution-plan review of the bounded append004 SQL and local validation subgate only. Actual execution additionally requires same-SHA TC approval and independent frozen pre-gate approval of final runner/source bytes.",
+  "reviewed_ledger": {
+    "path": "docs/ifpmic/evidence/b03/h2-prebinding-tc-ledger.json",
+    "sha256": "5279e6d1c0d2857dd53460107d7dc591ff16379cac67522068e8e9a06a8d8218",
+    "source_pins_verified": 30,
+    "source_pin_mismatches": 0,
+    "exact_inventory": {
+      "h2_schema_python": 50,
+      "g4_python": 91,
+      "g5_python": 93,
+      "legacy_python": 167,
+      "total": 401,
+      "unique": 401,
+      "previously_qualified_ids_retained": 361,
+      "additional_since_prior_gate": 40
+    }
+  },
+  "additional_reviewed_sha256": {
+    "scripts/verify_ifpmic_b03_h2_prebinding.py": "6bedfb8bd3d97d7db93ee94b24e4644c468201ecf5edb41475d1497941bf3fe5",
+    "tests/ifpmic_api/test_prebinding_incident.py": "789ea964c02a52cf9f311225a8d05b2fff0abeb195dedd8da63fccc1ab9f823e",
+    "tests/ifpmic_api/test_execution_protocol.py": "e7e80577f40275529957cae9ef352a006c052ab5a27aa4310a65ca137b86535a",
+    "tests/ifpmic_api/test_workflow_schema.py": "92d283ef921d5818649114f6b729c498fe6806d4ada255aa4ffb10063e820cd5",
+    "tests/ifpmic_api/workflow_schema_fixture.py": "5a3450bb4b436ea215ac6ab07b6d3d20d33ff87bdc56e83c5e5c163e7ffaedc4",
+    "tests/ifpmic_api/test_execution_manifest.py": "7124433d0642afaa7b44a1a7f18b2548aa3adf2497e367843463ddeea8e84c80",
+    "tests/ifpmic_api/test_execution_workspace.py": "666d8d4f233022b233c928ec6048a1ea7a91c6449331afc2b1d51e0551623bb0",
+    "docs/ifpmic/evidence/b03/h2-prebinding-source-review.json": "14784e9b7c9c42e85ab33a6da94bc87c5dd49243e69927025ff6bc35bb498176",
+    "docs/ifpmic/evidence/b03/h2-runtime-source-review.json": "8da116d7b133c7956c46230aec3fe1894c368495c9cf6ced2fed5836cf84aaa3"
+  },
+  "checks": [
+    {
+      "id": "PLAN-EXACT-SHA-AND-INVENTORY",
+      "result": "satisfied",
+      "evidence": "Contract and ledger SHA values match the requested final bytes, and all30 ledger source pins match current files. Parsed test AST without importing modules: the five first-phase files contain exactly the50 literal test IDs in the ledger. All401 IDs are unique. The three original phases match all351 accepted G6 archive IDs exactly, and all ten prior SQL IDs are present in the first phase."
+    },
+    {
+      "id": "PLAN-PARTIAL-BOUNDARY",
+      "result": "satisfied",
+      "evidence": "Plan limits claims to real PostgreSQL migration/SQL/auth/API regression plus protocol/READY/config local units. Configuration tests explicitly stub actual source/environment computation; they do not prove worker attestation, registry startup, polling or real Temporal history. H1five, actual dispatcher/worker/RPC crash/restart, live disable serialization, foreign-deployment reservation race, fullH2 and original AT remain pending. Foreign-binding denial and post-disable denial are separately tested without conflating those omitted concurrency cases."
+    },
+    {
+      "id": "PLAN-004-ORACLES",
+      "result": "sufficient_for_partial_subgate",
+      "evidence": "Independent SQL cases assert exact unbound attempt/outbox quarantine with unchanged DRAFT0/accepted/workspace/authority/sibling and no binding/scope/receipt; non-dispatcher/disabled principal/deployment, wrong route/terminal state, invalid code/attempt, stale/reclaimed/expired lease and nonREADY cases fail closed. Real concurrent reserve holds the job lock while incident waits and then verifies bound quarantine. A separate owner-seeded foreign binding is denied without mutation. Full-chain fresh,003 upgrade/rerun, function ACL and rollback are covered."
+    },
+    {
+      "id": "PLAN-LOCAL-UNIT-ORACLES",
+      "result": "sufficient_for_stated_local_scope",
+      "evidence": "Protocol cases use literal minimal start/proposal bytes and digest oracles, malformed fields/types/UUID/hash and finite-float rejection. READY cases compare inode/mode/content snapshots around valid and invalid marker/child/token/symlink/mode/nonempty layouts. Manifest units test private files, duplicate keys, pinned-manifest mismatch, extra config/non-loopback identity, cache/environment conditions and the repaired single-existing-socket DSN host-list denial. These are bounded local units, not an integrated dispatcher claim."
+    },
+    {
+      "id": "PLAN-PRELIMINARY-FINDINGS-RESOLVED",
+      "result": "satisfied",
+      "evidence": "Ledger method now matches H2->G4->G5->legacy runner/contract order. Current-schema literals now include004 while historical001/002 controls remain. The noncanonical UUID test uses actual uppercase A hex digits. Rollback injection now appends SELECT1/0 after004, producing an execution-time failure after preceding statements rather than a syntax error that may reject before replacement. Prebinding fixture explicitly depends on workflow_scram_hba before g4_harness; new foreign-binding denial case is included in the pinned50-case first phase."
+    },
+    {
+      "id": "PLAN-DEADLINES-AND-OWNED-CLEANUP",
+      "result": "satisfied_for_plan",
+      "evidence": "Four sequential phases retain300s each and1200s maximum phase sum. All50 first-phase cases use exact-path25s setup/body plus5s teardown watchdogs, whose monotonic records and timeout flags the runner checks against exact IDs. All351 prior cases must have finite JUnit duration<=30s. Runner retains accepted owned-command timeout, pidfd/start-tick descendant cleanup, PostgreSQL stopped/PID-absent checks and original PG binary pins. A timeout is failure, never termination proof or a basis for enlarging the budget during execution."
+    },
+    {
+      "id": "PLAN-RUNNER-PRIVACY-AND-FREEZE",
+      "result": "satisfied_pending_final_freeze",
+      "evidence": "Draft runner differs from accepted bounded schema runner only in approved evidence/scope/review paths and its unfilled execution SHA. It preserves exact approval/source/ledger checks, original351 comparison, source capture/freeze, original32/qualified36 environment before-after hashes, minimal test environment and private artifacts. It runs no Temporal launcher/server. Final runner must replace EXECUTION_SHA=None with this contract SHA and then receive a distinct frozen pre-gate review; the draft hash above is not final-runner approval."
+    }
+  ],
+  "blocking_findings": [],
+  "risks_and_edge_cases": [
+    "Approval of the plan is not a401-case pass claim. SQL compilation, real SCRAM behavior, migration rollback, lock races, timing and owned-service cleanup remain unobserved until the separately authorized gate runs.",
+    "The local unit scope intentionally does not exercise runtime self-exit watchdog, installed SDK custom failure conversion, actual manifests/registry/polling or same-proposal Temporal crash replay; prior source review is not execution evidence for those paths.",
+    "The partial gate covers same-deployment reservation race and static foreign-binding denial. Concurrent foreign reservation and in-flight principal-disable serialization remain required full-runtime evidence and cannot be marked passed from this subgate.",
+    "Prior G4 phase duration was near its retained300s limit. The approved behavior on timeout is preserve evidence, fail, diagnose and refresh reviewed candidate, not extend the deadline or omit tests.",
+    "Final source/runner/review bytes must be frozen before execution. Further fixture repairs may keep the same protocol contract only when its scope/oracles/budgets are unchanged, but they still require refreshed ledger/source fingerprints and independent pre-gate review."
+  ],
+  "decision": {
+    "execution_plan": "approve_execution for the exact contract SHA above",
+    "required_before_actual_execution": [
+      "Separate TC approve_execution for this same contract SHA.",
+      "Root pins the approved SHA in final runner.",
+      "Independent h2-prebinding-pre-gate-review.json approves_frozen_prebinding_gate and pins final runner, source, ledger and both review artifacts.",
+      "Run only the reviewed runner and preserve actual raw evidence from every attempt."
+    ],
+    "direct_pytest_or_service_execution_authorized_now": false,
+    "acceptance": "none; only the bounded partial subgate may later be assessed from actual evidence"
+  },
+  "remaining_uncertainty": [
+    "Final runner and frozen pre-gate artifact are not yet available for this review.",
+    "No pytest/product import, SQL, service, database connection or network operation was performed.",
+    "No actual H1/fullH2/AT/runtime result is established."
+  ],
+  "method_limits": "Read exact plan, ledger, relevant test/fixture and runner deltas; used standard-library JSON/AST/archive/hash processing only to verify pins and literal inventories without importing product/tests. Wrote this execution-plan review JSON only. No product/test/runner edits or execution."
+}

@@ -1,0 +1,96 @@
+{
+  "kind": "ifpmic.b03.h2.prebinding-execution-contract.v1",
+  "status": "candidate_pending_exact_independent_and_tc_execution_review",
+  "purpose": "Verify append004 authority, locking and atomic target-only quarantine, pure local protocol/workspace/config boundaries, and all361 previously qualified SQL/API regressions. This is a partial subgate, not full H2 runtime acceptance.",
+  "requirements": [
+    "B03 H2",
+    "REQ-02",
+    "REQ-05 prerequisite",
+    "REQ-13",
+    "REQ-14 preservation",
+    "AT-16 prerequisite only"
+  ],
+  "authoring_basis": {
+    "implementation_contract_sha256": "f63173ac17ebebd34a15d5966d96b79dc1667a713c00b1b92868b137ba93ded3",
+    "prebinding_amendment_sha256": "79360620e0d342e2fc25258bffd65ef216fe5b89dc45fd99213c81884ebeb1ff"
+  },
+  "tc_ledger": {
+    "path": "docs/ifpmic/evidence/b03/h2-prebinding-tc-ledger.json",
+    "sha256": "5279e6d1c0d2857dd53460107d7dc591ff16379cac67522068e8e9a06a8d8218"
+  },
+  "target": [
+    "Real PostgreSQL migration001–004 fresh/upgrade/rerun/failure rollback and exact ACL",
+    "Prebinding normal, authority failures, current READY identity, stale lease/reclaim/expiry after lock wait and concurrent reservation branch",
+    "Read-only workspace validator, canonical protocol, private configuration and local-only DSN checks",
+    "All prior SQL/API test IDs with unchanged historical001/002/003 hashes"
+  ],
+  "methods": "Four sequential isolated real-PostgreSQL pytest phases using original32 environment. First phase also executes pure local unit tests; configuration tests use explicit synthetic filesystem/sys seams and do not prove actual worker environment attestation or polling. All new exact case IDs come from TC ledger; actual JUnit and first-phase watchdog records must match. Existing351 IDs independently match accepted G6 archive; previous ten SQL IDs remain present.",
+  "responsibility": {
+    "main": "Product, migration, manifest/launcher, bounded runner and evidence integration",
+    "TC": "Independent literal tests, fixtures, exact case/deadline ledger and plan review",
+    "independent_reviewer": "Critical source review, exact execution-plan and frozen pre-gate review, then private/public evidence audit"
+  },
+  "required_review_names": [
+    "h2-prebinding-execution-review.json",
+    "h2-prebinding-tc-execution-review.json"
+  ],
+  "execution_authority": "Both required reviews must approve_execution for this exact contract SHA. Final runner must pin that SHA. Independent h2-prebinding-pre-gate-review.json must approve_frozen_prebinding_gate, pin final runner and frozen product/test/ledger/review bytes before any pytest/import/SQL/service execution. Authoring/source review is not execution approval.",
+  "runner": {
+    "path": "scripts/verify_ifpmic_b03_h2_prebinding.py",
+    "command": [
+      ".ifpmic-venv/bin/python",
+      "scripts/verify_ifpmic_b03_h2_prebinding.py"
+    ],
+    "source_pin": "Independent frozen pre-gate review pins final bytes; no self-referential hash."
+  },
+  "limits": {
+    "phase_order": [
+      "h2_schema_python",
+      "g4_python",
+      "g5_python",
+      "legacy_python"
+    ],
+    "per_phase_seconds": 300,
+    "maximum_phase_sum_seconds": 1200,
+    "per_new_case": "Setup+body25s, teardown5s, total<=30s; exact monotonic watchdog rows and no timeout flags required for every first-phase case.",
+    "prior_cases": "Existing351 each actual JUnit duration<=30s, existing bounded fixture subprocess limits retained.",
+    "cleanup": "On command timeout kill/reap only saved runner-owned process and descendants; cleanup helpers use saved PID/start-ticks; all PG clusters stopped and owned children absent. Observation timeout alone is not termination.",
+    "justification": "Prior original351 phases took177.08/260.57/154.99s and prior SQL10 took29.98s. Additional SQL/unit cases are isolated in the first300s phase; do not extend existing phase deadlines or mask timeout failures."
+  },
+  "environment": "No installs/downloads/implicit servers. Original32 Python plus exact pinned PostgreSQL18.1 private Unix sockets and fixture Node. Full original32 and H1qualified36 files/symlinks hashed before/after excluding only pyc/cache. Minimal environment, explicit empty private libpq fallback files, private short real /tmp roots, no HOME override, no inherited credentials or pytest plugins. H2 service principals authenticate through existing explicit SCRAM HBA fixture.",
+  "pass_criteria": [
+    "Every exact ledger case passes, no failure/error/skip/xfail/timeout, matching ID inventory and timing rows.",
+    "Unbound incident changes only the exact incomplete attempt and outbox. Job DRAFT0, accepted command, workspace, authority, sibling, zero binding/scope/receipt remain unchanged.",
+    "Bound same-deployment branch retains003 behavior, concurrent reservation is re-read after job lock, stale/expired lease affects0.",
+    "Fresh/upgrade/rerun and injected004 failure preserve original001/002/003 bytes, prior function/ACL/ledger on rollback.",
+    "No source changes during gate; original17+2 inputs and both Python environments unchanged; pinned PG binary lifecycle stopped and no owned children."
+  ],
+  "expected_results": "Exact current accepted CREATE/READY claim may quarantine only its own transport delivery; no Temporal start, no job transition or filesystem repair. Unit tests prove only tested local validation rules. Actual Temporal source/env/build validation, crash history and runtime acceptances remain pending.",
+  "evidence": "Private0700/0600 candidate source ZIP, full source/env inventories, actual JUnit/watchdog rows, SQL assertions/diagnostics, auth observations and PG lifecycle. Public only derived normalized case IDs/counts/hashes and independent review. No raw histories/logs/credentials/source ZIP/PIDs or actual absolute private paths published.",
+  "failure_recovery": "Keep every failed candidate and actual evidence. Diagnose migration/auth/lock/lease/fixture or local validation boundary. Fix source without weakening oracles; refresh ledger/source fingerprint and independent frozen pre-gate review, then rerun all401 cases of this subgate. Revise this contract only when scope/oracle/budgets change; fixture spelling corrections do not require a new protocol contract.",
+  "omitted_stages": [
+    {
+      "item": "Actual H1 service and full H2 Temporal dispatcher/worker/process-crash integration",
+      "reason": "This subgate runs no Temporal server or launcher. Separate full runtime ledger/runner must rerun H1five and all affected cases.",
+      "remaining_risk": "SDK API, actual environment manifests/polling, accepted-start response loss, durable history, projection activity retry and independent restarts remain unproven. Concurrent foreign-deployment reservation and live principal-disable serialization remain full-runtime tests; SQL subgate separately checks foreign-binding denial and post-disable denial."
+    },
+    {
+      "item": "Node/UI/build regression in this subgate",
+      "reason": "No AX/Paperclip UI, server/plugin, Node dependencies or bridge sources changed. Full H6 still requires Node387/build/UI impact evidence.",
+      "remaining_risk": "No new rendered runtime visualization or frontend integration acceptance."
+    },
+    {
+      "item": "H3–H7, original32 AT, real Agents/devices/production/deployment/external submission",
+      "reason": "Outside append004/SQL/local validation scope; original design and role/approval boundaries remain.",
+      "remaining_risk": "Full IFPMIC workflow visualization/orchestration remains incomplete; no original AT acceptance."
+    }
+  ],
+  "goal_status": "active",
+  "acceptance_status": "not_executed",
+  "inventory": {
+    "total": 401,
+    "previously_qualified_ids_retained": 361,
+    "first_phase_cases": 50,
+    "additional_cases_since_prior_gate": 40
+  }
+}

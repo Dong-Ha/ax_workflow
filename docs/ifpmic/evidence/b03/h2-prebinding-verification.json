@@ -1,0 +1,167 @@
+{
+  "archive": {
+    "entries": {
+      "gate/h2-case-timings.json": {
+        "bytes": 14443,
+        "sha256": "e0fa8c0a7a3d7ffbc4386dea33908dbd0c2ccacd88ffe695822d248ffa16e6e1"
+      },
+      "gate/postgres-lifecycle.json": {
+        "bytes": 4773,
+        "sha256": "2cea060745f0a802fec6566b62a3048c299fd006d2da7cc38a42043f78c25157"
+      },
+      "gate/pytest.xml": {
+        "bytes": 70767,
+        "sha256": "6e5bd4b9224ebcd1f2c154a10f1fdc8bde88fafc371329596ff7bddd9c643d15"
+      },
+      "gate/source-manifest.json": {
+        "bytes": 135995,
+        "sha256": "130dac15de6ac19efe7aaa1d26dda75cddecced72c0df0e21da63f16c567d4b3"
+      },
+      "gate/summary.json": {
+        "bytes": 2853,
+        "sha256": "febd7dba4e9a480686a74b9dee87f8f2154009a4640fb72745ffd2e085e6dbe8"
+      }
+    },
+    "path": "docs/ifpmic/evidence/b03/h2-prebinding-gate.zip",
+    "sha256": "c7f7d7f775de6c2cdde0daf98a1c6960db4477f4555acd1a7c3360b90d45fb2a"
+  },
+  "candidate_fingerprint": "e51d6d4986e7ba2dd6a905ef4af770abc60c3fa2f3791052db6cf128a8197e18",
+  "decision": "pass_pending_independent_final_review",
+  "execution_contract": {
+    "path": "docs/ifpmic/evidence/b03/h2-prebinding-execution-contract.json",
+    "sha256": "0a1933427bbfc8e47e71548c55de35d5c418a349a8d807e8f99fd6e0032f3065"
+  },
+  "failed_attempts": "docs/ifpmic/evidence/b03/h2-prebinding-runtime-attempts.json",
+  "goal_status": "active",
+  "kind": "ifpmic.b03.h2.prebinding-verification.v1",
+  "limitations": [
+    {
+      "item": "Actual H1 service and full H2 Temporal dispatcher/worker/process-crash integration",
+      "reason": "This subgate runs no Temporal server or launcher. Separate full runtime ledger/runner must rerun H1five and all affected cases.",
+      "remaining_risk": "SDK API, actual environment manifests/polling, accepted-start response loss, durable history, projection activity retry and independent restarts remain unproven. Concurrent foreign-deployment reservation and live principal-disable serialization remain full-runtime tests; SQL subgate separately checks foreign-binding denial and post-disable denial."
+    },
+    {
+      "item": "Node/UI/build regression in this subgate",
+      "reason": "No AX/Paperclip UI, server/plugin, Node dependencies or bridge sources changed. Full H6 still requires Node387/build/UI impact evidence.",
+      "remaining_risk": "No new rendered runtime visualization or frontend integration acceptance."
+    },
+    {
+      "item": "H3\u2013H7, original32 AT, real Agents/devices/production/deployment/external submission",
+      "reason": "Outside append004/SQL/local validation scope; original design and role/approval boundaries remain.",
+      "remaining_risk": "Full IFPMIC workflow visualization/orchestration remains incomplete; no original AT acceptance."
+    }
+  ],
+  "phases": [
+    {
+      "case_progress": {
+        "cases": 93,
+        "maximum_elapsed_seconds": 4.378655380000055,
+        "sha256": "05600eea253df5727131bb839403e468b000bf90757cf6fd28615f75ee8c0e94"
+      },
+      "counts": {
+        "errors": 0,
+        "failed": 0,
+        "skipped": 0,
+        "tests": 93
+      },
+      "name": "g5_python",
+      "seconds": 216.50256310400073,
+      "timeout_seconds": 600
+    },
+    {
+      "case_progress": {
+        "cases": 50,
+        "maximum_elapsed_seconds": 4.334716916000616,
+        "sha256": "cc9a3352291209df8503a9dc43935625e335c9858aa5b28f383c87dfdc591557"
+      },
+      "counts": {
+        "errors": 0,
+        "failed": 0,
+        "skipped": 0,
+        "tests": 50
+      },
+      "name": "h2_schema_python",
+      "seconds": 63.22750568599986,
+      "timeout_seconds": 300
+    },
+    {
+      "case_progress": {
+        "cases": 91,
+        "maximum_elapsed_seconds": 7.910584168999776,
+        "sha256": "3d7fcead0f7329f352ba492c2b88b112c55981ede8febe8c8bd83b9777e387a2"
+      },
+      "counts": {
+        "errors": 0,
+        "failed": 0,
+        "skipped": 0,
+        "tests": 91
+      },
+      "name": "g4_python",
+      "seconds": 175.82573389000027,
+      "timeout_seconds": 300
+    },
+    {
+      "case_progress": {
+        "cases": 167,
+        "maximum_elapsed_seconds": 2.7123089550004806,
+        "sha256": "359e802f3bf706f8abedd0c4614d9068b4af1b611d4ce4f00b696a938cfe1092"
+      },
+      "counts": {
+        "errors": 0,
+        "failed": 0,
+        "skipped": 0,
+        "tests": 167
+      },
+      "name": "legacy_python",
+      "seconds": 143.10090651499922,
+      "timeout_seconds": 300
+    }
+  ],
+  "private_candidate_source_zip_sha256": "58c332256f8fddf789c5d953e6e3f519312de46045828164d0c5890b2ccf350b",
+  "private_gate": {
+    "path": "workflow-artifacts/verification/B03/H2/prebinding/gates/2026-10-19T12-16-37-929856Z/gate.json",
+    "sha256": "c7dd1c5bfe5885bb603a0fea080eeeca3ab2caff0f77fbfa3299cf1732b0eeea"
+  },
+  "publication": "Whitelisted normalized counts/IDs, timing deltas, relative source hashes, sanitized JUnit and process-free PG summaries only. Raw logs/histories/credentials/source ZIP/PIDs/absolute private paths remain private.",
+  "real_acceptance_status": "not_executed",
+  "requirements": [
+    "B03 H2",
+    "REQ-02",
+    "REQ-05 prerequisite",
+    "REQ-13",
+    "REQ-14 preservation",
+    "AT-16 prerequisite only"
+  ],
+  "scope": "Append004 PostgreSQL/authentication/API regression plus protocol/workspace/manifest unit tests only. No Temporal runtime, physical crash, full H2 or original AT acceptance.",
+  "source_environment_and_cleanup": {
+    "original32_and_qualified36_files_unchanged_during_gate": true,
+    "owned_children_absent": true,
+    "postgres_clusters_stopped": 4,
+    "protected": {
+      "original_imported_files": 17,
+      "original_uploads": 2,
+      "protected_inventory_count": 89,
+      "protected_source_count": 96,
+      "scope": "Byte/inventory comparison only. Full Node/build/browser G6 remains pending."
+    },
+    "source_changes_during_gate": []
+  },
+  "tc_ledger": {
+    "path": "docs/ifpmic/evidence/b03/h2-prebinding-tc-ledger.json",
+    "sha256": "8430215621dc61672ce158c9af0f2fc9124542539e77b988b138727d0856c442"
+  },
+  "tests": {
+    "errors": 0,
+    "failed": 0,
+    "passed": 401,
+    "skipped": 0
+  },
+  "timing": {
+    "body_limit_seconds": 25,
+    "cleanup_limit_seconds": 5,
+    "max_body_seconds": 3.3141860410005393,
+    "max_total_seconds": 4.314375341999948,
+    "new_case_records": 50,
+    "total_limit_seconds": 30
+  }
+}

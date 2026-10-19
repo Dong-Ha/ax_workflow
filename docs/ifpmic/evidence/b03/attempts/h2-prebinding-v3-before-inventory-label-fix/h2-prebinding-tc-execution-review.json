@@ -1,0 +1,68 @@
+{
+  "kind": "ifpmic.b03.h2.prebinding-tc-execution-review.v1",
+  "verdict": "approve_execution",
+  "contract_sha256": "2f2b3ba8d12d88243974a84ed814918290a83c7133749819ca276e4ec080b5c5",
+  "contract_path": "docs/ifpmic/evidence/b03/h2-prebinding-execution-contract.json",
+  "reviewer": "TC execution reviewer (/root/h2_tc_query_fix)",
+  "reviewer_role": "TC test and ledger owner; exact execution-plan reviewer",
+  "review_scope": "Read-only review of the exact corrected v3 execution contract, pinned TC ledger, progress plugin and current runner parsing. Confirmed H2 local-unit/watchdog scope names h2_schema_python explicitly despite G5-first order. Verified all source pins, inventories/order/budgets, node ID mapping, report fields/order and elapsed checks. No imports, tests, SQL, database connections, or services were run.",
+  "reviewed_inputs": {
+    "execution_contract": {
+      "path": "docs/ifpmic/evidence/b03/h2-prebinding-execution-contract.json",
+      "sha256": "2f2b3ba8d12d88243974a84ed814918290a83c7133749819ca276e4ec080b5c5"
+    },
+    "tc_ledger": {
+      "path": "docs/ifpmic/evidence/b03/h2-prebinding-tc-ledger.json",
+      "sha256": "8430215621dc61672ce158c9af0f2fc9124542539e77b988b138727d0856c442",
+      "source_pin_count": 32,
+      "source_pin_mismatches": 0
+    },
+    "progress_plugin": {
+      "path": "tests/ifpmic_api/gate_progress.py",
+      "sha256": "2f902b38ff0436f3f85d3a9a1341f8b530c8b0d3f5211dfdd56dba37ae8a07e4"
+    },
+    "runner_parser": {
+      "path": "scripts/verify_ifpmic_b03_h2_prebinding.py",
+      "sha256": "b2546b5783bc45c1293d90d5c2faf909a9a7a03f5255eda358ced3c31902236b"
+    }
+  },
+  "checks": {
+    "contract_sha_matches_requested": true,
+    "ledger_sha_matches_contract": true,
+    "all_ledger_source_pins_match": true,
+    "phase_order": [
+      "g5_python",
+      "h2_schema_python",
+      "g4_python",
+      "legacy_python"
+    ],
+    "phase_case_counts": {
+      "g5_python": 93,
+      "h2_schema_python": 50,
+      "g4_python": 91,
+      "legacy_python": 167
+    },
+    "unique_case_ids": 401,
+    "previous_case_ids_retained": 361,
+    "per_phase_timeout_seconds": {
+      "g5_python": 600,
+      "h2_schema_python": 300,
+      "g4_python": 300,
+      "legacy_python": 300
+    },
+    "first_phase_watchdog_seconds": {
+      "body": 25,
+      "cleanup": 5,
+      "total": 30
+    },
+    "progress_plugin_enabled_for_all_phases": true,
+    "plugin_event_fields_match_runner_parser": true,
+    "nodeid_mapping_matches_ledger_ids": true,
+    "start_report_finish_pairing_and_order_checked": true,
+    "all_case_elapsed_bound_checked_at_completion": true,
+    "report_duration_upper_bound_checked": true,
+    "watchdog_scope_names_h2_schema_python_explicitly": true
+  },
+  "findings": [],
+  "execution_boundary": "Approval covers only the exact 401-case append004 schema/prebinding/local-validation subgate plan. The corrected contract explicitly identifies h2_schema_python as the phase containing the 50 local unit/watchdog cases, while the runner order is G5→H2→G4→legacy. The progress plugin writes start/report/finish events with nodeid and monotonic clock; report adds when/outcome/duration. The runner maps pytest node IDs to ledger IDs, rejects duplicate starts, post-finish events, missing or misordered setup/call/teardown reports, nonpassing or >30-second reports, event inventory mismatch and total start-to-finish above30s. It also checks JUnit inventory and duration. G5 runs first with a 600-second cumulative cap; H2, G4 and legacy retain 300-second caps, while the 50 h2_schema_python cases retain the 25+5 watchdog. Historical over-30-second cases fail acceptance only when completed; no new hard per-case interrupt is added, and a hung case remains bounded by its phase cap with the journal identifying the current node. No execution or runtime pass is claimed; final runner pin and independent frozen pre-gate approval remain required before any run. Full Temporal/H1/runtime and original AT acceptance remain pending."
+}
