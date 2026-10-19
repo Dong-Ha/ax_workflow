@@ -64,3 +64,42 @@ normalized synthetic summaries and hashes. On failure, retain the actual cut and
 return to its claim/start/admission/acknowledgement/projection step; update source
 pins and reviews before a complete required regression rerun. Never reset a
 workflow, edit a committed receipt or relabel a failed attempt to obtain a pass.
+
+## Unexecuted test-authoring checkpoint (2026-10-19)
+
+This checkpoint records TC-authored source drafts, not passing crash evidence.
+The last independently accepted normal-runtime increment remains commit
+`131f4f5` with 407 passing cases against its own frozen candidate. Those results
+do not qualify the additional files recorded here.
+
+- `test_accepted_start_response_loss.py`, `accepted_start_dispatcher_child.py`
+  and `response_loss_proxy.py` draft the accepted-start/lost-response cut.
+- `test_h2_dispatcher_crashes.py`, `h2_dispatcher_crash_support.py` and
+  `h2_crash_case_budget.py` draft dispatcher cuts, live competing dispatchers,
+  stale acknowledgement and admitted-history deletion.
+- `test_h2_runtime_restart_and_history.py` drafts independent service restarts
+  using the existing private storage.
+- `test_h2_worker_api_crashes.py`, `h2_worker_crash_child.py`,
+  `h2_api_crash_child.py` and `h2_worker_api_case_budget.py` draft the API and
+  activity projection/history cuts.
+
+Checkpoint verification is static only: Python AST parsing, source inspection
+and whitespace checks. No new test collection, product import, SQL migration,
+database, Temporal service or crash scenario has been executed. The source
+drafts and their helper/API assumptions still require review. In particular,
+literal real attempt-row oracles must be checked separately from reused normal
+state oracles; the response proxy's causal cut and history event ordering need
+independent review. Separate watchdog interfaces also require integration into
+the eventual bounded runner.
+The worker/API history-cut draft additionally needs the explicit proxy assertion
+`server_response_bytes_forwarded_after_arm == 0` while responses are held.
+Actual server-side history deletion and fixture PostgreSQL restart behavior
+have not been verified.
+
+The complete boundary inventory, exact execution ledger, source/environment
+pins, execution contract, independent approval and runner pre-gate remain
+pending. Startup rejection, authority/configuration failures, reconciliation
+window boundaries, non-create notification and runtime failure/shutdown cases
+must retain explicit coverage. This checkpoint neither authorizes execution
+nor completes H2/B03 or the final IFPMIC AX workflow visualization. Original
+input ZIP/DOCX files and private runtime artifacts are excluded from Git.
