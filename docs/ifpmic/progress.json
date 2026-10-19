@@ -442,7 +442,7 @@
           "runtime_normal_progress_reconciliation": "evidence/b03/h2-runtime-normal-progress-reconciliation.json",
           "runtime_next_steps": "evidence/b03/h2-runtime-normal-next-steps.json",
           "runtime_full_preparation": {
-            "status": "additional_tc_authoring_methods_approved_no_execution",
+            "status": "additional_tc_draft_variants_static_reviewed_no_execution",
             "authoring_checkpoint_commit": "ed2d09983977407320dc9ed23cf0e6e46c9fc221",
             "verification_plan": "evidence/b03/h2-runtime-full-verification-plan.json",
             "plan_review_status": "independent_and_tc_approved_authoring_only",
@@ -456,7 +456,16 @@
             "plan_acceptance": "evidence/b03/h2-runtime-full-plan-acceptance.json",
             "independent_plan_review": "evidence/b03/h2-runtime-full-plan-review.json",
             "tc_plan_review": "evidence/b03/h2-runtime-full-tc-plan-review.json",
-            "static_checkpoint": "evidence/b03/h2-runtime-crash-static-checkpoint.json"
+            "static_checkpoint": "evidence/b03/h2-runtime-crash-static-checkpoint.json",
+            "literal_draft_new_case_ids": 42,
+            "startup_draft_case_ids": 21,
+            "window_draft_case_ids": 9,
+            "startup_tc_ledger": "evidence/b03/h2-runtime-startup-tc-ledger.json",
+            "window_tc_ledger": "evidence/b03/h2-runtime-window-tc-ledger.json",
+            "coverage_progress": "evidence/b03/h2-runtime-full-coverage-progress.json",
+            "remaining_groups_without_literal_ids": 10,
+            "startup_window_static_review": "evidence/b03/h2-runtime-startup-window-static-review.json",
+            "startup_window_static_review_sha256": "ac4e7c09048a4f6a4ea513bacc41d1db2ef3178945ae3d686aae6bc46b5c4a1a"
           }
         }
       ]
@@ -634,12 +643,12 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "H2: TC is authoring actual CLI startup rejections and finite-reconciliation-window cases under independently/TC-approved25-obligation plan. Finish all12 draft crash cases, remaining runtime negatives, literal identity/security/time/cleanup oracles and exact ledger; review contract/runner/pre-gate before execution. Rerun407 retained IDs plus every mandatory addition. H2/B03, H3-H7, originalAT32 and final workflow visualization remain incomplete.",
+  "next_step": "H2: finish ten remaining runtime-negative obligation groups and review all25 groups as one complete literal ledger; resolve shared fixture cleanup, restarted-PG identity and attempt ordering. Then review execution contract/runner/pre-gate and execute fresh407 retained IDs plus all mandatory additions.42 new draft IDs are unexecuted; no fullH2/B03/originalAT/fullAX completion.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",
     "Approved Bedrock/Claude runtime profile"
   ],
   "publication_policy": "Only authorized git repository documentation, source and synthetic verification summaries/screenshots; never runtime credentials or application logs.",
-  "updated_at": "2026-10-19T13:50:42.140794+00:00"
+  "updated_at": "2026-10-19T14:06:21.964727+00:00"
 }

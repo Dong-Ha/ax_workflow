@@ -1,0 +1,245 @@
+{
+  "kind": "ifpmic.b03.h2.neg-window-tc-ledger.v1",
+  "status": "authored_pending_same_sha_review_no_execution",
+  "obligation_id": "NEG-WINDOW",
+  "parent_plan": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-full-verification-plan.json",
+    "sha256": "c6964bccff0d4cec1ac00f18fbb267d5d1a4a5887e53844c604333b7c059486c"
+  },
+  "scope": {
+    "purpose": "Derivative exact-case ledger input to the eventual full 25-obligation ledger.",
+    "standalone_gate": false,
+    "runner_authoring_authorized": false,
+    "execution_authorized": false,
+    "acceptance_authorized": false,
+    "runtime_status": "not executed; no results or pass claims"
+  },
+  "source_pins": {
+    "tests/ifpmic_api/test_h2_reconciliation_window.py": "3fffa849572b4945b040f3869b65828f80c134b301aeb42e4bb840e24fa96096",
+    "tests/ifpmic_api/h2_window_case_budget.py": "7c64f17995b17c1072dc7106ccc38a3595367ecab8fa96fd43619bba98e85c1e",
+    "tests/ifpmic_api/h2_dispatcher_crash_support.py": "6d27c1bb6cd0b87532261689d50aa5dcd0d2d15e9ed5865d407338fbc60e8242",
+    "tests/ifpmic_api/test_h2_runtime_normal_flow.py": "fa34210fff8deb60b107d738924059999507bb7dcdf41ada91d9be6ce26e30c3",
+    "tests/ifpmic_api/test_accepted_start_response_loss.py": "cfd8b3c0f8905563a4a80646bb27f4cd1c11397ae29c25dbe7314a800b112e2e",
+    "tests/ifpmic_api/jobs_fixture.py": "2191f3523e0ddcbb4c7e97d7b74348dc571c432b5df5a01c7436dd57db3bac48",
+    "tests/ifpmic_api/workspace_fixture.py": "5987916779c74a91b4dc44f16b03f27024762b4525ba6f8e9f14a20809e50ff8",
+    "tests/ifpmic_api/workflow_schema_fixture.py": "5a3450bb4b436ea215ac6ab07b6d3d20d33ff87bdc56e83c5e5c163e7ffaedc4",
+    "tests/ifpmic_api/conftest.py": "3c39b0491139762d0a3da09397a368558cbe72e5cfebda4a279c76c97ce6ebe5",
+    "services/ifpmic_api/migrations/003_workflow_execution.sql": "5ef29521944e18551728dd285ce3ae21fa03c2b06f77c25430da6acb0ce1f102",
+    "services/ifpmic_api/migrations/004_prebinding_incident.sql": "9a7651ab063901e69a77f4b825dd21544dc018ed01941dc3a1bc76f8a65b541f",
+    "services/ifpmic_api/execution_runtime.py": "49c0c6208e62b26e808ecffadf278dd9c7cff45134a47b905d3a4f60987c4b08",
+    "services/ifpmic_api/execution_dispatcher.py": "7baf91290938b3159b2e200e6fde8f81db5ec2d7b117351e03f689bbc75db209",
+    "services/ifpmic_api/execution_temporal.py": "886d40d4dcb0e6e916f5cb76e5d514ce5890d2cd5a7f7069acafe84cfed1cea2",
+    "services/ifpmic_api/execution_manifest.py": "0f08e5c86992edc9ee9b62b19d50f981282d125e39810e0f0d6e75d39bfd07b6",
+    "services/ifpmic_api/execution_store.py": "2bdbc8b457a2da1f78d73c8e3ddda5059962a5931b154423a681a7cbb88d71bd",
+    "scripts/ifpmic_temporal_toolchain.py": "8cadab76ccfa1f93392cf759991d6906415c75ed5a116093c53aee9f4a445564",
+    "services/ifpmic_api/requirements-temporal.lock": "ccbbf7a8aab39cd80861f607afd4994bf461d07cbf592f6acfcc492e63ff85c6"
+  },
+  "budget_policy": {
+    "sql_case_setup_body_seconds": 25,
+    "sql_case_cleanup_seconds": 5,
+    "runtime_case_setup_body_seconds": 215,
+    "runtime_case_cleanup_seconds": 25,
+    "watchdog_start": "pytest_runtest_protocol before fixture setup",
+    "cleanup_scope": "test-owned process cleanup plus all pytest fixture finalizers under one shared per-case cleanup timer",
+    "private_timing_path": "runner-provided 0700 IFPMIC_H2_WINDOW_TIMINGS_ROOT plus node-id SHA256 filename; 0600 file",
+    "execution_note": "The 25/5 SQL split and 215/25 runtime split are authoring proposals. Exact fixture teardown duration and runner integration remain execution blockers until reviewed and demonstrated."
+  },
+  "private_evidence_policy": {
+    "allowed_private_outputs": [
+      "source-manifest.json",
+      "environment-manifest.json",
+      "neg-window-retention.json",
+      "neg-window-partial-shape.json",
+      "neg-window-clock-seam.json",
+      "neg-window-runtime-boundary.json",
+      "process-journal.jsonl",
+      "accepted-start-history-before-kill.pbseq",
+      "accepted-start-observer.json",
+      "case timing JSON"
+    ],
+    "publicly_allowed": "Only independently reviewed normalized synthetic case IDs, outcomes, counts and hashes; never raw SQL, function definitions, SCRAM credentials, claim tokens, source/environment archives, history or process identities.",
+    "mode": "private evidence root 0700; files 0600"
+  },
+  "cases": [
+    {
+      "case_id": "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_retention[retention-null]",
+      "obligation": "NEG-WINDOW",
+      "requirements": [
+        "B03 H2",
+        "REQ-02",
+        "REQ-13",
+        "REQ-14 preservation",
+        "AT-16 prerequisite only"
+      ],
+      "purpose": "Prove the NEG-WINDOW requirement boundary: B03 H2; REQ-02; REQ-13; REQ-14 preservation; AT-16 prerequisite only.",
+      "target": "Create a real accepted synthetic API job, READY workspace and eligible profile in the isolated fixture database; register the dispatcher/build identity; claim through the SCRAM dispatcher role and reserve through actual ifpmic.reserve_execution. Confirm the binding window fields are all NULL before the attempt. Use source_pins above, the parent plan SHA, and private per-case source/environment manifests generated by the test. Actual installed runtime/toolchain pins remain to be frozen by the full ledger.",
+      "method": "Invoke actual ifpmic.record_start_attempt(command_id,generation,claim_token,NULL) over the dispatcher SCRAM DSN. This SQL-only cut has no Temporal transport or dispatcher process; the actual unmodified dispatcher before/after cases separately cover history behavior.",
+      "agent": "TC",
+      "pass_criteria": "Before: accepted command, DRAFT revision 0, leased outbox, one reserved binding with all window fields NULL, no scopes/receipts. Cut result: {status:quarantined,code:RETENTION_UNVERIFIED}. After: binding/outbox quarantined, quarantine_code and current attempt error RETENTION_UNVERIFIED, window fields remain NULL, no admitted_run_id, no scope/receipt, job remains DRAFT revision 0.",
+      "expected": "25s setup/body + shared 5s cleanup from protocol start, including fixtures. Expected domain code RETENTION_UNVERIFIED. The 25/5 fixture timing must be independently shown to fit; no runtime qualification is claimed.",
+      "evidence": "Keep source/environment manifests and neg-window-retention.json (before/after SQL snapshots, result, generation and token) private. Public summary may report only the case ID, RETENTION_UNVERIFIED outcome and reviewed counts/hashes.",
+      "recovery": "No owned process is started for this SQL-only case. The private setup root and fixture database are disposed by pytest finalizers; function behavior is not recovered by altering state or resetting the command."
+    },
+    {
+      "case_id": "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_retention[retention-3600]",
+      "obligation": "NEG-WINDOW",
+      "requirements": [
+        "B03 H2",
+        "REQ-02",
+        "REQ-13",
+        "REQ-14 preservation",
+        "AT-16 prerequisite only"
+      ],
+      "purpose": "Prove the NEG-WINDOW requirement boundary: B03 H2; REQ-02; REQ-13; REQ-14 preservation; AT-16 prerequisite only.",
+      "target": "Same real accepted-job, READY-workspace and eligible-profile setup as the NULL case; the real SCRAM dispatcher claims and reserves a binding whose window fields are all NULL. Use source_pins above, the parent plan SHA, and private per-case source/environment manifests generated by the test. Actual installed runtime/toolchain pins remain to be frozen by the full ledger.",
+      "method": "Invoke actual ifpmic.record_start_attempt with literal retention_seconds=3600 through the SCRAM dispatcher DSN; no Temporal client or mocked SQL result is used.",
+      "agent": "TC",
+      "pass_criteria": "Before: DRAFT revision 0, leased outbox, reserved binding with three NULL window fields. Cut result: {status:quarantined,code:RETENTION_UNVERIFIED}. After: binding and outbox quarantined, window fields still all NULL, current attempt completed with RETENTION_UNVERIFIED, no run/scope/receipt, DRAFT revision 0.",
+      "expected": "25s setup/body + shared 5s cleanup, including fixture setup/finalizers. Expected domain code RETENTION_UNVERIFIED; timing fit remains unverified.",
+      "evidence": "Private source/environment manifests and neg-window-retention.json. Public output is limited to the normalized case ID, RETENTION_UNVERIFIED outcome and reviewed counts/hashes.",
+      "recovery": "No owned process is started. Preserve the failed private snapshots; fixture teardown drops the isolated database without editing a receipt or manufacturing a retry outcome."
+    },
+    {
+      "case_id": "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_retention[retention-3601]",
+      "obligation": "NEG-WINDOW",
+      "requirements": [
+        "B03 H2",
+        "REQ-02",
+        "REQ-13",
+        "REQ-14 preservation",
+        "AT-16 prerequisite only"
+      ],
+      "purpose": "Prove the NEG-WINDOW requirement boundary: B03 H2; REQ-02; REQ-13; REQ-14 preservation; AT-16 prerequisite only.",
+      "target": "Same real accepted-job, READY-workspace and eligible-profile setup; dispatcher SCRAM role claims and reserves an all-NULL window binding. Use source_pins above, the parent plan SHA, and private per-case source/environment manifests generated by the test. Actual installed runtime/toolchain pins remain to be frozen by the full ledger.",
+      "method": "Invoke the real SQL function with literal retention_seconds=3601 through the real SCRAM dispatcher principal.",
+      "agent": "TC",
+      "pass_criteria": "Before: DRAFT revision 0, leased outbox, reserved binding and NULL window. Cut result: status permitted. After: same binding remains reserved and unadmitted; first_start_attempt_at is set by the actual database clock, uncertain_until-first_start_attempt_at is exactly one hour, observed_retention_seconds=3601, no scope/receipt and job remains DRAFT revision 0. No Start RPC is present in this direct SQL case.",
+      "expected": "25s setup/body + shared 5s cleanup including fixtures. Expected result is permitted, with no expected domain failure code; timing fit remains unverified.",
+      "evidence": "Private source/environment manifests and neg-window-retention.json with literal SQL snapshots/result. Public output may expose only the normalized case ID, permitted outcome and reviewed counts/hashes.",
+      "recovery": "No owned process is started. The disposable fixture database is removed by its fixture lifecycle; no SQL rollback/replay is used to claim runtime success."
+    },
+    {
+      "case_id": "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_partial_shape_constraint",
+      "obligation": "NEG-WINDOW",
+      "requirements": [
+        "B03 H2",
+        "REQ-02",
+        "REQ-13",
+        "REQ-14 preservation",
+        "AT-16 prerequisite only"
+      ],
+      "purpose": "Prove the NEG-WINDOW requirement boundary: B03 H2; REQ-02; REQ-13; REQ-14 preservation; AT-16 prerequisite only.",
+      "target": "Use a real accepted job, READY workspace, registered identity, SCRAM claim and actual reserve_execution. Confirm the owner sees (NULL,NULL,NULL) on the reserved binding; do not disable triggers or change DDL. Use source_pins above, the parent plan SHA, and private source/environment manifests generated for this isolated synthetic case.",
+      "method": "Owner attempts all six non-empty partial shapes: first only; first+deadline; first+retention; deadline only; retention only; deadline+retention. Every UPDATE runs against the unchanged database constraint inside its own rollback-capable transaction.",
+      "agent": "TC",
+      "pass_criteria": "Each attempted shape fails with SQLSTATE check violation and constraint_name=binding_start_window_shape. After every rollback and at case end, all three stored fields are still NULL, binding remains reserved, and there are no scopes or receipts.",
+      "expected": "25s setup/body + shared 5s cleanup including fixture setup/finalizers. Expected SQLSTATE 23514/CheckViolation for each shape, with exact named constraint binding_start_window_shape.",
+      "evidence": "Private source/environment manifests and neg-window-partial-shape.json containing initial/final SQL snapshots and the literal rejected assignment list. Public output may contain only normalized case ID, six rejection counts and reviewed hashes.",
+      "recovery": "No owned process is started. The owner transaction rolls back each rejected UPDATE; final fixture teardown drops the isolated database."
+    },
+    {
+      "case_id": "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_exact_deadline_with_isolated_clock_seam[before-deadline]",
+      "obligation": "NEG-WINDOW",
+      "requirements": [
+        "B03 H2",
+        "REQ-02",
+        "REQ-13",
+        "REQ-14 preservation",
+        "AT-16 prerequisite only"
+      ],
+      "purpose": "Prove the NEG-WINDOW requirement boundary: B03 H2; REQ-02; REQ-13; REQ-14 preservation; AT-16 prerequisite only.",
+      "target": "Real accepted job, READY workspace, registered identity, dispatcher SCRAM claim and actual reserve_execution. Seed the owner-only window while all fields are NULL: deadline=frozen_instant+1 second, first_start=deadline-1 hour, retention=3601. Before replacement, capture function OID, owner OID/name, ACL preserving NULL-vs-array, SECURITY DEFINER, full proconfig/search_path and exact pg_get_functiondef. Require exactly one literal instant:=clock_timestamp(); assignment and claim_expires_at>frozen_instant for matching leased generation/token. Use source_pins above and private generated source/environment manifests. The dedicated fixture database and exact plan SHA must be recorded; the seam is not production clock evidence.",
+      "method": "In the isolated synthetic database only, CREATE OR REPLACE the same function identity with its one clock assignment replaced by a fixed timestamptz literal. Invoke the actual SQL function via SCRAM dispatcher role; no Temporal service/client is used in this equality seam.",
+      "agent": "TC",
+      "pass_criteria": "Before replacement: save full metadata and definition; while replaced: require identical OID/owner/ACL/security/proconfig, exact definition equal to original with only the one assignment replaced, and live matching lease at frozen instant. At call: return status permitted because uncertain_until=frozen+1 second. Window tuple remains exactly (frozen-1h+1s,frozen+1s,3601), with no admitted run, scope or receipt. Finally restore byte-identical original pg_get_functiondef and verify all metadata. This direct SQL seam makes no Start RPC; it does not claim a Temporal history query.",
+      "expected": "25s setup/body + shared 5s cleanup. Expected status permitted; no domain failure code. The exact replacement and restoration remain unexecuted and require runner/ledger review before any execution.",
+      "evidence": "Always attempt byte-exact restoration before writing private evidence. neg-window-clock-seam.json is attempted on success and failure with available before/while/restored metadata, original and replacement definitions, frozen instant, live-lease context, SQL snapshots, result (nullable), primary/restoration failure types and status. Evidence-write failure is recorded when possible and never masks a primary failure or prevents cleanup. Keep these files private; public output is normalized only.",
+      "recovery": "No child service process is started. A finally block restores the original function definition even on assertion/SQL failure; if exact metadata/definition restoration cannot be demonstrated, abort the method and retain private evidence. Drop the dedicated synthetic fixture database during fixture teardown. Failure-path evidence is emitted after restoration from whatever snapshots were captured; original test exceptions are preserved if evidence writing also fails."
+    },
+    {
+      "case_id": "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_exact_deadline_with_isolated_clock_seam[at-deadline]",
+      "obligation": "NEG-WINDOW",
+      "requirements": [
+        "B03 H2",
+        "REQ-02",
+        "REQ-13",
+        "REQ-14 preservation",
+        "AT-16 prerequisite only"
+      ],
+      "purpose": "Prove the NEG-WINDOW requirement boundary: B03 H2; REQ-02; REQ-13; REQ-14 preservation; AT-16 prerequisite only.",
+      "target": "Same isolated accepted/reserved command setup. While all window fields are NULL, owner seeds deadline=frozen_instant, first_start=frozen_instant-1 hour, retention=3601. Capture exact function identity/security metadata and original body; prove one replaceable clock assignment and matching live claim token/generation with expiry after frozen instant. Use source_pins above and private generated source/environment manifests; exact equality proof is isolated and not production time behavior evidence.",
+      "method": "Temporary same-identity function replacement changes only instant:=clock_timestamp(); to instant:=TIMESTAMPTZ '<frozen>'; actual record_start_attempt runs as SCRAM dispatcher. No Temporal service/client is used in this SQL seam.",
+      "agent": "TC",
+      "pass_criteria": "At frozen equality, uncertain_until<=instant must yield {status:quarantined,code:START_WINDOW_EXPIRED}; binding/outbox quarantine, same seeded window tuple, no admitted run/scope/receipt, job remains DRAFT revision 0. Capture unchanged function OID/owner OID+name/ACL including NULL/SECURITY DEFINER/full proconfig before and while replaced; verify exact one-assignment definition diff; in finally restore byte-identical pg_get_functiondef and verify all metadata. No Temporal history absence is claimed by this SQL-only test.",
+      "expected": "25s setup/body + shared 5s cleanup. Expected domain code START_WINDOW_EXPIRED. The seam remains unexecuted; exact object metadata/restore assertions must pass before any acceptance.",
+      "evidence": "Always attempt byte-exact restoration before writing private evidence. neg-window-clock-seam.json is attempted on success and failure with available before/while/restored metadata, original and replacement definitions, frozen instant, live-lease context, SQL snapshots, result (nullable), primary/restoration failure types and status. Evidence-write failure is recorded when possible and never masks a primary failure or prevents cleanup. Keep these files private; public output is normalized only.",
+      "recovery": "No owned process is started. Always restore exact original function source in finally; failure to establish metadata or restoration aborts the method. Isolated DB fixture is discarded afterward. Failure-path evidence is emitted after restoration from whatever snapshots were captured; original test exceptions are preserved if evidence writing also fails."
+    },
+    {
+      "case_id": "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_exact_deadline_with_isolated_clock_seam[after-deadline]",
+      "obligation": "NEG-WINDOW",
+      "requirements": [
+        "B03 H2",
+        "REQ-02",
+        "REQ-13",
+        "REQ-14 preservation",
+        "AT-16 prerequisite only"
+      ],
+      "purpose": "Prove the NEG-WINDOW requirement boundary: B03 H2; REQ-02; REQ-13; REQ-14 preservation; AT-16 prerequisite only.",
+      "target": "Same isolated accepted/reserved command setup. While all window fields are NULL, owner seeds deadline=frozen_instant-1 second, first_start=deadline-1 hour, retention=3601. Capture complete function identity/security metadata and exact original definition; matching generation/token must remain leased beyond frozen instant. Use source_pins above and private generated source/environment manifests; exact equality seam is not production time evidence.",
+      "method": "In the dedicated synthetic DB, replace only the one clock assignment in the same function identity with the fixed frozen timestamptz literal and call the actual SQL function as dispatcher SCRAM role. No Temporal client/service is part of the seam.",
+      "agent": "TC",
+      "pass_criteria": "At the frozen instant, deadline is one second past; require {status:quarantined,code:START_WINDOW_EXPIRED}, same stored window tuple, quarantined binding/outbox, no admitted run/scope/receipt and DRAFT revision 0. Verify before/while/after OID, owner OID/name, ACL including NULL, SECURITY DEFINER and full proconfig; exact function-definition diff is one assignment only and restore original pg_get_functiondef byte-for-byte in finally. No Temporal history absence is claimed by this SQL-only test.",
+      "expected": "25s setup/body + shared 5s cleanup. Expected domain code START_WINDOW_EXPIRED. No execution, runner or acceptance authorization is granted.",
+      "evidence": "Always attempt byte-exact restoration before writing private evidence. neg-window-clock-seam.json is attempted on success and failure with available before/while/restored metadata, original and replacement definitions, frozen instant, live-lease context, SQL snapshots, result (nullable), primary/restoration failure types and status. Evidence-write failure is recorded when possible and never masks a primary failure or prevents cleanup. Keep these files private; public output is normalized only.",
+      "recovery": "No owned process is started. Restore original function definition and verify metadata in finally, even after assertion failure; if restoration is not exact, abort the method and retain private evidence. Fixture drops the isolated database. Failure-path evidence is emitted after restoration from whatever snapshots were captured; original test exceptions are preserved if evidence writing also fails."
+    },
+    {
+      "case_id": "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_actual_dispatcher_boundary[actual-before-deadline]",
+      "obligation": "NEG-WINDOW",
+      "requirements": [
+        "B03 H2",
+        "REQ-02",
+        "REQ-13",
+        "REQ-14 preservation",
+        "AT-16 prerequisite only"
+      ],
+      "purpose": "Prove the NEG-WINDOW requirement boundary: B03 H2; REQ-02; REQ-13; REQ-14 preservation; AT-16 prerequisite only.",
+      "target": "Use crash.prepare_case for a real API-accepted job, ready workspace, live eligibility, registered build, private configs and owned Temporal server. Real SCRAM dispatcher claims and reserves; owner seeds the window while all fields are NULL with first_start=database_now and uncertain_until=first_start+1 hour, retention=3601. Preserve gen1/token and wait for its actual 30-second database-clock lease expiry before starting the dispatcher. Use source_pins above, private source/environment manifest files and exact Temporal toolchain/installed environment inventory from the full runtime gate. This case uses the unmodified production dispatcher and must never use the clock seam.",
+      "method": "Start the real unmodified services.ifpmic_api.execution_runtime dispatcher CLI against the exact private config and same Temporal storage. It reclaims generation 2, observes missing history, calls real record_start_attempt while deadline remains live, starts the real workflow, verifies Started history, admits the run and dispatches. The activity worker remains stopped.",
+      "agent": "TC",
+      "pass_criteria": "Before runtime reclaim: seeded tuple is unchanged and gen1/token lease is expired. After: gen1 attempt expired; gen2 attempt started with same run ID; outbox dispatched; binding admitted with exact unchanged seeded window and uncertain_until still in future; one scope, no projection receipt, job remains DRAFT revision 0. Direct Temporal observer requires one execution, one event-1 WorkflowExecutionStarted, exact input/workflow ID/type/task queue and RUNNING status.",
+      "expected": "215s setup/body + shared 25s cleanup, including PG/Temporal/API/workspace fixtures and owned-process cleanup. Expected outcome is admission/dispatched; no domain failure code. Actual setup and all fixture finalizers must be demonstrated within budgets before execution.",
+      "evidence": "Private manifests/configs, process-journal.jsonl, SQL before/lease-expired/after snapshots, neg-window-runtime-boundary.json, raw accepted-start-history-before-kill.pbseq and observer summary. Public output may contain only normalized case ID, counts/outcome and reviewed hashes.",
+      "recovery": "The runtime harness journals each owned Temporal/dispatcher PID and /proc start_ticks immediately. Stop only saved identities in finally, verify absence and record forced/graceful outcomes within the shared cleanup deadline. No replacement build/storage or rerun receipt is permitted."
+    },
+    {
+      "case_id": "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_actual_dispatcher_boundary[actual-after-deadline]",
+      "obligation": "NEG-WINDOW",
+      "requirements": [
+        "B03 H2",
+        "REQ-02",
+        "REQ-13",
+        "REQ-14 preservation",
+        "AT-16 prerequisite only"
+      ],
+      "purpose": "Prove the NEG-WINDOW requirement boundary: B03 H2; REQ-02; REQ-13; REQ-14 preservation; AT-16 prerequisite only.",
+      "target": "Use same real API/workspace/build/Temporal setup. Dispatcher SCRAM role claims and reserves an all-NULL binding. Owner initializes only then: uncertain_until=database_now-1 minute, first_start=uncertain_until-1 hour, retention=3601. Keep gen1/token unchanged until the real 30-second database-clock lease expires. Use source_pins above, private source/environment manifests and exact Temporal toolchain/installed environment inventory. This actual case uses unmodified runtime sources only; no clock replacement is allowed.",
+      "method": "Run the unmodified production dispatcher CLI against the real private Temporal server/storage. It reclaims generation 2 and reaches the actual record_start_attempt boundary; because the seeded deadline is expired it must quarantine before Temporal start or admission.",
+      "agent": "TC",
+      "pass_criteria": "Before reclaim: exact seeded tuple, gen1/token lease expired, no run/scope/receipt. After: gen1 attempt expired, gen2 completed quarantined with START_WINDOW_EXPIRED, outbox and binding quarantined, seeded window unchanged, no admitted_run_id/scope/receipt, DRAFT revision 0; direct Temporal workflow list for exact workflow ID remains empty.",
+      "expected": "215s setup/body + shared 25s cleanup for real services, lease wait, process cleanup and all fixtures. Expected domain code START_WINDOW_EXPIRED; startup/dependency failures remain failures, not window passes.",
+      "evidence": "Private process journal, source/environment manifests, SQL snapshots before/after lease expiry and quarantine, neg-window-runtime-boundary.json and direct empty-history list observation. Public output only normalized synthetic ID, outcome/counts and reviewed hashes.",
+      "recovery": "Journal owned Temporal/dispatcher PID plus /proc start_ticks immediately. Finally stop only those identities and verify absence within the 25-second shared cleanup. Preserve private state on failure; do not reset or retry the command to manufacture a result."
+    }
+  ],
+  "known_execution_blockers_and_uncertainties": [
+    "No tests, imports, fixture setup, SQL, services, or network actions were executed while authoring this ledger.",
+    "The 25s body + 5s cleanup allocation for SQL cases is unproven; the API/workspace fixture, manifest capture, and PostgreSQL/function cleanup may exceed it. Preserve these budgets only if exact runner/fixture evidence demonstrates fit; otherwise obtain per-case reviewed limits within the approved default or exception policy.",
+    "The 215s runtime body + 25s cleanup allocation includes a 30-second original lease expiry, owned PostgreSQL/Temporal services, dispatcher startup, API/workspace setup, direct history checks, and every fixture finalizer. The current helper's full cleanup bound and fixture teardown integration have not been runtime-qualified.",
+    "SQL-only retention, shape and clock-seam tests do not query Temporal history. They make no history-absence claim; the separate actual unmodified after-deadline case supplies the direct empty-workflow-list oracle.",
+    "Temporal server retention and installed toolchain behavior must be confirmed by the pinned actual runtime case; source files and the normal flow helper do not prove execution.",
+    "The dedicated synthetic database is currently the isolated per-test migration database behind workspace_environment. Review must confirm it meets the approved seam isolation requirement before any function replacement is executed.",
+    "This derivative ledger is not the complete 25-obligation inventory, exact full-H2 case ledger, runner contract, runner pre-gate, authorization, or acceptance record."
+  ]
+}

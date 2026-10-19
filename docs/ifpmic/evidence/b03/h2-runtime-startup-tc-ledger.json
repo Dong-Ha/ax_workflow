@@ -1,0 +1,291 @@
+{
+  "kind": "ifpmic.b03.h2.runtime-startup-tc-ledger.v1",
+  "status": "authoring_complete_execution_not_started",
+  "scope": {
+    "purpose": "Inventory 21 literal production-CLI startup rejection cases for later integration into the full H2 gate.",
+    "acceptance_limit": "Derivative inventory only. This is not an execution authorization or standalone gate, and no runtime result is claimed. It does not replace the full H2 crash/history-loss inventory or acceptance.",
+    "timing": {
+      "body_seconds": 25,
+      "cleanup_seconds": 5,
+      "total_seconds": 30,
+      "coverage": "The protocol watchdog starts before test fixture setup; the shared cleanup window begins before fixture teardown. No Temporal service is started in these rejection cases."
+    },
+    "source_validation": "Static authoring only: Python AST parse and whitespace checks passed. No project imports, collection, test execution, DB, service, or network operations were performed."
+  },
+  "method": "For each exact node ID, construct a private real runtime configuration and initial owner registration state, launch the production execution_runtime CLI in dispatcher or worker mode, and require exit code 3 with the fixed DEPENDENCY_UNAVAILABLE stdout and empty stderr. Passive listeners cover the selected loopback endpoints and record zero incoming connections; endpoint_mismatch uses distinct listeners for the configured and registered endpoints and records both independently. For accepted-job cases, compare independent owner snapshots before/after and require the accepted create command to remain pending at generation zero with no attempts, binding, scope, or receipt. The no-job case omits registration and job creation, and independently requires all eight tracked table counts to remain zero.",
+  "agent": "TC owns the startup test, deadline plugin, and this derivative inventory. Root owns full-gate integration and authorization. No execution is authorized or claimed here.",
+  "source_pins": [
+    {"path": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py", "sha256": "58ba9c3a7dac9b4e78573acd1888008b355960effc689276547a169a5a099c80", "role": "new startup rejection cases and private evidence helpers"},
+    {"path": "tests/ifpmic_api/h2_startup_case_budget.py", "sha256": "ee84ddd77140f617c0572f1a4bc9714b6a257ead361282bd84341a181ffc0894", "role": "new exact-node whole-case 25+5 second watchdog"},
+    {"path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py", "sha256": "fa34210fff8deb60b107d738924059999507bb7dcdf41ada91d9be6ce26e30c3", "role": "reused manifest, private-config, DSN, process identity and SQL snapshot helpers"},
+    {"path": "tests/ifpmic_api/jobs_fixture.py", "sha256": "2191f3523e0ddcbb4c7e97d7b74348dc571c432b5df5a01c7436dd57db3bac48", "role": "G4 PostgreSQL harness, owner DSN and isolated migration database"},
+    {"path": "tests/ifpmic_api/workspace_fixture.py", "sha256": "5987916779c74a91b4dc44f16b03f27024762b4525ba6f8e9f14a20809e50ff8", "role": "G5 authenticated harness and real READY helper used by job-backed variants"},
+    {"path": "tests/ifpmic_api/workflow_schema_fixture.py", "sha256": "5a3450bb4b436ea215ac6ab07b6d3d20d33ff87bdc56e83c5e5c163e7ffaedc4", "role": "SCRAM HBA fixture and current migration fixture dependency"},
+    {"path": "tests/ifpmic_api/conftest.py", "sha256": "3c39b0491139762d0a3da09397a368558cbe72e5cfebda4a279c76c97ce6ebe5", "role": "temporary PostgreSQL cluster, role and migration database lifecycle"},
+    {"path": "services/ifpmic_api/execution_runtime.py", "sha256": "49c0c6208e62b26e808ecffadf278dd9c7cff45134a47b905d3a4f60987c4b08", "role": "production dispatcher/worker CLI entrypoint under test"},
+    {"path": "services/ifpmic_api/execution_protocol.py", "sha256": "543c801e902e28b1ada451aa98196275ccb271246c2772837386b7e7aca2c965", "role": "production execution identity validation"},
+    {"path": "services/ifpmic_api/execution_store.py", "sha256": "2bdbc8b457a2da1f78d73c8e3ddda5059962a5931b154423a681a7cbb88d71bd", "role": "production startup registry reads and CLI failure mapping"},
+    {"path": "services/ifpmic_api/execution_workspace.py", "sha256": "d2794d8a8f20b78c6fe71ea36d2563c876a7372a14acd2e0a1944e2aff5fab05", "role": "production CLI configuration and runtime wiring dependency"},
+    {"path": "services/ifpmic_api/execution_manifest.py", "sha256": "0f08e5c86992edc9ee9b62b19d50f981282d125e39810e0f0d6e75d39bfd07b6", "role": "production canonical source/environment manifest validation"},
+    {"path": "services/ifpmic_api/migrations/003_workflow_execution.sql", "sha256": "5ef29521944e18551728dd285ce3ae21fa03c2b06f77c25430da6acb0ce1f102", "role": "immutable deployment/build/principal registration and startup lookup schema"},
+    {"path": "services/ifpmic_api/migrations/004_prebinding_incident.sql", "sha256": "9a7651ab063901e69a77f4b825dd21544dc018ed01941dc3a1bc76f8a65b541f", "role": "current schema additions included by the isolated migration fixture"}
+  ],
+  "zero_count_tables": [
+    "ifpmic.jobs",
+    "ifpmic.commands",
+    "ifpmic.commands_outbox",
+    "ifpmic.workspace_intents",
+    "ifpmic.execution_bindings",
+    "ifpmic.worker_run_scopes",
+    "ifpmic.projection_receipts",
+    "ifpmic.delivery_attempts"
+  ],
+  "cases": [
+    {
+      "id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[no_job_missing_registration]",
+      "purpose": "Reject missing startup registration before any job or binding exists.",
+      "target": "Production dispatcher CLI; no deployment/principal/build mapping and no accepted job.",
+      "method": "Skip job creation and workspace provisioning; confirm all eight table counts are zero, then launch with an identity naming the absent deployment.",
+      "agent": "TC",
+      "pass_criteria": "Fixed code-3 response, empty stderr, zero connections to the selected passive listener, and identical all-zero counts after startup rejection.",
+      "expected": "DEPENDENCY_UNAVAILABLE; all eight counts remain zero.",
+      "evidence": "Private per-case process journal, fixed-output digests, listener count, and before/after count record.",
+      "recovery": "Preserve private evidence; allow isolated DB/workspace fixture teardown; do not create a replacement registration or job to make startup pass."
+    },
+    {
+      "id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[missing_deployment_dispatcher]",
+      "purpose": "Reject a missing deployment mapping for an already accepted create.",
+      "target": "Production dispatcher CLI and a real accepted, physically READY job with no deployment row.",
+      "method": "Create the job through G4 HTTP, provision G5 READY through WorkspaceService, omit the deployment during initial owner registration, and launch the dispatcher.",
+      "agent": "TC",
+      "pass_criteria": "Fixed code-3 response; zero selected-endpoint connections; exact owner snapshot unchanged with pending generation-zero outbox and no execution rows.",
+      "expected": "DEPENDENCY_UNAVAILABLE before Temporal connection or claim.",
+      "evidence": "Private owner snapshots and workspace fingerprint, process journal/output digests, and passive-listener count.",
+      "recovery": "Preserve the case evidence and let the per-test database drop; do not add deployment state after observing failure."
+    },
+    {
+      "id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[disabled_deployment_dispatcher]",
+      "purpose": "Reject a disabled deployment mapping.",
+      "target": "Production dispatcher CLI with an initially inserted disabled deployment and accepted READY job.",
+      "method": "Insert the deployment disabled from the outset, register its build/principals, and run the dispatcher against a passive endpoint.",
+      "agent": "TC",
+      "pass_criteria": "Fixed code-3 response; zero endpoint connections and no mutation to accepted job, pending outbox, workspace, or execution rows.",
+      "expected": "DEPENDENCY_UNAVAILABLE before Temporal connection or claim.",
+      "evidence": "Private owner/workspace snapshots, CLI journal/output digests, and listener count.",
+      "recovery": "Preserve evidence and drop the isolated DB; do not enable the deployment to turn rejection into success."
+    },
+    {
+      "id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[missing_dispatcher_principal]",
+      "purpose": "Reject a registered deployment/build without a dispatcher principal.",
+      "target": "Production dispatcher CLI with deployment and build rows but no dispatcher principal row.",
+      "method": "Build the initial owner registry omitting only the dispatcher principal, preserve the accepted READY job, and launch the dispatcher.",
+      "agent": "TC",
+      "pass_criteria": "Fixed code-3 response; zero endpoint connections; accepted/outbox/workspace state unchanged and no attempt, binding, scope, or receipt.",
+      "expected": "DEPENDENCY_UNAVAILABLE before Temporal connection or claim.",
+      "evidence": "Private owner/workspace snapshots, process journal/output digests, and listener count.",
+      "recovery": "Preserve the failing evidence; no owner registration repair is permitted inside the case."
+    },
+    {
+      "id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[disabled_dispatcher_principal]",
+      "purpose": "Reject an initially inactive dispatcher principal.",
+      "target": "Production dispatcher CLI with the owner-inserted dispatcher principal inactive.",
+      "method": "Insert the dispatcher principal with active=false and launch against an accepted READY job.",
+      "agent": "TC",
+      "pass_criteria": "Fixed code-3 response; no endpoint connection or accepted/outbox/workspace/execution-row change.",
+      "expected": "DEPENDENCY_UNAVAILABLE before Temporal connection or claim.",
+      "evidence": "Private owner/workspace snapshots, process journal/output digests, and listener count.",
+      "recovery": "Preserve evidence and drop the test DB; do not activate the principal after rejection."
+    },
+    {
+      "id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[missing_projector_principal]",
+      "purpose": "Reject a build with no projector principal.",
+      "target": "Production worker CLI with deployment/build present and projector principal omitted.",
+      "method": "Insert deployment/build and dispatcher principal only, accept/provision a READY job, then launch worker mode.",
+      "agent": "TC",
+      "pass_criteria": "Fixed code-3 response; no endpoint connection and unchanged pending outbox, accepted job, workspace, and empty execution rows.",
+      "expected": "DEPENDENCY_UNAVAILABLE before Temporal connection or projection.",
+      "evidence": "Private owner/workspace snapshots, process journal/output digests, and listener count.",
+      "recovery": "Preserve evidence and drop the isolated DB; do not insert the missing principal during the case."
+    },
+    {
+      "id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[disabled_projector_principal]",
+      "purpose": "Reject an initially inactive projector principal.",
+      "target": "Production worker CLI with an inactive projector principal and enabled build.",
+      "method": "Insert the projector principal with active=false from the start and launch worker mode against an accepted READY job.",
+      "agent": "TC",
+      "pass_criteria": "Fixed code-3 response; zero endpoint connections and no job, outbox, workspace, or execution-state mutation.",
+      "expected": "DEPENDENCY_UNAVAILABLE before Temporal connection or projection.",
+      "evidence": "Private owner/workspace snapshots, process journal/output digests, and listener count.",
+      "recovery": "Preserve the rejection evidence; do not activate the principal or retry in the same case."
+    },
+    {
+      "id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[missing_dispatcher_build]",
+      "purpose": "Reject a dispatcher deployment with no enabled build mapping.",
+      "target": "Production dispatcher CLI with deployment/principal present and build omitted.",
+      "method": "Insert deployment and dispatcher principal only, then run the dispatcher against an accepted READY job.",
+      "agent": "TC",
+      "pass_criteria": "Fixed code-3 response; no endpoint connection and unchanged accepted/outbox/workspace state with no execution rows.",
+      "expected": "DEPENDENCY_UNAVAILABLE before Temporal connection or claim.",
+      "evidence": "Private owner/workspace snapshots, process journal/output digests, and listener count.",
+      "recovery": "Preserve evidence and drop the isolated DB; no build row may be added after rejection."
+    },
+    {
+      "id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[disabled_dispatcher_build]",
+      "purpose": "Reject a disabled dispatcher build.",
+      "target": "Production dispatcher CLI with a disabled build and enabled deployment/principal.",
+      "method": "Insert the build disabled initially and launch the dispatcher against an accepted READY job.",
+      "agent": "TC",
+      "pass_criteria": "Fixed code-3 response; zero endpoint connections and unchanged accepted/outbox/workspace state with no attempts or execution rows.",
+      "expected": "DEPENDENCY_UNAVAILABLE before Temporal connection or claim.",
+      "evidence": "Private owner/workspace snapshots, process journal/output digests, and listener count.",
+      "recovery": "Preserve evidence; do not enable the build and retry within the case."
+    },
+    {
+      "id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[disabled_projector_build]",
+      "purpose": "Reject a disabled worker build.",
+      "target": "Production worker CLI with a registered but disabled projector build.",
+      "method": "Insert deployment/build/principals with the projector build disabled initially, then launch worker mode.",
+      "agent": "TC",
+      "pass_criteria": "Fixed code-3 response; zero endpoint connections; no projection or mutation to job/outbox/workspace/execution rows.",
+      "expected": "DEPENDENCY_UNAVAILABLE before Temporal connection or projection.",
+      "evidence": "Private owner/workspace snapshots, process journal/output digests, and listener count.",
+      "recovery": "Preserve evidence and discard the isolated DB; do not enable the build during recovery."
+    },
+    {
+      "id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[wrong_dispatcher_role]",
+      "purpose": "Reject a valid projector credential used in dispatcher mode.",
+      "target": "Production dispatcher CLI configured with the projector DB role.",
+      "method": "Use the real projector DSN in an otherwise valid dispatcher configuration and launch the dispatcher.",
+      "agent": "TC",
+      "pass_criteria": "Fixed code-3 response; no listener connection and no owner-visible dispatch/projection effect.",
+      "expected": "DEPENDENCY_UNAVAILABLE before Temporal connection or claim.",
+      "evidence": "Private SQL/workspace snapshots, process journal/output digests, and listener count.",
+      "recovery": "Preserve evidence; do not grant dispatcher authority to the projector role."
+    },
+    {
+      "id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[wrong_projector_role]",
+      "purpose": "Reject a valid dispatcher credential used in worker mode.",
+      "target": "Production worker CLI configured with the dispatcher DB role.",
+      "method": "Use the real dispatcher DSN in an otherwise valid worker configuration and launch worker mode.",
+      "agent": "TC",
+      "pass_criteria": "Fixed code-3 response; no listener connection and no owner-visible dispatch/projection effect.",
+      "expected": "DEPENDENCY_UNAVAILABLE before Temporal connection or projection.",
+      "evidence": "Private SQL/workspace snapshots, process journal/output digests, and listener count.",
+      "recovery": "Preserve evidence; do not grant projector authority to the dispatcher role."
+    },
+    {
+      "id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[wrong_dispatcher_password]",
+      "purpose": "Reject incorrect dispatcher database credentials.",
+      "target": "Production dispatcher CLI with correct role name and incorrect password.",
+      "method": "Change only the private DSN password and launch the dispatcher; assert fixed output without exposing DSN or stderr.",
+      "agent": "TC",
+      "pass_criteria": "Fixed code-3 response; no listener connection and no accepted/outbox/workspace/execution-row mutation.",
+      "expected": "DEPENDENCY_UNAVAILABLE on SQL authentication failure before Temporal connection.",
+      "evidence": "Private owner/workspace snapshots, process journal/output digests, and listener count; no credential bytes in public evidence.",
+      "recovery": "Preserve evidence and private configuration; do not publish or echo credentials."
+    },
+    {
+      "id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[recreated_dispatcher_role_oid]",
+      "purpose": "Reject a same-name dispatcher role recreated with a different PostgreSQL OID.",
+      "target": "Production dispatcher CLI after the role is recreated while the immutable registry retains its original role OID.",
+      "method": "Recreate the role and restore only password/schema/function grants; never update/delete immutable principal/config rows; run dispatcher and restore fixture role credentials/grants during cleanup.",
+      "agent": "TC",
+      "pass_criteria": "Fixed code-3 response; zero listener connections and no outbox/job/workspace/execution mutation; immutable registry remains untouched.",
+      "expected": "DEPENDENCY_UNAVAILABLE because current role OID is not the registered principal OID.",
+      "evidence": "Private role OIDs, owner/workspace snapshots, process journal/output digests, and listener count.",
+      "recovery": "Restore original role password and required grants, preserve evidence, then allow isolated DB teardown; never rewrite the immutable registration."
+    },
+    {
+      "id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[endpoint_mismatch]",
+      "purpose": "Reject an identity whose endpoint/digest conflicts with the registered deployment.",
+      "target": "Production dispatcher CLI with a valid listener endpoint in config but a different registered endpoint.",
+      "method": "Register the alternate endpoint and its correct deployment digest, use the passive listener endpoint and its independently recomputed matching digest in config, then launch.",
+      "agent": "TC",
+      "pass_criteria": "Fixed code-3 response and zero connections to both the distinct configured and registered passive listeners; job/outbox/workspace/execution state unchanged.",
+      "expected": "DEPENDENCY_UNAVAILABLE before connecting to either selected endpoint.",
+      "evidence": "Private identity documents/digests, owner/workspace snapshots, process journal/output digests, and named configured/registered listener counts recorded both after CLI exit and during cleanup.",
+      "recovery": "Preserve private evidence; do not change registry endpoint or weaken the independently recomputed digest."
+    },
+    {
+      "id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[namespace_mismatch]",
+      "purpose": "Reject a configuration namespace that differs from the deployment registration.",
+      "target": "Production dispatcher CLI with matching deployment endpoint but a distinct config namespace and valid recomputed digest.",
+      "method": "Register the original namespace, configure a different namespace with its correctly recomputed deployment digest, and launch.",
+      "agent": "TC",
+      "pass_criteria": "Fixed code-3 response; no passive-listener connection and no SQL/workspace execution-state change.",
+      "expected": "DEPENDENCY_UNAVAILABLE before Temporal connection or claim.",
+      "evidence": "Private registry/config identity digests, owner/workspace snapshots, process journal/output digests, and listener count.",
+      "recovery": "Preserve evidence; do not rewrite namespace registration or config after the attempted start."
+    },
+    {
+      "id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[deployment_mismatch]",
+      "purpose": "Reject a configuration naming a different deployment ID with valid digest material.",
+      "target": "Production dispatcher CLI whose config deployment ID has no corresponding owner registration.",
+      "method": "Keep a valid registered deployment, configure a distinct deployment ID with a correctly recomputed digest, and launch.",
+      "agent": "TC",
+      "pass_criteria": "Fixed code-3 response; zero listener connection and unchanged accepted/outbox/workspace/execution state.",
+      "expected": "DEPENDENCY_UNAVAILABLE before Temporal connection or claim.",
+      "evidence": "Private config/registry hashes, owner/workspace snapshots, process journal/output digests, and listener count.",
+      "recovery": "Preserve evidence; do not add a deployment mapping for the configured ID."
+    },
+    {
+      "id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[build_mismatch_dispatcher]",
+      "purpose": "Reject a dispatcher identity whose build differs from the initially registered build.",
+      "target": "Production dispatcher CLI with a deployment registered for a different build ID.",
+      "method": "Insert only the alternate build and dispatcher principal initially, retain the expected build in the config, and launch.",
+      "agent": "TC",
+      "pass_criteria": "Fixed code-3 response; no listener connection or change to accepted/outbox/workspace/execution state.",
+      "expected": "DEPENDENCY_UNAVAILABLE on identity/build comparison before Temporal connection or claim.",
+      "evidence": "Private build/config digests, owner/workspace snapshots, process journal/output digests, and listener count.",
+      "recovery": "Preserve evidence and discard the DB; do not add the expected build or projector mapping after failure."
+    },
+    {
+      "id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[build_mismatch_projector]",
+      "purpose": "Reject a worker identity whose expected build has no corresponding projector mapping.",
+      "target": "Production worker CLI with an alternate registered build/principal and the expected build in config.",
+      "method": "Insert the alternate build and bind the projector principal to it, then launch worker mode configured for the expected build.",
+      "agent": "TC",
+      "pass_criteria": "Fixed code-3 response; no passive endpoint connection, projection, or job/outbox/workspace/execution mutation.",
+      "expected": "DEPENDENCY_UNAVAILABLE before Temporal connection or projection.",
+      "evidence": "Private build/config digests, owner/workspace snapshots, process journal/output digests, and listener count.",
+      "recovery": "Preserve evidence and drop the isolated DB; do not remap the projector principal."
+    },
+    {
+      "id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[source_manifest_mismatch]",
+      "purpose": "Reject a private source manifest that does not match the identity hash.",
+      "target": "Production dispatcher CLI with a tampered private copy of the source manifest.",
+      "method": "Add a synthetic untrusted file digest to the private manifest copy while retaining the original identity/source hash, then launch.",
+      "agent": "TC",
+      "pass_criteria": "Fixed code-3 response; no listener connection and no accepted/outbox/workspace/execution-state mutation.",
+      "expected": "DEPENDENCY_UNAVAILABLE during fail-closed local manifest validation before Temporal connection.",
+      "evidence": "Private original/altered manifest hashes, process journal/output digests, SQL/workspace snapshots, and listener count.",
+      "recovery": "Preserve the tampered private test artifact; do not alter product source or expected manifest hash."
+    },
+    {
+      "id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[environment_manifest_mismatch]",
+      "purpose": "Reject a private environment manifest that does not match the identity hash.",
+      "target": "Production dispatcher CLI with a tampered private copy of the environment manifest.",
+      "method": "Add a synthetic untrusted module digest to the private manifest copy while retaining the original identity/environment hash, then launch.",
+      "agent": "TC",
+      "pass_criteria": "Fixed code-3 response; no listener connection and no accepted/outbox/workspace/execution-state mutation.",
+      "expected": "DEPENDENCY_UNAVAILABLE during fail-closed local manifest validation before Temporal connection.",
+      "evidence": "Private original/altered manifest hashes, process journal/output digests, SQL/workspace snapshots, and listener count.",
+      "recovery": "Preserve the tampered private test artifact; do not alter product source or expected manifest hash."
+    }
+  ],
+  "expected": {
+    "case_count": 21,
+    "node_ids_are_literal": true,
+    "all_cases_require_fixed_cli_failure_and_zero_selected_endpoint_connections": true,
+    "endpoint_mismatch_requires_two_distinct_passive_listener_counts_at_zero_in_normal_and_cleanup_journals": true,
+    "job_backed_cases_require_unchanged_pending_generation_zero_and_empty_execution_rows": true,
+    "no_job_case_zero_count_tables": ["ifpmic.jobs", "ifpmic.commands", "ifpmic.commands_outbox", "ifpmic.workspace_intents", "ifpmic.execution_bindings", "ifpmic.worker_run_scopes", "ifpmic.projection_receipts", "ifpmic.delivery_attempts"],
+    "missing_projector_build_variant": "Not representable with a projector principal present because worker_principals(deployment_id,build_id) has a foreign key to engine_builds(deployment_id,build_id). Coverage uses a missing projector principal, disabled projector build, and mismatched projector-build identity instead.",
+    "omitted_permutations": "No full Cartesian product across every invalid deployment/principal/build/config dimension is attempted. The literal variants isolate one startup rejection condition at a time; dispatcher and worker paths are both covered, but not every condition in both modes.",
+    "residual_risks": [
+      "These cases are authored but not executed; CLI output, timing, passive-listener behavior, SQL snapshot preservation, and teardown remain unverified.",
+      "The startup watchdog's 25-second body budget includes real G4/G5 fixture setup; actual host timing must be established by the approved full gate.",
+      "The exact runner phase integration and authorization are pending; this file is not independently runnable as an accepted gate."
+    ]
+  }
+}

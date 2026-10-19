@@ -1,0 +1,72 @@
+{
+  "kind": "ifpmic.b03.h2.runtime-startup-window-static-review.v1",
+  "verdict": "approve_static_authoring_checkpoint_only",
+  "reviewer": {
+    "agent_id": "/root/h2_prebinding_gate_audit",
+    "actual_role": "worker_luna",
+    "review_type": "independent bounded static checkpoint audit"
+  },
+  "scope": "Approve only the authored startup-rejection and reconciliation-window cases and their derivative ledgers for continuation into exact full-ledger/contract/runner review. This is not full-ledger approval, execution authorization, test evidence, or H2 acceptance.",
+  "reviewed_source_pins": {
+    "tests/ifpmic_api/test_h2_runtime_startup_rejections.py": "58ba9c3a7dac9b4e78573acd1888008b355960effc689276547a169a5a099c80",
+    "tests/ifpmic_api/h2_startup_case_budget.py": "ee84ddd77140f617c0572f1a4bc9714b6a257ead361282bd84341a181ffc0894",
+    "tests/ifpmic_api/test_h2_reconciliation_window.py": "3fffa849572b4945b040f3869b65828f80c134b301aeb42e4bb840e24fa96096",
+    "tests/ifpmic_api/h2_window_case_budget.py": "7c64f17995b17c1072dc7106ccc38a3595367ecab8fa96fd43619bba98e85c1e",
+    "docs/ifpmic/evidence/b03/h2-runtime-startup-tc-ledger.json": "b6752ef8bf241b461add6981a3a05720548c07a1cba3c62dc9ee280c86d40c81",
+    "docs/ifpmic/evidence/b03/h2-runtime-window-tc-ledger.json": "3baf07cf336868b7c8bfbdfbb7b233f49d4f606660aefb14dffe93cfee965153",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-verification-plan.json": "c6964bccff0d4cec1ac00f18fbb267d5d1a4a5887e53844c604333b7c059486c"
+  },
+  "checks": {
+    "startup_literal_case_count": 21,
+    "startup_ledger_ids_match_test_and_budget_ids": true,
+    "window_literal_case_count": 9,
+    "window_ledger_ids_match_test_and_budget_ids": true,
+    "startup_ledger_case_fields_complete": true,
+    "window_ledger_case_fields_complete": true,
+    "startup_ledger_source_pin_count": 14,
+    "window_ledger_source_pin_count": 18,
+    "all_ledger_source_pins_match_current_bytes": true,
+    "python_ast_parse_for_four_authored_sources_passed": true,
+    "startup_dual_endpoint_oracle_fixed": true,
+    "window_failure_path_restore_and_evidence_fixed": true,
+    "full_plan_execution_authorized_false": true,
+    "execution_or_acceptance_claimed": false
+  },
+  "findings": [
+    {
+      "severity": "resolved_before_approval",
+      "subject": "Startup endpoint mismatch observation",
+      "initial_issue": "The initial variant observed only the configured endpoint while its registered endpoint was an unobserved fixed port.",
+      "resolution": "The exact reviewed version uses two distinct passive loopback listeners for the endpoint-mismatch case, drains and records both configured and registered endpoint connection counts, and requires both counts to be zero in normal and cleanup evidence. Other variants observe their single shared selected endpoint."
+    },
+    {
+      "severity": "resolved_before_approval",
+      "subject": "NEG-WINDOW exception-path restoration evidence",
+      "initial_issue": "The initial version wrote seam evidence only after a successful SQL result, so an assertion or SQL error after replacement could leave no before/while/restored record.",
+      "resolution": "The exact reviewed version attempts original-function restoration in finally before evidence writing, verifies the restored definition and metadata, captures nullable result/snapshot fields and primary/restoration failure types for unsuccessful paths, and preserves the original primary exception without masking it. Cleanup deadline transition remains in a nested finally."
+    }
+  ],
+  "static_findings": {
+    "startup": [
+      "The 21 case IDs are literal and exactly match the startup budget plugin's expanded node IDs.",
+      "Each production CLI rejection expects exit code 3, fixed DEPENDENCY_UNAVAILABLE stdout, empty stderr, no forced termination, and process identity absence.",
+      "Job-backed cases begin with accepted create plus READY workspace and compare owner snapshots after CLI startup; accepted command/outbox remains pending at generation zero and execution binding/scope/receipt/attempt tables remain empty.",
+      "The no-job case checks all eight named business tables are zero before and after; registration state is omitted from the outset for the missing-registration case. Registry test fixtures use initial inserts for variants, not post-observation edits to repair startup state.",
+      "Passive endpoint listeners are evidence-only loopback sockets. Endpoint mismatch observes both the configured and registered endpoint; the oracle requires zero connections to both."
+    ],
+    "window": [
+      "The nine case IDs exactly match the per-case budget map: retention NULL/3600/3601, partial-shape constraints, synthetic-clock before/at/after, and actual-runtime before/after deadline cases.",
+      "The isolated equality seam checks unchanged function OID, owner OID/name, ACL including NULL semantics, SECURITY DEFINER and complete proconfig before/while/restored; it asserts a single clock-assignment replacement, matching live claim identity/expiry, and byte-identical original definition restoration.",
+      "The seam captures private before/while/restored definitions and metadata plus nullable result/SQL snapshots and primary/restoration failure types; restoration precedes evidence writing and primary failure is not replaced by a secondary restore/evidence error.",
+      "Unmodified actual-runtime before/after cases remain separate from the synthetic seam and specify direct workflow history or empty-list observations, with the initial lease-expiry wait and same generation/token fencing."
+    ],
+    "privacy_and_scope": "Both ledgers keep raw configs, endpoints, credentials, SQL snapshots, process identities, and full function definitions in private evidence. Public output is constrained to normalized IDs/outcomes/counts/hashes. The derivative ledgers are explicitly not the complete H2 ledger or standalone gates."
+  },
+  "known_limits": [
+    "No imports, collection, tests, SQL, database access, service startup, or network actions were performed.",
+    "The 25+5 startup/SQL and 215+25 runtime window budgets remain proposals pending exact runner integration and demonstrated full fixture/cleanup fit.",
+    "PostgreSQL/Temporal server behavior, listener behavior, clock replacement/restoration at runtime, and all case outcomes remain unexecuted and unverified.",
+    "This checkpoint does not approve other obligations, exact aggregate ledger, execution contract, runner, frozen pre-gate, any pass, or H2 acceptance."
+  ],
+  "blocking_findings": []
+}

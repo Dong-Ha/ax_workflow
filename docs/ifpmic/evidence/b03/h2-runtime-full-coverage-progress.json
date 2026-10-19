@@ -1,0 +1,289 @@
+{
+  "kind": "ifpmic.b03.h2.runtime-full-coverage-progress.v1",
+  "goal_status": "active",
+  "status": "authoring_only_no_new_runtime_passes",
+  "plan": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-full-verification-plan.json",
+    "sha256": "c6964bccff0d4cec1ac00f18fbb267d5d1a4a5887e53844c604333b7c059486c"
+  },
+  "scope": "Full25-obligation plan remains mandatory. These derivative ledgers are authoring inputs, not an approved complete execution inventory.",
+  "counts": {
+    "obligation_groups": 25,
+    "groups_with_existing_or_draft_literal_ids": 15,
+    "groups_without_literal_ids": 10,
+    "new_unexecuted_draft_case_ids": 42,
+    "retained_case_ids_required_fresh": 407,
+    "current_union_minimum_before_remaining_variants": 449,
+    "final_execution_inventory_frozen": false
+  },
+  "obligations": [
+    {
+      "obligation": "CRASH-01",
+      "status": "draft_case_ids_unexecuted",
+      "literal_pytest_node_ids": [
+        "tests/ifpmic_api/test_accepted_start_response_loss.py::test_actual_started_event_survives_lost_start_response_and_recovers_same_run"
+      ],
+      "tc_ledger": null,
+      "execution_pass_evidence": null
+    },
+    {
+      "obligation": "CRASH-02",
+      "status": "draft_case_ids_unexecuted",
+      "literal_pytest_node_ids": [
+        "tests/ifpmic_api/test_h2_dispatcher_crashes.py::test_claim_commit_crash_reclaims_only_after_expiry"
+      ],
+      "tc_ledger": null,
+      "execution_pass_evidence": null
+    },
+    {
+      "obligation": "CRASH-03",
+      "status": "draft_case_ids_unexecuted",
+      "literal_pytest_node_ids": [
+        "tests/ifpmic_api/test_h2_dispatcher_crashes.py::test_start_response_before_admission_crash_recovers_same_run"
+      ],
+      "tc_ledger": null,
+      "execution_pass_evidence": null
+    },
+    {
+      "obligation": "CRASH-04",
+      "status": "draft_case_ids_unexecuted",
+      "literal_pytest_node_ids": [
+        "tests/ifpmic_api/test_h2_dispatcher_crashes.py::test_admission_before_ack_crash_recovers_same_run"
+      ],
+      "tc_ledger": null,
+      "execution_pass_evidence": null
+    },
+    {
+      "obligation": "CRASH-05",
+      "status": "draft_case_ids_unexecuted",
+      "literal_pytest_node_ids": [
+        "tests/ifpmic_api/test_h2_dispatcher_crashes.py::test_ack_before_worker_activation_projects_once"
+      ],
+      "tc_ledger": null,
+      "execution_pass_evidence": null
+    },
+    {
+      "obligation": "CRASH-06",
+      "status": "draft_case_ids_unexecuted",
+      "literal_pytest_node_ids": [
+        "tests/ifpmic_api/test_h2_dispatcher_crashes.py::test_two_live_dispatchers_stale_ack_cannot_change_recovered_run"
+      ],
+      "tc_ledger": null,
+      "execution_pass_evidence": null
+    },
+    {
+      "obligation": "CRASH-07",
+      "status": "draft_case_ids_unexecuted",
+      "literal_pytest_node_ids": [
+        "tests/ifpmic_api/test_h2_dispatcher_crashes.py::test_admitted_missing_history_is_quarantined_without_replacement"
+      ],
+      "tc_ledger": null,
+      "execution_pass_evidence": null
+    },
+    {
+      "obligation": "CRASH-08",
+      "status": "draft_case_ids_unexecuted",
+      "literal_pytest_node_ids": [
+        "tests/ifpmic_api/test_h2_runtime_restart_and_history.py::test_postgres_and_temporal_restart_preserve_same_execution_and_receipt"
+      ],
+      "tc_ledger": null,
+      "execution_pass_evidence": null
+    },
+    {
+      "obligation": "CRASH-09",
+      "status": "draft_case_ids_unexecuted",
+      "literal_pytest_node_ids": [
+        "tests/ifpmic_api/test_h2_worker_api_crashes.py::test_h2_api_commit_before_response_sigkill_retry_applies_once"
+      ],
+      "tc_ledger": null,
+      "execution_pass_evidence": null
+    },
+    {
+      "obligation": "CRASH-10",
+      "status": "draft_case_ids_unexecuted",
+      "literal_pytest_node_ids": [
+        "tests/ifpmic_api/test_h2_worker_api_crashes.py::test_h2_worker_projection_before_pg_commit_sigkill_rolls_back_then_retries"
+      ],
+      "tc_ledger": null,
+      "execution_pass_evidence": null
+    },
+    {
+      "obligation": "CRASH-11",
+      "status": "draft_case_ids_unexecuted",
+      "literal_pytest_node_ids": [
+        "tests/ifpmic_api/test_h2_worker_api_crashes.py::test_h2_worker_projection_after_pg_commit_sigkill_replays_receipt"
+      ],
+      "tc_ledger": null,
+      "execution_pass_evidence": null
+    },
+    {
+      "obligation": "CRASH-12",
+      "status": "draft_case_ids_unexecuted",
+      "literal_pytest_node_ids": [
+        "tests/ifpmic_api/test_h2_worker_api_crashes.py::test_h2_activity_completed_before_workflow_decision_sigkill_replays_history"
+      ],
+      "tc_ledger": null,
+      "execution_pass_evidence": null
+    },
+    {
+      "obligation": "NEG-STARTUP",
+      "status": "tc_draft_variants_unexecuted",
+      "literal_pytest_node_ids": [
+        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[no_job_missing_registration]",
+        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[missing_deployment_dispatcher]",
+        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[disabled_deployment_dispatcher]",
+        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[missing_dispatcher_principal]",
+        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[disabled_dispatcher_principal]",
+        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[missing_projector_principal]",
+        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[disabled_projector_principal]",
+        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[missing_dispatcher_build]",
+        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[disabled_dispatcher_build]",
+        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[disabled_projector_build]",
+        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[wrong_dispatcher_role]",
+        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[wrong_projector_role]",
+        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[wrong_dispatcher_password]",
+        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[recreated_dispatcher_role_oid]",
+        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[endpoint_mismatch]",
+        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[namespace_mismatch]",
+        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[deployment_mismatch]",
+        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[build_mismatch_dispatcher]",
+        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[build_mismatch_projector]",
+        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[source_manifest_mismatch]",
+        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[environment_manifest_mismatch]"
+      ],
+      "tc_ledger": {
+        "path": "docs/ifpmic/evidence/b03/h2-runtime-startup-tc-ledger.json",
+        "sha256": "b6752ef8bf241b461add6981a3a05720548c07a1cba3c62dc9ee280c86d40c81"
+      },
+      "execution_pass_evidence": null
+    },
+    {
+      "obligation": "NEG-MACHINE-RACE",
+      "status": "literal_cases_not_authored",
+      "literal_pytest_node_ids": [],
+      "tc_ledger": null,
+      "execution_pass_evidence": null
+    },
+    {
+      "obligation": "NEG-STARTED",
+      "status": "literal_cases_not_authored",
+      "literal_pytest_node_ids": [],
+      "tc_ledger": null,
+      "execution_pass_evidence": null
+    },
+    {
+      "obligation": "NEG-FOREIGN-DEPLOYMENT",
+      "status": "literal_cases_not_authored",
+      "literal_pytest_node_ids": [],
+      "tc_ledger": null,
+      "execution_pass_evidence": null
+    },
+    {
+      "obligation": "NEG-WORKSPACE",
+      "status": "literal_cases_not_authored",
+      "literal_pytest_node_ids": [],
+      "tc_ledger": null,
+      "execution_pass_evidence": null
+    },
+    {
+      "obligation": "NEG-AUTHORITY",
+      "status": "literal_cases_not_authored",
+      "literal_pytest_node_ids": [],
+      "tc_ledger": null,
+      "execution_pass_evidence": null
+    },
+    {
+      "obligation": "NEG-PROJECTION-FENCES",
+      "status": "historical_real_SQL_cases_require_fresh_full_gate",
+      "literal_pytest_node_ids": [
+        "tests/ifpmic_api/test_workflow_schema.py::test_h2_real_create_activation_receipt_replay_and_run_fences",
+        "tests/ifpmic_api/test_workflow_schema.py::test_h2_role_registry_and_function_acl_match_static_contract",
+        "tests/ifpmic_api/test_workflow_schema.py::test_h2_four_role_oid_recreation_is_drift_and_does_not_rebind",
+        "tests/ifpmic_api/test_workflow_schema.py::test_h2_service_roles_use_scram_without_trust_fallthrough"
+      ],
+      "tc_ledger": null,
+      "execution_pass_evidence": null
+    },
+    {
+      "obligation": "NEG-PREADMISSION",
+      "status": "literal_cases_not_authored",
+      "literal_pytest_node_ids": [],
+      "tc_ledger": null,
+      "execution_pass_evidence": null
+    },
+    {
+      "obligation": "NEG-WINDOW",
+      "status": "tc_draft_variants_unexecuted",
+      "literal_pytest_node_ids": [
+        "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_retention[retention-null]",
+        "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_retention[retention-3600]",
+        "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_retention[retention-3601]",
+        "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_partial_shape_constraint",
+        "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_exact_deadline_with_isolated_clock_seam[before-deadline]",
+        "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_exact_deadline_with_isolated_clock_seam[at-deadline]",
+        "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_exact_deadline_with_isolated_clock_seam[after-deadline]",
+        "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_actual_dispatcher_boundary[actual-before-deadline]",
+        "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_actual_dispatcher_boundary[actual-after-deadline]"
+      ],
+      "tc_ledger": {
+        "path": "docs/ifpmic/evidence/b03/h2-runtime-window-tc-ledger.json",
+        "sha256": "3baf07cf336868b7c8bfbdfbb7b233f49d4f606660aefb14dffe93cfee965153"
+      },
+      "execution_pass_evidence": null
+    },
+    {
+      "obligation": "NEG-RETENTION-RPC",
+      "status": "literal_cases_not_authored",
+      "literal_pytest_node_ids": [],
+      "tc_ledger": null,
+      "execution_pass_evidence": null
+    },
+    {
+      "obligation": "NEG-NONCREATE",
+      "status": "literal_cases_not_authored",
+      "literal_pytest_node_ids": [],
+      "tc_ledger": null,
+      "execution_pass_evidence": null
+    },
+    {
+      "obligation": "NEG-RUNTIME-FAILURE",
+      "status": "literal_cases_not_authored",
+      "literal_pytest_node_ids": [],
+      "tc_ledger": null,
+      "execution_pass_evidence": null
+    },
+    {
+      "obligation": "NEG-HUNG-DRIVER",
+      "status": "literal_cases_not_authored",
+      "literal_pytest_node_ids": [],
+      "tc_ledger": null,
+      "execution_pass_evidence": null
+    }
+  ],
+  "missing_literal_groups": [
+    "NEG-MACHINE-RACE",
+    "NEG-STARTED",
+    "NEG-FOREIGN-DEPLOYMENT",
+    "NEG-WORKSPACE",
+    "NEG-AUTHORITY",
+    "NEG-PREADMISSION",
+    "NEG-RETENTION-RPC",
+    "NEG-NONCREATE",
+    "NEG-RUNTIME-FAILURE",
+    "NEG-HUNG-DRIVER"
+  ],
+  "execution_authorized": false,
+  "runtime_acceptance": "No new crash, startup or window passing results. Historical407 passes apply only to their previously accepted candidate.",
+  "remaining_gates": [
+    "Finish all10 missing runtime groups and reconcile all25 obligations, concrete oracles and case IDs.",
+    "Resolve shared cleanup/fixture budget, current restarted PG identity and deterministic attempt-row ordering across crash tests.",
+    "Independently review complete exact ledger/contract, then runner and pre-gate before execution.",
+    "Fresh complete gate407+allmandatoryadditions, private raw evidence/public privacy audit and independent final acceptance.",
+    "Full B03/H3-H7/originalAT32/AX visualization and authorized deployment remain later goal obligations."
+  ],
+  "bounded_static_review": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-startup-window-static-review.json",
+    "sha256": "ac4e7c09048a4f6a4ea513bacc41d1db2ef3178945ae3d686aae6bc46b5c4a1a",
+    "scope": "30 startup/window draft IDs only; no full ledger, runner, execution or acceptance approval"
+  }
+}
