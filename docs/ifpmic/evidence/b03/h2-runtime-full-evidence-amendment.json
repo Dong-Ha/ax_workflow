@@ -1,0 +1,61 @@
+{
+  "kind": "ifpmic.b03.h2.runtime-full-evidence-amendment.v1",
+  "status": "paused_by_user_unreviewed_source_checkpoint_not_executed",
+  "goal_status": "active",
+  "prior_checkpoint_commit": "ea5055a2b6fda99dd697d042deddc0d3245bf222",
+  "prior_candidate": {
+    "h2-runtime-full-integrated-ledger.json": "cf4f3bfc023341c22e0c8fc7c072c54838d62f7adeb39d817a4ce3b6589f8d60",
+    "h2-runtime-full-execution-contract.json": "c10c7cb329ea82b758cfa7db34ac330e4b7ec472320b5904e8086f8067865a2d",
+    "h2-runtime-full-inventory-source-review.json": "4fda632e7eed5ee10f8aad0ffa13443d169f0dc9d4469991d9af75cc192f123a",
+    "h2-runtime-full-execution-contract-review.json": "481604abb4cfe602e16cbd65fae8f290f5a61f3ec405d350c9ebbbf6b7fe7c79",
+    "h2-runtime-full-execution-tc-review.json": "17da5950d52deed48d454b026e152415d4e3eadd9eba20da4503009a41bf46b9"
+  },
+  "purpose": "Persist actual SQL evidence required by the approved plan and correct two source defects before collection or execution.",
+  "target": "Unexecuted490-case candidate; no changes to literal case inventory or historical407 proof.",
+  "method": [
+    "Private raw owner snapshot observation on each shared query, preserving database rows, ordering, return object and existing assertions.",
+    "Crash timing uses private per-node SHA256 filenames instead of a shared exclusive file.",
+    "Foreign reservation denial remains based on actual SQLSTATE42501; undefined redundant name removed.",
+    "Use the source audit to resolve additional history/tree/SQL evidence gaps before freezing an amended candidate."
+  ],
+  "agent": {
+    "integration": "Code-dev/root",
+    "test_authoring_and_audit": "TC worker_luna",
+    "independent_review": "pending"
+  },
+  "pass_criteria": [
+    "Actual before/cut/recovered SQL rows remain reviewable after fixture teardown.",
+    "Every case timing record is unique and preserves215+25s original deadlines.",
+    "Fresh independent source and TC reviews bind amended bytes before pre-gate.",
+    "All490 cases and mandatory proof must pass fresh actual execution; no hash or JUnit substitutes raw required evidence."
+  ],
+  "expected_result": "Amended evidence-complete candidate, followed by reviewed runner/pre-gate and actual full execution.",
+  "evidence": {
+    "source_audit": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-full-case-evidence-index.json",
+      "sha256": "5eaa7704eca86ccccccc3beba8fe0a464cb992ac8941740f2744c814bfcf9cea"
+    },
+    "draft_source_pins": {
+      "tests/ifpmic_api/h2_crash_case_budget.py": "b382b7096b4f3abb73357f851804a8f2427ab36971a0641e49e25ce045b457b5",
+      "tests/ifpmic_api/test_h2_started_deployment_boundaries.py": "2bccaebf9df70459f26dea3e742aa15289e6cee642278cd8151e9e14ea21c7eb",
+      "tests/ifpmic_api/test_h2_runtime_normal_flow.py": "c459515ef3ecb2992481ed8d10ebceb4be030f64c95859c030857ced0a3776bc",
+      "tests/ifpmic_api/h2_snapshot_evidence.py": "5b483045cb0cf402d9c7abfd228c9a975c00ddcac90e04aa4f274f318c9189b3"
+    },
+    "dynamic_results": null
+  },
+  "recovery_and_reverification": "Keep prior approvals bound to original bytes. Preserve failed attempts. Resolve every actual gap; refresh source closure, ledgers and exact reviews; review runner and pre-gate before imports/collection/tests/services.",
+  "limitations": [
+    "Shared owner observer does not cover direct SQL in startup/FENCES or workspace tree evidence; explicit gap resolution remains pending.",
+    "Existing source audit describes ea5055a and must remain historical when draft sources change.",
+    "New observer has only static validation so far; no actual SQL/test/service was executed."
+  ],
+  "execution_authorized": false,
+  "h2_complete": false,
+  "resume_document": "docs/ifpmic/RESUME.md",
+  "unreviewed_runner_draft": {
+    "path": "scripts/verify_ifpmic_b03_h2_runtime_full.py",
+    "sha256": "88b298f5749f435a00c97fc1f648add3aabc49aa2a2c04afd93bf0648d18acbd",
+    "provisional_old_pins": true,
+    "executed": false
+  }
+}

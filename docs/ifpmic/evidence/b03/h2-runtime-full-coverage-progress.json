@@ -1,7 +1,7 @@
 {
   "kind": "ifpmic.b03.h2.runtime-full-coverage-progress.v1",
   "goal_status": "active",
-  "status": "authoring_only_no_new_runtime_passes",
+  "status": "evidence_source_amendment_pending_no_execution",
   "plan": {
     "path": "docs/ifpmic/evidence/b03/h2-runtime-full-verification-plan.json",
     "sha256": "c6964bccff0d4cec1ac00f18fbb267d5d1a4a5887e53844c604333b7c059486c"
@@ -14,7 +14,7 @@
     "new_unexecuted_draft_case_ids": 83,
     "retained_case_ids_required_fresh": 407,
     "current_union_minimum_before_remaining_variants": 490,
-    "final_execution_inventory_frozen": true,
+    "final_execution_inventory_frozen": false,
     "fixture_failure_prerequisite_ids": 5
   },
   "obligations": [
@@ -414,5 +414,6 @@
   "runner_authoring_acceptance": {
     "path": "docs/ifpmic/evidence/b03/h2-runtime-full-runner-authoring-acceptance.json",
     "sha256": "09509b02d3743119babaf175a4cc8d160428daeacc3fa8dbbdebb5d2529791ef"
-  }
+  },
+  "current_source_amendment": "docs/ifpmic/evidence/b03/h2-runtime-full-evidence-amendment.json"
 }

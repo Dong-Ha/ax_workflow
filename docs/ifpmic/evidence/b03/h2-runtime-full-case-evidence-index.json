@@ -1,0 +1,1932 @@
+{
+  "kind": "ifpmic.b03.h2.runtime-full-case-evidence-index.v1",
+  "status": "static_read_only_source_audit_unexecuted_no_pass_or_acceptance_claim",
+  "purpose": "Map all83 frozen-ledger additions and five explicitly requested retained controls to source-created private evidence paths and identify proof artifacts that current code does not persist.",
+  "authority": {
+    "head": "ea5055a2b6fda99dd697d042deddc0d3245bf222",
+    "ledger": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger.json",
+      "sha256": "cf4f3bfc023341c22e0c8fc7c072c54838d62f7adeb39d817a4ce3b6589f8d60"
+    },
+    "execution_contract": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-full-execution-contract.json",
+      "sha256": "c10c7cb329ea82b758cfa7db34ac330e4b7ec472320b5904e8086f8067865a2d"
+    },
+    "approved_plan": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-full-verification-plan.json",
+      "sha256": "c6964bccff0d4cec1ac00f18fbb267d5d1a4a5887e53844c604333b7c059486c"
+    }
+  },
+  "method_and_limits": [
+    "Read-only AST/source/JSON inspection. No imports, collection, tests, SQL, services, or network operations were performed.",
+    "File names below are source-derived private evidence templates, not observed runtime artifacts. No test pass is inferred.",
+    "A SHA-256 in a JSON summary is integrity metadata only; it cannot replace persisted full SQL rows/history required for independent review.",
+    "Fixture fault-injection cases explicitly distinguish synthetic process handles from actual OS processes, and actual sockets/threads from unstarted handles."
+  ],
+  "counts": {
+    "ledger_additions": 83,
+    "cases_with_literal_node_ids": 83,
+    "supplemental_retained_controls": 5
+  },
+  "cases": [
+    {
+      "node_id": "tests/ifpmic_api/test_accepted_start_response_loss.py::test_actual_started_event_survives_lost_start_response_and_recovers_same_run",
+      "obligation": "CRASH-01",
+      "budget_seconds": {
+        "setup_and_body": 215,
+        "shared_cleanup": 25
+      },
+      "purpose": "test_actual_started_event_survives_lost_start_response_and_recovers_same_run",
+      "target": "test_actual_started_event_survives_lost_start_response_and_recovers_same_run",
+      "method": "Use the concrete draft source named by case_ids plus its named process barrier. Independently observe committed SQL and exact history at the cut, kill saved PID/start-tick, recover the same build and storage. Review full literal oracles before execution.",
+      "evidence_profile": "accepted_start_loss",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_authority_revoked_before_first_projection[eligibility]",
+      "obligation": "NEG-AUTHORITY",
+      "budget_seconds": {
+        "setup_and_body": 215,
+        "shared_cleanup": 25
+      },
+      "purpose": "Current profile eligibility revocation wins when committed before the first worker projection.",
+      "target": "One real admitted create workflow paused immediately before its first actual project_activation SQL function call.",
+      "method": "Private child validates manifests, then test-only ExecutionStore subclass blocks before the real call. Operator inserts the real eligibility revocation; API read remains 200/DRAFT; release the worker.",
+      "evidence_profile": "activity_authority",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_authority_revoked_before_first_projection[membership]",
+      "obligation": "NEG-AUTHORITY",
+      "budget_seconds": {
+        "setup_and_body": 215,
+        "shared_cleanup": 25
+      },
+      "purpose": "Current membership revocation wins when committed before the first worker projection.",
+      "target": "One real admitted create workflow and actual projector worker paused immediately before the first project_activation SQL call.",
+      "method": "Private child validates manifests, then subclasses the actual ExecutionStore to block before delegating the real SQL function. Operator independently deactivates the membership; API read must return 403; release the actual worker.",
+      "evidence_profile": "activity_authority",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_committed_receipt_replays_after_authority_revoke[eligibility]",
+      "obligation": "NEG-AUTHORITY",
+      "budget_seconds": {
+        "setup_and_body": 215,
+        "shared_cleanup": 25
+      },
+      "purpose": "A committed projection receipt remains authoritative after eligibility is revoked and the worker loses its activity result.",
+      "target": "Actual projector paused after PostgreSQL commit and before its activity result reaches Temporal.",
+      "method": "Verify committed applied receipt and absent matching ActivityTaskCompleted; insert eligibility revocation, kill the saved worker PID after start-tick check, restart the normal worker on unchanged storage/build, and observe direct history.",
+      "evidence_profile": "activity_receipt_replay",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_committed_receipt_replays_after_authority_revoke[membership]",
+      "obligation": "NEG-AUTHORITY",
+      "budget_seconds": {
+        "setup_and_body": 215,
+        "shared_cleanup": 25
+      },
+      "purpose": "A committed projection receipt remains authoritative after membership is revoked and the worker loses its activity result.",
+      "target": "Actual worker paused after the real project_activation transaction committed but before returning the Activity result.",
+      "method": "Observe one committed applied receipt and no matching ActivityTaskCompleted in direct history; revoke membership; SIGKILL the journaled PID only after start-tick identity check; start the normal worker on the same build/config/storage and await history completion.",
+      "evidence_profile": "activity_receipt_replay",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_execution_runtime_kills_hung_real_driver_and_rolls_back",
+      "obligation": "NEG-HUNG-DRIVER",
+      "budget_seconds": {
+        "setup_and_body": 215,
+        "shared_cleanup": 25
+      },
+      "purpose": "An uncancellable real PostgreSQL driver thread cannot prevent bounded worker-process termination or commit partial projection state.",
+      "target": "Actual worker activity and project_activation transaction; injected DB connection wrapper executes the actual SQL function and then blocks on real SELECT pg_sleep(30) on the same open transaction.",
+      "method": "Observe private pg_sleep barrier and independent pg_stat_activity evidence for exact projector role/backend PID, active SELECT pg_sleep(30), and non-NULL xact_start, with DRAFT/no-receipt owner SQL state. SIGTERM the exact worker PID after start-tick check; wait for runtime self-exit within 15s+3s, then independently observe exact backend disappearance by pre-query event time+40s (capped by original body deadline); restart normal worker and inspect receipt/history recovery.",
+      "evidence_profile": "hung_driver",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_execution_runtime_normal_sigterm_control",
+      "obligation": "NEG-RUNTIME-FAILURE",
+      "budget_seconds": {
+        "setup_and_body": 215,
+        "shared_cleanup": 25
+      },
+      "purpose": "Requested SIGTERM remains a graceful shutdown control and does not become a false fatal-worker result.",
+      "target": "Actual execution_runtime child with registered worker and private Worker subclass waiting for runtime shutdown().",
+      "method": "Wait for Worker.run entry, signal only the saved child PID after validating start ticks, and observe worker shutdown and process exit.",
+      "evidence_profile": "runtime_sigterm",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_execution_runtime_surfaces_unrequested_worker_exit[runtime-concurrent-fatal]",
+      "obligation": "NEG-RUNTIME-FAILURE",
+      "budget_seconds": {
+        "setup_and_body": 215,
+        "shared_cleanup": 25
+      },
+      "purpose": "A fatal Worker task racing with SIGTERM is still surfaced instead of being swallowed as normal shutdown.",
+      "target": "Actual runtime child with a private Worker subclass that sends SIGTERM to its own saved process and raises a fatal exception in the same task turn.",
+      "method": "Wait for the child’s fatal-armed event, release the action, require the private event ordering (task action, self-SIGTERM, exception path), then inspect actual exit and fixed stdout.",
+      "evidence_profile": "runtime_exit",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_execution_runtime_surfaces_unrequested_worker_exit[runtime-fatal]",
+      "obligation": "NEG-RUNTIME-FAILURE",
+      "budget_seconds": {
+        "setup_and_body": 215,
+        "shared_cleanup": 25
+      },
+      "purpose": "An unsolicited fatal Worker.run exception is surfaced as a runtime failure.",
+      "target": "Actual execution_runtime.main/run with a privately injected Worker whose run raises after a parent-controlled barrier.",
+      "method": "Child validates manifest/config and real registry before SDK dependency replacement; parent releases the fatal worker action and records the actual process outcome.",
+      "evidence_profile": "runtime_exit",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_execution_runtime_surfaces_unrequested_worker_exit[runtime-return]",
+      "obligation": "NEG-RUNTIME-FAILURE",
+      "budget_seconds": {
+        "setup_and_body": 215,
+        "shared_cleanup": 25
+      },
+      "purpose": "An unsolicited successful Worker.run return is treated as runtime failure.",
+      "target": "Actual execution_runtime.main/run in a manifest-validated private child with a narrowly injected Worker subclass.",
+      "method": "After the real child connects to registered PG/Temporal dependencies, private barrier releases the injected Worker.run to return None; inspect process result and fixed stdout.",
+      "evidence_profile": "runtime_exit",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_missing_history_then_retention_rpc_failure_never_starts",
+      "obligation": "NEG-RETENTION-RPC",
+      "budget_seconds": {
+        "setup_and_body": 215,
+        "shared_cleanup": 25
+      },
+      "purpose": "A real namespace retention lookup failure after actual history NotFound never authorizes workflow Start.",
+      "target": "Real dispatcher private child observes the isolated Temporal namespace before the owned Temporal server is stopped and retention RPC is attempted.",
+      "method": "Test-only TemporalTransport subclass records actual MissingHistory then waits. Parent confirms no run via actual list RPC, gracefully stops the owned server, releases child to call the unchanged super().retention_seconds() RPC, then queries owner SQL.",
+      "evidence_profile": "retention_rpc",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_noncreate_signal_targets_admitted_run_without_business_consumption",
+      "obligation": "NEG-NONCREATE",
+      "budget_seconds": {
+        "setup_and_body": 215,
+        "shared_cleanup": 25
+      },
+      "purpose": "A durable non-create command signals the already admitted run without creating business state or a second workflow.",
+      "target": "Normally admitted and activated workflow plus one owner-seeded synthetic human-submission command/outbox, delivered by the actual dispatcher.",
+      "method": "Run actual dispatcher/worker and baseline create to completion; seed the non-create route/outbox; make it due; await real signal delivery attempt; compare owner SQL before/after and direct Temporal signal history plus workflow query.",
+      "evidence_profile": "noncreate_signal",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_noncreate_waits_until_admission",
+      "obligation": "NEG-NONCREATE",
+      "budget_seconds": {
+        "setup_and_body": 25,
+        "shared_cleanup": 5
+      },
+      "purpose": "A non-create command cannot be dispatched or consumed before a workflow binding is admitted.",
+      "target": "Synthetic accepted human-submission route/outbox in a real isolated fixture database, with no binding or workflow server.",
+      "method": "Owner seeds only the immutable command and outbox, calls actual claim_delivery through the SCRAM dispatcher role, then reads actual owner tables. The synthetic registered endpoint is never contacted.",
+      "evidence_profile": "noncreate_wait",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_dispatcher_crashes.py::test_ack_before_worker_activation_projects_once",
+      "obligation": "CRASH-05",
+      "budget_seconds": {
+        "setup_and_body": 215,
+        "shared_cleanup": 25
+      },
+      "purpose": "test_ack_before_worker_activation_projects_once",
+      "target": "test_ack_before_worker_activation_projects_once",
+      "method": "Use the concrete draft source named by case_ids plus its named process barrier. Independently observe committed SQL and exact history at the cut, kill saved PID/start-tick, recover the same build and storage. Review full literal oracles before execution.",
+      "evidence_profile": "dispatcher_crash",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_dispatcher_crashes.py::test_admission_before_ack_crash_recovers_same_run",
+      "obligation": "CRASH-04",
+      "budget_seconds": {
+        "setup_and_body": 215,
+        "shared_cleanup": 25
+      },
+      "purpose": "test_admission_before_ack_crash_recovers_same_run",
+      "target": "test_admission_before_ack_crash_recovers_same_run",
+      "method": "Use the concrete draft source named by case_ids plus its named process barrier. Independently observe committed SQL and exact history at the cut, kill saved PID/start-tick, recover the same build and storage. Review full literal oracles before execution.",
+      "evidence_profile": "dispatcher_crash",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_dispatcher_crashes.py::test_admitted_missing_history_is_quarantined_without_replacement",
+      "obligation": "CRASH-07",
+      "budget_seconds": {
+        "setup_and_body": 215,
+        "shared_cleanup": 25
+      },
+      "purpose": "test_admitted_missing_history_is_quarantined_without_replacement",
+      "target": "test_admitted_missing_history_is_quarantined_without_replacement",
+      "method": "Use the concrete draft source named by case_ids plus its named process barrier. Independently observe committed SQL and exact history at the cut, kill saved PID/start-tick, recover the same build and storage. Review full literal oracles before execution.",
+      "evidence_profile": "dispatcher_crash",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_dispatcher_crashes.py::test_claim_commit_crash_reclaims_only_after_expiry",
+      "obligation": "CRASH-02",
+      "budget_seconds": {
+        "setup_and_body": 215,
+        "shared_cleanup": 25
+      },
+      "purpose": "test_claim_commit_crash_reclaims_only_after_expiry",
+      "target": "test_claim_commit_crash_reclaims_only_after_expiry",
+      "method": "Use the concrete draft source named by case_ids plus its named process barrier. Independently observe committed SQL and exact history at the cut, kill saved PID/start-tick, recover the same build and storage. Review full literal oracles before execution.",
+      "evidence_profile": "dispatcher_crash",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_dispatcher_crashes.py::test_start_response_before_admission_crash_recovers_same_run",
+      "obligation": "CRASH-03",
+      "budget_seconds": {
+        "setup_and_body": 215,
+        "shared_cleanup": 25
+      },
+      "purpose": "test_start_response_before_admission_crash_recovers_same_run",
+      "target": "test_start_response_before_admission_crash_recovers_same_run",
+      "method": "Use the concrete draft source named by case_ids plus its named process barrier. Independently observe committed SQL and exact history at the cut, kill saved PID/start-tick, recover the same build and storage. Review full literal oracles before execution.",
+      "evidence_profile": "dispatcher_crash",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_dispatcher_crashes.py::test_two_live_dispatchers_stale_ack_cannot_change_recovered_run",
+      "obligation": "CRASH-06",
+      "budget_seconds": {
+        "setup_and_body": 215,
+        "shared_cleanup": 25
+      },
+      "purpose": "test_two_live_dispatchers_stale_ack_cannot_change_recovered_run",
+      "target": "test_two_live_dispatchers_stale_ack_cannot_change_recovered_run",
+      "method": "Use the concrete draft source named by case_ids plus its named process barrier. Independently observe committed SQL and exact history at the cut, kill saved PID/start-tick, recover the same build and storage. Review full literal oracles before execution.",
+      "evidence_profile": "dispatcher_crash",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py::test_expired_cleanup_budget_performs_no_new_lifecycle_action",
+      "obligation": "NEG-WORKSPACE",
+      "budget_seconds": {
+        "setup_and_body": 25,
+        "shared_cleanup": 5
+      },
+      "purpose": "Ensure an exhausted shared cleanup allowance cannot fall back to new signal or wait work and preserves unknown ownership evidence.",
+      "target": "h2_dispatcher_crash_support.cleanup_case fallback branch and _fallback_signal ordering under an exhausted cleanup controller.",
+      "method": "Exercise the real test-only cleanup entry point and saved resource handles under the same case clock; private fixture evidence only, with no claim that an unconfirmed handle is absent. Inject a stop_all_owned failure and a separate exhausted cleanup controller into the actual crash.cleanup_case controller branch. Its real fallback calls the real _fallback_signal, which must recheck the injected remaining callback before any process identity lookup, signal or wait. Retain a private process journal and handle probe.",
+      "evidence_profile": "fixture_budget",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py::test_partial_oidc_start_fails_closed_for_unstarted_thread_handle",
+      "obligation": "NEG-WORKSPACE",
+      "budget_seconds": {
+        "setup_and_body": 25,
+        "shared_cleanup": 5
+      },
+      "purpose": "Prove partial local OIDC startup retains and finalizes real sockets and already-started serving threads.",
+      "target": "SyntheticOIDCProvider.start/close and the actual g4_oidc_provider fixture finalization contract.",
+      "method": "Exercise the real test-only cleanup entry point and saved resource handles under the same case clock; private fixture evidence only, with no claim that an unconfirmed handle is absent. Inject one exception immediately before the second registered serving Thread.start. Capture both actually allocated server sockets, the first live serving thread and second retained unstarted thread handle, then call the real bounded provider.close with cleanup.remaining backed by the same case controller.",
+      "evidence_profile": "fixture_oidc",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py::test_restore_error_keeps_exact_primary_and_notes_secondary",
+      "obligation": "NEG-WORKSPACE",
+      "budget_seconds": {
+        "setup_and_body": 25,
+        "shared_cleanup": 5
+      },
+      "purpose": "Ensure deadline restoration failure cannot replace an already propagating body/setup exception.",
+      "target": "h2_fixture_cleanup.restore_preserving_error in the actual finally-style exception context.",
+      "method": "Exercise the real test-only cleanup entry point and saved resource handles under the same case clock; private fixture evidence only, with no claim that an unconfirmed handle is absent. Raise a unique primary LookupError, call the real helper with a restore callback that raises a unique OSError, then compare object identity and the exact secondary-type note.",
+      "evidence_profile": "fixture_restore_primary",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py::test_restore_only_failure_escapes_by_identity",
+      "obligation": "NEG-WORKSPACE",
+      "budget_seconds": {
+        "setup_and_body": 25,
+        "shared_cleanup": 5
+      },
+      "purpose": "Ensure restoration failure remains visible when no earlier exception exists.",
+      "target": "h2_fixture_cleanup.restore_preserving_error with restore as the sole failure.",
+      "method": "Exercise the real test-only cleanup entry point and saved resource handles under the same case clock; private fixture evidence only, with no claim that an unconfirmed handle is absent. Pass a unique RuntimeError instance from the restore callback and assert the exact same object escapes.",
+      "evidence_profile": "fixture_restore_only",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py::test_unconfirmed_testclient_exit_records_unknown_ownership",
+      "obligation": "NEG-WORKSPACE",
+      "budget_seconds": {
+        "setup_and_body": 25,
+        "shared_cleanup": 5
+      },
+      "purpose": "Prove unconfirmed actual TestClient exit cannot be reported as successful or absent.",
+      "target": "h2_fixture_cleanup.managed_test_client finally path with a real FastAPI TestClient portal and close helper thread.",
+      "method": "Exercise the real test-only cleanup entry point and saved resource handles under the same case clock; private fixture evidence only, with no claim that an unconfirmed handle is absent. Use a real minimal FastAPI lifespan/maintenance task and actual Starlette TestClient. Hold the actual client exit in a synchronized helper-thread gate, cap each remaining request by the original shared deadline, and inspect private finalizer record and retained helper/portal handles before releasing and joining them within the remaining same epoch.",
+      "evidence_profile": "fixture_testclient",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_actual_dispatcher_boundary[actual-after-deadline]",
+      "obligation": "NEG-WINDOW",
+      "budget_seconds": {
+        "setup_and_body": 215,
+        "shared_cleanup": 25
+      },
+      "purpose": "Prove the NEG-WINDOW requirement boundary: B03 H2; REQ-02; REQ-13; REQ-14 preservation; AT-16 prerequisite only.",
+      "target": "Use same real API/workspace/build/Temporal setup. Dispatcher SCRAM role claims and reserves an all-NULL binding. Owner initializes only then: uncertain_until=database_now-1 minute, first_start=uncertain_until-1 hour, retention=3601. Keep gen1/token unchanged until the real 30-second database-clock lease expires. Use source_pins above, private source/environment manifests and exact Temporal toolchain/installed environment inventory. This actual case uses unmodified runtime sources only; no clock replacement is allowed.",
+      "method": "Run the unmodified production dispatcher CLI against the real private Temporal server/storage. It reclaims generation 2 and reaches the actual record_start_attempt boundary; because the seeded deadline is expired it must quarantine before Temporal start or admission.",
+      "evidence_profile": "window_runtime",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_actual_dispatcher_boundary[actual-before-deadline]",
+      "obligation": "NEG-WINDOW",
+      "budget_seconds": {
+        "setup_and_body": 215,
+        "shared_cleanup": 25
+      },
+      "purpose": "Prove the NEG-WINDOW requirement boundary: B03 H2; REQ-02; REQ-13; REQ-14 preservation; AT-16 prerequisite only.",
+      "target": "Use crash.prepare_case for a real API-accepted job, ready workspace, live eligibility, registered build, private configs and owned Temporal server. Real SCRAM dispatcher claims and reserves; owner seeds the window while all fields are NULL with first_start=database_now and uncertain_until=first_start+1 hour, retention=3601. Preserve gen1/token and wait for its actual 30-second database-clock lease expiry before starting the dispatcher. Use source_pins above, private source/environment manifest files and exact Temporal toolchain/installed environment inventory from the full runtime gate. This case uses the unmodified production dispatcher and must never use the clock seam.",
+      "method": "Start the real unmodified services.ifpmic_api.execution_runtime dispatcher CLI against the exact private config and same Temporal storage. It reclaims generation 2, observes missing history, calls real record_start_attempt while deadline remains live, starts the real workflow, verifies Started history, admits the run and dispatches. The activity worker remains stopped.",
+      "evidence_profile": "window_runtime",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_exact_deadline_with_isolated_clock_seam[after-deadline]",
+      "obligation": "NEG-WINDOW",
+      "budget_seconds": {
+        "setup_and_body": 25,
+        "shared_cleanup": 5
+      },
+      "purpose": "Prove the NEG-WINDOW requirement boundary: B03 H2; REQ-02; REQ-13; REQ-14 preservation; AT-16 prerequisite only.",
+      "target": "Same isolated accepted/reserved command setup. While all window fields are NULL, owner seeds deadline=frozen_instant-1 second, first_start=deadline-1 hour, retention=3601. Capture complete function identity/security metadata and exact original definition; matching generation/token must remain leased beyond frozen instant. Use source_pins above and private generated source/environment manifests; exact equality seam is not production time evidence.",
+      "method": "In the dedicated synthetic DB, replace only the one clock assignment in the same function identity with the fixed frozen timestamptz literal and call the actual SQL function as dispatcher SCRAM role. No Temporal client/service is part of the seam.",
+      "evidence_profile": "window_clock",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_exact_deadline_with_isolated_clock_seam[at-deadline]",
+      "obligation": "NEG-WINDOW",
+      "budget_seconds": {
+        "setup_and_body": 25,
+        "shared_cleanup": 5
+      },
+      "purpose": "Prove the NEG-WINDOW requirement boundary: B03 H2; REQ-02; REQ-13; REQ-14 preservation; AT-16 prerequisite only.",
+      "target": "Same isolated accepted/reserved command setup. While all window fields are NULL, owner seeds deadline=frozen_instant, first_start=frozen_instant-1 hour, retention=3601. Capture exact function identity/security metadata and original body; prove one replaceable clock assignment and matching live claim token/generation with expiry after frozen instant. Use source_pins above and private generated source/environment manifests; exact equality proof is isolated and not production time behavior evidence.",
+      "method": "Temporary same-identity function replacement changes only instant:=clock_timestamp(); to instant:=TIMESTAMPTZ '<frozen>'; actual record_start_attempt runs as SCRAM dispatcher. No Temporal service/client is used in this SQL seam.",
+      "evidence_profile": "window_clock",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_exact_deadline_with_isolated_clock_seam[before-deadline]",
+      "obligation": "NEG-WINDOW",
+      "budget_seconds": {
+        "setup_and_body": 25,
+        "shared_cleanup": 5
+      },
+      "purpose": "Prove the NEG-WINDOW requirement boundary: B03 H2; REQ-02; REQ-13; REQ-14 preservation; AT-16 prerequisite only.",
+      "target": "Real accepted job, READY workspace, registered identity, dispatcher SCRAM claim and actual reserve_execution. Seed the owner-only window while all fields are NULL: deadline=frozen_instant+1 second, first_start=deadline-1 hour, retention=3601. Before replacement, capture function OID, owner OID/name, ACL preserving NULL-vs-array, SECURITY DEFINER, full proconfig/search_path and exact pg_get_functiondef. Require exactly one literal instant:=clock_timestamp(); assignment and claim_expires_at>frozen_instant for matching leased generation/token. Use source_pins above and private generated source/environment manifests. The dedicated fixture database and exact plan SHA must be recorded; the seam is not production clock evidence.",
+      "method": "In the isolated synthetic database only, CREATE OR REPLACE the same function identity with its one clock assignment replaced by a fixed timestamptz literal. Invoke the actual SQL function via SCRAM dispatcher role; no Temporal service/client is used in this equality seam.",
+      "evidence_profile": "window_clock",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_partial_shape_constraint",
+      "obligation": "NEG-WINDOW",
+      "budget_seconds": {
+        "setup_and_body": 25,
+        "shared_cleanup": 5
+      },
+      "purpose": "Prove the NEG-WINDOW requirement boundary: B03 H2; REQ-02; REQ-13; REQ-14 preservation; AT-16 prerequisite only.",
+      "target": "Use a real accepted job, READY workspace, registered identity, SCRAM claim and actual reserve_execution. Confirm the owner sees (NULL,NULL,NULL) on the reserved binding; do not disable triggers or change DDL. Use source_pins above, the parent plan SHA, and private source/environment manifests generated for this isolated synthetic case.",
+      "method": "Owner attempts all six non-empty partial shapes: first only; first+deadline; first+retention; deadline only; retention only; deadline+retention. Every UPDATE runs against the unchanged database constraint inside its own rollback-capable transaction.",
+      "evidence_profile": "window_shape",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_retention[retention-3600]",
+      "obligation": "NEG-WINDOW",
+      "budget_seconds": {
+        "setup_and_body": 25,
+        "shared_cleanup": 5
+      },
+      "purpose": "Prove the NEG-WINDOW requirement boundary: B03 H2; REQ-02; REQ-13; REQ-14 preservation; AT-16 prerequisite only.",
+      "target": "Same real accepted-job, READY-workspace and eligible-profile setup as the NULL case; the real SCRAM dispatcher claims and reserves a binding whose window fields are all NULL. Use source_pins above, the parent plan SHA, and private per-case source/environment manifests generated by the test. Actual installed runtime/toolchain pins remain to be frozen by the full ledger.",
+      "method": "Invoke actual ifpmic.record_start_attempt with literal retention_seconds=3600 through the SCRAM dispatcher DSN; no Temporal client or mocked SQL result is used.",
+      "evidence_profile": "window_retention",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_retention[retention-3601]",
+      "obligation": "NEG-WINDOW",
+      "budget_seconds": {
+        "setup_and_body": 25,
+        "shared_cleanup": 5
+      },
+      "purpose": "Prove the NEG-WINDOW requirement boundary: B03 H2; REQ-02; REQ-13; REQ-14 preservation; AT-16 prerequisite only.",
+      "target": "Same real accepted-job, READY-workspace and eligible-profile setup; dispatcher SCRAM role claims and reserves an all-NULL window binding. Use source_pins above, the parent plan SHA, and private per-case source/environment manifests generated by the test. Actual installed runtime/toolchain pins remain to be frozen by the full ledger.",
+      "method": "Invoke the real SQL function with literal retention_seconds=3601 through the real SCRAM dispatcher principal.",
+      "evidence_profile": "window_retention",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_retention[retention-null]",
+      "obligation": "NEG-WINDOW",
+      "budget_seconds": {
+        "setup_and_body": 25,
+        "shared_cleanup": 5
+      },
+      "purpose": "Prove the NEG-WINDOW requirement boundary: B03 H2; REQ-02; REQ-13; REQ-14 preservation; AT-16 prerequisite only.",
+      "target": "Create a real accepted synthetic API job, READY workspace and eligible profile in the isolated fixture database; register the dispatcher/build identity; claim through the SCRAM dispatcher role and reserve through actual ifpmic.reserve_execution. Confirm the binding window fields are all NULL before the attempt. Use source_pins above, the parent plan SHA, and private per-case source/environment manifests generated by the test. Actual installed runtime/toolchain pins remain to be frozen by the full ledger.",
+      "method": "Invoke actual ifpmic.record_start_attempt(command_id,generation,claim_token,NULL) over the dispatcher SCRAM DSN. This SQL-only cut has no Temporal transport or dispatcher process; the actual unmodified dispatcher before/after cases separately cover history behavior.",
+      "evidence_profile": "window_retention",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_runtime_restart_and_history.py::test_postgres_and_temporal_restart_preserve_same_execution_and_receipt",
+      "obligation": "CRASH-08",
+      "budget_seconds": {
+        "setup_and_body": 215,
+        "shared_cleanup": 25
+      },
+      "purpose": "test_postgres_and_temporal_restart_preserve_same_execution_and_receipt",
+      "target": "test_postgres_and_temporal_restart_preserve_same_execution_and_receipt",
+      "method": "Use the concrete draft source named by case_ids plus its named process barrier. Independently observe committed SQL and exact history at the cut, kill saved PID/start-tick, recover the same build and storage. Review full literal oracles before execution.",
+      "evidence_profile": "restart",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[build_mismatch_dispatcher]",
+      "obligation": "NEG-STARTUP",
+      "budget_seconds": {
+        "setup_and_body": 25,
+        "shared_cleanup": 5
+      },
+      "purpose": "Reject a dispatcher identity whose build differs from the initially registered build.",
+      "target": "Production dispatcher CLI with a deployment registered for a different build ID.",
+      "method": "Insert only the alternate build and dispatcher principal initially, retain the expected build in the config, and launch.",
+      "evidence_profile": "startup",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[build_mismatch_projector]",
+      "obligation": "NEG-STARTUP",
+      "budget_seconds": {
+        "setup_and_body": 25,
+        "shared_cleanup": 5
+      },
+      "purpose": "Reject a worker identity whose expected build has no corresponding projector mapping.",
+      "target": "Production worker CLI with an alternate registered build/principal and the expected build in config.",
+      "method": "Insert the alternate build and bind the projector principal to it, then launch worker mode configured for the expected build.",
+      "evidence_profile": "startup",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[deployment_mismatch]",
+      "obligation": "NEG-STARTUP",
+      "budget_seconds": {
+        "setup_and_body": 25,
+        "shared_cleanup": 5
+      },
+      "purpose": "Reject a configuration naming a different deployment ID with valid digest material.",
+      "target": "Production dispatcher CLI whose config deployment ID has no corresponding owner registration.",
+      "method": "Keep a valid registered deployment, configure a distinct deployment ID with a correctly recomputed digest, and launch.",
+      "evidence_profile": "startup",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[disabled_deployment_dispatcher]",
+      "obligation": "NEG-STARTUP",
+      "budget_seconds": {
+        "setup_and_body": 25,
+        "shared_cleanup": 5
+      },
+      "purpose": "Reject a disabled deployment mapping.",
+      "target": "Production dispatcher CLI with an initially inserted disabled deployment and accepted READY job.",
+      "method": "Insert the deployment disabled from the outset, register its build/principals, and run the dispatcher against a passive endpoint.",
+      "evidence_profile": "startup",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[disabled_dispatcher_build]",
+      "obligation": "NEG-STARTUP",
+      "budget_seconds": {
+        "setup_and_body": 25,
+        "shared_cleanup": 5
+      },
+      "purpose": "Reject a disabled dispatcher build.",
+      "target": "Production dispatcher CLI with a disabled build and enabled deployment/principal.",
+      "method": "Insert the build disabled initially and launch the dispatcher against an accepted READY job.",
+      "evidence_profile": "startup",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[disabled_dispatcher_principal]",
+      "obligation": "NEG-STARTUP",
+      "budget_seconds": {
+        "setup_and_body": 25,
+        "shared_cleanup": 5
+      },
+      "purpose": "Reject an initially inactive dispatcher principal.",
+      "target": "Production dispatcher CLI with the owner-inserted dispatcher principal inactive.",
+      "method": "Insert the dispatcher principal with active=false and launch against an accepted READY job.",
+      "evidence_profile": "startup",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[disabled_projector_build]",
+      "obligation": "NEG-STARTUP",
+      "budget_seconds": {
+        "setup_and_body": 25,
+        "shared_cleanup": 5
+      },
+      "purpose": "Reject a disabled worker build.",
+      "target": "Production worker CLI with a registered but disabled projector build.",
+      "method": "Insert deployment/build/principals with the projector build disabled initially, then launch worker mode.",
+      "evidence_profile": "startup",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[disabled_projector_principal]",
+      "obligation": "NEG-STARTUP",
+      "budget_seconds": {
+        "setup_and_body": 25,
+        "shared_cleanup": 5
+      },
+      "purpose": "Reject an initially inactive projector principal.",
+      "target": "Production worker CLI with an inactive projector principal and enabled build.",
+      "method": "Insert the projector principal with active=false from the start and launch worker mode against an accepted READY job.",
+      "evidence_profile": "startup",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[endpoint_mismatch]",
+      "obligation": "NEG-STARTUP",
+      "budget_seconds": {
+        "setup_and_body": 25,
+        "shared_cleanup": 5
+      },
+      "purpose": "Reject an identity whose endpoint/digest conflicts with the registered deployment.",
+      "target": "Production dispatcher CLI with a valid listener endpoint in config but a different registered endpoint.",
+      "method": "Register the alternate endpoint and its correct deployment digest, use the passive listener endpoint and its independently recomputed matching digest in config, then launch.",
+      "evidence_profile": "startup",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[environment_manifest_mismatch]",
+      "obligation": "NEG-STARTUP",
+      "budget_seconds": {
+        "setup_and_body": 25,
+        "shared_cleanup": 5
+      },
+      "purpose": "Reject a private environment manifest that does not match the identity hash.",
+      "target": "Production dispatcher CLI with a tampered private copy of the environment manifest.",
+      "method": "Add a synthetic untrusted module digest to the private manifest copy while retaining the original identity/environment hash, then launch.",
+      "evidence_profile": "startup",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[missing_deployment_dispatcher]",
+      "obligation": "NEG-STARTUP",
+      "budget_seconds": {
+        "setup_and_body": 25,
+        "shared_cleanup": 5
+      },
+      "purpose": "Reject a missing deployment mapping for an already accepted create.",
+      "target": "Production dispatcher CLI and a real accepted, physically READY job with no deployment row.",
+      "method": "Create the job through G4 HTTP, provision G5 READY through WorkspaceService, omit the deployment during initial owner registration, and launch the dispatcher.",
+      "evidence_profile": "startup",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[missing_dispatcher_build]",
+      "obligation": "NEG-STARTUP",
+      "budget_seconds": {
+        "setup_and_body": 25,
+        "shared_cleanup": 5
+      },
+      "purpose": "Reject a dispatcher deployment with no enabled build mapping.",
+      "target": "Production dispatcher CLI with deployment/principal present and build omitted.",
+      "method": "Insert deployment and dispatcher principal only, then run the dispatcher against an accepted READY job.",
+      "evidence_profile": "startup",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[missing_dispatcher_principal]",
+      "obligation": "NEG-STARTUP",
+      "budget_seconds": {
+        "setup_and_body": 25,
+        "shared_cleanup": 5
+      },
+      "purpose": "Reject a registered deployment/build without a dispatcher principal.",
+      "target": "Production dispatcher CLI with deployment and build rows but no dispatcher principal row.",
+      "method": "Build the initial owner registry omitting only the dispatcher principal, preserve the accepted READY job, and launch the dispatcher.",
+      "evidence_profile": "startup",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[missing_projector_principal]",
+      "obligation": "NEG-STARTUP",
+      "budget_seconds": {
+        "setup_and_body": 25,
+        "shared_cleanup": 5
+      },
+      "purpose": "Reject a build with no projector principal.",
+      "target": "Production worker CLI with deployment/build present and projector principal omitted.",
+      "method": "Insert deployment/build and dispatcher principal only, accept/provision a READY job, then launch worker mode.",
+      "evidence_profile": "startup",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[namespace_mismatch]",
+      "obligation": "NEG-STARTUP",
+      "budget_seconds": {
+        "setup_and_body": 25,
+        "shared_cleanup": 5
+      },
+      "purpose": "Reject a configuration namespace that differs from the deployment registration.",
+      "target": "Production dispatcher CLI with matching deployment endpoint but a distinct config namespace and valid recomputed digest.",
+      "method": "Register the original namespace, configure a different namespace with its correctly recomputed deployment digest, and launch.",
+      "evidence_profile": "startup",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[no_job_missing_registration]",
+      "obligation": "NEG-STARTUP",
+      "budget_seconds": {
+        "setup_and_body": 25,
+        "shared_cleanup": 5
+      },
+      "purpose": "Reject missing startup registration before any job or binding exists.",
+      "target": "Production dispatcher CLI; no deployment/principal/build mapping and no accepted job.",
+      "method": "Skip job creation and workspace provisioning; confirm all eight table counts are zero, then launch with an identity naming the absent deployment.",
+      "evidence_profile": "startup",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[recreated_dispatcher_role_oid]",
+      "obligation": "NEG-STARTUP",
+      "budget_seconds": {
+        "setup_and_body": 25,
+        "shared_cleanup": 5
+      },
+      "purpose": "Reject a same-name dispatcher role recreated with a different PostgreSQL OID.",
+      "target": "Production dispatcher CLI after the role is recreated while the immutable registry retains its original role OID.",
+      "method": "Recreate the role and restore only password/schema/function grants; never update/delete immutable principal/config rows; run dispatcher and restore fixture role credentials/grants during cleanup.",
+      "evidence_profile": "startup",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[source_manifest_mismatch]",
+      "obligation": "NEG-STARTUP",
+      "budget_seconds": {
+        "setup_and_body": 25,
+        "shared_cleanup": 5
+      },
+      "purpose": "Reject a private source manifest that does not match the identity hash.",
+      "target": "Production dispatcher CLI with a tampered private copy of the source manifest.",
+      "method": "Add a synthetic untrusted file digest to the private manifest copy while retaining the original identity/source hash, then launch.",
+      "evidence_profile": "startup",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[wrong_dispatcher_password]",
+      "obligation": "NEG-STARTUP",
+      "budget_seconds": {
+        "setup_and_body": 25,
+        "shared_cleanup": 5
+      },
+      "purpose": "Reject incorrect dispatcher database credentials.",
+      "target": "Production dispatcher CLI with correct role name and incorrect password.",
+      "method": "Change only the private DSN password and launch the dispatcher; assert fixed output without exposing DSN or stderr.",
+      "evidence_profile": "startup",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[wrong_dispatcher_role]",
+      "obligation": "NEG-STARTUP",
+      "budget_seconds": {
+        "setup_and_body": 25,
+        "shared_cleanup": 5
+      },
+      "purpose": "Reject a valid projector credential used in dispatcher mode.",
+      "target": "Production dispatcher CLI configured with the projector DB role.",
+      "method": "Use the real projector DSN in an otherwise valid dispatcher configuration and launch the dispatcher.",
+      "evidence_profile": "startup",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[wrong_projector_role]",
+      "obligation": "NEG-STARTUP",
+      "budget_seconds": {
+        "setup_and_body": 25,
+        "shared_cleanup": 5
+      },
+      "purpose": "Reject a valid dispatcher credential used in worker mode.",
+      "target": "Production worker CLI configured with the dispatcher DB role.",
+      "method": "Use the real dispatcher DSN in an otherwise valid worker configuration and launch worker mode.",
+      "evidence_profile": "startup",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_foreign_deployment_cannot_start_old_binding",
+      "obligation": "NEG-FOREIGN-DEPLOYMENT",
+      "budget_seconds": {
+        "setup_and_body": 215,
+        "shared_cleanup": 25
+      },
+      "purpose": "Prove namespace equality does not transfer an existing binding across deployments.",
+      "target": "Two owned loopback Temporal servers with distinct private SQLite directories, one shared PostgreSQL fixture, distinct registered deployment/build identities and distinct standalone dispatcher/projector login principals.",
+      "method": "Create two owned loopback Temporal servers with distinct storage and same namespace; register deployment-two identities and standalone logins using bootstrap role administration. Put explicit foreign-role SCRAM rules ahead of trust, verify correct-password session_user and wrong-password rejection. Reserve under deployment one, prove the foreign direct reserve receives 42501, return the old lease to retry, and run deployment two's real Dispatcher CLI against its private config; require successful bootstrap, exact idle JSON, exit 0, and no old-binding generation or foreign-server run change. Then admit the original command through deployment one's real post-admission barrier, independently verify persisted Started history, and leave its actual workflow unprojected. Build the valid activation proposal from that admitted binding/run and accepted payload, independently verify its domain digest, require the foreign projector with identical valid arguments to receive 42501 with no effect, then require the owning projector with those same arguments to apply revision one and create exactly one receipt. Compare immutable binding and original registry rows throughout.",
+      "evidence_profile": "foreign_deployment",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[binding_digest]",
+      "obligation": "NEG-STARTED",
+      "budget_seconds": {
+        "setup_and_body": 215,
+        "shared_cleanup": 25
+      },
+      "purpose": "Fail closed when actual persisted Started event has binding_digest mismatch.",
+      "target": "Production Dispatcher once() against an owner-reserved binding and exact workflow ID; one direct rogue start on its owned Temporal server.",
+      "method": "At the real before_start_rpc constructor barrier, independently observe reserved SQL, start exactly one workflow at binding.temporal_workflow_id with only the literal binding_digest alteration, fetch actual first-event protobuf history and decode input, then release production dispatcher. Worker remains stopped.",
+      "evidence_profile": "started_mismatch",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[build_id]",
+      "obligation": "NEG-STARTED",
+      "budget_seconds": {
+        "setup_and_body": 215,
+        "shared_cleanup": 25
+      },
+      "purpose": "Fail closed when actual persisted Started event has build_id mismatch.",
+      "target": "Production Dispatcher once() against an owner-reserved binding and exact workflow ID; one direct rogue start on its owned Temporal server.",
+      "method": "At the real before_start_rpc constructor barrier, independently observe reserved SQL, start exactly one workflow at binding.temporal_workflow_id with only the literal build_id alteration, fetch actual first-event protobuf history and decode input, then release production dispatcher. Worker remains stopped.",
+      "evidence_profile": "started_mismatch",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[extra_input]",
+      "obligation": "NEG-STARTED",
+      "budget_seconds": {
+        "setup_and_body": 215,
+        "shared_cleanup": 25
+      },
+      "purpose": "Fail closed when actual persisted Started event has extra_input mismatch.",
+      "target": "Production Dispatcher once() against an owner-reserved binding and exact workflow ID; one direct rogue start on its owned Temporal server.",
+      "method": "At the real before_start_rpc constructor barrier, independently observe reserved SQL, start exactly one workflow at binding.temporal_workflow_id with only the literal extra_input alteration, fetch actual first-event protobuf history and decode input, then release production dispatcher. Worker remains stopped.",
+      "evidence_profile": "started_mismatch",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[job_id]",
+      "obligation": "NEG-STARTED",
+      "budget_seconds": {
+        "setup_and_body": 215,
+        "shared_cleanup": 25
+      },
+      "purpose": "Fail closed when actual persisted Started event has job_id mismatch.",
+      "target": "Production Dispatcher once() against an owner-reserved binding and exact workflow ID; one direct rogue start on its owned Temporal server.",
+      "method": "At the real before_start_rpc constructor barrier, independently observe reserved SQL, start exactly one workflow at binding.temporal_workflow_id with only the literal job_id alteration, fetch actual first-event protobuf history and decode input, then release production dispatcher. Worker remains stopped.",
+      "evidence_profile": "started_mismatch",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[malformed_input]",
+      "obligation": "NEG-STARTED",
+      "budget_seconds": {
+        "setup_and_body": 215,
+        "shared_cleanup": 25
+      },
+      "purpose": "Fail closed when actual persisted Started event has malformed_input mismatch.",
+      "target": "Production Dispatcher once() against an owner-reserved binding and exact workflow ID; one direct rogue start on its owned Temporal server.",
+      "method": "At the real before_start_rpc constructor barrier, independently observe reserved SQL, start exactly one workflow at binding.temporal_workflow_id with only the literal malformed_input alteration, fetch actual first-event protobuf history and decode input, then release production dispatcher. Worker remains stopped.",
+      "evidence_profile": "started_mismatch",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[missing_input]",
+      "obligation": "NEG-STARTED",
+      "budget_seconds": {
+        "setup_and_body": 215,
+        "shared_cleanup": 25
+      },
+      "purpose": "Fail closed when actual persisted Started event has missing_input mismatch.",
+      "target": "Production Dispatcher once() against an owner-reserved binding and exact workflow ID; one direct rogue start on its owned Temporal server.",
+      "method": "At the real before_start_rpc constructor barrier, independently observe reserved SQL, start exactly one workflow at binding.temporal_workflow_id with only the literal missing_input alteration, fetch actual first-event protobuf history and decode input, then release production dispatcher. Worker remains stopped.",
+      "evidence_profile": "started_mismatch",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[project_id]",
+      "obligation": "NEG-STARTED",
+      "budget_seconds": {
+        "setup_and_body": 215,
+        "shared_cleanup": 25
+      },
+      "purpose": "Fail closed when actual persisted Started event has project_id mismatch.",
+      "target": "Production Dispatcher once() against an owner-reserved binding and exact workflow ID; one direct rogue start on its owned Temporal server.",
+      "method": "At the real before_start_rpc constructor barrier, independently observe reserved SQL, start exactly one workflow at binding.temporal_workflow_id with only the literal project_id alteration, fetch actual first-event protobuf history and decode input, then release production dispatcher. Worker remains stopped.",
+      "evidence_profile": "started_mismatch",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[task_queue]",
+      "obligation": "NEG-STARTED",
+      "budget_seconds": {
+        "setup_and_body": 215,
+        "shared_cleanup": 25
+      },
+      "purpose": "Fail closed when actual persisted Started event has task_queue mismatch.",
+      "target": "Production Dispatcher once() against an owner-reserved binding and exact workflow ID; one direct rogue start on its owned Temporal server.",
+      "method": "At the real before_start_rpc constructor barrier, independently observe reserved SQL, start exactly one workflow at binding.temporal_workflow_id with only the literal task_queue alteration, fetch actual first-event protobuf history and decode input, then release production dispatcher. Worker remains stopped.",
+      "evidence_profile": "started_mismatch",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[workflow_type]",
+      "obligation": "NEG-STARTED",
+      "budget_seconds": {
+        "setup_and_body": 215,
+        "shared_cleanup": 25
+      },
+      "purpose": "Fail closed when actual persisted Started event has workflow_type mismatch.",
+      "target": "Production Dispatcher once() against an owner-reserved binding and exact workflow ID; one direct rogue start on its owned Temporal server.",
+      "method": "At the real before_start_rpc constructor barrier, independently observe reserved SQL, start exactly one workflow at binding.temporal_workflow_id with only the literal workflow_type alteration, fetch actual first-event protobuf history and decode input, then release production dispatcher. Worker remains stopped.",
+      "evidence_profile": "started_mismatch",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_transport_boundaries.py::test_h2_activity_waits_until_admission_same_run",
+      "obligation": "NEG-PREADMISSION",
+      "budget_seconds": {
+        "setup_and_body": 215,
+        "shared_cleanup": 25
+      },
+      "purpose": "A real projector activity arriving before dispatcher admission waits without effects, then succeeds for the same run after admission.",
+      "target": "Actual production Dispatcher paused after it observes persisted Started history but before admit_run, plus a separate production Worker CLI on the registered build queue.",
+      "method": "Pause the actual Dispatcher at after_history_observed after its one real Start and independent history read. Start the real registered Worker; independently observe a completed read_activation activity returning wait while workflow phase remains admission_wait. Snapshot SQL to require DRAFT revision 0, reserved binding with no admitted_run_id, generation-1 leased outbox, and no worker scope or receipt. Release the dispatcher, require admission/ack and project_activation to settle, and assert exactly the same Started run is admitted and the one immutable receipt queues the job.",
+      "evidence_profile": "preadmission",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_transport_boundaries.py::test_h2_machine_authority_disable_serializes_with_claim[claim-before-disable]",
+      "obligation": "NEG-MACHINE-RACE",
+      "budget_seconds": {
+        "setup_and_body": 215,
+        "shared_cleanup": 25
+      },
+      "purpose": "A principal disable waiting on the claim transaction commits before execution reservation is authorized.",
+      "target": "Fresh accepted create with no binding, a real Dispatcher child paused before and after the claim transaction, and a separate owner SQL session disabling the dispatcher registration.",
+      "method": "Pause at the real ExecutionStore before_claim_delivery_commit hook and observe the owner UPDATE blocked via pg_blocking_pids and lock wait state. Release claim commit, pause at after_claim_delivery_commit before Dispatcher proceeds to deliver/reserve, verify the owner disable committed, then release delivery. Independently verify no reservation, attempt completion, scope, receipt or Temporal execution.",
+      "evidence_profile": "machine_claim_first",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_transport_boundaries.py::test_h2_machine_authority_disable_serializes_with_claim[disable-before-claim]",
+      "obligation": "NEG-MACHINE-RACE",
+      "budget_seconds": {
+        "setup_and_body": 215,
+        "shared_cleanup": 25
+      },
+      "purpose": "A disabled dispatcher principal is rejected before it can claim a fresh accepted create.",
+      "target": "Actual production Dispatcher startup against the registered deployment after owner disables that principal; the synthetic accepted job is fresh and has no execution binding.",
+      "method": "Create an accepted job through the real G4/G5 harness, establish physical READY, disable the registered dispatcher principal through the owner role, then start the one-shot production Dispatcher child. Independently compare owner SQL before and after and query the exact workflow ID in the actual isolated Temporal namespace.",
+      "evidence_profile": "machine_disable_first",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_worker_api_crashes.py::test_h2_activity_completed_before_workflow_decision_sigkill_replays_history",
+      "obligation": "CRASH-12",
+      "budget_seconds": {
+        "setup_and_body": 215,
+        "shared_cleanup": 25
+      },
+      "purpose": "test_h2_activity_completed_before_workflow_decision_sigkill_replays_history",
+      "target": "test_h2_activity_completed_before_workflow_decision_sigkill_replays_history",
+      "method": "Use the concrete draft source named by case_ids plus its named process barrier. Independently observe committed SQL and exact history at the cut, kill saved PID/start-tick, recover the same build and storage. Review full literal oracles before execution.",
+      "evidence_profile": "worker_api",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_worker_api_crashes.py::test_h2_api_commit_before_response_sigkill_retry_applies_once",
+      "obligation": "CRASH-09",
+      "budget_seconds": {
+        "setup_and_body": 215,
+        "shared_cleanup": 25
+      },
+      "purpose": "test_h2_api_commit_before_response_sigkill_retry_applies_once",
+      "target": "test_h2_api_commit_before_response_sigkill_retry_applies_once",
+      "method": "Use the concrete draft source named by case_ids plus its named process barrier. Independently observe committed SQL and exact history at the cut, kill saved PID/start-tick, recover the same build and storage. Review full literal oracles before execution.",
+      "evidence_profile": "worker_api",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_worker_api_crashes.py::test_h2_worker_projection_after_pg_commit_sigkill_replays_receipt",
+      "obligation": "CRASH-11",
+      "budget_seconds": {
+        "setup_and_body": 215,
+        "shared_cleanup": 25
+      },
+      "purpose": "test_h2_worker_projection_after_pg_commit_sigkill_replays_receipt",
+      "target": "test_h2_worker_projection_after_pg_commit_sigkill_replays_receipt",
+      "method": "Use the concrete draft source named by case_ids plus its named process barrier. Independently observe committed SQL and exact history at the cut, kill saved PID/start-tick, recover the same build and storage. Review full literal oracles before execution.",
+      "evidence_profile": "worker_api",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_worker_api_crashes.py::test_h2_worker_projection_before_pg_commit_sigkill_rolls_back_then_retries",
+      "obligation": "CRASH-10",
+      "budget_seconds": {
+        "setup_and_body": 215,
+        "shared_cleanup": 25
+      },
+      "purpose": "test_h2_worker_projection_before_pg_commit_sigkill_rolls_back_then_retries",
+      "target": "test_h2_worker_projection_before_pg_commit_sigkill_rolls_back_then_retries",
+      "method": "Use the concrete draft source named by case_ids plus its named process barrier. Independently observe committed SQL and exact history at the cut, kill saved PID/start-tick, recover the same build and storage. Review full literal oracles before execution.",
+      "evidence_profile": "worker_api",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_invalid_ready_fails_closed[marker-forged]",
+      "obligation": "NEG-WORKSPACE",
+      "budget_seconds": {
+        "setup_and_body": 215,
+        "shared_cleanup": 25
+      },
+      "purpose": "Prove READY workspace identity validation rejects invalid canonical marker bytes.",
+      "target": "Actual dispatcher on a real READY G5 workspace with one controlled marker defect.",
+      "method": "Use actual private manifests, registered deployment, real PostgreSQL SCRAM roles and Temporal server through test-only dispatcher/worker barriers. Independently read owner SQL and direct Temporal history; no fake projection/SDK result. The whole-case watchdog starts before fixtures and the shared cleanup window includes fixture teardown. Apply only invalid canonical marker bytes to the private fixture before claim; release at after-claim barrier and inspect real result, rows and lstat snapshots.",
+      "evidence_profile": "workspace_marker",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_invalid_ready_fails_closed[marker-missing]",
+      "obligation": "NEG-WORKSPACE",
+      "budget_seconds": {
+        "setup_and_body": 215,
+        "shared_cleanup": 25
+      },
+      "purpose": "Prove READY workspace identity validation rejects marker absent.",
+      "target": "Actual dispatcher on a real READY G5 workspace with one controlled marker defect.",
+      "method": "Use actual private manifests, registered deployment, real PostgreSQL SCRAM roles and Temporal server through test-only dispatcher/worker barriers. Independently read owner SQL and direct Temporal history; no fake projection/SDK result. The whole-case watchdog starts before fixtures and the shared cleanup window includes fixture teardown. Apply only marker absent to the private fixture before claim; release at after-claim barrier and inspect real result, rows and lstat snapshots.",
+      "evidence_profile": "workspace_marker",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_invalid_ready_fails_closed[marker-symlink]",
+      "obligation": "NEG-WORKSPACE",
+      "budget_seconds": {
+        "setup_and_body": 215,
+        "shared_cleanup": 25
+      },
+      "purpose": "Prove READY workspace identity validation rejects marker path is a symlink to an external private target.",
+      "target": "Actual dispatcher on a real READY G5 workspace with one controlled marker defect.",
+      "method": "Use actual private manifests, registered deployment, real PostgreSQL SCRAM roles and Temporal server through test-only dispatcher/worker barriers. Independently read owner SQL and direct Temporal history; no fake projection/SDK result. The whole-case watchdog starts before fixtures and the shared cleanup window includes fixture teardown. Apply only marker path is a symlink to an external private target to the private fixture before claim; release at after-claim barrier and inspect real result, rows and lstat snapshots.",
+      "evidence_profile": "workspace_marker",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_invalid_ready_fails_closed[marker-wrong-token]",
+      "obligation": "NEG-WORKSPACE",
+      "budget_seconds": {
+        "setup_and_body": 215,
+        "shared_cleanup": 25
+      },
+      "purpose": "Prove READY workspace identity validation rejects valid marker format with another UUID token.",
+      "target": "Actual dispatcher on a real READY G5 workspace with one controlled marker defect.",
+      "method": "Use actual private manifests, registered deployment, real PostgreSQL SCRAM roles and Temporal server through test-only dispatcher/worker barriers. Independently read owner SQL and direct Temporal history; no fake projection/SDK result. The whole-case watchdog starts before fixtures and the shared cleanup window includes fixture teardown. Apply only valid marker format with another UUID token to the private fixture before claim; release at after-claim barrier and inspect real result, rows and lstat snapshots.",
+      "evidence_profile": "workspace_marker",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_nonready_blocks_admitted_worker[state-error]",
+      "obligation": "NEG-WORKSPACE",
+      "budget_seconds": {
+        "setup_and_body": 215,
+        "shared_cleanup": 25
+      },
+      "purpose": "Prove an already admitted worker waits safely while workspace is ERROR.",
+      "target": "Actual dispatcher admits one workflow; actual Temporal worker executes read_activation against real non-READY workspace.",
+      "method": "Use actual private manifests, registered deployment, real PostgreSQL SCRAM roles and Temporal server through test-only dispatcher/worker barriers. Independently read owner SQL and direct Temporal history; no fake projection/SDK result. The whole-case watchdog starts before fixtures and the shared cleanup window includes fixture teardown. Pause after_run_admitted, change the current workspace state to ERROR through independent owner fixture, release dispatcher and start real CLI worker; inspect direct activity history and SQL.",
+      "evidence_profile": "workspace_worker",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_nonready_blocks_admitted_worker[state-provisioning]",
+      "obligation": "NEG-WORKSPACE",
+      "budget_seconds": {
+        "setup_and_body": 215,
+        "shared_cleanup": 25
+      },
+      "purpose": "Prove an already admitted worker waits safely while workspace is PROVISIONING.",
+      "target": "Actual dispatcher admits one workflow; actual Temporal worker executes read_activation against real non-READY workspace.",
+      "method": "Use actual private manifests, registered deployment, real PostgreSQL SCRAM roles and Temporal server through test-only dispatcher/worker barriers. Independently read owner SQL and direct Temporal history; no fake projection/SDK result. The whole-case watchdog starts before fixtures and the shared cleanup window includes fixture teardown. Pause after_run_admitted, change the current workspace state to PROVISIONING through independent owner fixture, release dispatcher and start real CLI worker; inspect direct activity history and SQL.",
+      "evidence_profile": "workspace_worker",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_nonready_blocks_admitted_worker[state-reserved]",
+      "obligation": "NEG-WORKSPACE",
+      "budget_seconds": {
+        "setup_and_body": 215,
+        "shared_cleanup": 25
+      },
+      "purpose": "Prove an already admitted worker waits safely while workspace is RESERVED.",
+      "target": "Actual dispatcher admits one workflow; actual Temporal worker executes read_activation against real non-READY workspace.",
+      "method": "Use actual private manifests, registered deployment, real PostgreSQL SCRAM roles and Temporal server through test-only dispatcher/worker barriers. Independently read owner SQL and direct Temporal history; no fake projection/SDK result. The whole-case watchdog starts before fixtures and the shared cleanup window includes fixture teardown. Pause after_run_admitted, change the current workspace state to RESERVED through independent owner fixture, release dispatcher and start real CLI worker; inspect direct activity history and SQL.",
+      "evidence_profile": "workspace_worker",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_nonready_blocks_dispatcher_before_start[state-error]",
+      "obligation": "NEG-WORKSPACE",
+      "budget_seconds": {
+        "setup_and_body": 215,
+        "shared_cleanup": 25
+      },
+      "purpose": "Prove a ERROR workspace cannot admit dispatcher execution.",
+      "target": "Actual dispatcher after durable outbox claim, before workspace admission.",
+      "method": "Use actual private manifests, registered deployment, real PostgreSQL SCRAM roles and Temporal server through test-only dispatcher/worker barriers. Independently read owner SQL and direct Temporal history; no fake projection/SDK result. The whole-case watchdog starts before fixtures and the shared cleanup window includes fixture teardown. Seed the real fixture workspace to ERROR, release the dispatcher after-claim barrier, and inspect independent owner SQL plus Temporal list.",
+      "evidence_profile": "workspace_dispatcher",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_nonready_blocks_dispatcher_before_start[state-provisioning]",
+      "obligation": "NEG-WORKSPACE",
+      "budget_seconds": {
+        "setup_and_body": 215,
+        "shared_cleanup": 25
+      },
+      "purpose": "Prove a PROVISIONING workspace cannot admit dispatcher execution.",
+      "target": "Actual dispatcher after durable outbox claim, before workspace admission.",
+      "method": "Use actual private manifests, registered deployment, real PostgreSQL SCRAM roles and Temporal server through test-only dispatcher/worker barriers. Independently read owner SQL and direct Temporal history; no fake projection/SDK result. The whole-case watchdog starts before fixtures and the shared cleanup window includes fixture teardown. Seed the real fixture workspace to PROVISIONING, release the dispatcher after-claim barrier, and inspect independent owner SQL plus Temporal list.",
+      "evidence_profile": "workspace_dispatcher",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_nonready_blocks_dispatcher_before_start[state-reserved]",
+      "obligation": "NEG-WORKSPACE",
+      "budget_seconds": {
+        "setup_and_body": 215,
+        "shared_cleanup": 25
+      },
+      "purpose": "Prove a RESERVED workspace cannot admit dispatcher execution.",
+      "target": "Actual dispatcher after durable outbox claim, before workspace admission.",
+      "method": "Use actual private manifests, registered deployment, real PostgreSQL SCRAM roles and Temporal server through test-only dispatcher/worker barriers. Independently read owner SQL and direct Temporal history; no fake projection/SDK result. The whole-case watchdog starts before fixtures and the shared cleanup window includes fixture teardown. Seed the real fixture workspace to RESERVED, release the dispatcher after-claim barrier, and inspect independent owner SQL plus Temporal list.",
+      "evidence_profile": "workspace_dispatcher",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_stale_generation_claim_is_fenced",
+      "obligation": "NEG-WORKSPACE",
+      "budget_seconds": {
+        "setup_and_body": 215,
+        "shared_cleanup": 25
+      },
+      "purpose": "Prove a previously claimed READY workspace generation cannot activate after the real workspace generation advances.",
+      "target": "Actual dispatcher paused after claim commit; real G5 owner recovery advances generation while preserving workspace token/tree.",
+      "method": "Use actual private manifests, registered deployment, real PostgreSQL SCRAM roles and Temporal server through test-only dispatcher/worker barriers. Independently read owner SQL and direct Temporal history; no fake projection/SDK result. The whole-case watchdog starts before fixtures and the shared cleanup window includes fixture teardown. Observe generation 1 claim, use actual WorkspaceService retry_error/reconcile_once from ERROR to READY generation 2, then release the unchanged dispatcher claim. Verify lease remains live, owner SQL and no Temporal run.",
+      "evidence_profile": "workspace_generation",
+      "execution_pass_evidence": null,
+      "audit_status": "static_source_audit_only_not_executed"
+    }
+  ],
+  "evidence_profiles": {
+    "accepted_start_loss": {
+      "root": "IFPMIC_H2_RUNTIME_EVIDENCE_ROOT/accepted-start-loss/",
+      "source_files": [
+        "tests/ifpmic_api/test_accepted_start_response_loss.py",
+        "tests/ifpmic_api/response_loss_proxy.py",
+        "tests/ifpmic_api/accepted_start_dispatcher_child.py"
+      ],
+      "observed_artifacts": [
+        "owner-before-dispatch.json",
+        "accepted-start-history-before-kill.pbseq",
+        "accepted-start-observer.json",
+        "barrier-sequence.json",
+        "proxy-before-kill.json",
+        "proxy-through-kill.json",
+        "owner-at-start-attempt.json",
+        "owner-after-kill.json",
+        "history-after-projection/ (direct temporal observation)",
+        "owner-after-projection-replay.json",
+        "process journal and source/environment manifests"
+      ],
+      "required_independent_oracles": [
+        "actual committed API row before held response",
+        "direct history Started event for same run before kill",
+        "saved PID/start ticks and exact SIGKILL/absence",
+        "same idempotency replay API receipt",
+        "post-recovery SQL receipt/scope/binding and unchanged tree",
+        "proxy direction/cut ordering; no decoded HTTP2 claim"
+      ],
+      "evidence_gaps": []
+    },
+    "dispatcher_crash": {
+      "root": "IFPMIC_H2_RUNTIME_EVIDENCE_ROOT/<dispatcher case_name>/",
+      "source_files": [
+        "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+        "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+        "tests/ifpmic_api/test_h2_runtime_normal_flow.py"
+      ],
+      "observed_artifacts": [
+        "owner-at-cut.json",
+        "process-journal.jsonl",
+        "barrier files",
+        "case-result.json (snapshot digest, generation/proposal/history digest, run ID)",
+        "history-after-projection/ direct observation",
+        "process-cleanup.json"
+      ],
+      "required_independent_oracles": [
+        "raw owner SQL before change/cut/recovery, including rows and attempts",
+        "direct temporal history for the exact boundary and recovery (or NOT_FOUND proof for deleted-history case)",
+        "barrier event, PID/start ticks, SIGKILL and absence",
+        "replayed same run, one receipt/scope, tree unchanged; deleted history case quarantines/no replacement"
+      ],
+      "evidence_gaps": [
+        "h2_dispatcher_crash_support.prepare_case captures initial owner snapshot in memory only",
+        "test_h2_dispatcher_crashes persists owner-at-cut but not initial before SQL",
+        "_assert_crash_final persists only snapshot SHA, not full recovered SQL; history-missing case persists full post-quarantine SQL but still no initial SQL",
+        "case-result history digest is not substitute for raw history unless raw history files are preserved and directly inspectable"
+      ]
+    },
+    "restart": {
+      "root": "IFPMIC_H2_RUNTIME_EVIDENCE_ROOT/runtime-independent-storage-restarts/",
+      "source_files": [
+        "tests/ifpmic_api/test_h2_runtime_restart_and_history.py",
+        "tests/ifpmic_api/h2_dispatcher_crash_support.py"
+      ],
+      "observed_artifacts": [
+        "process-journal.jsonl",
+        "restart-oracle.json",
+        "history-after-pg-restart/",
+        "history-after-temporal-restart/",
+        "history-after-cli-restart/",
+        "Temporal/Postgres private stores and logs"
+      ],
+      "required_independent_oracles": [
+        "full identical SQL before/after each restart",
+        "same raw history/run after Postgres/Temporal/CLI restart",
+        "same store inode and actual old/new PID/start ticks",
+        "same one receipt and binding"
+      ],
+      "evidence_gaps": [
+        "before_restart, after_pg_restart, after_temporal_restart, final SQL snapshots are only in memory",
+        "restart-oracle.json stores hashes for SQL restart snapshots, not full rows; hashes cannot reconstruct independent SQL state"
+      ]
+    },
+    "worker_api": {
+      "root": "IFPMIC_H2_RUNTIME_EVIDENCE_ROOT/<worker-api crash case>/",
+      "source_files": [
+        "tests/ifpmic_api/test_h2_worker_api_crashes.py",
+        "tests/ifpmic_api/h2_worker_crash_child.py",
+        "tests/ifpmic_api/h2_api_crash_child.py",
+        "tests/ifpmic_api/response_loss_proxy.py"
+      ],
+      "observed_artifacts": [
+        "API commit: api-commit-before-kill.json, api-retry-receipt.json, api-crash-recovery.json",
+        "projection: owner-at-worker-cut.json, history-at-worker-cut.pbseq, history-after-worker-recovery.pbseq, worker-cut-history-before-recovery.json, worker-crash-recovery.json, authority-revoked-before-replay.json where applicable",
+        "activity result: history-activity-completed-before-decision.pbseq, activity-completed-cut.json, proxy snapshots, history-after-workflow-restart.pbseq, activity-completed-restart.json",
+        "process journal and cleanup"
+      ],
+      "required_independent_oracles": [
+        "actual HTTP API/SQL commit and private auth setup without token leak",
+        "exact worker PG transaction cut and rollback/commit receipts",
+        "direct raw Temporal event history and absence of next decision at activity-result cut",
+        "saved child PID/start ticks, SIGKILL/absence; receipt replay with authority revoked and one effect"
+      ],
+      "evidence_gaps": []
+    },
+    "startup": {
+      "root": "IFPMIC_H2_RUNTIME_EVIDENCE_ROOT/startup-<variant>/",
+      "source_files": [
+        "tests/ifpmic_api/test_h2_runtime_startup_rejections.py",
+        "tests/ifpmic_api/h2_startup_case_budget.py"
+      ],
+      "observed_artifacts": [
+        "startup-rejection-result.json",
+        "process journal / stdout / stderr",
+        "source-manifest.json and environment-manifest.json",
+        "altered config/manifests where variant requires",
+        "listener connection count and owner snapshot comparisons executed in test"
+      ],
+      "required_independent_oracles": [
+        "full raw owner SQL before/after (or exact table rows for no-job case)",
+        "literal sanitized CLI output and exit/PID/start ticks",
+        "persisted passive-listener connection count=0",
+        "direct empty workflow list/result for no workflow start",
+        "workspace tree equality and service resource cleanup"
+      ],
+      "evidence_gaps": [
+        "startup-rejection-result.json stores unchanged bool plus snapshot SHA, not full SQL; no-job variant stores counts only",
+        "listener count and no-workflow assertions are not persisted as independent raw observations",
+        "startup result has process output digests rather than raw output; should preserve private raw stdout/stderr if review must inspect exact bytes"
+      ]
+    },
+    "window_retention": {
+      "root": "IFPMIC_H2_RUNTIME_EVIDENCE_ROOT/neg-window-retention-* (SQL-only owner setup; no Temporal server)",
+      "source_files": [
+        "tests/ifpmic_api/test_h2_reconciliation_window.py",
+        "tests/ifpmic_api/h2_window_case_budget.py"
+      ],
+      "observed_artifacts": [
+        "neg-window-retention.json with retention, result, claim generation/token, full sql_before_cut and sql_after"
+      ],
+      "required_independent_oracles": [
+        "literal NULL/3600/3601 retention outcomes and actual owner rows before/after",
+        "attempt/claim deadline and no binding/scope/receipt"
+      ],
+      "evidence_gaps": []
+    },
+    "window_shape": {
+      "root": "IFPMIC_H2_RUNTIME_EVIDENCE_ROOT/neg-window-partial-shape/",
+      "source_files": [
+        "tests/ifpmic_api/test_h2_reconciliation_window.py",
+        "tests/ifpmic_api/h2_window_case_budget.py"
+      ],
+      "observed_artifacts": [
+        "neg-window-partial-shape.json with initial window, invalid assignments and full before/after SQL"
+      ],
+      "required_independent_oracles": [
+        "real PostgreSQL constraint rejection for every partial triple",
+        "owner SQL remains unchanged"
+      ],
+      "evidence_gaps": []
+    },
+    "window_clock": {
+      "root": "IFPMIC_H2_RUNTIME_EVIDENCE_ROOT/neg-window-clock-*",
+      "source_files": [
+        "tests/ifpmic_api/test_h2_reconciliation_window.py",
+        "tests/ifpmic_api/h2_window_case_budget.py"
+      ],
+      "observed_artifacts": [
+        "neg-window-clock-seam.json finally evidence with function before/while/restored metadata and definition, frozen clock/live claim, function result, SQL before/call/after, primary/restoration error type"
+      ],
+      "required_independent_oracles": [
+        "exact one-assignment clock seam and correct frozen deadline/live token",
+        "function OID/owner/ACL/security-definer/proconfig unchanged and exact function definition restored",
+        "before/at/after expected SQL claim outcome"
+      ],
+      "evidence_gaps": [
+        "runtime isolation/privilege feasibility and PostgreSQL function restore behavior remain dynamically unverified; abort path is recorded but not execution evidence"
+      ]
+    },
+    "window_runtime": {
+      "root": "IFPMIC_H2_RUNTIME_EVIDENCE_ROOT/neg-window-runtime-*",
+      "source_files": [
+        "tests/ifpmic_api/test_h2_reconciliation_window.py",
+        "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+        "tests/ifpmic_api/h2_window_case_budget.py"
+      ],
+      "observed_artifacts": [
+        "neg-window-runtime-boundary.json with ISO-normalized seed, full before/expiry-cut/after SQL, direct workflow run/history summary",
+        "raw direct history in per-run history directory",
+        "process journal/barrier/cleanup"
+      ],
+      "required_independent_oracles": [
+        "real dispatcher before/after exact deadline outcomes",
+        "lease window fields unchanged at real DB clock; direct run/history list and started event when expected",
+        "actual PID/start ticks and cleanup"
+      ],
+      "evidence_gaps": [
+        "case source persists full SQL, but actual runtime result remains unexecuted; history summary needs raw history file retained by observer path"
+      ]
+    },
+    "activity_authority": {
+      "root": "IFPMIC_H2_RUNTIME_EVIDENCE_ROOT/authority-before-first-projection-{eligibility|membership}/",
+      "source_files": [
+        "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
+        "tests/ifpmic_api/h2_activity_runtime_boundary_child.py"
+      ],
+      "observed_artifacts": [
+        "before_first_projection_sql.json barrier",
+        "authority-eligibility.json or authority-membership.json",
+        "authority-rejected-history.pbseq",
+        "process journal and logs"
+      ],
+      "required_independent_oracles": [
+        "actual profile eligibility or membership revocation committed before real projection call",
+        "full pre/cut/rejected owner SQL rows with immutable rejected receipt",
+        "independently reconstructed proposal digest and exact PROFILE_INELIGIBLE/MEMBERSHIP error",
+        "direct raw history showing one admitted workflow completed with rejected result"
+      ],
+      "evidence_gaps": [
+        "pre and rejected SQL snapshots are only in memory; current authority JSON has authority state/ids only, not raw SQL rows"
+      ]
+    },
+    "activity_receipt_replay": {
+      "root": "IFPMIC_H2_RUNTIME_EVIDENCE_ROOT/receipt-replay-after-authority-revoke-*",
+      "source_files": [
+        "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
+        "tests/ifpmic_api/h2_activity_runtime_boundary_child.py"
+      ],
+      "observed_artifacts": [
+        "worker-crash-recovery.json with full owner before/after",
+        "history-before-lost-activity-result.pbseq",
+        "history-after-receipt-replay.pbseq",
+        "authority membership/eligibility evidence",
+        "process journal and SIGKILL lifecycle"
+      ],
+      "required_independent_oracles": [
+        "commit receipt before result loss; revoke authority before worker retry",
+        "saved worker PID/start ticks and SIGKILL",
+        "receipt replay after revoke, one projection, identical direct workflow history/result and full SQL before/after"
+      ],
+      "evidence_gaps": []
+    },
+    "noncreate_wait": {
+      "root": "IFPMIC_H2_RUNTIME_EVIDENCE_ROOT/noncreate-unadmitted-<random>/",
+      "source_files": [
+        "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
+        "tests/ifpmic_api/h2_activity_runtime_case_budget.py"
+      ],
+      "observed_artifacts": [
+        "noncreate-not-admitted.json with command/claim scalar state"
+      ],
+      "required_independent_oracles": [
+        "no admitted run means real non-create activity does not consume human command",
+        "full pre/post SQL and direct empty Temporal lookup result"
+      ],
+      "evidence_gaps": [
+        "pre/post SQL is only in memory; result file omits full rows and direct list_runs result is not persisted"
+      ]
+    },
+    "noncreate_signal": {
+      "root": "IFPMIC_H2_RUNTIME_EVIDENCE_ROOT/noncreate-signal/",
+      "source_files": [
+        "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
+        "tests/ifpmic_api/h2_activity_runtime_boundary_child.py"
+      ],
+      "observed_artifacts": [
+        "history-after-real-noncreate-signal.pbseq",
+        "process journal, logs, cleanup"
+      ],
+      "required_independent_oracles": [
+        "signal targets exact admitted run",
+        "no human command consumption/revision/new start and full before/final SQL",
+        "direct history shows actual signal handling"
+      ],
+      "evidence_gaps": [
+        "SQL and run/history assertions exist only in memory/raw history is available but no final SQL snapshot or summary file"
+      ]
+    },
+    "retention_rpc": {
+      "root": "IFPMIC_H2_RUNTIME_EVIDENCE_ROOT/retention-rpc-failure/",
+      "source_files": [
+        "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
+        "tests/ifpmic_api/h2_activity_runtime_boundary_child.py"
+      ],
+      "observed_artifacts": [
+        "actual_history_not_found.json",
+        "actual_retention_rpc_begin.json",
+        "retention-unavailable.json",
+        "process journal"
+      ],
+      "required_independent_oracles": [
+        "direct NOT_FOUND after history retention boundary; then real SDK retention RPC error from actual stopped owned server",
+        "direct workflow list empty before/after",
+        "full owner SQL before/quarantine final and attempt records",
+        "server PID/ticks/exit before RPC and process cleanup"
+      ],
+      "evidence_gaps": [
+        "full owner snapshots not saved; list_runs empty result asserted but not persisted; event snapshots lack RPC exception type/detail/raw evidence"
+      ]
+    },
+    "runtime_exit": {
+      "root": "IFPMIC_H2_RUNTIME_EVIDENCE_ROOT/runtime-exit-<mode>/",
+      "source_files": [
+        "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
+        "tests/ifpmic_api/h2_activity_runtime_boundary_child.py"
+      ],
+      "observed_artifacts": [
+        "worker_run_entered.json; worker_fatal_armed.json/concurrent_sigterm_sent.json as applicable; task action files; process journal/logs/cleanup"
+      ],
+      "required_independent_oracles": [
+        "actual execution_runtime.run child lifecycle for fatal exception, unsolicited return and concurrent SIGTERM",
+        "saved PID/start ticks, exact expected exit3, sanitized output",
+        "full owner SQL before/after and no workflow side effect"
+      ],
+      "evidence_gaps": [
+        "no private case result or raw SQL snapshot; zero bindings is checked only in memory; test task fault is deliberately runtime-layer simulation, not an actual delivered Temporal task result"
+      ]
+    },
+    "runtime_sigterm": {
+      "root": "IFPMIC_H2_RUNTIME_EVIDENCE_ROOT/runtime-normal-sigterm/",
+      "source_files": [
+        "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
+        "tests/ifpmic_api/h2_activity_runtime_boundary_child.py"
+      ],
+      "observed_artifacts": [
+        "worker_run_entered.json",
+        "process journal/logs/cleanup"
+      ],
+      "required_independent_oracles": [
+        "actual runtime child handles real SIGTERM and exits0",
+        "PID/start ticks and no unexpected output",
+        "full SQL/no-start state before/after"
+      ],
+      "evidence_gaps": [
+        "no full SQL snapshots or standalone private result; no workflow absence RPC result file"
+      ]
+    },
+    "hung_driver": {
+      "root": "IFPMIC_H2_RUNTIME_EVIDENCE_ROOT/runtime-hung-driver/",
+      "source_files": [
+        "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
+        "tests/ifpmic_api/h2_activity_runtime_boundary_child.py"
+      ],
+      "observed_artifacts": [
+        "projection_driver_blocked.json",
+        "hung-driver-rollback.json",
+        "history-after-hung-driver-kill.pbseq",
+        "history-after-driver-rollback-recovery.pbseq",
+        "process journal and backend observations"
+      ],
+      "required_independent_oracles": [
+        "real PG active SELECT pg_sleep(30), exact projector role/backend PID/open transaction before runtime SIGTERM",
+        "runtime self-exits3 within approved timing; backend gone within documented absolute cap",
+        "transaction rolled back with zero receipt before recovery; actual receipt/history recovered once"
+      ],
+      "evidence_gaps": [
+        "before/during/after full owner snapshots are not persisted; hung-driver-rollback.json carries selected SQL scalars only",
+        "client disconnect may not immediately cancel pg_sleep; backend-gone absolute cap is a pending runtime behavior, currently unverified"
+      ]
+    },
+    "machine_disable_first": {
+      "root": "IFPMIC_H2_RUNTIME_EVIDENCE_ROOT/transport-machine-disable-before-claim/",
+      "source_files": [
+        "tests/ifpmic_api/test_h2_transport_boundaries.py",
+        "tests/ifpmic_api/h2_transport_boundary_child.py"
+      ],
+      "observed_artifacts": [
+        "machine-race-result.json with variant/status/exit only",
+        "process journal/logs",
+        "actual owner snapshot comparisons and empty workflow list assertion occur in test"
+      ],
+      "required_independent_oracles": [
+        "machine principal disabled before real dispatcher; no claim or Temporal start",
+        "full SQL before/after, empty direct list_workflows result, exact child exit and PID lifecycle"
+      ],
+      "evidence_gaps": [
+        "result contains no SQL snapshots, listener/history result, nor process identities beyond journal"
+      ]
+    },
+    "machine_claim_first": {
+      "root": "IFPMIC_H2_RUNTIME_EVIDENCE_ROOT/transport-machine-claim-before-disable/",
+      "source_files": [
+        "tests/ifpmic_api/test_h2_transport_boundaries.py",
+        "tests/ifpmic_api/h2_transport_boundary_child.py"
+      ],
+      "observed_artifacts": [
+        "machine-race-result.json with full before/after SQL and lock-wait barrier monotonic data",
+        "process journal/logs"
+      ],
+      "required_independent_oracles": [
+        "real claim transaction blocks real operator disable (pg_stat_activity/blocking PID), then authority disable before reserve",
+        "attempt remains leased, no run, no receipt; full SQL and direct empty run list",
+        "actual process identity/timing"
+      ],
+      "evidence_gaps": [
+        "empty run list result is checked in-memory, not persisted"
+      ]
+    },
+    "preadmission": {
+      "root": "IFPMIC_H2_RUNTIME_EVIDENCE_ROOT/transport-preadmission/",
+      "source_files": [
+        "tests/ifpmic_api/test_h2_transport_boundaries.py",
+        "tests/ifpmic_api/h2_transport_boundary_child.py"
+      ],
+      "observed_artifacts": [
+        "preadmission-owner-at-cut.json",
+        "preadmission-owner-before-admission.json",
+        "preadmission-wait-history.pbseq",
+        "preadmission-final-history/ direct observation",
+        "preadmission-result.json (final snapshot hash only)",
+        "process journal/barriers"
+      ],
+      "required_independent_oracles": [
+        "reserved binding/no run at dispatcher history-observed cut",
+        "real worker direct history read_activation wait and no project_activation scheduled until admission",
+        "same run admitted after release, full final SQL and started history",
+        "saved process PIDs/ticks and bounded cleanup"
+      ],
+      "evidence_gaps": [
+        "final SQL is only represented by SHA in result; raw snapshot not persisted",
+        "started history output is reduced to fields/hash; direct empty workflow list before admission not persisted"
+      ]
+    },
+    "workspace_dispatcher": {
+      "root": "IFPMIC_H2_RUNTIME_EVIDENCE_ROOT/workspace-dispatch-nonready-<state>/",
+      "source_files": [
+        "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py",
+        "tests/ifpmic_api/workspace_fixture.py"
+      ],
+      "observed_artifacts": [
+        "workspace-nonready-dispatcher.json with state/attempts/run count/tree bool",
+        "barrier/process logs/journal/cleanup"
+      ],
+      "required_independent_oracles": [
+        "actual RESERVED/PROVISIONING/ERROR row before dispatcher; real filesystem tree unchanged",
+        "full SQL before/cut/after, direct empty workflow listing, owner process identity"
+      ],
+      "evidence_gaps": [
+        "only in-memory SQL/list/tree comparisons; result has attempts/scalars but no full SQL or tree manifest/hash"
+      ]
+    },
+    "workspace_marker": {
+      "root": "IFPMIC_H2_RUNTIME_EVIDENCE_ROOT/workspace-invalid-<damage>/",
+      "source_files": [
+        "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py",
+        "tests/ifpmic_api/workspace_fixture.py"
+      ],
+      "observed_artifacts": [
+        "workspace-invalid-ready.json with damage/state/attempts/run count/tree bool",
+        "external-marker-target for symlink variant",
+        "barrier/process logs/journal/cleanup"
+      ],
+      "required_independent_oracles": [
+        "actual missing/forged/wrong-token/symlink marker bytes and inode/target",
+        "full SQL before/cut/after; exact workspace tree/fingerprint; direct no-run response"
+      ],
+      "evidence_gaps": [
+        "marker bytes/tree fingerprint rows and SQL snapshots are only in memory/fixture tree; result stores booleans and attempts only"
+      ]
+    },
+    "workspace_generation": {
+      "root": "IFPMIC_H2_RUNTIME_EVIDENCE_ROOT/workspace-stale-generation-claim/",
+      "source_files": [
+        "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py",
+        "tests/ifpmic_api/workspace_fixture.py"
+      ],
+      "observed_artifacts": [
+        "workspace-generation-fenced.json scalars",
+        "barrier/process journal/cleanup"
+      ],
+      "required_independent_oracles": [
+        "actual gen1 lease + G5 ERROR→READY gen2 same token/tree while lease live",
+        "full SQL at claim/G5/final, exact workspace row/tree and no run"
+      ],
+      "evidence_gaps": [
+        "all SQL and workspace tree/lease checks only in memory; result carries attempt list and scalar generation values"
+      ]
+    },
+    "workspace_worker": {
+      "root": "IFPMIC_H2_RUNTIME_EVIDENCE_ROOT/workspace-worker-nonready-<state>/",
+      "source_files": [
+        "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py",
+        "tests/ifpmic_api/h2_transport_boundary_child.py"
+      ],
+      "observed_artifacts": [
+        "workspace-worker-history.pbseq",
+        "workspace-worker-wait.json",
+        "barriers/process journal/cleanup"
+      ],
+      "required_independent_oracles": [
+        "actual admitted workflow, real workspace state and real read_activation wait history",
+        "no project_activation scheduled, no receipt, revision0",
+        "full before/after SQL and workspace row/tree"
+      ],
+      "evidence_gaps": [
+        "full SQL/workspace rows not persisted; result only scalar/read-wait fields"
+      ]
+    },
+    "started_mismatch": {
+      "root": "IFPMIC_H2_RUNTIME_EVIDENCE_ROOT/started-<variant>/",
+      "source_files": [
+        "tests/ifpmic_api/test_h2_started_deployment_boundaries.py",
+        "tests/ifpmic_api/h2_dispatcher_crash_support.py"
+      ],
+      "observed_artifacts": [
+        "rogue-started-history.pbseq",
+        "owner-after-quarantine.json",
+        "rogue-started-summary.json",
+        "process journal/barrier/cleanup"
+      ],
+      "required_independent_oracles": [
+        "real rogue Started fields (workflow ID/type/task queue/input/original run) for each variant",
+        "actual pre-Start SQL cut and post-quarantine SQL; exact fixed CLI output and no replacement run",
+        "history bytes and PID/start ticks"
+      ],
+      "evidence_gaps": [
+        "pre/cut SQL not persisted; malformed-history run and fields are summarized but raw full history is available",
+        "no independent direct empty-run query after quarantine is persisted (logical list checked in-memory)"
+      ]
+    },
+    "foreign_deployment": {
+      "root": "IFPMIC_H2_RUNTIME_EVIDENCE_ROOT/foreign-deployment/",
+      "source_files": [
+        "tests/ifpmic_api/test_h2_started_deployment_boundaries.py",
+        "tests/ifpmic_api/h2_foreign_dispatcher_child.py"
+      ],
+      "observed_artifacts": [
+        "foreign-deployment-summary.json",
+        "foreign-login-cleanup.json",
+        "foreign temporal store/logs",
+        "barriers/process journal/cleanup"
+      ],
+      "required_independent_oracles": [
+        "two isolated real Temporal endpoints/stores; exact SCRAM roles and registered principal OIDs",
+        "foreign dispatcher cannot reserve or start old binding; owner-one positive control admits same binding",
+        "foreign projector 42501 then correct projector applied; full SQL before/after and direct histories/list results",
+        "HBA/role restoration and resource PIDs"
+      ],
+      "evidence_gaps": [
+        "critical source defect: foreign_reserve_rejected is asserted but never assigned (NameError); test cannot reach its evidence write",
+        "SQL snapshots/registry rows are in memory; summary stores scalar/boolean only",
+        "foreign empty run list is reduced to count; direct history/raw RPC response not saved"
+      ]
+    },
+    "fixture_restore_primary": {
+      "root": "fixture plugin private fixture-cleanup.jsonl (case node ID); no per-case root",
+      "source_files": [
+        "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py",
+        "tests/ifpmic_api/h2_fixture_cleanup.py"
+      ],
+      "observed_artifacts": [
+        "JUnit assertion and whole-case budget record; helper behavior is inline test-only exception object"
+      ],
+      "required_independent_oracles": [
+        "same primary exception identity retained and secondary exception type noted; real original exception object"
+      ],
+      "evidence_gaps": [
+        "no separate per-case evidence artifact; proof currently exists only in assertion/JUnit stream"
+      ]
+    },
+    "fixture_restore_only": {
+      "root": "fixture plugin private fixture-cleanup.jsonl (case node ID); no per-case root",
+      "source_files": [
+        "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py",
+        "tests/ifpmic_api/h2_fixture_cleanup.py"
+      ],
+      "observed_artifacts": [
+        "JUnit assertion and whole-case budget record; helper behavior is inline test-only exception object"
+      ],
+      "required_independent_oracles": [
+        "restore-only same exception object propagates"
+      ],
+      "evidence_gaps": [
+        "no separate per-case evidence artifact; proof currently exists only in assertion/JUnit stream"
+      ]
+    },
+    "fixture_budget": {
+      "root": "IFPMIC_H2_RUNTIME_EVIDENCE_ROOT/cleanup-fallback-probe-<casekey>/",
+      "source_files": [
+        "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py",
+        "tests/ifpmic_api/h2_dispatcher_crash_support.py"
+      ],
+      "observed_artifacts": [
+        "process-cleanup.json",
+        "process-journal.jsonl",
+        "JUnit assertion and watchdog record"
+      ],
+      "required_independent_oracles": [
+        "cleanup_case actual exhausted-controller fallback path; no fresh signal/wait; retained owned handle and not-absent claim"
+      ],
+      "evidence_gaps": [
+        "Popen-like handle and controller are deliberately synthetic fixture probes, not a real OS process/real shared timeout; do not claim product-process or H2 runtime evidence"
+      ]
+    },
+    "fixture_oidc": {
+      "root": "fixture plugin private fixture-cleanup.jsonl (case node ID); provider socket/thread handles are actual runtime objects",
+      "source_files": [
+        "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py",
+        "tests/ifpmic_api/oidc_provider.py",
+        "tests/ifpmic_api/h2_fixture_cleanup.py"
+      ],
+      "observed_artifacts": [
+        "fixture-cleanup.jsonl records allocated sockets/registered handles/started count and fail-closed unknown ownership",
+        "JUnit assertions inspect actual socket descriptors and actual started/unstarted Thread objects"
+      ],
+      "required_independent_oracles": [
+        "real allocated sockets all closed",
+        "actual first started thread and shutdown helper joined",
+        "never-started handle retained and ownership marked unknown; cleanup fails closed"
+      ],
+      "evidence_gaps": [
+        "no separate full per-case JSON file; actual handles are checked in-process and private fixture cleanup stream records summarized fields"
+      ]
+    },
+    "fixture_testclient": {
+      "root": "fixture plugin private fixture-cleanup.jsonl (case node ID); actual TestClient portal/helper threads",
+      "source_files": [
+        "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py",
+        "tests/ifpmic_api/h2_fixture_cleanup.py"
+      ],
+      "observed_artifacts": [
+        "fixture-cleanup.jsonl failed shutdown event and explicit unknown ownership event",
+        "JUnit reads actual helper/portal thread IDs and alive flags before release/join"
+      ],
+      "required_independent_oracles": [
+        "unconfirmed TestClient exit raises; actual helper thread remains alive and portal ownership is unknown, not absent",
+        "finally releases gate then joins both threads inside original cleanup window"
+      ],
+      "evidence_gaps": [
+        "no standalone evidence JSON; actual live thread facts are only represented by private fixture stream/JUnit"
+      ]
+    }
+  },
+  "supplemental_retained_controls": [
+    {
+      "node_id": "tests/ifpmic_api/test_workflow_schema.py::test_h2_real_create_activation_receipt_replay_and_run_fences",
+      "obligation": "retained NEG-PROJECTION-FENCES",
+      "source": "tests/ifpmic_api/test_workflow_schema.py",
+      "evidence_root": "No named private runtime evidence root found in this source test.",
+      "observed_artifacts": [
+        "PostgreSQL and Temporal assertions in the test process; no raw per-case evidence writer found."
+      ],
+      "required_oracles": [
+        "actual owner SQL rows, exact SCRAM-role projection fences, direct workflow history/run counts"
+      ],
+      "evidence_gaps": [
+        "Assertions are in-memory; no private SQL/history evidence artifact is written by this test."
+      ]
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_workflow_schema.py::test_h2_role_registry_and_function_acl_match_static_contract",
+      "obligation": "retained NEG-PROJECTION-FENCES",
+      "source": "tests/ifpmic_api/test_workflow_schema.py",
+      "evidence_root": "No named private runtime evidence root found in this source test.",
+      "observed_artifacts": [
+        "PostgreSQL role/function metadata assertions only."
+      ],
+      "required_oracles": [
+        "actual role OIDs, function privileges and ACL result rows"
+      ],
+      "evidence_gaps": [
+        "No separate private result writer; raw SQL outputs are not retained beyond JUnit assertion outcome."
+      ]
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_workflow_schema.py::test_h2_four_role_oid_recreation_is_drift_and_does_not_rebind",
+      "obligation": "retained NEG-PROJECTION-FENCES",
+      "source": "tests/ifpmic_api/test_workflow_schema.py",
+      "evidence_root": "No named private runtime evidence root found in this source test.",
+      "observed_artifacts": [
+        "Real database role recreation and in-memory drift/no-rebind assertions."
+      ],
+      "required_oracles": [
+        "old role OIDs, replacement OIDs, immutable principal registry and failed access"
+      ],
+      "evidence_gaps": [
+        "No raw role/function SQL evidence artifact found."
+      ]
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_workflow_schema.py::test_h2_service_roles_use_scram_without_trust_fallthrough",
+      "obligation": "retained NEG-PROJECTION-FENCES",
+      "source": "tests/ifpmic_api/test_workflow_schema.py",
+      "evidence_root": "No named private runtime evidence root found in this source test.",
+      "observed_artifacts": [
+        "HBA rules and SCRAM login assertions within test process."
+      ],
+      "required_oracles": [
+        "exact active HBA rule order, role login outcomes and no trust fallthrough"
+      ],
+      "evidence_gaps": [
+        "No private HBA/connection result file found; assertions only."
+      ]
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_h2_runtime_normal_flow.py::test_h2_runtime_real_cli_create_ready_admits_one_run_and_queues_one_receipt",
+      "obligation": "retained normal CLI positive control for NEG-* cases",
+      "source": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+      "evidence_root": "IFPMIC_H2_RUNTIME_EVIDENCE_ROOT/runtime-normal-flow/",
+      "observed_artifacts": [
+        "owner-before.json",
+        "owner-after.json",
+        "runtime-observation.json",
+        "api-observations.json",
+        "raw Temporal observer files in private root",
+        "process-journal.jsonl",
+        "source/environment manifests and child/server logs"
+      ],
+      "required_oracles": [
+        "full SQL before/after and one immutable receipt",
+        "direct Temporal Started input/run ID",
+        "real CLI PID/start ticks and children/resource lifecycle",
+        "HTTP/API receipt retry and workspace tree invariance"
+      ],
+      "evidence_gaps": [
+        "Source appears to persist required proof; retain raw private artifacts. The retained case must be freshly run in full candidate; historical pass does not qualify."
+      ]
+    }
+  ],
+  "blockers_requiring_candidate_amendment_before_any_execution": [
+    "Dispatcher CRASH-02–07: persist full initial owner SQL snapshot and full final recovery SQL snapshot per case; current source retains cut snapshot but only hashes recovered SQL (CRASH-07 does persist quarantine SQL).",
+    "CRASH-08: persist complete owner SQL at initial, after-PG-restart, after-Temporal-restart and final states; restart-oracle currently stores only hashes for restart snapshots.",
+    "NEG-STARTUP all21: persist complete before/after owner rows and the passive listener/no-workflow RPC outcomes, not only snapshot hashes/booleans/counts.",
+    "NEG-AUTHORITY two revocation cases: persist actual full pre/cut/rejected owner SQL rows; current snapshots remain in memory.",
+    "NEG-NONCREATE, NEG-RETENTION-RPC, NEG-RUNTIME-FAILURE, NEG-HUNG-DRIVER: persist full SQL states and exact direct Temporal empty/history query outputs where named; current artifacts are partial/scalar or assertions only.",
+    "NEG-MACHINE-RACE disable-before-claim and NEG-PREADMISSION: persist full required SQL at each cut/final; machine first variant writes no SQL and preadmission final state is only hashed.",
+    "NEG-WORKSPACE and NEG-STARTED: persist full owner SQL cuts/recovery and actual filesystem marker/tree evidence and no-run response outputs where required; current results are mostly scalar summaries.",
+    "NEG-FOREIGN-DEPLOYMENT has an undefined `foreign_reserve_rejected` variable at line 559, asserted before summary writing; source cannot produce its intended evidence until fixed.",
+    "Four retained NEG-PROJECTION-FENCES source cases have no private raw SQL/HBA/history evidence writers; this index only records current assertions and does not claim the frozen full proof requirement is met."
+  ],
+  "conclusions": [
+    "CRASH-01 and CRASH-09–12 have the strongest source-defined causal artifacts: full named cuts, direct raw history, saved process identity, kill/recovery or proxy direction records. They remain unexecuted.",
+    "NEG-WINDOW retention/shape/clock source writes detailed private SQL evidence; runtime before/after variants also write full SQL snapshots. Dynamic correctness and clock seam execution remain unverified.",
+    "The retained normal CLI control source has full before/after SQL and direct Temporal evidence paths, but must be freshly executed with the candidate.",
+    "Candidate source currently lacks raw persisted SQL/history/resource results for many obligations; full H2 cannot be independently audited using only JUnit assertions or digests."
+  ]
+}

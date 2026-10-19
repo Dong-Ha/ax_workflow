@@ -39,6 +39,7 @@ from scripts.ifpmic_temporal_toolchain import (
     CLI_SHA, owned_listeners, process_identity, start_server, stop_all_owned,
 )
 from tests.ifpmic_api.h2_runtime_case_budget import BODY_SECONDS, CLEANUP_SECONDS
+from tests.ifpmic_api.h2_snapshot_evidence import record_owner_snapshot
 
 REPO_ROOT = Path.cwd().resolve()
 WORKFLOW_TYPE = "IFPMICJobWorkflow"
@@ -425,8 +426,10 @@ def _read_owner_snapshot(harness, job_id: str) -> dict[str, object]:
             "SELECT count(*) FROM ifpmic.commands WHERE job_id=%s AND command_id<>"
             "(SELECT create_command_id FROM ifpmic.jobs WHERE job_id=%s)", (job_id, job_id),
         ).fetchone()[0]
-    return {"accepted": accepted, "bindings": binding, "scopes": scopes,
-            "receipts": receipts, "attempts": attempts, "noncreate_commands": noncreate}
+    snapshot = {"accepted": accepted, "bindings": binding, "scopes": scopes,
+                "receipts": receipts, "attempts": attempts, "noncreate_commands": noncreate}
+    record_owner_snapshot(job_id, snapshot)
+    return snapshot
 
 
 def _expected_binding(job_id: str, rows: tuple, workspace: dict[str, object], identity: dict[str, str],

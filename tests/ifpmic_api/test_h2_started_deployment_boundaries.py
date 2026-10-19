@@ -556,7 +556,6 @@ def test_foreign_deployment_cannot_start_old_binding(workspace_environment, work
                 except psycopg.errors.InsufficientPrivilege as error:
                     foreign_reserve_sqlstate = error.sqlstate
             assert foreign_reserve_sqlstate == "42501"
-            assert foreign_reserve_rejected
             returned = dispatcher.execute(
                 "SELECT ifpmic.record_delivery(%s,%s,%s,%s,%s,%s)",
                 (command_id, claim["generation"], claim["claim_token"], "retry", None,
@@ -581,6 +580,9 @@ def test_foreign_deployment_cannot_start_old_binding(workspace_environment, work
         foreign_runs = asyncio.run(accepted_start._list_workflow_runs(
             endpoint2, foreign_identity["namespace"], "ifpmic.job." + case["job_id"],
             deadline.body_deadline))
+        normal._write_private(case["root"] / "foreign-server-list-response.json",
+                              normal._canonical({"workflow_id": "ifpmic.job." + case["job_id"],
+                                                 "runs": foreign_runs}) + b"\n")
         assert foreign_runs == []
         # Admit the same pending command only through deployment one. Stop at
         # the real post-admission hook so the valid run exists while no worker
@@ -655,6 +657,13 @@ def test_foreign_deployment_cannot_start_old_binding(workspace_environment, work
             case["identity"]["build_id"], proposal_sha, 0, "applied")
         registry_after = _registered_deployment_rows(
             case["harness"]["database"], case["identity"]["deployment_id"])
+        normal._write_private(case["root"] / "foreign-deployment-sql-observations.json",
+                              normal._canonical({"registry_before": registry_before,
+                                                 "registry_after": registry_after,
+                                                 "foreign_reserve_sqlstate": foreign_reserve_sqlstate,
+                                                 "foreign_projector_sqlstate": projector_sqlstate,
+                                                 "owning_projector_result": applied,
+                                                 "proposal": proposal}) + b"\n")
         assert registry_after == registry_before
         # The current child helper reads this private path at launch; this check
         # guards that the real foreign config was the one selected.

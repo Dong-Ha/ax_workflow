@@ -5,6 +5,7 @@ session/function fixture setup; all collected IDs are exact and finite.
 """
 from __future__ import annotations
 
+import hashlib
 import json
 import math
 import os
@@ -92,10 +93,14 @@ class CrashCaseDeadline:
         self._timer = signal.getitimer(signal.ITIMER_REAL)
         self.started = time.monotonic()
         self.body_deadline = self.started + BODY_SECONDS
-        raw = os.environ.get("IFPMIC_H2_CRASH_TIMINGS_PATH")
-        assert raw is not None
-        self._path = Path(raw)
-        assert self._path.is_absolute() and self._path.name == "case-timings.json"
+        raw_root = os.environ.get("IFPMIC_H2_CRASH_TIMINGS_ROOT")
+        assert raw_root is not None
+        root = Path(raw_root)
+        info = root.lstat()
+        assert root.is_absolute() and stat.S_ISDIR(info.st_mode)
+        assert info.st_uid == os.getuid() and stat.S_IMODE(info.st_mode) == 0o700
+        assert not root.is_symlink()
+        self._path = root / (hashlib.sha256(self.nodeid.encode("utf-8")).hexdigest() + ".json")
 
         def body_timeout(_signum, _frame):
             self.body_timeout = True

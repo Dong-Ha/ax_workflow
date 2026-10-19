@@ -442,15 +442,15 @@
           "runtime_normal_progress_reconciliation": "evidence/b03/h2-runtime-normal-progress-reconciliation.json",
           "runtime_next_steps": "evidence/b03/h2-runtime-normal-next-steps.json",
           "runtime_full_preparation": {
-            "status": "exact490_candidate_frozen_paired_runner_authoring_approved_execution_not_started",
-            "authoring_checkpoint_commit": "ed2d09983977407320dc9ed23cf0e6e46c9fc221",
+            "status": "evidence_source_amendment_pending_exact_reviews_execution_not_started",
+            "authoring_checkpoint_commit": "ea5055a2b6fda99dd697d042deddc0d3245bf222",
             "verification_plan": "evidence/b03/h2-runtime-full-verification-plan.json",
             "plan_review_status": "independent_and_tc_approved_authoring_only",
             "planned_obligation_groups": 25,
             "authored_draft_crash_case_functions": 12,
             "tests_executed": false,
             "static_changes": "Authored all25 groups plus5 cleanup prerequisites; integrated490 literal IDs with exact budgets and preserved407 retained IDs. Independent source review repaired SDK/SQL/deadline/foreign-authority oracles, bounded new native calls and partial-start cleanup. No imports, collection, runtime tests or services executed.",
-            "pending": "Author and independently review exact490 runner, obtain independent/TC pre-gate, then execute full490 and audit actual evidence. No current runtime passes.",
+            "pending": "Resolve private raw proof gaps, rebind amended source inventory and paired reviews, complete/review runner, obtain pre-gate, then fresh full490 execution.",
             "acceptance_boundary": "407-case evidence remains historical only for its frozen candidate. No new crash/negative passes; fullH2, B03, originalAT and finalAX remain incomplete.",
             "plan_sha256": "c6964bccff0d4cec1ac00f18fbb267d5d1a4a5887e53844c604333b7c059486c",
             "plan_acceptance": "evidence/b03/h2-runtime-full-plan-acceptance.json",
@@ -481,7 +481,8 @@
             "full_inventory_source_review": "evidence/b03/h2-runtime-full-inventory-source-review.json",
             "full_inventory_tc_review": "evidence/b03/h2-runtime-full-inventory-tc-review.json",
             "full_execution_contract": "evidence/b03/h2-runtime-full-execution-contract.json",
-            "runner_authoring_acceptance": "evidence/b03/h2-runtime-full-runner-authoring-acceptance.json"
+            "runner_authoring_acceptance": "evidence/b03/h2-runtime-full-runner-authoring-acceptance.json",
+            "evidence_amendment": "evidence/b03/h2-runtime-full-evidence-amendment.json"
           }
         }
       ]
@@ -659,12 +660,19 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "H2: author/review the exact490-case runner and obtain independent/TC pre-gate; execute407 retained+83 additions and independently audit actual full25 obligations plus5 cleanup prerequisites. FullH2/B03/H3-H7/originalAT32/fullAX remain incomplete.",
+  "next_step": "H2: finish raw SQL/history/workspace evidence amendment and exact source reviews before runner pre-gate and fresh490-case execution. FullH2/B03/H3-H7/originalAT32/fullAX remain incomplete.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",
     "Approved Bedrock/Claude runtime profile"
   ],
   "publication_policy": "Only authorized git repository documentation, source and synthetic verification summaries/screenshots; never runtime credentials or application logs.",
-  "updated_at": "2026-10-19T15:13:09.474133+00:00"
+  "updated_at": "2026-10-19T15:13:09.474133+00:00",
+  "session_handoff": {
+    "status": "paused_at_user_request_weekly_limit",
+    "date": "2026-10-20",
+    "resume_document": "docs/ifpmic/RESUME.md",
+    "goal_complete": false,
+    "execution_started": false
+  }
 }
