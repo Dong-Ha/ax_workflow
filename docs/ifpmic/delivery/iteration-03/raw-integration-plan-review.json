@@ -1,0 +1,32 @@
+{
+  "kind": "ifpmic.delivery.iteration-03.raw-integration-plan-review.v1",
+  "review_date": "2026-10-20",
+  "reviewer": "/root/h2_evidence_amendment_review",
+  "decision": "approve_integration_plan_for_authoring_only",
+  "plan": {
+    "path": "docs/ifpmic/delivery/iteration-03/RAW-AUDIT-INTEGRATION.md",
+    "sha256": "40dcec3d3c2e000711c6324351415aad26426de4e5964047d225174998aec5c3"
+  },
+  "findings": [],
+  "evidence": [
+    "The five stages retain all eight planning fields and explicit source approval before synthetic units. Normal, missing/cross-node/shared/identity/frame/decoder/digest/permission/path exceptions and original28 unit regression are covered.",
+    "All490 literal IDs, 25 obligations, five fixture prerequisites, default25+5 and extended215+25 case limits and the15420s phase-cap sum remain mandatory.",
+    "The separate offline auditor budget is explicit: ten phases times10s command+5s kill/wait+2s reaper=170s, plus30s reserve=200s. Original600s overhead becomes800s and the outer16020s becomes16220s; test case/phase caps are not extended.",
+    "The ten proposed mapped phases and87 supplemental node IDs match the current draft phase distribution. This is a count/scope check, not acceptance of all470 artifact rules.",
+    "History uses qualified actual Temporal protobuf decoding only after the full paired gate; SQL/auth-only phases do not import Temporal. Quiescent raw files, exact87 union, source pins and final manifest/hash rechecks precede publication.",
+    "Versioned contract/ledger and new exact reviews preserve historical c10/407/I02 references. Failure preservation, owned cleanup, full fresh490 and affected mandatory regressions remain required."
+  ],
+  "authorization": {
+    "integration_and_tc_authoring": true,
+    "synthetic_units_on_this_plan_alone": false,
+    "full_runner_child_or_sdk_execution": false,
+    "product_collection_sql_services_network": false,
+    "h2_iteration_or_goal_acceptance": false
+  },
+  "risks_and_edge_cases": [
+    "The10s auditor allowance is a proposed bound, not evidence of sufficient runtime performance. Timeout fails the candidate and requires owned cleanup; it cannot silently borrow test caps or increase the approved outer budget.",
+    "A parsed protobuf and consistent manifest do not prove business invariants or invocation completeness. Full runtime oracles and independent actual-result review remain mandatory."
+  ],
+  "recommendation": "Proceed with exact mapping/producer/TC/source review and versioned full-contract integration. Execute synthetic units only under their separate exact-byte source approval; execute no full-H2 work on this plan review.",
+  "remaining_uncertainty": "No new contract, runner, mapping or actual raw audit is accepted here; no execution was performed by this reviewer."
+}

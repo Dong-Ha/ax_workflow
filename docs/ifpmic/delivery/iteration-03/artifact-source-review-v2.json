@@ -1,0 +1,53 @@
+{
+  "kind": "ifpmic.delivery.iteration-03.artifact-source-review.v2",
+  "review_date": "2026-10-20",
+  "reviewer": {
+    "agent": "/root/h2_evidence_amendment_review",
+    "independence": "Did not author the conversion helper, producer amendment or TC units."
+  },
+  "decision": "approve_exact_source_for_65_synthetic_stdlib_units_only",
+  "previous_review": {
+    "path": "docs/ifpmic/delivery/iteration-03/artifact-source-review.json",
+    "sha256": "51d759d54cfd322048759e1e91c589e38342c720a41f767d015200d1697ac3c6",
+    "preservation": "The prior62-unit source approval remains historical and is not overwritten. Its scope limits and unresolved full-runtime obligations remain in force."
+  },
+  "source_pins": {
+    "scripts/ifpmic_h2_raw_evidence.py": "7b02c3b6a5713d6abe0e589d75835f5f6519e2aa5daee690e811497f20b7b4fe",
+    "scripts/ifpmic_h2_artifacts.py": "65c647a4a26fda2923d41d1c344958af254cf8fb35ea80250140c3140e41bcb9",
+    "tests/ifpmic_evidence/test_raw_observations.py": "684ee4f7c85b8347b7b76cf988eab3f3aaafcc93c2262882a8781fdd87e63fb7",
+    "tests/ifpmic_evidence/test_raw_artifacts.py": "765a054ba6e98d4bd3f61f29f4b64e4e5bba03aa96209c411ddb20aae32a7d8d",
+    "tests/ifpmic_api/h2_private_values.py": "ea2e828b0956f5e5bf9dd7f3c35441b948e1d0d17a49367b1d6ddd0c039cf86e",
+    "tests/ifpmic_evidence/test_private_values.py": "fa675b2f32ec7fd68a38c2cdf84873af94ea312a1007aed532b6ed395c8ab811"
+  },
+  "source_only_producer_pin_not_execution_approval": {
+    "tests/ifpmic_api/test_h2_worker_api_crashes.py": "b17b0b46b7e17a8fe9cf17b02b760eefa54c21565479805dd5d2a5c832b98630"
+  },
+  "findings": [],
+  "delta_evidence": [
+    "Actual worker/API process evidence contains Path-valued stdout/stderr and Temporal log fields. Passing these directly to the existing strict canonical encoder raises TypeError before the intended crash boundary.",
+    "The amended private writer converts a copied value tree before encoding. Only concrete Path values become strings; dictionaries and list/tuple values are copied recursively. Original process records, Path objects and cleanup references remain intact.",
+    "Unsupported objects and exception objects remain unsupported rather than being converted through arbitrary str/default handlers. The original strict canonical encoder continues to reject them.",
+    "Three focused TC methods check nested path JSON round-trip, original Path identity and actual file reading after conversion, and preservation/rejection of unsupported objects and exceptions. They import only the new pure-stdlib helper and stdlib; namespace package directories have no initializer code.",
+    "The previous four imported/unit sources are byte-identical. The complete discovery scope is the three synthetic unittest files:28+34+3=65 methods. The product/SDK-bearing worker/API test module is inspected only and is not imported or discovered."
+  ],
+  "authorization": {
+    "command": "/usr/bin/python3 -S -B -m unittest discover -s tests/ifpmic_evidence -v",
+    "working_directory": "repository root",
+    "maximum_wall_seconds": 60,
+    "environment": "Minimal PATH=/usr/bin, LC_ALL=C.UTF-8, PYTHONDONTWRITEBYTECODE=1.",
+    "capture": "Private stdout/stderr, exact65 unit IDs and all six source hashes before/after. Timeout, changed pins, missing/extra/failing/skipped units prevent acceptance.",
+    "inputs": "Only the six pinned unit/import sources, synthetic values and owned TemporaryDirectory files; stdlib imports only.",
+    "worker_api_product_module_or_sdk_imports": false,
+    "raw_audit_child_full_runner_or_other_test_collection": false,
+    "sql_services_network": false,
+    "h2_runtime_iteration_or_goal_acceptance": false,
+    "source_change_rule": "Any source-pin or discovery-scope change requires renewed exact source review before execution."
+  },
+  "risks_and_remaining_uncertainty": [
+    "Synthetic helper tests do not establish successful serialization, crash recovery or cleanup in the actual worker/API tests. Those retain their full490 runtime obligations under a newly versioned exact contract and pre-gates.",
+    "Full machine mapping, explicit digest-target coverage, real qualified history decoder binding, runner lifecycle and final raw manifest rechecks remain separate pending reviews. Existing or historical gate references do not authorize changed runtime sources.",
+    "No65-unit result or runtime execution has been accepted by this source review."
+  ],
+  "recommendation": "Execute only the pinned bounded65-unit synthetic command, preserving prior attempts and exact private results. Continue full-runtime source/contract reviews separately.",
+  "validation": "Static helper/TC/producer inspection, SHA256 and review-document JSON validation only; no imports, tests, collection, SQL, services or network executed by the reviewer."
+}

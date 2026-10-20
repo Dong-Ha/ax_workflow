@@ -1,6 +1,6 @@
 # 다음 세션 재개 안내 — 2026-10-20
 
-> 최신 개발 체크포인트: [주기03 실행 연결 진행 기록](./delivery/iteration-03/README.md). 케이스별 owner/query 원본 검사기와 TC 합성28건을 작성·실행했다. 독립 검토는 해당 증빙을 따른다. 다음은87개 조건부 artifact 규칙의 machine mapping과 full runner 통합이다. full490 및 실제 실행 화면은 아직 미수용이다.
+> 최신 개발 체크포인트: [주기03 진행 기록](./delivery/iteration-03/README.md), [65건 검증 요약](./delivery/iteration-03/artifact-verification.json). 합성 단위65/65와 독립 결과 검토 완료.87-case mapping 및 phase hook은 초안/범위 한정 소스 검토이며 전체 실행 승인이 아니다. **다음 수정은 retained SQL fence 내부 evidence schema·canonical digest·정확한 kind/case/node 검사 누락**이다. 그 뒤 새 버전 계약/ledger·전체 runner/paired pre-gate → fresh490 → 실제 run/receipt 화면 연결. 기존 c10 계약은 주기02가 사용하므로 보존한다. 아래 오래된28건/원본490 계약 내용은 역사 기록으로만 읽는다.
 
 > 최신 제품 결과: [주기02 실제 요청 저장 화면](./delivery/iteration-02/README.md), http://127.0.0.1:8769/ . 실제 API/DB 저장·재시작 유지 검증 완료, 독립 결과 검토 상태는 해당 증빙을 확인한다. 다음 단위는 필수 H2 검증 후 실제 실행 한 구간 연결이다.
 

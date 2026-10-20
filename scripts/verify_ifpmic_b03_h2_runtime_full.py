@@ -42,7 +42,7 @@ CAPS = {
     'h2_schema_python': 300, 'g4_python': 300, 'legacy_python': 300,
 }
 COLLECTION_SECONDS = 30
-OUTER_SECONDS = 16020
+OUTER_SECONDS = 16220  # Existing16020 plus separately reviewed200s raw-audit overhead.
 ARCHIVE_MEMBERS = (
     'gate/summary.json', 'gate/pytest.xml', 'gate/case-timings.json',
     'gate/postgres-lifecycle.json', 'gate/temporal-summary.json',
@@ -96,7 +96,8 @@ def execution_gate(contract: dict, ledger: dict, runner_sha: str):
         review = json.loads(raw)
         if (review.get('verdict') != 'approve_runner_authoring_only'
                 or review.get('contract_sha256') != CONTRACT_SHA
-                or review.get('ledger_sha256') != LEDGER_SHA):
+                or review.get('ledger_sha256') != LEDGER_SHA
+                or review.get('raw_rules_sha256') != contract['per_case_raw_evidence']['rules']['sha256']):
             raise RuntimeError('Exact contract/ledger runner-authoring review missing')
 
     source_path = ROOT / protocol['runner_source_review_path']
@@ -108,6 +109,7 @@ def execution_gate(contract: dict, ledger: dict, runner_sha: str):
         'contract_sha256': CONTRACT_SHA,
         'ledger_sha256': LEDGER_SHA,
         'runner_sha256': runner_sha,
+        'raw_rules_sha256': contract['per_case_raw_evidence']['rules']['sha256'],
     }
     if source_review.get('verdict') not in ('approve_source', 'approve_execution'):
         raise RuntimeError('Exact independent final runner-source review missing')
@@ -129,6 +131,7 @@ def execution_gate(contract: dict, ledger: dict, runner_sha: str):
             'independent_contract_review_sha256': sha(independent_raw),
             'tc_contract_review_sha256': sha(tc_raw),
             'runner_source_review_sha256': source_review_sha,
+            'raw_rules_sha256': contract['per_case_raw_evidence']['rules']['sha256'],
         })
         if item.get('reviewer', {}).get('independence') is None and 'tc' not in path.name:
             raise RuntimeError('Independent pre-gate reviewer independence not declared')
@@ -140,6 +143,32 @@ def execution_gate(contract: dict, ledger: dict, runner_sha: str):
         'source_review': (source_path.name, source_review_raw),
         'pre_gate_reviews': reviews,
     }
+
+
+
+def verify_raw_policy_sources(contract: dict, ledger: dict) -> dict:
+    """Check exact source bytes before importing any raw-evidence helper."""
+    policy = contract.get('per_case_raw_evidence')
+    if not isinstance(policy, dict):
+        raise RuntimeError('Current execution contract lacks per-case raw evidence policy')
+    required = {
+        'rules': 'docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules.json',
+        'auditor': 'scripts/ifpmic_h2_raw_audit.py',
+        'adapter': 'scripts/ifpmic_h2_full_raw_adapter.py',
+        'artifact_checker': 'scripts/ifpmic_h2_artifacts.py',
+        'recorder_checker': 'scripts/ifpmic_h2_raw_evidence.py',
+    }
+    for key, relative in required.items():
+        item = policy.get(key)
+        path = ROOT / relative
+        if (not isinstance(item, dict) or item.get('path') != relative
+                or not isinstance(item.get('sha256'), str)
+                or re.fullmatch('[0-9a-f]{64}', item['sha256']) is None
+                or ledger['source_pins'].get(relative) != item['sha256']
+                or path.is_symlink() or path.resolve() != path):
+            raise RuntimeError('Raw-evidence policy/source binding differs: ' + key)
+        require_file_hash(path, item['sha256'], 'Raw evidence ' + key)
+    return policy
 
 
 def verify_contract_ledger(contract: dict, ledger: dict) -> list[dict]:
@@ -791,6 +820,12 @@ def build_public_proposal(leaf: Path, contract: dict, ledger: dict, report: dict
                           env_before: dict) -> dict:
     if report.get('verdict') != 'running':
         raise RuntimeError('Public proposal may be constructed only after all checks')
+    raw_summary = report.get('raw_case_evidence', {})
+    if (raw_summary.get('covered_nodes') != 87 or raw_summary.get('audited_phases') != 10
+            or raw_summary.get('all_indexed_raw_files_unchanged') is not True
+            or raw_summary.get('rules_sha256') != contract['per_case_raw_evidence']['rules']['sha256']
+            or sum(row.get('raw_case_audit', {}).get('nodes', 0) for row in report['checks']) != 87):
+        raise RuntimeError('Public proposal lacks exact rechecked per-case raw evidence')
     timing_rows = [{key: row[key] for key in ('case_id', 'elapsed_seconds', 'setup_seconds',
                       'call_seconds', 'teardown_seconds', 'body_limit_seconds', 'cleanup_limit_seconds')}
                    for row in sorted(cases, key=lambda item: item['case_id'])]
@@ -807,6 +842,7 @@ def build_public_proposal(leaf: Path, contract: dict, ledger: dict, report: dict
         'kind': 'ifpmic.b03.h2.runtime-full-public-summary.v1',
         'verdict': 'candidate_pass_pending_independent_final_review',
         'counts': expected_counts, 'phase_durations': phase_summary,
+        'raw_case_evidence': raw_summary,
         'collection_seconds': report['collection_seconds'],
         'execution_seconds': report['execution_seconds'],
         'outer_cap_seconds': OUTER_SECONDS,
@@ -928,6 +964,7 @@ def main() -> int:
     contract, ledger = json.loads(contract_raw), json.loads(ledger_raw)
     phases = verify_contract_ledger(contract, ledger)
     verify_static_anchors(contract, ledger)
+    raw_policy = verify_raw_policy_sources(contract, ledger)
     runner_sha = sha(Path(__file__).read_bytes())
     reviews = execution_gate(contract, ledger, runner_sha)
 
@@ -937,12 +974,15 @@ def main() -> int:
                 'live_temporal_lifecycle_helper', 'live_gate_descendant_helper'):
         item = contract['attestation_inputs'][key]
         require_file_hash(ROOT / item['path'], item['sha256'], key)
+    sys.path.insert(0, str(ROOT))
     sys.path.insert(0, str(ROOT / 'scripts'))
     from verify_ifpmic_g1 import check_unchanged_sources
     from verify_ifpmic_b03_h1 import environment_hashes
     from verify_ifpmic_g4 import enable_subreaper, run_owned_command, cleanup_owned_children, reap_orphans, owned_children
     from ifpmic_temporal_toolchain import verify_binary, CLI_SHA
     from verify_ifpmic_b03_h2_runtime_normal import check_h1_evidence, check_runtime_evidence
+    from ifpmic_h2_full_raw_adapter import validate_policy, audit_phase, recheck_manifests
+    raw_state = validate_policy(ROOT, contract, ledger, phases)
 
     leaf = ROOT / 'workflow-artifacts/verification/B03/H2/runtime-full/gates' / datetime.now(timezone.utc).strftime('%Y-%m-%dT%H-%M-%S-%fZ')
     leaf.mkdir(parents=True, mode=0o700)
@@ -950,6 +990,7 @@ def main() -> int:
               'contract_sha256': CONTRACT_SHA, 'ledger_sha256': LEDGER_SHA,
               'runner_sha256': runner_sha, 'phase_order': list(ORDER),
               'expected_cases': 490, 'checks': [], 'private_temporary_roots': [],
+              'raw_rules_sha256': raw_policy['rules']['sha256'],
               'review_sha256': {name: sha(raw) for group in reviews.values()
                                 for name, raw in (group if isinstance(group, list) else [group])}}
     try:
@@ -1039,6 +1080,7 @@ def main() -> int:
             raise RuntimeError('Pinned Temporal CLI version check failed')
         normalized_cases = []
         normalized_pg = []
+        raw_proofs = []
         temporal_evidence = {'owned_process_roles': {}, 'history_hashes': [], 'phase_evidence': {}}
 
         # Build isolated private phase layouts and collect all fifteen before
@@ -1090,7 +1132,7 @@ def main() -> int:
             if duration > CAPS[name] or result.returncode or not junit.is_file():
                 raise RuntimeError('Phase exited unsuccessfully: ' + name)
             cases, counts = verify_junit(junit, phase, normal_contract)
-            check.update(counts=counts, status='passed')
+            check.update(counts=counts, status='tests_passed_pending_raw_audit')
             if any(not math.isfinite(float(c.get('time', 'nan'))) or float(c.get('time')) > CAPS[name]
                    for c in cases):
                 raise RuntimeError('JUnit testcase timing invalid: ' + name)
@@ -1155,6 +1197,18 @@ def main() -> int:
                 raise RuntimeError('Owned phase descendants remain live: ' + name)
             if list(cache.iterdir()):
                 raise RuntimeError('Phase bytecode cache unexpectedly populated')
+            proof = audit_phase(ROOT, phase, directory, observations, interpreter, env,
+                                raw_state, run_owned_command)
+            if proof is not None:
+                raw_proofs.append(proof)
+                check['raw_case_audit'] = {'nodes': len(proof['node_ids']),
+                                          'manifest_sha256': proof['sha256'], 'seconds': proof['seconds']}
+            else:
+                check['raw_case_audit'] = {'nodes': 0, 'applicability': 'retained phase with existing independent oracles'}
+            reap_orphans()
+            if owned_children():
+                raise RuntimeError('Raw auditor owned descendant remains unconfirmed: ' + name)
+            check['status'] = 'passed'
         if time.monotonic() - start > OUTER_SECONDS:
             raise RuntimeError('Outer gate wall budget exceeded')
 
@@ -1182,6 +1236,14 @@ def main() -> int:
         temporal_evidence['phase_count'] = len(temporal_evidence['h1_retention_seconds']) + 1
         temporal_evidence['postgres_lifecycle_phases'] = len(normalized_pg)
         write_private(leaf / 'normalized-temporal-summary.json', temporal_evidence)
+        verify_raw_policy_sources(contract, ledger)
+        raw_summary = recheck_manifests(raw_proofs, raw_state, deadline=start + OUTER_SECONDS)
+        write_private(leaf / 'raw-audit-proofs.json', raw_proofs)
+        write_private(leaf / 'normalized-raw-case-summary.json', raw_summary)
+        report['raw_case_evidence'] = raw_summary
+        report['raw_audit_seconds'] = sum(proof['seconds'] for proof in raw_proofs)
+        if report['raw_audit_seconds'] > 100 or time.monotonic() - start > OUTER_SECONDS:
+            raise RuntimeError('Raw-audit or final outer gate wall budget exceeded')
         report['collection_seconds'] = collection_total
         report['execution_seconds'] = execution_total
         report['verdict'] = 'running'

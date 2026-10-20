@@ -1,0 +1,43 @@
+{
+  "kind": "ifpmic.delivery.iteration-03.raw-hooks-checkpoint-review.v1",
+  "review_date": "2026-10-20",
+  "reviewer": "/root/h2_evidence_amendment_review",
+  "decision": "approve_scoped_source_checkpoint_only",
+  "comparison_commit": "2e929df51c6de06b5b93434da9186ab0bc3c7b79",
+  "scope": "Changed full-runner raw-policy/import/phase-audit/final-recheck hooks plus the new adapter and child. This is not whole-runner source approval or full mapping acceptance.",
+  "source_pins": {
+    "scripts/verify_ifpmic_b03_h2_runtime_full.py": "56320c67025c449a27270633ca95b8ba90f8baad5e1cf6c2a29f60bc0170c8a1",
+    "scripts/ifpmic_h2_full_raw_adapter.py": "c16257c8fe618ef658301a3d82d2161ac3afdb64a27b377cd3d24951fb21c858",
+    "scripts/ifpmic_h2_raw_audit.py": "3670a6889a76596caaf3de474e607631228f27f7824ee0dea201dfea262f2b8d",
+    "scripts/ifpmic_h2_artifacts.py": "65c647a4a26fda2923d41d1c344958af254cf8fb35ea80250140c3140e41bcb9",
+    "scripts/ifpmic_h2_raw_evidence.py": "7b02c3b6a5713d6abe0e589d75835f5f6519e2aa5daee690e811497f20b7b4fe"
+  },
+  "context_pins_not_runtime_approval": {
+    "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules.json": "f155cf1be6381439182155d5947c85faf8ce92e645a9c98446f2c7dc9a5ff772",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-execution-contract.json": "c10c7cb329ea82b758cfa7db34ac330e4b7ec472320b5904e8086f8067865a2d",
+    "docs/ifpmic/delivery/iteration-03/raw-integration-plan-review.json": "f901765bd2190da008d3b905048a09ec646800f05a6ec9a9b2589bcf977d92ab"
+  },
+  "findings": [],
+  "evidence": [
+    "The five raw-policy source paths and hashes must match contract, ledger and actual files before helper imports. Exact paired contract/source/pre-gate reviews also bind the raw rules hash; adapter import occurs after the global execution gate.",
+    "Adapter policy validation derives83 additions plus four exact retained fences from the ledger, checks the87-node union and ten phases, rejects unresolved rules and requires identity files and all digest targets to be separately indexed artifacts.",
+    "The audit child is launched only after phase tests, fixture/lifecycle checks and owned-child cleanup. It uses the selected attested phase interpreter through the existing owned-command helper with10s timeout; success also requires elapsed<=10s and exact phase/node/rule/decoder/result identity.",
+    "The child reads private config, checks rule and producer source hashes before/after, invokes the raw guards, and imports actual HistoryEvent.FromString only for PBSeq rules. Synthetic unit decoders are not wired into this entry point; SQL/auth-only rules need no Temporal import.",
+    "Final recheck requires ten unique proof phases and exact87-node coverage, validates unchanged private audit manifests and each indexed raw file's length/hash through descriptor-relative guards, and precedes the guarded public proposal.",
+    "The source uses the separately planned16220s outer cap. The current historical c10 contract still has16020s and lacks per_case_raw_evidence, so it cannot authorize or pass this changed candidate's guards. No historical approval is treated as new execution permission."
+  ],
+  "authorization": {
+    "source_checkpoint_recording": true,
+    "adapter_child_sdk_or_full_runner_execution": false,
+    "test_collection_sql_services_network": false,
+    "whole_runner_or_full_mapping_acceptance": false,
+    "h2_iteration_or_goal_acceptance": false
+  },
+  "risks_and_remaining_uncertainty": [
+    "The517 draft artifact rules and their actual source applicability are not independently accepted here. Full mapping and source closure must be frozen and reviewed under a new versioned ledger/contract.",
+    "Whole-runner lifecycle, attestation/import side effects, reaper/timeout recovery, total overhead accounting and publication/archive integrity still require complete source and paired pre-gate reviews. The scoped65-unit proof does not exercise these hooks.",
+    "History parsing remains structural and does not replace actual490 SQL/history/authorization/receipt/lease/recovery oracles. Quiescent retained evidence and final independent actual-result review remain mandatory."
+  ],
+  "recommendation": "Preserve this source-only checkpoint; prepare the versioned candidate, complete mapping/whole-runner reviews and obtain exact paired pre-gates before any full execution.",
+  "review_method": "Read-only changed-path/source/helper-contract inspection and SHA256; no imports, collection, tests, SDK, SQL, services or network executed."
+}

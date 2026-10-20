@@ -1,0 +1,44 @@
+{
+  "kind": "ifpmic.delivery.iteration-03.artifact-result-review.v1",
+  "review_date": "2026-10-20",
+  "reviewer": "/root/h2_evidence_amendment_review",
+  "decision": "accept_65_synthetic_checker_and_path_regression_units_only",
+  "source_review_sha256": "98c5e6bd4d3c870457ff2020f9ca4b8692775abb920cb802add8e760bc7d4318",
+  "findings": [],
+  "raw_evidence": {
+    "directory": "workflow-artifacts/verification/agile/iteration-03/artifact-unit-2026-10-20T14-37-59-705943Z",
+    "sha256": {
+      "result.json": "8f9e3dd1803b93ea2279358795d27378fcfa00dfb3d9265db1a958c3a2820321",
+      "source-before.json": "a8bd4479c4a6fdee4512a36b03e881da78548762a8c632969c6ddcbd13f75ff3",
+      "source-after.json": "a8bd4479c4a6fdee4512a36b03e881da78548762a8c632969c6ddcbd13f75ff3",
+      "stderr.log": "5fd0ec4cbeab8b7413ce3861d2861397a25785c52deb19ad698982ddd4d70c1d",
+      "stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "evidence": [
+    "Recorded command exactly matches the approved /usr/bin/python3 -S -B -m unittest discover -s tests/ifpmic_evidence -v; exit0. Actual stderr reports Ran65 tests in0.283s/OK.",
+    "All65 unique verbose passing IDs independently match the65 methods in the three pinned unittest sources and both expected/passed lists in result.json. No missing, extra, failing or skipped unit was observed.",
+    "All six approved source hashes match source-before, source-after and current files. Recomputed raw hashes match the result record; stdout is empty. Raw directory mode0700 and all five files mode0600 were verified.",
+    "Accepted scope is28 owner/query,34 artifact/phase-binding and3 Path-conversion regression units, using synthetic temporary evidence. The earlier62-unit attempt remains preserved separately."
+  ],
+  "accepted_counts": {
+    "tests": 65,
+    "passed": 65,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "missing_or_extra": 0
+  },
+  "risks_and_remaining_uncertainty": [
+    "Synthetic decoding and Path serialization do not prove actual SDK compatibility, worker/API crash execution, invocation completeness, SQL/business invariants or lifecycle cleanup.",
+    "The87 machine mappings, full runner/child integration, versioned490 contract and exact paired pre-gates, real runtime evidence and execution UI remain pending."
+  ],
+  "acceptance": {
+    "synthetic_checker_and_path_regression_units": true,
+    "raw_hooks_or_full_machine_mapping": false,
+    "full_h2_or_runtime": false,
+    "iteration03_business_or_goal_completion": false
+  },
+  "recommendation": "Retain this bounded actual-unit result and continue separate full mapping and runtime-gate reviews.",
+  "review_method": "Read-only raw output/ID/source/hash/mode inspection and JSON validation. No tests, imports, SQL, services or network executed by the reviewer; final public-document bytes are outside this result review."
+}

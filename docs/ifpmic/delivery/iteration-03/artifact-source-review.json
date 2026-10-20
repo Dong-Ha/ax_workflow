@@ -1,0 +1,56 @@
+{
+  "kind": "ifpmic.delivery.iteration-03.artifact-source-review.v1",
+  "review_date": "2026-10-20",
+  "reviewer": {
+    "agent": "/root/h2_evidence_amendment_review",
+    "independence": "Did not author implementation, producer amendment or TC units."
+  },
+  "decision": "approve_exact_source_for_62_synthetic_stdlib_units_only",
+  "source_pins": {
+    "scripts/ifpmic_h2_raw_evidence.py": "7b02c3b6a5713d6abe0e589d75835f5f6519e2aa5daee690e811497f20b7b4fe",
+    "scripts/ifpmic_h2_artifacts.py": "65c647a4a26fda2923d41d1c344958af254cf8fb35ea80250140c3140e41bcb9",
+    "tests/ifpmic_evidence/test_raw_observations.py": "684ee4f7c85b8347b7b76cf988eab3f3aaafcc93c2262882a8781fdd87e63fb7",
+    "tests/ifpmic_evidence/test_raw_artifacts.py": "765a054ba6e98d4bd3f61f29f4b64e4e5bba03aa96209c411ddb20aae32a7d8d"
+  },
+  "source_only_context_pins_not_execution_approval": {
+    "tests/ifpmic_api/test_h2_worker_api_crashes.py": "2b6ce2261765320df2cecbb759c115f9553a13f7d646784e4a954b60d8141037",
+    "scripts/ifpmic_h2_raw_audit.py": "3670a6889a76596caaf3de474e607631228f27f7824ee0dea201dfea262f2b8d",
+    "docs/ifpmic/delivery/iteration-03/RAW-AUDIT-INTEGRATION.md": "40dcec3d3c2e000711c6324351415aad26426de4e5964047d225174998aec5c3",
+    "docs/ifpmic/delivery/iteration-03/raw-integration-plan-review.json": "f901765bd2190da008d3b905048a09ec646800f05a6ec9a9b2589bcf977d92ab"
+  },
+  "authorization": {
+    "command": "/usr/bin/python3 -S -B -m unittest discover -s tests/ifpmic_evidence -v",
+    "working_directory": "repository root",
+    "maximum_wall_seconds": 60,
+    "environment": "Minimal PATH=/usr/bin, LC_ALL=C.UTF-8, PYTHONDONTWRITEBYTECODE=1.",
+    "capture": "Private stdout/stderr, exact62 unit IDs, and all four source pins before/after; missing/extra/failing/skipped units or timeout prevent acceptance.",
+    "inputs": "Only the four pinned unit/import sources and synthetic TemporaryDirectory evidence; stdlib imports only.",
+    "raw_audit_child_or_product_sdk_imports": false,
+    "other_test_collection_sql_services_network": false,
+    "full_h2_or_iteration_acceptance": false,
+    "source_change_rule": "Changed source pins or discovery scope require renewed exact source review."
+  },
+  "findings": [],
+  "evidence": [
+    "Descriptor-relative no-follow reads reuse the reviewed private-file guards. Partial match gathering closes collected descriptors on error and closes generators; selected case/file descriptors close through failure paths.",
+    "Traversal, ambiguous roots, excess matches, overlapping same-case patterns and unscoped cross-node file reuse fail closed. Shared JSON/JSONL requires the same node field and actual exact-node rows. Dynamic UUID roots can be selected only by strict kind/node/pytest-phase identity records, with exactly one matching directory.",
+    "Strict JSON/JSONL keys, required fields, exact raw-file SHA256 links and object/array JSON pointers are checked. Missing targets and invalid paths fail rather than becoming inferred N/A.",
+    "PBSeq framing matches the unchanged producers' eight-byte big-endian lengths. A decoder is mandatory; exceptions, event/frame count differences, noncontiguous IDs and missing/duplicate initial type1 Started events fail. Synthetic decoder success is explicitly not qualified Temporal history acceptance.",
+    "Phase binding compares the exact case union to an external expected-node set, rejects unresolved drafts and incorrect phase membership, and rejects unknown artifact constraints. Actual mapping correctness remains separately reviewable.",
+    "The bounded producer amendment only adds an actual PYTEST_CURRENT_TEST identity record through the existing strict private writer; no original business assertion or case budget changes.",
+    "The34 new TC methods cover normal manifests, shared journals, identity selection, paths/links/modes, digest mismatch and malformed frames/decoder outputs, plus phase constraints; original28 units remain. All fixtures use synthetic temporary files and import only the pinned checkers and stdlib."
+  ],
+  "resolved_tc_findings": [
+    "Phase-row fixtures now explicitly default unresolved to[], so positive binding and intended negative constraints reach their actual checks.",
+    "The missing-file test now creates the empty case directory, so ARTIFACT_MATCH_COUNT is the intended failure rather than missing-directory failure."
+  ],
+  "risks_and_remaining_work": [
+    "The real child uses HistoryEvent.FromString only when a PBSeq rule exists. Its qualified environment, exact source gate, parent ownership and timeout/reaper behavior still require full runner/pre-gate review; the child is not imported or executed by these units.",
+    "All87 mappings and conditional applicability remain unaccepted. Each digest target must also be indexed as a raw artifact or otherwise included in the reviewed final hash recheck; link validation alone does not place its target in this module's output manifest.",
+    "Quiescent evidence is required. This foundation does not certify concurrent namespace integrity, every invocation's causality/completeness, SQL/business invariants or producer execution.",
+    "Full490, 25 obligations, five fixture prerequisites, versioned contract/ledger, exact paired source/pre-gate reviews, actual runtime and execution UI remain pending."
+  ],
+  "recommendation": "Run only the approved bounded62-unit synthetic command and retain its actual results. Continue mapping and full-runner reviews separately.",
+  "remaining_uncertainty": "No tests or runtime paths were executed by this reviewer; actual outcomes remain unaccepted.",
+  "validation": "Static source/TC/producer inspection and SHA256; review-document JSON validation only. No product/SDK imports, collection, tests, SQL, services or network."
+}

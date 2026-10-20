@@ -1,26 +1,37 @@
-# 주기03 진행 기록 — 실제 실행 화면 연결 중
+# 주기03 — 저장한 요청을 실행 화면에 연결하는 중
 
-주기02의 실제 요청 저장 화면은 `http://127.0.0.1:8769/`, 기존 workflow 화면은 `http://127.0.0.1:4173/ifpmic.html`이다. 이번 체크포인트는 화면 기능을 추가하지 않는다. 실제 실행 연결 전에 필요한 케이스별 원본 증빙 검사 기반을 구현했다. 주기03·H2·최종 목표는 미완료다.
+**지금 볼 수 있는 결과:** [실제 요청 등록·저장 화면](http://127.0.0.1:8769/), [29단계 workflow 탐색](http://127.0.0.1:4173/ifpmic.html). 이번 체크포인트에서 두 주소의 HTTP200을 확인했다. 실제 실행 접수와 run/receipt 표시는 아직 연결 중이다.
 
-## 실제로 검증한 변경
+| 사용자 흐름 | 현재 상태 |
+|---|---|
+| 설계 흐름 탐색·74개 모의 시나리오 | 공개·검증 완료, 합성 시연 |
+| 로그인 → 실제 요청 등록 → 목록·상세 → 재시작 유지 | 실제 로컬 API/DB 검증 완료, 합성 계정·mock 프로파일 |
+| 저장 요청 → 실행 엔진 접수 → run/receipt 표시 | 진행 중, 아직 시연할 수 없음 |
+| 실제 업무·사람·품질·장비·배포 경로 | 후속 작업 및 최종 인수 미완료 |
 
-- 신규 stdlib 검사기 `scripts/ifpmic_h2_raw_evidence.py`: owner SQL/query 기록의 node·setup/call/teardown 구분, 원문 구조와 canonical digest, node별 최소/최대 횟수, private 디렉터리/파일 권한·소유자·symlink/hardlink, 중복 복사 및 파일별 해시 검사.
-- TC 작성 합성 테스트28건을 독립 소스 승인 후 실제 실행하여28/28 통과했다. 정상·빈 실제 결과·누락·변조·다른 node 자료·중복 기록·해시만 있는 자료·권한/링크·JSON 경계를 확인했다.
-- 증빙: [검증 결과](./recorder-verification.json), [소스 검토](./recorder-source-review.json), [결과 검토](./recorder-result-review.json). 원본 unit 로그·실행 ID·before/after·권한·보존 자료는 비공개 `workflow-artifacts/verification/agile/iteration-03/`에 있다.
-- 보호된 AX96 해시/89 목록·설계17/업로드2·원래 Python1777/qualified3072 파일을 실제 기존 승인 map과 비교해 모두 유지됨을 확인했다. 제품/UI/의존성 변경이 없으므로 이 체크포인트에서 build/browser를 반복하지 않았다. 실제 실행 연결 시 관련 회귀는 필수다.
+전체 필수 단계 완료율은 **2/16=12.5%**다. 동일 비중의 단계 수이며 제품 작업량 추정치는 아니다. 새 단위 검사 통과를 단계 완료율에 더하지 않는다.
 
-## 다음 한 가지
+## 이번에 실제 검증한 것
 
-설명형87 case 계약의 조건부 artifact/history/list/tree/process/SQL-fence 규칙을 실제 파일 경로와 연결하고, full runner의 각 phase 및 공개 결과 생성 전에 전체 규칙을 검사하도록 통합한다. SQL-only/실제 no-run 경로에 Temporal history를 만들어 요구하지 않는다. 다른 case의 증빙이 누락을 가리지 못하게 한다.
+원본 증빙 검사 기반을 확장하고, 프로세스 기록의 Path 값 때문에 JSON 저장이 실패하는 준비 단계 결함을 수정했다. 정리에 필요한 원래 Path 객체는 유지한다. 기존 worker/API 테스트4개의 업무 검사 본문은 HEAD와 AST가 같다.
 
-그다음 현재490 후보 source/ledger/계약의 paired 리뷰와 전체 runner/pre-gate를 완료하고 fresh490을 실행한다. 통과·원본 증빙 독립 수용 뒤에 주기02 job을 실제 workspace/실행 엔진 접수에 연결한다. `QUEUED`는 P01 등의 업무 수행 완료가 아니며 화면에서도 구분한다.
+- 합성 단위 **65/65 통과**: owner/query28 + artifact/phase 규칙34 + Path 회귀3. 정확한 소스 승인 후 실행했고 독립 결과 검토가 수용했다. 앞선28·62건 기록도 보존한다.65건은 이를 포함하는 누적 검사 수다.
+- 87 case·517 artifact·10 phase의 machine mapping과 raw child/adapter/full runner hook 초안을 작성했다.35개 직접 소스 pin이 실제 파일과 일치한다. Hook 검토는 소스 체크포인트 범위이며 전체 실행 승인이 아니다.
+- [실제 검증 요약](./artifact-verification.json), [독립 결과 검토](./artifact-result-review.json), [hook 소스 검토](./raw-hooks-checkpoint-review.json), [통합 계획](./RAW-AUDIT-INTEGRATION.md).
+- 원래 승인 map 대비 보호 AX96 해시·89 목록, 설계17·업로드2, Python 환경1777/3072 항목이 모두 일치했다.
+- 제품/UI/의존성 변경이 없어 이 체크포인트에서 build/browser를 반복하지 않았다. 실행 연결 시 해당 검증을 수행한다. 원본 로그·SQL·환경 map은 비공개 workflow-artifacts에 보존한다.
 
-## 재검증 명령과 제한
+## 다음에 보여줄 한 가지
 
-저장소 루트에서 승인된 stdlib 단위 범위만 실행하는 명령이다. 합성 임시 파일을 사용하며 API/DB/Temporal을 시작하지 않는다.
+**저장한 요청이 실제 실행 엔진에 접수되어 run/receipt와 QUEUED 상태가 화면에 표시되는 흐름.** QUEUED는 접수 상태이며 P01 등 업무 완료가 아니다.
 
-```sh
-/usr/bin/python3 -S -B -m unittest discover -s tests/ifpmic_evidence -v
-```
+이 흐름을 막는 현재 결함은 retained SQL fence 기록의 내부 원문·canonical digest·정확한 case/node 검사가 부족한 점이다. 먼저 이 검사와 실패 테스트를 보완한다. 이후 별도 버전의490 계약·ledger와 전체 runner/paired pre-gate를 검토하고 fresh490을 실행한다. 검증·독립 수용 뒤 실제 화면 연결을 진행한다. 기존 c10 계약은 주기02 재실행에 쓰이므로 덮어쓰지 않는다.
 
-원본 full490 runner는 여전히 현재 후보의 실행 승인이 없으므로 실행하지 않는다. 이 checker는 owner/query의 구조·원문·횟수만 검사하며 history 의미, 모든 호출의 인과 완전성, process lifecycle, SQL 업무 불변식, concurrent namespace 안전성을 수용하지 않는다. 전체 H225+5 의무/490·H3–H7·원래 AT32·실제 Agent/장비/배포 요구사항은 남아 있다.
+## 재개 위치
+
+1. 위 retained-fence 검증 결함을 수정하고 TC 실패 사례를 추가한다.
+2. 새 소스 승인 후 합성 검사 실행; 현재65건 증빙을 새 소스의 승인으로 재사용하지 않는다.
+3. 전체 mapping·버전 계약·runner 검토와 정확한 pre-gate → fresh490 → 독립 결과 수용.
+4. 실제 접수 화면 연결·브라우저 검증·시연 → 커밋/push.
+
+원본 full490 runner는 아직 실행하지 않는다. 현재 초안 status와 옛 pin은 실행을 차단한다. 전체 H2/H3–H7·원래 AT32·실제 Agent/장비/배포 인수 및 최종 목표는 미완료다.

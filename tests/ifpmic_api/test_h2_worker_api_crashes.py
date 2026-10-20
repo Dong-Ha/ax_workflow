@@ -25,6 +25,7 @@ from uuid import uuid4
 
 import psycopg
 from tests.ifpmic_api.h2_native_bounds import bounded_connect, bounded_harness
+from tests.ifpmic_api.h2_private_values import private_json_values
 import pytest
 from temporalio.client import Client
 
@@ -153,7 +154,7 @@ def _kill_saved(process) -> dict[str, object]:
 
 def _record_private(root: Path, name: str, value: object) -> Path:
     path = root / name
-    normal._write_private(path, normal._canonical(value) + b"\n")
+    normal._write_private(path, normal._canonical(private_json_values(value)) + b"\n")
     return path
 
 
@@ -227,6 +228,13 @@ def _record_history(root: Path, name: str, events) -> str:
 def _root() -> Path:
     evidence = normal._runtime_evidence_root()
     root = normal._private_dir(evidence / ("worker-api-" + uuid4().hex))
+    current_test = os.environ["PYTEST_CURRENT_TEST"]
+    node_id, stage = current_test.rsplit(" (", 1)
+    assert stage in ("setup)", "call)", "teardown)")
+    _record_private(root, "case-node.json", {
+        "kind": "ifpmic.b03.h2.case-identity.v1",
+        "node_id": node_id, "pytest_current_test": current_test,
+    })
     return root
 
 

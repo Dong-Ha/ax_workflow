@@ -1,0 +1,89 @@
+{
+  "kind": "ifpmic.agile.iteration-03.artifact-verification.v1",
+  "status": "accepted_65_synthetic_units_only",
+  "scope": "28 owner/query +34 artifact/phase-rule +3 Path serialization regression checks; synthetic temporary evidence only.",
+  "passed": 65,
+  "failed_or_missing": 0,
+  "exit_code": 0,
+  "command": [
+    "/usr/bin/python3",
+    "-S",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests/ifpmic_evidence",
+    "-v"
+  ],
+  "source_unchanged": true,
+  "raw_result": {
+    "path": "workflow-artifacts/verification/agile/iteration-03/artifact-unit-2026-10-20T14-37-59-705943Z/result.json",
+    "sha256": "8f9e3dd1803b93ea2279358795d27378fcfa00dfb3d9265db1a958c3a2820321"
+  },
+  "source_review": {
+    "path": "docs/ifpmic/delivery/iteration-03/artifact-source-review-v2.json",
+    "sha256": "98c5e6bd4d3c870457ff2020f9ca4b8692775abb920cb802add8e760bc7d4318"
+  },
+  "independent_result_review": {
+    "path": "docs/ifpmic/delivery/iteration-03/artifact-result-review.json",
+    "sha256": "3fec88f1feec5dda05cb28ccc9cbd5f14bf66df8183457c353bb77ec310944bc"
+  },
+  "raw_hooks_source_checkpoint_review": {
+    "path": "docs/ifpmic/delivery/iteration-03/raw-hooks-checkpoint-review.json",
+    "sha256": "53780c1408f8b09cd8d0265aaca4b371cf24e7e752725847cf206f738f5cd638"
+  },
+  "integration_plan_review": {
+    "path": "docs/ifpmic/delivery/iteration-03/raw-integration-plan-review.json",
+    "sha256": "f901765bd2190da008d3b905048a09ec646800f05a6ec9a9b2589bcf977d92ab"
+  },
+  "machine_rules": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules.json",
+    "sha256": "f155cf1be6381439182155d5947c85faf8ce92e645a9c98446f2c7dc9a5ff772",
+    "status": "draft_no_execution",
+    "cases": 87,
+    "artifacts": 517,
+    "phases": 10,
+    "source_pins_checked": 35,
+    "full_mapping_accepted": false
+  },
+  "producer_change": "Private case identity marker and Path-only JSON conversion; four worker/API business-test function AST bodies unchanged from HEAD 2e929df. Actual crash cases have not run.",
+  "limits": [
+    "Retained SQL fence envelopes still lack nested raw evidence schema, canonical evidence digest and exact kind/case/node validation. Empty or hash-only nested evidence must be rejected before runtime approval.",
+    "Synthetic protobuf decoding does not prove actual SDK compatibility or business history semantics.",
+    "Full runner hooks received scoped source checkpoint review only, not whole-runner or execution approval.",
+    "Old full contract/ledger pins intentionally remain incompatible with new runner. Preserve old c10 contract for iteration02; freeze a separately versioned candidate."
+  ],
+  "remaining": [
+    "Implement strict retained-fence envelope/body/digest validation and negative cases.",
+    "Review complete machine mapping and versioned490 ledger/contract; whole runner review and exact paired pre-gates.",
+    "Fresh full490 execution and independent evidence acceptance.",
+    "Connect saved API job to real engine admission and run/receipt display, then browser validation."
+  ],
+  "not_executed": {
+    "build_and_UI_browser": "No product/UI/dependency change in this checkpoint; existing visible deliveries remain independently scoped.",
+    "full490_services_SDK_pytest": "No H2 product/SDK imports, collection, SQL or runtime services executed for this checkpoint."
+  },
+  "visible_urls_checked_http_200": [
+    "http://127.0.0.1:4173/ifpmic.html",
+    "http://127.0.0.1:8769/"
+  ],
+  "h2_accepted": false,
+  "iteration03_complete": false,
+  "goal_complete": false,
+  "preservation": {
+    "all_unchanged": true,
+    "protected_ax_hashes": 96,
+    "inventory": 89,
+    "design": 17,
+    "uploads": 2,
+    "environment_entries": {
+      "original32": 1777,
+      "qualified36": 3072
+    },
+    "private_report": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/artifact-unit-2026-10-20T14-37-59-705943Z/preservation.json",
+      "sha256": "e16cb00b1440265a60eea22e6ea805b546c230da650d1ffb9cfaf3e02996b50d"
+    }
+  }
+}

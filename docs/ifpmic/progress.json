@@ -660,14 +660,14 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "Agile visible increment02: define and deliver one real request registration → persisted job detail/current stage/wait reason, with relevant exact source/gate/ownership/error checks. H2 evidence checkpoint fa3fe7e remains unexecuted; full H2/B03/H3-H7/AT32/finalAX remain incomplete.",
+  "next_step": "Iteration03: fix strict retained-fence raw body/digest/case-node validation; freeze versioned490 contract and full-runner reviews/pre-gates, execute fresh490, then show actual saved-job engine admission/run/receipt in UI.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",
     "Approved Bedrock/Claude runtime profile"
   ],
   "publication_policy": "Only authorized git repository documentation, source and synthetic verification summaries/screenshots; never runtime credentials or application logs.",
-  "updated_at": "2026-10-19T15:13:09.474133+00:00",
+  "updated_at": "2026-10-20T14:47:17.453338+00:00",
   "session_handoff": {
     "status": "resumed_by_user",
     "resume_document": "docs/ifpmic/RESUME.md",
@@ -715,10 +715,10 @@
       "status": "in_progress",
       "title": "Connect persisted API job to real execution-engine admission and visible run/receipt",
       "path": "delivery/iteration-03/README.md",
-      "verification": "delivery/iteration-03/recorder-verification.json",
-      "foundation_status": "accepted_28_synthetic_recorder_unit_checks_only",
+      "verification": "delivery/iteration-03/artifact-verification.json",
+      "foundation_status": "accepted_65_synthetic_checker_and_path_regression_units_only",
       "actual_job_execution": false,
-      "scope": "Recorder foundation verified by unit tests only; literal87 full raw mapping, full490 gates and actual execution UI remain pending."
+      "scope": "87-case machine mapping and phase hooks are source-only drafts. Retained-fence nested body/digest validation, full490 gates and actual execution UI remain pending."
     }
   ]
 }
