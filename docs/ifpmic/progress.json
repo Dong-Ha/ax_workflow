@@ -660,7 +660,7 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "H2: finish raw SQL/history/workspace evidence amendment and exact source reviews before runner pre-gate and fresh490-case execution. FullH2/B03/H3-H7/originalAT32/fullAX remain incomplete.",
+  "next_step": "Agile visible increment02: define and deliver one real request registration → persisted job detail/current stage/wait reason, with relevant exact source/gate/ownership/error checks. H2 evidence checkpoint fa3fe7e remains unexecuted; full H2/B03/H3-H7/AT32/finalAX remain incomplete.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",
@@ -669,10 +669,40 @@
   "publication_policy": "Only authorized git repository documentation, source and synthetic verification summaries/screenshots; never runtime credentials or application logs.",
   "updated_at": "2026-10-19T15:13:09.474133+00:00",
   "session_handoff": {
-    "status": "paused_at_user_request_weekly_limit",
-    "date": "2026-10-20",
+    "status": "resumed_by_user",
     "resume_document": "docs/ifpmic/RESUME.md",
+    "resumed_checkpoint": "0de641d",
     "goal_complete": false,
     "execution_started": false
-  }
+  },
+  "delivery_mode": {
+    "plan": "AGILE-DELIVERY.md",
+    "reason": "User requested short reviewable increments after several days without seeing results.",
+    "product_work_in_progress_limit": 1,
+    "delivery_report_fields": [
+      "visible_behavior",
+      "url_and_screenshot",
+      "actual_validation",
+      "limitations",
+      "next_single_flow",
+      "commit_and_push"
+    ],
+    "existing_mandatory_gates_preserved": true
+  },
+  "visible_deliveries": [
+    {
+      "id": "iteration-01",
+      "status": "accepted_local_design_and_synthetic_demo_only",
+      "title": "Original workflow explorer and synthetic scenario playback shown to user",
+      "path": "delivery/iteration-01/README.md",
+      "verification": "delivery/iteration-01/verification.json",
+      "actual_job_execution": false,
+      "independent_result_review": "delivery/iteration-01/result-review.json"
+    },
+    {
+      "id": "iteration-02",
+      "status": "planned",
+      "title": "One real request registration and persisted job/current-stage/wait detail"
+    }
+  ]
 }

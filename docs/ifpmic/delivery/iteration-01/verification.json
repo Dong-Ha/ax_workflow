@@ -1,0 +1,201 @@
+{
+  "kind": "ifpmic.agile.iteration-01.visible-delivery.v1",
+  "status": "checks_passed_pending_independent_result_review",
+  "goal_complete": false,
+  "purpose": "Let the user inspect the existing original-contract workflow and synthetic scenarios immediately.",
+  "route": "http://127.0.0.1:4173/ifpmic.html",
+  "source_checkpoint": "fa3fe7e",
+  "build": {
+    "command": "npm run build",
+    "exit_code": 0,
+    "typescript": "passed",
+    "vite": "passed",
+    "observed_in_this_session": true
+  },
+  "browser_checks": {
+    "design": {
+      "passed": 8,
+      "failed": 0,
+      "verdict": "pass",
+      "raw_report_path": "workflow-artifacts/verification/agile/iteration-01/2026-10-20T13-21-25Z/design-browser.json",
+      "raw_report_sha256": "3ee24820c1862f73f01c0ebb114e4dcafb46a360eb646094bdb42ae7076ef1ec",
+      "checks": [
+        {
+          "name": "Standalone preview route serves the IFPMIC page offline",
+          "verdict": "pass"
+        },
+        {
+          "name": "workflow cards, phases, edges and terminal match the V1 display contract",
+          "verdict": "pass"
+        },
+        {
+          "name": "selecting a node exposes its public detail fields and requirement links",
+          "verdict": "pass"
+        },
+        {
+          "name": "search, owner filtering, result counts and clear operate on the displayed graph",
+          "verdict": "pass"
+        },
+        {
+          "name": "special outcomes and business failure route controls navigate to their target nodes",
+          "verdict": "pass"
+        },
+        {
+          "name": "workflow cards support ArrowDown, ArrowUp, Home and End while skipping filtered nodes",
+          "verdict": "pass"
+        },
+        {
+          "name": "desktop and 375px mobile layouts expose core details without page overflow",
+          "verdict": "pass"
+        },
+        {
+          "name": "read-only visualizer sends no API/write requests or external network traffic",
+          "verdict": "pass"
+        }
+      ]
+    },
+    "replay": {
+      "passed": 19,
+      "failed": 0,
+      "verdict": "pass",
+      "raw_report_path": "workflow-artifacts/verification/agile/iteration-01/2026-10-20T13-21-25Z/replay-browser.json",
+      "raw_report_sha256": "40603985393e68fb8bbcd0f81f2cd2181cf3129d10dd5831194e8551d3690090",
+      "checks": [
+        {
+          "name": "design view is the default and replay view requires explicit selection",
+          "verdict": "pass"
+        },
+        {
+          "name": "catalog exposes all 74 scenarios and starts each at cursor zero",
+          "verdict": "pass"
+        },
+        {
+          "name": "all 74 scenarios reach their fixed endpoint through the end-observation control",
+          "verdict": "pass"
+        },
+        {
+          "name": "all controls checkpoints expose literal control state and three read-only semantic groups",
+          "verdict": "pass"
+        },
+        {
+          "name": "approved controls checkpoints are captured in three semantic groups at 375px and 1440px",
+          "verdict": "pass"
+        },
+        {
+          "name": "routing scenarios expose reuse, exemption, terminal, candidate and replan authority checkpoints",
+          "verdict": "pass"
+        },
+        {
+          "name": "scenario change clears display filters and resets selection and cursor",
+          "verdict": "pass"
+        },
+        {
+          "name": "previous/next/first/last and checkpoint selection move stored prefixes only",
+          "verdict": "pass"
+        },
+        {
+          "name": "observation panel separates mock job, step, agent and gate data and opens current node",
+          "verdict": "pass"
+        },
+        {
+          "name": "metadata recovery and notes checkpoints keep current approval and publication observability",
+          "verdict": "pass"
+        },
+        {
+          "name": "retry, cycle and device telemetry are distinct and never expose allocatable authority",
+          "verdict": "pass"
+        },
+        {
+          "name": "current-stage navigation reveals, focuses and scrolls a node hidden by active filters",
+          "verdict": "pass"
+        },
+        {
+          "name": "question panels distinguish durable answer, current-attempt review and archived review history",
+          "verdict": "pass"
+        },
+        {
+          "name": "remote panel shows stale-query rejection, one found receipt and quarantine independently",
+          "verdict": "pass"
+        },
+        {
+          "name": "SQE manual, report and judgment checkpoints remain separate across retries and history",
+          "verdict": "pass"
+        },
+        {
+          "name": "child coordinator and TC execution remain separate, bound, and legible across all nine fixed checkpoints",
+          "verdict": "pass"
+        },
+        {
+          "name": "question review-blocked checkpoint remains legible at 1440px and 375px",
+          "verdict": "pass"
+        },
+        {
+          "name": "1440px and 375px layouts expose replay controls and details without horizontal page overflow",
+          "verdict": "pass"
+        },
+        {
+          "name": "browser replay makes no API writes, external requests or runtime errors",
+          "verdict": "pass"
+        }
+      ]
+    }
+  },
+  "local_route_capture": {
+    "path": "docs/ifpmic/delivery/iteration-01/capture.json",
+    "sha256": "5de9d3c41b2a52ed9dbaf87bf3c308e8f7f8ea8655391ca5a2182cce3aa0363b"
+  },
+  "screenshots": {
+    "docs/ifpmic/delivery/iteration-01/human-wait-desktop.png": {
+      "sha256": "7080ac63169f3ecdb7fa78a3117338d8f2fd58017b220778a7c63edfb464650f",
+      "bytes": 428193
+    },
+    "docs/ifpmic/delivery/iteration-01/workflow-desktop.png": {
+      "sha256": "501fa50ef295afccd42252dd83922cb68ec04984a22077b4c631d615cb64ea7b",
+      "bytes": 299388
+    },
+    "docs/ifpmic/delivery/iteration-01/workflow-mobile.png": {
+      "sha256": "4671956288d05b07b23aba1963069c0250743cee1172b523078825c4d172c92b",
+      "bytes": 148474
+    }
+  },
+  "source_sha256": {
+    "src/ifpmic/WorkflowPage.tsx": "a2e93dfa06abf88ad51733ce2326f7bf613f433b51f86953eb544a34408b6310",
+    "src/ifpmic/ReplayPanel.tsx": "2387587203963f696c80db31347a5c6fa016bb7b8a91232f6a322736ddffb14f",
+    "src/ifpmic/contract.mjs": "64b8b8237ba88fb4ae7ae8ab38b6ca5882244db3095d1cd4c56413ed914ddfa7",
+    "src/ifpmic/replay.mjs": "2788390417a515374c664d79301375a893f85423f06623c1a20f5e7e89de7ca2",
+    "docs/ifpmic/design-v1/specs/workflow.v1.json": "bab40a7abb3929896add1ef2cd074893dd2a7de14d200a5d6cea4b7a77eb0e89",
+    "docs/ifpmic/design-v1/specs/state-contract.json": "0248e130017043539319c56af854f5388a95d33e7e687902a3438fdff414244a",
+    "docs/ifpmic/design-v1/specs/requirements.json": "6e1dc87cdbcaa66ed690ffd13d2d70242dff43410c9f822447bd520719ce249b"
+  },
+  "built_files_sha256": {
+    "dist/assets/client-CAHGjawS.js": "5fa7239379911c904db9b9302fd405a3b9e95325a502751ff2e1cb005e6ec769",
+    "dist/assets/ifpmic-lFe-uYV3.js": "cf6014835215be2da9a71f336d19db9e7cb3e55bc8e0fce3bceb1a7f33d32c6e",
+    "dist/assets/main-CylYjkUS.js": "ddbb9ffd85519b9bebb4689f7cac226a376fbc3cc1cca57dcbadeff28f4dc377",
+    "dist/assets/main-Drfl24f5.css": "5f130778329164918b89101b7ff8ae176d4f44800f424819c3a4add2d2911814",
+    "dist/ifpmic.html": "7a8a47f4bb100ee7905396cd2a0ed041a71df8937277f04d18625780b5b0cf0b",
+    "dist/index.html": "f0c4ef087190c0cfe694cf7cf27837494f3fc22ee4bcc05ee2c14a244056890f"
+  },
+  "source_preservation": {
+    "protected_ax_files": 96,
+    "protected_inventory": 89,
+    "imported_design_files": 17,
+    "original_uploads": 2,
+    "method": "Static exact B01 manifest/hash/inventory and original source-manifest comparison; all matched.",
+    "scope": "Source preservation only; no complete Node/API/Paperclip regression claim."
+  },
+  "delivery_scope": [
+    "Original29-node/6-phase/41-transition design explorer",
+    "74synthetic scenarios with normal/failure/human-wait playback",
+    "Desktop/mobile presentation and selected-step detail",
+    "ExistingUI served on loopback; no protected product source change"
+  ],
+  "not_completed": [
+    "Real job/agent/device execution",
+    "Fresh Paperclip-host integration check",
+    "Full H2 and B03 or H3-H7 acceptance",
+    "OriginalAT32 and final workflow acceptance"
+  ],
+  "next_visible_increment": "Register one real request and show its persisted job/current stage/wait reason through the authorized API, with ownership and duplicate/error checks.",
+  "verification_plan": "docs/ifpmic/AGILE-DELIVERY.md",
+  "plan_review": "docs/ifpmic/delivery/iteration-01/plan-review.json"
+}

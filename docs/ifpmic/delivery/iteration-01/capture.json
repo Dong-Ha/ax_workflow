@@ -1,0 +1,13 @@
+{
+  "kind": "ifpmic.local.iteration01.capture",
+  "route": "http://127.0.0.1:4173/ifpmic.html",
+  "mode": "design_and_synthetic_replay_only",
+  "nodes": 29,
+  "phases": 6,
+  "edges": 41,
+  "scenarios": 74,
+  "errors": [],
+  "blocked_external_origins": [],
+  "real_job_execution": false,
+  "paperclip_host_verified_in_this_iteration": false
+}

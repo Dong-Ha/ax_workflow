@@ -1,0 +1,87 @@
+{
+  "kind": "ifpmic.delivery.iteration-01.plan-review.v1",
+  "status": "approve_iteration_plan_only",
+  "reviewer": {
+    "agent": "/root/h2_worker_crash_tc",
+    "review_type": "independent static plan review",
+    "scope": "Review of visible incremental delivery sequence and preserved verification scope; not outcome acceptance."
+  },
+  "reviewed_inputs": {
+    "agile_plan": {
+      "path": "docs/ifpmic/AGILE-DELIVERY.md",
+      "sha256": "358d3ce5ad836b3a7ac2a36cb9cfcda99c7d129d5c7c67f10ea5bff651ed0b59"
+    },
+    "original_plan_with_pointer": {
+      "path": "docs/ifpmic/PLAN.md",
+      "sha256": "dc0b2547866c42bd262adcd29c0c5b7939267462a03123bfdd7f0a64df1e665a"
+    },
+    "progress_record": {
+      "path": "docs/ifpmic/progress.json",
+      "sha256": "5807e556ebd2ddf3fa7d2a6f779704a490b88a982f1715b40145e3efecde7109"
+    }
+  },
+  "decision": {
+    "result": "The short delivery sequence gives the user a reviewable screen first, then advances through one real request, one execution boundary, human/quality paths, and final acceptance. It retains the original IFPMIC business workflow and mandatory validation gates. This review approves the plan structure only; it does not verify or accept the running page, screenshots, test results, Paperclip integration, runtime behavior, or final workflow.",
+    "execution_or_acceptance_authorized": false
+  },
+  "checks": {
+    "plan_pointer_present_in_original_plan": true,
+    "visible_outcomes_are_prioritized_without_waiting_for_all_backend_work": true,
+    "increments_are_small_user_flows_not_claimed_as_full_sprints": true,
+    "original_business_roles_approval_rules_and_final_scope_preserved": true,
+    "V_and_B_stage_mapping_retained": true,
+    "AT32_and_final_independent_acceptance_retained": true,
+    "mock_and_real_state_are_explicitly_distinguished": true,
+    "full_h2_and_other_pending_gates_are_not_marked_complete": true,
+    "per_iteration_eight_verification_fields_present": true,
+    "iteration_one_regressions_named": true,
+    "privacy_localhost_and_external_submission_limits_preserved": true,
+    "user_feedback_returns_to_next_priority": true
+  },
+  "eight_verification_fields": {
+    "purpose": "Each iteration aims to make one user flow directly reviewable.",
+    "target": "Scope, affected functions, linked requirements and gate IDs are to be recorded before starting each flow.",
+    "method": "Normal, error, boundary and relevant regression checks are required; UI demonstrations do not substitute for service verification.",
+    "agent": "Code-dev integrates, TC verifies, and an independent agent reviews; original SAM/TEM/SQE/human responsibility boundaries remain.",
+    "pass_criteria": "Predeclared behavior must be supported by evidence and the in-scope tests; unintegrated behavior cannot be called complete.",
+    "expected": "A directly viewable screen or one complete user flow with its mock/real status made clear.",
+    "evidence": "URL, screenshot, verification result, artifact/source hash and commit, with private raw data retained privately.",
+    "recovery": "Retain failure evidence, fix the cause, and rerun the affected stage and regressions without weakening gates."
+  },
+  "iteration_one_regressions": {
+    "commands_named_in_plan": [
+      "npm run build",
+      "npm run test:ifpmic:browser",
+      "npm run test:ifpmic:replay"
+    ],
+    "additional_oracles": [
+      "Static source/design-contract hash check",
+      "29 workflow nodes, 6 sections and 41 transitions against the source contract",
+      "Browser console/errors and unexpected outbound requests",
+      "Desktop and mobile screen capture",
+      "Mock scenario playback remains explicitly synthetic and is not counted as real execution"
+    ],
+    "runtime_or_product_result_verified_by_this_review": false
+  },
+  "scope_and_gate_mapping": {
+    "preserved_final_target": "All design workflow stages, human approvals, SAM/TEM/SQE responsibilities, device handling, submission and original AT32 evidence remain in the final scope.",
+    "preserved_milestones": "V0/V1/V2 remain visualization increments; B01-B05 mock completion, B06-B08 development/quality, and B09-B12 device/approval/submission milestones remain intact, with B13 still in the original plan.",
+    "pending_work": "Full H2/B03, H3-H7, original AT evidence, Paperclip integration and final AX workflow acceptance remain pending unless separately evidenced and reviewed.",
+    "execution_guard": "Before each later flow begins, record concrete requirement/AT IDs and source files; do not use the agile sequence to omit or bypass the matching existing gates.",
+    "known_ambiguity": "The cycle 3 phrase 'current candidate mandatory execution, exception and recovery verification' should be operationalized against the exact frozen candidate ledger and gate IDs at that iteration's start; this is already required by the plan's per-cycle target/method rules and is not a blocker to the plan itself."
+  },
+  "findings": [],
+  "review_limit": {
+    "methods": [
+      "Read-only Markdown review",
+      "Static SHA-256 verification of reviewed documents"
+    ],
+    "not_performed": [
+      "Tests or browser execution",
+      "Services, SQL, database or network activity",
+      "Screenshot inspection",
+      "Runtime/Paperclip integration verification",
+      "Final acceptance"
+    ]
+  }
+}

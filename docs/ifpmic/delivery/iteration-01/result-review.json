@@ -1,0 +1,139 @@
+{
+  "kind": "ifpmic.delivery.iteration-01.result-review.v1",
+  "status": "approve_local_design_and_synthetic_demo_only",
+  "reviewer": {
+    "agent": "/root/h2_worker_crash_tc",
+    "review_type": "independent static evidence and screenshot review",
+    "review_scope": "Verify current report hashes, raw browser report contents, captured screenshots, and declared source/build hashes for the local design and synthetic replay delivery."
+  },
+  "reviewed_inputs": {
+    "verification": {
+      "path": "docs/ifpmic/delivery/iteration-01/verification.json",
+      "sha256": "86ff806f47a695e350a340bf4970d206937b73680fd9d7c8970e3240d94e58af"
+    },
+    "capture": {
+      "path": "docs/ifpmic/delivery/iteration-01/capture.json",
+      "sha256": "5de9d3c41b2a52ed9dbaf87bf3c308e8f7f8ea8655391ca5a2182cce3aa0363b"
+    },
+    "plan_review": {
+      "path": "docs/ifpmic/delivery/iteration-01/plan-review.json",
+      "sha256": "6db8f6eb32f7985b35c66001b3766317f8ff47527883fc6dbc01c02b77c9a3b1"
+    },
+    "plan_reviewed_sources": {
+      "agile_plan_sha256": "358d3ce5ad836b3a7ac2a36cb9cfcda99c7d129d5c7c67f10ea5bff651ed0b59",
+      "original_plan_sha256": "dc0b2547866c42bd262adcd29c0c5b7939267462a03123bfdd7f0a64df1e665a"
+    },
+    "source_checkpoint": "fa3fe7e"
+  },
+  "decision": {
+    "result": "The evidence supports a local original-contract design explorer and synthetic scenario demo. The raw browser reports and delivered image/source/build hashes match the verification summary. The screenshots visibly show the workflow and selected-step detail at desktop and mobile sizes, plus a clearly labeled MOCK human-wait replay.",
+    "approved_scope": "Local design visualization and synthetic scenario playback only.",
+    "real_job_execution": false,
+    "paperclip_host_integration_verified": false,
+    "h2_b03_at32_or_final_workflow_acceptance": false
+  },
+  "artifact_integrity": {
+    "raw_browser_reports": [
+      {
+        "path": "workflow-artifacts/verification/agile/iteration-01/2026-10-20T13-21-25Z/design-browser.json",
+        "expected_sha256": "3ee24820c1862f73f01c0ebb114e4dcafb46a360eb646094bdb42ae7076ef1ec",
+        "actual_sha256_matches": true,
+        "verdict": "pass",
+        "check_count": 8,
+        "failed_checks": 0,
+        "api_requests": 0,
+        "unexpected_external_requests": 0,
+        "page_errors": 0,
+        "console_errors": 0
+      },
+      {
+        "path": "workflow-artifacts/verification/agile/iteration-01/2026-10-20T13-21-25Z/replay-browser.json",
+        "expected_sha256": "40603985393e68fb8bbcd0f81f2cd2181cf3129d10dd5831194e8551d3690090",
+        "actual_sha256_matches": true,
+        "verdict": "pass",
+        "check_count": 19,
+        "failed_checks": 0,
+        "api_requests": 0,
+        "browser_write_requests": 0,
+        "unexpected_external_requests": 0,
+        "page_errors": 0,
+        "console_errors": 0
+      }
+    ],
+    "capture": {
+      "sha256_matches_verification_pointer": true,
+      "route": "http://127.0.0.1:4173/ifpmic.html",
+      "nodes": 29,
+      "phases": 6,
+      "edges": 41,
+      "scenarios": 74,
+      "errors": 0,
+      "blocked_external_origins": 0,
+      "real_job_execution": false,
+      "paperclip_host_verified": false
+    },
+    "screenshots": [
+      {
+        "path": "docs/ifpmic/delivery/iteration-01/workflow-desktop.png",
+        "sha256": "501fa50ef295afccd42252dd83922cb68ec04984a22077b4c631d615cb64ea7b",
+        "size_bytes_matches": true,
+        "visually_inspected": true
+      },
+      {
+        "path": "docs/ifpmic/delivery/iteration-01/workflow-mobile.png",
+        "sha256": "4671956288d05b07b23aba1963069c0250743cee1172b523078825c4d172c92b",
+        "size_bytes_matches": true,
+        "visually_inspected": true
+      },
+      {
+        "path": "docs/ifpmic/delivery/iteration-01/human-wait-desktop.png",
+        "sha256": "7080ac63169f3ecdb7fa78a3117338d8f2fd58017b220778a7c63edfb464650f",
+        "size_bytes_matches": true,
+        "visually_inspected": true,
+        "mock_label_visible": true
+      }
+    ],
+    "source_hashes": {
+      "listed_source_files": 7,
+      "actual_sha256_matches": "all 7 listed source/design files",
+      "protected_ax_inventory_method": "The verification records a static comparison against the protected manifest and reports all 96 protected AX files, 89 inventory entries, 17 imported design files and two original uploads matched; this review checked the summary, not every inventory row independently."
+    },
+    "built_artifact_hashes": {
+      "listed_files": 6,
+      "actual_sha256_matches": "all 6 listed dist assets and HTML files"
+    }
+  },
+  "build_evidence_limit": {
+    "recorded_claim": "verification.json records `npm run build` exit code 0, TypeScript passed and Vite passed, marked observed in this session.",
+    "independent_artifact": "No standalone build log was present among the reviewed evidence files.",
+    "assessment": "Accept as the session's recorded build outcome for this local delivery, while retaining the missing standalone log as an evidence limitation. The listed dist files exist and their hashes match."
+  },
+  "next_increment": {
+    "description": "Register one real request, then display its persisted job, current stage and wait reason through the authorized API.",
+    "required_checks_before_acceptance": [
+      "API response and displayed job refer to the same persisted request",
+      "Refresh retains the same job state",
+      "Ownership, invalid input and duplicate request behavior are verified",
+      "Only data approved for display is exposed",
+      "Relevant existing gates and regressions pass with private evidence"
+    ],
+    "not_started_or_accepted_by_this_review": true
+  },
+  "findings": [],
+  "review_limit": {
+    "methods": [
+      "Read-only JSON inspection",
+      "SHA-256 and file-size comparison",
+      "Static verification of referenced raw report pass fields",
+      "Visual inspection of the three supplied screenshots"
+    ],
+    "not_performed": [
+      "Tests or browser rerun",
+      "Local server startup or route request",
+      "Services, SQL, database or network operations",
+      "Independent rebuild",
+      "Paperclip host integration check",
+      "Real API, Temporal, device, H2/B03, AT32 or final workflow acceptance"
+    ]
+  }
+}
