@@ -1,0 +1,125 @@
+{
+  "kind": "ifpmic.b03.h2.runtime-full-execution-contract-review.v2",
+  "verdict": "approve_runner_authoring_only",
+  "contract_sha256": "d2f0ef941e62cf6a6597b39a9eda676161cd616d723403a34f16a2903a91bfe6",
+  "ledger_sha256": "1512b767aa06961d8f80ed474a4bf44929d9db430a05317447eb49f4d71a0655",
+  "raw_rules_sha256": "8c948efa993a1ba6837af28746af42ad532342eca5d5b299ac133f0377c0b74c",
+  "reviewed_utc": "2026-10-20T16:39:47.949091+00:00",
+  "reviewer": {
+    "agent_id": "/root/h2_evidence_amendment_review",
+    "actual_role": "independent senior source/evidence reviewer",
+    "independence": "Not the Code-dev contract/ledger/runner author or TC test author. This agent authored the independent source-mapping reviews and this review; all implementation and execution remain with the orchestrator."
+  },
+  "scope": "Exact current contract, full104-file ledger source closure, literal490 inventory and87-case raw mapping authoring review. No runner source acceptance or execution authorization.",
+  "findings": {
+    "blocking_runner_authoring": [],
+    "mandatory_followup_runner_repairs_before_any_execution": [
+      {
+        "id": "RUNNER-FINAL-SELF-SHA",
+        "severity": "execution_blocker",
+        "source": "scripts/verify_ifpmic_b03_h2_runtime_full.py:1024,1287-1318",
+        "finding": "The current runner captures its SHA once and binds initial source/pre-gate reviews, but final source checks cover ledger/helpers only. With the runner deliberately excluded from ledger, it can publish a proposal with cached runner_sha256/source_unchanged despite its file changing during a long run.",
+        "required_repair": "After a separately approved bounded repair plan, verify the runner file against its separately reviewed initial SHA immediately before public proposal construction. Fail closed into existing failure/recovery handling on mismatch. Keep it outside ledger to avoid a hash cycle. FULL-AUDIT already explicitly requires this check."
+      },
+      {
+        "id": "RUNNER-ACTUAL-WATCHDOG-TOTAL-SCHEMAS",
+        "severity": "execution_blocker",
+        "source": "scripts/verify_ifpmic_b03_h2_runtime_full.py:547-555",
+        "finding": "validate_watchdog_record requires numeric total_seconds, but five actual pinned watchdog schemas omit that field while recording real ordered start/cleanup/finish clocks and body/cleanup durations. Their40 literal phase nodes therefore deterministically fail audit. Prior119 synthetic guard fixtures supplied total_seconds and did not prove these producer schemas compatible.",
+        "actual_producers": [
+          {
+            "phase": "window",
+            "path": "tests/ifpmic_api/h2_window_case_budget.py",
+            "record_dict_line": 51,
+            "sha256": "da04f059de0e1b487b40a50f997797874e7373947f5dc251fc88a138a5231f19",
+            "kind": "ifpmic.b03.h2.neg-window-case-timing.v1",
+            "literal_phase_node_count": 9,
+            "total_seconds_present": false
+          },
+          {
+            "phase": "activity_runtime",
+            "path": "tests/ifpmic_api/h2_activity_runtime_case_budget.py",
+            "record_dict_line": 58,
+            "sha256": "34df11020b89f884207fd8ebdb8aef3e0d1acf452c1429bb9ec2d4735af3da4c",
+            "kind": "ifpmic.b03.h2.activity-runtime-case-timing.v1",
+            "literal_phase_node_count": 12,
+            "total_seconds_present": false
+          },
+          {
+            "phase": "transport",
+            "path": "tests/ifpmic_api/h2_transport_case_budget.py",
+            "record_dict_line": 43,
+            "sha256": "a507a9e5a00b0bfbd061ca1bf59693315ad09dcf95d5b9c84bc5a987ad8af19a",
+            "kind": "ifpmic.b03.h2.transport-case-timing.v1",
+            "literal_phase_node_count": 3,
+            "total_seconds_present": false
+          },
+          {
+            "phase": "workspace",
+            "path": "tests/ifpmic_api/h2_workspace_activation_case_budget.py",
+            "record_dict_line": 54,
+            "sha256": "3ac6604aa1921b011bd6b7016129e94c918776f5b97eefa4a1e1bb1eee8c9ff8",
+            "kind": "ifpmic.b03.h2.workspace-case-timing.v1",
+            "literal_phase_node_count": 11,
+            "total_seconds_present": false
+          },
+          {
+            "phase": "fixture_failure",
+            "path": "tests/ifpmic_api/h2_fixture_failure_case_budget.py",
+            "record_dict_line": 44,
+            "sha256": "503a1fc22d2ddece87fa83336fc5c26b003c094a7cf793339d3dbe0d61a06791",
+            "kind": "ifpmic.b03.h2.fixture-failure-case-timing.v1",
+            "literal_phase_node_count": 5,
+            "total_seconds_present": false
+          }
+        ],
+        "required_repair": "After a separately approved bounded repair plan, adapt only the five exact known producer kinds: when total_seconds is absent derive elapsed from the already validated finite ordered finish-start clocks; verify supplied totals whenever present, retain strict body/cleanup consistency, finite values, timeout flags and every original budget. Unknown/malformed records must fail. Add source-pinned pure-stdlib schema/boundary regressions without running product/SDK code. This preserves existing timing conditions and changes no producer/business oracle."
+      }
+    ]
+  },
+  "evidence": {
+    "current_source_closure": "All104 ledger paths are current regular non-symlink files and match their exact SHA; Python sources parse statically. The exact service/test suffix closure is86 files. All38 machine producer/checker pins are included with identical SHA. Current service sources are unchanged from immutable cf4;14 old test/support pins are refreshed and the audited raw/budget/unit closure is included. Active runner, contract and review records stay separately frozen to avoid cycles.",
+    "inventory_and_regression": "All490 unique literal IDs are preserved:83 across9 addition phases plus407 across6 retained phases. Inventory, new_cases,25 obligation mappings,5 fixture prerequisites, retained/additional phase declarations and all per-case budgets equal immutable cf4. New budgets remain49 at215+25 and34 at25+5; the two historical retained integration exceptions remain pinned. All15 phase caps match the ledger and sum15420.",
+    "raw_mapping_closure": "The final machine has87 unique nodes,953 explicit artifact rules,38 current source pins and empty global/per-row unresolved arrays. All83 new nodes plus4 retained SQL/auth fence nodes are covered across exactly10 phases. All83 full projected rows exactly match their approved proposals excluding added review pointers; the4 retained rows retain their bounded addendum. Every source-resolution proposal/review SHA and active source-location SHA matches actual bytes. All53 .pbseq rules use pbseq; supported rule fields/required_keys/counts are present and every raw digest target is explicitly indexed.",
+    "supporting_exact_source_mapping_reviews": {
+      "docs/ifpmic/evidence/b03/h2-machine-resolution-dispatcher-review-v3.json": "c8738de718812b61b1ab41178223b3224872876943335706e31c29d64681f096",
+      "docs/ifpmic/evidence/b03/h2-machine-resolution-activity-review-v5.json": "3116f53b8c632e63892d098ef9f273a80d9047324aaa0cf98562f39c9342a801",
+      "docs/ifpmic/evidence/b03/h2-machine-resolution-window-fixture-review-v2.json": "ed674ab682f5f6f5f394f62a90ded9ed830d2d3b1e2e3a1e5c880cc32879bd7a",
+      "docs/ifpmic/evidence/b03/h2-machine-resolution-startup-projection-review-v2.json": "eafdb7e74eacb42914be3f32ab407dcd37ab7b7f9243f7a22a72d3d6fd30abe6",
+      "docs/ifpmic/evidence/b03/h2-machine-resolution-started-review-v3.json": "6a7981968ddd9b8f5ce29e64dc0ea5a0e2d4a5ac5ffe95216181cc0977993a7b",
+      "docs/ifpmic/evidence/b03/h2-machine-resolution-transport-worker-review-v4.json": "69165ef006ebeaa3e5a602b8b82be121b1c53b5fc5e8602d5cea5c8c142a0745",
+      "docs/ifpmic/evidence/b03/h2-machine-resolution-workspace-review-v2.json": "7e56a46d2a72712b4fde7ddd61c074f022c3e997d66b4446f332f6a47def361c",
+      "docs/ifpmic/evidence/b03/h2-machine-resolution-fences-review-v2.json": "10f0b533d9ff0c1b365b5e673e8a96a75082e7f5adac866c7385f379fe32394f"
+    },
+    "contract_methods": "Every execution stage contains purpose,target,method,pass_criteria,expected,evidence,agent,recovery. Normal, error, boundary, crash/concurrency and complete retained regression oracles remain actual runtime duties. Dynamic hung-driver/backend observations and foreign HBA/domain-digest limits are explicitly retained; source mapping does not certify timing, causality or runtime results.",
+    "attestation_and_originals": "All19 exact attestation anchor files and7 resolved binary hashes match current bytes; both pinned Python symlink target hashes match. Static accepted-environment map entry counts are1777/3072. Pinned B01 gate/gate.json member hash matches; current protected96 hashes/89 inventory and imported17/upload2 hashes also match their original anchors. No binary or environment interpreter was executed and no installed-environment full file-map recapture was performed here; actual before/after comparisons remain gate duties.",
+    "raw_runtime_binding": "Contract binds exact6 raw inputs (rules/auditor/adapter/artifact/recorder/fence checkers) and exact6 runtime helpers through current ledger pins. Existing adapter/child source retains87-node/10-phase union checks, private reads, actual qualified temporalio HistoryEvent.FromString decoder, quiescent phase audit and final rehash of every indexed raw file. These process hooks remain source-only pending exact runner/pre-gate review.",
+    "budget_and_cleanup": "450 collection seconds plus150 attestation/post-audit plus separately reviewed200 raw-audit overhead yields800;15420+800=16220 one outer epoch. Ten raw children reserve10+5+2 seconds each plus30 reserve. Case/phase caps remain unchanged. Final15-second recovery reserve, owned PID/start-tick identity, retained ambiguous fixture handles and failure-only parent recovery remain mandatory; no deadline reset or cleanup-to-pass conversion is authorized.",
+    "privacy_and_gates": "The public archive remains exactly6 normalized members; private SQL/history/config/log/source ZIP/identity data stay private. Contract reviews authorize authoring only; separate final runner source review and paired approve_execution pre-gates pin contract,ledger,runner,both contract reviews,source review and raw rules. The old19 anchors are historical provenance/comparison anchors and grant no current source approval. c10/cf4 remain immutable.",
+    "observed_unaccepted_runner_source": {
+      "path": "scripts/verify_ifpmic_b03_h2_runtime_full.py",
+      "sha256": "c11bb4fea9184e274ec11402e0d6cf1385256700938ac9bb35c8b5762a517d57",
+      "status": "Old contract constants retained; two required repairs above remain unimplemented. No current runner-source or execution approval."
+    }
+  },
+  "risks_and_edge_cases": [
+    "This approval permits bounded runner authoring only after matching exact TC contract/ledger/raw approval. The next two repairs require their own eight-field plan/independent plan review, implementation, exact source review and approved synthetic boundary/regression proof before paired full pre-gates.",
+    "Changes to ledger-pinned helper/test/machine bytes require refreshed exact dependent pins/reviews; this approval cannot bless future source bytes. Keep the current candidate and superseded/rejected review attempts preserved.",
+    "The119 accepted synthetic units and historical407 passes prove only their exact historical scopes. No current main/pytest collection/SQL/Temporal/services/full490 result exists or is accepted by this review.",
+    "Raw schema/framing/hash checks cannot establish nested SQL/history semantics, actual authority/barrier order, resource identity/death, deadline behavior or privacy fidelity. Fresh full490/JUnit/private raw evidence and independent actual-result review remain mandatory.",
+    "Node/build/browser omission is justified for this source/contract checkpoint by unchanged protected AX files; fresh H6/UI impact validation and B03/H3-H7/originalAT32/full AX remain later obligations."
+  ],
+  "recommendation": "Freeze this exact v2 authoring candidate and both matching reviews without editing or executing the runner in this checkpoint. Next review the bounded two-repair plan, then exact implementation/synthetic proof; obtain the complete exact source and paired pre-gates before any full-gate imports/collection/tests/services. No pass or acceptance is inferred.",
+  "remaining_uncertainty": [
+    "No runtime actions were performed. Actual current environment health, collection/import side effects, native SQL/RPC/SDK behavior, all490 timing/causal outcomes and physical cleanup remain unqualified.",
+    "Current runner compatibility is intentionally blocked by its old bindings and the two explicit implementation findings. Full H2 and goal completion remain unaccepted."
+  ],
+  "authorization": {
+    "runner_authoring": "conditional_on_matching_exact_TC_authoring_review_and_required_followup_plan_reviews",
+    "test_or_service_execution": false,
+    "pytest_collection_or_product_sdk_import": false,
+    "h2_acceptance": false,
+    "full_goal_acceptance": false
+  },
+  "review_method": "Read-only JSON/AST/source/hash/ZIP member comparisons. No repository module imports, tests, collection, SQL, SDK, services, binaries or network were executed."
+}

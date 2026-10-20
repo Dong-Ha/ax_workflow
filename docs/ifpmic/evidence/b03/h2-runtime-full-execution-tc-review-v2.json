@@ -1,0 +1,232 @@
+{
+  "kind": "ifpmic.b03.h2.runtime-full-execution-tc-review.v2",
+  "review_protocol": "approve_runner_authoring_only",
+  "verdict": "approve_runner_authoring_only",
+  "contract_sha256": "d2f0ef941e62cf6a6597b39a9eda676161cd616d723403a34f16a2903a91bfe6",
+  "ledger_sha256": "1512b767aa06961d8f80ed474a4bf44929d9db430a05317447eb49f4d71a0655",
+  "raw_rules_sha256": "8c948efa993a1ba6837af28746af42ad532342eca5d5b299ac133f0377c0b74c",
+  "review_effect": "This exact TC review is one required half of the V2 contract gate and permits runner authoring only after the separate independent exact contract review also approves these same three target hashes. It does not authorize imports, collection, tests, services, execution, H2 acceptance, or full-goal acceptance.",
+  "reviewer": "TC exact contract reviewer; own test and ledger authorship declared; not an independent review",
+  "authorship_disclosure": {
+    "ledger": "Authored docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger-v2.json as a source-closure candidate; its content was statically cross-checked against the immutable original cf4 ledger and exact machine rules.",
+    "tests": [
+      "tests/ifpmic_evidence/test_full_runner_guards.py",
+      "tests/ifpmic_evidence/test_gate_budget.py",
+      "tests/ifpmic_evidence/test_private_values.py",
+      "tests/ifpmic_evidence/test_raw_artifacts.py",
+      "tests/ifpmic_evidence/test_raw_observations.py",
+      "tests/ifpmic_evidence/test_retained_fences.py"
+    ],
+    "independence_boundary": "This disclosure prevents treating the TC review as independent. The separately named independent contract review remains mandatory."
+  },
+  "review_scope": "Static TC review of the exact V2 execution contract against the exact 104-pin integrated ledger, 87-case machine raw-evidence rules, approved scope, phase inventory/budgets, protected and historical anchors, and review/authorization protocol. No product or SDK import, pytest collection, test, SQL, service or full-runner execution was performed.",
+  "reviewed_inputs": {
+    "execution_contract": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-full-execution-contract-v2.json",
+      "sha256": "d2f0ef941e62cf6a6597b39a9eda676161cd616d723403a34f16a2903a91bfe6",
+      "status": "candidate_pending_exact_independent_and_tc_contract_review"
+    },
+    "integrated_ledger": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger-v2.json",
+      "sha256": "1512b767aa06961d8f80ed474a4bf44929d9db430a05317447eb49f4d71a0655",
+      "source_pin_count": 104,
+      "current_pin_mismatches": 0,
+      "status": "candidate_v2_current_source_closure_pending_independent_review_no_execution"
+    },
+    "machine_rules": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules.json",
+      "sha256": "8c948efa993a1ba6837af28746af42ad532342eca5d5b299ac133f0377c0b74c",
+      "case_count": 87,
+      "artifact_rule_count": 953,
+      "source_pin_count": 38,
+      "status": "candidate_pending_exact_review",
+      "unresolved": []
+    },
+    "approved_plan": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-full-verification-plan.json",
+      "sha256": "c6964bccff0d4cec1ac00f18fbb267d5d1a4a5887e53844c604333b7c059486c"
+    },
+    "raw_integration_plan": {
+      "path": "docs/ifpmic/delivery/iteration-03/RAW-AUDIT-INTEGRATION.md",
+      "sha256": "40dcec3d3c2e000711c6324351415aad26426de4e5964047d225174998aec5c3"
+    },
+    "raw_integration_plan_review": {
+      "path": "docs/ifpmic/delivery/iteration-03/raw-integration-plan-review.json",
+      "sha256": "f901765bd2190da008d3b905048a09ec646800f05a6ec9a9b2589bcf977d92ab"
+    },
+    "original_c10_cf4_immutability": {
+      "old_contract_path": "docs/ifpmic/evidence/b03/h2-runtime-full-execution-contract.json",
+      "old_contract_sha256": "c10c7cb329ea82b758cfa7db34ac330e4b7ec472320b5904e8086f8067865a2d",
+      "old_ledger_path": "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger.json",
+      "old_ledger_sha256": "cf4f3bfc023341c22e0c8fc7c072c54838d62f7adeb39d817a4ce3b6589f8d60"
+    }
+  },
+  "checks": {
+    "authority_and_inventory": {
+      "result": "pass_static",
+      "evidence": "The exact candidate preserves 407 retained IDs plus 83 new IDs for 490 unique cases, all 25 obligation groups, all 5 fixture-failure prerequisites, 49 extended 215+25 cases and 34 default 25+5 cases. Nine new phases and six retained phases keep their literal order, IDs, files, per-case budgets, phase caps, timing exceptions and seven historical derivative-ledger references. Contract counts, order and caps equal the V2 ledger."
+    },
+    "source_closure_and_non_circularity": {
+      "result": "pass_static",
+      "evidence": "The V2 ledger pins exactly 104 current paths: 103 deduplicated code/source files from the 84 original ledger paths, 38 machine-rule producer/checker paths and 12 additional audited helper/unit paths, plus the exact machine-rules JSON. All 104 current hashes match. The active full runner, V2 execution contract and reviews are excluded from ledger source pins. Contract authority points to the exact V2 ledger SHA; contract raw policy and ledger both point to the exact machine-rules SHA. The old c10/cf4 documents remain unchanged and are identified as immutable provenance."
+    },
+    "machine_raw_evidence_inventory": {
+      "result": "pass_static",
+      "evidence": "The raw policy covers exactly the 83 additional nodes plus the four retained SQL-fence nodes, for 87 unique node IDs across ten phases; all 953 artifact constraints are syntactically within the validator’s accepted fields/formats, each row maps to its ledger phase, all node/phase/artifact paths are unique and safe, and every row/top-level unresolved list is empty. The four retained fence cases retain their exact special hashed filename, case-root and retained_fence_json/node-field requirement. Machine-rule source pins (38) match current bytes."
+    },
+    "raw_checker_scope_and_schema": {
+      "result": "pass_static",
+      "evidence": "The pinned adapter binds phase IDs and expected IDs before auditing. The raw auditor uses private-file/path checks and exact owner/query record schemas; the artifact checker enforces literal path, type, cardinality, JSON keys, digest links and qualified HistoryEvent decoding for PBSeq; the fence checker validates its strict envelope, nested source-shaped structures and canonical evidence digest. The checkers explicitly return h2_accepted=false and do not substitute for test assertions, actual SQL/business values, lifecycle, causal timing or the final fresh 490-case pass."
+    },
+    "raw_checker_and_helper_bindings": {
+      "result": "pass_static",
+      "raw_policy_paths": {
+        "rules": {
+          "path": "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules.json",
+          "sha256": "8c948efa993a1ba6837af28746af42ad532342eca5d5b299ac133f0377c0b74c",
+          "ledger_pin_matches": true,
+          "current_file_matches": true
+        },
+        "auditor": {
+          "path": "scripts/ifpmic_h2_raw_audit.py",
+          "sha256": "3670a6889a76596caaf3de474e607631228f27f7824ee0dea201dfea262f2b8d",
+          "ledger_pin_matches": true,
+          "current_file_matches": true
+        },
+        "adapter": {
+          "path": "scripts/ifpmic_h2_full_raw_adapter.py",
+          "sha256": "04efd3a7851e756a275df58efc83828df5cf7cf30ce51240b8f7721c918d8c46",
+          "ledger_pin_matches": true,
+          "current_file_matches": true
+        },
+        "artifact_checker": {
+          "path": "scripts/ifpmic_h2_artifacts.py",
+          "sha256": "712d5800835cd8f5e8f3ac513e2dd44b8f0fb2d035e83775ff989f4f24940b47",
+          "ledger_pin_matches": true,
+          "current_file_matches": true
+        },
+        "recorder_checker": {
+          "path": "scripts/ifpmic_h2_raw_evidence.py",
+          "sha256": "7b02c3b6a5713d6abe0e589d75835f5f6519e2aa5daee690e811497f20b7b4fe",
+          "ledger_pin_matches": true,
+          "current_file_matches": true
+        },
+        "fence_checker": {
+          "path": "scripts/ifpmic_h2_fences.py",
+          "sha256": "53836724368ab3dac9e7ccaeb6e603a3a2124926e73db452448bfd608d746a9f",
+          "ledger_pin_matches": true,
+          "current_file_matches": true
+        }
+      },
+      "fixed_runtime_helpers": {
+        "scripts/verify_ifpmic_g1.py": {
+          "sha256": "0f6603de4b0de546ccf2c23bc663c0568c2a178c8c19e31812c68b10a61e6d9b",
+          "ledger_pin_matches": true,
+          "current_file_matches": true
+        },
+        "scripts/verify_ifpmic_g4.py": {
+          "sha256": "ad9b66b7463b84f22227d8ba924b42628f8abb463d0873ac9a90ab013708c13a",
+          "ledger_pin_matches": true,
+          "current_file_matches": true
+        },
+        "scripts/verify_ifpmic_b03_h1.py": {
+          "sha256": "9c20131082af1467f682d31fabb47daf359867aa5939ad818d97b7ac4c0d5573",
+          "ledger_pin_matches": true,
+          "current_file_matches": true
+        },
+        "scripts/ifpmic_temporal_toolchain.py": {
+          "sha256": "8cadab76ccfa1f93392cf759991d6906415c75ed5a116093c53aee9f4a445564",
+          "ledger_pin_matches": true,
+          "current_file_matches": true
+        },
+        "scripts/verify_ifpmic_b03_h2_runtime_normal.py": {
+          "sha256": "e38d62b8c64c2c8ce5e52df04ceac37e90ce802fe3d8c710a69d2b08f23c8728",
+          "ledger_pin_matches": true,
+          "current_file_matches": true
+        },
+        "scripts/ifpmic_h2_gate_budget.py": {
+          "sha256": "5bb8fe646c499a371d160e057d3a049ecc845123efe01a7aba411c7521929f77",
+          "ledger_pin_matches": true,
+          "current_file_matches": true
+        }
+      },
+      "evidence": "All six raw policy source paths and all six fixed runtime helper hashes equal the ledger pins and current file bytes; expected raw audit phase count is ten and its 200-second reserve is included in the 800-second overhead."
+    },
+    "timing_and_collection_budget": {
+      "result": "pass_static",
+      "evidence": "The 15 phase caps sum to 15,420 seconds. The 15 collections are all before case execution and reserve exactly 450 seconds. Contract overhead is 800 seconds including 450 collection, 150 attestation/post-audit and 200 raw audit/recovery allowance; 15,420 + 800 equals the single outer 16,220-second cap. Raw audit is bounded to ten phase commands and contract preserves one original epoch and final recovery reserve."
+    },
+    "attestation_and_privacy_boundary": {
+      "result": "pass_static",
+      "evidence": "The contract has 19 explicit attestation anchors and seven binary identities, distinguishes old accepted407/environment and inventory reviews as historical only, requires before/after environment/source/protected/original comparisons without new baselines or installation/downloads, and restricts public output to six normalized archive members after independent raw/privacy review."
+    },
+    "review_and_execution_separation": {
+      "result": "pass_static",
+      "evidence": "Contract review target fields are exactly contract_sha256, ledger_sha256 and raw_rules_sha256. Both paired contract reviews can authorize runner authoring only. Separate independent and TC pre-gate reviews require approve_execution against runner, both contract reviews and final source review hashes. All candidate authorization flags remain false. No old c10/cf4 review can satisfy these V2 exact-hash gates."
+    },
+    "runner_self_hash_final_audit_requirement": {
+      "result": "required_for_runner_authoring",
+      "evidence": "The contract FULL-AUDIT method explicitly requires rehashing the runner against its separately reviewed initial runner SHA immediately before constructing a public proposal; the runner is excluded from ledger pins to avoid a hash cycle. The current runner source remains unreviewed. Runner authoring must implement that final self-hash check and update only the exact approved V2 constants as needed; a new exact final runner source review and both pre-gate approvals remain necessary before any execution."
+    },
+    "watchdog_record_producer_schema_gap": {
+      "result": "mandatory_runner_authoring_repair_before_final_source_review_or_pre_gate",
+      "finding": "The current runner validate_watchdog_record() reads total_seconds and unconditionally includes it in numeric, finite, bounded, and elapsed-delta checks. Five actual watchdog producers do not emit total_seconds, so every record in these five phases will be rejected despite valid start/body/cleanup/finish observations. The contract is sound because it requires exact monotonic/body/cleanup/total budgets; the reader must derive total from finished-start or accept an exact producer-specific schema while preserving that total predicate.",
+      "static_ast_evidence": {
+        "runner": "scripts/verify_ifpmic_b03_h2_runtime_full.py:531-556; total_seconds is required at line 547 and validated at 550-555.",
+        "watchdog_kinds": "WATCHDOG_KINDS at scripts/verify_ifpmic_b03_h2_runtime_full.py:506-517 contains five affected kinds.",
+        "affected_producers": [
+          {
+            "path": "tests/ifpmic_api/h2_window_case_budget.py",
+            "kind": "ifpmic.b03.h2.neg-window-case-timing.v1",
+            "node_count": 9,
+            "writes_total_seconds": false
+          },
+          {
+            "path": "tests/ifpmic_api/h2_activity_runtime_case_budget.py",
+            "kind": "ifpmic.b03.h2.activity-runtime-case-timing.v1",
+            "node_count": 12,
+            "writes_total_seconds": false
+          },
+          {
+            "path": "tests/ifpmic_api/h2_transport_case_budget.py",
+            "kind": "ifpmic.b03.h2.transport-case-timing.v1",
+            "node_count": 3,
+            "writes_total_seconds": false
+          },
+          {
+            "path": "tests/ifpmic_api/h2_workspace_activation_case_budget.py",
+            "kind": "ifpmic.b03.h2.workspace-case-timing.v1",
+            "node_count": 11,
+            "writes_total_seconds": false
+          },
+          {
+            "path": "tests/ifpmic_api/h2_fixture_failure_case_budget.py",
+            "kind": "ifpmic.b03.h2.fixture-failure-case-timing.v1",
+            "node_count": 5,
+            "writes_total_seconds": false
+          }
+        ],
+        "target_case_count": 40,
+        "method": "stdlib AST read of the runner literal WATCHDOG_KINDS and each plugin’s literal CASE_NODE_IDS/CASE_BUDGETS and JSON writer dictionary keys; no imports, tests, or execution."
+      },
+      "required_authoring_condition": "During runner authoring, add a minimal source-reviewed adapter for these producer formats that validates the exact node ID/kind, monotonic start/cleanup/finish ordering, body and cleanup durations and bounds, both false timeout flags, and the total duration derived as finish-start. Do not weaken the contract’s total budget predicate, case set, producer behavior, or 215+25/25+5 limits. Add synthetic regressions covering all five producer schemas and 40 target-node binding/counts. Then rehash and review the final runner bytes and repeat the exact source/pre-gate checks before any execution.",
+      "execution_authorized": false
+    }
+  },
+  "limitations": [
+    "This review does not claim that the full runner source currently implements every V2 contract requirement; it only finds the contract and source-policy basis sound for runner authoring.",
+    "The machine-rules document remains candidate_pending_exact_review. This TC review evaluates its exact current bytes and source/checker schema but does not replace the separate independent source/mapping review or final raw-evidence review.",
+    "No test collection, pytest, product/SDK import, SQL, service, binary probe, network action or execution occurred.",
+    "All actual 490-case results, watchdog evidence, private raw artifacts, process/session cleanup and publication remain unproven until the separately reviewed fresh gate.",
+    "A known runner candidate defect blocks source freeze/pre-gate: validate_watchdog_record() requires total_seconds absent from the five actual watchdog JSON writers (40 cases). The approved contract budget remains sound; the runner-only schema adapter and synthetic regression are required during authoring, followed by exact final source review. No current runner candidate is approved for execution."
+  ],
+  "authorization": {
+    "tc_review_approves_runner_authoring_only": true,
+    "independent_exact_contract_review_still_required": true,
+    "effective_runner_authoring_authorized_by_this_review_alone": false,
+    "test_or_service_execution_authorized": false,
+    "pre_gate_authorized": false,
+    "h2_acceptance": false,
+    "full_goal_acceptance": false
+  }
+}

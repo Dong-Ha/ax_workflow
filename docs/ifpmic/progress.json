@@ -660,14 +660,14 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "Iteration03: all87 source-mapping rows integrated (953 artifact rules,475 original annotations resolved). Freeze separate v2 ledger/contract with103 code-source pins plus final machine; paired authoring reviews, bind runner constants, exact source/paired pre-gates, fresh490, then actual admission/run/receipt UI. Oldc10/cf4/I02 remain immutable; no actual490 run yet.",
+  "next_step": "Iteration03: separate v2 ledger/contract prepared and statically cross-checked (104 source pins,490 IDs unchanged,87 raw nodes/953 rules). Paired exact authoring reviews approved; next plan/review two runner-only repairs (final self-rehash and actual watchdog schema adaptation), bind v2 runner, exact source/synthetic renewal and paired pre-gates, fresh490, then actual admission/run/receipt UI. Original c10/cf4/I02 remain immutable; no v2 runtime execution.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",
     "Approved Bedrock/Claude runtime profile"
   ],
   "publication_policy": "Only authorized git repository documentation, source and synthetic verification summaries/screenshots; never runtime credentials or application logs.",
-  "updated_at": "2026-10-20T16:30:00.734693+00:00",
+  "updated_at": "2026-10-20T16:38:17.528148+00:00",
   "session_handoff": {
     "status": "resumed_by_user",
     "resume_document": "docs/ifpmic/RESUME.md",
@@ -708,6 +708,12 @@
       "artifact_rules": 953,
       "machine_sha256": "8c948efa993a1ba6837af28746af42ad532342eca5d5b299ac133f0377c0b74c",
       "scope": "Source path/schema/applicability only; no actual execution acceptance."
+    },
+    "current_candidate_static_verification": "delivery/iteration-03/full-candidate-v2-static-verification.json",
+    "next_foundation_scope": "Only two known runner repairs plus exact v2 binding/review; do not add unrelated infrastructure before the saved-request admission flow.",
+    "candidate_authoring_reviews": {
+      "independent": "evidence/b03/h2-runtime-full-execution-contract-review-v2.json",
+      "tc": "evidence/b03/h2-runtime-full-execution-tc-review-v2.json"
     }
   },
   "visible_deliveries": [
@@ -740,7 +746,8 @@
       "foundation_status": "accepted_119_cache_isolated_synthetic_units_only",
       "actual_job_execution": false,
       "scope": "All87 source rows/953 artifact rules integrated through independent exact reviews;475 original annotations source-resolved. Five harness defects repaired and269 assertions statically preserved. Original119 unit source closure unchanged. No new tests/full490 or actual admission UI accepted.",
-      "mapping_resolution_progress": "evidence/b03/h2-machine-resolution-progress-v2.json"
+      "mapping_resolution_progress": "evidence/b03/h2-machine-resolution-progress-v2.json",
+      "candidate_static_verification": "delivery/iteration-03/full-candidate-v2-static-verification.json"
     }
   ]
 }

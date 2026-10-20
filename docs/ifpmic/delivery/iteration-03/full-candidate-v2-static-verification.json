@@ -1,0 +1,80 @@
+{
+  "kind": "ifpmic.delivery.iteration03.full-candidate-v2-static-verification.v1",
+  "status": "static_candidate_preparation_only_no_runtime_acceptance",
+  "verified_at": "2026-10-20T16:38:17.523801+00:00",
+  "targets": {
+    "ledger": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger-v2.json",
+      "sha256": "1512b767aa06961d8f80ed474a4bf44929d9db430a05317447eb49f4d71a0655"
+    },
+    "contract": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-full-execution-contract-v2.json",
+      "sha256": "d2f0ef941e62cf6a6597b39a9eda676161cd616d723403a34f16a2903a91bfe6"
+    },
+    "raw_rules": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules.json",
+      "sha256": "8c948efa993a1ba6837af28746af42ad532342eca5d5b299ac133f0377c0b74c"
+    }
+  },
+  "method": "External Python stdlib JSON/hash/AST checks only; no repository or SDK imports, pytest collection, tests, SQL, service or full-runner execution. Both existing UI endpoints returned HTTP200; no browser regression rerun.",
+  "checks": {
+    "source_pins": 104,
+    "code_source_paths": 103,
+    "service_test_closure_paths": 86,
+    "source_pins_match_actual_bytes": true,
+    "original_ledger_inventory_cases_obligations_phases_limits_and_derivatives_unchanged": true,
+    "literal_full_ids": 490,
+    "retained_ids": 407,
+    "new_ids": 83,
+    "business_obligations": 25,
+    "fixture_prerequisites": 5,
+    "phases": 15,
+    "raw_nodes": 87,
+    "artifact_rules": 953,
+    "machine_source_pins": 38,
+    "raw_phases": 10,
+    "raw_policy_bindings": 6,
+    "runtime_helper_bindings": 6,
+    "immutable_attestation_anchors": 19,
+    "all_attestation_hashes_match": true,
+    "binary_pins_retained": 7,
+    "phase_caps_sum_seconds": 15420,
+    "collection_seconds": 450,
+    "other_overhead_seconds": 150,
+    "raw_audit_overhead_seconds": 200,
+    "outer_seconds": 16220,
+    "original_c10_cf4_hashes_unchanged": true,
+    "cycle_exclusions": [
+      "active runner",
+      "active ledger/contract reviews",
+      "active contract"
+    ]
+  },
+  "known_runner_repairs_pending": [
+    "Rehash separately reviewed runner source immediately before public proposal; runner stays outside ledger to avoid cycles.",
+    "Adapt watchdog validator to actual known writer schemas without total_seconds while preserving finite/ordered clocks, body/cleanup/total consistency and original case budgets; exact plan/source/synthetic verification required."
+  ],
+  "runtime_executed": false,
+  "h2_accepted": false,
+  "iteration03_accepted": false,
+  "full_goal_accepted": false,
+  "stage_completion": {
+    "verified": 2,
+    "total": 16,
+    "percent": 12.5,
+    "method": "unweighted mandatory-stage count"
+  },
+  "authoring_reviews": {
+    "independent": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-full-execution-contract-review-v2.json",
+      "sha256": "072951dc1d617d6be165ad10d2d922c2a8e63c4f2b53f377b46982eb4047cb0e",
+      "verdict": "approve_runner_authoring_only"
+    },
+    "tc": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-full-execution-tc-review-v2.json",
+      "sha256": "b30bf91a3a233c511d5acf259a599b17a153724e0fd18e285424c126006f337e",
+      "verdict": "approve_runner_authoring_only"
+    }
+  },
+  "authoring_scope": "Exact v2 candidate drafting basis accepted by independent and TC reviews. No runner edit, source acceptance or runtime authority in this checkpoint. Next8field repair plan and its independent review are mandatory."
+}

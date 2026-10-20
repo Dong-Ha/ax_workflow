@@ -1,0 +1,539 @@
+{
+  "kind": "ifpmic.b03.h2.runtime-full-execution-contract.v1",
+  "status": "candidate_pending_exact_independent_and_tc_contract_review",
+  "purpose": "Freshly verify the unchanged full490 H2 scope with source-resolved per-case raw evidence before actual saved-request admission UI acceptance.",
+  "requirements": [
+    "B03 H2 full25 obligations",
+    "REQ-02",
+    "REQ-13",
+    "REQ-14 preservation",
+    "AT-16 prerequisite only; no originalAT completion claim"
+  ],
+  "authority": {
+    "approved_plan": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-full-verification-plan.json",
+      "sha256": "c6964bccff0d4cec1ac00f18fbb267d5d1a4a5887e53844c604333b7c059486c"
+    },
+    "integrated_ledger": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger-v2.json",
+      "sha256": "1512b767aa06961d8f80ed474a4bf44929d9db430a05317447eb49f4d71a0655"
+    },
+    "raw_integration_plan": {
+      "path": "docs/ifpmic/delivery/iteration-03/RAW-AUDIT-INTEGRATION.md",
+      "sha256": "40dcec3d3c2e000711c6324351415aad26426de4e5964047d225174998aec5c3"
+    },
+    "raw_integration_plan_review": {
+      "path": "docs/ifpmic/delivery/iteration-03/raw-integration-plan-review.json",
+      "sha256": "f901765bd2190da008d3b905048a09ec646800f05a6ec9a9b2589bcf977d92ab"
+    }
+  },
+  "counts": {
+    "retained_ids": 407,
+    "new_unexecuted_ids": 83,
+    "expected_full_union": 490,
+    "approved_obligation_groups": 25,
+    "groups_with_draft_ids": 25,
+    "fixture_failure_prerequisites": 5,
+    "extended215_25_ids": 49,
+    "default25_5_ids": 34
+  },
+  "responsibility": "Code-dev manages integration and runner; TC authors tests; independent Agent reviews methods/source/evidence. SAM/TEM/SQE/human approval boundaries remain unchanged.",
+  "stages": [
+    {
+      "id": "FULL-ATTEST",
+      "purpose": "Verify exact source, original-design integrity, toolchain identity and isolation before SDK/service actions.",
+      "target": "Current ledger source closure, protected AX96/inventory89, imported17/upload2, original32 and qualified36 Python environments, pinned Temporal CLI.",
+      "method": "Check all reviewed bytes, environment/package/binary inventories and approvals; capture private candidate bundle and before manifest. Reuse accepted environment identities but verify current bytes; install/download nothing.",
+      "pass_criteria": "All pinned artifacts, binary hashes and source/environment inventories match. Final independent+TC pre-gate approve_execution for exact contract/ledger/runner/review hashes. No ambient auth/cloud or unreviewed drift.",
+      "expected": "Exact isolated candidate ready; no test pass claim.",
+      "evidence": "Private before-source/environment manifests and candidate archive/hash; normalized comparison counts/hash only.",
+      "agent": "Code-dev manages integration and runner; TC authors tests; independent Agent reviews methods/source/evidence. SAM/TEM/SQE/human approval boundaries remain unchanged.",
+      "recovery": "Retain failed candidate and private evidence; stop only proven owned identities, diagnose the failing boundary, repin and rereview changes, then repeat the full fresh gate and affected regressions. No silent retry, history/receipt rewrite or inherited pass."
+    },
+    {
+      "id": "FULL-COLLECT",
+      "purpose": "Prove literal full inventory matches the candidate.",
+      "target": "All490 IDs across nine additions and six retained phases.",
+      "method": "After runner/pre-gate approval, collect selected files in each exact phase interpreter with the documented plugin set. Preserve collection output privately and require one-to-one IDs before cases run.",
+      "pass_criteria": "No missing/extra/duplicate IDs, no collection errors/skips; all25 groups and all5 fixture prerequisites represented.",
+      "expected": "490 exact unique collected IDs; all407 retained parameter suffixes unchanged.",
+      "evidence": "Private collection output/hash, exact per-phase ID comparison.",
+      "agent": "Code-dev manages integration and runner; TC authors tests; independent Agent reviews methods/source/evidence. SAM/TEM/SQE/human approval boundaries remain unchanged.",
+      "recovery": "Retain failed candidate and private evidence; stop only proven owned identities, diagnose the failing boundary, repin and rereview changes, then repeat the full fresh gate and affected regressions. No silent retry, history/receipt rewrite or inherited pass."
+    },
+    {
+      "id": "FULL-EXECUTE",
+      "purpose": "Prove normal, exception, boundary, crash, concurrency and regression behavior.",
+      "target": "All new83 and retained407 cases, including every25 business obligation and fixture prerequisites.",
+      "method": "Execute literal phase order and individual methods/budgets from ledger; actual SQL/RPC/history/threads/sockets where required. Fixture probe handles apply only to explicitly labeled fault mechanism tests. Require whole-case timing and last-item session cleanup; observe live handles rather than infer death from timeouts.",
+      "pass_criteria": "490 passes, zero missing/extra/duplicate/failure/error/skip; every literal causal oracle and per-call/case/phase bound passes; unexpected forced cleanup fails acceptance.",
+      "expected": "Fresh complete H2 candidate result; prior407 evidence supplies no current pass.",
+      "evidence": "Private JUnit/progress/per-case watchdog files, raw SQL/history/fault observations, actual resource lifecycle and exact config/source/environment pins.",
+      "agent": "Code-dev manages integration and runner; TC authors tests; independent Agent reviews methods/source/evidence. SAM/TEM/SQE/human approval boundaries remain unchanged.",
+      "recovery": "Retain failed candidate and private evidence; stop only proven owned identities, diagnose the failing boundary, repin and rereview changes, then repeat the full fresh gate and affected regressions. No silent retry, history/receipt rewrite or inherited pass."
+    },
+    {
+      "id": "FULL-AUDIT",
+      "purpose": "Confirm scope integrity, resource absence and private/public evidence fidelity.",
+      "target": "Before/after source inventories, every owned process/thread/socket and prospective public six-member archive.",
+      "method": "Compare before/after source/protected/original bytes; independently inspect PID/start-tick lifecycle and saved thread/socket handles including failures. Transform only fixed normalized allowlist, verify counts/hashes against private originals, scan for private material. Rehash both complete installed environment file/symlink maps and resolved binaries after execution and compare to pinned accepted baselines and before capture. Rehash the runner itself against the separately reviewed initial runner SHA immediately before constructing a public proposal; the runner is deliberately excluded from ledger source pins to prevent a contract/ledger/runner hash cycle.",
+      "pass_criteria": "No unreviewed source/environment drift or unknown resource in a positive acceptance path. Expected unknown fixture-fault state stays explicitly unknown; all actually started threads/helpers and allocated sockets are subsequently verified stopped/closed, while unstarted ambiguous handles remain retained. No secret/raw history/log/source ZIP/process identity in public artifacts.",
+      "expected": "Reviewable normalized evidence with private raw proof preserved.",
+      "evidence": "Private raw evidence and privacy audit; exact public member lengths/hashes and archive hash.",
+      "agent": "Code-dev manages integration and runner; TC authors tests; independent Agent reviews methods/source/evidence. SAM/TEM/SQE/human approval boundaries remain unchanged.",
+      "recovery": "Retain failed candidate and private evidence; stop only proven owned identities, diagnose the failing boundary, repin and rereview changes, then repeat the full fresh gate and affected regressions. No silent retry, history/receipt rewrite or inherited pass."
+    },
+    {
+      "id": "FULL-FINAL-REVIEW",
+      "purpose": "Prevent completion based on intent, static review or partial evidence.",
+      "target": "Entire current full H2 contract/ledger/candidate/results and all requirement mappings.",
+      "method": "Independent Agent compares actual raw results to every case, obligation, timing, original-source and privacy predicate; TC checks test evidence. Any contradiction returns to the failing stage and requires a newly reviewed full gate.",
+      "pass_criteria": "Exact approved candidate with all490 actual passes and full25 obligations proven; no omitted current regression or unresolved critical finding.",
+      "expected": "Only full H2 acceptance may be proposed; B03/H3-H7/originalAT32/fullAX remain incomplete.",
+      "evidence": "Independent final review pinned to exact source fingerprint, ledger/contract, raw gate result and public archive; explicit remaining scope.",
+      "agent": "Code-dev manages integration and runner; TC authors tests; independent Agent reviews methods/source/evidence. SAM/TEM/SQE/human approval boundaries remain unchanged.",
+      "recovery": "Retain failed candidate and private evidence; stop only proven owned identities, diagnose the failing boundary, repin and rereview changes, then repeat the full fresh gate and affected regressions. No silent retry, history/receipt rewrite or inherited pass."
+    }
+  ],
+  "execution_order": [
+    "dispatcher_crashes",
+    "worker_api_crashes",
+    "startup",
+    "window",
+    "activity_runtime",
+    "transport",
+    "workspace",
+    "started_deployment",
+    "fixture_failure",
+    "h2_runtime_python",
+    "h1_python",
+    "g5_python",
+    "h2_schema_python",
+    "g4_python",
+    "legacy_python"
+  ],
+  "phase_caps_seconds": {
+    "dispatcher_crashes": 1980,
+    "worker_api_crashes": 1020,
+    "startup": 690,
+    "window": 750,
+    "activity_runtime": 2730,
+    "transport": 780,
+    "workspace": 2700,
+    "started_deployment": 2460,
+    "fixture_failure": 210,
+    "h2_runtime_python": 300,
+    "h1_python": 300,
+    "g5_python": 600,
+    "h2_schema_python": 300,
+    "g4_python": 300,
+    "legacy_python": 300
+  },
+  "limits": {
+    "extended_setup_body_cleanup": [
+      215,
+      25
+    ],
+    "default_setup_body_cleanup": [
+      25,
+      5
+    ],
+    "phase_cap_rule": "Exact case total allowances plus60s phase overhead; per-case clock never resets.",
+    "phase_caps_sum_seconds": 15420,
+    "sql_body_lock_seconds": 5,
+    "sql_body_statement_seconds": 30,
+    "rpc_seconds": 10,
+    "outer_gate_seconds": 16220,
+    "case_timing_predicate": "Finite ordered unique start/setup/call/teardown/finish progress and exact JUnit plus independent watchdog records; timeout flags always fail. New49 extended215+25, new34 default25+5. Retained407 timing rules remain identical to historical contract, including its two240s integration exceptions. A caught expected injected expiration uses a separate probe controller and must never poison the actual case watchdog.",
+    "cleanup": "One original cleanup epoch including all fixtures and last-item session PG. No fresh timeout after alarm; failed cleanup retains ownership/error and outer subreaper recovers only proven descendants. Parent recovery is never case success.",
+    "driver_observation": "Real pg_sleep30/localSQLtimeout30 exceeds worker selfwatchdog15. Worker exit3/absence12..18s and exact actual backend absence by pre-query event+40s are distinct assertions. No parent SQL cancellation or early recovery substitutes for rollback."
+  },
+  "environment": {
+    "no_install_or_download": true,
+    "h1_and_runtime_interpreter": "PinnedH1toolchain/venv/bin/python using qualified36; verify sys.prefix and inventory plusinterpreterSHA.",
+    "sql_interpreter": "Original32 .ifpmic-venv/bin/python; baseline401 files selected explicitly.",
+    "network": "Only explicit127.0.0.1 Temporaltestendpoint and privateUnixsocketPG. Never remoteTemporal, realPaperclipDB, companyIdP/cloud/device.",
+    "isolation": "New private0700/0600 retained evidence/tempdirs perphase; actualruntime configs/source/env manifests and operationlogs stayprivate. NoHOMEoverride. No ambientcloud/proxy/TEMPORAL/PG/auth/userconfig; outerSQLfixture fallbackfiles explicitempty and actualruntimechild env contains noPG*.",
+    "server_launch": "Use the existing H1 verified binary helper and exact pinned SHA, --disable-config-env/--disable-config-file, private literal empty env-file, --ip127.0.0.1, unique private persistent SQLite data path, three owned loopback listeners. A port collision fails before use; no endpoint or process fallback."
+  },
+  "runner": {
+    "path": "scripts/verify_ifpmic_b03_h2_runtime_full.py",
+    "status": "existing_source_candidate_pending_v2_binding_and_exact_source_review",
+    "authoring_gate": "Exact independent and TC v2 contract+ledger+raw-rules approvals required before updating runner candidate bindings.",
+    "execution_gate": "Final exact runner source review and independent/TC pre-gate approval required before imports/collection/tests/services."
+  },
+  "publication": {
+    "policy": "Private rawlogs/histories/credentials/processidentity/sourceZIP/absolutepaths never published. Only exact allowlisted counts/IDs/durations/hash/version/syntheticstatus summaries and sanitizedJUnit.",
+    "review": "Specify final archive allowlist and transformation in runner/source review before execution; final independent auditor compares everypublicmember to rawexactevidence.",
+    "archive_members": [
+      "gate/summary.json",
+      "gate/pytest.xml",
+      "gate/case-timings.json",
+      "gate/postgres-lifecycle.json",
+      "gate/temporal-summary.json",
+      "gate/source-manifest.json"
+    ],
+    "transformation": "Exactly these six relative members with fixed2000-01-01 ZIP timestamp/mode0644. Summary contains counts, phase durations/caps, candidate/hash invariants and scoped limitations. JUnit contains only classname/name/time and successful count fields, never captured output/hostname/private paths. Case timings contain normalized case IDs, elapsed deltas, body/cleanup limits and no absolute monotonic timestamps. PG lifecycle contains phase/version/binary hashes/operation exit+durations/stopped boolean, no paths or PIDs. Temporal summary contains pinned versions, H1 asserted retention and event-type/history hashes, runtime execution/receipt counts, queued/open status, source/env/build/history hashes and normalized owned process role/count/expected-exit-and-signal/absence flags; no raw inputs, command/catalog bytes, UUID/process IDs, raw history/error/log text. Source manifest contains only relative repository paths and SHA256. Each member byte length and SHA and ZIP SHA are independently verified.",
+    "privacy_check": "Fail publication on actual root/toolchain/private temporary absolute prefixes, DSN/password/private-key markers, raw log/history/source ZIP members or process PID/start-tick fields. Do not reject harmless synthetic negative-test literals as actual paths. Final independent reviewer checks private raw records against the six public members; public evidence is not a replacement for raw private proof.",
+    "negative_case_policy": "Normalized expected child failures/SIGKILL codes are controlled test oracles, never pytest failures. Fixture simulated handles remain labeled mechanism evidence; do not publish PIDs/raw identities or call simulated absence physical proof."
+  },
+  "omissions": [
+    {
+      "item": "Node/build/browser execution now",
+      "technical_reason": "Only Python test/support and IFPMIC documentation change; protected existing AX/Node96 files and89 inventory are bytechecked.",
+      "residual_risk": "No new rendered AX workflow proven; H6 fresh Node/build/browser impact validation remains mandatory."
+    },
+    {
+      "item": "Real agents/devices/companySSO/cloud/deployment/external submission",
+      "technical_reason": "This gate uses only synthetic owned local PostgreSQL/Temporal and preserves original role responsibilities.",
+      "residual_risk": "Human device actions and final deployment/external submission approvals remain required; full IFPMIC AX objective is active."
+    }
+  ],
+  "authorization": {
+    "runner_authoring": false,
+    "test_or_service_execution": false,
+    "h2_acceptance": false,
+    "full_goal_acceptance": false
+  },
+  "reviews_required": [
+    "Independent full inventory/source review",
+    "TC full inventory review",
+    "Independent exact full execution contract review",
+    "TC exact full execution contract review",
+    "Independent final runner source review and independent/TC pre-gate",
+    "Independent final actual-evidence review"
+  ],
+  "goal_status": "active",
+  "runtime_pass_evidence": null,
+  "approval_rule": "False authorization flags describe this candidate document alone. Exact independent+TC contract/ledger approval may authorize runner authoring; only separately reviewed final runner and independent+TC pre-gate may authorize test/service execution. Keep candidate bytes fixed and record approvals separately.",
+  "attestation_inputs": {
+    "original_design_manifest": {
+      "path": "docs/ifpmic/source-manifest.json",
+      "sha256": "8afba9c1fc16ef3a6565f45576792cad51a1aaab59857d3a28666c71ec43007c"
+    },
+    "protected_AX_baseline": {
+      "path": "docs/ifpmic/evidence/b01/local-profile-gate.zip",
+      "sha256": "486d153780df2121cd9d57a56a9ad794ac8829ca25945954ed71b522f6c0fab1"
+    },
+    "original32_lock": {
+      "path": "services/ifpmic_api/requirements.lock",
+      "sha256": "6c8c950820a8c3ae9dea250e4080bc9dab09db17663e3d50118c5ac29211357e"
+    },
+    "temporal_input": {
+      "path": "services/ifpmic_api/requirements-temporal.lock",
+      "sha256": "ccbbf7a8aab39cd80861f607afd4994bf461d07cbf592f6acfcc492e63ff85c6"
+    },
+    "qualified36_candidate_lock": {
+      "path": "workflow-artifacts/verification/B03/H1/preparations/2026-10-18T19-40-54Z-uv-resolution-retry/candidate-requirements.lock",
+      "sha256": "9c6141efe9ccb7cd9a94e3663c2faf9049eb10b883c93f492bb3e46c3a8883f7"
+    },
+    "qualified_resolution": {
+      "path": "docs/ifpmic/evidence/b03/h1-resolution-preparation.json",
+      "sha256": "a777a09f3a00a24b4dc21a7aa3e649b5237aeec1360fbfd4c19c244b897eb213"
+    },
+    "qualified_preparation": {
+      "path": "docs/ifpmic/evidence/b03/h1-installation-preparation.json",
+      "sha256": "277fe057d633759381ddcbba2df22a2772edf928c84d6dc43eb9f0ffa0d849a6"
+    },
+    "qualified_private_installation": {
+      "path": "workflow-artifacts/toolchains/B03/H1/2026-10-18T19-43-43-523587Z/installation.json",
+      "sha256": "a1aa7d0b77b94302064b26796b5df45d24032c73d30080dc91db94d989b80e8d"
+    },
+    "accepted407_environment_inventory": {
+      "path": "workflow-artifacts/verification/B03/H2/runtime-normal/gates/2026-10-19T13-14-17-430254Z/environment-before.json",
+      "sha256": "b68aa30da8886fad1e0b2266c05b1f1393875b8f56ca47e04be77e578319d269"
+    },
+    "accepted407_verification": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-normal-verification.json",
+      "sha256": "0662ec41f3b5b6bf2f00fd48e88803f55f692da48178c4f79f3068802c3ba328"
+    },
+    "accepted407_final_review": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-normal-final-review.json",
+      "sha256": "f18f65d9d155609141d0fa073e529cbf6009a625dcbbc7a731594bb99b2b0784"
+    },
+    "accepted407_archive": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-normal-gate.zip",
+      "sha256": "ad9b085e1cfa25b7d6109354a57f9f6e07c660281f9255fef5669fe160f13c16"
+    },
+    "historical407_timing_contract": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-normal-execution-contract.json",
+      "sha256": "7e730a5936a39d364821df4b1e92afabc36813211f97cbd920aad7db2018260b"
+    },
+    "independent_inventory_source_review": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-full-inventory-source-review.json",
+      "sha256": "4fda632e7eed5ee10f8aad0ffa13443d169f0dc9d4469991d9af75cc192f123a"
+    },
+    "TC_inventory_review": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-full-inventory-tc-review.json",
+      "sha256": "cd8752ab97742e829a920de827a09ca2c113b563e87a69560d8d8549ef2da388"
+    },
+    "protected_comparison_algorithm": {
+      "path": "scripts/verify_ifpmic_g1.py",
+      "sha256": "0f6603de4b0de546ccf2c23bc663c0568c2a178c8c19e31812c68b10a61e6d9b"
+    },
+    "environment_comparison_algorithm": {
+      "path": "scripts/verify_ifpmic_b03_h1.py",
+      "sha256": "9c20131082af1467f682d31fabb47daf359867aa5939ad818d97b7ac4c0d5573"
+    },
+    "live_temporal_lifecycle_helper": {
+      "path": "scripts/ifpmic_temporal_toolchain.py",
+      "sha256": "8cadab76ccfa1f93392cf759991d6906415c75ed5a116093c53aee9f4a445564"
+    },
+    "live_gate_descendant_helper": {
+      "path": "scripts/verify_ifpmic_g4.py",
+      "sha256": "ad9b66b7463b84f22227d8ba924b42628f8abb463d0873ac9a90ab013708c13a"
+    }
+  },
+  "binary_inputs": {
+    "original32_python": {
+      "path": ".ifpmic-venv/bin/python",
+      "sha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f",
+      "symlink_target_sha256": "31f2aee4e71d21fbe5cf8b01ff0e069b9275f58929596ceb00d14d90e3e16cd6"
+    },
+    "qualified36_python": {
+      "path": "workflow-artifacts/toolchains/B03/H1/2026-10-18T19-43-43-523587Z/venv/bin/python",
+      "sha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f",
+      "symlink_target_sha256": "42f2b28d8258c41a63374ac4365007738900f66a9b62a7eb1a2041a2e091d41b"
+    },
+    "temporal_cli": {
+      "path": "workflow-artifacts/toolchains/B03/H1/2026-10-18T19-43-43-523587Z/temporal",
+      "sha256": "712217694cac9f786a72d4b6c876cd15f3dcf1bf31434d9fed6af25242a327a0",
+      "symlink_target_sha256": null
+    },
+    "initdb": {
+      "path": ".paperclip-lab/runtime/node_modules/@embedded-postgres/linux-x64/native/bin/initdb",
+      "sha256": "7cba14094c5f505f492fd243c5eda04f0dc3be05f12b7bd278f150f1e03b721f",
+      "symlink_target_sha256": null
+    },
+    "pg_ctl": {
+      "path": ".paperclip-lab/runtime/node_modules/@embedded-postgres/linux-x64/native/bin/pg_ctl",
+      "sha256": "24a1f166819e0924319ff3faf752ad2a1ac594e223e2f3b1a2038dc84a2969de",
+      "symlink_target_sha256": null
+    },
+    "postgres": {
+      "path": ".paperclip-lab/runtime/node_modules/@embedded-postgres/linux-x64/native/bin/postgres",
+      "sha256": "c85fa9c977d9e641c2d22d93675a9b7097764b7df2c4c9ea021f5780522b2af2",
+      "symlink_target_sha256": null
+    },
+    "fixture_node": {
+      "path": "~/.nvm/versions/node/v24.17.0/bin/node",
+      "path_kind": "current_user_home_relative",
+      "sha256": "62d66443847de1f527f74afe715900b12884ace52136dc9cd8e91e61acc2f527",
+      "expected_version": "v24.17.0",
+      "path_policy": "Only explicit home-relative path, no PATH fallback. Resolved absolute path remains private."
+    }
+  },
+  "attestation_policy": {
+    "environment_roots": {
+      "original32": ".ifpmic-venv",
+      "qualified36": "workflow-artifacts/toolchains/B03/H1/2026-10-18T19-43-43-523587Z/venv"
+    },
+    "environment_inventory": "Before and after compare exact relative regular-file SHA and symlink-target-string SHA maps to pinned accepted407 environment-before.json:1777 original32 entries and3072 qualified36 entries. Ignore only __pycache__ descendants and.pyc per pinned environment_hashes. Added/removed/changed files/links fail. Rehash resolved interpreter binaries independently; never modify environments.",
+    "source_inventory": "Before and after compare every ledger path/hash and exact current service/test closure inventory. Reject source symlinks and resolved escape paths. Additional runner/review artifacts are frozen separately in pre-gate manifest; they cannot replace ledger source pins.",
+    "protected_inventory": "Extract exact96 protected hashes and89 file inventory from pinned B01 gate/gate.json member SHA597c3ada698cd20ff9c93a318e1177fe55e43e68844d08a6c56281cf940cb2c6 using pinned check_unchanged_sources prefixes/explicitfiles. Before/after reject additions/removals/changes/symlinks.",
+    "original_design": "Before and after compare imported17 and uploads2 to pinned source-manifest.json. Uploads remain unstaged/private and never enter public artifacts.",
+    "postgres_binaries": "Explicit PG18.1 hashes must also match accepted407 archive gate/postgres-lifecycle.json. Disconnect detection during a query is not assumed immediate; official18 documentation https://www.postgresql.org/docs/18/runtime-config-connection.html#GUC-CLIENT-CONNECTION-CHECK-INTERVAL supports separate actual backend observation.",
+    "no_new_baseline": "Runner cannot choose new baselines or replace reviewed pinned inventories with a capture of current state; captures are compared to these exact anchors."
+  },
+  "review_protocol": {
+    "contract_reviews": [
+      {
+        "path": "docs/ifpmic/evidence/b03/h2-runtime-full-execution-contract-review-v2.json",
+        "reviewer": "Independent from Code-dev contract and TC test authors"
+      },
+      {
+        "path": "docs/ifpmic/evidence/b03/h2-runtime-full-execution-tc-review-v2.json",
+        "reviewer": "TC; own test authorship declared; independent review required separately"
+      }
+    ],
+    "required_contract_verdict": "approve_runner_authoring_only",
+    "required_target_fields": [
+      "contract_sha256",
+      "ledger_sha256",
+      "raw_rules_sha256"
+    ],
+    "contract_effect": "Both exact approvals permit runner authoring only; neither authorizes imports/collection/tests/services. Target fields equal exact bytes of this contract and authority.integrated_ledger.",
+    "pre_gate_reviews": [
+      "docs/ifpmic/evidence/b03/h2-runtime-full-pre-gate-review-v2.json",
+      "docs/ifpmic/evidence/b03/h2-runtime-full-pre-gate-tc-review-v2.json"
+    ],
+    "required_pre_gate_verdict": "approve_execution",
+    "pre_gate_target_fields": [
+      "contract_sha256",
+      "ledger_sha256",
+      "runner_sha256",
+      "independent_contract_review_sha256",
+      "tc_contract_review_sha256",
+      "runner_source_review_sha256",
+      "raw_rules_sha256"
+    ],
+    "runner_source_review_path": "docs/ifpmic/evidence/b03/h2-runtime-full-runner-source-review-v2.json",
+    "non_circularity": "This contract pins authorities/ledger, never reviews of itself. Separate final pre-gate pins runner+both contract reviews+final runner source review. Changed bytes invalidate affected approvals; retain superseded/rejected attempts.",
+    "historical_review_scope": "The19 retained attestation anchors include old inventory/source reviews as immutable provenance of the old candidate. They grant no approval for current sources. Current paired contract reviews must also audit the whole current ledger source/inventory and raw-rule closure before authoring; separate current source/pre-gates are mandatory."
+  },
+  "collection_policy": {
+    "mode": "all15_phase_collections_before_any_case_execution",
+    "per_collection_seconds": 30,
+    "total_collection_seconds": 450,
+    "overhead_budget": {
+      "collections": 450,
+      "attestation_and_post_audit": 150,
+      "total": 800,
+      "per_case_raw_audits": 200
+    },
+    "accounting": "All15 collections reserve450s, attestation/post-audit150s, and10 raw audits reserve200s (10*(10s command+5s kill/wait+2s reaper)+30s reserve). Test phase caps remain15420s. Outer16220s includes all work/recovery from one original epoch; GateBudget reserves its final15s for recovery/final record, never resets deadlines, and failure/forced cleanup cannot become case success.",
+    "side_effects": "Collection imports occur only after final runner/pre-gate approval. No services/testcases may start during collection; source review must audit import side effects. Capture output privately and match all490 IDs before first case."
+  },
+  "revision_history": [
+    {
+      "version": 1,
+      "contract_sha256": "d3e6f9a0a9900f19ff41a9eb7a75efad344cd2182be14db12905bb0e305bc8b8",
+      "archive": "attempts/h2-runtime-full-execution-v1-before-attestation-anchors",
+      "reason": "Independent review required exact attestation/timing anchors, review layers and collection/before-after-env accounting. Old TC approval applies only to archived bytes.",
+      "runner_authored": false,
+      "execution_performed": false
+    },
+    {
+      "version": 2,
+      "reason": "Pin19 attestation inputs and7 binary identities including live lifecycle/descendant helpers; specify all15 collections within outer600 overhead and non-circular exact review gates. Paired revised reviews pending.",
+      "execution_performed": false
+    },
+    {
+      "version": "source-resolved-v2",
+      "previous_contract": {
+        "path": "docs/ifpmic/evidence/b03/h2-runtime-full-execution-contract.json",
+        "sha256": "c10c7cb329ea82b758cfa7db34ac330e4b7ec472320b5904e8086f8067865a2d"
+      },
+      "reason": "Separate version preserves c10/cf4 and iteration02. Bind final87 source rows,953 artifact rules,38 machine producer/checker pins, full code closure and reviewed200s raw audit overhead. Retain490 IDs,25+5 obligations and all case/phase limits.",
+      "execution_performed": false
+    }
+  ],
+  "per_case_raw_evidence": {
+    "rules": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules.json",
+      "sha256": "8c948efa993a1ba6837af28746af42ad532342eca5d5b299ac133f0377c0b74c"
+    },
+    "auditor": {
+      "path": "scripts/ifpmic_h2_raw_audit.py",
+      "sha256": "3670a6889a76596caaf3de474e607631228f27f7824ee0dea201dfea262f2b8d"
+    },
+    "adapter": {
+      "path": "scripts/ifpmic_h2_full_raw_adapter.py",
+      "sha256": "04efd3a7851e756a275df58efc83828df5cf7cf30ce51240b8f7721c918d8c46"
+    },
+    "artifact_checker": {
+      "path": "scripts/ifpmic_h2_artifacts.py",
+      "sha256": "712d5800835cd8f5e8f3ac513e2dd44b8f0fb2d035e83775ff989f4f24940b47"
+    },
+    "recorder_checker": {
+      "path": "scripts/ifpmic_h2_raw_evidence.py",
+      "sha256": "7b02c3b6a5713d6abe0e589d75835f5f6519e2aa5daee690e811497f20b7b4fe"
+    },
+    "fence_checker": {
+      "path": "scripts/ifpmic_h2_fences.py",
+      "sha256": "53836724368ab3dac9e7ccaeb6e603a3a2124926e73db452448bfd608d746a9f"
+    },
+    "runtime_helpers": {
+      "scripts/verify_ifpmic_g1.py": "0f6603de4b0de546ccf2c23bc663c0568c2a178c8c19e31812c68b10a61e6d9b",
+      "scripts/verify_ifpmic_g4.py": "ad9b66b7463b84f22227d8ba924b42628f8abb463d0873ac9a90ab013708c13a",
+      "scripts/verify_ifpmic_b03_h1.py": "9c20131082af1467f682d31fabb47daf359867aa5939ad818d97b7ac4c0d5573",
+      "scripts/ifpmic_temporal_toolchain.py": "8cadab76ccfa1f93392cf759991d6906415c75ed5a116093c53aee9f4a445564",
+      "scripts/verify_ifpmic_b03_h2_runtime_normal.py": "e38d62b8c64c2c8ce5e52df04ceac37e90ce802fe3d8c710a69d2b08f23c8728",
+      "scripts/ifpmic_h2_gate_budget.py": "5bb8fe646c499a371d160e057d3a049ecc845123efe01a7aba411c7521929f77"
+    },
+    "expected_node_ids": [
+      "tests/ifpmic_api/test_accepted_start_response_loss.py::test_actual_started_event_survives_lost_start_response_and_recovers_same_run",
+      "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_authority_revoked_before_first_projection[eligibility]",
+      "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_authority_revoked_before_first_projection[membership]",
+      "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_committed_receipt_replays_after_authority_revoke[eligibility]",
+      "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_committed_receipt_replays_after_authority_revoke[membership]",
+      "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_execution_runtime_kills_hung_real_driver_and_rolls_back",
+      "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_execution_runtime_normal_sigterm_control",
+      "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_execution_runtime_surfaces_unrequested_worker_exit[runtime-concurrent-fatal]",
+      "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_execution_runtime_surfaces_unrequested_worker_exit[runtime-fatal]",
+      "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_execution_runtime_surfaces_unrequested_worker_exit[runtime-return]",
+      "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_missing_history_then_retention_rpc_failure_never_starts",
+      "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_noncreate_signal_targets_admitted_run_without_business_consumption",
+      "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_noncreate_waits_until_admission",
+      "tests/ifpmic_api/test_h2_dispatcher_crashes.py::test_ack_before_worker_activation_projects_once",
+      "tests/ifpmic_api/test_h2_dispatcher_crashes.py::test_admission_before_ack_crash_recovers_same_run",
+      "tests/ifpmic_api/test_h2_dispatcher_crashes.py::test_admitted_missing_history_is_quarantined_without_replacement",
+      "tests/ifpmic_api/test_h2_dispatcher_crashes.py::test_claim_commit_crash_reclaims_only_after_expiry",
+      "tests/ifpmic_api/test_h2_dispatcher_crashes.py::test_start_response_before_admission_crash_recovers_same_run",
+      "tests/ifpmic_api/test_h2_dispatcher_crashes.py::test_two_live_dispatchers_stale_ack_cannot_change_recovered_run",
+      "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py::test_expired_cleanup_budget_performs_no_new_lifecycle_action",
+      "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py::test_partial_oidc_start_fails_closed_for_unstarted_thread_handle",
+      "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py::test_restore_error_keeps_exact_primary_and_notes_secondary",
+      "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py::test_restore_only_failure_escapes_by_identity",
+      "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py::test_unconfirmed_testclient_exit_records_unknown_ownership",
+      "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_actual_dispatcher_boundary[actual-after-deadline]",
+      "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_actual_dispatcher_boundary[actual-before-deadline]",
+      "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_exact_deadline_with_isolated_clock_seam[after-deadline]",
+      "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_exact_deadline_with_isolated_clock_seam[at-deadline]",
+      "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_exact_deadline_with_isolated_clock_seam[before-deadline]",
+      "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_partial_shape_constraint",
+      "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_retention[retention-3600]",
+      "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_retention[retention-3601]",
+      "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_retention[retention-null]",
+      "tests/ifpmic_api/test_h2_runtime_restart_and_history.py::test_postgres_and_temporal_restart_preserve_same_execution_and_receipt",
+      "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[build_mismatch_dispatcher]",
+      "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[build_mismatch_projector]",
+      "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[deployment_mismatch]",
+      "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[disabled_deployment_dispatcher]",
+      "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[disabled_dispatcher_build]",
+      "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[disabled_dispatcher_principal]",
+      "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[disabled_projector_build]",
+      "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[disabled_projector_principal]",
+      "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[endpoint_mismatch]",
+      "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[environment_manifest_mismatch]",
+      "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[missing_deployment_dispatcher]",
+      "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[missing_dispatcher_build]",
+      "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[missing_dispatcher_principal]",
+      "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[missing_projector_principal]",
+      "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[namespace_mismatch]",
+      "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[no_job_missing_registration]",
+      "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[recreated_dispatcher_role_oid]",
+      "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[source_manifest_mismatch]",
+      "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[wrong_dispatcher_password]",
+      "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[wrong_dispatcher_role]",
+      "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[wrong_projector_role]",
+      "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_foreign_deployment_cannot_start_old_binding",
+      "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[binding_digest]",
+      "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[build_id]",
+      "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[extra_input]",
+      "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[job_id]",
+      "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[malformed_input]",
+      "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[missing_input]",
+      "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[project_id]",
+      "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[task_queue]",
+      "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[workflow_type]",
+      "tests/ifpmic_api/test_h2_transport_boundaries.py::test_h2_activity_waits_until_admission_same_run",
+      "tests/ifpmic_api/test_h2_transport_boundaries.py::test_h2_machine_authority_disable_serializes_with_claim[claim-before-disable]",
+      "tests/ifpmic_api/test_h2_transport_boundaries.py::test_h2_machine_authority_disable_serializes_with_claim[disable-before-claim]",
+      "tests/ifpmic_api/test_h2_worker_api_crashes.py::test_h2_activity_completed_before_workflow_decision_sigkill_replays_history",
+      "tests/ifpmic_api/test_h2_worker_api_crashes.py::test_h2_api_commit_before_response_sigkill_retry_applies_once",
+      "tests/ifpmic_api/test_h2_worker_api_crashes.py::test_h2_worker_projection_after_pg_commit_sigkill_replays_receipt",
+      "tests/ifpmic_api/test_h2_worker_api_crashes.py::test_h2_worker_projection_before_pg_commit_sigkill_rolls_back_then_retries",
+      "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_invalid_ready_fails_closed[marker-forged]",
+      "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_invalid_ready_fails_closed[marker-missing]",
+      "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_invalid_ready_fails_closed[marker-symlink]",
+      "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_invalid_ready_fails_closed[marker-wrong-token]",
+      "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_nonready_blocks_admitted_worker[state-error]",
+      "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_nonready_blocks_admitted_worker[state-provisioning]",
+      "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_nonready_blocks_admitted_worker[state-reserved]",
+      "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_nonready_blocks_dispatcher_before_start[state-error]",
+      "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_nonready_blocks_dispatcher_before_start[state-provisioning]",
+      "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_nonready_blocks_dispatcher_before_start[state-reserved]",
+      "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_stale_generation_claim_is_fenced",
+      "tests/ifpmic_api/test_workflow_schema.py::test_h2_four_role_oid_recreation_is_drift_and_does_not_rebind",
+      "tests/ifpmic_api/test_workflow_schema.py::test_h2_real_create_activation_receipt_replay_and_run_fences",
+      "tests/ifpmic_api/test_workflow_schema.py::test_h2_role_registry_and_function_acl_match_static_contract",
+      "tests/ifpmic_api/test_workflow_schema.py::test_h2_service_roles_use_scram_without_trust_fallthrough"
+    ],
+    "audit_timeout_seconds": 10,
+    "audit_phase_count": 10,
+    "extra_overhead_seconds": 200,
+    "method": "After exact paired pre-gates, run each raw audit after phase tests/fixture cleanup using its pinned interpreter and fresh private bytecode cache. Decode PBSeq with actual qualified temporalio.HistoryEvent.FromString; no synthetic decoder in the full gate. Require87 exact nodes across10 phases and rehash all indexed raw files before publication. Source-resolved mapping is not runtime acceptance.",
+    "failure_recovery": "Missing/invalid/changed raw artifacts, unknown resource state, decoder failure, timing excess or unexpected forced recovery fail the attempt. Preserve private evidence and recover only proven owned identities under original deadline; obtain affected exact reviews before a new fresh full gate."
+  }
+}
