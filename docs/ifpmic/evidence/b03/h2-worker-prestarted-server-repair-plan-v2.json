@@ -1,0 +1,239 @@
+{
+  "deferred_dynamic_scenarios": {
+    "residual_risk": "No newly injected proxy-start failure is exercised here; unchanged finally/ownership control flow is statically compared, and mandatory existing full490 lifecycle/error tests still execute before H2 acceptance.",
+    "scope": "The new proxy-start failure injection below is future-only analysis, not authorization to author/run an additional test in this one-literal repair. It is not claimed passed or used as source/runtime acceptance. Any implementation requires its own scoped plan/source gates."
+  },
+  "kind": "ifpmic.b03.h2.worker-prestarted-server-record-repair-plan.v2",
+  "remaining_questions": [],
+  "review_boundary": {
+    "execution_authorized": false,
+    "required_next_step": "Independent exact plan/source review, then implementation by the source owner, then source-pin and machine-row refresh/review before any execution authorization.",
+    "runtime_or_sdk_imports_performed": false,
+    "source_change_authorized": false,
+    "test_execution_performed": false
+  },
+  "scope": {
+    "expected_artifact_delta": "The affected activity-completed case gains one distinct private JSON artifact; canonical owned-temporal-server.json remains required and produced by the helper.",
+    "non_goals": [
+      "Do not remove O_EXCL or private mode checks.",
+      "Do not overwrite or merge existing records.",
+      "Do not change the process, server, log, proxy, worker, or cleanup lifecycle.",
+      "Do not publish either record or PID/start_ticks."
+    ],
+    "observed_failure": "The caller creates owned-temporal-server.json before proxy setup. It then enters _create_runtime_world, whose unconditional _record_private uses O_EXCL for that same filename; the second write raises FileExistsError.",
+    "proposed_artifact_change": {
+      "case_directory": "worker-api-*",
+      "format": "json",
+      "identity_file": "case-node.json",
+      "maximum": 1,
+      "minimum": 1,
+      "path": "owned-temporal-prestarted-server.json",
+      "required_keys": [
+        "role",
+        "pid",
+        "start_ticks",
+        "log"
+      ]
+    },
+    "proposed_minimal_source_diff": {
+      "change": "Rename only the early record output to owned-temporal-prestarted-server.json; keep _create_runtime_world writing owned-temporal-server.json.",
+      "file": "tests/ifpmic_api/test_h2_worker_api_crashes.py",
+      "line": 747
+    },
+    "target_function": "test_h2_activity_completed_before_workflow_decision_sigkill_replays_history",
+    "target_node": "tests/ifpmic_api/test_h2_worker_api_crashes.py::test_h2_activity_completed_before_workflow_decision_sigkill_replays_history"
+  },
+  "source_evidence": [
+    {
+      "facts": [
+        "Starts one server process, stores the Popen in owner_ctx.processes, saves start ticks, and writes its output to temporal-data/temporal.log."
+      ],
+      "lines": "168-217",
+      "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py",
+      "symbols": [
+        "_start_owned_temporal"
+      ]
+    },
+    {
+      "facts": [
+        "For a prestarted server it reuses the provided Popen and ports; constructs role/pid/start_ticks/log and unconditionally O_EXCL-writes owned-temporal-server.json; process membership check avoids duplicate handle."
+      ],
+      "lines": "246-272",
+      "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py",
+      "symbols": [
+        "_create_runtime_world"
+      ]
+    },
+    {
+      "facts": [
+        "The test writes the same owned-temporal-server.json before proxy startup and later passes the same process/root into _create_runtime_world."
+      ],
+      "lines": "735-755",
+      "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py",
+      "symbols": [
+        "test_h2_activity_completed_before_workflow_decision_sigkill_replays_history"
+      ]
+    },
+    {
+      "facts": [
+        "Canonicalizes the supplied values, converts supported Path values to strings, and delegates to private write."
+      ],
+      "lines": "155-158",
+      "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py",
+      "symbols": [
+        "_record_private"
+      ]
+    },
+    {
+      "facts": [
+        "Writes with O_CREAT|O_EXCL, fchmod 0600, fsync; an existing destination is an intentional hard failure."
+      ],
+      "lines": "96-109",
+      "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+      "symbols": [
+        "_write_private"
+      ]
+    },
+    {
+      "facts": [
+        "Retains the owned server process and verifies its captured identity is gone after shutdown."
+      ],
+      "lines": "434-454",
+      "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py",
+      "symbols": [
+        "_cleanup"
+      ]
+    },
+    {
+      "facts": [
+        "Descriptor-relative no-follow traversal and private file checks for owner, regular-file type, link count, permissions and bounded reads."
+      ],
+      "lines": "83-115",
+      "path": "scripts/ifpmic_h2_raw_evidence.py",
+      "symbols": [
+        " _open_directory",
+        "_read_file"
+      ]
+    }
+  ],
+  "source_pins": {
+    "scripts/ifpmic_h2_raw_evidence.py": "7b02c3b6a5713d6abe0e589d75835f5f6519e2aa5daee690e811497f20b7b4fe",
+    "tests/ifpmic_api/h2_private_values.py": "ea2e828b0956f5e5bf9dd7f3c35441b948e1d0d17a49367b1d6ddd0c039cf86e",
+    "tests/ifpmic_api/test_h2_runtime_normal_flow.py": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d",
+    "tests/ifpmic_api/test_h2_worker_api_crashes.py": "b17b0b46b7e17a8fe9cf17b02b760eefa54c21565479805dd5d2a5c832b98630"
+  },
+  "status": "draft_source_change_plan_pending_independent_review_no_execution",
+  "verification": {
+    "evidence": [
+      "Exact before/after source SHA and whole-file AST delta",
+      "Independent plan and exact source reviews",
+      "Exact source-pin/mapping projection reviews",
+      "After full paired gates: private fresh490 actual records/JUnit/process cleanup and sanitized independent result acceptance"
+    ],
+    "expected_result": "Prestarted early record and shared helper canonical record occupy distinct private paths, so successful setup can proceed without duplicate-create failure; ownership evidence remains retained. Source acceptance alone establishes no runtime pass.",
+    "failure_recovery": "Preserve failed attempt and original saved process ownership; return to source/mapping stage; independently review corrected source and new exact closure/ledger/contract/pre-gates; rerun fresh490 and affected mandatory checks. No overwritten evidence, waived failed cases or old approvals repinned as current proof.",
+    "method": {
+      "boundary": "Verify prestarted call retains both files/same saved process/log and default helper retains single canonical file; permissions/no-follow/O_EXCL/fsync unchanged.",
+      "exception": "Static full-file/control-flow comparison preserves proxy-start failure finally/owned cleanup and O_EXCL rejection at each distinct destination. Existing mandatory full490 exception/cleanup tests remain required. New injected proxy-failure scenario listed below is deferred dynamic follow-up and is not implemented/executed/accepted by this one-literal source repair.",
+      "normal": "Before/after exact whole-file AST differs only by one early filename Constant; helper canonical writer unchanged. Under future independently approved fresh490 require both actual records for the prestarted case and canonical record only for ordinary branches.",
+      "regression": "All test assertions/calls/process and cleanup code, literal case inventory and budgets remain unchanged. Rebind affected actual source pins/row metadata in new candidate, independently review exact projection and whole-source gates before fresh490. UI/build/browser are unaffected and not rerun for source-only test evidence rename."
+    },
+    "pass_criteria": [
+      "Independent plan approval before edit",
+      "Independent exact-source AST review confirms one filename Constant changed and all assertions/writers/lifecycle retained",
+      "New mapping requires both files only on actual prestarted case and preserves default applicability/private constraints",
+      "Fresh490/JUnit/raw ownership/process/history/SQL proof plus independent result review still required for runtime acceptance"
+    ],
+    "purpose": "Remove deterministic duplicate O_EXCL write while retaining early prestarted ownership evidence and canonical runtime evidence.",
+    "responsible_agents": {
+      "independent_plan_source_result_review": "/root/h2_evidence_amendment_review",
+      "source_integration": "Code-dev /root",
+      "test_plan_and_mapping": "TC /root/h2_full_runner_author"
+    },
+    "target": [
+      "One early output filename literal in test_h2_activity_completed_before_workflow_decision_sigkill_replays_history",
+      "Both real server identity records and UUID case-node attribution",
+      "All4 worker/API literal tests, shared helper default branch, original490 inventory/budgets"
+    ]
+  },
+  "verification_fields": [
+    {
+      "basis": "Keep early writer’s evidence before proxy startup; this filename is distinct from the canonical helper output.",
+      "expected": "owned-temporal-prestarted-server.json",
+      "id": "prestarted_record_path"
+    },
+    {
+      "basis": "_create_runtime_world remains the sole writer of the canonical runtime server record.",
+      "expected": "owned-temporal-server.json",
+      "id": "canonical_record_path"
+    },
+    {
+      "basis": "Both source dictionaries are constructed with exactly these fields.",
+      "expected": [
+        "role",
+        "pid",
+        "start_ticks",
+        "log"
+      ],
+      "id": "both_record_top_level_keys"
+    },
+    {
+      "basis": "The early caller and shared helper build the same record from the retained Popen object and path.",
+      "expected": {
+        "log": "<case-root>/temporal-data/temporal.log",
+        "pid": "server.pid",
+        "role": "temporal",
+        "start_ticks": "server._ifpmic_start_ticks"
+      },
+      "id": "record_identity_equalities"
+    },
+    {
+      "basis": "_start_owned_temporal appends it; helper checks membership before append.",
+      "expected": "same server Popen object appears exactly once in owner_ctx.processes; _create_runtime_world does not append a duplicate",
+      "id": "process_handle_ownership"
+    },
+    {
+      "basis": "The producer uses _root plus _write_private for mode 0700/0600, O_EXCL and fsync; the pinned raw evidence reader verifies owned regular files, link count, and no-follow path components.",
+      "expected": {
+        "file_mode": "0600",
+        "nlink": 1,
+        "regular_file": true,
+        "root_mode": "0700",
+        "symlink": false,
+        "uid": "current user"
+      },
+      "id": "private_file_properties"
+    },
+    {
+      "basis": "_start_owned_temporal creates one 0600 log and passes it to server stdout/stderr.",
+      "expected": "both records reference the unchanged temporal-data/temporal.log; do not replace, truncate, or copy it",
+      "id": "retained_log_identity"
+    },
+    {
+      "basis": "_cleanup owns process object and rechecks identity after stop_all_owned.",
+      "expected": "existing cleanup stops the saved server process once and verifies PID/start_ticks no longer identify the same process",
+      "id": "cleanup_identity"
+    }
+  ],
+  "verification_scenarios": {
+    "boundary_cases": [
+      "For ordinary calls where prestarted_server is absent, _create_runtime_world writes only owned-temporal-server.json; no prestarted record is fabricated.",
+      "For prestarted calls, both records refer to the same Popen identity and same log; a preexisting destination at either path still fails closed through O_EXCL.",
+      "If server identity capture fails before the early record, retain existing cleanup behavior; this plan adds no synthetic identity or fallback record."
+    ],
+    "error_path": [
+      "Inject a proxy-start failure after the prestarted record is written and before _create_runtime_world is called.",
+      "Run existing finally cleanup; assert the prestarted record remains intact, canonical helper record is absent, server log remains at the same path, and the saved server process is stopped and no longer matches its original identity."
+    ],
+    "normal_success": [
+      "After server start, verify the prestarted file exists before proxy startup and has the exact 4-key server record.",
+      "After _create_runtime_world succeeds, verify both private filenames exist, each is one regular 0600 file, and their decoded records are exactly equal.",
+      "Verify the same saved process identity and temporal-data/temporal.log path are present; owner_ctx.processes contains one server handle."
+    ],
+    "regression": [
+      "The activity-completed literal case must progress past _create_runtime_world without FileExistsError and retain both records through normal case cleanup.",
+      "The existing four worker/API literal nodes continue to bind their UUID directories via case-node.json; only the activity-completed row gains the extra artifact.",
+      "After the source change, update affected source SHA pins and re-review the machine row projection before any gate execution."
+    ]
+  }
+}

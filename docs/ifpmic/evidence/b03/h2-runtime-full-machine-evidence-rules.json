@@ -10581,7 +10581,7 @@
         {
           "line": 715,
           "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py",
-          "sha256": "2b6ce2261765320df2cecbb759c115f9553a13f7d646784e4a954b60d8141037",
+          "sha256": "7001cf8c9be2dcfc57e86b0d1e5da0b6a06e2154b40e26a08f5933e2fac691ac",
           "symbol": "test_h2_activity_completed_before_workflow_decision_sigkill_replays_history"
         },
         {
@@ -10938,7 +10938,7 @@
         {
           "line": 449,
           "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py",
-          "sha256": "2b6ce2261765320df2cecbb759c115f9553a13f7d646784e4a954b60d8141037",
+          "sha256": "7001cf8c9be2dcfc57e86b0d1e5da0b6a06e2154b40e26a08f5933e2fac691ac",
           "symbol": "test_h2_api_commit_before_response_sigkill_retry_applies_once"
         },
         {
@@ -11328,7 +11328,7 @@
         {
           "line": 696,
           "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py",
-          "sha256": "2b6ce2261765320df2cecbb759c115f9553a13f7d646784e4a954b60d8141037",
+          "sha256": "7001cf8c9be2dcfc57e86b0d1e5da0b6a06e2154b40e26a08f5933e2fac691ac",
           "symbol": "test_h2_worker_projection_after_pg_commit_sigkill_replays_receipt"
         },
         {
@@ -11702,7 +11702,7 @@
         {
           "line": 678,
           "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py",
-          "sha256": "2b6ce2261765320df2cecbb759c115f9553a13f7d646784e4a954b60d8141037",
+          "sha256": "7001cf8c9be2dcfc57e86b0d1e5da0b6a06e2154b40e26a08f5933e2fac691ac",
           "symbol": "test_h2_worker_projection_before_pg_commit_sigkill_rolls_back_then_retries"
         },
         {
@@ -14052,7 +14052,7 @@
     "tests/ifpmic_api/test_h2_runtime_startup_rejections.py": "80376fad5e864c4ac07cc0fc1cf75fce205d06da64f22e74a67b542ca60fb1b1",
     "tests/ifpmic_api/test_h2_started_deployment_boundaries.py": "034ae6eb4399d8e4b906ffc27401d2b1d4d3799e44159b7a711d6e174c25bbdf",
     "tests/ifpmic_api/test_h2_transport_boundaries.py": "059b7f61e6da19f9177bb0ab833dd2ebbf0409d88bfdd9ebf914166688525ad2",
-    "tests/ifpmic_api/test_h2_worker_api_crashes.py": "b17b0b46b7e17a8fe9cf17b02b760eefa54c21565479805dd5d2a5c832b98630",
+    "tests/ifpmic_api/test_h2_worker_api_crashes.py": "7001cf8c9be2dcfc57e86b0d1e5da0b6a06e2154b40e26a08f5933e2fac691ac",
     "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py": "ad48c0a6dd84d08e2839a9ba5a4b3d4f8b4cad82df99e0a090ae5d4387eb2f2f",
     "tests/ifpmic_api/test_workflow_schema.py": "b76ebd44dc6e98323501fea1c03e3f5c1838484b3f7b359693a2e5ef52159224",
     "tests/ifpmic_api/workflow_schema_fixture.py": "dd1eba1754a8985dd704f0ed63271cc73beca8b03c72aaa2f14acdd41e5e3681",

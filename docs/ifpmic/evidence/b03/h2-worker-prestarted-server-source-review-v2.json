@@ -1,0 +1,49 @@
+{
+  "kind": "ifpmic.b03.h2.worker-prestarted-server-source-review.v2",
+  "review_date": "2026-10-21",
+  "reviewer": "/root/h2_evidence_amendment_review",
+  "decision": "approve_exact_early_filename_repair_and_bounded_hash_refresh_only",
+  "plan_review": {
+    "path": "docs/ifpmic/evidence/b03/h2-worker-prestarted-server-repair-plan-review-v2.json",
+    "sha256": "86da03a1b159023569eba6456e5405a13aa63a51038a11a71ff7acc0b02542b8"
+  },
+  "source_check": {
+    "path": "docs/ifpmic/evidence/b03/h2-worker-prestarted-server-source-check-v2.json",
+    "sha256": "6daf10763f26b464a77cd3fd3e8687c724fcf11d715f4eaa9cd8bbaf15671c78"
+  },
+  "source": {
+    "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py",
+    "before_commit": "911ee83",
+    "before_sha256": "b17b0b46b7e17a8fe9cf17b02b760eefa54c21565479805dd5d2a5c832b98630",
+    "after_sha256": "7001cf8c9be2dcfc57e86b0d1e5da0b6a06e2154b40e26a08f5933e2fac691ac"
+  },
+  "input_machine": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules.json",
+    "commit": "49852d2",
+    "sha256": "7880e9cdaeb14b70134d12964e25b548a5ba8b9269ca642a7f9e32269a3b3aeb"
+  },
+  "findings": [],
+  "evidence": {
+    "independent_ast_check": "Read the original source from Git911ee83. Changing exactly one _record_private filename Constant in test_h2_activity_completed_before_workflow_decision_sigkill_replays_history from owned-temporal-server.json to owned-temporal-prestarted-server.json makes the original whole-file AST identical to current, excluding source-position attributes.",
+    "preserved_semantics": "All82 assertions and every other function/call/value remain unchanged. The shared _create_runtime_world canonical writer still uses owned-temporal-server.json. Early record keys/values, same Popen/log identity, O_EXCL/private serialization, ownership/cleanup, proxy/worker/server lifecycle, inventory and budgets are unchanged. No line count or line-number shift occurs.",
+    "global_pin": "This worker file is the sole stale input-machine source_pins entry: b17b0b46 must become the reviewed exact7001cf8c source.",
+    "row_metadata_discrepancy": "The4 unresolved worker rows contain an older primary row-local source_locations SHA2b6ce2261765320df2cecbb759c115f9553a13f7d646784e4a954b60d8141037, rather than the global b17b0b46 source. Refresh only existing SHA fields whose path exactly matches this worker file to7001cf8c. The one-Constant repair is proved against committed b17b0b46 only; this metadata refresh does not accept the older2b6ce226 source or redeem any previous mapping claim."
+  },
+  "authorization": {
+    "retain_exact_one_constant_source_repair": true,
+    "repin_only_worker_global_source_sha_b17b0b46_to_exact_7001cf8c": true,
+    "refresh_only_matching_worker_path_existing_sha_fields_in_4_worker_row_source_locations_2b6ce226_to_exact_7001cf8c": true,
+    "change_line_numbers_or_other_row_metadata": false,
+    "clear_worker_unresolved_annotations_or_accept_related_mapping_proposal": false,
+    "change_other_source_tests_assertions_inventory_budgets_or_checker": false,
+    "imports_collection_tests_sql_sdk_services_network_execution": false,
+    "whole_source_mapping_contract_h2_iteration_or_goal_acceptance": false
+  },
+  "risks_and_remaining_uncertainty": [
+    "The rename removes the deterministic duplicate-file write but does not prove actual setup, equal retained records, private properties, lifecycle/SQL/history/cleanup success or runtime test pass.",
+    "A separately reviewed corrected mapping must require the early prestarted record and canonical record on this one case, preserve default-branch applicability and refresh its own source references. Historical drafts remain unaccepted.",
+    "Complete versioned source closure, ledger/contract and paired pre-gates plus fresh490 remain mandatory. No additional injected proxy-failure test authoring or execution is authorized."
+  ],
+  "recommendation": "Apply only the bounded global and4 row-local hash refreshes, retain all unresolved annotations and source history, then obtain exact corrected mapping review.",
+  "review_method": "Read-only Git/source/AST/JSON/SHA checks; no repository imports, tests, collection, SQL, SDK, services or network."
+}

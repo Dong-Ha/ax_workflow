@@ -3,7 +3,7 @@
   "status": "partial_source_mapping_only_runtime_blocked",
   "machine": {
     "path": "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules.json",
-    "sha256": "7880e9cdaeb14b70134d12964e25b548a5ba8b9269ca642a7f9e32269a3b3aeb"
+    "sha256": "571951683230da449cbabfcfee0240a3275fb80401f8ac22cc2b2b17123cd1b8"
   },
   "cases": 87,
   "artifacts": 661,
@@ -87,5 +87,21 @@
     "artifacts_before": 73,
     "artifacts_after": 149,
     "runtime_executed": false
+  },
+  "latest_worker_source_repair": {
+    "source": "tests/ifpmic_api/test_h2_worker_api_crashes.py",
+    "sha256": "7001cf8c9be2dcfc57e86b0d1e5da0b6a06e2154b40e26a08f5933e2fac691ac",
+    "independent_review": {
+      "path": "docs/ifpmic/evidence/b03/h2-worker-prestarted-server-source-review-v2.json",
+      "sha256": "7427ba60b8bc4c51582c9d9877ba3a1b8b477482f97a4b437c4275ddc4682f20"
+    },
+    "input_commit": "49852d2",
+    "input_machine_sha256": "7880e9cdaeb14b70134d12964e25b548a5ba8b9269ca642a7f9e32269a3b3aeb",
+    "global_source_before": "b17b0b46b7e17a8fe9cf17b02b760eefa54c21565479805dd5d2a5c832b98630",
+    "four_row_location_hashes_before": [
+      "2b6ce2261765320df2cecbb759c115f9553a13f7d646784e4a954b60d8141037"
+    ],
+    "only_global_and4_matching_location_SHA_changed_no_line_shift": true,
+    "actual_worker_case_executed": false
   }
 }

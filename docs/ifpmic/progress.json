@@ -660,7 +660,7 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "Iteration03: resolve worker prestarted duplicate O_EXCL source defect and transport3/worker4 projection, then activity12/started10. Source mapping58/87 reviewed rows;29 rows/177 annotations remain. Preserve original490, review versioned closure/contract/runner and paired pre-gates, run fresh490, then actual admission/run/receipt UI.",
+  "next_step": "Iteration03: independently review transport3/worker4 projection after exact worker prestarted filename repair; activity12 duplicate dispatcher log/cache repair and started10 still pending. Source mapping58/87,29 rows/177 annotations remain; actual490 and admission UI incomplete.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",
@@ -699,7 +699,7 @@
     },
     "pending_source_proposal": "evidence/b03/h2-machine-resolution-transport-worker-v2.json",
     "pending_source_proposal_review": "evidence/b03/h2-worker-prestarted-server-repair-plan-v2.json",
-    "pending_source_proposal_status": "worker_prestarted_duplicate_create_source_defect_requires_plan_source_and_projection_reviews",
+    "pending_source_proposal_status": "worker_prestarted_filename_repair_exact_source_accepted; transport_worker_projection_refresh_pending",
     "latest_source_mapping": {
       "resolved_cases": 58,
       "total_cases": 87,

@@ -19,7 +19,7 @@ workspace stale-generation 테스트가 정의되지 않은 run_id 때문에 증
 
 dispatcher의 생성되지 않는 파일 요구3개를 바로잡고 실제 분기 출력79개를 추가했다. 거절된 초안과 수정된 exact 승인 문서를 함께 보존했다. 현재119 합성 단위의12개 소스 해시는 그대로지만 단위 검사를 반복 실행하지 않았다. 기존 두 공개 주소의 HTTP200만 재확인했다.
 
-worker의 사전 기동 서버 기록을 같은 O_EXCL 경로에 두 번 작성하는 결함도 발견했다. 별도 수정 계획·exact source·projection 검토를 거쳐 해결한다. transport3/worker4와 activity12/started10이 남았으며 actual main/SDK/SQL/full490/실제 실행 접수는 이번 체크포인트에서 실행하지 않았다. 아래 내용의83행469항목은 이전 체크포인트 기록이다.
+worker의 사전 기동 서버 기록을 같은 O_EXCL 경로에 두 번 작성하는 결함은 early 파일명 한 곳을 분리해 수정했다. [독립 exact source 검토](../../evidence/b03/h2-worker-prestarted-server-source-review-v2.json)가 전체 AST의 filename Constant 하나와82개 assertion 보존을 확인했다. 두 실제 파일을 요구하는 새 projection은 별도 검토하며 실제 실행 증거는 아직 없다. transport3/worker4와 activity12/started10이 남았으며 actual main/SDK/SQL/full490/실제 실행 접수는 이번 체크포인트에서 실행하지 않았다. 아래 내용의83행469항목은 이전 체크포인트 기록이다.
 
 ## 이번에 실제 검증한 것
 

@@ -744,7 +744,7 @@ def test_h2_activity_completed_before_workflow_decision_sigkill_replays_history(
                          "start_ticks": server._ifpmic_start_ticks,
                          "log": root / "temporal-data" / "temporal.log"}
         ctx["server_record"] = server_record
-        _record_private(root, "owned-temporal-server.json", server_record)
+        _record_private(root, "owned-temporal-prestarted-server.json", server_record)
         listeners = normal._wait_for_temporal_listeners(server, ports, time.monotonic() + 30)
         assert all(item["loopback"] for item in listeners)
         proxy = TCPResponseHoldingProxy("127.0.0.1", ports[0])

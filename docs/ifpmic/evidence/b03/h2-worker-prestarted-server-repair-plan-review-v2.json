@@ -1,0 +1,37 @@
+{
+  "kind": "ifpmic.b03.h2.worker-prestarted-server-repair-plan-review.v2",
+  "review_date": "2026-10-21",
+  "reviewer": "/root/h2_evidence_amendment_review",
+  "decision": "approve_one_early_filename_change_authoring_only",
+  "plan": {
+    "path": "docs/ifpmic/evidence/b03/h2-worker-prestarted-server-repair-plan-v2.json",
+    "sha256": "10ae72c6b122b747cc3b5972492a0b17c95a1bfbf59b12d75ebb1db264de820c"
+  },
+  "source_before": {
+    "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py",
+    "sha256": "b17b0b46b7e17a8fe9cf17b02b760eefa54c21565479805dd5d2a5c832b98630",
+    "symbol": "test_h2_activity_completed_before_workflow_decision_sigkill_replays_history",
+    "line": 747
+  },
+  "findings": [],
+  "evidence": {
+    "actual_defect": "AST/source comparison confirms the activity-completed caller at747 and _create_runtime_world at272 both call _record_private with owned-temporal-server.json for the same root and prestarted server. _record_private delegates to the existing O_CREAT|O_EXCL writer, so the helper's second write deterministically fails with FileExistsError.",
+    "minimal_repair": "Rename only the early caller's filename Constant to owned-temporal-prestarted-server.json. Keep the canonical helper filename unchanged. Both actual4-field role/pid/start_ticks/log records remain separately retained; process membership, existing log path, proxy/worker/server lifecycle and assertions need no change.",
+    "verification_fields": "The amended verification block contains purpose, target, method, responsible_agents, pass_criteria, expected_result, evidence and failure_recovery. Its separate8 observation dimensions are retained as data requirements rather than substitutes for the required plan fields.",
+    "coverage_and_omissions": "Normal two-record retention, default single-record applicability, private/O_EXCL boundaries, existing proxy-failure finally/ownership paths and all4 worker/API cases are covered statically and deferred to mandatory fresh490. New proxy-start injection is explicitly future-only and authorizes no additional test authoring/execution. Product/UI/browser code is untouched, justifying no new standalone UI/build run for this evidence-path rename.",
+    "pins": "All4 plan source pins match current bytes; no implementation change was present during review."
+  },
+  "authorization": {
+    "rename_only_the_early_filename_constant_as_planned": true,
+    "change_helper_canonical_writer_O_EXCL_private_checks_or_lifecycle_assertions": false,
+    "author_or_run_new_proxy_failure_injection": false,
+    "imports_collection_tests_sql_sdk_services_network_execution": false,
+    "exact_source_mapping_contract_h2_iteration_or_goal_acceptance": false
+  },
+  "risks_and_remaining_uncertainty": [
+    "The actual source change needs separate exact review confirming a whole-file AST delta of one filename Constant. Then renew affected source pins and independently review a projection requiring both records only for this prestarted case, preserving ordinary branch applicability.",
+    "The error-injection scenario remains unexecuted. Static rename approval proves no actual setup/cleanup/business outcome; whole-source/versioned contract/ledger reviews, paired pre-gates and fresh490 remain mandatory. Both records and PID/start_ticks stay private."
+  ],
+  "recommendation": "Implement only the early filename rename, retain before/after source hashes and AST delta, then request exact-source and revised mapping review. Do not execute or clear related machine annotations under this plan approval.",
+  "review_method": "Read-only plan/source/AST/JSON/SHA comparison; no repository imports, tests, collection, SQL, SDK, services or network."
+}

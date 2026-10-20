@@ -1,0 +1,33 @@
+{
+  "after_sha256": "7001cf8c9be2dcfc57e86b0d1e5da0b6a06e2154b40e26a08f5933e2fac691ac",
+  "before_commit": "911ee83",
+  "before_sha256": "b17b0b46b7e17a8fe9cf17b02b760eefa54c21565479805dd5d2a5c832b98630",
+  "h2_accepted": false,
+  "independent_plan_review": {
+    "path": "docs/ifpmic/evidence/b03/h2-worker-prestarted-server-repair-plan-review-v2.json",
+    "sha256": "86da03a1b159023569eba6456e5405a13aa63a51038a11a71ff7acc0b02542b8"
+  },
+  "iteration03_complete": false,
+  "kind": "ifpmic.b03.h2.worker-prestarted-server-source-check.v2",
+  "not_proven": [
+    "Actual setup succeeds",
+    "Both files contain matching actual saved process identity",
+    "Actual lifecycle/SQL/history/cleanup oracles pass"
+  ],
+  "plan": {
+    "path": "docs/ifpmic/evidence/b03/h2-worker-prestarted-server-repair-plan-v2.json",
+    "sha256": "10ae72c6b122b747cc3b5972492a0b17c95a1bfbf59b12d75ebb1db264de820c"
+  },
+  "required_next": "Independent exact-source review, sourcepin/row metadata repin, versioned transport-worker projection with both actual paths, whole-source/paired gates and fresh490.",
+  "runtime_executed": false,
+  "source": "tests/ifpmic_api/test_h2_worker_api_crashes.py",
+  "static_checks": {
+    "assertions_preserved": 82,
+    "canonical_helper_writer_preserved": true,
+    "changed_early_record_calls": 1,
+    "no_case_inventory_budget_or_other_function_change": true,
+    "private_O_EXCL_permissions_and_lifecycle_unchanged": true,
+    "whole_file_AST_equal_after_one_filename_Constant_change": true
+  },
+  "status": "exact_source_repair_pending_independent_review_no_execution"
+}
