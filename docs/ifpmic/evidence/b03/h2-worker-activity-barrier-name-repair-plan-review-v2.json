@@ -1,0 +1,34 @@
+{
+  "kind": "ifpmic.b03.h2.worker-activity-barrier-name-repair-plan-review.v2",
+  "review_date": "2026-10-21",
+  "reviewer": "/root/h2_evidence_amendment_review",
+  "decision": "approve_one_helper_call_identifier_authoring_only",
+  "plan": {
+    "path": "docs/ifpmic/evidence/b03/h2-worker-activity-barrier-name-repair-plan-v2.json",
+    "sha256": "a379525922cdd3d2c7bdb61477ce5661251c35035bff02b348eafd65d18ffb65"
+  },
+  "source_before": {
+    "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py",
+    "sha256": "7001cf8c9be2dcfc57e86b0d1e5da0b6a06e2154b40e26a08f5933e2fac691ac",
+    "line": 761
+  },
+  "findings": [],
+  "evidence": {
+    "defect": "The activity-completed call references undefined _wait_activity_barrier. The actual _wait_for_activity_barrier helper at399 has the same4-position signature and is already called by the existing worker path at578.",
+    "minimal_semantics": "Change only the call's Name identifier to _wait_for_activity_barrier. Preserve ctx, barrier Path, owned worker and absolute deadline arguments in order, the returned phase event and every subsequent assertion.",
+    "preservation": "The helper's ready wait, dispatcher start, reached wait, owner dispatched cut and error propagation remain unchanged, as do the previously accepted two server filenames, proxy/history/SQL lifecycle and cleanup.",
+    "plan_coverage": "All8 required plan fields and normal/error/boundary/regression categories are present. The current7001 source pin matches actual bytes. No replacement helper or new test scenario is needed to author this identifier correction."
+  },
+  "authorization": {
+    "rename_only_the_one_undefined_call_target_as_planned": true,
+    "change_arguments_helper_other_sources_assertions_paths_lifecycle_or_budgets": false,
+    "imports_collection_tests_sql_sdk_services_network_execution": false,
+    "exact_source_mapping_contract_h2_iteration_or_goal_acceptance": false
+  },
+  "risks_and_remaining_uncertainty": [
+    "Separate exact-source review must verify only one AST Name changed before source/mapping pin refresh. The prior7001 filename repair remains historical and accepted only in its original exact scope.",
+    "The plan establishes no actual barrier, cut, SQL/history or cleanup outcome. Full490/25+5, whole-source/versioned ledger/contract and paired pre-gates remain mandatory before runtime execution."
+  ],
+  "recommendation": "Implement only the call-target spelling correction, retain whole-file before/after hashes and AST delta, then obtain exact-source and corrected mapping reviews.",
+  "review_method": "Read-only plan/source/AST/hash comparison; no repository imports, tests, collection, SQL, SDK, services or network."
+}

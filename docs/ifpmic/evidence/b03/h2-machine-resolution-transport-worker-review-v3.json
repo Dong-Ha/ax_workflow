@@ -1,0 +1,67 @@
+{
+  "kind": "ifpmic.b03.h2.transport-worker-source-projection-review.v3",
+  "review_date": "2026-10-21",
+  "reviewer": "/root/h2_evidence_amendment_review",
+  "decision": "request_changes_no_integration_no_execution",
+  "proposal": {
+    "path": "docs/ifpmic/evidence/b03/h2-machine-resolution-transport-worker-v3.json",
+    "sha256": "8be0f6c5fee6cf58ee0fd2d1fba5686a9122c3228f49d75d097ab853dd08c966"
+  },
+  "input_machine": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules.json",
+    "commit": "6a480bf",
+    "sha256": "571951683230da449cbabfcfee0240a3275fb80401f8ac22cc2b2b17123cd1b8"
+  },
+  "findings": [
+    {
+      "severity": "blocking_source_defect",
+      "location": "tests/ifpmic_api/test_h2_transport_boundaries.py:108",
+      "problem": "_release calls _write_private(path) with one argument, while the local writer requires path and raw at69. claim-before-disable and preadmission invoke this path, so a TypeError prevents the release and later successful result.",
+      "required_action": "Obtain a separate minimal repair plan/source review supplying the intended release bytes while preserving the existing private/O_EXCL writer, barrier order, cleanup and all assertions. This mapping review authorizes no source edit."
+    },
+    {
+      "severity": "blocking_source_defect",
+      "location": "tests/ifpmic_api/test_h2_worker_api_crashes.py:761",
+      "problem": "The activity-completed case calls undefined _wait_activity_barrier. The only actual helper is _wait_for_activity_barrier at399, already used by the other worker path at578. After the previously reviewed server-file rename, this NameError still prevents the cut and recovery outputs.",
+      "required_action": "Obtain a separate minimal helper-name repair plan/source review, preserving arguments, helper semantics and every oracle. The prior one-filename repair remains accepted in its exact scope."
+    },
+    {
+      "severity": "blocking_artifact_schema_mismatch",
+      "location": "All4 worker proposed owned-process-00.json rules; worker source161-165,260-271",
+      "problem": "These rules require stdout/stderr, but the first journaled process record is the Temporal server with role/pid/start_ticks/log. In the API case owner_ctx.root is still the outer root when the helper journals this first server record, so outer owned-process-00.json is also the server; the API child has its own owned-api-commit-child.json record.",
+      "required_action": "Require role/pid/start_ticks/log for these4 first server records, retain the actual stdout/stderr schemas on ordinary CLI records01/02 and retain separate child identity files."
+    },
+    {
+      "severity": "blocking_explicit_raw_index_gap",
+      "location": "Transport3 preparation; activity-completed successful dispatcher stop",
+      "problem": "All3 transport cases call crash.prepare_case but omit its workspace-initial-observation.json, source-manifest.json and environment-manifest.json. Activity-completed also omits stopped-dispatcher-before-activity-result-cut.json written by _stop_saved at766/613-619.",
+      "required_action": "Add the3 common preparation files to each transport row (9 rules), with actual key sets job_id/tree/marker_bytes_hex; format/files; and format/files/interpreter_sha256/python_version. Add the activity-only stopped dispatcher JSON with role/pid/start_ticks/stop. Use mandatory min/max1 and exact source references; do not invent files on other branches."
+    },
+    {
+      "severity": "conditional_schema_gap",
+      "location": "Transport machine-race-result.json rules; source271 and346",
+      "problem": "Both literal rows require only variant/status instead of their known conditional top-level shapes. Disable-before-claim writes variant/status/exit_code. Claim-before-disable writes variant/status/blocked_update_pid/first_barrier/second_barrier/before/after.",
+      "required_action": "Bind each literal rule to its actual3-key or7-key source shape, preserving nested business assertions and raw owner/query requirements."
+    }
+  ],
+  "supported_findings": {
+    "literal_rows": 7,
+    "artifact_rules": 128,
+    "original_annotations_compared_verbatim": 51,
+    "pins_parser_and_binding": "All13 proposal source pins match current files. Supported loader fields, required_keys, min/max1, unique per-case paths and explicit digest targets are structurally compatible. Original nodes/phases/profiles/directories/owner/query requirements remain unchanged. Four UUID worker-api roots retain case-node.json attribution and identity filtering.",
+    "prior_server_record_repair": "The activity-completed row correctly requires both the early owned-temporal-prestarted-server.json and canonical owned-temporal-server.json against the separately accepted7001cf8c source. This does not cure the distinct undefined helper call.",
+    "history_and_applicability": "Declared history paths and digest links follow actual preadmission and worker before/after writers; authority revocation applies only to the committed projection branch. API runtime files are correctly nested while its first server journal record remains at the outer root. Full SDK history semantics and business oracles remain future runtime obligations."
+  },
+  "authorization": {
+    "integrate_rows_or_clear_any_51_annotations": false,
+    "change_source_tests_checker_or_gates": false,
+    "imports_collection_tests_sql_sdk_services_network_execution": false,
+    "whole_mapping_contract_h2_iteration_or_goal_acceptance": false
+  },
+  "risks_and_remaining_uncertainty": [
+    "Static path/schema review does not establish actual output, exception/cleanup success, SQL/history/proxy invariants or complete causal ordering. New source defects require independently reviewed authoring plans and exact-source deltas before mapping refresh.",
+    "Preserve this exact rejected draft and historical prior source approvals. Author one corrected projection after the bounded source repairs, refresh all affected source evidence and obtain exact re-review. Original full490/25+5 inventory, budgets, whole-source/versioned ledger/contract and paired pre-gates remain mandatory."
+  ],
+  "recommendation": "Do not integrate v3. Address all5 findings in the next bounded source-repair and projection batch, preserving the original51 strings and every runtime oracle.",
+  "review_method": "Read-only actual source/AST/JSON/SHA comparison; no repository imports, collection, tests, SQL, SDK, services or network."
+}

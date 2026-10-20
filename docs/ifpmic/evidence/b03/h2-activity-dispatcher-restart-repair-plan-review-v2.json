@@ -1,0 +1,33 @@
+{
+  "kind": "ifpmic.b03.h2.activity-dispatcher-restart-repair-plan-review.v2",
+  "review_date": "2026-10-21",
+  "reviewer": "/root/h2_evidence_amendment_review",
+  "decision": "approve_activity_local_instance_label_authoring_only",
+  "plan": {
+    "path": "docs/ifpmic/evidence/b03/h2-activity-dispatcher-restart-repair-plan-v2.json",
+    "sha256": "e6614055a3152487c209651616f51b7d091686f105705c9dc0a9f55db1b6c556"
+  },
+  "source_before": {
+    "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
+    "sha256": "11db8cfc513c4845128e26558ae2d5ca6d87beea485e524ebdd949b974c89954"
+  },
+  "findings": [],
+  "evidence": {
+    "defect": "_start_pair launches the first dispatcher; the noncreate-signal case later repeats _start_cli(case,dispatcher). The shared spawner creates pycache-dispatcher exclusively before its O_EXCL role-named logs, so the second same-root launch fails before starting a new process.",
+    "narrow_design": "Only activity-local _start_cli and the one second-dispatcher call change. An optional keyword-only instance_label controls the existing spawner's private cache/log naming, while config selection remains case[logical_role+'_config']. The shared spawner first argument affects paths and returned record metadata, not actual runtime mode. Restoring record.role to logical role before ownership append/journal preserves process semantics and leaves shared normal source bytes unchanged.",
+    "boundaries": "Explicit labels must be str1..64 ASCII letters/digits/underscore/hyphen, validated before I/O. Defaults preserve legacy names; repeated labels still fail exclusive creation. Only the second call uses dispatcher-noncreate-signal. Existing Popen/start-tick ownership, actual signal/history/query oracles and cleanup remain unchanged.",
+    "plan_coverage": "All8 required plan fields and normal/error/boundary/regression scenarios are present. Current source pins match. Unchanged product/UI/shared-helper behavior justifies no extra standalone UI/build scope for this authoring checkpoint."
+  },
+  "authorization": {
+    "author_only_planned_activity_local_wrapper_and_one_second_call_label": true,
+    "change_shared_normal_helper_other_sources_assertions_lifecycle_or_budgets": false,
+    "imports_collection_tests_sql_sdk_services_network_execution": false,
+    "exact_source_mapping_contract_h2_iteration_or_goal_acceptance": false
+  },
+  "risks_and_remaining_uncertainty": [
+    "Exact-source review must verify default behavior, pre-I/O label validation, unchanged logical-role config and journal metadata, and the exact one-call applicability before source/mapping pin updates.",
+    "This plan proves no actual child launch, unique identity, signal count or cleanup result. Original full490/25+5, whole-source/versioned ledger/contract and paired pre-gates remain mandatory; no additional test execution is authorized."
+  ],
+  "recommendation": "Implement only the one-file local approach, retain before/after source and AST delta, then obtain exact-source and mapping reviews.",
+  "review_method": "Read-only plan/source/AST/hash comparison; no repository imports, tests, collection, SQL, SDK, services or network."
+}

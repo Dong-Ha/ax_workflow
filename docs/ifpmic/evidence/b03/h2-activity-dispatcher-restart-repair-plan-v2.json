@@ -1,0 +1,149 @@
+{
+  "evidence": [
+    {
+      "fact": "The wrapper currently passes only role/config/root to the shared runtime CLI spawn helper.",
+      "lines": "143-149",
+      "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
+      "symbols": [
+        "_start_cli"
+      ]
+    },
+    {
+      "fact": "Starts dispatcher and worker using their normal role-derived log/cache labels.",
+      "lines": "290-294",
+      "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
+      "symbols": [
+        "_start_pair"
+      ]
+    },
+    {
+      "fact": "After _start_pair, calls _start_cli(case,\"dispatcher\") a second time before checking delivery.",
+      "lines": "537-553",
+      "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
+      "symbols": [
+        "test_h2_noncreate_signal_targets_admitted_run_without_business_consumption"
+      ]
+    },
+    {
+      "fact": "Private cache directory uses mkdir(exist_ok=False); a second role-derived cache path is already occupied.",
+      "lines": "78-82",
+      "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+      "symbols": [
+        "_private_dir"
+      ]
+    },
+    {
+      "fact": "Cache and process-logs names derive from role; logs are opened with O_CREAT|O_EXCL; child command uses configured runtime mode and role config.",
+      "lines": "289-320",
+      "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+      "symbols": [
+        "_spawn_runtime_cli"
+      ]
+    },
+    {
+      "fact": "Process identity/start ticks are saved and cleanup is performed through case-owned process handles; this ownership chain must remain unchanged.",
+      "lines": "101-118,188-233",
+      "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
+      "symbols": [
+        "_append_owned",
+        "_case_cleanup"
+      ]
+    },
+    {
+      "fact": "The actual expected oracle is a signaled outbox delivery plus one notification_count query and captured workflow history; this source oracle remains required.",
+      "lines": "558-588",
+      "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
+      "symbols": [
+        "test_h2_noncreate_signal_targets_admitted_run_without_business_consumption"
+      ]
+    }
+  ],
+  "expected_result": "The noncreate-signal scenario can reach its intended second dispatcher launch without colliding with the first dispatcher’s exclusive evidence files. This is only a proposed repair; no runtime success is implied.",
+  "failure_recovery": "If the explicit label fails validation or any exclusive create collides, retain the original exception and all existing owned Popen identities; run the existing bounded cleanup path and preserve private failure evidence. Do not delete, truncate, rename, or reuse prior logs. Return to source/mapping review with exact changed hashes; do not execute under stale approvals.",
+  "kind": "ifpmic.b03.h2.activity-dispatcher-restart-repair-plan.v2",
+  "method": {
+    "minimal_source_diff": [
+      {
+        "change": "Add keyword-only optional instance_label. Before I/O reject an explicit value unless it is a str of1..64 ASCII letters/digits/underscore/hyphen. Select runtime config with the unchanged logical role. Pass label (or default role) only as the existing normal spawner path-label argument, restore returned record[role] to logical role before existing ownership append/journal, and leave shared normal source unchanged.",
+        "file": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
+        "symbol": "_start_cli"
+      },
+      {
+        "change": "Only the second dispatcher call uses instance_label=dispatcher-noncreate-signal; role and config remain dispatcher. No assertions, lifecycle order, inventory or budgets change.",
+        "file": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
+        "symbol": "test_h2_noncreate_signal_targets_admitted_run_without_business_consumption"
+      }
+    ],
+    "preserved_invariants": [
+      "No overwrite, append fallback, or removal of O_EXCL/private mode checks.",
+      "Role/config remains dispatcher; only the private evidence/cache instance label differs.",
+      "Each Popen, start-tick identity, process-journal event, and final cleanup remains tracked by the same existing ownership lists.",
+      "Default labels preserve all other callers and their current log/cache paths."
+    ],
+    "proposed_paths": {
+      "initial_dispatcher": "process-logs/dispatcher-{stdout,stderr}.log and pycache-dispatcher",
+      "second_dispatcher": "process-logs/dispatcher-noncreate-signal-{stdout,stderr}.log and pycache-dispatcher-noncreate-signal",
+      "worker": "process-logs/worker-{stdout,stderr}.log and pycache-worker"
+    },
+    "unchanged_shared_helper": "tests/ifpmic_api/test_h2_runtime_normal_flow.py bytes and its source pins remain unchanged. Its first argument controls only cache/log paths and returned record role; actual runtime mode comes from config/env.",
+    "verification_scenarios": [
+      {
+        "case": "The two dispatcher instances and worker each receive unique private cache/log paths; both dispatcher configs still report dispatcher role; process journal records three distinct PIDs/start ticks; actual noncreate signal query observes one delivery.",
+        "category": "normal"
+      },
+      {
+        "case": "A pre-existing alias log/cache path causes O_EXCL or private-dir creation to fail closed; no existing bytes are replaced and already-owned processes are cleaned through the existing saved identities.",
+        "category": "error"
+      },
+      {
+        "case": "Omitted instance_label preserves existing role-derived naming/config/record metadata. Explicit label must be1..64 ASCII alphanumeric/underscore/hyphen before any I/O; empty, dot, slash, NUL, nonstring or overlong values fail. Repeatedvalidlabel still fails original exclusive creation.",
+        "category": "boundary"
+      },
+      {
+        "case": "All other _spawn_runtime_cli call sites continue using default names/config/role and retain original lifecycle/cleanup behavior; exact full490 and focused affected case are still required after independent approval.",
+        "category": "regression"
+      }
+    ]
+  },
+  "pass_criteria": [
+    "The activity test statically launches two actual dispatcher commands with distinct private cache and stdout/stderr paths while preserving dispatcher mode/config for both.",
+    "Each destination is newly created with O_EXCL and private mode; no fallback overwrite/append exists.",
+    "The default path remains unchanged for every call without an explicit instance label.",
+    "Process journal, saved Popen/start ticks, terminal state checks and cleanup still cover every created child.",
+    "Independent source and mapping reviews accept exact changed bytes before any execution authorization.",
+    "Only the activity test module changes; shared normal helper source hash remains c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d."
+  ],
+  "purpose": "Allow the intended second real dispatcher to start for noncreate signal delivery while retaining exclusive private log/cache creation, actual dispatcher configuration and process ownership.",
+  "responsible_agents": {
+    "authoring_agent": "/root/h2_full_runner_author, plan author only; no source edit or runtime test performed.",
+    "implementation": "Root-owned source maintainer after independent plan approval.",
+    "review": "Independent source reviewer and machine-rule reviewer; execution owner only after new exact gates."
+  },
+  "review_boundary": {
+    "execution_authorized": false,
+    "imports_or_tests_performed": false,
+    "runtime_or_sdk_imports_performed": false,
+    "source_change_authorized": false
+  },
+  "source_pins": {
+    "tests/ifpmic_api/h2_activity_runtime_boundary_child.py": "c140c731869ce13a4e3a13306a7e9bfa48ff1233ac1ea50fdef016020449f281",
+    "tests/ifpmic_api/h2_dispatcher_crash_support.py": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472",
+    "tests/ifpmic_api/h2_snapshot_evidence.py": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c",
+    "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py": "11db8cfc513c4845128e26558ae2d5ca6d87beea485e524ebdd949b974c89954",
+    "tests/ifpmic_api/test_h2_runtime_normal_flow.py": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d"
+  },
+  "status": "draft_source_change_plan_pending_independent_review_no_execution",
+  "target": {
+    "case_directory": "noncreate-signal",
+    "files": [
+      "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py"
+    ],
+    "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_noncreate_signal_targets_admitted_run_without_business_consumption",
+    "observed_collision": {
+      "first_create": "_start_pair -> _start_cli(case,\"dispatcher\")",
+      "mechanism": "_spawn_runtime_cli opens each exact log destination with O_CREAT|O_EXCL and creates pycache-dispatcher with exist_ok=False; repeated call fails closed before new process starts.",
+      "path": "process-logs/dispatcher-stdout.log and process-logs/dispatcher-stderr.log",
+      "second_create": "test calls _start_cli(case,\"dispatcher\") again"
+    }
+  }
+}

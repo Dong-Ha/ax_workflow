@@ -1,0 +1,34 @@
+{
+  "kind": "ifpmic.b03.h2.transport-release-repair-plan-review.v2",
+  "review_date": "2026-10-21",
+  "reviewer": "/root/h2_evidence_amendment_review",
+  "decision": "approve_one_empty_bytes_argument_authoring_only",
+  "plan": {
+    "path": "docs/ifpmic/evidence/b03/h2-transport-release-repair-plan-v2.json",
+    "sha256": "d257d38edc179b6297a8cb6a20ef61e717e17a5ecb7068591a8e2fcb2216263e"
+  },
+  "source_before": {
+    "path": "tests/ifpmic_api/test_h2_transport_boundaries.py",
+    "sha256": "059b7f61e6da19f9177bb0ab833dd2ebbf0409d88bfdd9ebf914166688525ad2",
+    "line": 108
+  },
+  "findings": [],
+  "evidence": {
+    "defect": "The actual _release call supplies only path while _write_private requires path/raw. Claim-before-disable calls it twice and preadmission once; each currently raises TypeError before release publication.",
+    "minimal_semantics": "Add only b'' as the second positional argument. The actual child accepts an owned regular0600 single-link release file and never reads its contents. Empty bytes therefore retain the intended presence-based signal. The writer still exclusively creates, chmods, fsyncs and closes; no overwrite/default/fallback is introduced.",
+    "preservation": "Keep the separate cleanup _write_private(path,b'release\\n') call, reached-event payloads, phase names/order, owned identities, process cleanup and all SQL/history assertions unchanged.",
+    "plan_coverage": "All8 required plan fields, all4 normal/error/boundary/regression categories and pinned source references are present and match actual source. The historical unaccepted mapping reference supplies context only, not execution authority."
+  },
+  "authorization": {
+    "add_only_one_empty_bytes_positional_argument_in_release": true,
+    "change_writer_child_predicate_cleanup_other_sources_assertions_or_budgets": false,
+    "imports_collection_tests_sql_sdk_services_network_execution": false,
+    "exact_source_mapping_contract_h2_iteration_or_goal_acceptance": false
+  },
+  "risks_and_remaining_uncertainty": [
+    "Exact-source review must verify a whole-file AST delta of only this added argument, then independently review refreshed source/mapping pins.",
+    "No actual release, ordering, child exit or cleanup is accepted here. Full490/25+5 and whole-source/versioned ledger/contract/paired pre-gates remain mandatory; this authoring approval adds no runtime authorization."
+  ],
+  "recommendation": "Implement the one-argument addition without changing any existing writer or oracle, then obtain exact-source and corrected mapping reviews.",
+  "review_method": "Read-only plan/source/AST/hash comparison; no repository imports, tests, collection, SQL, SDK, services or network."
+}

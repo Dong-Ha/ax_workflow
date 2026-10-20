@@ -758,7 +758,7 @@ def test_h2_activity_completed_before_workflow_decision_sigkill_replays_history(
         ctx.update(runtime_ctx)
         ctx["barrier"] = _private_barrier(root, "activity-before-decision")
         worker = _start_barrier_worker(ctx, "after_project_activation_commit", ctx["barrier"])
-        event = _wait_activity_barrier(ctx, ctx["barrier"], worker, deadline.deadline)
+        event = _wait_for_activity_barrier(ctx, ctx["barrier"], worker, deadline.deadline)
         assert event["phase"] == "after_project_activation_commit"
         at_barrier = ctx["owner_after_dispatch_ack"]
         assert at_barrier["accepted"][3:8] == ("QUEUED", 1, 0, [], None)

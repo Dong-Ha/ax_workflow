@@ -1,0 +1,3008 @@
+{
+  "case_annotations": [
+    {
+      "case_directory": "foreign-deployment",
+      "node_id": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_foreign_deployment_cannot_start_old_binding",
+      "original_unresolved": [
+        {
+          "evidence": [
+            "Second service is a distinct owned loopback Temporal process/store. The separately authenticated dispatcher writes foreign-dispatcher stdout/stderr at case root. The foreign list response is an actual empty list saved by the test; the owner server Started history is fetched directly and saved as PBSeq plus observer JSON. SQL before/after registry rows, authorization failures, valid owner projector result and proposal are stored in the SQL observations. Finally, process cleanup is emitted, HBA original bytes are restored/reloaded, test-created foreign logins are dropped, and foreign-login-cleanup.json is written."
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: foreign Temporal store/logs",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Second service is a distinct owned loopback Temporal process/store. The separately authenticated dispatcher writes foreign-dispatcher stdout/stderr at case root. The foreign list response is an actual empty list saved by the test; the owner server Started history is fetched directly and saved as PBSeq plus observer JSON. SQL before/after registry rows, authorization failures, valid owner projector result and proposal are stored in the SQL observations. Finally, process cleanup is emitted, HBA original bytes are restored/reloaded, test-created foreign logins are dropped, and foreign-login-cleanup.json is written."
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: barriers/cleanup",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Second service is a distinct owned loopback Temporal process/store. The separately authenticated dispatcher writes foreign-dispatcher stdout/stderr at case root. The foreign list response is an actual empty list saved by the test; the owner server Started history is fetched directly and saved as PBSeq plus observer JSON. SQL before/after registry rows, authorization failures, valid owner projector result and proposal are stored in the SQL observations. Finally, process cleanup is emitted, HBA original bytes are restored/reloaded, test-created foreign logins are dropped, and foreign-login-cleanup.json is written."
+          ],
+          "original": "JSON top-level keys not fully source-verified for foreign-server-list-response.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Second service is a distinct owned loopback Temporal process/store. The separately authenticated dispatcher writes foreign-dispatcher stdout/stderr at case root. The foreign list response is an actual empty list saved by the test; the owner server Started history is fetched directly and saved as PBSeq plus observer JSON. SQL before/after registry rows, authorization failures, valid owner projector result and proposal are stored in the SQL observations. Finally, process cleanup is emitted, HBA original bytes are restored/reloaded, test-created foreign logins are dropped, and foreign-login-cleanup.json is written."
+          ],
+          "original": "JSON top-level keys not fully source-verified for foreign-deployment-sql-observations.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Second service is a distinct owned loopback Temporal process/store. The separately authenticated dispatcher writes foreign-dispatcher stdout/stderr at case root. The foreign list response is an actual empty list saved by the test; the owner server Started history is fetched directly and saved as PBSeq plus observer JSON. SQL before/after registry rows, authorization failures, valid owner projector result and proposal are stored in the SQL observations. Finally, process cleanup is emitted, HBA original bytes are restored/reloaded, test-created foreign logins are dropped, and foreign-login-cleanup.json is written."
+          ],
+          "original": "JSON top-level keys not fully source-verified for foreign-deployment-summary.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Second service is a distinct owned loopback Temporal process/store. The separately authenticated dispatcher writes foreign-dispatcher stdout/stderr at case root. The foreign list response is an actual empty list saved by the test; the owner server Started history is fetched directly and saved as PBSeq plus observer JSON. SQL before/after registry rows, authorization failures, valid owner projector result and proposal are stored in the SQL observations. Finally, process cleanup is emitted, HBA original bytes are restored/reloaded, test-created foreign logins are dropped, and foreign-login-cleanup.json is written."
+          ],
+          "original": "JSON top-level keys not fully source-verified for foreign-login-cleanup.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Second service is a distinct owned loopback Temporal process/store. The separately authenticated dispatcher writes foreign-dispatcher stdout/stderr at case root. The foreign list response is an actual empty list saved by the test; the owner server Started history is fetched directly and saved as PBSeq plus observer JSON. SQL before/after registry rows, authorization failures, valid owner projector result and proposal are stored in the SQL observations. Finally, process cleanup is emitted, HBA original bytes are restored/reloaded, test-created foreign logins are dropped, and foreign-login-cleanup.json is written."
+          ],
+          "original": "JSON top-level keys not fully source-verified for process-journal.jsonl",
+          "status": "source_mapped"
+        }
+      ],
+      "owner_query_source_mapping": {
+        "explanation": "The direct owner snapshot helper records each actual snapshot; the foreign and started-history observers record actual temporal.list_workflows results. Existing minimums and no-max bounds are preserved.",
+        "minimum_owner_preserved": 1,
+        "queries_max_preserved": {},
+        "queries_min_preserved": {
+          "temporal.list_workflows": 1
+        }
+      },
+      "source_evidence_refs": [
+        {
+          "path": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py",
+          "sha256": "034ae6eb4399d8e4b906ffc27401d2b1d4d3799e44159b7a711d6e174c25bbdf"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_started_deployment_case_budget.py",
+          "sha256": "305e2991d642804cf23f223ec875783a1df3517ba58f88e805cdbf121d7f1f35"
+        },
+        {
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "sha256": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8"
+        },
+        {
+          "path": "tests/ifpmic_api/accepted_start_dispatcher_child.py",
+          "sha256": "87c6cf61d94188f5733e73fc02e8d3d2caeb78f4a802a6455a501317a6f859eb"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_foreign_dispatcher_child.py",
+          "sha256": "4a3bcf89bc86892f259f47f868e734885e3ed26a4c7cfe30274aa90bdf5bb913"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "sha256": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "sha256": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c"
+        },
+        {
+          "path": "tests/ifpmic_api/workflow_schema_fixture.py",
+          "sha256": "dd1eba1754a8985dd704f0ed63271cc73beca8b03c72aaa2f14acdd41e5e3681"
+        },
+        {
+          "path": "services/ifpmic_api/execution_manifest.py",
+          "sha256": "0f08e5c86992edc9ee9b62b19d50f981282d125e39810e0f0d6e75d39bfd07b6"
+        }
+      ],
+      "source_mapping_note": "Second service is a distinct owned loopback Temporal process/store. The separately authenticated dispatcher writes foreign-dispatcher stdout/stderr at case root. The foreign list response is an actual empty list saved by the test; the owner server Started history is fetched directly and saved as PBSeq plus observer JSON. SQL before/after registry rows, authorization failures, valid owner projector result and proposal are stored in the SQL observations. Finally, process cleanup is emitted, HBA original bytes are restored/reloaded, test-created foreign logins are dropped, and foreign-login-cleanup.json is written."
+    },
+    {
+      "case_directory": "started-binding_digest",
+      "node_id": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[binding_digest]",
+      "original_unresolved": [
+        {
+          "evidence": [
+            "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path."
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: barrier and cleanup",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path."
+          ],
+          "original": "JSON top-level keys not fully source-verified for owner-after-quarantine.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path."
+          ],
+          "original": "JSON top-level keys not fully source-verified for rogue-started-summary.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path."
+          ],
+          "original": "JSON top-level keys not fully source-verified for process-journal.jsonl",
+          "status": "source_mapped"
+        }
+      ],
+      "owner_query_source_mapping": {
+        "explanation": "The direct owner snapshot helper records each actual snapshot; the foreign and started-history observers record actual temporal.list_workflows results. Existing minimums and no-max bounds are preserved.",
+        "minimum_owner_preserved": 1,
+        "queries_max_preserved": {},
+        "queries_min_preserved": {
+          "temporal.list_workflows": 1
+        }
+      },
+      "source_evidence_refs": [
+        {
+          "path": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py",
+          "sha256": "034ae6eb4399d8e4b906ffc27401d2b1d4d3799e44159b7a711d6e174c25bbdf"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_started_deployment_case_budget.py",
+          "sha256": "305e2991d642804cf23f223ec875783a1df3517ba58f88e805cdbf121d7f1f35"
+        },
+        {
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "sha256": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8"
+        },
+        {
+          "path": "tests/ifpmic_api/accepted_start_dispatcher_child.py",
+          "sha256": "87c6cf61d94188f5733e73fc02e8d3d2caeb78f4a802a6455a501317a6f859eb"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_foreign_dispatcher_child.py",
+          "sha256": "4a3bcf89bc86892f259f47f868e734885e3ed26a4c7cfe30274aa90bdf5bb913"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "sha256": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "sha256": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c"
+        },
+        {
+          "path": "tests/ifpmic_api/workflow_schema_fixture.py",
+          "sha256": "dd1eba1754a8985dd704f0ed63271cc73beca8b03c72aaa2f14acdd41e5e3681"
+        },
+        {
+          "path": "services/ifpmic_api/execution_manifest.py",
+          "sha256": "0f08e5c86992edc9ee9b62b19d50f981282d125e39810e0f0d6e75d39bfd07b6"
+        }
+      ],
+      "source_mapping_note": "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path."
+    },
+    {
+      "case_directory": "started-build_id",
+      "node_id": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[build_id]",
+      "original_unresolved": [
+        {
+          "evidence": [
+            "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path."
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: barrier and cleanup",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path."
+          ],
+          "original": "JSON top-level keys not fully source-verified for owner-after-quarantine.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path."
+          ],
+          "original": "JSON top-level keys not fully source-verified for rogue-started-summary.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path."
+          ],
+          "original": "JSON top-level keys not fully source-verified for process-journal.jsonl",
+          "status": "source_mapped"
+        }
+      ],
+      "owner_query_source_mapping": {
+        "explanation": "The direct owner snapshot helper records each actual snapshot; the foreign and started-history observers record actual temporal.list_workflows results. Existing minimums and no-max bounds are preserved.",
+        "minimum_owner_preserved": 1,
+        "queries_max_preserved": {},
+        "queries_min_preserved": {
+          "temporal.list_workflows": 1
+        }
+      },
+      "source_evidence_refs": [
+        {
+          "path": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py",
+          "sha256": "034ae6eb4399d8e4b906ffc27401d2b1d4d3799e44159b7a711d6e174c25bbdf"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_started_deployment_case_budget.py",
+          "sha256": "305e2991d642804cf23f223ec875783a1df3517ba58f88e805cdbf121d7f1f35"
+        },
+        {
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "sha256": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8"
+        },
+        {
+          "path": "tests/ifpmic_api/accepted_start_dispatcher_child.py",
+          "sha256": "87c6cf61d94188f5733e73fc02e8d3d2caeb78f4a802a6455a501317a6f859eb"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_foreign_dispatcher_child.py",
+          "sha256": "4a3bcf89bc86892f259f47f868e734885e3ed26a4c7cfe30274aa90bdf5bb913"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "sha256": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "sha256": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c"
+        },
+        {
+          "path": "tests/ifpmic_api/workflow_schema_fixture.py",
+          "sha256": "dd1eba1754a8985dd704f0ed63271cc73beca8b03c72aaa2f14acdd41e5e3681"
+        },
+        {
+          "path": "services/ifpmic_api/execution_manifest.py",
+          "sha256": "0f08e5c86992edc9ee9b62b19d50f981282d125e39810e0f0d6e75d39bfd07b6"
+        }
+      ],
+      "source_mapping_note": "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path."
+    },
+    {
+      "case_directory": "started-extra_input",
+      "node_id": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[extra_input]",
+      "original_unresolved": [
+        {
+          "evidence": [
+            "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path."
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: barrier and cleanup",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path."
+          ],
+          "original": "JSON top-level keys not fully source-verified for owner-after-quarantine.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path."
+          ],
+          "original": "JSON top-level keys not fully source-verified for rogue-started-summary.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path."
+          ],
+          "original": "JSON top-level keys not fully source-verified for process-journal.jsonl",
+          "status": "source_mapped"
+        }
+      ],
+      "owner_query_source_mapping": {
+        "explanation": "The direct owner snapshot helper records each actual snapshot; the foreign and started-history observers record actual temporal.list_workflows results. Existing minimums and no-max bounds are preserved.",
+        "minimum_owner_preserved": 1,
+        "queries_max_preserved": {},
+        "queries_min_preserved": {
+          "temporal.list_workflows": 1
+        }
+      },
+      "source_evidence_refs": [
+        {
+          "path": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py",
+          "sha256": "034ae6eb4399d8e4b906ffc27401d2b1d4d3799e44159b7a711d6e174c25bbdf"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_started_deployment_case_budget.py",
+          "sha256": "305e2991d642804cf23f223ec875783a1df3517ba58f88e805cdbf121d7f1f35"
+        },
+        {
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "sha256": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8"
+        },
+        {
+          "path": "tests/ifpmic_api/accepted_start_dispatcher_child.py",
+          "sha256": "87c6cf61d94188f5733e73fc02e8d3d2caeb78f4a802a6455a501317a6f859eb"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_foreign_dispatcher_child.py",
+          "sha256": "4a3bcf89bc86892f259f47f868e734885e3ed26a4c7cfe30274aa90bdf5bb913"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "sha256": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "sha256": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c"
+        },
+        {
+          "path": "tests/ifpmic_api/workflow_schema_fixture.py",
+          "sha256": "dd1eba1754a8985dd704f0ed63271cc73beca8b03c72aaa2f14acdd41e5e3681"
+        },
+        {
+          "path": "services/ifpmic_api/execution_manifest.py",
+          "sha256": "0f08e5c86992edc9ee9b62b19d50f981282d125e39810e0f0d6e75d39bfd07b6"
+        }
+      ],
+      "source_mapping_note": "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path."
+    },
+    {
+      "case_directory": "started-job_id",
+      "node_id": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[job_id]",
+      "original_unresolved": [
+        {
+          "evidence": [
+            "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path."
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: barrier and cleanup",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path."
+          ],
+          "original": "JSON top-level keys not fully source-verified for owner-after-quarantine.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path."
+          ],
+          "original": "JSON top-level keys not fully source-verified for rogue-started-summary.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path."
+          ],
+          "original": "JSON top-level keys not fully source-verified for process-journal.jsonl",
+          "status": "source_mapped"
+        }
+      ],
+      "owner_query_source_mapping": {
+        "explanation": "The direct owner snapshot helper records each actual snapshot; the foreign and started-history observers record actual temporal.list_workflows results. Existing minimums and no-max bounds are preserved.",
+        "minimum_owner_preserved": 1,
+        "queries_max_preserved": {},
+        "queries_min_preserved": {
+          "temporal.list_workflows": 1
+        }
+      },
+      "source_evidence_refs": [
+        {
+          "path": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py",
+          "sha256": "034ae6eb4399d8e4b906ffc27401d2b1d4d3799e44159b7a711d6e174c25bbdf"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_started_deployment_case_budget.py",
+          "sha256": "305e2991d642804cf23f223ec875783a1df3517ba58f88e805cdbf121d7f1f35"
+        },
+        {
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "sha256": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8"
+        },
+        {
+          "path": "tests/ifpmic_api/accepted_start_dispatcher_child.py",
+          "sha256": "87c6cf61d94188f5733e73fc02e8d3d2caeb78f4a802a6455a501317a6f859eb"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_foreign_dispatcher_child.py",
+          "sha256": "4a3bcf89bc86892f259f47f868e734885e3ed26a4c7cfe30274aa90bdf5bb913"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "sha256": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "sha256": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c"
+        },
+        {
+          "path": "tests/ifpmic_api/workflow_schema_fixture.py",
+          "sha256": "dd1eba1754a8985dd704f0ed63271cc73beca8b03c72aaa2f14acdd41e5e3681"
+        },
+        {
+          "path": "services/ifpmic_api/execution_manifest.py",
+          "sha256": "0f08e5c86992edc9ee9b62b19d50f981282d125e39810e0f0d6e75d39bfd07b6"
+        }
+      ],
+      "source_mapping_note": "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path."
+    },
+    {
+      "case_directory": "started-malformed_input",
+      "node_id": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[malformed_input]",
+      "original_unresolved": [
+        {
+          "evidence": [
+            "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path."
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: barrier and cleanup",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path."
+          ],
+          "original": "JSON top-level keys not fully source-verified for owner-after-quarantine.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path."
+          ],
+          "original": "JSON top-level keys not fully source-verified for rogue-started-summary.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path."
+          ],
+          "original": "JSON top-level keys not fully source-verified for process-journal.jsonl",
+          "status": "source_mapped"
+        }
+      ],
+      "owner_query_source_mapping": {
+        "explanation": "The direct owner snapshot helper records each actual snapshot; the foreign and started-history observers record actual temporal.list_workflows results. Existing minimums and no-max bounds are preserved.",
+        "minimum_owner_preserved": 1,
+        "queries_max_preserved": {},
+        "queries_min_preserved": {
+          "temporal.list_workflows": 1
+        }
+      },
+      "source_evidence_refs": [
+        {
+          "path": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py",
+          "sha256": "034ae6eb4399d8e4b906ffc27401d2b1d4d3799e44159b7a711d6e174c25bbdf"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_started_deployment_case_budget.py",
+          "sha256": "305e2991d642804cf23f223ec875783a1df3517ba58f88e805cdbf121d7f1f35"
+        },
+        {
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "sha256": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8"
+        },
+        {
+          "path": "tests/ifpmic_api/accepted_start_dispatcher_child.py",
+          "sha256": "87c6cf61d94188f5733e73fc02e8d3d2caeb78f4a802a6455a501317a6f859eb"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_foreign_dispatcher_child.py",
+          "sha256": "4a3bcf89bc86892f259f47f868e734885e3ed26a4c7cfe30274aa90bdf5bb913"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "sha256": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "sha256": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c"
+        },
+        {
+          "path": "tests/ifpmic_api/workflow_schema_fixture.py",
+          "sha256": "dd1eba1754a8985dd704f0ed63271cc73beca8b03c72aaa2f14acdd41e5e3681"
+        },
+        {
+          "path": "services/ifpmic_api/execution_manifest.py",
+          "sha256": "0f08e5c86992edc9ee9b62b19d50f981282d125e39810e0f0d6e75d39bfd07b6"
+        }
+      ],
+      "source_mapping_note": "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path."
+    },
+    {
+      "case_directory": "started-missing_input",
+      "node_id": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[missing_input]",
+      "original_unresolved": [
+        {
+          "evidence": [
+            "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path."
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: barrier and cleanup",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path."
+          ],
+          "original": "JSON top-level keys not fully source-verified for owner-after-quarantine.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path."
+          ],
+          "original": "JSON top-level keys not fully source-verified for rogue-started-summary.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path."
+          ],
+          "original": "JSON top-level keys not fully source-verified for process-journal.jsonl",
+          "status": "source_mapped"
+        }
+      ],
+      "owner_query_source_mapping": {
+        "explanation": "The direct owner snapshot helper records each actual snapshot; the foreign and started-history observers record actual temporal.list_workflows results. Existing minimums and no-max bounds are preserved.",
+        "minimum_owner_preserved": 1,
+        "queries_max_preserved": {},
+        "queries_min_preserved": {
+          "temporal.list_workflows": 1
+        }
+      },
+      "source_evidence_refs": [
+        {
+          "path": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py",
+          "sha256": "034ae6eb4399d8e4b906ffc27401d2b1d4d3799e44159b7a711d6e174c25bbdf"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_started_deployment_case_budget.py",
+          "sha256": "305e2991d642804cf23f223ec875783a1df3517ba58f88e805cdbf121d7f1f35"
+        },
+        {
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "sha256": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8"
+        },
+        {
+          "path": "tests/ifpmic_api/accepted_start_dispatcher_child.py",
+          "sha256": "87c6cf61d94188f5733e73fc02e8d3d2caeb78f4a802a6455a501317a6f859eb"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_foreign_dispatcher_child.py",
+          "sha256": "4a3bcf89bc86892f259f47f868e734885e3ed26a4c7cfe30274aa90bdf5bb913"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "sha256": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "sha256": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c"
+        },
+        {
+          "path": "tests/ifpmic_api/workflow_schema_fixture.py",
+          "sha256": "dd1eba1754a8985dd704f0ed63271cc73beca8b03c72aaa2f14acdd41e5e3681"
+        },
+        {
+          "path": "services/ifpmic_api/execution_manifest.py",
+          "sha256": "0f08e5c86992edc9ee9b62b19d50f981282d125e39810e0f0d6e75d39bfd07b6"
+        }
+      ],
+      "source_mapping_note": "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path."
+    },
+    {
+      "case_directory": "started-project_id",
+      "node_id": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[project_id]",
+      "original_unresolved": [
+        {
+          "evidence": [
+            "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path."
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: barrier and cleanup",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path."
+          ],
+          "original": "JSON top-level keys not fully source-verified for owner-after-quarantine.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path."
+          ],
+          "original": "JSON top-level keys not fully source-verified for rogue-started-summary.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path."
+          ],
+          "original": "JSON top-level keys not fully source-verified for process-journal.jsonl",
+          "status": "source_mapped"
+        }
+      ],
+      "owner_query_source_mapping": {
+        "explanation": "The direct owner snapshot helper records each actual snapshot; the foreign and started-history observers record actual temporal.list_workflows results. Existing minimums and no-max bounds are preserved.",
+        "minimum_owner_preserved": 1,
+        "queries_max_preserved": {},
+        "queries_min_preserved": {
+          "temporal.list_workflows": 1
+        }
+      },
+      "source_evidence_refs": [
+        {
+          "path": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py",
+          "sha256": "034ae6eb4399d8e4b906ffc27401d2b1d4d3799e44159b7a711d6e174c25bbdf"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_started_deployment_case_budget.py",
+          "sha256": "305e2991d642804cf23f223ec875783a1df3517ba58f88e805cdbf121d7f1f35"
+        },
+        {
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "sha256": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8"
+        },
+        {
+          "path": "tests/ifpmic_api/accepted_start_dispatcher_child.py",
+          "sha256": "87c6cf61d94188f5733e73fc02e8d3d2caeb78f4a802a6455a501317a6f859eb"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_foreign_dispatcher_child.py",
+          "sha256": "4a3bcf89bc86892f259f47f868e734885e3ed26a4c7cfe30274aa90bdf5bb913"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "sha256": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "sha256": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c"
+        },
+        {
+          "path": "tests/ifpmic_api/workflow_schema_fixture.py",
+          "sha256": "dd1eba1754a8985dd704f0ed63271cc73beca8b03c72aaa2f14acdd41e5e3681"
+        },
+        {
+          "path": "services/ifpmic_api/execution_manifest.py",
+          "sha256": "0f08e5c86992edc9ee9b62b19d50f981282d125e39810e0f0d6e75d39bfd07b6"
+        }
+      ],
+      "source_mapping_note": "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path."
+    },
+    {
+      "case_directory": "started-task_queue",
+      "node_id": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[task_queue]",
+      "original_unresolved": [
+        {
+          "evidence": [
+            "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path."
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: barrier and cleanup",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path."
+          ],
+          "original": "JSON top-level keys not fully source-verified for owner-after-quarantine.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path."
+          ],
+          "original": "JSON top-level keys not fully source-verified for rogue-started-summary.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path."
+          ],
+          "original": "JSON top-level keys not fully source-verified for process-journal.jsonl",
+          "status": "source_mapped"
+        }
+      ],
+      "owner_query_source_mapping": {
+        "explanation": "The direct owner snapshot helper records each actual snapshot; the foreign and started-history observers record actual temporal.list_workflows results. Existing minimums and no-max bounds are preserved.",
+        "minimum_owner_preserved": 1,
+        "queries_max_preserved": {},
+        "queries_min_preserved": {
+          "temporal.list_workflows": 1
+        }
+      },
+      "source_evidence_refs": [
+        {
+          "path": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py",
+          "sha256": "034ae6eb4399d8e4b906ffc27401d2b1d4d3799e44159b7a711d6e174c25bbdf"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_started_deployment_case_budget.py",
+          "sha256": "305e2991d642804cf23f223ec875783a1df3517ba58f88e805cdbf121d7f1f35"
+        },
+        {
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "sha256": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8"
+        },
+        {
+          "path": "tests/ifpmic_api/accepted_start_dispatcher_child.py",
+          "sha256": "87c6cf61d94188f5733e73fc02e8d3d2caeb78f4a802a6455a501317a6f859eb"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_foreign_dispatcher_child.py",
+          "sha256": "4a3bcf89bc86892f259f47f868e734885e3ed26a4c7cfe30274aa90bdf5bb913"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "sha256": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "sha256": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c"
+        },
+        {
+          "path": "tests/ifpmic_api/workflow_schema_fixture.py",
+          "sha256": "dd1eba1754a8985dd704f0ed63271cc73beca8b03c72aaa2f14acdd41e5e3681"
+        },
+        {
+          "path": "services/ifpmic_api/execution_manifest.py",
+          "sha256": "0f08e5c86992edc9ee9b62b19d50f981282d125e39810e0f0d6e75d39bfd07b6"
+        }
+      ],
+      "source_mapping_note": "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path."
+    },
+    {
+      "case_directory": "started-workflow_type",
+      "node_id": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[workflow_type]",
+      "original_unresolved": [
+        {
+          "evidence": [
+            "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path."
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: barrier and cleanup",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path."
+          ],
+          "original": "JSON top-level keys not fully source-verified for owner-after-quarantine.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path."
+          ],
+          "original": "JSON top-level keys not fully source-verified for rogue-started-summary.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path."
+          ],
+          "original": "JSON top-level keys not fully source-verified for process-journal.jsonl",
+          "status": "source_mapped"
+        }
+      ],
+      "owner_query_source_mapping": {
+        "explanation": "The direct owner snapshot helper records each actual snapshot; the foreign and started-history observers record actual temporal.list_workflows results. Existing minimums and no-max bounds are preserved.",
+        "minimum_owner_preserved": 1,
+        "queries_max_preserved": {},
+        "queries_min_preserved": {
+          "temporal.list_workflows": 1
+        }
+      },
+      "source_evidence_refs": [
+        {
+          "path": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py",
+          "sha256": "034ae6eb4399d8e4b906ffc27401d2b1d4d3799e44159b7a711d6e174c25bbdf"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_started_deployment_case_budget.py",
+          "sha256": "305e2991d642804cf23f223ec875783a1df3517ba58f88e805cdbf121d7f1f35"
+        },
+        {
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "sha256": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8"
+        },
+        {
+          "path": "tests/ifpmic_api/accepted_start_dispatcher_child.py",
+          "sha256": "87c6cf61d94188f5733e73fc02e8d3d2caeb78f4a802a6455a501317a6f859eb"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_foreign_dispatcher_child.py",
+          "sha256": "4a3bcf89bc86892f259f47f868e734885e3ed26a4c7cfe30274aa90bdf5bb913"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "sha256": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "sha256": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c"
+        },
+        {
+          "path": "tests/ifpmic_api/workflow_schema_fixture.py",
+          "sha256": "dd1eba1754a8985dd704f0ed63271cc73beca8b03c72aaa2f14acdd41e5e3681"
+        },
+        {
+          "path": "services/ifpmic_api/execution_manifest.py",
+          "sha256": "0f08e5c86992edc9ee9b62b19d50f981282d125e39810e0f0d6e75d39bfd07b6"
+        }
+      ],
+      "source_mapping_note": "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path."
+    }
+  ],
+  "input_machine": {
+    "commit": "911ee83",
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules.json",
+    "sha256": "c3142155333886eb7514c7361e437a15964dd13d2cc24893726302457ab3728e"
+  },
+  "kind": "ifpmic.b03.h2.started-deployment-machine-resolution.v2",
+  "proposed_rows": [
+    {
+      "artifact_sources": {
+        "mapping": "Second service is a distinct owned loopback Temporal process/store. The separately authenticated dispatcher writes foreign-dispatcher stdout/stderr at case root. The foreign list response is an actual empty list saved by the test; the owner server Started history is fetched directly and saved as PBSeq plus observer JSON. SQL before/after registry rows, authorization failures, valid owner projector result and proposal are stored in the SQL observations. Finally, process cleanup is emitted, HBA original bytes are restored/reloaded, test-created foreign logins are dropped, and foreign-login-cleanup.json is written.",
+        "runtime_acceptance": "Source-derived mapping only; no runtime artifacts or execution outcomes were read or accepted.",
+        "scope": "All mandatory case-root writers reachable on the literal success branch are listed. Process caches are fresh private -B prefixes; no cache files are emitted. The phase barrier uses a private TMPDIR Unix socket and in-memory events, has no JSON sidecar writer, and is closed/removed by cleanup. Shared owner/query recorder files are validated separately by the shared evidence recorder."
+      },
+      "artifacts": [
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "workspace-initial-observation.json",
+          "required_keys": [
+            "job_id",
+            "tree",
+            "marker_bytes_hex"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "source-manifest.json",
+          "required_keys": [
+            "format",
+            "files"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "environment-manifest.json",
+          "required_keys": [
+            "format",
+            "files",
+            "interpreter_sha256",
+            "python_version"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-config.json",
+          "required_keys": [
+            "format",
+            "mode",
+            "identity",
+            "dsn",
+            "workspace_root",
+            "source_manifest_path",
+            "environment_manifest_path"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "worker-config.json",
+          "required_keys": [
+            "format",
+            "mode",
+            "identity",
+            "dsn",
+            "workspace_root",
+            "source_manifest_path",
+            "environment_manifest_path"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/isolated-env.json",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal-server.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal.sqlite",
+          "required_keys": []
+        },
+        {
+          "format": "jsonl",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-journal.jsonl",
+          "required_keys": [
+            "event"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-cleanup.json",
+          "required_keys": [
+            "processes"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "foreign-temporal-data/isolated-env.json",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "foreign-temporal-data/foreign-temporal-server.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "foreign-temporal-data/temporal.sqlite",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "foreign-dispatcher-config.json",
+          "required_keys": [
+            "format",
+            "mode",
+            "identity",
+            "dsn",
+            "workspace_root",
+            "source_manifest_path",
+            "environment_manifest_path"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "foreign-dispatcher.stdout",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "foreign-dispatcher.stderr",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-cut-logs/dispatcher.stdout",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-cut-logs/dispatcher.stderr",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "accepted-start-history-before-kill.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "accepted-start-observer.json",
+          "required_keys": [
+            "workflow_id",
+            "run_id",
+            "observed_started_monotonic",
+            "execution_count",
+            "started_event_count",
+            "started_input",
+            "event_ids",
+            "status",
+            "retention_seconds",
+            "raw_history_sha256",
+            "raw_history_bytes"
+          ],
+          "sha256_links": {
+            "/raw_history_sha256": "accepted-start-history-before-kill.pbseq"
+          }
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "foreign-server-list-response.json",
+          "required_keys": [
+            "workflow_id",
+            "runs"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "foreign-deployment-sql-observations.json",
+          "required_keys": [
+            "registry_before",
+            "registry_after",
+            "foreign_reserve_sqlstate",
+            "foreign_projector_sqlstate",
+            "owning_projector_result",
+            "proposal"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "foreign-deployment-summary.json",
+          "required_keys": [
+            "namespace_shared",
+            "registered_deployments",
+            "distinct_loopback_endpoints",
+            "temporal_store_identity_one",
+            "temporal_store_identity_two",
+            "distinct_storage_directories",
+            "old_binding_preserved",
+            "old_deployment_build_immutable",
+            "foreign_outbox_generation",
+            "foreign_projector_sqlstate",
+            "right_projector_positive_control",
+            "valid_proposal_sha256",
+            "foreign_reserve_sqlstate",
+            "foreign_server_runs",
+            "admitted_run_id"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "foreign-login-cleanup.json",
+          "required_keys": [
+            "foreign_test_logins_dropped"
+          ]
+        }
+      ],
+      "case_directory": "foreign-deployment",
+      "minimum_owner": 1,
+      "node_id": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_foreign_deployment_cannot_start_old_binding",
+      "phase": "started_deployment",
+      "profile": "foreign_deployment",
+      "queries_max": {},
+      "queries_min": {
+        "temporal.list_workflows": 1
+      },
+      "source_locations": [
+        {
+          "path": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py",
+          "symbol": "test_foreign_deployment_cannot_start_old_binding"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_started_deployment_case_budget.py",
+          "symbol": "CASE_NODE_IDS / STARTED_VARIANTS"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "symbol": "_prepare_case_impl / start_barrier_dispatcher / _cleanup_case_impl"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "symbol": "_write_private / _write_runtime_config / _append_private_journal"
+        },
+        {
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "symbol": "_observe_started_direct"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "symbol": "record_owner_snapshot / record_query_observation"
+        }
+      ],
+      "unresolved": []
+    },
+    {
+      "artifact_sources": {
+        "mapping": "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path.",
+        "runtime_acceptance": "Source-derived mapping only; no runtime artifacts or execution outcomes were read or accepted.",
+        "scope": "All mandatory case-root writers reachable on the literal success branch are listed. Process caches are fresh private -B prefixes; no cache files are emitted. The phase barrier uses a private TMPDIR Unix socket and in-memory events, has no JSON sidecar writer, and is closed/removed by cleanup. Shared owner/query recorder files are validated separately by the shared evidence recorder."
+      },
+      "artifacts": [
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "workspace-initial-observation.json",
+          "required_keys": [
+            "job_id",
+            "tree",
+            "marker_bytes_hex"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "source-manifest.json",
+          "required_keys": [
+            "format",
+            "files"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "environment-manifest.json",
+          "required_keys": [
+            "format",
+            "files",
+            "interpreter_sha256",
+            "python_version"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-config.json",
+          "required_keys": [
+            "format",
+            "mode",
+            "identity",
+            "dsn",
+            "workspace_root",
+            "source_manifest_path",
+            "environment_manifest_path"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "worker-config.json",
+          "required_keys": [
+            "format",
+            "mode",
+            "identity",
+            "dsn",
+            "workspace_root",
+            "source_manifest_path",
+            "environment_manifest_path"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/isolated-env.json",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal-server.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal.sqlite",
+          "required_keys": []
+        },
+        {
+          "format": "jsonl",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-journal.jsonl",
+          "required_keys": [
+            "event"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-cleanup.json",
+          "required_keys": [
+            "processes"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-cut-logs/dispatcher.stdout",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-cut-logs/dispatcher.stderr",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "rogue-started-history.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "owner-after-quarantine.json",
+          "required_keys": [
+            "accepted",
+            "bindings",
+            "scopes",
+            "receipts",
+            "attempts",
+            "noncreate_commands"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "rogue-started-summary.json",
+          "required_keys": [
+            "variant",
+            "run_id",
+            "history_sha256",
+            "history_bytes",
+            "actual_workflow_type",
+            "actual_task_queue",
+            "actual_decoded_argument_count"
+          ],
+          "sha256_links": {
+            "/history_sha256": "rogue-started-history.pbseq"
+          }
+        }
+      ],
+      "case_directory": "started-binding_digest",
+      "minimum_owner": 1,
+      "node_id": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[binding_digest]",
+      "phase": "started_deployment",
+      "profile": "started_mismatch",
+      "queries_max": {},
+      "queries_min": {
+        "temporal.list_workflows": 1
+      },
+      "source_locations": [
+        {
+          "path": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py",
+          "symbol": "test_started_history_mismatch_fails_closed[binding_digest]"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_started_deployment_case_budget.py",
+          "symbol": "CASE_NODE_IDS / STARTED_VARIANTS"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "symbol": "_prepare_case_impl / start_barrier_dispatcher / _cleanup_case_impl"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "symbol": "_write_private / _write_runtime_config / _append_private_journal"
+        },
+        {
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "symbol": "_observe_started_direct"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "symbol": "record_owner_snapshot / record_query_observation"
+        }
+      ],
+      "unresolved": []
+    },
+    {
+      "artifact_sources": {
+        "mapping": "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path.",
+        "runtime_acceptance": "Source-derived mapping only; no runtime artifacts or execution outcomes were read or accepted.",
+        "scope": "All mandatory case-root writers reachable on the literal success branch are listed. Process caches are fresh private -B prefixes; no cache files are emitted. The phase barrier uses a private TMPDIR Unix socket and in-memory events, has no JSON sidecar writer, and is closed/removed by cleanup. Shared owner/query recorder files are validated separately by the shared evidence recorder."
+      },
+      "artifacts": [
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "workspace-initial-observation.json",
+          "required_keys": [
+            "job_id",
+            "tree",
+            "marker_bytes_hex"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "source-manifest.json",
+          "required_keys": [
+            "format",
+            "files"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "environment-manifest.json",
+          "required_keys": [
+            "format",
+            "files",
+            "interpreter_sha256",
+            "python_version"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-config.json",
+          "required_keys": [
+            "format",
+            "mode",
+            "identity",
+            "dsn",
+            "workspace_root",
+            "source_manifest_path",
+            "environment_manifest_path"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "worker-config.json",
+          "required_keys": [
+            "format",
+            "mode",
+            "identity",
+            "dsn",
+            "workspace_root",
+            "source_manifest_path",
+            "environment_manifest_path"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/isolated-env.json",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal-server.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal.sqlite",
+          "required_keys": []
+        },
+        {
+          "format": "jsonl",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-journal.jsonl",
+          "required_keys": [
+            "event"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-cleanup.json",
+          "required_keys": [
+            "processes"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-cut-logs/dispatcher.stdout",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-cut-logs/dispatcher.stderr",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "rogue-started-history.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "owner-after-quarantine.json",
+          "required_keys": [
+            "accepted",
+            "bindings",
+            "scopes",
+            "receipts",
+            "attempts",
+            "noncreate_commands"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "rogue-started-summary.json",
+          "required_keys": [
+            "variant",
+            "run_id",
+            "history_sha256",
+            "history_bytes",
+            "actual_workflow_type",
+            "actual_task_queue",
+            "actual_decoded_argument_count"
+          ],
+          "sha256_links": {
+            "/history_sha256": "rogue-started-history.pbseq"
+          }
+        }
+      ],
+      "case_directory": "started-build_id",
+      "minimum_owner": 1,
+      "node_id": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[build_id]",
+      "phase": "started_deployment",
+      "profile": "started_mismatch",
+      "queries_max": {},
+      "queries_min": {
+        "temporal.list_workflows": 1
+      },
+      "source_locations": [
+        {
+          "path": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py",
+          "symbol": "test_started_history_mismatch_fails_closed[build_id]"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_started_deployment_case_budget.py",
+          "symbol": "CASE_NODE_IDS / STARTED_VARIANTS"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "symbol": "_prepare_case_impl / start_barrier_dispatcher / _cleanup_case_impl"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "symbol": "_write_private / _write_runtime_config / _append_private_journal"
+        },
+        {
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "symbol": "_observe_started_direct"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "symbol": "record_owner_snapshot / record_query_observation"
+        }
+      ],
+      "unresolved": []
+    },
+    {
+      "artifact_sources": {
+        "mapping": "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path.",
+        "runtime_acceptance": "Source-derived mapping only; no runtime artifacts or execution outcomes were read or accepted.",
+        "scope": "All mandatory case-root writers reachable on the literal success branch are listed. Process caches are fresh private -B prefixes; no cache files are emitted. The phase barrier uses a private TMPDIR Unix socket and in-memory events, has no JSON sidecar writer, and is closed/removed by cleanup. Shared owner/query recorder files are validated separately by the shared evidence recorder."
+      },
+      "artifacts": [
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "workspace-initial-observation.json",
+          "required_keys": [
+            "job_id",
+            "tree",
+            "marker_bytes_hex"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "source-manifest.json",
+          "required_keys": [
+            "format",
+            "files"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "environment-manifest.json",
+          "required_keys": [
+            "format",
+            "files",
+            "interpreter_sha256",
+            "python_version"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-config.json",
+          "required_keys": [
+            "format",
+            "mode",
+            "identity",
+            "dsn",
+            "workspace_root",
+            "source_manifest_path",
+            "environment_manifest_path"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "worker-config.json",
+          "required_keys": [
+            "format",
+            "mode",
+            "identity",
+            "dsn",
+            "workspace_root",
+            "source_manifest_path",
+            "environment_manifest_path"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/isolated-env.json",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal-server.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal.sqlite",
+          "required_keys": []
+        },
+        {
+          "format": "jsonl",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-journal.jsonl",
+          "required_keys": [
+            "event"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-cleanup.json",
+          "required_keys": [
+            "processes"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-cut-logs/dispatcher.stdout",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-cut-logs/dispatcher.stderr",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "rogue-started-history.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "owner-after-quarantine.json",
+          "required_keys": [
+            "accepted",
+            "bindings",
+            "scopes",
+            "receipts",
+            "attempts",
+            "noncreate_commands"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "rogue-started-summary.json",
+          "required_keys": [
+            "variant",
+            "run_id",
+            "history_sha256",
+            "history_bytes",
+            "actual_workflow_type",
+            "actual_task_queue",
+            "actual_decoded_argument_count"
+          ],
+          "sha256_links": {
+            "/history_sha256": "rogue-started-history.pbseq"
+          }
+        }
+      ],
+      "case_directory": "started-extra_input",
+      "minimum_owner": 1,
+      "node_id": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[extra_input]",
+      "phase": "started_deployment",
+      "profile": "started_mismatch",
+      "queries_max": {},
+      "queries_min": {
+        "temporal.list_workflows": 1
+      },
+      "source_locations": [
+        {
+          "path": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py",
+          "symbol": "test_started_history_mismatch_fails_closed[extra_input]"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_started_deployment_case_budget.py",
+          "symbol": "CASE_NODE_IDS / STARTED_VARIANTS"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "symbol": "_prepare_case_impl / start_barrier_dispatcher / _cleanup_case_impl"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "symbol": "_write_private / _write_runtime_config / _append_private_journal"
+        },
+        {
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "symbol": "_observe_started_direct"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "symbol": "record_owner_snapshot / record_query_observation"
+        }
+      ],
+      "unresolved": []
+    },
+    {
+      "artifact_sources": {
+        "mapping": "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path.",
+        "runtime_acceptance": "Source-derived mapping only; no runtime artifacts or execution outcomes were read or accepted.",
+        "scope": "All mandatory case-root writers reachable on the literal success branch are listed. Process caches are fresh private -B prefixes; no cache files are emitted. The phase barrier uses a private TMPDIR Unix socket and in-memory events, has no JSON sidecar writer, and is closed/removed by cleanup. Shared owner/query recorder files are validated separately by the shared evidence recorder."
+      },
+      "artifacts": [
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "workspace-initial-observation.json",
+          "required_keys": [
+            "job_id",
+            "tree",
+            "marker_bytes_hex"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "source-manifest.json",
+          "required_keys": [
+            "format",
+            "files"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "environment-manifest.json",
+          "required_keys": [
+            "format",
+            "files",
+            "interpreter_sha256",
+            "python_version"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-config.json",
+          "required_keys": [
+            "format",
+            "mode",
+            "identity",
+            "dsn",
+            "workspace_root",
+            "source_manifest_path",
+            "environment_manifest_path"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "worker-config.json",
+          "required_keys": [
+            "format",
+            "mode",
+            "identity",
+            "dsn",
+            "workspace_root",
+            "source_manifest_path",
+            "environment_manifest_path"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/isolated-env.json",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal-server.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal.sqlite",
+          "required_keys": []
+        },
+        {
+          "format": "jsonl",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-journal.jsonl",
+          "required_keys": [
+            "event"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-cleanup.json",
+          "required_keys": [
+            "processes"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-cut-logs/dispatcher.stdout",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-cut-logs/dispatcher.stderr",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "rogue-started-history.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "owner-after-quarantine.json",
+          "required_keys": [
+            "accepted",
+            "bindings",
+            "scopes",
+            "receipts",
+            "attempts",
+            "noncreate_commands"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "rogue-started-summary.json",
+          "required_keys": [
+            "variant",
+            "run_id",
+            "history_sha256",
+            "history_bytes",
+            "actual_workflow_type",
+            "actual_task_queue",
+            "actual_decoded_argument_count"
+          ],
+          "sha256_links": {
+            "/history_sha256": "rogue-started-history.pbseq"
+          }
+        }
+      ],
+      "case_directory": "started-job_id",
+      "minimum_owner": 1,
+      "node_id": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[job_id]",
+      "phase": "started_deployment",
+      "profile": "started_mismatch",
+      "queries_max": {},
+      "queries_min": {
+        "temporal.list_workflows": 1
+      },
+      "source_locations": [
+        {
+          "path": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py",
+          "symbol": "test_started_history_mismatch_fails_closed[job_id]"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_started_deployment_case_budget.py",
+          "symbol": "CASE_NODE_IDS / STARTED_VARIANTS"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "symbol": "_prepare_case_impl / start_barrier_dispatcher / _cleanup_case_impl"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "symbol": "_write_private / _write_runtime_config / _append_private_journal"
+        },
+        {
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "symbol": "_observe_started_direct"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "symbol": "record_owner_snapshot / record_query_observation"
+        }
+      ],
+      "unresolved": []
+    },
+    {
+      "artifact_sources": {
+        "mapping": "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path.",
+        "runtime_acceptance": "Source-derived mapping only; no runtime artifacts or execution outcomes were read or accepted.",
+        "scope": "All mandatory case-root writers reachable on the literal success branch are listed. Process caches are fresh private -B prefixes; no cache files are emitted. The phase barrier uses a private TMPDIR Unix socket and in-memory events, has no JSON sidecar writer, and is closed/removed by cleanup. Shared owner/query recorder files are validated separately by the shared evidence recorder."
+      },
+      "artifacts": [
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "workspace-initial-observation.json",
+          "required_keys": [
+            "job_id",
+            "tree",
+            "marker_bytes_hex"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "source-manifest.json",
+          "required_keys": [
+            "format",
+            "files"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "environment-manifest.json",
+          "required_keys": [
+            "format",
+            "files",
+            "interpreter_sha256",
+            "python_version"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-config.json",
+          "required_keys": [
+            "format",
+            "mode",
+            "identity",
+            "dsn",
+            "workspace_root",
+            "source_manifest_path",
+            "environment_manifest_path"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "worker-config.json",
+          "required_keys": [
+            "format",
+            "mode",
+            "identity",
+            "dsn",
+            "workspace_root",
+            "source_manifest_path",
+            "environment_manifest_path"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/isolated-env.json",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal-server.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal.sqlite",
+          "required_keys": []
+        },
+        {
+          "format": "jsonl",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-journal.jsonl",
+          "required_keys": [
+            "event"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-cleanup.json",
+          "required_keys": [
+            "processes"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-cut-logs/dispatcher.stdout",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-cut-logs/dispatcher.stderr",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "rogue-started-history.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "owner-after-quarantine.json",
+          "required_keys": [
+            "accepted",
+            "bindings",
+            "scopes",
+            "receipts",
+            "attempts",
+            "noncreate_commands"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "rogue-started-summary.json",
+          "required_keys": [
+            "variant",
+            "run_id",
+            "history_sha256",
+            "history_bytes",
+            "actual_workflow_type",
+            "actual_task_queue",
+            "actual_decoded_argument_count"
+          ],
+          "sha256_links": {
+            "/history_sha256": "rogue-started-history.pbseq"
+          }
+        }
+      ],
+      "case_directory": "started-malformed_input",
+      "minimum_owner": 1,
+      "node_id": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[malformed_input]",
+      "phase": "started_deployment",
+      "profile": "started_mismatch",
+      "queries_max": {},
+      "queries_min": {
+        "temporal.list_workflows": 1
+      },
+      "source_locations": [
+        {
+          "path": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py",
+          "symbol": "test_started_history_mismatch_fails_closed[malformed_input]"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_started_deployment_case_budget.py",
+          "symbol": "CASE_NODE_IDS / STARTED_VARIANTS"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "symbol": "_prepare_case_impl / start_barrier_dispatcher / _cleanup_case_impl"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "symbol": "_write_private / _write_runtime_config / _append_private_journal"
+        },
+        {
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "symbol": "_observe_started_direct"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "symbol": "record_owner_snapshot / record_query_observation"
+        }
+      ],
+      "unresolved": []
+    },
+    {
+      "artifact_sources": {
+        "mapping": "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path.",
+        "runtime_acceptance": "Source-derived mapping only; no runtime artifacts or execution outcomes were read or accepted.",
+        "scope": "All mandatory case-root writers reachable on the literal success branch are listed. Process caches are fresh private -B prefixes; no cache files are emitted. The phase barrier uses a private TMPDIR Unix socket and in-memory events, has no JSON sidecar writer, and is closed/removed by cleanup. Shared owner/query recorder files are validated separately by the shared evidence recorder."
+      },
+      "artifacts": [
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "workspace-initial-observation.json",
+          "required_keys": [
+            "job_id",
+            "tree",
+            "marker_bytes_hex"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "source-manifest.json",
+          "required_keys": [
+            "format",
+            "files"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "environment-manifest.json",
+          "required_keys": [
+            "format",
+            "files",
+            "interpreter_sha256",
+            "python_version"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-config.json",
+          "required_keys": [
+            "format",
+            "mode",
+            "identity",
+            "dsn",
+            "workspace_root",
+            "source_manifest_path",
+            "environment_manifest_path"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "worker-config.json",
+          "required_keys": [
+            "format",
+            "mode",
+            "identity",
+            "dsn",
+            "workspace_root",
+            "source_manifest_path",
+            "environment_manifest_path"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/isolated-env.json",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal-server.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal.sqlite",
+          "required_keys": []
+        },
+        {
+          "format": "jsonl",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-journal.jsonl",
+          "required_keys": [
+            "event"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-cleanup.json",
+          "required_keys": [
+            "processes"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-cut-logs/dispatcher.stdout",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-cut-logs/dispatcher.stderr",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "rogue-started-history.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "owner-after-quarantine.json",
+          "required_keys": [
+            "accepted",
+            "bindings",
+            "scopes",
+            "receipts",
+            "attempts",
+            "noncreate_commands"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "rogue-started-summary.json",
+          "required_keys": [
+            "variant",
+            "run_id",
+            "history_sha256",
+            "history_bytes",
+            "actual_workflow_type",
+            "actual_task_queue",
+            "actual_decoded_argument_count"
+          ],
+          "sha256_links": {
+            "/history_sha256": "rogue-started-history.pbseq"
+          }
+        }
+      ],
+      "case_directory": "started-missing_input",
+      "minimum_owner": 1,
+      "node_id": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[missing_input]",
+      "phase": "started_deployment",
+      "profile": "started_mismatch",
+      "queries_max": {},
+      "queries_min": {
+        "temporal.list_workflows": 1
+      },
+      "source_locations": [
+        {
+          "path": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py",
+          "symbol": "test_started_history_mismatch_fails_closed[missing_input]"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_started_deployment_case_budget.py",
+          "symbol": "CASE_NODE_IDS / STARTED_VARIANTS"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "symbol": "_prepare_case_impl / start_barrier_dispatcher / _cleanup_case_impl"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "symbol": "_write_private / _write_runtime_config / _append_private_journal"
+        },
+        {
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "symbol": "_observe_started_direct"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "symbol": "record_owner_snapshot / record_query_observation"
+        }
+      ],
+      "unresolved": []
+    },
+    {
+      "artifact_sources": {
+        "mapping": "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path.",
+        "runtime_acceptance": "Source-derived mapping only; no runtime artifacts or execution outcomes were read or accepted.",
+        "scope": "All mandatory case-root writers reachable on the literal success branch are listed. Process caches are fresh private -B prefixes; no cache files are emitted. The phase barrier uses a private TMPDIR Unix socket and in-memory events, has no JSON sidecar writer, and is closed/removed by cleanup. Shared owner/query recorder files are validated separately by the shared evidence recorder."
+      },
+      "artifacts": [
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "workspace-initial-observation.json",
+          "required_keys": [
+            "job_id",
+            "tree",
+            "marker_bytes_hex"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "source-manifest.json",
+          "required_keys": [
+            "format",
+            "files"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "environment-manifest.json",
+          "required_keys": [
+            "format",
+            "files",
+            "interpreter_sha256",
+            "python_version"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-config.json",
+          "required_keys": [
+            "format",
+            "mode",
+            "identity",
+            "dsn",
+            "workspace_root",
+            "source_manifest_path",
+            "environment_manifest_path"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "worker-config.json",
+          "required_keys": [
+            "format",
+            "mode",
+            "identity",
+            "dsn",
+            "workspace_root",
+            "source_manifest_path",
+            "environment_manifest_path"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/isolated-env.json",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal-server.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal.sqlite",
+          "required_keys": []
+        },
+        {
+          "format": "jsonl",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-journal.jsonl",
+          "required_keys": [
+            "event"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-cleanup.json",
+          "required_keys": [
+            "processes"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-cut-logs/dispatcher.stdout",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-cut-logs/dispatcher.stderr",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "rogue-started-history.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "owner-after-quarantine.json",
+          "required_keys": [
+            "accepted",
+            "bindings",
+            "scopes",
+            "receipts",
+            "attempts",
+            "noncreate_commands"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "rogue-started-summary.json",
+          "required_keys": [
+            "variant",
+            "run_id",
+            "history_sha256",
+            "history_bytes",
+            "actual_workflow_type",
+            "actual_task_queue",
+            "actual_decoded_argument_count"
+          ],
+          "sha256_links": {
+            "/history_sha256": "rogue-started-history.pbseq"
+          }
+        }
+      ],
+      "case_directory": "started-project_id",
+      "minimum_owner": 1,
+      "node_id": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[project_id]",
+      "phase": "started_deployment",
+      "profile": "started_mismatch",
+      "queries_max": {},
+      "queries_min": {
+        "temporal.list_workflows": 1
+      },
+      "source_locations": [
+        {
+          "path": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py",
+          "symbol": "test_started_history_mismatch_fails_closed[project_id]"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_started_deployment_case_budget.py",
+          "symbol": "CASE_NODE_IDS / STARTED_VARIANTS"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "symbol": "_prepare_case_impl / start_barrier_dispatcher / _cleanup_case_impl"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "symbol": "_write_private / _write_runtime_config / _append_private_journal"
+        },
+        {
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "symbol": "_observe_started_direct"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "symbol": "record_owner_snapshot / record_query_observation"
+        }
+      ],
+      "unresolved": []
+    },
+    {
+      "artifact_sources": {
+        "mapping": "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path.",
+        "runtime_acceptance": "Source-derived mapping only; no runtime artifacts or execution outcomes were read or accepted.",
+        "scope": "All mandatory case-root writers reachable on the literal success branch are listed. Process caches are fresh private -B prefixes; no cache files are emitted. The phase barrier uses a private TMPDIR Unix socket and in-memory events, has no JSON sidecar writer, and is closed/removed by cleanup. Shared owner/query recorder files are validated separately by the shared evidence recorder."
+      },
+      "artifacts": [
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "workspace-initial-observation.json",
+          "required_keys": [
+            "job_id",
+            "tree",
+            "marker_bytes_hex"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "source-manifest.json",
+          "required_keys": [
+            "format",
+            "files"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "environment-manifest.json",
+          "required_keys": [
+            "format",
+            "files",
+            "interpreter_sha256",
+            "python_version"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-config.json",
+          "required_keys": [
+            "format",
+            "mode",
+            "identity",
+            "dsn",
+            "workspace_root",
+            "source_manifest_path",
+            "environment_manifest_path"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "worker-config.json",
+          "required_keys": [
+            "format",
+            "mode",
+            "identity",
+            "dsn",
+            "workspace_root",
+            "source_manifest_path",
+            "environment_manifest_path"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/isolated-env.json",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal-server.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal.sqlite",
+          "required_keys": []
+        },
+        {
+          "format": "jsonl",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-journal.jsonl",
+          "required_keys": [
+            "event"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-cleanup.json",
+          "required_keys": [
+            "processes"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-cut-logs/dispatcher.stdout",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-cut-logs/dispatcher.stderr",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "rogue-started-history.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "owner-after-quarantine.json",
+          "required_keys": [
+            "accepted",
+            "bindings",
+            "scopes",
+            "receipts",
+            "attempts",
+            "noncreate_commands"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "rogue-started-summary.json",
+          "required_keys": [
+            "variant",
+            "run_id",
+            "history_sha256",
+            "history_bytes",
+            "actual_workflow_type",
+            "actual_task_queue",
+            "actual_decoded_argument_count"
+          ],
+          "sha256_links": {
+            "/history_sha256": "rogue-started-history.pbseq"
+          }
+        }
+      ],
+      "case_directory": "started-task_queue",
+      "minimum_owner": 1,
+      "node_id": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[task_queue]",
+      "phase": "started_deployment",
+      "profile": "started_mismatch",
+      "queries_max": {},
+      "queries_min": {
+        "temporal.list_workflows": 1
+      },
+      "source_locations": [
+        {
+          "path": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py",
+          "symbol": "test_started_history_mismatch_fails_closed[task_queue]"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_started_deployment_case_budget.py",
+          "symbol": "CASE_NODE_IDS / STARTED_VARIANTS"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "symbol": "_prepare_case_impl / start_barrier_dispatcher / _cleanup_case_impl"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "symbol": "_write_private / _write_runtime_config / _append_private_journal"
+        },
+        {
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "symbol": "_observe_started_direct"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "symbol": "record_owner_snapshot / record_query_observation"
+        }
+      ],
+      "unresolved": []
+    },
+    {
+      "artifact_sources": {
+        "mapping": "Parameterized literal case directory is started-<variant>. test_h2_started_deployment_case_budget.STARTED_VARIANTS enumerates the nine exact variants. Each starts a production dispatcher child at the before_start_rpc phase cut, directly starts one rogue workflow on the actual pinned Temporal server, queries/listens to its persisted Started history and writes rogue-started-history.pbseq; summary stores actual run/type/taskqueue/decoded-argument count and digest. Owner cut and post-quarantine reads are also recorded by the shared raw snapshot recorder. Barrier synchronization is an in-memory Unix socket under private TMPDIR, released by test; no barrier JSON writer is reachable in this path.",
+        "runtime_acceptance": "Source-derived mapping only; no runtime artifacts or execution outcomes were read or accepted.",
+        "scope": "All mandatory case-root writers reachable on the literal success branch are listed. Process caches are fresh private -B prefixes; no cache files are emitted. The phase barrier uses a private TMPDIR Unix socket and in-memory events, has no JSON sidecar writer, and is closed/removed by cleanup. Shared owner/query recorder files are validated separately by the shared evidence recorder."
+      },
+      "artifacts": [
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "workspace-initial-observation.json",
+          "required_keys": [
+            "job_id",
+            "tree",
+            "marker_bytes_hex"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "source-manifest.json",
+          "required_keys": [
+            "format",
+            "files"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "environment-manifest.json",
+          "required_keys": [
+            "format",
+            "files",
+            "interpreter_sha256",
+            "python_version"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-config.json",
+          "required_keys": [
+            "format",
+            "mode",
+            "identity",
+            "dsn",
+            "workspace_root",
+            "source_manifest_path",
+            "environment_manifest_path"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "worker-config.json",
+          "required_keys": [
+            "format",
+            "mode",
+            "identity",
+            "dsn",
+            "workspace_root",
+            "source_manifest_path",
+            "environment_manifest_path"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/isolated-env.json",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal-server.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal.sqlite",
+          "required_keys": []
+        },
+        {
+          "format": "jsonl",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-journal.jsonl",
+          "required_keys": [
+            "event"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-cleanup.json",
+          "required_keys": [
+            "processes"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-cut-logs/dispatcher.stdout",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-cut-logs/dispatcher.stderr",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "rogue-started-history.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "owner-after-quarantine.json",
+          "required_keys": [
+            "accepted",
+            "bindings",
+            "scopes",
+            "receipts",
+            "attempts",
+            "noncreate_commands"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "rogue-started-summary.json",
+          "required_keys": [
+            "variant",
+            "run_id",
+            "history_sha256",
+            "history_bytes",
+            "actual_workflow_type",
+            "actual_task_queue",
+            "actual_decoded_argument_count"
+          ],
+          "sha256_links": {
+            "/history_sha256": "rogue-started-history.pbseq"
+          }
+        }
+      ],
+      "case_directory": "started-workflow_type",
+      "minimum_owner": 1,
+      "node_id": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[workflow_type]",
+      "phase": "started_deployment",
+      "profile": "started_mismatch",
+      "queries_max": {},
+      "queries_min": {
+        "temporal.list_workflows": 1
+      },
+      "source_locations": [
+        {
+          "path": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py",
+          "symbol": "test_started_history_mismatch_fails_closed[workflow_type]"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_started_deployment_case_budget.py",
+          "symbol": "CASE_NODE_IDS / STARTED_VARIANTS"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "symbol": "_prepare_case_impl / start_barrier_dispatcher / _cleanup_case_impl"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "symbol": "_write_private / _write_runtime_config / _append_private_journal"
+        },
+        {
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "symbol": "_observe_started_direct"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "symbol": "record_owner_snapshot / record_query_observation"
+        }
+      ],
+      "unresolved": []
+    }
+  ],
+  "remaining_limitations": [
+    "Runtime acceptance still requires all ten nodes in the fresh490 run, validated actual private outputs, exact query and owner recorder evidence, PBSeq decode, expected process exit/cleanup semantics, and the original test/JUnit semantic assertions.",
+    "Foreign HBA restoration is performed from the original bytes retained in memory and pg_ctl reload return code; the test does not persist a post-restore HBA readback. This mapping does not claim an independently recorded effective-rule verification after restoration.",
+    "The foreign deployment proposal hash is present as a nested object in foreign-deployment-sql-observations.json and summary value; there is no standalone proposal artifact, so the raw-artifact checker cannot add a cross-file SHA link for it. The source test independently recomputes and asserts the domain digest."
+  ],
+  "scope": {
+    "new_source_blockers": 0,
+    "note": "Target ten rows are byte-equivalent to the c314 baseline pinned at 911ee83. Source mapping does not assert case execution or artifact production.",
+    "original_artifact_count": 43,
+    "original_unresolved_count": 43,
+    "phase": "started_deployment",
+    "phase_rows": 10,
+    "proposed_artifact_count": 159,
+    "remaining_original_unresolved_count": 0,
+    "source_mapped_original_unresolved_count": 43
+  },
+  "source_pins": {
+    "services/ifpmic_api/execution_manifest.py": "0f08e5c86992edc9ee9b62b19d50f981282d125e39810e0f0d6e75d39bfd07b6",
+    "tests/ifpmic_api/accepted_start_dispatcher_child.py": "87c6cf61d94188f5733e73fc02e8d3d2caeb78f4a802a6455a501317a6f859eb",
+    "tests/ifpmic_api/h2_dispatcher_crash_support.py": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472",
+    "tests/ifpmic_api/h2_foreign_dispatcher_child.py": "4a3bcf89bc86892f259f47f868e734885e3ed26a4c7cfe30274aa90bdf5bb913",
+    "tests/ifpmic_api/h2_snapshot_evidence.py": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c",
+    "tests/ifpmic_api/h2_started_deployment_case_budget.py": "305e2991d642804cf23f223ec875783a1df3517ba58f88e805cdbf121d7f1f35",
+    "tests/ifpmic_api/test_accepted_start_response_loss.py": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8",
+    "tests/ifpmic_api/test_h2_runtime_normal_flow.py": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d",
+    "tests/ifpmic_api/test_h2_started_deployment_boundaries.py": "034ae6eb4399d8e4b906ffc27401d2b1d4d3799e44159b7a711d6e174c25bbdf",
+    "tests/ifpmic_api/workflow_schema_fixture.py": "dd1eba1754a8985dd704f0ed63271cc73beca8b03c72aaa2f14acdd41e5e3681"
+  },
+  "status": "draft_source_mapping_proposal_no_execution"
+}

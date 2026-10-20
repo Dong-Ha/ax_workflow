@@ -21,6 +21,8 @@ dispatcher의 생성되지 않는 파일 요구3개를 바로잡고 실제 분�
 
 worker의 사전 기동 서버 기록을 같은 O_EXCL 경로에 두 번 작성하는 결함은 early 파일명 한 곳을 분리해 수정했다. [독립 exact source 검토](../../evidence/b03/h2-worker-prestarted-server-source-review-v2.json)가 전체 AST의 filename Constant 하나와82개 assertion 보존을 확인했다. 두 실제 파일을 요구하는 새 projection은 별도 검토하며 실제 실행 증거는 아직 없다. transport3/worker4와 activity12/started10이 남았으며 actual main/SDK/SQL/full490/실제 실행 접수는 이번 체크포인트에서 실행하지 않았다. 아래 내용의83행469항목은 이전 체크포인트 기록이다.
 
+추가 source-only 수정: transport release에 빈 marker bytes 인자 추가, worker의 실제 존재하는 barrier helper 이름 사용, activity의 두 번째 dispatcher에 로컬 instance label을 지정했다. [독립 계획·정확한 source 검토](../../evidence/b03/h2-three-source-repairs-review-v2.json)가 activity87·transport42·worker82개 assertion 보존, shared normal helper 불변, 계획된 AST 차이만 있음을 확인했다. 테스트를 실행한 것은 아니며29개 규칙은 그대로 미해결이다. 10개 H2 추가 test module과 local helper의 정적 이름/인자 개수 검사에서 알려진 두 오류 외의 확정 오류는 추가로 발견되지 않았다. 이 정적 검사는 실제490 통과 증명이 아니다.
+
 ## 이번에 실제 검증한 것
 
 전체 실행기 정적 검토에서 찾은 집계·watchdog 경로·helper pin·기존 pyc 읽기·전체 deadline/TERM/정리·프로세스 수 집계 결함을 수정했다. 전체 실행기의 `main`을 실행한 것은 아니며, 별도 승인된 stdlib 함수와 합성 자료로 검사했다.

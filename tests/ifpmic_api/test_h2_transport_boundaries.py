@@ -105,7 +105,7 @@ def _event(case, name: str, deadline: float) -> dict[str, object]:
 
 
 def _release(case, name: str) -> None:
-    _write_private(case["control"] / ("release-" + name))
+    _write_private(case["control"] / ("release-" + name), b"")
 
 
 def _spawn_dispatcher(case, *, store_phases=(), dispatcher_phase=""):

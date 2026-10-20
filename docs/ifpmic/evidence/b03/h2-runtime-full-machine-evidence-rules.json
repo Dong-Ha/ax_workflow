@@ -544,9 +544,9 @@
       "queries_min": {},
       "source_locations": [
         {
-          "line": 363,
+          "line": 371,
           "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
-          "sha256": "11db8cfc513c4845128e26558ae2d5ca6d87beea485e524ebdd949b974c89954",
+          "sha256": "3c5bff7d8f858cad04665b850124f04bdab3684b7732592aad69dc2f8fda58f7",
           "symbol": "test_h2_authority_revoked_before_first_projection"
         },
         {
@@ -561,7 +561,7 @@
         },
         {
           "artifact": "before_first_projection_sql.json",
-          "line": 375,
+          "line": 383,
           "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
           "symbol": "source artifact write/read literal"
         },
@@ -573,13 +573,13 @@
         },
         {
           "artifact": "process-cleanup.json",
-          "line": 214,
+          "line": 222,
           "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
           "symbol": "source artifact write/read literal"
         },
         {
           "artifact": "authority-rejected-history.pbseq",
-          "line": 420,
+          "line": 428,
           "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
           "symbol": "named history writer call"
         }
@@ -662,9 +662,9 @@
       "queries_min": {},
       "source_locations": [
         {
-          "line": 363,
+          "line": 371,
           "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
-          "sha256": "11db8cfc513c4845128e26558ae2d5ca6d87beea485e524ebdd949b974c89954",
+          "sha256": "3c5bff7d8f858cad04665b850124f04bdab3684b7732592aad69dc2f8fda58f7",
           "symbol": "test_h2_authority_revoked_before_first_projection"
         },
         {
@@ -679,7 +679,7 @@
         },
         {
           "artifact": "before_first_projection_sql.json",
-          "line": 375,
+          "line": 383,
           "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
           "symbol": "source artifact write/read literal"
         },
@@ -691,13 +691,13 @@
         },
         {
           "artifact": "process-cleanup.json",
-          "line": 214,
+          "line": 222,
           "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
           "symbol": "source artifact write/read literal"
         },
         {
           "artifact": "authority-rejected-history.pbseq",
-          "line": 420,
+          "line": 428,
           "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
           "symbol": "named history writer call"
         }
@@ -791,9 +791,9 @@
       "queries_min": {},
       "source_locations": [
         {
-          "line": 436,
+          "line": 444,
           "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
-          "sha256": "11db8cfc513c4845128e26558ae2d5ca6d87beea485e524ebdd949b974c89954",
+          "sha256": "3c5bff7d8f858cad04665b850124f04bdab3684b7732592aad69dc2f8fda58f7",
           "symbol": "test_h2_committed_receipt_replays_after_authority_revoke"
         },
         {
@@ -814,19 +814,19 @@
         },
         {
           "artifact": "process-cleanup.json",
-          "line": 214,
+          "line": 222,
           "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
           "symbol": "source artifact write/read literal"
         },
         {
           "artifact": "history-before-lost-activity-result.pbseq",
-          "line": 459,
+          "line": 467,
           "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
           "symbol": "named history writer call"
         },
         {
           "artifact": "history-after-receipt-replay.pbseq",
-          "line": 474,
+          "line": 482,
           "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
           "symbol": "named history writer call"
         }
@@ -921,9 +921,9 @@
       "queries_min": {},
       "source_locations": [
         {
-          "line": 436,
+          "line": 444,
           "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
-          "sha256": "11db8cfc513c4845128e26558ae2d5ca6d87beea485e524ebdd949b974c89954",
+          "sha256": "3c5bff7d8f858cad04665b850124f04bdab3684b7732592aad69dc2f8fda58f7",
           "symbol": "test_h2_committed_receipt_replays_after_authority_revoke"
         },
         {
@@ -944,19 +944,19 @@
         },
         {
           "artifact": "process-cleanup.json",
-          "line": 214,
+          "line": 222,
           "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
           "symbol": "source artifact write/read literal"
         },
         {
           "artifact": "history-before-lost-activity-result.pbseq",
-          "line": 459,
+          "line": 467,
           "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
           "symbol": "named history writer call"
         },
         {
           "artifact": "history-after-receipt-replay.pbseq",
-          "line": 474,
+          "line": 482,
           "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
           "symbol": "named history writer call"
         }
@@ -1053,9 +1053,9 @@
       "queries_min": {},
       "source_locations": [
         {
-          "line": 759,
+          "line": 767,
           "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
-          "sha256": "11db8cfc513c4845128e26558ae2d5ca6d87beea485e524ebdd949b974c89954",
+          "sha256": "3c5bff7d8f858cad04665b850124f04bdab3684b7732592aad69dc2f8fda58f7",
           "symbol": "test_h2_execution_runtime_kills_hung_real_driver_and_rolls_back"
         },
         {
@@ -1070,13 +1070,13 @@
         },
         {
           "artifact": "projection_driver_blocked.json",
-          "line": 771,
+          "line": 779,
           "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
           "symbol": "source artifact write/read literal"
         },
         {
           "artifact": "hung-driver-rollback.json",
-          "line": 821,
+          "line": 829,
           "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
           "symbol": "source artifact write/read literal"
         },
@@ -1088,19 +1088,19 @@
         },
         {
           "artifact": "process-cleanup.json",
-          "line": 214,
+          "line": 222,
           "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
           "symbol": "source artifact write/read literal"
         },
         {
           "artifact": "history-after-hung-driver-kill.pbseq",
-          "line": 805,
+          "line": 813,
           "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
           "symbol": "named history writer call"
         },
         {
           "artifact": "history-after-driver-rollback-recovery.pbseq",
-          "line": 817,
+          "line": 825,
           "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
           "symbol": "named history writer call"
         }
@@ -1162,9 +1162,9 @@
       },
       "source_locations": [
         {
-          "line": 691,
+          "line": 699,
           "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
-          "sha256": "11db8cfc513c4845128e26558ae2d5ca6d87beea485e524ebdd949b974c89954",
+          "sha256": "3c5bff7d8f858cad04665b850124f04bdab3684b7732592aad69dc2f8fda58f7",
           "symbol": "test_h2_execution_runtime_normal_sigterm_control"
         },
         {
@@ -1184,7 +1184,7 @@
         },
         {
           "artifact": "worker_run_entered.json",
-          "line": 663,
+          "line": 671,
           "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
           "symbol": "source artifact write/read literal"
         },
@@ -1196,7 +1196,7 @@
         },
         {
           "artifact": "process-cleanup.json",
-          "line": 214,
+          "line": 222,
           "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
           "symbol": "source artifact write/read literal"
         }
@@ -1274,9 +1274,9 @@
       },
       "source_locations": [
         {
-          "line": 652,
+          "line": 660,
           "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
-          "sha256": "11db8cfc513c4845128e26558ae2d5ca6d87beea485e524ebdd949b974c89954",
+          "sha256": "3c5bff7d8f858cad04665b850124f04bdab3684b7732592aad69dc2f8fda58f7",
           "symbol": "test_h2_execution_runtime_surfaces_unrequested_worker_exit"
         },
         {
@@ -1296,19 +1296,19 @@
         },
         {
           "artifact": "worker_run_entered.json",
-          "line": 663,
+          "line": 671,
           "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
           "symbol": "source artifact write/read literal"
         },
         {
           "artifact": "worker_fatal_armed.json",
-          "line": 667,
+          "line": 675,
           "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
           "symbol": "source artifact write/read literal"
         },
         {
           "artifact": "concurrent_sigterm_sent.json",
-          "line": 671,
+          "line": 679,
           "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
           "symbol": "source artifact write/read literal"
         },
@@ -1320,7 +1320,7 @@
         },
         {
           "artifact": "process-cleanup.json",
-          "line": 214,
+          "line": 222,
           "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
           "symbol": "source artifact write/read literal"
         }
@@ -1392,9 +1392,9 @@
       },
       "source_locations": [
         {
-          "line": 652,
+          "line": 660,
           "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
-          "sha256": "11db8cfc513c4845128e26558ae2d5ca6d87beea485e524ebdd949b974c89954",
+          "sha256": "3c5bff7d8f858cad04665b850124f04bdab3684b7732592aad69dc2f8fda58f7",
           "symbol": "test_h2_execution_runtime_surfaces_unrequested_worker_exit"
         },
         {
@@ -1414,13 +1414,13 @@
         },
         {
           "artifact": "worker_run_entered.json",
-          "line": 663,
+          "line": 671,
           "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
           "symbol": "source artifact write/read literal"
         },
         {
           "artifact": "worker_fatal_armed.json",
-          "line": 667,
+          "line": 675,
           "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
           "symbol": "source artifact write/read literal"
         },
@@ -1432,7 +1432,7 @@
         },
         {
           "artifact": "process-cleanup.json",
-          "line": 214,
+          "line": 222,
           "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
           "symbol": "source artifact write/read literal"
         }
@@ -1493,9 +1493,9 @@
       },
       "source_locations": [
         {
-          "line": 652,
+          "line": 660,
           "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
-          "sha256": "11db8cfc513c4845128e26558ae2d5ca6d87beea485e524ebdd949b974c89954",
+          "sha256": "3c5bff7d8f858cad04665b850124f04bdab3684b7732592aad69dc2f8fda58f7",
           "symbol": "test_h2_execution_runtime_surfaces_unrequested_worker_exit"
         },
         {
@@ -1515,7 +1515,7 @@
         },
         {
           "artifact": "worker_run_entered.json",
-          "line": 663,
+          "line": 671,
           "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
           "symbol": "source artifact write/read literal"
         },
@@ -1527,7 +1527,7 @@
         },
         {
           "artifact": "process-cleanup.json",
-          "line": 214,
+          "line": 222,
           "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
           "symbol": "source artifact write/read literal"
         }
@@ -1622,9 +1622,9 @@
       },
       "source_locations": [
         {
-          "line": 591,
+          "line": 599,
           "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
-          "sha256": "11db8cfc513c4845128e26558ae2d5ca6d87beea485e524ebdd949b974c89954",
+          "sha256": "3c5bff7d8f858cad04665b850124f04bdab3684b7732592aad69dc2f8fda58f7",
           "symbol": "test_h2_missing_history_then_retention_rpc_failure_never_starts"
         },
         {
@@ -1644,25 +1644,25 @@
         },
         {
           "artifact": "actual_history_not_found.json",
-          "line": 602,
+          "line": 610,
           "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
           "symbol": "source artifact write/read literal"
         },
         {
           "artifact": "actual_retention_rpc_begin.json",
-          "line": 616,
+          "line": 624,
           "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
           "symbol": "source artifact write/read literal"
         },
         {
           "artifact": "actual_retention_rpc_failed.json",
-          "line": 621,
+          "line": 629,
           "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
           "symbol": "source artifact write/read literal"
         },
         {
           "artifact": "retention-unavailable.json",
-          "line": 631,
+          "line": 639,
           "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
           "symbol": "source artifact write/read literal"
         },
@@ -1674,7 +1674,7 @@
         },
         {
           "artifact": "process-cleanup.json",
-          "line": 214,
+          "line": 222,
           "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
           "symbol": "source artifact write/read literal"
         }
@@ -1742,9 +1742,9 @@
       },
       "source_locations": [
         {
-          "line": 537,
+          "line": 545,
           "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
-          "sha256": "11db8cfc513c4845128e26558ae2d5ca6d87beea485e524ebdd949b974c89954",
+          "sha256": "3c5bff7d8f858cad04665b850124f04bdab3684b7732592aad69dc2f8fda58f7",
           "symbol": "test_h2_noncreate_signal_targets_admitted_run_without_business_consumption"
         },
         {
@@ -1770,13 +1770,13 @@
         },
         {
           "artifact": "process-cleanup.json",
-          "line": 214,
+          "line": 222,
           "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
           "symbol": "source artifact write/read literal"
         },
         {
           "artifact": "history-after-real-noncreate-signal.pbseq",
-          "line": 558,
+          "line": 566,
           "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
           "symbol": "named history writer call"
         }
@@ -1822,9 +1822,9 @@
       "queries_min": {},
       "source_locations": [
         {
-          "line": 509,
+          "line": 517,
           "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
-          "sha256": "11db8cfc513c4845128e26558ae2d5ca6d87beea485e524ebdd949b974c89954",
+          "sha256": "3c5bff7d8f858cad04665b850124f04bdab3684b7732592aad69dc2f8fda58f7",
           "symbol": "test_h2_noncreate_waits_until_admission"
         },
         {
@@ -1834,7 +1834,7 @@
         },
         {
           "artifact": "noncreate-not-admitted.json",
-          "line": 529,
+          "line": 537,
           "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
           "symbol": "source artifact write/read literal"
         },
@@ -10129,7 +10129,7 @@
         {
           "line": 406,
           "path": "tests/ifpmic_api/test_h2_transport_boundaries.py",
-          "sha256": "059b7f61e6da19f9177bb0ab833dd2ebbf0409d88bfdd9ebf914166688525ad2",
+          "sha256": "6679eea681edd6f847e18aa75f1cee4d44f230d7ac9e7b88bc6253cbe5918372",
           "symbol": "test_h2_activity_waits_until_admission_same_run"
         },
         {
@@ -10226,7 +10226,7 @@
         {
           "line": 253,
           "path": "tests/ifpmic_api/test_h2_transport_boundaries.py",
-          "sha256": "059b7f61e6da19f9177bb0ab833dd2ebbf0409d88bfdd9ebf914166688525ad2",
+          "sha256": "6679eea681edd6f847e18aa75f1cee4d44f230d7ac9e7b88bc6253cbe5918372",
           "symbol": "test_h2_machine_authority_disable_serializes_with_claim"
         },
         {
@@ -10292,7 +10292,7 @@
         {
           "line": 253,
           "path": "tests/ifpmic_api/test_h2_transport_boundaries.py",
-          "sha256": "059b7f61e6da19f9177bb0ab833dd2ebbf0409d88bfdd9ebf914166688525ad2",
+          "sha256": "6679eea681edd6f847e18aa75f1cee4d44f230d7ac9e7b88bc6253cbe5918372",
           "symbol": "test_h2_machine_authority_disable_serializes_with_claim"
         },
         {
@@ -10581,7 +10581,7 @@
         {
           "line": 715,
           "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py",
-          "sha256": "7001cf8c9be2dcfc57e86b0d1e5da0b6a06e2154b40e26a08f5933e2fac691ac",
+          "sha256": "9ad3c1be60c3975cfe3a30fab972463361ac90c8e5f5b3a47461307d20ef35d3",
           "symbol": "test_h2_activity_completed_before_workflow_decision_sigkill_replays_history"
         },
         {
@@ -10938,7 +10938,7 @@
         {
           "line": 449,
           "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py",
-          "sha256": "7001cf8c9be2dcfc57e86b0d1e5da0b6a06e2154b40e26a08f5933e2fac691ac",
+          "sha256": "9ad3c1be60c3975cfe3a30fab972463361ac90c8e5f5b3a47461307d20ef35d3",
           "symbol": "test_h2_api_commit_before_response_sigkill_retry_applies_once"
         },
         {
@@ -11328,7 +11328,7 @@
         {
           "line": 696,
           "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py",
-          "sha256": "7001cf8c9be2dcfc57e86b0d1e5da0b6a06e2154b40e26a08f5933e2fac691ac",
+          "sha256": "9ad3c1be60c3975cfe3a30fab972463361ac90c8e5f5b3a47461307d20ef35d3",
           "symbol": "test_h2_worker_projection_after_pg_commit_sigkill_replays_receipt"
         },
         {
@@ -11702,7 +11702,7 @@
         {
           "line": 678,
           "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py",
-          "sha256": "7001cf8c9be2dcfc57e86b0d1e5da0b6a06e2154b40e26a08f5933e2fac691ac",
+          "sha256": "9ad3c1be60c3975cfe3a30fab972463361ac90c8e5f5b3a47461307d20ef35d3",
           "symbol": "test_h2_worker_projection_before_pg_commit_sigkill_rolls_back_then_retries"
         },
         {
@@ -14043,7 +14043,7 @@
     "tests/ifpmic_api/oidc_provider.py": "38c4e014c16cf43bc28ff384999dcc8468d0e6ac0cbcc92c1a69b2d4cccd84e0",
     "tests/ifpmic_api/response_loss_proxy.py": "b6f8ca62f21724bf26aac6395528092257e7c48b729d19df02adf7281b9ed512",
     "tests/ifpmic_api/test_accepted_start_response_loss.py": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8",
-    "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py": "11db8cfc513c4845128e26558ae2d5ca6d87beea485e524ebdd949b974c89954",
+    "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py": "3c5bff7d8f858cad04665b850124f04bdab3684b7732592aad69dc2f8fda58f7",
     "tests/ifpmic_api/test_h2_dispatcher_crashes.py": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52",
     "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py": "c0dd1e2a3e732ceea482e286a0f97bbb270dfab4040d88eff0403efc846e8688",
     "tests/ifpmic_api/test_h2_reconciliation_window.py": "7fe6f3856b408d8d1f1e9fefc58ae47db00cfe1f8f5b45b41836523c63881a01",
@@ -14051,8 +14051,8 @@
     "tests/ifpmic_api/test_h2_runtime_restart_and_history.py": "606db627f5efd4ba6f9158da6ef538b95fe70d77444cb0775191265a10a2b546",
     "tests/ifpmic_api/test_h2_runtime_startup_rejections.py": "80376fad5e864c4ac07cc0fc1cf75fce205d06da64f22e74a67b542ca60fb1b1",
     "tests/ifpmic_api/test_h2_started_deployment_boundaries.py": "034ae6eb4399d8e4b906ffc27401d2b1d4d3799e44159b7a711d6e174c25bbdf",
-    "tests/ifpmic_api/test_h2_transport_boundaries.py": "059b7f61e6da19f9177bb0ab833dd2ebbf0409d88bfdd9ebf914166688525ad2",
-    "tests/ifpmic_api/test_h2_worker_api_crashes.py": "7001cf8c9be2dcfc57e86b0d1e5da0b6a06e2154b40e26a08f5933e2fac691ac",
+    "tests/ifpmic_api/test_h2_transport_boundaries.py": "6679eea681edd6f847e18aa75f1cee4d44f230d7ac9e7b88bc6253cbe5918372",
+    "tests/ifpmic_api/test_h2_worker_api_crashes.py": "9ad3c1be60c3975cfe3a30fab972463361ac90c8e5f5b3a47461307d20ef35d3",
     "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py": "ad48c0a6dd84d08e2839a9ba5a4b3d4f8b4cad82df99e0a090ae5d4387eb2f2f",
     "tests/ifpmic_api/test_workflow_schema.py": "b76ebd44dc6e98323501fea1c03e3f5c1838484b3f7b359693a2e5ef52159224",
     "tests/ifpmic_api/workflow_schema_fixture.py": "dd1eba1754a8985dd704f0ed63271cc73beca8b03c72aaa2f14acdd41e5e3681",

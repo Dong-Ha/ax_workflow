@@ -1,0 +1,58 @@
+{
+  "before_commit": "6a480bf",
+  "h2_accepted": false,
+  "iteration03_complete": false,
+  "kind": "ifpmic.b03.h2.three-source-repairs-check.v2",
+  "not_executed": [
+    "repository_imports",
+    "collection",
+    "tests",
+    "SQL",
+    "SDK",
+    "services",
+    "actual490"
+  ],
+  "plan_reviews": [
+    {
+      "path": "docs/ifpmic/evidence/b03/h2-activity-dispatcher-restart-repair-plan-review-v2.json",
+      "sha256": "1546b152e44cc7d6213b8ca59fa40c3ebf183be1b1172e47419cfa06d40b5f06"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b03/h2-transport-release-repair-plan-review-v2.json",
+      "sha256": "112f462926756b0f6323d9402ee25dc0588a07217e4e11177303d780da67d17f"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b03/h2-worker-activity-barrier-name-repair-plan-review-v2.json",
+      "sha256": "9ec4bd3e0625d0dc9ee46437b1fb2cab2744eab54a0b88bc8ad420e67c776166"
+    }
+  ],
+  "required_next": "Independent exact-source review/metadata repin; one corrected7projection, activity12projection and started10projection; full versioned source closure/contract/paired gates then actual490.",
+  "source_deltas": {
+    "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py": {
+      "after_sha256": "3c5bff7d8f858cad04665b850124f04bdab3684b7732592aad69dc2f8fda58f7",
+      "assertions_unchanged": 87,
+      "before_sha256": "11db8cfc513c4845128e26558ae2d5ca6d87beea485e524ebdd949b974c89954"
+    },
+    "tests/ifpmic_api/test_h2_transport_boundaries.py": {
+      "after_sha256": "6679eea681edd6f847e18aa75f1cee4d44f230d7ac9e7b88bc6253cbe5918372",
+      "assertions_unchanged": 42,
+      "before_sha256": "059b7f61e6da19f9177bb0ab833dd2ebbf0409d88bfdd9ebf914166688525ad2"
+    },
+    "tests/ifpmic_api/test_h2_worker_api_crashes.py": {
+      "after_sha256": "9ad3c1be60c3975cfe3a30fab972463361ac90c8e5f5b3a47461307d20ef35d3",
+      "assertions_unchanged": 82,
+      "before_sha256": "7001cf8c9be2dcfc57e86b0d1e5da0b6a06e2154b40e26a08f5933e2fac691ac"
+    }
+  },
+  "static_checks": {
+    "activity_AST_only_local_wrapper_and_one_second_call_keyword_changed": true,
+    "activity_actual_config_and_root_arguments_exact": true,
+    "activity_old_ownership_journal_return_tail_exact": true,
+    "all_source_assertions_preserved": true,
+    "inventory_and_budget_sources_unchanged": true,
+    "shared_normal_helper_unchanged": true,
+    "transport_whole_AST_only_adds_empty_bytes_argument": true,
+    "worker_whole_AST_only_changes_one_helper_Name": true
+  },
+  "status": "source_only_pending_exact_review_no_execution"
+}

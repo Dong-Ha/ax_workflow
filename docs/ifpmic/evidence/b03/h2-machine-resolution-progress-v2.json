@@ -3,7 +3,7 @@
   "status": "partial_source_mapping_only_runtime_blocked",
   "machine": {
     "path": "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules.json",
-    "sha256": "571951683230da449cbabfcfee0240a3275fb80401f8ac22cc2b2b17123cd1b8"
+    "sha256": "33622d9944cafea7345526e25db524d06c6f64b2c04a73e7d0b55dbd8986bbd5"
   },
   "cases": 87,
   "artifacts": 661,
@@ -28,7 +28,7 @@
     "runtime_acceptance_unchanged": true
   },
   "unit_scope": "Original119 cache-isolated units remain accepted against unchanged12-source closure. Current mapping and separate workspace source repair were statically checked; no new tests or actual H2 cases were executed.",
-  "next_single_batch": "Review worker prestarted duplicate-write repair plan, exact source repair, then transport3/worker4 projection. Activity12 and started10 still pending; full490 freeze/gates and actual admission UI remain incomplete.",
+  "next_single_batch": "Independent reviews of corrected transport-worker7/activity12/started10 projections, preserving all490 requirements; then v2 source closure/contract/full runner reviews, exact paired pre-gates, fresh490 and actual admission UI.",
   "full_mapping_accepted": false,
   "h2_accepted": false,
   "iteration03_complete": false,
@@ -103,5 +103,49 @@
     ],
     "only_global_and4_matching_location_SHA_changed_no_line_shift": true,
     "actual_worker_case_executed": false
+  },
+  "latest_three_source_repairs": {
+    "input_commit": "6a480bf",
+    "input_machine_sha256": "571951683230da449cbabfcfee0240a3275fb80401f8ac22cc2b2b17123cd1b8",
+    "independent_source_review": {
+      "path": "docs/ifpmic/evidence/b03/h2-three-source-repairs-review-v2.json",
+      "sha256": "be6a2898074d58db1deb32ee68c652886ea91478bf0d9fcda034ffe44e0d6522"
+    },
+    "source_deltas": {
+      "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py": {
+        "after_sha256": "3c5bff7d8f858cad04665b850124f04bdab3684b7732592aad69dc2f8fda58f7",
+        "assertions_unchanged": 87,
+        "before_sha256": "11db8cfc513c4845128e26558ae2d5ca6d87beea485e524ebdd949b974c89954"
+      },
+      "tests/ifpmic_api/test_h2_transport_boundaries.py": {
+        "after_sha256": "6679eea681edd6f847e18aa75f1cee4d44f230d7ac9e7b88bc6253cbe5918372",
+        "assertions_unchanged": 42,
+        "before_sha256": "059b7f61e6da19f9177bb0ab833dd2ebbf0409d88bfdd9ebf914166688525ad2"
+      },
+      "tests/ifpmic_api/test_h2_worker_api_crashes.py": {
+        "after_sha256": "9ad3c1be60c3975cfe3a30fab972463361ac90c8e5f5b3a47461307d20ef35d3",
+        "assertions_unchanged": 82,
+        "before_sha256": "7001cf8c9be2dcfc57e86b0d1e5da0b6a06e2154b40e26a08f5933e2fac691ac"
+      }
+    },
+    "matching_rows_repin_counts": {
+      "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py": 12,
+      "tests/ifpmic_api/test_h2_transport_boundaries.py": 3,
+      "tests/ifpmic_api/test_h2_worker_api_crashes.py": 4
+    },
+    "old_row_source_hashes": {
+      "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py": [
+        "11db8cfc513c4845128e26558ae2d5ca6d87beea485e524ebdd949b974c89954"
+      ],
+      "tests/ifpmic_api/test_h2_transport_boundaries.py": [
+        "059b7f61e6da19f9177bb0ab833dd2ebbf0409d88bfdd9ebf914166688525ad2"
+      ],
+      "tests/ifpmic_api/test_h2_worker_api_crashes.py": [
+        "7001cf8c9be2dcfc57e86b0d1e5da0b6a06e2154b40e26a08f5933e2fac691ac"
+      ]
+    },
+    "only_source_SHA_and_activity_line_offsets_changed": true,
+    "all29_rows177_unresolved_annotations_unchanged": true,
+    "runtime_executed": false
   }
 }

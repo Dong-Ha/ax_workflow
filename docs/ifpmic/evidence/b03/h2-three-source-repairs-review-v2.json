@@ -1,0 +1,76 @@
+{
+  "kind": "ifpmic.b03.h2.three-source-repairs-review.v2",
+  "review_date": "2026-10-21",
+  "reviewer": "/root/h2_evidence_amendment_review",
+  "decision": "approve_exact_three_repairs_and_bounded_metadata_refresh_only",
+  "source_check": {
+    "path": "docs/ifpmic/evidence/b03/h2-three-source-repairs-check-v2.json",
+    "sha256": "f2787e9fcbd6f711bcf0ba7ae9da5b136cb09391e4b2f1c0065f49f9e70bf785"
+  },
+  "input_machine": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules.json",
+    "commit": "6a480bf",
+    "sha256": "571951683230da449cbabfcfee0240a3275fb80401f8ac22cc2b2b17123cd1b8"
+  },
+  "approved_source_deltas": {
+    "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py": {
+      "before_sha256": "11db8cfc513c4845128e26558ae2d5ca6d87beea485e524ebdd949b974c89954",
+      "after_sha256": "3c5bff7d8f858cad04665b850124f04bdab3684b7732592aad69dc2f8fda58f7",
+      "assertions_identical": 87,
+      "matching_machine_rows": 12,
+      "delta": "Only local _start_cli's planned optional keyword-only validated path label and one second-dispatcher keyword change."
+    },
+    "tests/ifpmic_api/test_h2_transport_boundaries.py": {
+      "before_sha256": "059b7f61e6da19f9177bb0ab833dd2ebbf0409d88bfdd9ebf914166688525ad2",
+      "after_sha256": "6679eea681edd6f847e18aa75f1cee4d44f230d7ac9e7b88bc6253cbe5918372",
+      "assertions_identical": 42,
+      "matching_machine_rows": 3,
+      "delta": "Only one empty-bytes positional argument is added to _release's private writer call."
+    },
+    "tests/ifpmic_api/test_h2_worker_api_crashes.py": {
+      "before_sha256": "7001cf8c9be2dcfc57e86b0d1e5da0b6a06e2154b40e26a08f5933e2fac691ac",
+      "after_sha256": "9ad3c1be60c3975cfe3a30fab972463361ac90c8e5f5b3a47461307d20ef35d3",
+      "assertions_identical": 82,
+      "matching_machine_rows": 4,
+      "delta": "Only the one undefined activity-completed call Name becomes _wait_for_activity_barrier."
+    }
+  },
+  "plan_reviews": [
+    {
+      "path": "docs/ifpmic/evidence/b03/h2-activity-dispatcher-restart-repair-plan-review-v2.json",
+      "sha256": "1546b152e44cc7d6213b8ca59fa40c3ebf183be1b1172e47419cfa06d40b5f06"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b03/h2-transport-release-repair-plan-review-v2.json",
+      "sha256": "112f462926756b0f6323d9402ee25dc0588a07217e4e11177303d780da67d17f"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b03/h2-worker-activity-barrier-name-repair-plan-review-v2.json",
+      "sha256": "9ec4bd3e0625d0dc9ee46437b1fb2cab2744eab54a0b88bc8ad420e67c776166"
+    }
+  ],
+  "findings": [],
+  "evidence": {
+    "independent_whole_file_ast_checks": "Read all3 original sources from Git6a480bf and independently constructed exactly the approved AST changes. Each resulting complete AST equals current source excluding position attributes. Every assertion AST is identical in original order; all other functions/calls/values remain unchanged outside the planned local wrapper and one call keyword.",
+    "activity_validation": "Explicit instance_label rejects non-str, empty, over64 and every non-ASCII/alphanumeric/underscore/hyphen character before any I/O. None preserves the role-derived label. The spawner receives that path label with unchanged case[logical_role+'_config'] and root; record.role is restored before the exact original ownership/journal/return tail. Only the second noncreate dispatcher uses dispatcher-noncreate-signal.",
+    "shared_helper": "test_h2_runtime_normal_flow.py remains exact c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d. Existing exclusive private file/cache creation, runtime argv/environment and saved process identity handling are unchanged.",
+    "transport_and_worker": "The transport writer now receives b'' without changing writer flags, child predicate, separate cleanup release or any event/order oracle. The worker call now resolves to the existing helper with exactly the original4 arguments; the two previously reviewed server record filenames remain unchanged.",
+    "metadata_scope": "Exactly these3 global source_pins are stale. Their matching12+3+4 rows contain the corresponding reviewed before hashes and remain unresolved. Existing activity source locations are outside the changed wrapper body and shift by8 lines; transport/worker have no line shift. No inventory or budget source changes occur."
+  },
+  "authorization": {
+    "retain_only_exact_three_reviewed_source_repairs": true,
+    "refresh_only_listed_three_global_source_pins_and_matching_19_row_source_locations_sha_fields": true,
+    "add_8_only_to_existing_source_location_lines_greater_than_143_with_exact_activity_source_path": true,
+    "change_other_line_refs_metadata_sources_assertions_or_budgets": false,
+    "clear_any_row_unresolved_items_or_accept_mapping_proposals": false,
+    "imports_collection_tests_sql_sdk_services_network_execution": false,
+    "whole_source_mapping_contract_h2_iteration_or_goal_acceptance": false
+  },
+  "risks_and_remaining_uncertainty": [
+    "Static repair acceptance does not establish actual startup, barrier ordering, signal count, SQL/history/proxy outcomes, raw artifact production or owned cleanup. Label validation was reviewed statically, not exercised.",
+    "Corrected7-row transport/worker and12-row activity projections require separate exact review against updated source bytes. All remaining source annotations and historical rejected drafts stay preserved.",
+    "Original full490/25+5 inventory/budgets, complete versioned source closure/ledger/contract and paired pre-gates remain mandatory. No repository test, synthetic unit, service or full runner execution is authorized here."
+  ],
+  "recommendation": "Apply only the authorized3 source-hash and19 row-local metadata refreshes, preserve unresolved arrays, then request exact corrected mapping review.",
+  "review_method": "Read-only Git/source/AST/JSON/SHA comparison; no repository imports, collection, tests, SQL, SDK, services or network."
+}

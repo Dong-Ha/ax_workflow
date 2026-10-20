@@ -140,8 +140,16 @@ def _spawn_child(case, config: Path, mode: str, barrier: Path, label: str):
     return process, record
 
 
-def _start_cli(case, role: str):
-    process, record = normal._spawn_runtime_cli(role, case[role + "_config"], case["root"])
+def _start_cli(case, role: str, *, instance_label: str | None = None):
+    if instance_label is not None and (
+        type(instance_label) is not str or not 1 <= len(instance_label) <= 64
+        or any(not (char.isascii() and (char.isalnum() or char in "-_"))
+               for char in instance_label)
+    ):
+        raise ValueError("invalid private CLI instance label")
+    label = role if instance_label is None else instance_label
+    process, record = normal._spawn_runtime_cli(label, case[role + "_config"], case["root"])
+    record["role"] = role
     case["processes"].append(process)
     case["records"].append(record)
     normal._append_private_journal(case["journal"], {"event": "started", **record})
@@ -546,7 +554,7 @@ def test_h2_noncreate_signal_targets_admitted_run_without_business_consumption(
         with bounded_connect(owner_dsn(case["harness"]["database"])) as owner:
             owner.execute("UPDATE ifpmic.commands_outbox SET next_attempt_at=clock_timestamp() "
                           "WHERE command_id=%s", (command["command_id"],))
-        _start_cli(case, "dispatcher")
+        _start_cli(case, "dispatcher", instance_label="dispatcher-noncreate-signal")
         state = _wait_noncreate(case, command["command_id"], run_id, deadline.body_deadline)
         assert state[0][0] == command["route"]
         final = normal._read_owner_snapshot(case["harness"], case["job_id"])

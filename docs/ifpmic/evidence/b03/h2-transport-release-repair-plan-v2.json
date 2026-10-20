@@ -1,0 +1,138 @@
+{
+  "evidence": [
+    {
+      "facts": [
+        "Required signature is _write_private(path, raw).",
+        "Creates exclusively with O_EXCL and O_NOFOLLOW, fchmods 0600, writes supplied bytes and fsyncs."
+      ],
+      "lines": "69-82",
+      "path": "tests/ifpmic_api/test_h2_transport_boundaries.py",
+      "symbols": [
+        "_write_private"
+      ]
+    },
+    {
+      "facts": [
+        "Actual defect: one-argument call cannot satisfy helper signature."
+      ],
+      "lines": "107-109",
+      "path": "tests/ifpmic_api/test_h2_transport_boundaries.py",
+      "symbols": [
+        "_release"
+      ]
+    },
+    {
+      "facts": [
+        "Child accepts any owned regular 0600 single-link release file and never reads its payload."
+      ],
+      "lines": "47-60",
+      "path": "tests/ifpmic_api/h2_transport_boundary_child.py",
+      "symbols": [
+        "_wait_release"
+      ]
+    },
+    {
+      "facts": [
+        "claim-before-disable invokes _release for first and second actual barriers; currently neither call can create its marker."
+      ],
+      "lines": "276-350",
+      "path": "tests/ifpmic_api/test_h2_transport_boundaries.py",
+      "symbols": [
+        "test_h2_machine_authority_disable_serializes_with_claim"
+      ]
+    },
+    {
+      "facts": [
+        "Preadmission branch invokes _release after history/activity observations and before dispatcher completion."
+      ],
+      "lines": "406-460",
+      "path": "tests/ifpmic_api/test_h2_transport_boundaries.py",
+      "symbols": [
+        "test_h2_activity_waits_until_admission_same_run"
+      ]
+    },
+    {
+      "facts": [
+        "Cleanup has an independent correctly formed two-argument private marker call using b\"release\\n\"."
+      ],
+      "lines": "179-220",
+      "path": "tests/ifpmic_api/test_h2_transport_boundaries.py",
+      "symbols": [
+        "_cleanup_case"
+      ]
+    }
+  ],
+  "expected_result": "Transport tests can publish each requested release marker instead of raising a call-signature TypeError; child wait predicates accept the zero-byte private marker. This is a source-repair proposal, not a claim that any case passed.",
+  "failure_recovery": "If the corrected helper call fails, retain the exception and existing file state. Do not remove or replace a marker to make a case continue. Let the current bounded cleanup release only absent markers, then stop owned children by saved identities. Preserve private failure evidence; request source/mapping re-review against exact changed hashes and do not execute using old approvals.",
+  "kind": "ifpmic.b03.h2.transport-release-helper-repair-plan.v2",
+  "method": {
+    "minimal_source_diff": {
+      "change": "Pass b\"\" as the second argument to _write_private: _write_private(case[\"control\"] / (\"release-\" + name), b\"\").",
+      "file": "tests/ifpmic_api/test_h2_transport_boundaries.py",
+      "symbol": "_release"
+    },
+    "preserved_invariants": [
+      "Keep _write_private\u2019s O_CREAT|O_EXCL|O_NOFOLLOW|O_CLOEXEC flags.",
+      "Keep chmod 0600, full-write loop, fsync and descriptor close.",
+      "Do not add an overwrite, append or already-exists fallback.",
+      "Leave `_cleanup_case`\u2019s separate `_write_private(path, b\"release\\n\")` call unchanged; its argument is already correct.",
+      "Do not alter event JSON payloads, child barrier names, process ownership, or cleanup sequencing."
+    ],
+    "semantics": "The child only waits for a private regular file with current uid, mode 0600 and link count 1; it does not read release-file contents. A zero-byte marker is the literal intended release signal.",
+    "verification_scenarios": [
+      {
+        "case": "Call _release for an absent marker; it creates exactly one empty 0600 single-link regular file, the owned child observes it, and both claim-before-disable releases reach their following phase.",
+        "category": "normal"
+      },
+      {
+        "case": "If the release pathname already exists or is a symlink, O_EXCL/O_NOFOLLOW continues to fail closed; no prior file is changed and cleanup still operates through existing owned child identities.",
+        "category": "error"
+      },
+      {
+        "case": "Validate the zero-byte marker accepted by the actual child predicate; confirm the separate cleanup-release path with b\"release\\n\" remains unchanged and also satisfies that predicate.",
+        "category": "boundary"
+      },
+      {
+        "case": "The preadmission test\u2019s normal release and the claim-before-disable test\u2019s first and second release both use the same corrected helper; all other transport logic and recorded event ordering remain unchanged.",
+        "category": "regression"
+      }
+    ]
+  },
+  "pass_criteria": [
+    "The `_release` call statically supplies both path and bytes arguments to the exact pinned `_write_private` signature.",
+    "Release marker bytes are exactly empty; child source predicate does not require marker contents.",
+    "Existing private writer O_EXCL/no-follow/mode/fsync behavior remains unchanged.",
+    "Cleanup release code remains unchanged and no default missing marker is silently accepted by a weakened writer.",
+    "Changed source and all affected case mappings receive independent exact review before any execution authorization."
+  ],
+  "purpose": "Make transport file-barrier release reachable while preserving the existing private-file creation contract and exact release-marker semantics.",
+  "responsible_agents": {
+    "implementation": "Source owner after independent plan approval.",
+    "plan_author": "/root/h2_full_runner_author; no implementation or test execution performed.",
+    "review": "Independent source reviewer and transport machine-rule reviewer; execution owner only after updated exact source gates."
+  },
+  "review_boundary": {
+    "execution_authorized": false,
+    "imports_or_tests_performed": false,
+    "runtime_or_sdk_imports_performed": false,
+    "source_change_authorized": false
+  },
+  "source_pins": {
+    "docs/ifpmic/evidence/b03/h2-machine-resolution-transport-worker-v2.json": "8ec81b95ccdba5a61f369b88f16e0d29525a1a27ee4b1b1992026fa08f36e584",
+    "tests/ifpmic_api/h2_dispatcher_crash_support.py": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472",
+    "tests/ifpmic_api/h2_transport_boundary_child.py": "ddac239eb8244b08671922c5cee255e608ad2c4589099499c1f3dd7ccc796300",
+    "tests/ifpmic_api/test_h2_runtime_normal_flow.py": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d",
+    "tests/ifpmic_api/test_h2_transport_boundaries.py": "059b7f61e6da19f9177bb0ab833dd2ebbf0409d88bfdd9ebf914166688525ad2"
+  },
+  "status": "draft_source_change_plan_pending_independent_review_no_execution",
+  "target": {
+    "affected_nodes": [
+      "tests/ifpmic_api/test_h2_transport_boundaries.py::test_h2_machine_authority_disable_serializes_with_claim[claim-before-disable]",
+      "tests/ifpmic_api/test_h2_transport_boundaries.py::test_h2_activity_waits_until_admission_same_run"
+    ],
+    "file": "tests/ifpmic_api/test_h2_transport_boundaries.py",
+    "line": "108",
+    "observed_failure": "_release calls _write_private(path) with one positional argument, while the local helper is _write_private(path, raw: bytes); each actual release raises TypeError before creating the marker.",
+    "symbol": "_release"
+  }
+}

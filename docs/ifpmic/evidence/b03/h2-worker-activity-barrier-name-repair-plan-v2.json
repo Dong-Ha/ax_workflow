@@ -1,0 +1,102 @@
+{
+  "evidence": [
+    {
+      "facts": [
+        "Defined helper signature is (ctx, barrier, process, deadline).",
+        "It waits for ready marker, starts dispatcher, waits for reached marker, observes dispatched owner snapshot and returns the event."
+      ],
+      "lines": "399-410",
+      "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py",
+      "symbols": [
+        "_wait_for_activity_barrier"
+      ]
+    },
+    {
+      "facts": [
+        "A separate existing worker activity path invokes `_wait_for_activity_barrier(ctx, ctx[\"barrier\"], worker, deadline.deadline)` using the same argument pattern."
+      ],
+      "lines": "578",
+      "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py",
+      "symbols": [
+        "existing helper caller"
+      ]
+    },
+    {
+      "facts": [
+        "The target call passes the same four values to undefined `_wait_activity_barrier`; its next assertion expects the returned phase event."
+      ],
+      "lines": "759-762",
+      "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py",
+      "symbols": [
+        "test_h2_activity_completed_before_workflow_decision_sigkill_replays_history"
+      ]
+    }
+  ],
+  "expected_result": "The activity-completed case enters the existing barrier protocol instead of raising NameError at the call site. Source repair alone is not runtime evidence or a passing result.",
+  "failure_recovery": "If the renamed call still fails, preserve the exact exception and owned worker/server identities; do not add a fallback helper or suppress barrier errors. Use the existing case finalizer to clean up by saved identities, retain private failure evidence, and return to source/mapping review with refreshed hashes before any execution.",
+  "kind": "ifpmic.b03.h2.worker-activity-barrier-name-repair-plan.v2",
+  "method": {
+    "minimal_source_diff": {
+      "change": "Rename only the call target from `_wait_activity_barrier(...)` to `_wait_for_activity_barrier(...)`; preserve arguments, order and returned event use.",
+      "line": 761,
+      "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py"
+    },
+    "non_goals": [
+      "Do not alter barrier file names or payloads.",
+      "Do not change worker/dispatcher lifecycle, held proxy, SQL/history assertions, process identity or cleanup.",
+      "Do not modify evidence artifact paths or claim the case passed."
+    ],
+    "signature_comparison": {
+      "call": "(ctx, ctx[\"barrier\"], worker, deadline.deadline) at line 761",
+      "defined": "_wait_for_activity_barrier(ctx, barrier: Path, process, deadline) at line 399",
+      "result": "All four positional arguments match in order; exact identifier correction is sufficient."
+    },
+    "verification_scenarios": [
+      {
+        "case": "The activity-completed test waits for ready.json, starts the dispatcher, waits for reached.json, records owner-after-dispatch-ack and returns the event; existing assertions then validate the activity-completed cut.",
+        "category": "normal"
+      },
+      {
+        "case": "Missing/malformed barrier records, early worker exit or owner-state timeout retain existing helper failures; do not catch/convert them or start any replacement child.",
+        "category": "error"
+      },
+      {
+        "case": "Keep the existing Path barrier, owned worker process and absolute deadline arguments unchanged; ensure only helper spelling changes.",
+        "category": "boundary"
+      },
+      {
+        "case": "The existing caller at line 578 continues using the helper; the target activity-completed caller now resolves to that same exact helper, with no duplicate or alternate helper introduced.",
+        "category": "regression"
+      }
+    ]
+  },
+  "pass_criteria": [
+    "Only the undefined helper identifier at the target call is changed.",
+    "The four call arguments continue to match the pinned helper signature positionally.",
+    "The helper\u2019s ready/reached ordering, dispatcher start, SQL snapshot wait and returned event remain unchanged.",
+    "The exact changed source SHA and machine-row mapping receive independent review before execution authorization."
+  ],
+  "purpose": "Restore the worker activity-completed cut test\u2019s intended barrier orchestration by calling the existing helper under its defined name.",
+  "responsible_agents": {
+    "implementation": "Source owner after independent plan approval.",
+    "plan_author": "/root/h2_full_runner_author; no implementation or test execution performed.",
+    "review": "Independent exact-source reviewer and worker API mapping reviewer before source change; execution owner only after refreshed exact gates."
+  },
+  "review_boundary": {
+    "execution_authorized": false,
+    "imports_or_tests_performed": false,
+    "runtime_or_sdk_imports_performed": false,
+    "source_change_authorized": false
+  },
+  "source_pins": {
+    "tests/ifpmic_api/test_h2_worker_api_crashes.py": "7001cf8c9be2dcfc57e86b0d1e5da0b6a06e2154b40e26a08f5933e2fac691ac"
+  },
+  "status": "draft_source_change_plan_pending_independent_review_no_execution",
+  "target": {
+    "line": 761,
+    "node_id": "tests/ifpmic_api/test_h2_worker_api_crashes.py::test_h2_activity_completed_before_workflow_decision_sigkill_replays_history",
+    "observed_failure": "The call references `_wait_activity_barrier`, which is undefined. The module defines `_wait_for_activity_barrier(ctx, barrier: Path, process, deadline)`.",
+    "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py",
+    "symbol": "test_h2_activity_completed_before_workflow_decision_sigkill_replays_history"
+  }
+}
