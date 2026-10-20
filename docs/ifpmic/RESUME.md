@@ -1,6 +1,6 @@
 # 다음 세션 재개 안내 — 2026-10-21
 
-> 최신 개발 체크포인트: [주기03 진행 기록](./delivery/iteration-03/README.md), [93건 검증 요약](./delivery/iteration-03/fence-verification.json). SQL fence 내부 원문/전체 열·함수 반환/DTO/오류 본문·canonical digest·정확한 kind/case/node/파일명 및 우회 방지 검사를 구현해 신규28+기존65=93/93 통과. 합성 범위·원본 보존에 대한 독립 결과 검토도 수용됐다. 다음은 **87-case 전체 mapping 대조·새 버전490 ledger/계약 고정 → 전체 runner/paired pre-gate → fresh490 → 실제 run/receipt 화면**이다. 새 fence helper/TC를 source closure에 포함한다. 기존 c10 계약은 주기02가 사용하므로 보존한다. 아래 과거 계약/28건·65건 상태는 역사 기록이다.
+> 최신 개발 체크포인트: [119건 검증 요약](./delivery/iteration-03/full-runner-repair-verification.json), [주기03 기록](./delivery/iteration-03/README.md). 전체 실행기 집계/watchdog 경로/helper pin/pyc 격리/부모 deadline·TERM·정리/프로세스 수 집계를 수정했고, exact 승인된 stdlib 함수로 새 cache 경로에서119/119 통과했다. 독립 결과 검토가 합성119건과 원본 보존 증거를 수용했다. **실제 main/전체490은 실행하지 않았다.** 새 machine은87case·535artifact지만87행에 미해결 표시475개가 남아 있어 [TC가 변경 요청](./evidence/b03/h2-runtime-full-machine-rules-tc-review-v2.json)했다. 과거 미해결0건 요약은 잘못됐으며 이를 근거로 freeze하지 않는다. 다음은 표시별 실제 source/key/path/조건 근거를 연결해 해소 → 새 버전490 ledger/계약 고정 → 전체 source/paired pre-gate → fresh490 → 실제 run/receipt 화면이다. 기존 c10/cf4·주기02 참조를 보존한다.
 
 > 최신 제품 결과: [주기02 실제 요청 저장 화면](./delivery/iteration-02/README.md), http://127.0.0.1:8769/ . 실제 API/DB 저장·재시작 유지 검증 완료, 독립 결과 검토 상태는 해당 증빙을 확인한다. 다음 단위는 필수 H2 검증 후 실제 실행 한 구간 연결이다.
 

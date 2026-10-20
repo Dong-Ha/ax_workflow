@@ -10,8 +10,10 @@ import os
 from pathlib import Path
 import re
 import shutil
+import signal
 import sys
 import tempfile
+import threading
 import time
 import xml.etree.ElementTree as ET
 import zipfile
@@ -157,6 +159,7 @@ def verify_raw_policy_sources(contract: dict, ledger: dict) -> dict:
         'adapter': 'scripts/ifpmic_h2_full_raw_adapter.py',
         'artifact_checker': 'scripts/ifpmic_h2_artifacts.py',
         'recorder_checker': 'scripts/ifpmic_h2_raw_evidence.py',
+        'fence_checker': 'scripts/ifpmic_h2_fences.py',
     }
     for key, relative in required.items():
         item = policy.get(key)
@@ -168,6 +171,21 @@ def verify_raw_policy_sources(contract: dict, ledger: dict) -> dict:
                 or path.is_symlink() or path.resolve() != path):
             raise RuntimeError('Raw-evidence policy/source binding differs: ' + key)
         require_file_hash(path, item['sha256'], 'Raw evidence ' + key)
+    helper_paths = {
+        'scripts/verify_ifpmic_g1.py', 'scripts/verify_ifpmic_g4.py',
+        'scripts/verify_ifpmic_b03_h1.py', 'scripts/ifpmic_temporal_toolchain.py',
+        'scripts/verify_ifpmic_b03_h2_runtime_normal.py', 'scripts/ifpmic_h2_gate_budget.py',
+    }
+    helpers = policy.get('runtime_helpers')
+    if not isinstance(helpers, dict) or set(helpers) != helper_paths:
+        raise RuntimeError('Exact pre-import runtime helper closure missing')
+    for relative, expected in helpers.items():
+        path = ROOT / relative
+        if (not isinstance(expected, str) or re.fullmatch('[0-9a-f]{64}', expected) is None
+                or ledger['source_pins'].get(relative) != expected
+                or path.is_symlink() or path.resolve() != path):
+            raise RuntimeError('Runtime helper/source binding differs: ' + relative)
+        require_file_hash(path, expected, 'Pre-import runtime helper')
     return policy
 
 
@@ -357,7 +375,8 @@ def safe_environment(base: Path, phase: dict, contract: dict, observations: Path
 
 def collect_phase(run_owned_command, phase: dict, interpreter: Path, plugins: list[str],
                   directory: Path, env: dict) -> dict:
-    command = [str(interpreter), '-B', '-m', 'pytest', '--collect-only', '-q',
+    command = [str(interpreter), '-B', '-X', 'pycache_prefix='+str(directory/'pycache'),
+               '-m', 'pytest', '--collect-only', '-q',
                '-p', 'no:cacheprovider']
     for plugin in plugins:
         command.extend(['-p', plugin])
@@ -580,7 +599,7 @@ def verify_phase_watchdogs(phase: dict, directory: Path, observations: Path,
         file_map = plugin_literal_map(ROOT/'tests/ifpmic_api/h2_worker_api_case_budget.py', 'CASE_FILES')
         if set(file_map) != expected_nodeids:
             raise RuntimeError('Worker watchdog literal file map differs from phase IDs')
-        paths = {nodeid: directory / file_map[nodeid] for nodeid in expected_nodeids}
+        paths = {nodeid: observations / file_map[nodeid] for nodeid in expected_nodeids}
     else:
         paths = {nodeid: observations / (hashlib.sha256(nodeid.encode('utf-8')).hexdigest() + '.json')
                  for nodeid in expected_nodeids}
@@ -654,12 +673,16 @@ def verify_interpreter(run_owned_command, interpreter: Path, prefix: Path, expec
         '"inventory":{d.metadata["Name"].lower().replace("_","-"):d.version '
         'for d in importlib.metadata.distributions()}},sort_keys=True))'
     )
-    result = run_owned_command([str(interpreter), '-B', '-c', code], cwd=ROOT, timeout=30,
+    cache = directory / (role + '-preflight-pycache')
+    cache.mkdir(mode=0o700)
+    result = run_owned_command([str(interpreter), '-B', '-X', 'pycache_prefix='+str(cache), '-c', code], cwd=ROOT, timeout=30,
         env={'PATH': os.pathsep.join((str(interpreter.parent), '/usr/bin', '/bin')),
              'LANG': 'C.UTF-8', 'LC_ALL': 'C.UTF-8', 'PYTHONDONTWRITEBYTECODE': '1'})
     write_private(directory / (role + '-interpreter-preflight.log'), result.stdout + result.stderr)
     if result.returncode:
         raise RuntimeError('Pinned interpreter preflight failed: ' + role)
+    if list(cache.iterdir()):
+        raise RuntimeError('Interpreter preflight bytecode cache populated')
     actual = json.loads(result.stdout)
     if (actual['prefix'] != str(prefix.resolve()) or actual['implementation'] != 'CPython'
             or actual['version'][:2] != [3, 12] or actual['interpreter_sha256'] != expected_sha
@@ -676,9 +699,28 @@ def collect_private_temporal_evidence(observation_roots: list[Path],
     hashes = {'history': set(), 'source': set(), 'environment': set(), 'build': set(), 'event_type': set()}
     counts: dict[str, list[int]] = {}
     statuses: set[str] = set()
-    process_rows: set[tuple] = set()
+    process_rows: dict[tuple, tuple] = {}
+    outcome_types_without_identity: set[tuple] = set()
     fixture_unknown = 0
     evidence_files = 0
+
+    def observe_process(value, role, exit_value, signal_name):
+        outcome = (role, exit_value, signal_name, False, True)
+        pid, ticks = value.get('pid'), value.get('start_ticks')
+        if (type(pid) is int and pid > 0 and
+                (type(ticks) is int and ticks > 0 or
+                 type(ticks) is str and ticks.isascii() and ticks.isdecimal() and int(ticks) > 0)):
+            identity = (pid, str(int(ticks)))
+            previous = process_rows.get(identity)
+            if previous is not None and previous != outcome:
+                raise RuntimeError('Conflicting terminal observations for one private process identity')
+            process_rows[identity] = outcome
+            return identity
+        else:
+            # Summaries without identities are outcome observations, not new
+            # processes. Their multiplicity must never inflate process counts.
+            outcome_types_without_identity.add(outcome)
+            return None
 
     def visit(value):
         nonlocal fixture_unknown
@@ -703,9 +745,9 @@ def collect_private_temporal_evidence(observation_roots: list[Path],
             if isinstance(role, str) and (type(exit_value) is int or absent is not None):
                 if type(exit_value) is int and exit_value not in (0, 3, -9):
                     raise RuntimeError('Unexpected child exit oracle in private process evidence')
-                if absent is True and forced is False:
+                if absent is True and forced is False and type(exit_value) is int:
                     signal_name = 'SIGKILL' if exit_value == -9 else None
-                    process_rows.add((role, exit_value, signal_name, False, True))
+                    observe_process(value, role, exit_value, signal_name)
                 elif absent is False and ('ownership_status' in value or role.startswith('injected-')):
                     fixture_unknown += 1
                 else:
@@ -762,10 +804,17 @@ def collect_private_temporal_evidence(observation_roots: list[Path],
         raise RuntimeError('Actual normal runtime process inventory missing or duplicated')
     if any(row[1] != 0 or row[3] is not False or row[4] is not True for row in normal_process_rows):
         raise RuntimeError('Actual normal runtime process lifecycle failed')
-    process_rows.update(normal_process_rows)
+    normal_identities = set()
+    for row in runtime['processes']:
+        identity = observe_process(row, row['role'], row['exit_code'], None)
+        if identity is None:
+            raise RuntimeError('Normal runtime process identity missing')
+        normal_identities.add(identity)
+    if len(normal_identities) != 3:
+        raise RuntimeError('Normal runtime process identities missing or duplicated')
     normalized_processes = []
     grouped = {}
-    for role, code, sig, forced, absent in process_rows:
+    for role, code, sig, forced, absent in process_rows.values():
         key = (role, code, sig, forced, absent)
         grouped[key] = grouped.get(key, 0) + 1
     for (role, code, sig, forced, absent), count in sorted(grouped.items()):
@@ -788,6 +837,12 @@ def collect_private_temporal_evidence(observation_roots: list[Path],
         'build_hashes': sorted(hashes['build']),
         'event_type_hashes': sorted(hashes['event_type']),
         'owned_processes': normalized_processes,
+        'owned_process_count_scope': 'distinct_saved_pid_start_ticks_with_verified_terminal_observations',
+        'unidentified_terminal_observation_types': [
+            {'role': role, 'expected_exit_code': code, 'expected_signal': sig,
+             'forced_cleanup': forced, 'absent': absent}
+            for role, code, sig, forced, absent in sorted(
+                outcome_types_without_identity, key=lambda row: (row[0], row[1]))],
         'expected_fixture_unknown_records': fixture_unknown,
         'private_observation_file_count': evidence_files,
         'normalized_statuses': sorted(statuses),
@@ -956,9 +1011,10 @@ def validate_public_junit(raw: bytes, expected_ids: set[str]) -> None:
         raise RuntimeError('Sanitized JUnit IDs differ from reviewed 490')
 
 
-def main() -> int:
+def main(*, start=None, release_bootstrap=None) -> int:
     os.umask(0o077)
-    start = time.monotonic()
+    if start is None:
+        start = time.monotonic()
     contract_raw = require_file_hash(CONTRACT_PATH, CONTRACT_SHA, 'Full execution contract')
     ledger_raw = require_file_hash(LEDGER_PATH, LEDGER_SHA, 'Integrated ledger')
     contract, ledger = json.loads(contract_raw), json.loads(ledger_raw)
@@ -968,24 +1024,17 @@ def main() -> int:
     runner_sha = sha(Path(__file__).read_bytes())
     reviews = execution_gate(contract, ledger, runner_sha)
 
-    # The reviewed helper bytes are checked before these imports. No helper,
-    # pytest, service, or test module is imported before the execution gate.
-    for key in ('protected_comparison_algorithm', 'environment_comparison_algorithm',
-                'live_temporal_lifecycle_helper', 'live_gate_descendant_helper'):
-        item = contract['attestation_inputs'][key]
-        require_file_hash(ROOT / item['path'], item['sha256'], key)
-    sys.path.insert(0, str(ROOT))
-    sys.path.insert(0, str(ROOT / 'scripts'))
-    from verify_ifpmic_g1 import check_unchanged_sources
-    from verify_ifpmic_b03_h1 import environment_hashes
-    from verify_ifpmic_g4 import enable_subreaper, run_owned_command, cleanup_owned_children, reap_orphans, owned_children
-    from ifpmic_temporal_toolchain import verify_binary, CLI_SHA
-    from verify_ifpmic_b03_h2_runtime_normal import check_h1_evidence, check_runtime_evidence
-    from ifpmic_h2_full_raw_adapter import validate_policy, audit_phase, recheck_manifests
-    raw_state = validate_policy(ROOT, contract, ledger, phases)
-
+    # Source and review gates above are complete before any local helper import.
     leaf = ROOT / 'workflow-artifacts/verification/B03/H2/runtime-full/gates' / datetime.now(timezone.utc).strftime('%Y-%m-%dT%H-%M-%S-%fZ')
     leaf.mkdir(parents=True, mode=0o700)
+    parent_cache = leaf / 'parent-pycache'
+    parent_cache.mkdir(mode=0o700)
+    sys.dont_write_bytecode = True
+    sys.pycache_prefix = str(parent_cache)
+    sys.path.insert(0, str(ROOT))
+    sys.path.insert(0, str(ROOT / 'scripts'))
+    from ifpmic_h2_gate_budget import GateBudget
+    budget = GateBudget(start + OUTER_SECONDS)
     report = {'kind': 'ifpmic.b03.h2.runtime-full-gate.v1', 'verdict': 'running',
               'contract_sha256': CONTRACT_SHA, 'ledger_sha256': LEDGER_SHA,
               'runner_sha256': runner_sha, 'phase_order': list(ORDER),
@@ -994,6 +1043,24 @@ def main() -> int:
               'review_sha256': {name: sha(raw) for group in reviews.values()
                                 for name, raw in (group if isinstance(group, list) else [group])}}
     try:
+        if release_bootstrap is not None:
+            release_bootstrap()
+        budget.arm()
+        from verify_ifpmic_g1 import check_unchanged_sources
+        from verify_ifpmic_b03_h1 import environment_hashes
+        from verify_ifpmic_g4 import enable_subreaper, run_owned_command as unbounded_command, reap_orphans, owned_children
+        from ifpmic_temporal_toolchain import verify_binary, CLI_SHA
+        from verify_ifpmic_b03_h2_runtime_normal import check_h1_evidence, check_runtime_evidence
+        from ifpmic_h2_full_raw_adapter import validate_policy, audit_phase, recheck_manifests
+
+        def run_owned_command(command, *, cwd, timeout, env):
+            previous_threads = set(threading.enumerate())
+            result = budget.run(unbounded_command, command, cwd=cwd, timeout=timeout, env=env)
+            if any(thread.is_alive() for thread in set(threading.enumerate()) - previous_threads):
+                raise RuntimeError('Owned command helper thread termination unconfirmed')
+            return result
+
+        raw_state = validate_policy(ROOT, contract, ledger, phases)
         review_dir = leaf / 'review-records'
         review_dir.mkdir(mode=0o700)
         for group in reviews.values():
@@ -1132,7 +1199,7 @@ def main() -> int:
             if duration > CAPS[name] or result.returncode or not junit.is_file():
                 raise RuntimeError('Phase exited unsuccessfully: ' + name)
             cases, counts = verify_junit(junit, phase, normal_contract)
-            check.update(counts=counts, status='tests_passed_pending_raw_audit')
+            check.update(counts, status='tests_passed_pending_raw_audit')
             if any(not math.isfinite(float(c.get('time', 'nan'))) or float(c.get('time')) > CAPS[name]
                    for c in cases):
                 raise RuntimeError('JUnit testcase timing invalid: ' + name)
@@ -1193,7 +1260,7 @@ def main() -> int:
                 if len(timing_rows) != len(phase['node_ids']) or sorted(timing_ids) != sorted(case_id(n) for n in phase['node_ids']):
                     raise RuntimeError('Retained H2 schema timing inventory differs')
             reap_orphans()
-            if any(state != 'Z' for _, state in owned_children().values()):
+            if owned_children():
                 raise RuntimeError('Owned phase descendants remain live: ' + name)
             if list(cache.iterdir()):
                 raise RuntimeError('Phase bytecode cache unexpectedly populated')
@@ -1237,7 +1304,7 @@ def main() -> int:
         temporal_evidence['postgres_lifecycle_phases'] = len(normalized_pg)
         write_private(leaf / 'normalized-temporal-summary.json', temporal_evidence)
         verify_raw_policy_sources(contract, ledger)
-        raw_summary = recheck_manifests(raw_proofs, raw_state, deadline=start + OUTER_SECONDS)
+        raw_summary = recheck_manifests(raw_proofs, raw_state, deadline=budget.work_deadline)
         write_private(leaf / 'raw-audit-proofs.json', raw_proofs)
         write_private(leaf / 'normalized-raw-case-summary.json', raw_summary)
         report['raw_case_evidence'] = raw_summary
@@ -1249,6 +1316,9 @@ def main() -> int:
         report['verdict'] = 'running'
         proposal = build_public_proposal(leaf, contract, ledger, report, layouts,
             normalized_cases, normalized_pg, temporal_evidence, source_before, env_before)
+        budget.require_work_time()
+        if list(parent_cache.iterdir()):
+            raise RuntimeError('Parent bytecode cache populated')
         report['public_proposal'] = proposal
         report['acceptance_status'] = 'candidate_only_pending_independent_final_review'
         report.update({'verdict': 'pass', 'collection_seconds': collection_total,
@@ -1258,15 +1328,55 @@ def main() -> int:
         report.update(verdict='fail', finding=str(error) if isinstance(error, RuntimeError) else type(error).__name__)
         # This recovery can establish cleanup only; it cannot convert any case
         # or phase result into success.
-        if 'cleanup_owned_children' in locals():
-            report['failure_cleanup'] = cleanup_owned_children()
+        budget.begin_recovery()
+        if 'owned_children' in locals() and 'reap_orphans' in locals():
+            try:
+                report['failure_cleanup'] = budget.cleanup(owned_children, reap_orphans)
+            except BaseException as cleanup_error:
+                report['failure_cleanup'] = {'result': 'unconfirmed',
+                                             'error_type': type(cleanup_error).__name__}
     finally:
+        budget.restore()
+        if not budget.finished_in_time():
+            report.update(verdict='fail', outer_deadline_exceeded=True)
+        if list(parent_cache.iterdir()):
+            report.update(verdict='fail', parent_bytecode_cache_populated=True)
         report['elapsed_seconds'] = time.monotonic() - start
         report['finished_utc'] = datetime.now(timezone.utc).isoformat()
         write_private(leaf / 'gate.json', report)
+        if not budget.finished_in_time():
+            report.update(verdict='fail', outer_deadline_exceeded=True, elapsed_seconds=time.monotonic()-start)
+            write_private(leaf / 'gate.json', report)
         print('H2 runtime-full ' + report['verdict'] + ': ' + str((leaf/'gate.json').relative_to(ROOT)))
     return 0 if report['verdict'] == 'pass' else 1
 
 
+def run_bootstrapped() -> int:
+    # Preparation hashing/review reads are bounded before any local helper can
+    # be imported. Handoff to GateBudget preserves this exact original epoch.
+    start = time.monotonic()
+    work_deadline = start + OUTER_SECONDS - 15
+    if signal.getitimer(signal.ITIMER_REAL) != (0.0, 0.0):
+        raise RuntimeError('Existing bootstrap alarm is not owned by this gate')
+    previous = {number: signal.getsignal(number)
+                for number in (signal.SIGALRM, signal.SIGTERM, signal.SIGINT)}
+
+    def stop(number, frame):
+        raise RuntimeError('Gate bootstrap deadline or termination request')
+
+    def restore():
+        signal.setitimer(signal.ITIMER_REAL, 0)
+        for number, handler in previous.items():
+            signal.signal(number, handler)
+
+    try:
+        for number in previous:
+            signal.signal(number, stop)
+        signal.setitimer(signal.ITIMER_REAL, max(0.000001, work_deadline-time.monotonic()))
+        return main(start=start, release_bootstrap=restore)
+    finally:
+        restore()
+
+
 if __name__ == '__main__':
-    sys.exit(main())
+    sys.exit(run_bootstrapped())

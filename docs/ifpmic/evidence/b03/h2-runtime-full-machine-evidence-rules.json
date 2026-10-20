@@ -161,6 +161,48 @@
           "minimum": 1,
           "path": "history-after-projection/temporal-history.pbseq",
           "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "proxy-before-kill.json",
+          "required_keys": [
+            "kind",
+            "armed",
+            "arm_monotonic",
+            "response_sequence",
+            "request_forwarded_bytes_after_arm",
+            "server_response_bytes_held_after_arm",
+            "server_response_bytes_forwarded_after_arm",
+            "server_response_bytes_total",
+            "held_response_bytes",
+            "overflowed",
+            "http2_or_grpc_frames_decoded",
+            "connection_records",
+            "events"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "proxy-through-kill.json",
+          "required_keys": [
+            "kind",
+            "armed",
+            "arm_monotonic",
+            "response_sequence",
+            "request_forwarded_bytes_after_arm",
+            "server_response_bytes_held_after_arm",
+            "server_response_bytes_forwarded_after_arm",
+            "server_response_bytes_total",
+            "held_response_bytes",
+            "overflowed",
+            "http2_or_grpc_frames_decoded",
+            "connection_records",
+            "events"
+          ]
         }
       ],
       "case_directory": "accepted-start-loss",
@@ -254,6 +296,28 @@
           "line": 417,
           "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
           "symbol": "source artifact write/read literal"
+        },
+        {
+          "artifact": "proxy-before-kill.json",
+          "line": 590,
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "symbol": "source artifact write/read literal"
+        },
+        {
+          "artifact": "proxy-through-kill.json",
+          "line": 645,
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "symbol": "source artifact write/read literal"
+        },
+        {
+          "line": 82,
+          "path": "tests/ifpmic_api/response_loss_proxy.py",
+          "symbol": "TCPResponseHoldingProxy.snapshot raw output schema"
+        },
+        {
+          "line": 87,
+          "path": "tests/ifpmic_api/response_loss_proxy.py",
+          "symbol": "raw TCP proxy observation kind and field schema"
         }
       ],
       "unresolved": [
@@ -1727,6 +1791,32 @@
             "pid",
             "start_ticks"
           ]
+        },
+        {
+          "format": "pbseq",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "accepted-start-history-before-kill.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "accepted-start-observer.json",
+          "required_keys": [
+            "workflow_id",
+            "run_id",
+            "observed_started_monotonic",
+            "execution_count",
+            "started_event_count",
+            "started_input",
+            "event_ids",
+            "status",
+            "retention_seconds",
+            "raw_history_sha256",
+            "raw_history_bytes"
+          ]
         }
       ],
       "case_directory": "dispatcher-ack-before-worker",
@@ -1789,6 +1879,23 @@
           "line": 549,
           "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
           "symbol": "source artifact write/read literal"
+        },
+        {
+          "line": 351,
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "symbol": "transitive _observe_started_direct call with private evidence root"
+        },
+        {
+          "line": 315,
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "symbol": "shared raw Temporal history write to evidence_root",
+          "artifact": "accepted-start-history-before-kill.pbseq"
+        },
+        {
+          "line": 326,
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "symbol": "shared Started observer JSON write to evidence_root",
+          "artifact": "accepted-start-observer.json"
         }
       ],
       "unresolved": [
@@ -1883,6 +1990,32 @@
             "pid",
             "start_ticks"
           ]
+        },
+        {
+          "format": "pbseq",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "accepted-start-history-before-kill.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "accepted-start-observer.json",
+          "required_keys": [
+            "workflow_id",
+            "run_id",
+            "observed_started_monotonic",
+            "execution_count",
+            "started_event_count",
+            "started_input",
+            "event_ids",
+            "status",
+            "retention_seconds",
+            "raw_history_sha256",
+            "raw_history_bytes"
+          ]
         }
       ],
       "case_directory": "dispatcher-admitted-before-ack",
@@ -1945,6 +2078,23 @@
           "line": 549,
           "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
           "symbol": "source artifact write/read literal"
+        },
+        {
+          "line": 318,
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "symbol": "transitive _observe_started_direct call with private evidence root"
+        },
+        {
+          "line": 315,
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "symbol": "shared raw Temporal history write to evidence_root",
+          "artifact": "accepted-start-history-before-kill.pbseq"
+        },
+        {
+          "line": 326,
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "symbol": "shared Started observer JSON write to evidence_root",
+          "artifact": "accepted-start-observer.json"
         }
       ],
       "unresolved": [
@@ -2050,6 +2200,32 @@
             "before",
             "after"
           ]
+        },
+        {
+          "format": "pbseq",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "accepted-start-history-before-kill.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "accepted-start-observer.json",
+          "required_keys": [
+            "workflow_id",
+            "run_id",
+            "observed_started_monotonic",
+            "execution_count",
+            "started_event_count",
+            "started_input",
+            "event_ids",
+            "status",
+            "retention_seconds",
+            "raw_history_sha256",
+            "raw_history_bytes"
+          ]
         }
       ],
       "case_directory": "dispatcher-admitted-history-deleted",
@@ -2124,6 +2300,23 @@
           "line": 549,
           "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
           "symbol": "source artifact write/read literal"
+        },
+        {
+          "line": 428,
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "symbol": "transitive _observe_started_direct call with private evidence root"
+        },
+        {
+          "line": 315,
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "symbol": "shared raw Temporal history write to evidence_root",
+          "artifact": "accepted-start-history-before-kill.pbseq"
+        },
+        {
+          "line": 326,
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "symbol": "shared Started observer JSON write to evidence_root",
+          "artifact": "accepted-start-observer.json"
         }
       ],
       "unresolved": [
@@ -2376,6 +2569,32 @@
             "pid",
             "start_ticks"
           ]
+        },
+        {
+          "format": "pbseq",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "accepted-start-history-before-kill.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "accepted-start-observer.json",
+          "required_keys": [
+            "workflow_id",
+            "run_id",
+            "observed_started_monotonic",
+            "execution_count",
+            "started_event_count",
+            "started_input",
+            "event_ids",
+            "status",
+            "retention_seconds",
+            "raw_history_sha256",
+            "raw_history_bytes"
+          ]
         }
       ],
       "case_directory": "dispatcher-response-before-admission",
@@ -2438,6 +2657,23 @@
           "line": 549,
           "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
           "symbol": "source artifact write/read literal"
+        },
+        {
+          "line": 285,
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "symbol": "transitive _observe_started_direct call with private evidence root"
+        },
+        {
+          "line": 315,
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "symbol": "shared raw Temporal history write to evidence_root",
+          "artifact": "accepted-start-history-before-kill.pbseq"
+        },
+        {
+          "line": 326,
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "symbol": "shared Started observer JSON write to evidence_root",
+          "artifact": "accepted-start-observer.json"
         }
       ],
       "unresolved": [
@@ -2532,6 +2768,32 @@
             "pid",
             "start_ticks"
           ]
+        },
+        {
+          "format": "pbseq",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "accepted-start-history-before-kill.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "accepted-start-observer.json",
+          "required_keys": [
+            "workflow_id",
+            "run_id",
+            "observed_started_monotonic",
+            "execution_count",
+            "started_event_count",
+            "started_input",
+            "event_ids",
+            "status",
+            "retention_seconds",
+            "raw_history_sha256",
+            "raw_history_bytes"
+          ]
         }
       ],
       "case_directory": "dispatcher-two-live-stale-ack",
@@ -2594,6 +2856,23 @@
           "line": 549,
           "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
           "symbol": "source artifact write/read literal"
+        },
+        {
+          "line": 379,
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "symbol": "transitive _observe_started_direct call with private evidence root"
+        },
+        {
+          "line": 315,
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "symbol": "shared raw Temporal history write to evidence_root",
+          "artifact": "accepted-start-history-before-kill.pbseq"
+        },
+        {
+          "line": 326,
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "symbol": "shared Started observer JSON write to evidence_root",
+          "artifact": "accepted-start-observer.json"
         }
       ],
       "unresolved": [
@@ -3045,6 +3324,32 @@
           "minimum": 1,
           "path": "process-journal.jsonl",
           "required_keys": []
+        },
+        {
+          "format": "pbseq",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "accepted-start-history-before-kill.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "accepted-start-observer.json",
+          "required_keys": [
+            "workflow_id",
+            "run_id",
+            "observed_started_monotonic",
+            "execution_count",
+            "started_event_count",
+            "started_input",
+            "event_ids",
+            "status",
+            "retention_seconds",
+            "raw_history_sha256",
+            "raw_history_bytes"
+          ]
         }
       ],
       "case_directory": "neg-window-test_h2_window_actual_dispatcher_boundary-actual-before-deadline",
@@ -3096,6 +3401,23 @@
           "line": 296,
           "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
           "symbol": "source artifact write/read literal"
+        },
+        {
+          "line": 525,
+          "path": "tests/ifpmic_api/test_h2_reconciliation_window.py",
+          "symbol": "transitive _observe_started_direct call with private evidence root"
+        },
+        {
+          "line": 315,
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "symbol": "shared raw Temporal history write to evidence_root",
+          "artifact": "accepted-start-history-before-kill.pbseq"
+        },
+        {
+          "line": 326,
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "symbol": "shared Started observer JSON write to evidence_root",
+          "artifact": "accepted-start-observer.json"
         }
       ],
       "unresolved": [
@@ -3703,6 +4025,13 @@
           "minimum": 1,
           "path": "history-after-cli-restart/temporal-history.pbseq",
           "required_keys": []
+        },
+        {
+          "format": "pbseq",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "history-after-projection/temporal-history.pbseq",
+          "required_keys": []
         }
       ],
       "case_directory": "runtime-independent-storage-restarts",
@@ -3742,6 +4071,22 @@
           "line": 296,
           "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
           "symbol": "source artifact write/read literal"
+        },
+        {
+          "line": 72,
+          "path": "tests/ifpmic_api/test_h2_runtime_restart_and_history.py",
+          "symbol": "calls shared _assert_crash_final initial runtime capture"
+        },
+        {
+          "line": 178,
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "symbol": "initial _assert_crash_final uses history-after-projection evidence directory"
+        },
+        {
+          "line": 527,
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "symbol": "shared Temporal observer writes temporal-history.pbseq in evidence_dir",
+          "artifact": "temporal-history.pbseq"
         }
       ],
       "unresolved": [
@@ -7452,6 +7797,32 @@
           "minimum": 1,
           "path": "process-journal.jsonl",
           "required_keys": []
+        },
+        {
+          "format": "pbseq",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "accepted-start-history-before-kill.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "accepted-start-observer.json",
+          "required_keys": [
+            "workflow_id",
+            "run_id",
+            "observed_started_monotonic",
+            "execution_count",
+            "started_event_count",
+            "started_input",
+            "event_ids",
+            "status",
+            "retention_seconds",
+            "raw_history_sha256",
+            "raw_history_bytes"
+          ]
         }
       ],
       "case_directory": "foreign-deployment",
@@ -7509,6 +7880,23 @@
           "line": 697,
           "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
           "symbol": "source artifact write/read literal"
+        },
+        {
+          "line": 604,
+          "path": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py",
+          "symbol": "transitive _observe_started_direct call with private evidence root"
+        },
+        {
+          "line": 315,
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "symbol": "shared raw Temporal history write to evidence_root",
+          "artifact": "accepted-start-history-before-kill.pbseq"
+        },
+        {
+          "line": 326,
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "symbol": "shared Started observer JSON write to evidence_root",
+          "artifact": "accepted-start-observer.json"
         }
       ],
       "unresolved": [
@@ -8570,6 +8958,25 @@
           "minimum": 1,
           "path": "preadmission-start-history/accepted-start-history-before-kill.pbseq",
           "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "preadmission-start-history/accepted-start-observer.json",
+          "required_keys": [
+            "workflow_id",
+            "run_id",
+            "observed_started_monotonic",
+            "execution_count",
+            "started_event_count",
+            "started_input",
+            "event_ids",
+            "status",
+            "retention_seconds",
+            "raw_history_sha256",
+            "raw_history_bytes"
+          ]
         }
       ],
       "case_directory": "transport-preadmission",
@@ -8627,6 +9034,17 @@
           "line": 697,
           "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
           "symbol": "source artifact write/read literal"
+        },
+        {
+          "line": 473,
+          "path": "tests/ifpmic_api/test_h2_transport_boundaries.py",
+          "symbol": "accepted_started delegates to shared direct Started observer with nested evidence root"
+        },
+        {
+          "line": 326,
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "symbol": "shared Started observer JSON write to evidence_root",
+          "artifact": "accepted-start-observer.json"
         }
       ],
       "unresolved": [
@@ -11399,7 +11817,61 @@
         "sha256": "a083c16240d614fe0e40a30c0e98b0a41de887a38c92050f33e37dbe45c15004"
       }
     ],
-    "mapping_basis_note": "Case rows are mapped against current test/support source paths below. Historical contract/index hashes explain provenance only and do not authorize execution."
+    "mapping_basis_note": "Case rows are mapped against current test/support source paths below. Historical contract/index hashes explain provenance only and do not authorize execution.",
+    "source_mapping_corrections": [
+      {
+        "case_suffix": "test_h2_window_actual_dispatcher_boundary[actual-before-deadline]",
+        "added_artifacts": [
+          "accepted-start-history-before-kill.pbseq",
+          "accepted-start-observer.json"
+        ],
+        "basis": "Only the before-deadline branch reaches _observe_started_direct with case root; after-deadline retains its actual empty run list."
+      },
+      {
+        "case_suffixes": [
+          "test_start_response_before_admission_crash_recovers_same_run",
+          "test_admission_before_ack_crash_recovers_same_run",
+          "test_ack_before_worker_activation_projects_once",
+          "test_two_live_dispatchers_stale_ack_cannot_change_recovered_run",
+          "test_admitted_missing_history_is_quarantined_without_replacement"
+        ],
+        "added_artifacts": [
+          "accepted-start-history-before-kill.pbseq",
+          "accepted-start-observer.json"
+        ],
+        "basis": "Each test reaches test_h2_dispatcher_crashes._observe_start; the shared Started observer persists these two files before later recovery/deletion."
+      },
+      {
+        "case_suffix": "test_postgres_and_temporal_restart_preserve_same_execution_and_receipt",
+        "added_artifacts": [
+          "history-after-projection/temporal-history.pbseq"
+        ],
+        "basis": "The initial _assert_crash_final call writes raw history before the three explicit restart history captures."
+      },
+      {
+        "case_suffix": "test_h2_activity_waits_until_admission_same_run",
+        "added_artifacts": [
+          "preadmission-start-history/accepted-start-observer.json"
+        ],
+        "basis": "accepted_started delegates to the shared Started observer under the nested preadmission-start-history evidence root."
+      },
+      {
+        "case_suffix": "test_foreign_deployment_cannot_start_old_binding",
+        "added_artifacts": [
+          "accepted-start-history-before-kill.pbseq",
+          "accepted-start-observer.json"
+        ],
+        "basis": "The test independently observes Started on the owning deployment before releasing its dispatcher barrier."
+      },
+      {
+        "case_suffix": "test_actual_started_event_survives_lost_start_response_and_recovers_same_run",
+        "added_artifacts": [
+          "proxy-before-kill.json",
+          "proxy-through-kill.json"
+        ],
+        "basis": "Both raw TCP proxy snapshots are persisted by the test and provide the held-response / kill causal evidence."
+      }
+    ]
   },
   "schema_scope": {
     "environment_manifest": {
@@ -11507,6 +11979,6 @@
     "scripts/ifpmic_h2_fences.py": "53836724368ab3dac9e7ccaeb6e603a3a2124926e73db452448bfd608d746a9f",
     "tests/ifpmic_evidence/test_retained_fences.py": "d23b1fe244071654b1c23bfccd84499eff5407ad243a806686aee4e81916d54f"
   },
-  "status": "draft_no_execution",
+  "status": "candidate_pending_exact_review",
   "unresolved": []
 }

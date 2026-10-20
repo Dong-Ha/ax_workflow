@@ -1,0 +1,2319 @@
+{
+  "cases": [
+    {
+      "artifact_count": 14,
+      "artifact_paths": [
+        "owner-before-dispatch.json",
+        "accepted-start-history-before-kill.pbseq",
+        "accepted-start-observer.json",
+        "barrier-sequence.json",
+        "owner-at-start-attempt.json",
+        "owner-after-kill.json",
+        "owner-after-projection-replay.json",
+        "process-journal.jsonl",
+        "source-manifest.json",
+        "environment-manifest.json",
+        "response-loss-observation.json",
+        "history-after-projection/temporal-history.pbseq",
+        "proxy-before-kill.json",
+        "proxy-through-kill.json"
+      ],
+      "case_directory": "accepted-start-loss",
+      "node_id": "tests/ifpmic_api/test_accepted_start_response_loss.py::test_actual_started_event_survives_lost_start_response_and_recovers_same_run",
+      "phase": "dispatcher_crashes",
+      "profile": "accepted_start_loss",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: barrier-sequence.json",
+        "Source-declared evidence item needs a concrete path/condition mapping: history-after-projection/** (direct history observation)",
+        "JSON top-level keys not fully source-verified for owner-before-dispatch.json",
+        "JSON top-level keys not fully source-verified for accepted-start-observer.json",
+        "JSON top-level keys not fully source-verified for barrier-sequence.json",
+        "JSON top-level keys not fully source-verified for owner-at-start-attempt.json",
+        "JSON top-level keys not fully source-verified for owner-after-kill.json",
+        "JSON top-level keys not fully source-verified for owner-after-projection-replay.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl",
+        "JSON top-level keys not fully source-verified for source-manifest.json",
+        "JSON top-level keys not fully source-verified for environment-manifest.json",
+        "JSON top-level keys not fully source-verified for response-loss-observation.json"
+      ]
+    },
+    {
+      "artifact_count": 5,
+      "artifact_paths": [
+        "authority-eligibility.json",
+        "authority-rejected-history.pbseq",
+        "process-journal.jsonl",
+        "process-cleanup.json",
+        "authority-before-barrier/before_first_projection_sql.json"
+      ],
+      "case_directory": "authority-before-first-projection-eligibility",
+      "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_authority_revoked_before_first_projection[eligibility]",
+      "phase": "activity_runtime",
+      "profile": "activity_authority",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: before_first_projection_sql.json barrier",
+        "Source-declared evidence item needs a concrete path/condition mapping: process logs",
+        "JSON top-level keys not fully source-verified for before_first_projection_sql.json",
+        "JSON top-level keys not fully source-verified for authority-eligibility.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl",
+        "JSON top-level keys not fully source-verified for process-cleanup.json",
+        "Artifact write source location not resolved statically: authority-eligibility.json",
+        "Artifact write source location not resolved statically: authority-rejected-history.pbseq"
+      ]
+    },
+    {
+      "artifact_count": 5,
+      "artifact_paths": [
+        "authority-membership.json",
+        "authority-rejected-history.pbseq",
+        "process-journal.jsonl",
+        "process-cleanup.json",
+        "authority-before-barrier/before_first_projection_sql.json"
+      ],
+      "case_directory": "authority-before-first-projection-membership",
+      "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_authority_revoked_before_first_projection[membership]",
+      "phase": "activity_runtime",
+      "profile": "activity_authority",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: before_first_projection_sql.json barrier",
+        "Source-declared evidence item needs a concrete path/condition mapping: process logs",
+        "JSON top-level keys not fully source-verified for before_first_projection_sql.json",
+        "JSON top-level keys not fully source-verified for authority-membership.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl",
+        "JSON top-level keys not fully source-verified for process-cleanup.json",
+        "Artifact write source location not resolved statically: authority-membership.json",
+        "Artifact write source location not resolved statically: authority-rejected-history.pbseq"
+      ]
+    },
+    {
+      "artifact_count": 6,
+      "artifact_paths": [
+        "history-before-lost-activity-result.pbseq",
+        "history-after-receipt-replay.pbseq",
+        "authority-eligibility.json",
+        "process-journal.jsonl",
+        "process-cleanup.json",
+        "receipt-replay-barrier/projection_commit_complete.json"
+      ],
+      "case_directory": "activity-receipt-replay-eligibility",
+      "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_committed_receipt_replays_after_authority_revoke[eligibility]",
+      "phase": "activity_runtime",
+      "profile": "activity_receipt_replay",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "JSON top-level keys not fully source-verified for worker-crash-recovery.json",
+        "JSON top-level keys not fully source-verified for authority-eligibility.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl",
+        "JSON top-level keys not fully source-verified for process-cleanup.json",
+        "Artifact write source location not resolved statically: worker-crash-recovery.json",
+        "Artifact write source location not resolved statically: history-before-lost-activity-result.pbseq",
+        "Artifact write source location not resolved statically: history-after-receipt-replay.pbseq",
+        "Artifact write source location not resolved statically: authority-eligibility.json",
+        "Raw contract names worker-crash-recovery.json, but no writer for that filename is present in this literal activity receipt replay source/support set; exclude until provenance is reconciled."
+      ]
+    },
+    {
+      "artifact_count": 6,
+      "artifact_paths": [
+        "history-before-lost-activity-result.pbseq",
+        "history-after-receipt-replay.pbseq",
+        "authority-membership.json",
+        "process-journal.jsonl",
+        "process-cleanup.json",
+        "receipt-replay-barrier/projection_commit_complete.json"
+      ],
+      "case_directory": "activity-receipt-replay-membership",
+      "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_committed_receipt_replays_after_authority_revoke[membership]",
+      "phase": "activity_runtime",
+      "profile": "activity_receipt_replay",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "JSON top-level keys not fully source-verified for worker-crash-recovery.json",
+        "JSON top-level keys not fully source-verified for authority-membership.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl",
+        "JSON top-level keys not fully source-verified for process-cleanup.json",
+        "Artifact write source location not resolved statically: worker-crash-recovery.json",
+        "Artifact write source location not resolved statically: history-before-lost-activity-result.pbseq",
+        "Artifact write source location not resolved statically: history-after-receipt-replay.pbseq",
+        "Artifact write source location not resolved statically: authority-membership.json",
+        "Raw contract names worker-crash-recovery.json, but no writer for that filename is present in this literal activity receipt replay source/support set; exclude until provenance is reconciled."
+      ]
+    },
+    {
+      "artifact_count": 6,
+      "artifact_paths": [
+        "hung-driver-rollback.json",
+        "history-after-hung-driver-kill.pbseq",
+        "history-after-driver-rollback-recovery.pbseq",
+        "process-journal.jsonl",
+        "process-cleanup.json",
+        "hung-driver-barrier/projection_driver_blocked.json"
+      ],
+      "case_directory": "runtime-hung-driver",
+      "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_execution_runtime_kills_hung_real_driver_and_rolls_back",
+      "phase": "activity_runtime",
+      "profile": "hung_driver",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: PostgreSQL backend observation records",
+        "JSON top-level keys not fully source-verified for projection_driver_blocked.json",
+        "JSON top-level keys not fully source-verified for hung-driver-rollback.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl",
+        "JSON top-level keys not fully source-verified for process-cleanup.json",
+        "Raw source gap: backend disappearance timing remains dynamically unverified; use bound from pinned plan and do not claim from source.",
+        "Artifact write source location not resolved statically: history-after-hung-driver-kill.pbseq",
+        "Artifact write source location not resolved statically: history-after-driver-rollback-recovery.pbseq"
+      ]
+    },
+    {
+      "artifact_count": 3,
+      "artifact_paths": [
+        "process-journal.jsonl",
+        "process-cleanup.json",
+        "normal-sigterm-barrier/worker_run_entered.json"
+      ],
+      "case_directory": "runtime-normal-sigterm",
+      "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_execution_runtime_normal_sigterm_control",
+      "phase": "activity_runtime",
+      "profile": "runtime_sigterm",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: process logs",
+        "JSON top-level keys not fully source-verified for worker_run_entered.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl",
+        "JSON top-level keys not fully source-verified for process-cleanup.json"
+      ]
+    },
+    {
+      "artifact_count": 5,
+      "artifact_paths": [
+        "process-journal.jsonl",
+        "process-cleanup.json",
+        "runtime-exit-barrier/worker_run_entered.json",
+        "runtime-exit-barrier/worker_fatal_armed.json",
+        "runtime-exit-barrier/concurrent_sigterm_sent.json"
+      ],
+      "case_directory": "runtime-exit-runtime-concurrent-fatal",
+      "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_execution_runtime_surfaces_unrequested_worker_exit[runtime-concurrent-fatal]",
+      "phase": "activity_runtime",
+      "profile": "runtime_exit",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: task action files",
+        "Source-declared evidence item needs a concrete path/condition mapping: process logs",
+        "JSON top-level keys not fully source-verified for worker_run_entered.json",
+        "JSON top-level keys not fully source-verified for worker_fatal_armed.json",
+        "JSON top-level keys not fully source-verified for concurrent_sigterm_sent.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl",
+        "JSON top-level keys not fully source-verified for process-cleanup.json",
+        "Raw source gap: Temporal list is actually queried and persisted as an empty result; raw workflow history is inapplicable because the observed result contains no runs."
+      ]
+    },
+    {
+      "artifact_count": 4,
+      "artifact_paths": [
+        "process-journal.jsonl",
+        "process-cleanup.json",
+        "runtime-exit-barrier/worker_run_entered.json",
+        "runtime-exit-barrier/worker_fatal_armed.json"
+      ],
+      "case_directory": "runtime-exit-runtime-fatal",
+      "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_execution_runtime_surfaces_unrequested_worker_exit[runtime-fatal]",
+      "phase": "activity_runtime",
+      "profile": "runtime_exit",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: task action files",
+        "Source-declared evidence item needs a concrete path/condition mapping: process logs",
+        "JSON top-level keys not fully source-verified for worker_run_entered.json",
+        "JSON top-level keys not fully source-verified for worker_fatal_armed.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl",
+        "JSON top-level keys not fully source-verified for process-cleanup.json",
+        "Raw source gap: Temporal list is actually queried and persisted as an empty result; raw workflow history is inapplicable because the observed result contains no runs."
+      ]
+    },
+    {
+      "artifact_count": 3,
+      "artifact_paths": [
+        "process-journal.jsonl",
+        "process-cleanup.json",
+        "runtime-exit-barrier/worker_run_entered.json"
+      ],
+      "case_directory": "runtime-exit-runtime-return",
+      "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_execution_runtime_surfaces_unrequested_worker_exit[runtime-return]",
+      "phase": "activity_runtime",
+      "profile": "runtime_exit",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: task action files",
+        "Source-declared evidence item needs a concrete path/condition mapping: process logs",
+        "JSON top-level keys not fully source-verified for worker_run_entered.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl",
+        "JSON top-level keys not fully source-verified for process-cleanup.json",
+        "Raw source gap: Temporal list is actually queried and persisted as an empty result; raw workflow history is inapplicable because the observed result contains no runs."
+      ]
+    },
+    {
+      "artifact_count": 6,
+      "artifact_paths": [
+        "retention-unavailable.json",
+        "process-journal.jsonl",
+        "process-cleanup.json",
+        "retention-rpc-barrier/actual_history_not_found.json",
+        "retention-rpc-barrier/actual_retention_rpc_begin.json",
+        "retention-rpc-barrier/actual_retention_rpc_failed.json"
+      ],
+      "case_directory": "retention-rpc-failure",
+      "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_missing_history_then_retention_rpc_failure_never_starts",
+      "phase": "activity_runtime",
+      "profile": "retention_rpc",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: actual_history_not_found.json barrier",
+        "Source-declared evidence item needs a concrete path/condition mapping: actual_retention_rpc_begin.json barrier",
+        "Source-declared evidence item needs a concrete path/condition mapping: actual_retention_rpc_failed.json barrier",
+        "JSON top-level keys not fully source-verified for actual_history_not_found.json",
+        "JSON top-level keys not fully source-verified for actual_retention_rpc_begin.json",
+        "JSON top-level keys not fully source-verified for actual_retention_rpc_failed.json",
+        "JSON top-level keys not fully source-verified for retention-unavailable.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl",
+        "JSON top-level keys not fully source-verified for process-cleanup.json"
+      ]
+    },
+    {
+      "artifact_count": 4,
+      "artifact_paths": [
+        "history-after-real-noncreate-signal.pbseq",
+        "process-journal.jsonl",
+        "process-cleanup.json",
+        "temporal-history.pbseq"
+      ],
+      "case_directory": "noncreate-signal",
+      "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_noncreate_signal_targets_admitted_run_without_business_consumption",
+      "phase": "activity_runtime",
+      "profile": "noncreate_signal",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: process logs",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl",
+        "JSON top-level keys not fully source-verified for process-cleanup.json",
+        "Artifact write source location not resolved statically: history-after-real-noncreate-signal.pbseq"
+      ]
+    },
+    {
+      "artifact_count": 2,
+      "artifact_paths": [
+        "noncreate-not-admitted.json",
+        "process-journal.jsonl"
+      ],
+      "case_directory": "noncreate-unadmitted-*",
+      "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_noncreate_waits_until_admission",
+      "phase": "activity_runtime",
+      "profile": "noncreate_wait",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: process logs/cleanup",
+        "JSON top-level keys not fully source-verified for noncreate-not-admitted.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl"
+      ]
+    },
+    {
+      "artifact_count": 9,
+      "artifact_paths": [
+        "owner-at-cut.json",
+        "workspace-recovered-observation.json",
+        "case-result.json",
+        "process-journal.jsonl",
+        "process-cleanup.json",
+        "history-after-projection/temporal-history.pbseq",
+        "dispatcher-barrier.json",
+        "accepted-start-history-before-kill.pbseq",
+        "accepted-start-observer.json"
+      ],
+      "case_directory": "dispatcher-ack-before-worker",
+      "node_id": "tests/ifpmic_api/test_h2_dispatcher_crashes.py::test_ack_before_worker_activation_projects_once",
+      "phase": "dispatcher_crashes",
+      "profile": "dispatcher_crash",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: history-after-projection/** (direct observation)",
+        "Source-declared evidence item needs a concrete path/condition mapping: barrier files",
+        "JSON top-level keys not fully source-verified for owner-at-cut.json",
+        "JSON top-level keys not fully source-verified for workspace-recovered-observation.json",
+        "JSON top-level keys not fully source-verified for case-result.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl",
+        "JSON top-level keys not fully source-verified for process-cleanup.json"
+      ]
+    },
+    {
+      "artifact_count": 9,
+      "artifact_paths": [
+        "owner-at-cut.json",
+        "workspace-recovered-observation.json",
+        "case-result.json",
+        "process-journal.jsonl",
+        "process-cleanup.json",
+        "history-after-projection/temporal-history.pbseq",
+        "dispatcher-barrier.json",
+        "accepted-start-history-before-kill.pbseq",
+        "accepted-start-observer.json"
+      ],
+      "case_directory": "dispatcher-admitted-before-ack",
+      "node_id": "tests/ifpmic_api/test_h2_dispatcher_crashes.py::test_admission_before_ack_crash_recovers_same_run",
+      "phase": "dispatcher_crashes",
+      "profile": "dispatcher_crash",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: history-after-projection/** (direct observation)",
+        "Source-declared evidence item needs a concrete path/condition mapping: barrier files",
+        "JSON top-level keys not fully source-verified for owner-at-cut.json",
+        "JSON top-level keys not fully source-verified for workspace-recovered-observation.json",
+        "JSON top-level keys not fully source-verified for case-result.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl",
+        "JSON top-level keys not fully source-verified for process-cleanup.json"
+      ]
+    },
+    {
+      "artifact_count": 10,
+      "artifact_paths": [
+        "owner-at-cut.json",
+        "case-result.json",
+        "exact-owned-history-deletion.json",
+        "owner-after-history-missing-quarantine.json",
+        "process-journal.jsonl",
+        "process-cleanup.json",
+        "dispatcher-barrier.json",
+        "workspace-after-history-missing-quarantine.json",
+        "accepted-start-history-before-kill.pbseq",
+        "accepted-start-observer.json"
+      ],
+      "case_directory": "dispatcher-admitted-history-deleted",
+      "node_id": "tests/ifpmic_api/test_h2_dispatcher_crashes.py::test_admitted_missing_history_is_quarantined_without_replacement",
+      "phase": "dispatcher_crashes",
+      "profile": "dispatcher_crash",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: history-after-projection/** (direct observation)",
+        "Source-declared evidence item needs a concrete path/condition mapping: barrier files",
+        "JSON top-level keys not fully source-verified for owner-at-cut.json",
+        "JSON top-level keys not fully source-verified for workspace-recovered-observation.json",
+        "JSON top-level keys not fully source-verified for case-result.json",
+        "JSON top-level keys not fully source-verified for exact-owned-history-deletion.json",
+        "JSON top-level keys not fully source-verified for owner-after-history-missing-quarantine.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl",
+        "JSON top-level keys not fully source-verified for process-cleanup.json"
+      ]
+    },
+    {
+      "artifact_count": 7,
+      "artifact_paths": [
+        "owner-at-cut.json",
+        "workspace-recovered-observation.json",
+        "case-result.json",
+        "process-journal.jsonl",
+        "process-cleanup.json",
+        "history-after-projection/temporal-history.pbseq",
+        "dispatcher-barrier.json"
+      ],
+      "case_directory": "dispatcher-claim-commit",
+      "node_id": "tests/ifpmic_api/test_h2_dispatcher_crashes.py::test_claim_commit_crash_reclaims_only_after_expiry",
+      "phase": "dispatcher_crashes",
+      "profile": "dispatcher_crash",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: history-after-projection/** (direct observation)",
+        "Source-declared evidence item needs a concrete path/condition mapping: barrier files",
+        "JSON top-level keys not fully source-verified for owner-at-cut.json",
+        "JSON top-level keys not fully source-verified for workspace-recovered-observation.json",
+        "JSON top-level keys not fully source-verified for case-result.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl",
+        "JSON top-level keys not fully source-verified for process-cleanup.json"
+      ]
+    },
+    {
+      "artifact_count": 9,
+      "artifact_paths": [
+        "owner-at-cut.json",
+        "workspace-recovered-observation.json",
+        "case-result.json",
+        "process-journal.jsonl",
+        "process-cleanup.json",
+        "history-after-projection/temporal-history.pbseq",
+        "dispatcher-barrier.json",
+        "accepted-start-history-before-kill.pbseq",
+        "accepted-start-observer.json"
+      ],
+      "case_directory": "dispatcher-response-before-admission",
+      "node_id": "tests/ifpmic_api/test_h2_dispatcher_crashes.py::test_start_response_before_admission_crash_recovers_same_run",
+      "phase": "dispatcher_crashes",
+      "profile": "dispatcher_crash",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: history-after-projection/** (direct observation)",
+        "Source-declared evidence item needs a concrete path/condition mapping: barrier files",
+        "JSON top-level keys not fully source-verified for owner-at-cut.json",
+        "JSON top-level keys not fully source-verified for workspace-recovered-observation.json",
+        "JSON top-level keys not fully source-verified for case-result.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl",
+        "JSON top-level keys not fully source-verified for process-cleanup.json"
+      ]
+    },
+    {
+      "artifact_count": 9,
+      "artifact_paths": [
+        "owner-at-cut.json",
+        "workspace-recovered-observation.json",
+        "case-result.json",
+        "process-journal.jsonl",
+        "process-cleanup.json",
+        "history-after-projection/temporal-history.pbseq",
+        "dispatcher-barrier.json",
+        "accepted-start-history-before-kill.pbseq",
+        "accepted-start-observer.json"
+      ],
+      "case_directory": "dispatcher-two-live-stale-ack",
+      "node_id": "tests/ifpmic_api/test_h2_dispatcher_crashes.py::test_two_live_dispatchers_stale_ack_cannot_change_recovered_run",
+      "phase": "dispatcher_crashes",
+      "profile": "dispatcher_crash",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: history-after-projection/** (direct observation)",
+        "Source-declared evidence item needs a concrete path/condition mapping: barrier files",
+        "JSON top-level keys not fully source-verified for owner-at-cut.json",
+        "JSON top-level keys not fully source-verified for workspace-recovered-observation.json",
+        "JSON top-level keys not fully source-verified for case-result.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl",
+        "JSON top-level keys not fully source-verified for process-cleanup.json"
+      ]
+    },
+    {
+      "artifact_count": 2,
+      "artifact_paths": [
+        "process-cleanup.json",
+        "process-journal.jsonl"
+      ],
+      "case_directory": "cleanup-fallback-probe-0380168db84faae2",
+      "node_id": "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py::test_expired_cleanup_budget_performs_no_new_lifecycle_action",
+      "phase": "fixture_failure",
+      "profile": "fixture_budget",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: JUnit assertions",
+        "JSON top-level keys not fully source-verified for process-cleanup.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl",
+        "Raw source gap: test uses a narrow retained-handle probe; do not mislabel synthetic handle as actual OS subprocess."
+      ]
+    },
+    {
+      "artifact_count": 1,
+      "artifact_paths": [
+        "fixture-cleanup.jsonl"
+      ],
+      "case_directory": ".",
+      "node_id": "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py::test_partial_oidc_start_fails_closed_for_unstarted_thread_handle",
+      "phase": "fixture_failure",
+      "profile": "fixture_oidc",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "JSON top-level keys not fully source-verified for fixture-cleanup.jsonl",
+        "Raw source gap: file log must retain descriptor/handle identity and unknown ownership; JUnit observes actual open/started state."
+      ]
+    },
+    {
+      "artifact_count": 1,
+      "artifact_paths": [
+        "fixture-cleanup.jsonl"
+      ],
+      "case_directory": ".",
+      "node_id": "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py::test_restore_error_keeps_exact_primary_and_notes_secondary",
+      "phase": "fixture_failure",
+      "profile": "fixture_restore_primary",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "JSON top-level keys not fully source-verified for fixture-cleanup.jsonl",
+        "Raw source gap: private query observation records types/identity result, not entire exception trace; JUnit assertion retains object identity check."
+      ]
+    },
+    {
+      "artifact_count": 1,
+      "artifact_paths": [
+        "fixture-cleanup.jsonl"
+      ],
+      "case_directory": ".",
+      "node_id": "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py::test_restore_only_failure_escapes_by_identity",
+      "phase": "fixture_failure",
+      "profile": "fixture_restore_only",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "JSON top-level keys not fully source-verified for fixture-cleanup.jsonl"
+      ]
+    },
+    {
+      "artifact_count": 1,
+      "artifact_paths": [
+        "fixture-cleanup.jsonl"
+      ],
+      "case_directory": ".",
+      "node_id": "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py::test_unconfirmed_testclient_exit_records_unknown_ownership",
+      "phase": "fixture_failure",
+      "profile": "fixture_testclient",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "JSON top-level keys not fully source-verified for fixture-cleanup.jsonl",
+        "Raw source gap: do not claim absence from only serialized thread id; require source JUnit inspection and finalizer log."
+      ]
+    },
+    {
+      "artifact_count": 4,
+      "artifact_paths": [
+        "neg-window-runtime-boundary.json",
+        "source-manifest.json",
+        "environment-manifest.json",
+        "process-journal.jsonl"
+      ],
+      "case_directory": "neg-window-test_h2_window_actual_dispatcher_boundary-actual-after-deadline",
+      "node_id": "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_actual_dispatcher_boundary[actual-after-deadline]",
+      "phase": "window",
+      "profile": "window_runtime",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: history/** raw direct event sequence",
+        "Source-declared evidence item needs a concrete path/condition mapping: barrier and cleanup records",
+        "JSON top-level keys not fully source-verified for neg-window-runtime-boundary.json",
+        "JSON top-level keys not fully source-verified for source-manifest.json",
+        "JSON top-level keys not fully source-verified for environment-manifest.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl"
+      ]
+    },
+    {
+      "artifact_count": 6,
+      "artifact_paths": [
+        "neg-window-runtime-boundary.json",
+        "source-manifest.json",
+        "environment-manifest.json",
+        "process-journal.jsonl",
+        "accepted-start-history-before-kill.pbseq",
+        "accepted-start-observer.json"
+      ],
+      "case_directory": "neg-window-test_h2_window_actual_dispatcher_boundary-actual-before-deadline",
+      "node_id": "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_actual_dispatcher_boundary[actual-before-deadline]",
+      "phase": "window",
+      "profile": "window_runtime",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: history/** raw direct event sequence",
+        "Source-declared evidence item needs a concrete path/condition mapping: barrier and cleanup records",
+        "JSON top-level keys not fully source-verified for neg-window-runtime-boundary.json",
+        "JSON top-level keys not fully source-verified for source-manifest.json",
+        "JSON top-level keys not fully source-verified for environment-manifest.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl"
+      ]
+    },
+    {
+      "artifact_count": 3,
+      "artifact_paths": [
+        "neg-window-clock-seam.json",
+        "source-manifest.json",
+        "environment-manifest.json"
+      ],
+      "case_directory": "neg-window-test_h2_window_exact_deadline_with_isolated_clock_seam-after-deadline",
+      "node_id": "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_exact_deadline_with_isolated_clock_seam[after-deadline]",
+      "phase": "window",
+      "profile": "window_clock",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "JSON top-level keys not fully source-verified for neg-window-clock-seam.json",
+        "JSON top-level keys not fully source-verified for source-manifest.json",
+        "JSON top-level keys not fully source-verified for environment-manifest.json",
+        "Raw source gap: clock-seam mutation remains unexecuted; no production clock evidence."
+      ]
+    },
+    {
+      "artifact_count": 3,
+      "artifact_paths": [
+        "neg-window-clock-seam.json",
+        "source-manifest.json",
+        "environment-manifest.json"
+      ],
+      "case_directory": "neg-window-test_h2_window_exact_deadline_with_isolated_clock_seam-at-deadline",
+      "node_id": "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_exact_deadline_with_isolated_clock_seam[at-deadline]",
+      "phase": "window",
+      "profile": "window_clock",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "JSON top-level keys not fully source-verified for neg-window-clock-seam.json",
+        "JSON top-level keys not fully source-verified for source-manifest.json",
+        "JSON top-level keys not fully source-verified for environment-manifest.json",
+        "Raw source gap: clock-seam mutation remains unexecuted; no production clock evidence."
+      ]
+    },
+    {
+      "artifact_count": 3,
+      "artifact_paths": [
+        "neg-window-clock-seam.json",
+        "source-manifest.json",
+        "environment-manifest.json"
+      ],
+      "case_directory": "neg-window-test_h2_window_exact_deadline_with_isolated_clock_seam-before-deadline",
+      "node_id": "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_exact_deadline_with_isolated_clock_seam[before-deadline]",
+      "phase": "window",
+      "profile": "window_clock",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "JSON top-level keys not fully source-verified for neg-window-clock-seam.json",
+        "JSON top-level keys not fully source-verified for source-manifest.json",
+        "JSON top-level keys not fully source-verified for environment-manifest.json",
+        "Raw source gap: clock-seam mutation remains unexecuted; no production clock evidence."
+      ]
+    },
+    {
+      "artifact_count": 3,
+      "artifact_paths": [
+        "neg-window-partial-shape.json",
+        "source-manifest.json",
+        "environment-manifest.json"
+      ],
+      "case_directory": "neg-window-test_h2_window_partial_shape_constraint",
+      "node_id": "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_partial_shape_constraint",
+      "phase": "window",
+      "profile": "window_shape",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "JSON top-level keys not fully source-verified for neg-window-partial-shape.json",
+        "JSON top-level keys not fully source-verified for source-manifest.json",
+        "JSON top-level keys not fully source-verified for environment-manifest.json"
+      ]
+    },
+    {
+      "artifact_count": 3,
+      "artifact_paths": [
+        "neg-window-retention.json",
+        "source-manifest.json",
+        "environment-manifest.json"
+      ],
+      "case_directory": "neg-window-test_h2_window_retention-retention-3600",
+      "node_id": "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_retention[retention-3600]",
+      "phase": "window",
+      "profile": "window_retention",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "JSON top-level keys not fully source-verified for neg-window-retention.json",
+        "JSON top-level keys not fully source-verified for source-manifest.json",
+        "JSON top-level keys not fully source-verified for environment-manifest.json"
+      ]
+    },
+    {
+      "artifact_count": 3,
+      "artifact_paths": [
+        "neg-window-retention.json",
+        "source-manifest.json",
+        "environment-manifest.json"
+      ],
+      "case_directory": "neg-window-test_h2_window_retention-retention-3601",
+      "node_id": "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_retention[retention-3601]",
+      "phase": "window",
+      "profile": "window_retention",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "JSON top-level keys not fully source-verified for neg-window-retention.json",
+        "JSON top-level keys not fully source-verified for source-manifest.json",
+        "JSON top-level keys not fully source-verified for environment-manifest.json"
+      ]
+    },
+    {
+      "artifact_count": 3,
+      "artifact_paths": [
+        "neg-window-retention.json",
+        "source-manifest.json",
+        "environment-manifest.json"
+      ],
+      "case_directory": "neg-window-test_h2_window_retention-retention-null",
+      "node_id": "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_retention[retention-null]",
+      "phase": "window",
+      "profile": "window_retention",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "JSON top-level keys not fully source-verified for neg-window-retention.json",
+        "JSON top-level keys not fully source-verified for source-manifest.json",
+        "JSON top-level keys not fully source-verified for environment-manifest.json"
+      ]
+    },
+    {
+      "artifact_count": 6,
+      "artifact_paths": [
+        "restart-oracle.json",
+        "process-journal.jsonl",
+        "history-after-pg-restart/temporal-history.pbseq",
+        "history-after-temporal-restart/temporal-history.pbseq",
+        "history-after-cli-restart/temporal-history.pbseq",
+        "history-after-projection/temporal-history.pbseq"
+      ],
+      "case_directory": "runtime-independent-storage-restarts",
+      "node_id": "tests/ifpmic_api/test_h2_runtime_restart_and_history.py::test_postgres_and_temporal_restart_preserve_same_execution_and_receipt",
+      "phase": "dispatcher_crashes",
+      "profile": "restart",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: history-after-pg-restart/**",
+        "Source-declared evidence item needs a concrete path/condition mapping: history-after-temporal-restart/**",
+        "Source-declared evidence item needs a concrete path/condition mapping: history-after-cli-restart/**",
+        "Source-declared evidence item needs a concrete path/condition mapping: private PostgreSQL/Temporal stores and logs",
+        "JSON top-level keys not fully source-verified for restart-oracle.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl"
+      ]
+    },
+    {
+      "artifact_count": 9,
+      "artifact_paths": [
+        "startup-stdout.log",
+        "startup-stderr.log",
+        "startup-workspace-observations.json",
+        "startup-rejection-result.json",
+        "process-journal.jsonl",
+        "source.json",
+        "environment.json",
+        "source-manifest.json",
+        "environment-manifest.json"
+      ],
+      "case_directory": "startup-build_mismatch_dispatcher",
+      "node_id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[build_mismatch_dispatcher]",
+      "phase": "startup",
+      "profile": "startup",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "JSON top-level keys not fully source-verified for startup-workspace-observations.json",
+        "JSON top-level keys not fully source-verified for startup-rejection-result.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl",
+        "JSON top-level keys not fully source-verified for source.json",
+        "JSON top-level keys not fully source-verified for environment.json",
+        "JSON top-level keys not fully source-verified for source-manifest.json",
+        "JSON top-level keys not fully source-verified for environment-manifest.json"
+      ]
+    },
+    {
+      "artifact_count": 9,
+      "artifact_paths": [
+        "startup-stdout.log",
+        "startup-stderr.log",
+        "startup-workspace-observations.json",
+        "startup-rejection-result.json",
+        "process-journal.jsonl",
+        "source.json",
+        "environment.json",
+        "source-manifest.json",
+        "environment-manifest.json"
+      ],
+      "case_directory": "startup-build_mismatch_projector",
+      "node_id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[build_mismatch_projector]",
+      "phase": "startup",
+      "profile": "startup",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "JSON top-level keys not fully source-verified for startup-workspace-observations.json",
+        "JSON top-level keys not fully source-verified for startup-rejection-result.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl",
+        "JSON top-level keys not fully source-verified for source.json",
+        "JSON top-level keys not fully source-verified for environment.json",
+        "JSON top-level keys not fully source-verified for source-manifest.json",
+        "JSON top-level keys not fully source-verified for environment-manifest.json"
+      ]
+    },
+    {
+      "artifact_count": 9,
+      "artifact_paths": [
+        "startup-stdout.log",
+        "startup-stderr.log",
+        "startup-workspace-observations.json",
+        "startup-rejection-result.json",
+        "process-journal.jsonl",
+        "source.json",
+        "environment.json",
+        "source-manifest.json",
+        "environment-manifest.json"
+      ],
+      "case_directory": "startup-deployment_mismatch",
+      "node_id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[deployment_mismatch]",
+      "phase": "startup",
+      "profile": "startup",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "JSON top-level keys not fully source-verified for startup-workspace-observations.json",
+        "JSON top-level keys not fully source-verified for startup-rejection-result.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl",
+        "JSON top-level keys not fully source-verified for source.json",
+        "JSON top-level keys not fully source-verified for environment.json",
+        "JSON top-level keys not fully source-verified for source-manifest.json",
+        "JSON top-level keys not fully source-verified for environment-manifest.json"
+      ]
+    },
+    {
+      "artifact_count": 9,
+      "artifact_paths": [
+        "startup-stdout.log",
+        "startup-stderr.log",
+        "startup-workspace-observations.json",
+        "startup-rejection-result.json",
+        "process-journal.jsonl",
+        "source.json",
+        "environment.json",
+        "source-manifest.json",
+        "environment-manifest.json"
+      ],
+      "case_directory": "startup-disabled_deployment_dispatcher",
+      "node_id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[disabled_deployment_dispatcher]",
+      "phase": "startup",
+      "profile": "startup",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "JSON top-level keys not fully source-verified for startup-workspace-observations.json",
+        "JSON top-level keys not fully source-verified for startup-rejection-result.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl",
+        "JSON top-level keys not fully source-verified for source.json",
+        "JSON top-level keys not fully source-verified for environment.json",
+        "JSON top-level keys not fully source-verified for source-manifest.json",
+        "JSON top-level keys not fully source-verified for environment-manifest.json"
+      ]
+    },
+    {
+      "artifact_count": 9,
+      "artifact_paths": [
+        "startup-stdout.log",
+        "startup-stderr.log",
+        "startup-workspace-observations.json",
+        "startup-rejection-result.json",
+        "process-journal.jsonl",
+        "source.json",
+        "environment.json",
+        "source-manifest.json",
+        "environment-manifest.json"
+      ],
+      "case_directory": "startup-disabled_dispatcher_build",
+      "node_id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[disabled_dispatcher_build]",
+      "phase": "startup",
+      "profile": "startup",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "JSON top-level keys not fully source-verified for startup-workspace-observations.json",
+        "JSON top-level keys not fully source-verified for startup-rejection-result.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl",
+        "JSON top-level keys not fully source-verified for source.json",
+        "JSON top-level keys not fully source-verified for environment.json",
+        "JSON top-level keys not fully source-verified for source-manifest.json",
+        "JSON top-level keys not fully source-verified for environment-manifest.json"
+      ]
+    },
+    {
+      "artifact_count": 9,
+      "artifact_paths": [
+        "startup-stdout.log",
+        "startup-stderr.log",
+        "startup-workspace-observations.json",
+        "startup-rejection-result.json",
+        "process-journal.jsonl",
+        "source.json",
+        "environment.json",
+        "source-manifest.json",
+        "environment-manifest.json"
+      ],
+      "case_directory": "startup-disabled_dispatcher_principal",
+      "node_id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[disabled_dispatcher_principal]",
+      "phase": "startup",
+      "profile": "startup",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "JSON top-level keys not fully source-verified for startup-workspace-observations.json",
+        "JSON top-level keys not fully source-verified for startup-rejection-result.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl",
+        "JSON top-level keys not fully source-verified for source.json",
+        "JSON top-level keys not fully source-verified for environment.json",
+        "JSON top-level keys not fully source-verified for source-manifest.json",
+        "JSON top-level keys not fully source-verified for environment-manifest.json"
+      ]
+    },
+    {
+      "artifact_count": 9,
+      "artifact_paths": [
+        "startup-stdout.log",
+        "startup-stderr.log",
+        "startup-workspace-observations.json",
+        "startup-rejection-result.json",
+        "process-journal.jsonl",
+        "source.json",
+        "environment.json",
+        "source-manifest.json",
+        "environment-manifest.json"
+      ],
+      "case_directory": "startup-disabled_projector_build",
+      "node_id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[disabled_projector_build]",
+      "phase": "startup",
+      "profile": "startup",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "JSON top-level keys not fully source-verified for startup-workspace-observations.json",
+        "JSON top-level keys not fully source-verified for startup-rejection-result.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl",
+        "JSON top-level keys not fully source-verified for source.json",
+        "JSON top-level keys not fully source-verified for environment.json",
+        "JSON top-level keys not fully source-verified for source-manifest.json",
+        "JSON top-level keys not fully source-verified for environment-manifest.json"
+      ]
+    },
+    {
+      "artifact_count": 9,
+      "artifact_paths": [
+        "startup-stdout.log",
+        "startup-stderr.log",
+        "startup-workspace-observations.json",
+        "startup-rejection-result.json",
+        "process-journal.jsonl",
+        "source.json",
+        "environment.json",
+        "source-manifest.json",
+        "environment-manifest.json"
+      ],
+      "case_directory": "startup-disabled_projector_principal",
+      "node_id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[disabled_projector_principal]",
+      "phase": "startup",
+      "profile": "startup",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "JSON top-level keys not fully source-verified for startup-workspace-observations.json",
+        "JSON top-level keys not fully source-verified for startup-rejection-result.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl",
+        "JSON top-level keys not fully source-verified for source.json",
+        "JSON top-level keys not fully source-verified for environment.json",
+        "JSON top-level keys not fully source-verified for source-manifest.json",
+        "JSON top-level keys not fully source-verified for environment-manifest.json"
+      ]
+    },
+    {
+      "artifact_count": 9,
+      "artifact_paths": [
+        "startup-stdout.log",
+        "startup-stderr.log",
+        "startup-workspace-observations.json",
+        "startup-rejection-result.json",
+        "process-journal.jsonl",
+        "source.json",
+        "environment.json",
+        "source-manifest.json",
+        "environment-manifest.json"
+      ],
+      "case_directory": "startup-endpoint_mismatch",
+      "node_id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[endpoint_mismatch]",
+      "phase": "startup",
+      "profile": "startup",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "JSON top-level keys not fully source-verified for startup-workspace-observations.json",
+        "JSON top-level keys not fully source-verified for startup-rejection-result.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl",
+        "JSON top-level keys not fully source-verified for source.json",
+        "JSON top-level keys not fully source-verified for environment.json",
+        "JSON top-level keys not fully source-verified for source-manifest.json",
+        "JSON top-level keys not fully source-verified for environment-manifest.json"
+      ]
+    },
+    {
+      "artifact_count": 9,
+      "artifact_paths": [
+        "startup-stdout.log",
+        "startup-stderr.log",
+        "startup-workspace-observations.json",
+        "startup-rejection-result.json",
+        "process-journal.jsonl",
+        "source.json",
+        "environment-mismatch.json",
+        "source-manifest.json",
+        "environment-manifest.json"
+      ],
+      "case_directory": "startup-environment_manifest_mismatch",
+      "node_id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[environment_manifest_mismatch]",
+      "phase": "startup",
+      "profile": "startup",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "JSON top-level keys not fully source-verified for startup-workspace-observations.json",
+        "JSON top-level keys not fully source-verified for startup-rejection-result.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl",
+        "JSON top-level keys not fully source-verified for source.json",
+        "JSON top-level keys not fully source-verified for environment-mismatch.json",
+        "JSON top-level keys not fully source-verified for source-manifest.json",
+        "JSON top-level keys not fully source-verified for environment-manifest.json"
+      ]
+    },
+    {
+      "artifact_count": 9,
+      "artifact_paths": [
+        "startup-stdout.log",
+        "startup-stderr.log",
+        "startup-workspace-observations.json",
+        "startup-rejection-result.json",
+        "process-journal.jsonl",
+        "source.json",
+        "environment.json",
+        "source-manifest.json",
+        "environment-manifest.json"
+      ],
+      "case_directory": "startup-missing_deployment_dispatcher",
+      "node_id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[missing_deployment_dispatcher]",
+      "phase": "startup",
+      "profile": "startup",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "JSON top-level keys not fully source-verified for startup-workspace-observations.json",
+        "JSON top-level keys not fully source-verified for startup-rejection-result.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl",
+        "JSON top-level keys not fully source-verified for source.json",
+        "JSON top-level keys not fully source-verified for environment.json",
+        "JSON top-level keys not fully source-verified for source-manifest.json",
+        "JSON top-level keys not fully source-verified for environment-manifest.json"
+      ]
+    },
+    {
+      "artifact_count": 9,
+      "artifact_paths": [
+        "startup-stdout.log",
+        "startup-stderr.log",
+        "startup-workspace-observations.json",
+        "startup-rejection-result.json",
+        "process-journal.jsonl",
+        "source.json",
+        "environment.json",
+        "source-manifest.json",
+        "environment-manifest.json"
+      ],
+      "case_directory": "startup-missing_dispatcher_build",
+      "node_id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[missing_dispatcher_build]",
+      "phase": "startup",
+      "profile": "startup",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "JSON top-level keys not fully source-verified for startup-workspace-observations.json",
+        "JSON top-level keys not fully source-verified for startup-rejection-result.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl",
+        "JSON top-level keys not fully source-verified for source.json",
+        "JSON top-level keys not fully source-verified for environment.json",
+        "JSON top-level keys not fully source-verified for source-manifest.json",
+        "JSON top-level keys not fully source-verified for environment-manifest.json"
+      ]
+    },
+    {
+      "artifact_count": 9,
+      "artifact_paths": [
+        "startup-stdout.log",
+        "startup-stderr.log",
+        "startup-workspace-observations.json",
+        "startup-rejection-result.json",
+        "process-journal.jsonl",
+        "source.json",
+        "environment.json",
+        "source-manifest.json",
+        "environment-manifest.json"
+      ],
+      "case_directory": "startup-missing_dispatcher_principal",
+      "node_id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[missing_dispatcher_principal]",
+      "phase": "startup",
+      "profile": "startup",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "JSON top-level keys not fully source-verified for startup-workspace-observations.json",
+        "JSON top-level keys not fully source-verified for startup-rejection-result.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl",
+        "JSON top-level keys not fully source-verified for source.json",
+        "JSON top-level keys not fully source-verified for environment.json",
+        "JSON top-level keys not fully source-verified for source-manifest.json",
+        "JSON top-level keys not fully source-verified for environment-manifest.json"
+      ]
+    },
+    {
+      "artifact_count": 9,
+      "artifact_paths": [
+        "startup-stdout.log",
+        "startup-stderr.log",
+        "startup-workspace-observations.json",
+        "startup-rejection-result.json",
+        "process-journal.jsonl",
+        "source.json",
+        "environment.json",
+        "source-manifest.json",
+        "environment-manifest.json"
+      ],
+      "case_directory": "startup-missing_projector_principal",
+      "node_id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[missing_projector_principal]",
+      "phase": "startup",
+      "profile": "startup",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "JSON top-level keys not fully source-verified for startup-workspace-observations.json",
+        "JSON top-level keys not fully source-verified for startup-rejection-result.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl",
+        "JSON top-level keys not fully source-verified for source.json",
+        "JSON top-level keys not fully source-verified for environment.json",
+        "JSON top-level keys not fully source-verified for source-manifest.json",
+        "JSON top-level keys not fully source-verified for environment-manifest.json"
+      ]
+    },
+    {
+      "artifact_count": 9,
+      "artifact_paths": [
+        "startup-stdout.log",
+        "startup-stderr.log",
+        "startup-workspace-observations.json",
+        "startup-rejection-result.json",
+        "process-journal.jsonl",
+        "source.json",
+        "environment.json",
+        "source-manifest.json",
+        "environment-manifest.json"
+      ],
+      "case_directory": "startup-namespace_mismatch",
+      "node_id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[namespace_mismatch]",
+      "phase": "startup",
+      "profile": "startup",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "JSON top-level keys not fully source-verified for startup-workspace-observations.json",
+        "JSON top-level keys not fully source-verified for startup-rejection-result.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl",
+        "JSON top-level keys not fully source-verified for source.json",
+        "JSON top-level keys not fully source-verified for environment.json",
+        "JSON top-level keys not fully source-verified for source-manifest.json",
+        "JSON top-level keys not fully source-verified for environment-manifest.json"
+      ]
+    },
+    {
+      "artifact_count": 8,
+      "artifact_paths": [
+        "startup-stdout.log",
+        "startup-stderr.log",
+        "startup-rejection-result.json",
+        "process-journal.jsonl",
+        "source.json",
+        "environment.json",
+        "source-manifest.json",
+        "environment-manifest.json"
+      ],
+      "case_directory": "startup-no_job_missing_registration",
+      "node_id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[no_job_missing_registration]",
+      "phase": "startup",
+      "profile": "startup",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "JSON top-level keys not fully source-verified for startup-rejection-result.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl",
+        "JSON top-level keys not fully source-verified for source.json",
+        "JSON top-level keys not fully source-verified for environment.json",
+        "JSON top-level keys not fully source-verified for source-manifest.json",
+        "JSON top-level keys not fully source-verified for environment-manifest.json"
+      ]
+    },
+    {
+      "artifact_count": 9,
+      "artifact_paths": [
+        "startup-stdout.log",
+        "startup-stderr.log",
+        "startup-workspace-observations.json",
+        "startup-rejection-result.json",
+        "process-journal.jsonl",
+        "source.json",
+        "environment.json",
+        "source-manifest.json",
+        "environment-manifest.json"
+      ],
+      "case_directory": "startup-recreated_dispatcher_role_oid",
+      "node_id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[recreated_dispatcher_role_oid]",
+      "phase": "startup",
+      "profile": "startup",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "JSON top-level keys not fully source-verified for startup-workspace-observations.json",
+        "JSON top-level keys not fully source-verified for startup-rejection-result.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl",
+        "JSON top-level keys not fully source-verified for source.json",
+        "JSON top-level keys not fully source-verified for environment.json",
+        "JSON top-level keys not fully source-verified for source-manifest.json",
+        "JSON top-level keys not fully source-verified for environment-manifest.json"
+      ]
+    },
+    {
+      "artifact_count": 9,
+      "artifact_paths": [
+        "startup-stdout.log",
+        "startup-stderr.log",
+        "startup-workspace-observations.json",
+        "startup-rejection-result.json",
+        "process-journal.jsonl",
+        "environment.json",
+        "source-mismatch.json",
+        "source-manifest.json",
+        "environment-manifest.json"
+      ],
+      "case_directory": "startup-source_manifest_mismatch",
+      "node_id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[source_manifest_mismatch]",
+      "phase": "startup",
+      "profile": "startup",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "JSON top-level keys not fully source-verified for startup-workspace-observations.json",
+        "JSON top-level keys not fully source-verified for startup-rejection-result.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl",
+        "JSON top-level keys not fully source-verified for environment.json",
+        "JSON top-level keys not fully source-verified for source-mismatch.json",
+        "JSON top-level keys not fully source-verified for source-manifest.json",
+        "JSON top-level keys not fully source-verified for environment-manifest.json"
+      ]
+    },
+    {
+      "artifact_count": 9,
+      "artifact_paths": [
+        "startup-stdout.log",
+        "startup-stderr.log",
+        "startup-workspace-observations.json",
+        "startup-rejection-result.json",
+        "process-journal.jsonl",
+        "source.json",
+        "environment.json",
+        "source-manifest.json",
+        "environment-manifest.json"
+      ],
+      "case_directory": "startup-wrong_dispatcher_password",
+      "node_id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[wrong_dispatcher_password]",
+      "phase": "startup",
+      "profile": "startup",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "JSON top-level keys not fully source-verified for startup-workspace-observations.json",
+        "JSON top-level keys not fully source-verified for startup-rejection-result.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl",
+        "JSON top-level keys not fully source-verified for source.json",
+        "JSON top-level keys not fully source-verified for environment.json",
+        "JSON top-level keys not fully source-verified for source-manifest.json",
+        "JSON top-level keys not fully source-verified for environment-manifest.json"
+      ]
+    },
+    {
+      "artifact_count": 9,
+      "artifact_paths": [
+        "startup-stdout.log",
+        "startup-stderr.log",
+        "startup-workspace-observations.json",
+        "startup-rejection-result.json",
+        "process-journal.jsonl",
+        "source.json",
+        "environment.json",
+        "source-manifest.json",
+        "environment-manifest.json"
+      ],
+      "case_directory": "startup-wrong_dispatcher_role",
+      "node_id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[wrong_dispatcher_role]",
+      "phase": "startup",
+      "profile": "startup",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "JSON top-level keys not fully source-verified for startup-workspace-observations.json",
+        "JSON top-level keys not fully source-verified for startup-rejection-result.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl",
+        "JSON top-level keys not fully source-verified for source.json",
+        "JSON top-level keys not fully source-verified for environment.json",
+        "JSON top-level keys not fully source-verified for source-manifest.json",
+        "JSON top-level keys not fully source-verified for environment-manifest.json"
+      ]
+    },
+    {
+      "artifact_count": 9,
+      "artifact_paths": [
+        "startup-stdout.log",
+        "startup-stderr.log",
+        "startup-workspace-observations.json",
+        "startup-rejection-result.json",
+        "process-journal.jsonl",
+        "source.json",
+        "environment.json",
+        "source-manifest.json",
+        "environment-manifest.json"
+      ],
+      "case_directory": "startup-wrong_projector_role",
+      "node_id": "tests/ifpmic_api/test_h2_runtime_startup_rejections.py::test_runtime_cli_rejects_registry_and_identity_mismatches[wrong_projector_role]",
+      "phase": "startup",
+      "profile": "startup",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "JSON top-level keys not fully source-verified for startup-workspace-observations.json",
+        "JSON top-level keys not fully source-verified for startup-rejection-result.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl",
+        "JSON top-level keys not fully source-verified for source.json",
+        "JSON top-level keys not fully source-verified for environment.json",
+        "JSON top-level keys not fully source-verified for source-manifest.json",
+        "JSON top-level keys not fully source-verified for environment-manifest.json"
+      ]
+    },
+    {
+      "artifact_count": 7,
+      "artifact_paths": [
+        "foreign-server-list-response.json",
+        "foreign-deployment-sql-observations.json",
+        "foreign-deployment-summary.json",
+        "foreign-login-cleanup.json",
+        "process-journal.jsonl",
+        "accepted-start-history-before-kill.pbseq",
+        "accepted-start-observer.json"
+      ],
+      "case_directory": "foreign-deployment",
+      "node_id": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_foreign_deployment_cannot_start_old_binding",
+      "phase": "started_deployment",
+      "profile": "foreign_deployment",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: foreign Temporal store/logs",
+        "Source-declared evidence item needs a concrete path/condition mapping: barriers/cleanup",
+        "JSON top-level keys not fully source-verified for foreign-server-list-response.json",
+        "JSON top-level keys not fully source-verified for foreign-deployment-sql-observations.json",
+        "JSON top-level keys not fully source-verified for foreign-deployment-summary.json",
+        "JSON top-level keys not fully source-verified for foreign-login-cleanup.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl"
+      ]
+    },
+    {
+      "artifact_count": 4,
+      "artifact_paths": [
+        "rogue-started-history.pbseq",
+        "owner-after-quarantine.json",
+        "rogue-started-summary.json",
+        "process-journal.jsonl"
+      ],
+      "case_directory": "started-binding_digest",
+      "node_id": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[binding_digest]",
+      "phase": "started_deployment",
+      "profile": "started_mismatch",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: barrier and cleanup",
+        "JSON top-level keys not fully source-verified for owner-after-quarantine.json",
+        "JSON top-level keys not fully source-verified for rogue-started-summary.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl"
+      ]
+    },
+    {
+      "artifact_count": 4,
+      "artifact_paths": [
+        "rogue-started-history.pbseq",
+        "owner-after-quarantine.json",
+        "rogue-started-summary.json",
+        "process-journal.jsonl"
+      ],
+      "case_directory": "started-build_id",
+      "node_id": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[build_id]",
+      "phase": "started_deployment",
+      "profile": "started_mismatch",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: barrier and cleanup",
+        "JSON top-level keys not fully source-verified for owner-after-quarantine.json",
+        "JSON top-level keys not fully source-verified for rogue-started-summary.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl"
+      ]
+    },
+    {
+      "artifact_count": 4,
+      "artifact_paths": [
+        "rogue-started-history.pbseq",
+        "owner-after-quarantine.json",
+        "rogue-started-summary.json",
+        "process-journal.jsonl"
+      ],
+      "case_directory": "started-extra_input",
+      "node_id": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[extra_input]",
+      "phase": "started_deployment",
+      "profile": "started_mismatch",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: barrier and cleanup",
+        "JSON top-level keys not fully source-verified for owner-after-quarantine.json",
+        "JSON top-level keys not fully source-verified for rogue-started-summary.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl"
+      ]
+    },
+    {
+      "artifact_count": 4,
+      "artifact_paths": [
+        "rogue-started-history.pbseq",
+        "owner-after-quarantine.json",
+        "rogue-started-summary.json",
+        "process-journal.jsonl"
+      ],
+      "case_directory": "started-job_id",
+      "node_id": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[job_id]",
+      "phase": "started_deployment",
+      "profile": "started_mismatch",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: barrier and cleanup",
+        "JSON top-level keys not fully source-verified for owner-after-quarantine.json",
+        "JSON top-level keys not fully source-verified for rogue-started-summary.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl"
+      ]
+    },
+    {
+      "artifact_count": 4,
+      "artifact_paths": [
+        "rogue-started-history.pbseq",
+        "owner-after-quarantine.json",
+        "rogue-started-summary.json",
+        "process-journal.jsonl"
+      ],
+      "case_directory": "started-malformed_input",
+      "node_id": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[malformed_input]",
+      "phase": "started_deployment",
+      "profile": "started_mismatch",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: barrier and cleanup",
+        "JSON top-level keys not fully source-verified for owner-after-quarantine.json",
+        "JSON top-level keys not fully source-verified for rogue-started-summary.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl"
+      ]
+    },
+    {
+      "artifact_count": 4,
+      "artifact_paths": [
+        "rogue-started-history.pbseq",
+        "owner-after-quarantine.json",
+        "rogue-started-summary.json",
+        "process-journal.jsonl"
+      ],
+      "case_directory": "started-missing_input",
+      "node_id": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[missing_input]",
+      "phase": "started_deployment",
+      "profile": "started_mismatch",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: barrier and cleanup",
+        "JSON top-level keys not fully source-verified for owner-after-quarantine.json",
+        "JSON top-level keys not fully source-verified for rogue-started-summary.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl"
+      ]
+    },
+    {
+      "artifact_count": 4,
+      "artifact_paths": [
+        "rogue-started-history.pbseq",
+        "owner-after-quarantine.json",
+        "rogue-started-summary.json",
+        "process-journal.jsonl"
+      ],
+      "case_directory": "started-project_id",
+      "node_id": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[project_id]",
+      "phase": "started_deployment",
+      "profile": "started_mismatch",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: barrier and cleanup",
+        "JSON top-level keys not fully source-verified for owner-after-quarantine.json",
+        "JSON top-level keys not fully source-verified for rogue-started-summary.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl"
+      ]
+    },
+    {
+      "artifact_count": 4,
+      "artifact_paths": [
+        "rogue-started-history.pbseq",
+        "owner-after-quarantine.json",
+        "rogue-started-summary.json",
+        "process-journal.jsonl"
+      ],
+      "case_directory": "started-task_queue",
+      "node_id": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[task_queue]",
+      "phase": "started_deployment",
+      "profile": "started_mismatch",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: barrier and cleanup",
+        "JSON top-level keys not fully source-verified for owner-after-quarantine.json",
+        "JSON top-level keys not fully source-verified for rogue-started-summary.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl"
+      ]
+    },
+    {
+      "artifact_count": 4,
+      "artifact_paths": [
+        "rogue-started-history.pbseq",
+        "owner-after-quarantine.json",
+        "rogue-started-summary.json",
+        "process-journal.jsonl"
+      ],
+      "case_directory": "started-workflow_type",
+      "node_id": "tests/ifpmic_api/test_h2_started_deployment_boundaries.py::test_started_history_mismatch_fails_closed[workflow_type]",
+      "phase": "started_deployment",
+      "profile": "started_mismatch",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: barrier and cleanup",
+        "JSON top-level keys not fully source-verified for owner-after-quarantine.json",
+        "JSON top-level keys not fully source-verified for rogue-started-summary.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl"
+      ]
+    },
+    {
+      "artifact_count": 8,
+      "artifact_paths": [
+        "preadmission-owner-at-cut.json",
+        "preadmission-owner-before-admission.json",
+        "preadmission-wait-history.pbseq",
+        "preadmission-result.json",
+        "process-journal.jsonl",
+        "preadmission-final-history/temporal-history.pbseq",
+        "preadmission-start-history/accepted-start-history-before-kill.pbseq",
+        "preadmission-start-history/accepted-start-observer.json"
+      ],
+      "case_directory": "transport-preadmission",
+      "node_id": "tests/ifpmic_api/test_h2_transport_boundaries.py::test_h2_activity_waits_until_admission_same_run",
+      "phase": "transport",
+      "profile": "preadmission",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: preadmission-final-history/** direct observation",
+        "Source-declared evidence item needs a concrete path/condition mapping: barriers and cleanup",
+        "JSON top-level keys not fully source-verified for preadmission-owner-at-cut.json",
+        "JSON top-level keys not fully source-verified for preadmission-owner-before-admission.json",
+        "JSON top-level keys not fully source-verified for preadmission-result.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl"
+      ]
+    },
+    {
+      "artifact_count": 2,
+      "artifact_paths": [
+        "machine-race-result.json",
+        "process-journal.jsonl"
+      ],
+      "case_directory": "transport-machine-claim-before-disable",
+      "node_id": "tests/ifpmic_api/test_h2_transport_boundaries.py::test_h2_machine_authority_disable_serializes_with_claim[claim-before-disable]",
+      "phase": "transport",
+      "profile": "machine_claim_first",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: process logs/cleanup",
+        "Source-declared evidence item needs a concrete path/condition mapping: barrier synchronization records",
+        "JSON top-level keys not fully source-verified for machine-race-result.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl"
+      ]
+    },
+    {
+      "artifact_count": 2,
+      "artifact_paths": [
+        "machine-race-result.json",
+        "process-journal.jsonl"
+      ],
+      "case_directory": "transport-machine-disable-before-claim",
+      "node_id": "tests/ifpmic_api/test_h2_transport_boundaries.py::test_h2_machine_authority_disable_serializes_with_claim[disable-before-claim]",
+      "phase": "transport",
+      "profile": "machine_disable_first",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: process logs/cleanup",
+        "Source-declared evidence item needs a concrete path/condition mapping: barrier synchronization records",
+        "JSON top-level keys not fully source-verified for machine-race-result.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl"
+      ]
+    },
+    {
+      "artifact_count": 23,
+      "artifact_paths": [
+        "owned-temporal-server.json",
+        "source-manifest.json",
+        "environment-manifest.json",
+        "history-activity-completed-before-decision.pbseq",
+        "activity-completed-cut.json",
+        "history-after-workflow-restart.pbseq",
+        "activity-completed-restart.json",
+        "owned-process-cleanup.json",
+        "case-node.json",
+        "temporal-history.pbseq",
+        "activity-before-decision-barrier/ready.json",
+        "activity-before-decision-barrier/reached.json",
+        "owned-worker-cut-after_project_activation_commit.json",
+        "child-logs/worker-cut-after_project_activation_commit.stdout",
+        "child-logs/worker-cut-after_project_activation_commit.stderr",
+        "owned-process-00.json",
+        "owned-process-01.json",
+        "owned-process-02.json",
+        "process-logs/dispatcher-stdout.log",
+        "process-logs/dispatcher-stderr.log",
+        "process-logs/worker-stdout.log",
+        "process-logs/worker-stderr.log",
+        "temporal-data/temporal.log"
+      ],
+      "case_directory": "worker-api-*",
+      "node_id": "tests/ifpmic_api/test_h2_worker_api_crashes.py::test_h2_activity_completed_before_workflow_decision_sigkill_replays_history",
+      "phase": "worker_api_crashes",
+      "profile": "worker_api",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: proxy snapshots (activity-result case)",
+        "JSON top-level keys not fully source-verified for owned-temporal-server.json",
+        "JSON top-level keys not fully source-verified for source-manifest.json",
+        "JSON top-level keys not fully source-verified for environment-manifest.json",
+        "JSON top-level keys not fully source-verified for worker-cut-history-before-recovery.json",
+        "JSON top-level keys not fully source-verified for worker-crash-recovery.json",
+        "JSON top-level keys not fully source-verified for activity-completed-cut.json",
+        "JSON top-level keys not fully source-verified for activity-completed-restart.json",
+        "JSON top-level keys not fully source-verified for owned-process-cleanup.json"
+      ]
+    },
+    {
+      "artifact_count": 22,
+      "artifact_paths": [
+        "api-settings.json",
+        "api-commit-before-kill.json",
+        "api-retry-receipt.json",
+        "api-crash-recovery.json",
+        "case-node.json",
+        "runtime/owned-temporal-server.json",
+        "runtime/source-manifest.json",
+        "runtime/environment-manifest.json",
+        "runtime/temporal-history.pbseq",
+        "runtime/owned-process-cleanup.json",
+        "runtime/owned-process-01.json",
+        "runtime/owned-process-02.json",
+        "runtime/temporal-data/temporal.log",
+        "runtime/process-logs/worker-stdout.log",
+        "runtime/process-logs/worker-stderr.log",
+        "runtime/process-logs/dispatcher-stdout.log",
+        "runtime/process-logs/dispatcher-stderr.log",
+        "api-commit-barrier/reached.json",
+        "child-logs/api-commit-child.stdout",
+        "child-logs/api-commit-child.stderr",
+        "owned-api-commit-child.json",
+        "owned-process-00.json"
+      ],
+      "case_directory": "worker-api-*",
+      "node_id": "tests/ifpmic_api/test_h2_worker_api_crashes.py::test_h2_api_commit_before_response_sigkill_retry_applies_once",
+      "phase": "worker_api_crashes",
+      "profile": "worker_api",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: proxy snapshots (activity-result case)",
+        "JSON top-level keys not fully source-verified for owned-temporal-server.json",
+        "JSON top-level keys not fully source-verified for source-manifest.json",
+        "JSON top-level keys not fully source-verified for environment-manifest.json",
+        "JSON top-level keys not fully source-verified for api-settings.json",
+        "JSON top-level keys not fully source-verified for api-commit-before-kill.json",
+        "JSON top-level keys not fully source-verified for api-retry-receipt.json",
+        "JSON top-level keys not fully source-verified for api-crash-recovery.json",
+        "JSON top-level keys not fully source-verified for worker-cut-history-before-recovery.json",
+        "JSON top-level keys not fully source-verified for worker-crash-recovery.json",
+        "JSON top-level keys not fully source-verified for owned-process-cleanup.json"
+      ]
+    },
+    {
+      "artifact_count": 25,
+      "artifact_paths": [
+        "owned-temporal-server.json",
+        "source-manifest.json",
+        "environment-manifest.json",
+        "owner-at-worker-cut.json",
+        "history-at-worker-cut.pbseq",
+        "history-after-worker-recovery.pbseq",
+        "worker-cut-history-before-recovery.json",
+        "worker-crash-recovery.json",
+        "authority-revoked-before-replay.json",
+        "owned-process-cleanup.json",
+        "case-node.json",
+        "temporal-history.pbseq",
+        "after_project_activation_commit-barrier/ready.json",
+        "after_project_activation_commit-barrier/reached.json",
+        "owned-worker-cut-after_project_activation_commit.json",
+        "child-logs/worker-cut-after_project_activation_commit.stdout",
+        "child-logs/worker-cut-after_project_activation_commit.stderr",
+        "owned-process-00.json",
+        "owned-process-01.json",
+        "owned-process-02.json",
+        "process-logs/dispatcher-stdout.log",
+        "process-logs/dispatcher-stderr.log",
+        "process-logs/worker-stdout.log",
+        "process-logs/worker-stderr.log",
+        "temporal-data/temporal.log"
+      ],
+      "case_directory": "worker-api-*",
+      "node_id": "tests/ifpmic_api/test_h2_worker_api_crashes.py::test_h2_worker_projection_after_pg_commit_sigkill_replays_receipt",
+      "phase": "worker_api_crashes",
+      "profile": "worker_api",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: proxy snapshots (activity-result case)",
+        "JSON top-level keys not fully source-verified for owned-temporal-server.json",
+        "JSON top-level keys not fully source-verified for source-manifest.json",
+        "JSON top-level keys not fully source-verified for environment-manifest.json",
+        "JSON top-level keys not fully source-verified for owner-at-worker-cut.json",
+        "JSON top-level keys not fully source-verified for worker-cut-history-before-recovery.json",
+        "JSON top-level keys not fully source-verified for worker-crash-recovery.json",
+        "JSON top-level keys not fully source-verified for authority-revoked-before-replay.json",
+        "JSON top-level keys not fully source-verified for owned-process-cleanup.json"
+      ]
+    },
+    {
+      "artifact_count": 24,
+      "artifact_paths": [
+        "owned-temporal-server.json",
+        "source-manifest.json",
+        "environment-manifest.json",
+        "owner-at-worker-cut.json",
+        "history-at-worker-cut.pbseq",
+        "history-after-worker-recovery.pbseq",
+        "worker-cut-history-before-recovery.json",
+        "worker-crash-recovery.json",
+        "owned-process-cleanup.json",
+        "case-node.json",
+        "temporal-history.pbseq",
+        "before_project_activation_commit-barrier/ready.json",
+        "before_project_activation_commit-barrier/reached.json",
+        "owned-worker-cut-before_project_activation_commit.json",
+        "child-logs/worker-cut-before_project_activation_commit.stdout",
+        "child-logs/worker-cut-before_project_activation_commit.stderr",
+        "owned-process-00.json",
+        "owned-process-01.json",
+        "owned-process-02.json",
+        "process-logs/dispatcher-stdout.log",
+        "process-logs/dispatcher-stderr.log",
+        "process-logs/worker-stdout.log",
+        "process-logs/worker-stderr.log",
+        "temporal-data/temporal.log"
+      ],
+      "case_directory": "worker-api-*",
+      "node_id": "tests/ifpmic_api/test_h2_worker_api_crashes.py::test_h2_worker_projection_before_pg_commit_sigkill_rolls_back_then_retries",
+      "phase": "worker_api_crashes",
+      "profile": "worker_api",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: proxy snapshots (activity-result case)",
+        "JSON top-level keys not fully source-verified for owned-temporal-server.json",
+        "JSON top-level keys not fully source-verified for source-manifest.json",
+        "JSON top-level keys not fully source-verified for environment-manifest.json",
+        "JSON top-level keys not fully source-verified for owner-at-worker-cut.json",
+        "JSON top-level keys not fully source-verified for worker-cut-history-before-recovery.json",
+        "JSON top-level keys not fully source-verified for worker-crash-recovery.json",
+        "JSON top-level keys not fully source-verified for owned-process-cleanup.json"
+      ]
+    },
+    {
+      "artifact_count": 2,
+      "artifact_paths": [
+        "workspace-invalid-ready.json",
+        "process-journal.jsonl"
+      ],
+      "case_directory": "workspace-invalid-marker-forged",
+      "node_id": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_invalid_ready_fails_closed[marker-forged]",
+      "phase": "workspace",
+      "profile": "workspace_marker",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: barriers and cleanup",
+        "JSON top-level keys not fully source-verified for workspace-invalid-ready.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl"
+      ]
+    },
+    {
+      "artifact_count": 2,
+      "artifact_paths": [
+        "workspace-invalid-ready.json",
+        "process-journal.jsonl"
+      ],
+      "case_directory": "workspace-invalid-marker-missing",
+      "node_id": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_invalid_ready_fails_closed[marker-missing]",
+      "phase": "workspace",
+      "profile": "workspace_marker",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: barriers and cleanup",
+        "JSON top-level keys not fully source-verified for workspace-invalid-ready.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl"
+      ]
+    },
+    {
+      "artifact_count": 3,
+      "artifact_paths": [
+        "external-marker-target.json",
+        "workspace-invalid-ready.json",
+        "process-journal.jsonl"
+      ],
+      "case_directory": "workspace-invalid-marker-symlink",
+      "node_id": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_invalid_ready_fails_closed[marker-symlink]",
+      "phase": "workspace",
+      "profile": "workspace_marker",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: barriers and cleanup",
+        "JSON top-level keys not fully source-verified for external-marker-target.json",
+        "JSON top-level keys not fully source-verified for workspace-invalid-ready.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl"
+      ]
+    },
+    {
+      "artifact_count": 2,
+      "artifact_paths": [
+        "workspace-invalid-ready.json",
+        "process-journal.jsonl"
+      ],
+      "case_directory": "workspace-invalid-marker-wrong-token",
+      "node_id": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_invalid_ready_fails_closed[marker-wrong-token]",
+      "phase": "workspace",
+      "profile": "workspace_marker",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: barriers and cleanup",
+        "JSON top-level keys not fully source-verified for workspace-invalid-ready.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl"
+      ]
+    },
+    {
+      "artifact_count": 3,
+      "artifact_paths": [
+        "workspace-worker-history.pbseq",
+        "workspace-worker-wait.json",
+        "process-journal.jsonl"
+      ],
+      "case_directory": "workspace-worker-nonready-error",
+      "node_id": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_nonready_blocks_admitted_worker[state-error]",
+      "phase": "workspace",
+      "profile": "workspace_worker",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: barriers and cleanup",
+        "JSON top-level keys not fully source-verified for workspace-worker-wait.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl"
+      ]
+    },
+    {
+      "artifact_count": 3,
+      "artifact_paths": [
+        "workspace-worker-history.pbseq",
+        "workspace-worker-wait.json",
+        "process-journal.jsonl"
+      ],
+      "case_directory": "workspace-worker-nonready-provisioning",
+      "node_id": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_nonready_blocks_admitted_worker[state-provisioning]",
+      "phase": "workspace",
+      "profile": "workspace_worker",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: barriers and cleanup",
+        "JSON top-level keys not fully source-verified for workspace-worker-wait.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl"
+      ]
+    },
+    {
+      "artifact_count": 3,
+      "artifact_paths": [
+        "workspace-worker-history.pbseq",
+        "workspace-worker-wait.json",
+        "process-journal.jsonl"
+      ],
+      "case_directory": "workspace-worker-nonready-reserved",
+      "node_id": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_nonready_blocks_admitted_worker[state-reserved]",
+      "phase": "workspace",
+      "profile": "workspace_worker",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: barriers and cleanup",
+        "JSON top-level keys not fully source-verified for workspace-worker-wait.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl"
+      ]
+    },
+    {
+      "artifact_count": 3,
+      "artifact_paths": [
+        "workspace-nonready-dispatcher.json",
+        "process-journal.jsonl",
+        "process-cleanup.json"
+      ],
+      "case_directory": "workspace-dispatch-nonready-error",
+      "node_id": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_nonready_blocks_dispatcher_before_start[state-error]",
+      "phase": "workspace",
+      "profile": "workspace_dispatcher",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: barriers and process-cleanup.json",
+        "JSON top-level keys not fully source-verified for workspace-nonready-dispatcher.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl",
+        "JSON top-level keys not fully source-verified for process-cleanup.json"
+      ]
+    },
+    {
+      "artifact_count": 3,
+      "artifact_paths": [
+        "workspace-nonready-dispatcher.json",
+        "process-journal.jsonl",
+        "process-cleanup.json"
+      ],
+      "case_directory": "workspace-dispatch-nonready-provisioning",
+      "node_id": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_nonready_blocks_dispatcher_before_start[state-provisioning]",
+      "phase": "workspace",
+      "profile": "workspace_dispatcher",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: barriers and process-cleanup.json",
+        "JSON top-level keys not fully source-verified for workspace-nonready-dispatcher.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl",
+        "JSON top-level keys not fully source-verified for process-cleanup.json"
+      ]
+    },
+    {
+      "artifact_count": 3,
+      "artifact_paths": [
+        "workspace-nonready-dispatcher.json",
+        "process-journal.jsonl",
+        "process-cleanup.json"
+      ],
+      "case_directory": "workspace-dispatch-nonready-reserved",
+      "node_id": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_nonready_blocks_dispatcher_before_start[state-reserved]",
+      "phase": "workspace",
+      "profile": "workspace_dispatcher",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: barriers and process-cleanup.json",
+        "JSON top-level keys not fully source-verified for workspace-nonready-dispatcher.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl",
+        "JSON top-level keys not fully source-verified for process-cleanup.json"
+      ]
+    },
+    {
+      "artifact_count": 2,
+      "artifact_paths": [
+        "workspace-generation-fenced.json",
+        "process-journal.jsonl"
+      ],
+      "case_directory": "workspace-stale-generation-claim",
+      "node_id": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py::test_h2_workspace_stale_generation_claim_is_fenced",
+      "phase": "workspace",
+      "profile": "workspace_generation",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: barriers and cleanup",
+        "JSON top-level keys not fully source-verified for workspace-generation-fenced.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl"
+      ]
+    },
+    {
+      "artifact_count": 1,
+      "artifact_paths": [
+        "retained-fences/ed0848adbdf80946dcc316ad389865262bba4be7deb1d5d340e3143b014d4f08.json"
+      ],
+      "case_directory": ".",
+      "node_id": "tests/ifpmic_api/test_workflow_schema.py::test_h2_real_create_activation_receipt_replay_and_run_fences",
+      "phase": "h2_schema_python",
+      "profile": "retained_sql_fence",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "JSON top-level keys not fully source-verified for retained-fences/ed0848adbdf80946dcc316ad389865262bba4be7deb1d5d340e3143b014d4f08.json"
+      ]
+    },
+    {
+      "artifact_count": 1,
+      "artifact_paths": [
+        "retained-fences/291c474be1300da2a2e1062b421b824d9eb73a8539e5e6c011540a5024649748.json"
+      ],
+      "case_directory": ".",
+      "node_id": "tests/ifpmic_api/test_workflow_schema.py::test_h2_role_registry_and_function_acl_match_static_contract",
+      "phase": "h2_schema_python",
+      "profile": "retained_sql_fence",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "JSON top-level keys not fully source-verified for retained-fences/291c474be1300da2a2e1062b421b824d9eb73a8539e5e6c011540a5024649748.json"
+      ]
+    },
+    {
+      "artifact_count": 1,
+      "artifact_paths": [
+        "retained-fences/5731d311492332cefc00ef2f08a3675ad1e4468d415f6cf3033259edb0d2244c.json"
+      ],
+      "case_directory": ".",
+      "node_id": "tests/ifpmic_api/test_workflow_schema.py::test_h2_four_role_oid_recreation_is_drift_and_does_not_rebind",
+      "phase": "h2_schema_python",
+      "profile": "retained_sql_fence",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "JSON top-level keys not fully source-verified for retained-fences/5731d311492332cefc00ef2f08a3675ad1e4468d415f6cf3033259edb0d2244c.json",
+        "Raw source gap: no Temporal client/server in test; none should be invented."
+      ]
+    },
+    {
+      "artifact_count": 1,
+      "artifact_paths": [
+        "retained-fences/b97ed7abe03f746e7c565fbcef5ae4ba8c3aa1a2e3fdd283449f12f76380a8b0.json"
+      ],
+      "case_directory": ".",
+      "node_id": "tests/ifpmic_api/test_workflow_schema.py::test_h2_service_roles_use_scram_without_trust_fallthrough",
+      "phase": "h2_schema_python",
+      "profile": "retained_sql_fence",
+      "review_result": "hold_case_rules_unresolved",
+      "unresolved": [
+        "JSON top-level keys not fully source-verified for retained-fences/b97ed7abe03f746e7c565fbcef5ae4ba8c3aa1a2e3fdd283449f12f76380a8b0.json",
+        "Raw source gap: failure exception/sqlstate may be null for connection-level OperationalError; HBA rows and failure exception type remain raw actual evidence."
+      ]
+    }
+  ],
+  "checks": {
+    "machine_rule_validator_compatibility": {
+      "detail": "All 87 case rows have nonempty unresolved arrays while top-level unresolved is empty. prepare_phase_rules rejects nonempty case unresolved (scripts/ifpmic_h2_artifacts.py:314); adapter validation also requires every row unresolved=[] (scripts/ifpmic_h2_full_raw_adapter.py:72).",
+      "result": "fail_static"
+    },
+    "node_inventory": {
+      "detail": "All 87 unique literal node IDs are listed below with their phase, profile and exact artifact paths.",
+      "result": "pass_static_enumeration"
+    },
+    "per_case_source_closure": {
+      "detail": "The reviewer has not approved per-case source closure or transitive call-path coverage while 475 row-level unresolved entries remain.",
+      "result": "not_approved_unresolved"
+    },
+    "source_pin_bytes": {
+      "detail": "37/37 declared source pins match current bytes.",
+      "result": "pass_static"
+    }
+  },
+  "execution_boundary": {
+    "actual_test_execution": false,
+    "execution_authorized": false,
+    "product_or_sdk_import": false,
+    "pytest_collection_or_tests": false,
+    "services_sql_or_network": false
+  },
+  "findings": [
+    {
+      "detail": "Top-level unresolved is empty, but 87 of 87 case rows contain 475 unresolved entries. These include unmapped source-declared conditional artifact paths, unverified JSONL/JSON keys and unresolved artifact writers. Resolve against current producer/helper call paths or document explicit non-applicability with source evidence; do not mark these rows approved while the checker rejects them.",
+      "id": "RULES-UNRESOLVED-01",
+      "result": "request_changes",
+      "severity": "blocking"
+    },
+    {
+      "detail": "Retract the earlier claim that the noncreate signal case has no actual Temporal history. tests/ifpmic_api/test_h2_activity_runtime_boundaries.py:544 calls _normal_outcome; its helper at :273-284 invokes normal._observe_temporal(..., case[\"root\"]); tests/ifpmic_api/test_h2_runtime_normal_flow.py:548-557 delegates to _observe_real_temporal, which writes temporal-history.pbseq at :527. The raw history path and observer JSON are source-reachable through the helper, so this earlier concern was incorrect. This correction does not clear unrelated row-level unresolved items.",
+      "id": "HISTORY-NONCREATE-RETRACTION-01",
+      "result": "prior_concern_retracted",
+      "severity": "informational"
+    }
+  ],
+  "inventory_check": {
+    "artifact_count": 535,
+    "case_count": 87,
+    "phase_count": 10,
+    "source_pin_count": 37,
+    "source_pin_match_count": 37,
+    "source_pin_mismatches": [],
+    "source_pins": {
+      "scripts/ifpmic_h2_artifacts.py": {
+        "actual_sha256": "712d5800835cd8f5e8f3ac513e2dd44b8f0fb2d035e83775ff989f4f24940b47",
+        "expected_sha256": "712d5800835cd8f5e8f3ac513e2dd44b8f0fb2d035e83775ff989f4f24940b47",
+        "matches": true
+      },
+      "scripts/ifpmic_h2_fences.py": {
+        "actual_sha256": "53836724368ab3dac9e7ccaeb6e603a3a2124926e73db452448bfd608d746a9f",
+        "expected_sha256": "53836724368ab3dac9e7ccaeb6e603a3a2124926e73db452448bfd608d746a9f",
+        "matches": true
+      },
+      "scripts/ifpmic_h2_raw_evidence.py": {
+        "actual_sha256": "7b02c3b6a5713d6abe0e589d75835f5f6519e2aa5daee690e811497f20b7b4fe",
+        "expected_sha256": "7b02c3b6a5713d6abe0e589d75835f5f6519e2aa5daee690e811497f20b7b4fe",
+        "matches": true
+      },
+      "services/ifpmic_api/execution_manifest.py": {
+        "actual_sha256": "0f08e5c86992edc9ee9b62b19d50f981282d125e39810e0f0d6e75d39bfd07b6",
+        "expected_sha256": "0f08e5c86992edc9ee9b62b19d50f981282d125e39810e0f0d6e75d39bfd07b6",
+        "matches": true
+      },
+      "tests/ifpmic_api/accepted_start_dispatcher_child.py": {
+        "actual_sha256": "87c6cf61d94188f5733e73fc02e8d3d2caeb78f4a802a6455a501317a6f859eb",
+        "expected_sha256": "87c6cf61d94188f5733e73fc02e8d3d2caeb78f4a802a6455a501317a6f859eb",
+        "matches": true
+      },
+      "tests/ifpmic_api/h2_activity_runtime_boundary_child.py": {
+        "actual_sha256": "c140c731869ce13a4e3a13306a7e9bfa48ff1233ac1ea50fdef016020449f281",
+        "expected_sha256": "c140c731869ce13a4e3a13306a7e9bfa48ff1233ac1ea50fdef016020449f281",
+        "matches": true
+      },
+      "tests/ifpmic_api/h2_activity_runtime_case_budget.py": {
+        "actual_sha256": "34df11020b89f884207fd8ebdb8aef3e0d1acf452c1429bb9ec2d4735af3da4c",
+        "expected_sha256": "34df11020b89f884207fd8ebdb8aef3e0d1acf452c1429bb9ec2d4735af3da4c",
+        "matches": true
+      },
+      "tests/ifpmic_api/h2_api_crash_child.py": {
+        "actual_sha256": "29100b07e82334a2fc3193fbc55c784e7ede69cb4f0aa6dc60a4152e2d0cd4db",
+        "expected_sha256": "29100b07e82334a2fc3193fbc55c784e7ede69cb4f0aa6dc60a4152e2d0cd4db",
+        "matches": true
+      },
+      "tests/ifpmic_api/h2_dispatcher_crash_support.py": {
+        "actual_sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472",
+        "expected_sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472",
+        "matches": true
+      },
+      "tests/ifpmic_api/h2_fixture_cleanup.py": {
+        "actual_sha256": "99b277b7532ebc0e12d80dacd40d7b3e6a2af7f7aebfc46c93b35c3a04c50500",
+        "expected_sha256": "99b277b7532ebc0e12d80dacd40d7b3e6a2af7f7aebfc46c93b35c3a04c50500",
+        "matches": true
+      },
+      "tests/ifpmic_api/h2_foreign_dispatcher_child.py": {
+        "actual_sha256": "4a3bcf89bc86892f259f47f868e734885e3ed26a4c7cfe30274aa90bdf5bb913",
+        "expected_sha256": "4a3bcf89bc86892f259f47f868e734885e3ed26a4c7cfe30274aa90bdf5bb913",
+        "matches": true
+      },
+      "tests/ifpmic_api/h2_private_values.py": {
+        "actual_sha256": "ea2e828b0956f5e5bf9dd7f3c35441b948e1d0d17a49367b1d6ddd0c039cf86e",
+        "expected_sha256": "ea2e828b0956f5e5bf9dd7f3c35441b948e1d0d17a49367b1d6ddd0c039cf86e",
+        "matches": true
+      },
+      "tests/ifpmic_api/h2_snapshot_evidence.py": {
+        "actual_sha256": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c",
+        "expected_sha256": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c",
+        "matches": true
+      },
+      "tests/ifpmic_api/h2_startup_case_budget.py": {
+        "actual_sha256": "35e8b7431c0f54e269392f5a958628f39cce1ae1039e1ea37bee318a2ae7a0a7",
+        "expected_sha256": "35e8b7431c0f54e269392f5a958628f39cce1ae1039e1ea37bee318a2ae7a0a7",
+        "matches": true
+      },
+      "tests/ifpmic_api/h2_transport_boundary_child.py": {
+        "actual_sha256": "ddac239eb8244b08671922c5cee255e608ad2c4589099499c1f3dd7ccc796300",
+        "expected_sha256": "ddac239eb8244b08671922c5cee255e608ad2c4589099499c1f3dd7ccc796300",
+        "matches": true
+      },
+      "tests/ifpmic_api/h2_window_case_budget.py": {
+        "actual_sha256": "da04f059de0e1b487b40a50f997797874e7373947f5dc251fc88a138a5231f19",
+        "expected_sha256": "da04f059de0e1b487b40a50f997797874e7373947f5dc251fc88a138a5231f19",
+        "matches": true
+      },
+      "tests/ifpmic_api/h2_worker_crash_child.py": {
+        "actual_sha256": "003ba93a06fb3d5a81c0661e7c68ae4cfc56b95fb70c9bbf8afdd2c45b83b4cd",
+        "expected_sha256": "003ba93a06fb3d5a81c0661e7c68ae4cfc56b95fb70c9bbf8afdd2c45b83b4cd",
+        "matches": true
+      },
+      "tests/ifpmic_api/jobs_fixture.py": {
+        "actual_sha256": "b8fefc39f3005b3a662124ae3182cee4e7a293e18dd4e84d18facd09c0e0d539",
+        "expected_sha256": "b8fefc39f3005b3a662124ae3182cee4e7a293e18dd4e84d18facd09c0e0d539",
+        "matches": true
+      },
+      "tests/ifpmic_api/oidc_provider.py": {
+        "actual_sha256": "38c4e014c16cf43bc28ff384999dcc8468d0e6ac0cbcc92c1a69b2d4cccd84e0",
+        "expected_sha256": "38c4e014c16cf43bc28ff384999dcc8468d0e6ac0cbcc92c1a69b2d4cccd84e0",
+        "matches": true
+      },
+      "tests/ifpmic_api/response_loss_proxy.py": {
+        "actual_sha256": "b6f8ca62f21724bf26aac6395528092257e7c48b729d19df02adf7281b9ed512",
+        "expected_sha256": "b6f8ca62f21724bf26aac6395528092257e7c48b729d19df02adf7281b9ed512",
+        "matches": true
+      },
+      "tests/ifpmic_api/test_accepted_start_response_loss.py": {
+        "actual_sha256": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8",
+        "expected_sha256": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8",
+        "matches": true
+      },
+      "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py": {
+        "actual_sha256": "11db8cfc513c4845128e26558ae2d5ca6d87beea485e524ebdd949b974c89954",
+        "expected_sha256": "11db8cfc513c4845128e26558ae2d5ca6d87beea485e524ebdd949b974c89954",
+        "matches": true
+      },
+      "tests/ifpmic_api/test_h2_dispatcher_crashes.py": {
+        "actual_sha256": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52",
+        "expected_sha256": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52",
+        "matches": true
+      },
+      "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py": {
+        "actual_sha256": "c0dd1e2a3e732ceea482e286a0f97bbb270dfab4040d88eff0403efc846e8688",
+        "expected_sha256": "c0dd1e2a3e732ceea482e286a0f97bbb270dfab4040d88eff0403efc846e8688",
+        "matches": true
+      },
+      "tests/ifpmic_api/test_h2_reconciliation_window.py": {
+        "actual_sha256": "7fe6f3856b408d8d1f1e9fefc58ae47db00cfe1f8f5b45b41836523c63881a01",
+        "expected_sha256": "7fe6f3856b408d8d1f1e9fefc58ae47db00cfe1f8f5b45b41836523c63881a01",
+        "matches": true
+      },
+      "tests/ifpmic_api/test_h2_runtime_normal_flow.py": {
+        "actual_sha256": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d",
+        "expected_sha256": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d",
+        "matches": true
+      },
+      "tests/ifpmic_api/test_h2_runtime_restart_and_history.py": {
+        "actual_sha256": "606db627f5efd4ba6f9158da6ef538b95fe70d77444cb0775191265a10a2b546",
+        "expected_sha256": "606db627f5efd4ba6f9158da6ef538b95fe70d77444cb0775191265a10a2b546",
+        "matches": true
+      },
+      "tests/ifpmic_api/test_h2_runtime_startup_rejections.py": {
+        "actual_sha256": "80376fad5e864c4ac07cc0fc1cf75fce205d06da64f22e74a67b542ca60fb1b1",
+        "expected_sha256": "80376fad5e864c4ac07cc0fc1cf75fce205d06da64f22e74a67b542ca60fb1b1",
+        "matches": true
+      },
+      "tests/ifpmic_api/test_h2_started_deployment_boundaries.py": {
+        "actual_sha256": "034ae6eb4399d8e4b906ffc27401d2b1d4d3799e44159b7a711d6e174c25bbdf",
+        "expected_sha256": "034ae6eb4399d8e4b906ffc27401d2b1d4d3799e44159b7a711d6e174c25bbdf",
+        "matches": true
+      },
+      "tests/ifpmic_api/test_h2_transport_boundaries.py": {
+        "actual_sha256": "059b7f61e6da19f9177bb0ab833dd2ebbf0409d88bfdd9ebf914166688525ad2",
+        "expected_sha256": "059b7f61e6da19f9177bb0ab833dd2ebbf0409d88bfdd9ebf914166688525ad2",
+        "matches": true
+      },
+      "tests/ifpmic_api/test_h2_worker_api_crashes.py": {
+        "actual_sha256": "b17b0b46b7e17a8fe9cf17b02b760eefa54c21565479805dd5d2a5c832b98630",
+        "expected_sha256": "b17b0b46b7e17a8fe9cf17b02b760eefa54c21565479805dd5d2a5c832b98630",
+        "matches": true
+      },
+      "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py": {
+        "actual_sha256": "682eb21235786607802e4f108331afa7050d54d94ddd4d92d087a278e3c76a95",
+        "expected_sha256": "682eb21235786607802e4f108331afa7050d54d94ddd4d92d087a278e3c76a95",
+        "matches": true
+      },
+      "tests/ifpmic_api/test_workflow_schema.py": {
+        "actual_sha256": "b76ebd44dc6e98323501fea1c03e3f5c1838484b3f7b359693a2e5ef52159224",
+        "expected_sha256": "b76ebd44dc6e98323501fea1c03e3f5c1838484b3f7b359693a2e5ef52159224",
+        "matches": true
+      },
+      "tests/ifpmic_api/workflow_schema_fixture.py": {
+        "actual_sha256": "dd1eba1754a8985dd704f0ed63271cc73beca8b03c72aaa2f14acdd41e5e3681",
+        "expected_sha256": "dd1eba1754a8985dd704f0ed63271cc73beca8b03c72aaa2f14acdd41e5e3681",
+        "matches": true
+      },
+      "tests/ifpmic_api/workspace_fixture.py": {
+        "actual_sha256": "66b0d11faaa343542fe27e1254e0ed28a968d73518a7a1ac2aab106e4ef126b6",
+        "expected_sha256": "66b0d11faaa343542fe27e1254e0ed28a968d73518a7a1ac2aab106e4ef126b6",
+        "matches": true
+      },
+      "tests/ifpmic_evidence/test_private_values.py": {
+        "actual_sha256": "fa675b2f32ec7fd68a38c2cdf84873af94ea312a1007aed532b6ed395c8ab811",
+        "expected_sha256": "fa675b2f32ec7fd68a38c2cdf84873af94ea312a1007aed532b6ed395c8ab811",
+        "matches": true
+      },
+      "tests/ifpmic_evidence/test_retained_fences.py": {
+        "actual_sha256": "d23b1fe244071654b1c23bfccd84499eff5407ad243a806686aee4e81916d54f",
+        "expected_sha256": "d23b1fe244071654b1c23bfccd84499eff5407ad243a806686aee4e81916d54f",
+        "matches": true
+      }
+    },
+    "unique_node_count": 87
+  },
+  "kind": "ifpmic.b03.h2.runtime-full-machine-rules-tc-review.v2",
+  "review_protocol": "static_source_mapping_review; does_not_authorize_runner_execution",
+  "review_scope": "Enumerated all 87 machine-rule node IDs, checked phase/profile/artifact inventory and all 37 declared source-pin byte hashes, and traced the previously disputed noncreate history call path. Per-case source closure is not approved because each row still contains unresolved mapping/schema findings that the current validator rejects.",
+  "reviewed_inputs": {
+    "historical_execution_contract": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-full-execution-contract.json",
+      "role": "historical mapping provenance only",
+      "sha256": "c10c7cb329ea82b758cfa7db34ac330e4b7ec472320b5904e8086f8067865a2d"
+    },
+    "historical_integrated_ledger": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger.json",
+      "role": "historical inventory provenance only",
+      "sha256": "cf4f3bfc023341c22e0c8fc7c072c54838d62f7adeb39d817a4ce3b6589f8d60"
+    },
+    "machine_rules": {
+      "artifact_count": 535,
+      "case_count": 87,
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules.json",
+      "phase_count": 10,
+      "sha256": "1ec018486a118cbe2474751fcb06b70c2923d8d0b04b53705385823ec5ba3f88",
+      "status": "candidate_pending_exact_review"
+    }
+  },
+  "reviewer": "TC machine-evidence mapping reviewer",
+  "status": "request_changes_no_execution",
+  "verdict": "request_changes_no_execution"
+}

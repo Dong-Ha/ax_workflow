@@ -13,24 +13,24 @@
 
 ## 이번에 실제 검증한 것
 
-retained SQL/auth fence4개의 원문 검증 누락을 수정했다. 실제 producer의 case/node/파일명과 원문 canonical SHA를 연결하고, SQL 행의 모든 열·함수 반환 필드·작업 DTO·오류 본문을 검사한다. 실제 admission이 남기는 scope, primary receipt와 정상적으로 비어 있는 OID principal/conflict receipt를 구분한다. 일반 JSON 규칙으로 검사를 우회하는 변경도 거절한다.
+전체 실행기 정적 검토에서 찾은 집계·watchdog 경로·helper pin·기존 pyc 읽기·전체 deadline/TERM/정리·프로세스 수 집계 결함을 수정했다. 전체 실행기의 `main`을 실행한 것은 아니며, 별도 승인된 stdlib 함수와 합성 자료로 검사했다.
 
-- 신규28 + 기존65, **합성 단위93/93 통과**. 정확한 소스 승인 후 실제 실행했고 독립 결과 검토가 해당 합성 범위와 원본 보존 증거를 수용했다. 이전28·62·65건은 역사 증빙으로 보존하며 누적 수에 더하지 않는다.
-- [93건 검증 요약](./fence-verification.json), [소스 승인](./fence-source-review.json), [독립 결과 검토](./fence-result-review.json), [8개 항목 보완 계획](./FENCE-VALIDATION.md).
-- 보호 AX96 해시·89 목록, 설계17·업로드2, Python 환경1777/3072가 원래 승인 기준과 before/after 모두 일치했다.
-- 87 case·517 artifact·10 phase machine mapping은37개 직접 소스 pin을 포함하는 초안이다. 전체 mapping·full runner·실제 SQL/H2 실행 승인이 아니다. 앞선 [hook 소스 체크포인트 검토](./raw-hooks-checkpoint-review.json)는 해당 과거 소스 범위로만 유효하다.
-- 제품/UI/의존성 변경이 없어 이 단위 체크포인트에서 build/browser를 반복하지 않았다. 원본 SQL/로그·환경 map은 비공개로 보존하며, 실행 연결 때 관련 회귀를 수행한다.
+- **119/119 합성 단위 통과:** 기존93 + budget/cache16 + 실행기 순수 함수10. 새 비공개 pycache prefix에서 실행해 캐시가 비어 있음을 확인했고, 독립 결과 검토가 합성 범위와 원본 보존 증거를 수용했다. 이전 검사 수를 중복 합산하지 않는다.
+- [119건 증빙](./full-runner-repair-verification.json), [정확한 소스 승인](./full-runner-repair-source-review.json), [독립 결과 검토](./full-runner-repair-result-review.json), [복구 검증 계획](./FULL-RUNNER-REPAIR.md).
+- 보호 AX96 해시·89 목록, 설계17·업로드2, Python 환경1777/3072 항목을 원래 승인 기준과 비교해 before/after 모두 유지했다.
+- 실제 생성 코드에서 빠진 조건부 증빙18개를 더 연결해 mapping은87 case·535 artifact·10 phase다. 그러나 **87행에 미해결 검토 표시475개가 남아 있다.** 이전의 미해결0건 요약은 잘못됐으며, [TC의 변경 요청](../../evidence/b03/h2-runtime-full-machine-rules-tc-review-v2.json)이 이를 기록한다. 해당 표시를 실제 소스 근거 없이 지우지 않는다.
+- 제품/UI/의존성이 바뀌지 않아 이 단위 checkpoint에서 build/browser를 반복하지 않았다. 실제 SDK/SQL/서비스 및 전체490 검증·주기03 완료는 미수용이다.
 
 ## 다음에 보여줄 한 가지
 
 **저장한 요청이 실제 실행 엔진에 접수되어 run/receipt와 QUEUED 상태가 화면에 표시되는 흐름.** QUEUED는 접수 상태이며 P01 등 업무 완료가 아니다.
 
-이번에 확인된 SQL fence 내부 원문 검사 누락은 수정·합성 검증했다. 다음은87개 mapping 전체를 대조하고 별도 버전의490 계약·ledger와 전체 runner/paired pre-gate를 검토한 뒤 fresh490을 실행하는 것이다. 검증·독립 수용 뒤 실제 화면 연결을 진행한다. 기존 c10 계약은 주기02 재실행에 쓰이므로 덮어쓰지 않는다.
+이번에 확인된 SQL fence 내부 원문 검사 누락은 수정·합성 검증했다. 다음은 mapping에 남은 경로·조건·JSON schema 검토 표시를 실제 producer와 대조해 해소하는 것이다. 그 뒤 별도 버전490 계약·ledger와 전체 runner/paired pre-gate를 검토하고 fresh490을 실행한다. 검증·독립 수용 뒤 실제 화면 연결을 진행한다. 기존 c10 계약은 주기02 재실행에 쓰이므로 덮어쓰지 않는다.
 
 ## 재개 위치
 
-1. 이번93건 독립 결과 검토를 확인한다. 소스 변경 시 해당 exact 승인을 재사용하지 않는다.
-2. 전체 mapping·새 버전 계약·ledger를 고정한다. fence helper와 TC를 새 source closure에 포함하고 옛 c10/cf4 계약·주기02 참조를 보존한다.
+1. 이번119건 독립 결과 검토와 mapping TC 변경 요청을 확인한다. 소스 변경 시 exact 승인을 재사용하지 않는다.
+2. 475개 mapping 검토 표시를 근거와 연결해 해소하고 새 버전 계약·ledger를 고정한다. fence helper와 TC를 새 source closure에 포함하고 옛 c10/cf4 계약·주기02 참조를 보존한다.
 3. 전체 runner 검토·정확한 paired pre-gate → fresh490 → 독립 결과 수용.
 4. 실제 접수 화면 연결·브라우저 검증·시연 → 커밋/push.
 

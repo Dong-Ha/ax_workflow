@@ -97,11 +97,15 @@ def audit_phase(root, phase, directory, observations, interpreter, env, state, r
     payload = (json.dumps(config, ensure_ascii=True, sort_keys=True) + '\n').encode('ascii')
     config_path = directory / 'raw-audit-input.json'
     _private_write(directory, config_path.name, payload)
+    cache = directory / 'raw-audit-pycache'
+    cache.mkdir(mode=0o700)
     began = time.monotonic()
-    result = run_owned_command([str(interpreter), '-B', str(root / state['policy']['auditor']['path']),
+    result = run_owned_command([str(interpreter), '-B', '-X', 'pycache_prefix='+str(cache),
+                                str(root / state['policy']['auditor']['path']),
                                 '--config', str(config_path)], cwd=root,
                                timeout=state['policy']['audit_timeout_seconds'], env=env)
     elapsed = time.monotonic() - began
+    _require(not list(cache.iterdir()), 'RAW_AUDIT_BYTECODE_CACHE_POPULATED')
     _private_write(directory, 'raw-audit-child.log', result.stdout + result.stderr)
     _require(result.returncode == 0 and elapsed <= state['policy']['audit_timeout_seconds'],
              'RAW_AUDIT_CHILD_FAILED')

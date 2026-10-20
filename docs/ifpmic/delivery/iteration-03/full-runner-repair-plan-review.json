@@ -1,0 +1,34 @@
+{
+  "kind": "ifpmic.delivery.iteration-03.full-runner-repair-plan-review.v1",
+  "review_date": "2026-10-21",
+  "reviewer": "/root/h2_evidence_amendment_review",
+  "decision": "approve_repair_plan_for_authoring_only",
+  "plan": {
+    "path": "docs/ifpmic/delivery/iteration-03/FULL-RUNNER-REPAIR.md",
+    "sha256": "596e1c2f871616bae1925ee7a93d929058726dd9e62baa2ae93ab7c4b46ad7e0"
+  },
+  "findings": [],
+  "evidence": [
+    "The four stages provide all eight planning fields, explicit source approval before units and separate full-runner/paired pre-gates before actual490 execution.",
+    "The repair addresses confirmed source defects: nested versus flat phase counts, missing mandatory pre-import helper pins, owned-child tuple unpacking, unenforced parent deadline/late success, default TERM bypass of cleanup and existing unpinned bytecode reads despite-B.",
+    "The total16220s, existing490 IDs, 25 obligations, five fixture prerequisites and all case/phase caps remain unchanged. Reserving15s inside existing800s overhead reduces available work time; a command uses at most remaining work time minus7s kill/wait/reaper reserve and cannot borrow case/phase time.",
+    "A single work alarm plus explicit deadline checks covers synchronous audits/proposal work. TERM/INT enter failure cleanup; repeated requests cannot reset or interrupt its original deadline. Cleanup targets only owned PID/start-tick/pidfd identities and starts no signal/wait after the outer deadline.",
+    "Fresh private empty cache prefixes precede parent post-gate helper imports and all Python child imports, with-B retained and emptiness verified. New synthetic regression uses the same isolation; historical93 proof is preserved without claiming it exercised this new candidate.",
+    "Normal execution, insufficient remaining-time launch rejection, reduced command timeout, late-success rejection, termination/repeated termination, owned identity/clock boundaries and original93 regression are included. Short owned subprocess probes remain separate from product/SDK/SQL/services.",
+    "Omitting product build/browser for this stdlib-only checkpoint has an explicit impact rationale. Actual full490, source/environment/raw privacy audits and later execution UI regression remain mandatory."
+  ],
+  "authorization": {
+    "repair_helper_runner_and_tc_authoring": true,
+    "synthetic_unit_execution_on_this_plan_alone": false,
+    "product_import_collection_sql_services_network": false,
+    "actual_full_gate_or_h2_acceptance": false
+  },
+  "risks_and_remaining_uncertainty": [
+    "Implementation must preserve one first-start deadline across preparation, commands, synchronous audits, failure cleanup and final recording; writing a report must not let an over-budget attempt return or remain recorded as success.",
+    "Mandatory pre-import pins must include the actual runtime-normal helper, retained-fence module and new budget helper in addition to the existing fixed helpers. Optional ledger entries alone cannot establish the required closure.",
+    "Signal restoration, in-flight owned-command interruption, original PID ownership, timeout/reaper behavior and actual cache isolation require exact source/TC review. Synthetic outcomes do not establish actual runtime cleanup or timing performance.",
+    "SIGKILL and uninterruptible kernel I/O remain outside the stated Python guarantee. The versioned candidate, whole-runner review and paired full pre-gates remain pending."
+  ],
+  "recommendation": "Proceed with bounded repair and TC authoring, then obtain exact source approval for the cache-isolated synthetic units. Execute no full-H2 work on this plan review.",
+  "review_method": "Read-only plan and whole-runner/helper source inspection plus SHA256; review-document validation only. No imports, tests, collection, SQL, services or network."
+}

@@ -1,0 +1,55 @@
+{
+  "kind": "ifpmic.delivery.iteration-03.full-runner-repair-result-review.v1",
+  "review_date": "2026-10-21",
+  "reviewer": "/root/h2_evidence_amendment_review",
+  "decision": "accept_119_cache_isolated_synthetic_units_and_preservation_only",
+  "source_review_sha256": "07d12b89156aa18f9a9bbde9935100e110ccf95a1d2cabc4c8547e2631e84d86",
+  "findings": [],
+  "raw_evidence": {
+    "directory": "workflow-artifacts/verification/agile/iteration-03/runner-repair-unit-2026-10-20T15-23-30-199107Z",
+    "sha256": {
+      "result.json": "113c4ba098f8e7f9ae5f4d0b4990b49044f43be063c4bc8d195bfa1fa3fc6c1c",
+      "source-before.json": "c0e6469b104fabf4558313ad953c383d8a46fc7926fc919fd9ca89c9bf1aa051",
+      "source-after.json": "c0e6469b104fabf4558313ad953c383d8a46fc7926fc919fd9ca89c9bf1aa051",
+      "stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr.log": "21c9f9eaa7417ce6d2905e7338b0ee4bc519cf45367ce29cab1d70f937e04bcd",
+      "preservation-before.json": "0949cf3d3a59fd0452efb6d4a04679a132eaf73661dced36cd6ca416cf0f57e8",
+      "preservation-after.json": "0949cf3d3a59fd0452efb6d4a04679a132eaf73661dced36cd6ca416cf0f57e8"
+    }
+  },
+  "evidence": [
+    "The actual command matches the approved /usr/bin/python3 -S -B -X pycache_prefix=<this private gate>/pycache -m unittest discover -s tests/ifpmic_evidence -v. Exit0 and actual stderr Ran119 tests in0.559s/OK were verified.",
+    "The119 unique verbose passing IDs match independently AST-derived methods from all six unittest files and both expected/passed result lists: original93,16 budget and10 runner-guard units. No missing, extra, failing or skipped unit was observed.",
+    "All12 approved source pins match current bytes, standalone before/after files and result maps. Recomputed log hashes match; stdout is empty. The gate and cache directories are0700, all seven evidence files0600, recorded cache-before/after is empty and the retained cache is independently empty.",
+    "Pinned unit dispatch uses only synthetic values/files and guarded stdlib functions. Bootstrap tests replace main and signal APIs; the stale-pyc test's two short Python probes operate on its own synthetic module. No product, SDK, pytest, SQL, service or actual full gate was exercised by these units.",
+    "Preservation-before/after are identical and connect to the verified historical c10 contract and its pinned accepted407 environment map, B01 archive/gate member and design manifest. Recorded1777/3072 environment maps exactly match that baseline. Independent current AX96 hashes/exact89 inventory, design17 and uploads2 comparisons passed."
+  ],
+  "preservation_anchors_verified": {
+    "historical_c10_contract": "c10c7cb329ea82b758cfa7db34ac330e4b7ec472320b5904e8086f8067865a2d",
+    "accepted407_environment_map": "b68aa30da8886fad1e0b2266c05b1f1393875b8f56ca47e04be77e578319d269",
+    "B01_archive": "486d153780df2121cd9d57a56a9ad794ac8829ca25945954ed71b522f6c0fab1",
+    "B01_gate_member": "597c3ada698cd20ff9c93a318e1177fe55e43e68844d08a6c56281cf940cb2c6",
+    "design_manifest": "8afba9c1fc16ef3a6565f45576792cad51a1aaab59857d3a28666c71ec43007c"
+  },
+  "accepted_counts": {
+    "tests": 119,
+    "passed": 119,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "missing_or_extra": 0
+  },
+  "risks_and_remaining_uncertainty": [
+    "Synthetic/mock deadline and ownership checks do not prove real interrupted commands, reaper/PG/Temporal cleanup, actual SDK/history/SQL/receipt behavior or full proposal publication. Main and full490 were not executed.",
+    "The actual machine rules still contain475 per-case unresolved entries. Their empty global unresolved list and candidate status are not approval; per-case guards continue to block full execution. These rules were not unit inputs.",
+    "Whole mapping/source-closure review, versioned490 contract/ledger, exact paired pre-gates, fresh490/25+5, independent actual runtime acceptance and execution UI remain pending."
+  ],
+  "acceptance": {
+    "cache_isolated_synthetic_units_and_preservation": true,
+    "main_or_whole_runner_runtime": false,
+    "machine_mapping_or_full_h2": false,
+    "iteration03_or_business_or_goal_completion": false
+  },
+  "recommendation": "Record this bounded actual119-unit checkpoint, preserve historical attempts and keep raw logs/private identities unpublished. Resolve the475 mapping items before the separate versioned full candidate and paired gates.",
+  "review_method": "Read-only raw output/AST/JSON/source/hash/mode/cache/archive comparison and stdlib data auditing. No product imports, unit rerun, SQL, services or network by the reviewer."
+}

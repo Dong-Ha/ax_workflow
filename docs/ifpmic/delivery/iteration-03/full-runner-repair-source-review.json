@@ -1,0 +1,69 @@
+{
+  "kind": "ifpmic.delivery.iteration-03.full-runner-repair-source-review.v1",
+  "review_date": "2026-10-21",
+  "reviewer": {
+    "agent": "/root/h2_evidence_amendment_review",
+    "independence": "Did not author the repairs, budget helper or TC units."
+  },
+  "decision": "approve_exact_source_for_119_cache_isolated_synthetic_units_only",
+  "plan_review_sha256": "60e5090e138bab3f49fbebfbe543ccc37917dfff200416e274f4c72281b45b5b",
+  "source_pins": {
+    "scripts/ifpmic_h2_raw_evidence.py": "7b02c3b6a5713d6abe0e589d75835f5f6519e2aa5daee690e811497f20b7b4fe",
+    "scripts/ifpmic_h2_artifacts.py": "712d5800835cd8f5e8f3ac513e2dd44b8f0fb2d035e83775ff989f4f24940b47",
+    "scripts/ifpmic_h2_fences.py": "53836724368ab3dac9e7ccaeb6e603a3a2124926e73db452448bfd608d746a9f",
+    "tests/ifpmic_api/h2_private_values.py": "ea2e828b0956f5e5bf9dd7f3c35441b948e1d0d17a49367b1d6ddd0c039cf86e",
+    "tests/ifpmic_evidence/test_raw_observations.py": "684ee4f7c85b8347b7b76cf988eab3f3aaafcc93c2262882a8781fdd87e63fb7",
+    "tests/ifpmic_evidence/test_raw_artifacts.py": "765a054ba6e98d4bd3f61f29f4b64e4e5bba03aa96209c411ddb20aae32a7d8d",
+    "tests/ifpmic_evidence/test_private_values.py": "fa675b2f32ec7fd68a38c2cdf84873af94ea312a1007aed532b6ed395c8ab811",
+    "tests/ifpmic_evidence/test_retained_fences.py": "d23b1fe244071654b1c23bfccd84499eff5407ad243a806686aee4e81916d54f",
+    "scripts/ifpmic_h2_gate_budget.py": "5bb8fe646c499a371d160e057d3a049ecc845123efe01a7aba411c7521929f77",
+    "scripts/verify_ifpmic_b03_h2_runtime_full.py": "c11bb4fea9184e274ec11402e0d6cf1385256700938ac9bb35c8b5762a517d57",
+    "tests/ifpmic_evidence/test_gate_budget.py": "286036ac2dd8b67d0f76bc3eb86ab016c140a06c79ecd8e2504b0aa45e9097ee",
+    "tests/ifpmic_evidence/test_full_runner_guards.py": "ac2219a1854783233a45bc870e0ba9e1a1233b65d9fd82af3ebe690e8a93601b"
+  },
+  "scoped_unit_blockers": [],
+  "resolved_findings": [
+    "Phase counts are stored in the flat structure consumed by proposal checks; worker/API watchdog reads use the actual observations directory; owned-child checks no longer unpack triple rows as pairs.",
+    "Pre-import policy requires and hashes the fixed runtime helper closure, including runtime-normal/budget, plus the retained-fence checker. Parent and Python child imports use fresh private cache prefixes with bytecode writes disabled.",
+    "The stdlib bootstrap alarm precedes source/review preparation. Its handoff passes the original start to GateBudget without resetting the16220s epoch, and occurs before any child launch.",
+    "GateBudget reserves15s within the existing outer bound, caps commands by remaining work time minus7s, handles TERM/INT/alarm failure and repeated stops, and uses cumulative3/5/10s PID/start-tick/pidfd cleanup without new signal/wait after the outer deadline.",
+    "Post-proposal and post-record deadline checks prevent late success. Normal process identities now require valid positive ticks and three distinct identities; public counts deduplicate actual identities, with identityless summaries listed separately without multiplicity claims.",
+    "TC watchdog expectations now use qualified case IDs. Invalid normal ticks and cross-role identity reuse have meaningful negative subcases."
+  ],
+  "tc_scope": {
+    "original_units": 93,
+    "budget_units": 16,
+    "runner_guard_units": 10,
+    "total_methods": 119,
+    "evidence": [
+      "All six unittest modules were inspected for dynamic dispatch. Runner import is stdlib-only and its main/real gate is never invoked. Bootstrap tests call run_bootstrapped only with main and signal APIs patched.",
+      "Budget clock/signal/process tests patch actual signal and PID operations. Guard tests use synthetic JSON, temporary source text and AST literal maps; synthetic policy source text is hashed, never imported.",
+      "The stale-pyc regression alone launches two bounded short Python probes against its own synthetic module, demonstrating stale-B reads versus fresh-prefix reads. It imports no product/SDK and starts no service.",
+      "The previous eight unit/import sources remain unchanged. Prior93 logs remain historical and are not relabeled as evidence for this new cache-isolated candidate."
+    ]
+  },
+  "authorization": {
+    "command_template": "/usr/bin/python3 -S -B -X pycache_prefix=<fresh_private_gate>/pycache -m unittest discover -s tests/ifpmic_evidence -v",
+    "working_directory": "repository root",
+    "maximum_wall_seconds": 60,
+    "environment": "Minimal PATH=/usr/bin, LC_ALL=C.UTF-8, PYTHONDONTWRITEBYTECODE=1.",
+    "private_cache": "Fresh owned mode0700 gate/cache directories, with no symlink substitution; cache empty before and after execution.",
+    "capture": "Mode0600 stdout/stderr/result and source-before/source-after, exact119 unit IDs, all12 source hashes and approved-baseline preservation evidence. Timeout, changed pins, populated cache, missing/extra/failing/skipped units prevent acceptance.",
+    "permitted_probe_exception": "Only the two short subprocess probes defined in the pinned stale-pyc unit, each using synthetic source and native10s timeout.",
+    "actual_main_raw_child_adapter_or_full_gate": false,
+    "product_sdk_imports_pytest_collection_sql_services_network": false,
+    "full_h2_or_iteration_or_goal_acceptance": false,
+    "source_change_rule": "Changed source pins, test discovery or dispatch scope require renewed exact source review before execution."
+  },
+  "full_runtime_blockers_outside_unit_scope": [
+    "Actual machine JSON currently has87 rows and475 per-case unresolved items despite an empty global unresolved list. Full policy and phase guards reject those rows. Mapping acceptance is explicitly withheld; this JSON is not a synthetic-unit input.",
+    "A new versioned contract/ledger and complete whole-runner/mapping/source-closure review, exact paired pre-gates and fresh490 remain pending. Historical constants or approvals do not authorize runtime execution."
+  ],
+  "risks_and_remaining_uncertainty": [
+    "Mocked signals/ownership and short synthetic probes do not establish real long-running command interruption, PG/Temporal cleanup, SDK compatibility, resource absence or final publication behavior.",
+    "This unit authorization is not the final whole-runner source approval. All490/25+5, actual raw SQL/history/receipt/lease/recovery oracles, privacy/environment audits and execution UI remain mandatory.",
+    "No119-unit result has been accepted by this source review; no tests were executed by the reviewer."
+  ],
+  "recommendation": "Run only the pinned cache-isolated119-unit command and review its actual private results. Resolve all475 mapping items and complete the versioned full candidate and paired gates separately.",
+  "validation": "Static complete repaired runner/helper/TC and dynamic-dispatch inspection, SHA256 and review-document JSON validation only. No imports, collection, tests, SQL, services or network executed by the reviewer."
+}
