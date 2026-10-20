@@ -1,0 +1,43 @@
+{
+  "kind": "ifpmic.delivery.iteration-03.fence-plan-review.v1",
+  "review_date": "2026-10-20",
+  "reviewer": {
+    "agent": "/root/h2_evidence_amendment_review",
+    "independence": "Did not author the plan, producer or proposed checker implementation."
+  },
+  "decision": "approve_fence_validation_plan_for_authoring_only",
+  "plan": {
+    "path": "docs/ifpmic/delivery/iteration-03/FENCE-VALIDATION.md",
+    "sha256": "7179c1cab95e7668b20fc67e9b45d5f86281cd2bd01e65fd1848b02a31dcfc3a"
+  },
+  "context": {
+    "checkpoint_commit": "81c84d58f931b9fea2c93991729796579add1aba",
+    "source_pins": {
+      "tests/ifpmic_api/test_workflow_schema.py": "b76ebd44dc6e98323501fea1c03e3f5c1838484b3f7b359693a2e5ef52159224",
+      "scripts/ifpmic_h2_artifacts.py": "65c647a4a26fda2923d41d1c344958af254cf8fb35ea80250140c3140e41bcb9"
+    }
+  },
+  "findings": [],
+  "evidence": [
+    "All four stages provide the eight required fields: stage, purpose, target, method, responsible agent, pass criteria, expected evidence and failure/reverification procedure.",
+    "The current four machine rows use generic JSON required_keys only. The existing checker neither validates the retained-fence envelope values nor recomputes evidence_sha256 or checks the nested raw schemas; the identified gap is concrete and remains blocked from runtime acceptance.",
+    "The proposed specialized format binds the exact four literal nodes to producer case names, kind, positive integer observation time, filename node hash, canonical evidence digest and case-specific internal observations. Actual producer pytest_current_test is the bare literal node without a phase suffix; filenames are SHA256 of its UTF-8 bytes plus.json.",
+    "The planned canonical digest matches the producer's ensure_ascii=True, sort_keys=True, compact separators and allow_nan=False JSON. Case bodies contain actual role/ACL/denial records, OID replacement/config observations, SCRAM/HBA outcomes, or create/admit/projection/replay results and complete JSONB row cuts.",
+    "Normal, malformed/empty/hash-only/nested-missing/type/row-width/cross-case/node/kind/digest/time/filename exceptions, legitimate empty OID principal rows and the existing65-unit regression are explicit. SQL/auth-only cases do not acquire invented Temporal history requirements.",
+    "All490 cases, 25 obligations and five fixture prerequisites, original business oracles and budgets remain unchanged. The new source bytes require renewed exact source approval and all synthetic units; old65 approval bytes are not reused.",
+    "Omitting product build/browser at this stdlib checker checkpoint has a stated bounded impact rationale. Original96/89 sources, design17/upload2 and environment1777/3072 remain protected, with full mapping/runtime/SDK/SQL/lifecycle review and fresh490 still mandatory."
+  ],
+  "authorization": {
+    "planned_checker_mapping_and_tc_authoring": true,
+    "unit_or_product_test_execution": false,
+    "imports_collection_sql_services_network": false,
+    "full_h2_or_iteration_or_goal_acceptance": false
+  },
+  "risks_and_remaining_uncertainty": [
+    "Synthetic shape/digest checks establish neither actual SQL execution nor authorization/run/receipt/recovery invariants; the original tests and independent actual-result review remain necessary.",
+    "Internal schema details and valid empty/nullable branches must come from actual producer paths, not invented fixtures or summary counts. Their implementation and TC coverage require separate exact-byte source review.",
+    "FullH2 is unexecuted. The new versioned contract, complete mapping/runner reviews and paired pre-gates remain prerequisites for runtime work."
+  ],
+  "recommendation": "Proceed with implementation and TC authoring within the plan. Obtain separate exact-source approval before any synthetic unit execution.",
+  "review_method": "Read-only plan, actual four producer paths, machine rows and existing checker inspection plus SHA256; JSON validation of this review only. No source/test/service execution, imports, collection, SQL or network."
+}

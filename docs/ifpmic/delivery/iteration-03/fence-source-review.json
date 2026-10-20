@@ -1,0 +1,59 @@
+{
+  "kind": "ifpmic.delivery.iteration-03.fence-source-review.v1",
+  "review_date": "2026-10-20",
+  "reviewer": {
+    "agent": "/root/h2_evidence_amendment_review",
+    "independence": "Did not author implementation, producer schemas, machine rows or TC units."
+  },
+  "decision": "approve_exact_source_for_93_synthetic_stdlib_units_only",
+  "plan_review_sha256": "b53634fd0c6dd31ff76bca5abae76291e81fb7b0264b04d96fe5398c6c5e8bab",
+  "source_pins": {
+    "scripts/ifpmic_h2_raw_evidence.py": "7b02c3b6a5713d6abe0e589d75835f5f6519e2aa5daee690e811497f20b7b4fe",
+    "scripts/ifpmic_h2_artifacts.py": "712d5800835cd8f5e8f3ac513e2dd44b8f0fb2d035e83775ff989f4f24940b47",
+    "scripts/ifpmic_h2_fences.py": "53836724368ab3dac9e7ccaeb6e603a3a2124926e73db452448bfd608d746a9f",
+    "tests/ifpmic_api/h2_private_values.py": "ea2e828b0956f5e5bf9dd7f3c35441b948e1d0d17a49367b1d6ddd0c039cf86e",
+    "tests/ifpmic_evidence/test_raw_observations.py": "684ee4f7c85b8347b7b76cf988eab3f3aaafcc93c2262882a8781fdd87e63fb7",
+    "tests/ifpmic_evidence/test_raw_artifacts.py": "765a054ba6e98d4bd3f61f29f4b64e4e5bba03aa96209c411ddb20aae32a7d8d",
+    "tests/ifpmic_evidence/test_private_values.py": "fa675b2f32ec7fd68a38c2cdf84873af94ea312a1007aed532b6ed395c8ab811",
+    "tests/ifpmic_evidence/test_retained_fences.py": "d23b1fe244071654b1c23bfccd84499eff5407ad243a806686aee4e81916d54f"
+  },
+  "context_pins_not_execution_approval": {
+    "tests/ifpmic_api/test_workflow_schema.py": "b76ebd44dc6e98323501fea1c03e3f5c1838484b3f7b359693a2e5ef52159224",
+    "services/ifpmic_api/migrations/001_initial.sql": "cf0437a5f32e1589e4ea821afbb2ef2480d780a276667880aa9a08a0f4c77f12",
+    "services/ifpmic_api/migrations/003_workflow_execution.sql": "5ef29521944e18551728dd285ce3ae21fa03c2b06f77c25430da6acb0ce1f102",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules.json": "be23fd9a734e70a8e9e89c4ba07923eb97944d466d273ede9d6c9e9ff3722642"
+  },
+  "findings": [],
+  "resolved_findings": [
+    "Final SQL rows now require every raw column and its JSON type across all eight tables, instead of accepting arbitrary nonempty dictionaries. Both admitted branches require scopes; only the conflict branch permits an empty receipt array.",
+    "The18 operation results now require their actual returned fields, including nullable CLAIM binding, workspace, full binding rows, affected/code fields, activation data and projection/replay results.",
+    "Listing/detail require the full actual job DTO. Revoked API responses require code/message/trace_id error bodies rather than arbitrary dictionaries."
+  ],
+  "evidence": [
+    "The dedicated validator requires exact envelope keys/kind, exact case-to-literal-node binding, bare producer node identity, SHA256(node UTF-8)+.json filename, strictly positive non-boolean observation time and recomputed canonical raw evidence digest.",
+    "All four schemas were compared to actual producer code. Role/ACL row widths and counts, nullable metadata/build IDs, SCRAM error SQLSTATE and legitimate empty OID principal rows match the source. Create-case raw columns and nullable branches match migrations001/003 and actual API DTOs; no product or SQL code is imported.",
+    "Artifact dispatch retains the existing strict JSON/private-file guards and returns verified case/digest metadata. The phase loader binds each of the four exact fence nodes to its single dedicated format/path/count/node field and rejects generic JSON downgrades or alternate directories.",
+    "The28 new TC methods use independent synthetic fixtures and exact failure codes. They exercise all four positive schemas, valid empty/null branches, nested omissions, each binding/table column,18 operation discriminators, DTO/error-body omissions, hash-only replacements, envelope/node/case/filename/time/digest failures, actual private artifact integration and rule downgrade rejection.",
+    "The existing65 methods remain in discovery; only the artifact integration source changed among those earlier imported sources. Total93 methods in four synthetic unittest files import only the four pinned stdlib helper/checker modules and stdlib. Historical source/result reviews remain preserved."
+  ],
+  "authorization": {
+    "command": "/usr/bin/python3 -S -B -m unittest discover -s tests/ifpmic_evidence -v",
+    "working_directory": "repository root",
+    "maximum_wall_seconds": 60,
+    "environment": "Minimal PATH=/usr/bin, LC_ALL=C.UTF-8, PYTHONDONTWRITEBYTECODE=1.",
+    "capture": "Private0700 directory and0600 stdout/stderr/result/source-before/source-after; exact93 unit IDs and all eight source hashes before/after. Timeout, changed pins, missing/extra/failing/skipped units prevent acceptance.",
+    "only_inputs": "Eight pinned source files, synthetic values and owned temporary files. Machine JSON and actual producer/migration files are review context, not unit execution inputs.",
+    "product_sdk_imports_or_pytest_collection": false,
+    "sql_services_network": false,
+    "raw_child_adapter_full_runner_execution": false,
+    "h2_iteration_or_goal_acceptance": false,
+    "source_change_rule": "Changed source pins or discovery scope require renewed exact source review before execution."
+  },
+  "risks_and_remaining_uncertainty": [
+    "Field/type/raw-digest validity is not a business oracle. UUID/timestamp content, privilege outcomes, actual SQL/run/receipt/recovery semantics and producer execution remain the responsibility of original tests and independent runtime review.",
+    "The37-pin machine document remains draft_no_execution. This review accepts neither the full87 mappings nor updated full-runner source closure, contract, lifecycle, SDK decoder binding or paired pre-gates.",
+    "No93-unit result or full490 runtime evidence has been accepted here. All25 obligations and five fixture prerequisites, fresh490 and execution UI remain pending."
+  ],
+  "recommendation": "Execute only the pinned bounded93-unit synthetic command, preserving prior attempts. Review its actual results separately; continue full-H2 freeze and pre-gates without reusing historical approvals for changed sources.",
+  "validation": "Static checker/TC/producer/migration/machine-row inspection, SHA256 and review-document JSON validation only; no imports, collection, tests, SQL, services or network executed by the reviewer."
+}

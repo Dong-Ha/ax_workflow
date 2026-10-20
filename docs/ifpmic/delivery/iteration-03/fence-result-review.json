@@ -1,0 +1,54 @@
+{
+  "kind": "ifpmic.delivery.iteration-03.fence-result-review.v1",
+  "review_date": "2026-10-21",
+  "reviewer": "/root/h2_evidence_amendment_review",
+  "decision": "accept_93_synthetic_checker_units_and_preservation_evidence_only",
+  "source_review_sha256": "56971622e78953bd38c90085ea06c6213c8b1d085e715972529aa8ef95d917a4",
+  "findings": [],
+  "raw_evidence": {
+    "directory": "workflow-artifacts/verification/agile/iteration-03/fence-unit-2026-10-20T14-58-53-969678Z",
+    "sha256": {
+      "result.json": "e136f9bd7d3d6f70fc46a685f2ca19d0f47e2adcb96430165d9c4b590debde84",
+      "source-before.json": "f82ff15e1cc06a842be722ef9b2eed7c7b3b4b773a67c60a20e88b0c26aaf6c8",
+      "source-after.json": "f82ff15e1cc06a842be722ef9b2eed7c7b3b4b773a67c60a20e88b0c26aaf6c8",
+      "stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr.log": "5ac138168e076c7817946c8dd506c2870753c644312c015d508b0ad5c5e793d6",
+      "preservation-before.json": "0949cf3d3a59fd0452efb6d4a04679a132eaf73661dced36cd6ca416cf0f57e8",
+      "preservation-after.json": "0949cf3d3a59fd0452efb6d4a04679a132eaf73661dced36cd6ca416cf0f57e8"
+    }
+  },
+  "baseline_pins_verified": {
+    "docs/ifpmic/evidence/b03/h2-runtime-full-execution-contract.json": "c10c7cb329ea82b758cfa7db34ac330e4b7ec472320b5904e8086f8067865a2d",
+    "accepted407_environment_inventory": "b68aa30da8886fad1e0b2266c05b1f1393875b8f56ca47e04be77e578319d269",
+    "B01_protected_archive": "486d153780df2121cd9d57a56a9ad794ac8829ca25945954ed71b522f6c0fab1",
+    "B01_gate_gate_json_member": "597c3ada698cd20ff9c93a318e1177fe55e43e68844d08a6c56281cf940cb2c6",
+    "docs/ifpmic/source-manifest.json": "8afba9c1fc16ef3a6565f45576792cad51a1aaab59857d3a28666c71ec43007c"
+  },
+  "evidence": [
+    "Recorded command exactly matches the approved /usr/bin/python3 -S -B -m unittest discover -s tests/ifpmic_evidence -v; exit0. Actual stderr reports Ran93 tests in0.278s/OK.",
+    "All93 unique actual passing IDs independently match the93 methods in the four pinned unittest sources and both expected/passed result lists: original65 plus28 retained-fence units. No missing, extra, failing or skipped unit was observed.",
+    "Standalone source-before/source-after maps, result maps, approved eight source pins and current file hashes match. Recomputed stdout/stderr hashes match the result; stdout is empty. Directory0700 and all seven private files0600 were verified.",
+    "The historical c10 contract hash and its accepted407 environment, B01 archive/member and original design manifest anchors were verified. Both recorded environment maps exactly equal the accepted baseline:1777 original32 and3072 qualified36 entries. This verifies recorded preservation evidence, not a new environment baseline.",
+    "Preservation-before and preservation-after are identical. Protected96 hashes match the pinned B01 member; independent current-byte and exact89-file inventory comparison passed. All17 current design files and both original uploads also match the pinned manifest."
+  ],
+  "accepted_counts": {
+    "tests": 93,
+    "passed": 93,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "missing_or_extra": 0
+  },
+  "risks_and_remaining_uncertainty": [
+    "Synthetic fence schemas/digests do not establish actual SQL execution, privilege outcomes, producer invocation completeness, SDK/history compatibility, run/receipt/recovery semantics or process cleanup.",
+    "The full87 machine mappings, complete source closure/runner, versioned contract and paired pre-gates, fresh490 across all25 obligations and five fixture prerequisites, actual runtime evidence and execution UI remain pending. Historical c10 is used only as a preservation anchor here."
+  ],
+  "acceptance": {
+    "synthetic_units_and_recorded_preservation": true,
+    "full_machine_mapping_or_runtime_hooks": false,
+    "actual_sql_or_full_h2_runtime": false,
+    "iteration03_or_business_or_goal_completion": false
+  },
+  "recommendation": "Record this bounded93-unit result and preserve historical attempts. Continue full mapping, source/contract freeze and exact pre-gate reviews separately.",
+  "review_method": "Read-only log/ID/JSON/hash/mode/archive comparison and stdlib data auditing; no product imports, test execution, SQL, services or network by the reviewer."
+}

@@ -11087,7 +11087,7 @@
     {
       "artifacts": [
         {
-          "format": "json",
+          "format": "retained_fence_json",
           "maximum": 1,
           "minimum": 1,
           "path": "retained-fences/ed0848adbdf80946dcc316ad389865262bba4be7deb1d5d340e3143b014d4f08.json",
@@ -11098,7 +11098,8 @@
             "observed_monotonic_ns",
             "evidence_sha256",
             "evidence"
-          ]
+          ],
+          "node_field": "pytest_current_test"
         }
       ],
       "case_directory": ".",
@@ -11143,12 +11144,15 @@
       ],
       "unresolved": [
         "JSON top-level keys not fully source-verified for retained-fences/ed0848adbdf80946dcc316ad389865262bba4be7deb1d5d340e3143b014d4f08.json"
+      ],
+      "applicability_clarifications": [
+        "Dedicated validator checks literal case/node/filename, exact envelope, canonical nested evidence digest and source-shaped internal raw observations. Structural acceptance does not establish SQL business semantics."
       ]
     },
     {
       "artifacts": [
         {
-          "format": "json",
+          "format": "retained_fence_json",
           "maximum": 1,
           "minimum": 1,
           "path": "retained-fences/291c474be1300da2a2e1062b421b824d9eb73a8539e5e6c011540a5024649748.json",
@@ -11159,7 +11163,8 @@
             "observed_monotonic_ns",
             "evidence_sha256",
             "evidence"
-          ]
+          ],
+          "node_field": "pytest_current_test"
         }
       ],
       "case_directory": ".",
@@ -11195,12 +11200,15 @@
       ],
       "unresolved": [
         "JSON top-level keys not fully source-verified for retained-fences/291c474be1300da2a2e1062b421b824d9eb73a8539e5e6c011540a5024649748.json"
+      ],
+      "applicability_clarifications": [
+        "Dedicated validator checks literal case/node/filename, exact envelope, canonical nested evidence digest and source-shaped internal raw observations. Structural acceptance does not establish SQL business semantics."
       ]
     },
     {
       "artifacts": [
         {
-          "format": "json",
+          "format": "retained_fence_json",
           "maximum": 1,
           "minimum": 1,
           "path": "retained-fences/5731d311492332cefc00ef2f08a3675ad1e4468d415f6cf3033259edb0d2244c.json",
@@ -11211,7 +11219,8 @@
             "observed_monotonic_ns",
             "evidence_sha256",
             "evidence"
-          ]
+          ],
+          "node_field": "pytest_current_test"
         }
       ],
       "case_directory": ".",
@@ -11248,12 +11257,15 @@
       "unresolved": [
         "JSON top-level keys not fully source-verified for retained-fences/5731d311492332cefc00ef2f08a3675ad1e4468d415f6cf3033259edb0d2244c.json",
         "Raw source gap: no Temporal client/server in test; none should be invented."
+      ],
+      "applicability_clarifications": [
+        "Dedicated validator checks literal case/node/filename, exact envelope, canonical nested evidence digest and source-shaped internal raw observations. Structural acceptance does not establish SQL business semantics."
       ]
     },
     {
       "artifacts": [
         {
-          "format": "json",
+          "format": "retained_fence_json",
           "maximum": 1,
           "minimum": 1,
           "path": "retained-fences/b97ed7abe03f746e7c565fbcef5ae4ba8c3aa1a2e3fdd283449f12f76380a8b0.json",
@@ -11264,7 +11276,8 @@
             "observed_monotonic_ns",
             "evidence_sha256",
             "evidence"
-          ]
+          ],
+          "node_field": "pytest_current_test"
         }
       ],
       "case_directory": ".",
@@ -11310,6 +11323,9 @@
       "unresolved": [
         "JSON top-level keys not fully source-verified for retained-fences/b97ed7abe03f746e7c565fbcef5ae4ba8c3aa1a2e3fdd283449f12f76380a8b0.json",
         "Raw source gap: failure exception/sqlstate may be null for connection-level OperationalError; HBA rows and failure exception type remain raw actual evidence."
+      ],
+      "applicability_clarifications": [
+        "Dedicated validator checks literal case/node/filename, exact envelope, canonical nested evidence digest and source-shaped internal raw observations. Structural acceptance does not establish SQL business semantics."
       ]
     }
   ],
@@ -11453,7 +11469,7 @@
     }
   },
   "source_pins": {
-    "scripts/ifpmic_h2_artifacts.py": "65c647a4a26fda2923d41d1c344958af254cf8fb35ea80250140c3140e41bcb9",
+    "scripts/ifpmic_h2_artifacts.py": "712d5800835cd8f5e8f3ac513e2dd44b8f0fb2d035e83775ff989f4f24940b47",
     "scripts/ifpmic_h2_raw_evidence.py": "7b02c3b6a5713d6abe0e589d75835f5f6519e2aa5daee690e811497f20b7b4fe",
     "services/ifpmic_api/execution_manifest.py": "0f08e5c86992edc9ee9b62b19d50f981282d125e39810e0f0d6e75d39bfd07b6",
     "tests/ifpmic_api/accepted_start_dispatcher_child.py": "87c6cf61d94188f5733e73fc02e8d3d2caeb78f4a802a6455a501317a6f859eb",
@@ -11487,7 +11503,9 @@
     "tests/ifpmic_api/workflow_schema_fixture.py": "dd1eba1754a8985dd704f0ed63271cc73beca8b03c72aaa2f14acdd41e5e3681",
     "tests/ifpmic_api/workspace_fixture.py": "66b0d11faaa343542fe27e1254e0ed28a968d73518a7a1ac2aab106e4ef126b6",
     "tests/ifpmic_evidence/test_private_values.py": "fa675b2f32ec7fd68a38c2cdf84873af94ea312a1007aed532b6ed395c8ab811",
-    "tests/ifpmic_api/h2_private_values.py": "ea2e828b0956f5e5bf9dd7f3c35441b948e1d0d17a49367b1d6ddd0c039cf86e"
+    "tests/ifpmic_api/h2_private_values.py": "ea2e828b0956f5e5bf9dd7f3c35441b948e1d0d17a49367b1d6ddd0c039cf86e",
+    "scripts/ifpmic_h2_fences.py": "53836724368ab3dac9e7ccaeb6e603a3a2124926e73db452448bfd608d746a9f",
+    "tests/ifpmic_evidence/test_retained_fences.py": "d23b1fe244071654b1c23bfccd84499eff5407ad243a806686aee4e81916d54f"
   },
   "status": "draft_no_execution",
   "unresolved": []

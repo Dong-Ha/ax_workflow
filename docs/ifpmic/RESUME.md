@@ -1,12 +1,18 @@
-# 다음 세션 재개 안내 — 2026-10-20
+# 다음 세션 재개 안내 — 2026-10-21
 
-> 최신 개발 체크포인트: [주기03 진행 기록](./delivery/iteration-03/README.md), [65건 검증 요약](./delivery/iteration-03/artifact-verification.json). 합성 단위65/65와 독립 결과 검토 완료.87-case mapping 및 phase hook은 초안/범위 한정 소스 검토이며 전체 실행 승인이 아니다. **다음 수정은 retained SQL fence 내부 evidence schema·canonical digest·정확한 kind/case/node 검사 누락**이다. 그 뒤 새 버전 계약/ledger·전체 runner/paired pre-gate → fresh490 → 실제 run/receipt 화면 연결. 기존 c10 계약은 주기02가 사용하므로 보존한다. 아래 오래된28건/원본490 계약 내용은 역사 기록으로만 읽는다.
+> 최신 개발 체크포인트: [주기03 진행 기록](./delivery/iteration-03/README.md), [93건 검증 요약](./delivery/iteration-03/fence-verification.json). SQL fence 내부 원문/전체 열·함수 반환/DTO/오류 본문·canonical digest·정확한 kind/case/node/파일명 및 우회 방지 검사를 구현해 신규28+기존65=93/93 통과. 합성 범위·원본 보존에 대한 독립 결과 검토도 수용됐다. 다음은 **87-case 전체 mapping 대조·새 버전490 ledger/계약 고정 → 전체 runner/paired pre-gate → fresh490 → 실제 run/receipt 화면**이다. 새 fence helper/TC를 source closure에 포함한다. 기존 c10 계약은 주기02가 사용하므로 보존한다. 아래 과거 계약/28건·65건 상태는 역사 기록이다.
 
 > 최신 제품 결과: [주기02 실제 요청 저장 화면](./delivery/iteration-02/README.md), http://127.0.0.1:8769/ . 실제 API/DB 저장·재시작 유지 검증 완료, 독립 결과 검토 상태는 해당 증빙을 확인한다. 다음 단위는 필수 H2 검증 후 실제 실행 한 구간 연결이다.
 
 > 최신 사용자 지시: [애자일 전달 계획](./AGILE-DELIVERY.md)을 우선한다. 목표는 재개되었으며, [첫 화면 공개](./delivery/iteration-01/README.md)에 이어 [실제 요청 저장 흐름](./delivery/iteration-02/README.md)을 전달했다. 이후에도 한 사용자 흐름씩 구현·시연·검증한다. H2 소스 증빙 보완은 `fa3fe7e`에 보존했으며 아직 실행 승인이 없다. 아래 내용은 중단 당시의 상세 기술 인계다.
 
 이전에는 weekly limit 때문에 중단·인계를 요청했으나, 이후 사용자 지시로 애자일 개발을 재개했다. 현재 목표는 진행 중이다. 이 파일과 `AGENTS.md`, `docs/ifpmic/progress.json`, 실제 Git 상태를 확인하고 최신 제품 주기를 이어간다. 아래 과거 중단 기록의 정지 문구를 현재 실행 지시로 해석하지 않는다.
+
+## 다음 full 후보 고정 시 확인할 정적 차이
+
+81c84d5 이후 fence 체크포인트에서 비교: 옛 ledger84개 pin 중13개가 현재 소스와 다르다. 최신 machine37개 pin은 모두 일치하지만7개가 옛 ledger에 없다: `scripts/ifpmic_h2_{artifacts,fences,raw_evidence}.py`, `tests/ifpmic_api/{h2_private_values,h2_snapshot_evidence}.py`, `tests/ifpmic_evidence/test_{private_values,retained_fences}.py`. 이 목록만으로 전체 closure를 한정하지 말고, 실제 서비스·테스트 파일과 auditor/adapter/unit closure를 다시 고정한다.
+
+새 candidate 경로를 별도로 정하고 새 ledger → 새 contract → runner 상수 순으로 hash를 연결한다. ledger가 새 contract/runner를 pin하면 순환이 생기므로 runner의 정확한 hash는 별도 source/pre-gate 리뷰에서 연결한다. machine rules에는 활성 ledger/contract를 역으로 pin하지 않는다. 원래 case/phase 예산 합15420초 + 기존600초 + 검토된 raw 감사200초 =16220초이며, case/phase 테스트 시간을 늘리는 변경이 아니다.
 
 ## 목표와 유지할 경계
 

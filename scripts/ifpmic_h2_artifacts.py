@@ -147,13 +147,21 @@ def _history(raw, decoder):
     return {'event_count': len(events), 'frame_sha256': [hashlib.sha256(frame).hexdigest() for frame in frames]}
 
 
-def _document(raw, rule, node, case_fd, max_bytes):
+def _document(raw, rule, node, case_fd, max_bytes, filename):
     if rule.format == 'jsonl':
         lines = raw.splitlines()
         _require(bool(lines) and all(line.strip() for line in lines), 'EMPTY_JSON_JOURNAL')
         documents = [_decode(line) for line in lines]
     else:
         documents = [_decode(raw)]
+    if rule.format == 'retained_fence_json':
+        from scripts.ifpmic_h2_fences import validate_retained_fence
+
+        _require(rule.node_field == 'pytest_current_test', 'INVALID_FENCE_NODE_FIELD')
+        details = validate_retained_fence(documents[0], node, filename)
+        _require(not rule.sha256_links and set(rule.required_keys) <= set(documents[0]),
+                 'INVALID_FENCE_RULE_CONSTRAINT')
+        return details
     if rule.node_field is not None:
         _require(isinstance(rule.node_field, str) and bool(rule.node_field), 'INVALID_NODE_FIELD')
         _require(all(type(row) is dict for row in documents), 'INVALID_NODE_JOURNAL')
@@ -196,13 +204,13 @@ def audit_artifacts(root: Path, cases: list[CaseArtifacts], *,
             _segments(rule.path)
             _require(rule.path not in seen_paths, 'DUPLICATE_ARTIFACT_RULE')
             seen_paths.add(rule.path)
-            _require(rule.format in ('json', 'jsonl', 'pbseq', 'bytes'), 'INVALID_ARTIFACT_FORMAT')
+            _require(rule.format in ('json', 'jsonl', 'retained_fence_json', 'pbseq', 'bytes'), 'INVALID_ARTIFACT_FORMAT')
             _require(type(rule.minimum) is int and type(rule.maximum) is int and
                      0 < rule.minimum <= rule.maximum, 'INVALID_ARTIFACT_LIMITS')
             _require(type(rule.required_keys) is tuple and all(isinstance(key, str) and key
                      for key in rule.required_keys), 'INVALID_ARTIFACT_KEYS')
             _require(type(rule.sha256_links) is dict, 'INVALID_ARTIFACT_LINKS')
-            _require(rule.format in ('json', 'jsonl') or
+            _require(rule.format in ('json', 'jsonl', 'retained_fence_json') or
                      (not rule.required_keys and not rule.sha256_links and rule.node_field is None),
                      'NONJSON_ARTIFACT_CONSTRAINT')
             for pointer, target in rule.sha256_links.items():
@@ -249,8 +257,9 @@ def audit_artifacts(root: Path, cases: list[CaseArtifacts], *,
                         for relative, parent_fd in matches:
                             raw = _read_file(relative.rsplit('/', 1)[-1], parent_fd, max_bytes)
                             details = {}
-                            if rule.format in ('json', 'jsonl'):
-                                details = _document(raw, rule, case.node_id, case_fd, max_bytes)
+                            if rule.format in ('json', 'jsonl', 'retained_fence_json'):
+                                details = _document(raw, rule, case.node_id, case_fd, max_bytes,
+                                                    relative.rsplit('/', 1)[-1])
                             elif rule.format == 'pbseq':
                                 details = _history(raw, decode_history)
                             path = relative if directory_name == '.' else directory_name + '/' + relative
@@ -318,6 +327,14 @@ def prepare_phase_rules(document: dict, phase: str, phase_nodes: set[str],
             artifacts.append(ArtifactRule(path=item['path'], format=item['format'],
                 minimum=item['minimum'], maximum=item['maximum'], required_keys=tuple(item['required_keys']),
                 node_field=item.get('node_field'), sha256_links=item.get('sha256_links', {})))
+        from scripts.ifpmic_h2_fences import CASE_NODES
+
+        if row['node_id'] in CASE_NODES.values():
+            expected_path = 'retained-fences/' + hashlib.sha256(row['node_id'].encode('utf-8')).hexdigest() + '.json'
+            _require(row.get('case_directory') == '.' and len(artifacts) == 1 and
+                     artifacts[0].path == expected_path and artifacts[0].format == 'retained_fence_json' and
+                     artifacts[0].minimum == 1 and artifacts[0].maximum == 1 and
+                     artifacts[0].node_field == 'pytest_current_test', 'RETAINED_FENCE_RULE_DOWNGRADE')
         _require({'minimum_owner', 'queries_min', 'queries_max', 'case_directory'} <= set(row),
                  'MACHINE_RECORDER_RULE_MISSING')
         recorders.append(RecorderRequirement(row['node_id'], row['minimum_owner'],
