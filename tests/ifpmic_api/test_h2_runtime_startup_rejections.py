@@ -410,6 +410,8 @@ def _launch_rejected_cli(case, deadline):
                                "listener_connection_counts": connection_counts}
     case["listener_connections"] = connections
     case["listener_connection_counts"] = connection_counts
+    _write_private(case["root"] / "startup-stdout.log", stdout)
+    _write_private(case["root"] / "startup-stderr.log", stderr)
     assert process.returncode == 3 and forced is False and absent is True
     assert stdout == EXPECTED_STDOUT and stderr == b""
     assert all(value == 0 for value in connection_counts.values())
@@ -483,9 +485,13 @@ def _cleanup_case(case, deadline, *, preserve_primary=False):
             if before is not None:
                 after = normal._read_owner_snapshot(case["harness"], case["job_id"])
                 assert after == before
-                assert normal.tree_fingerprint(
+                tree_after = normal.tree_fingerprint(
                     Path(case["harness"]["workspace_root"]) / case["job_id"]
-                ) == case["tree_before"]
+                )
+                normal._write_private(case["root"] / "startup-workspace-observations.json",
+                                      normal._canonical({"before": case["tree_before"],
+                                                         "after": tree_after}) + b"\n")
+                assert tree_after == case["tree_before"]
                 result = case.get("process_outcome", {})
                 evidence = {
                     "case_id": case["variant"], "snapshot_unchanged": after == before,

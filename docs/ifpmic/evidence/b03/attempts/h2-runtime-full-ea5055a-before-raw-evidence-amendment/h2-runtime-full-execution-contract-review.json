@@ -1,0 +1,203 @@
+{
+  "kind": "ifpmic.b03.h2.runtime-full-execution-contract-review.v1",
+  "verdict": "approve_runner_authoring_only",
+  "contract_sha256": "c10c7cb329ea82b758cfa7db34ac330e4b7ec472320b5904e8086f8067865a2d",
+  "ledger_sha256": "cf4f3bfc023341c22e0c8fc7c072c54838d62f7adeb39d817a4ce3b6589f8d60",
+  "reviewed_utc": "2026-10-19T15:15:19.284627+00:00",
+  "reviewer": {
+    "agent_id": "/root/h2_prebinding_advice",
+    "actual_role": "senior_sol",
+    "independence": "Independent of root contract/integration author and TC test author. Reviewer authored only this new review JSON; main orchestrator retains ownership. TC was notified of the final exact SHA before this approval."
+  },
+  "scope": "Static independent review of the exact full490 execution contract and its attestation/approval/budget/archive requirements. Prior source/inventory review is pinned; case source auditing was not repeated and no case result is claimed.",
+  "reviewed_contract": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-full-execution-contract.json",
+    "sha256": "c10c7cb329ea82b758cfa7db34ac330e4b7ec472320b5904e8086f8067865a2d"
+  },
+  "reviewed_ledger": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger.json",
+    "sha256": "cf4f3bfc023341c22e0c8fc7c072c54838d62f7adeb39d817a4ce3b6589f8d60"
+  },
+  "reviewed_authority_and_attestation_inputs": {
+    "approved_plan": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-full-verification-plan.json",
+      "sha256": "c6964bccff0d4cec1ac00f18fbb267d5d1a4a5887e53844c604333b7c059486c"
+    },
+    "integrated_ledger": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger.json",
+      "sha256": "cf4f3bfc023341c22e0c8fc7c072c54838d62f7adeb39d817a4ce3b6589f8d60"
+    },
+    "original_design_manifest": {
+      "path": "docs/ifpmic/source-manifest.json",
+      "sha256": "8afba9c1fc16ef3a6565f45576792cad51a1aaab59857d3a28666c71ec43007c"
+    },
+    "protected_AX_baseline": {
+      "path": "docs/ifpmic/evidence/b01/local-profile-gate.zip",
+      "sha256": "486d153780df2121cd9d57a56a9ad794ac8829ca25945954ed71b522f6c0fab1"
+    },
+    "original32_lock": {
+      "path": "services/ifpmic_api/requirements.lock",
+      "sha256": "6c8c950820a8c3ae9dea250e4080bc9dab09db17663e3d50118c5ac29211357e"
+    },
+    "temporal_input": {
+      "path": "services/ifpmic_api/requirements-temporal.lock",
+      "sha256": "ccbbf7a8aab39cd80861f607afd4994bf461d07cbf592f6acfcc492e63ff85c6"
+    },
+    "qualified36_candidate_lock": {
+      "path": "workflow-artifacts/verification/B03/H1/preparations/2026-10-18T19-40-54Z-uv-resolution-retry/candidate-requirements.lock",
+      "sha256": "9c6141efe9ccb7cd9a94e3663c2faf9049eb10b883c93f492bb3e46c3a8883f7"
+    },
+    "qualified_resolution": {
+      "path": "docs/ifpmic/evidence/b03/h1-resolution-preparation.json",
+      "sha256": "a777a09f3a00a24b4dc21a7aa3e649b5237aeec1360fbfd4c19c244b897eb213"
+    },
+    "qualified_preparation": {
+      "path": "docs/ifpmic/evidence/b03/h1-installation-preparation.json",
+      "sha256": "277fe057d633759381ddcbba2df22a2772edf928c84d6dc43eb9f0ffa0d849a6"
+    },
+    "qualified_private_installation": {
+      "path": "workflow-artifacts/toolchains/B03/H1/2026-10-18T19-43-43-523587Z/installation.json",
+      "sha256": "a1aa7d0b77b94302064b26796b5df45d24032c73d30080dc91db94d989b80e8d"
+    },
+    "accepted407_environment_inventory": {
+      "path": "workflow-artifacts/verification/B03/H2/runtime-normal/gates/2026-10-19T13-14-17-430254Z/environment-before.json",
+      "sha256": "b68aa30da8886fad1e0b2266c05b1f1393875b8f56ca47e04be77e578319d269"
+    },
+    "accepted407_verification": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-normal-verification.json",
+      "sha256": "0662ec41f3b5b6bf2f00fd48e88803f55f692da48178c4f79f3068802c3ba328"
+    },
+    "accepted407_final_review": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-normal-final-review.json",
+      "sha256": "f18f65d9d155609141d0fa073e529cbf6009a625dcbbc7a731594bb99b2b0784"
+    },
+    "accepted407_archive": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-normal-gate.zip",
+      "sha256": "ad9b085e1cfa25b7d6109354a57f9f6e07c660281f9255fef5669fe160f13c16"
+    },
+    "historical407_timing_contract": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-normal-execution-contract.json",
+      "sha256": "7e730a5936a39d364821df4b1e92afabc36813211f97cbd920aad7db2018260b"
+    },
+    "independent_inventory_source_review": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-full-inventory-source-review.json",
+      "sha256": "4fda632e7eed5ee10f8aad0ffa13443d169f0dc9d4469991d9af75cc192f123a"
+    },
+    "TC_inventory_review": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-full-inventory-tc-review.json",
+      "sha256": "cd8752ab97742e829a920de827a09ca2c113b563e87a69560d8d8549ef2da388"
+    },
+    "protected_comparison_algorithm": {
+      "path": "scripts/verify_ifpmic_g1.py",
+      "sha256": "0f6603de4b0de546ccf2c23bc663c0568c2a178c8c19e31812c68b10a61e6d9b"
+    },
+    "environment_comparison_algorithm": {
+      "path": "scripts/verify_ifpmic_b03_h1.py",
+      "sha256": "9c20131082af1467f682d31fabb47daf359867aa5939ad818d97b7ac4c0d5573"
+    },
+    "live_temporal_lifecycle_helper": {
+      "path": "scripts/ifpmic_temporal_toolchain.py",
+      "sha256": "8cadab76ccfa1f93392cf759991d6906415c75ed5a116093c53aee9f4a445564"
+    },
+    "live_gate_descendant_helper": {
+      "path": "scripts/verify_ifpmic_g4.py",
+      "sha256": "ad9b66b7463b84f22227d8ba924b42628f8abb463d0873ac9a90ab013708c13a"
+    }
+  },
+  "reviewed_binary_inputs": {
+    "original32_python": {
+      "path": ".ifpmic-venv/bin/python",
+      "sha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f",
+      "symlink_target_sha256": "31f2aee4e71d21fbe5cf8b01ff0e069b9275f58929596ceb00d14d90e3e16cd6"
+    },
+    "qualified36_python": {
+      "path": "workflow-artifacts/toolchains/B03/H1/2026-10-18T19-43-43-523587Z/venv/bin/python",
+      "sha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f",
+      "symlink_target_sha256": "42f2b28d8258c41a63374ac4365007738900f66a9b62a7eb1a2041a2e091d41b"
+    },
+    "temporal_cli": {
+      "path": "workflow-artifacts/toolchains/B03/H1/2026-10-18T19-43-43-523587Z/temporal",
+      "sha256": "712217694cac9f786a72d4b6c876cd15f3dcf1bf31434d9fed6af25242a327a0",
+      "symlink_target_sha256": null
+    },
+    "initdb": {
+      "path": ".paperclip-lab/runtime/node_modules/@embedded-postgres/linux-x64/native/bin/initdb",
+      "sha256": "7cba14094c5f505f492fd243c5eda04f0dc3be05f12b7bd278f150f1e03b721f",
+      "symlink_target_sha256": null
+    },
+    "pg_ctl": {
+      "path": ".paperclip-lab/runtime/node_modules/@embedded-postgres/linux-x64/native/bin/pg_ctl",
+      "sha256": "24a1f166819e0924319ff3faf752ad2a1ac594e223e2f3b1a2038dc84a2969de",
+      "symlink_target_sha256": null
+    },
+    "postgres": {
+      "path": ".paperclip-lab/runtime/node_modules/@embedded-postgres/linux-x64/native/bin/postgres",
+      "sha256": "c85fa9c977d9e641c2d22d93675a9b7097764b7df2c4c9ea021f5780522b2af2",
+      "symlink_target_sha256": null
+    },
+    "fixture_node": {
+      "path": "~/.nvm/versions/node/v24.17.0/bin/node",
+      "path_kind": "current_user_home_relative",
+      "sha256": "62d66443847de1f527f74afe715900b12884ace52136dc9cd8e91e61acc2f527",
+      "expected_version": "v24.17.0",
+      "path_policy": "Only explicit home-relative path, no PATH fallback. Resolved absolute path remains private."
+    }
+  },
+  "findings": {
+    "blocking": [],
+    "resolved": [
+      {
+        "id": "CONTRACT-EXACT-ATTESTATION-ANCHORS",
+        "initial_candidate_sha256": "d3e6f9a0a9900f19ff41a9eb7a75efad344cd2182be14db12905bb0e305bc8b8",
+        "problem": "Named protected/design/environment/toolchain counts had no concrete current comparison anchors; historical407 timing contract was not pinned.",
+        "resolution": "Final contract pins19 exact attestation inputs and7 binary identities, including accepted407 environment maps/timing contract, original/protected manifests, package locks/preparation/installation and current comparison/lifecycle helpers. Before/after file/link/source/protected/design comparisons are explicit; no new baseline may be chosen."
+      },
+      {
+        "id": "CONTRACT-APPROVAL-LAYERS",
+        "problem": "Generic both-approvals wording left review identity and effect ambiguous.",
+        "resolution": "Final contract names exact contract review filenames, approve_runner_authoring_only verdict and exact contract_sha256/ledger_sha256 fields. Final separate pre-gates pin both contract reviews, final runner and runner source review with approve_execution; the contract never pins reviews of itself. Changed bytes invalidate affected approvals."
+      },
+      {
+        "id": "CONTRACT-COLLECTION-ACCOUNTING",
+        "problem": "All15 collections before cases and their budget accounting needed to be explicit.",
+        "resolution": "Final contract requires all15 collections and exact490-ID comparison before any case execution,30s per collection/450s total. Collections consume outer600 overhead rather than any execution phase cap;150s remains for attestation/post audit. Outer16020 includes every action and recovery."
+      },
+      {
+        "id": "CONTRACT-LIVE-SCRIPT-CLOSURE",
+        "previous_candidate_sha256": "b1518c6c7dfca45f5eb230b25d0ecd4feb106dbc4edfcd9800af8687bf529234",
+        "problem": "Current84 ledger source pins did not directly anchor the live Temporal binary/process lifecycle helper.",
+        "resolution": "Final contract adds explicit current scripts/ifpmic_temporal_toolchain.py and scripts/verify_ifpmic_g4.py anchors. Their current bytes match the specified hashes, with existing G1/H1 comparison algorithm anchors retained."
+      }
+    ]
+  },
+  "evidence": [
+    "Static hash comparison verified both authority artifacts and all19 attestation inputs against current bytes. No imports of product, SDK or runner modules were performed.",
+    "All7 binary file SHA values match current files; both Python symlink-target-string SHA values also match. No binary was executed, so this check is identity evidence rather than runtime/version qualification.",
+    "Accepted407 environment-before anchor has exactly1777 original32 and3072 qualified36 map entries. Pinned environment_hashes source records regular-file bytes and symlink target strings, excluding only specified cache/pyc entries; final contract requires exact before/after equality.",
+    "Pinned B01 gate/gate.json member hash matches. Applying its stated protected prefixes/explicit-file selection to the archived manifest yields96 protected hashes and89 inventory entries; original design manifest has17 imports and2 uploads. Current whole inventories must still be compared by the authorized gate.",
+    "All5 accepted407 PostgreSQL lifecycle records carry the same three binary hashes pinned by this contract and report18.1. This corrects reliance on generic documentation versions; actual current version commands remain a gate obligation.",
+    "Contract counts/order/all15 phase caps exactly equal ledgercf4f3bfc. Caps sum15420; plus fixed600 overhead equals16020 outer bound. Nine additions cover83 cases and six retained phases cover407, with49 extended215+25 and34 default25+5 new cases. Historical407 exact timing rules are now pinned via7e730a5936a39d364821df4b1e92afabc36813211f97cbd920aad7db2018260b.",
+    "All5 execution stages contain purpose,target,method,pass_criteria,expected,evidence,agent,recovery. They require actual unique ordered timing/progress and exact JUnit/watchdog evidence, fail timeout flags, retain one shared cleanup epoch through last-item session cleanup and never treat parent recovery as case success.",
+    "All84 current ledger source pins still match. This is a consistency check and does not broaden the separately pinned source review into certification of every byte. The runner path does not yet exist.",
+    "The six-member public archive transformation has a closed member list, normalized timing/process roles and expected exit/signal fields, raw private proof preservation and independent comparison. Explicit expected-child-fatal/SIGKILL policy permits intended test oracles while rejecting pytest failures; simulated fixture handles remain labeled mechanism evidence.",
+    "Superseded initial contract/TC approval is disclosed as archived and cannot satisfy the final exact-SHA review gate."
+  ],
+  "risks_and_edge_cases": [
+    "Runner implementation must actually enforce the contract: all collections first, exact interpreter/plugin/ID matching, separate overhead accounting, native/case/phase/outer bounds, reserve time for proven owned cleanup, before/after inventories and exact review pins. This approval does not establish those properties of a nonexistent runner.",
+    "Expected fixture unknown state must stay unknown while actual started threads/helpers/sockets are independently closed; expected child failures and SIGKILL must not be normalized into unintended global exit0 requirements or fabricated physical absence.",
+    "Historical environment and pass artifacts provide identity/comparison baselines only. Every current490 result, causal oracle, privacy transformation and resource observation still requires fresh raw evidence.",
+    "Source/environment drift, wrong or stale review targets, collection differences, timing/cleanup failures or unreviewed runner changes require rejection and rereview rather than silent retries or larger limits."
+  ],
+  "recommendation": "With a matching exact TC approval for this contract and ledger, author the bounded runner only. Then obtain exact runner source review and independent/TC pre-gate approvals before any imports, collection, tests, SQL, services or network. Final full H2 acceptance requires separate actual-evidence review.",
+  "remaining_uncertainty": [
+    "No runner implementation exists and none was executed or imported.",
+    "No test/collection/SQL/service/network execution was performed in this review; actual timing, environment health, isolation, SDK/PG behavior and evidence/privacy compliance remain unqualified.",
+    "This review does not accept H2, later B03/H3-H7 duties, originalAT32 or the full AX goal."
+  ],
+  "authorization": {
+    "runner_authoring": "conditional_on_matching_exact_TC_review_only",
+    "test_or_service_execution": false,
+    "h2_acceptance": false,
+    "full_goal_acceptance": false
+  }
+}

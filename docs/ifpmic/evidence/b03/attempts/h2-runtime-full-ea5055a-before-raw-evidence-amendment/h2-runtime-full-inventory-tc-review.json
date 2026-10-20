@@ -1,0 +1,68 @@
+{
+  "kind": "ifpmic.b03.h2.runtime-full-inventory-tc-review.v1",
+  "verdict": "approve_inventory_integrity_for_continued_review_only",
+  "reviewer": "TC inventory reviewer; also authored some included test cases",
+  "review_scope": "Authoring/inventory consistency only. This is not independent source qualification, runner review, pre-gate, execution authorization, or H2 acceptance.",
+  "reviewed_input": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger.json",
+    "sha256": "cf4f3bfc023341c22e0c8fc7c072c54838d62f7adeb39d817a4ce3b6589f8d60",
+    "approved_plan_path": "docs/ifpmic/evidence/b03/h2-runtime-full-verification-plan.json",
+    "approved_plan_sha256": "c6964bccff0d4cec1ac00f18fbb267d5d1a4a5887e53844c604333b7c059486c"
+  },
+  "checks": {
+    "retained_inventory": {
+      "result": "pass_static",
+      "evidence": "The integrated 407 retained pytest node IDs convert one-for-one, in the same order, to the 407 historical dotted case IDs in h2-runtime-normal-tc-ledger.json; the historical ledger SHA matches its recorded pin."
+    },
+    "union_and_phases": {
+      "result": "pass_static",
+      "evidence": "There are 407 retained IDs, 83 unique additional IDs, and 490 unique IDs in the union with no overlap. The six retained phases account for all retained IDs; the nine new phases account for all 83 additions."
+    },
+    "approved_obligation_coverage": {
+      "result": "pass_static",
+      "evidence": "The 25 obligation IDs and order match the exact approved plan. The draft inventory assigns literal IDs to all 25 groups, including CRASH-01 through CRASH-12 and all named NEG groups. The five fixture-failure prerequisites are explicitly identified and remain among those approved groups; they do not create a 26th business obligation."
+    },
+    "case_fields": {
+      "result": "pass_static",
+      "required_fields": [
+        "purpose",
+        "target",
+        "method",
+        "agent",
+        "pass_criteria",
+        "expected",
+        "evidence",
+        "recovery"
+      ],
+      "evidence": "All 83 new-case records and all 15 retained/additional phase records contain every required field."
+    },
+    "phase_case_and_budget_mapping": {
+      "result": "pass_static",
+      "evidence": "Each additional phase's node_ids exactly match its per_case_budgets keys. The literal CASE_NODE_IDS in dispatcher, startup, activity/runtime, transport, workspace and fixture-failure watchdog plugins match the phase IDs. The worker API plugin's CASE_FILES keys match its four phase IDs; its filename values are private journal names. The started/deployment plugin composes the nine listed parametrized variants and the separate foreign-deployment ID. Window and startup parametrized IDs match their literal base/variant definitions. Phase deadlines equal the sum of listed per-case setup/body plus shared-cleanup budgets with the documented 60-second phase allowance."
+    },
+    "budget_totals": {
+      "result": "pass_static",
+      "evidence": "The 83 new cases divide exactly into 49 cases at 215+25 seconds and 34 at 25+5 seconds. The sum of the six retained and nine additional phase caps is 15,420 seconds, matching limits.phase_caps_sum_seconds."
+    },
+    "source_pins_and_history": {
+      "result": "pass_static",
+      "evidence": "All 84 current source pins and seven derivative-ledger pins match their recorded SHA-256 values. All 14 historical source-pin override rows point to the corresponding historical pins in their derivative ledgers and state that shared-fixture/native-bounds changes mean the historical result does not qualify current bytes. Repeated rows are intentional ledger/source history entries."
+    },
+    "scope_and_authority": {
+      "result": "pass_static",
+      "evidence": "The inventory preserves all 407 retained cases and includes all 25 approved groups without a narrowed H2 scope. execution_authorized, runner_authoring_authorized, and full_h2_acceptance are false; all cases are unexecuted and acceptance, collection, runner, and pre-gate work remain pending."
+    }
+  },
+  "limitations": [
+    "This review checks inventory structure and authoring metadata, not whether each test source reaches its named runtime cut or whether a product invariant passes.",
+    "The reviewer authored some included test cases, so this report is not independent source-method review. The separate senior source review remains necessary.",
+    "No imports, pytest collection, tests, SQL, services, or network operations were run. Static node-ID construction checks do not substitute for the exact future collection gate.",
+    "The NEG-WINDOW isolated exact-deadline clock seam remains subject to the approved-plan caveat and its pending independent source review; the separately listed real-runtime before/after cases remain required."
+  ],
+  "authority": {
+    "execution_authorized": false,
+    "runner_authoring_authorized": false,
+    "h2_acceptance": false,
+    "next_gate": "Complete independent source review, exact execution-contract review, runner review, and pre-gate before any authorized execution."
+  }
+}

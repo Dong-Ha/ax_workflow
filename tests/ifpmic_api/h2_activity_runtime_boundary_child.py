@@ -145,7 +145,15 @@ def _install_transport_injection(temporal_module) -> None:
 
         async def retention_seconds(self):
             _event("actual_retention_rpc_begin")
-            return await super().retention_seconds()
+            try:
+                return await super().retention_seconds()
+            except Exception as error:
+                context = error.__context__
+                _event("actual_retention_rpc_failed",
+                       error_type=type(error).__qualname__,
+                       context_type=None if context is None else type(context).__qualname__,
+                       context_detail=None if context is None else str(context))
+                raise
 
     temporal_module.TemporalTransport = TCTransport
 

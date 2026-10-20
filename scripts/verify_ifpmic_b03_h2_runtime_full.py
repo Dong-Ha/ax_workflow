@@ -206,6 +206,10 @@ def verify_static_anchors(contract: dict, ledger: dict) -> None:
         p = ROOT / path
         if p.is_symlink() or not p.is_file() or ROOT not in p.resolve().parents or sha(p.read_bytes()) != expected:
             raise RuntimeError('Ledger source pin differs: ' + path)
+    for path, expected in ledger['derivative_ledgers'].items():
+        if Path(path).is_absolute() or '..' in Path(path).parts:
+            raise RuntimeError('Derivative ledger path escapes repository')
+        require_file_hash(ROOT / path, expected, 'Historical derivative ledger')
     suffixes = {'.py', '.sql', '.in', '.lock'}
     expected_closure = {path for path in ledger['source_pins']
                         if path.startswith(('services/ifpmic_api/', 'tests/ifpmic_api/'))
@@ -302,7 +306,10 @@ def safe_environment(base: Path, phase: dict, contract: dict, observations: Path
         suffix = plugin.rsplit('.', 1)[-1]
         key = watchdog_map.get(suffix)
         if key:
-            env[key] = str(root)
+            # The retained normal runtime watchdog writes one phase-wide JSON
+            # timings file; the new case watchdogs each receive their private
+            # observation directory as the root for node-specific records.
+            env[key] = str(timings if suffix == 'h2_runtime_case_budget' else root)
         # Plugin source is part of the ledger closure; inspect its literal
         # environment accesses before allowing the phase to run.
         plugin_path = ROOT / (plugin.replace('.', '/') + '.py')
@@ -717,11 +724,16 @@ def collect_private_temporal_evidence(observation_roots: list[Path],
         value = runtime.get(key)
         if isinstance(value, str) and re.fullmatch(r'[0-9a-f]{64}', value):
             hashes[key.split('_')[0]].add(value)
-    process_rows.update((row['role'], row.get('exit_code'), None, row.get('forced'), row.get('absent'))
-                        for row in runtime.get('processes', []) if isinstance(row, dict))
-    if any(row[1] != 0 or row[3] is not False or row[4] is not True for row in process_rows
-           if row[0] in {'dispatcher', 'worker', 'temporal'}):
+    normal_process_rows = {
+        (row['role'], row.get('exit_code'), None, row.get('forced'), row.get('absent'))
+        for row in runtime.get('processes', []) if isinstance(row, dict)
+    }
+    if len(normal_process_rows) != 3 or {row[0] for row in normal_process_rows} != {
+            'dispatcher', 'worker', 'temporal'}:
+        raise RuntimeError('Actual normal runtime process inventory missing or duplicated')
+    if any(row[1] != 0 or row[3] is not False or row[4] is not True for row in normal_process_rows):
         raise RuntimeError('Actual normal runtime process lifecycle failed')
+    process_rows.update(normal_process_rows)
     normalized_processes = []
     grouped = {}
     for role, code, sig, forced, absent in process_rows:

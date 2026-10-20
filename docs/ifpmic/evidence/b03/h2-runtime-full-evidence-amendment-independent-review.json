@@ -1,0 +1,125 @@
+{
+  "kind": "ifpmic.b03.h2.runtime-full-evidence-amendment-independent-review.v1",
+  "review_date": "2026-10-20",
+  "reviewer": "independent agent /root/h2_evidence_amendment_review",
+  "decision": "approve_scoped_source_evidence_amendment_only",
+  "execution_authorized": false,
+  "dynamic_acceptance": false,
+  "h2_complete": false,
+  "baseline_commit": "0de641d",
+  "additional_comparison_commit": "ea5055a2b6fda99dd697d042deddc0d3245bf222",
+  "scope": {
+    "primary": "Independent static review of actual amended private evidence producers and corrected crash timing environment contract.",
+    "additional": "Review the earlier unexecuted shared owner observer, crash timing filename fix, foreign-reservation NameError fix and actual foreign list/registry/proposal evidence against ea5055a.",
+    "runner": "Only the changed runtime timing environment routing and runtime-normal lifecycle predicate were reviewed here. This is not a complete runner review.",
+    "inventory": "The amendment adds helper functions and observations to existing cases. Exact 490 literal IDs, 407 retained plus 83 new, still require the separately pinned inventory/TC review.",
+    "excluded": [
+      "Product or SDK import",
+      "pytest collection",
+      "Test execution",
+      "SQL execution",
+      "Service execution",
+      "Network access",
+      "Dynamic proof acceptance",
+      "Final full runner or pre-gate approval"
+    ]
+  },
+  "source_pins": {
+    "tests/ifpmic_api/h2_crash_case_budget.py": "b382b7096b4f3abb73357f851804a8f2427ab36971a0641e49e25ce045b457b5",
+    "tests/ifpmic_api/h2_snapshot_evidence.py": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c",
+    "tests/ifpmic_api/test_h2_runtime_normal_flow.py": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d",
+    "tests/ifpmic_api/h2_activity_runtime_boundary_child.py": "c140c731869ce13a4e3a13306a7e9bfa48ff1233ac1ea50fdef016020449f281",
+    "tests/ifpmic_api/h2_dispatcher_crash_support.py": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472",
+    "tests/ifpmic_api/test_accepted_start_response_loss.py": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8",
+    "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py": "11db8cfc513c4845128e26558ae2d5ca6d87beea485e524ebdd949b974c89954",
+    "tests/ifpmic_api/test_h2_dispatcher_crashes.py": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52",
+    "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py": "c0dd1e2a3e732ceea482e286a0f97bbb270dfab4040d88eff0403efc846e8688",
+    "tests/ifpmic_api/test_h2_runtime_startup_rejections.py": "80376fad5e864c4ac07cc0fc1cf75fce205d06da64f22e74a67b542ca60fb1b1",
+    "tests/ifpmic_api/test_h2_started_deployment_boundaries.py": "034ae6eb4399d8e4b906ffc27401d2b1d4d3799e44159b7a711d6e174c25bbdf",
+    "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py": "682eb21235786607802e4f108331afa7050d54d94ddd4d92d087a278e3c76a95",
+    "tests/ifpmic_api/test_workflow_schema.py": "b76ebd44dc6e98323501fea1c03e3f5c1838484b3f7b359693a2e5ef52159224",
+    "scripts/verify_ifpmic_b03_h2_runtime_full.py": "82b2d78e26d894b3012b50837bb454f8547c429de695976c64126907a21abaa5"
+  },
+  "findings": [
+    {
+      "id": "OWNER-RAW",
+      "status": "accepted_static",
+      "evidence": [
+        "test_h2_runtime_normal_flow._read_owner_snapshot retains its original returned dictionary, rows and ordering, and records it before return.",
+        "h2_dispatcher_crash_support.read_owner_snapshot calls that observer transitively before applying its existing ordered-attempt oracle.",
+        "The existing SELECT casts UUIDs and timestamps to text. Generic query records contain actual decoded primitive results.",
+        "h2_snapshot_evidence validates private roots/directories and writes exclusive no-follow mode0600 files, handles short writes and fsyncs each file.",
+        "Enabled evidence errors propagate; absent evidence root preserves existing unrelated-suite behavior."
+      ]
+    },
+    {
+      "id": "ADDITIONAL-RAW",
+      "status": "accepted_static",
+      "evidence": [
+        "Actual accepted-start, shared normal and Started-observer workflow list results are retained privately after each actual list iteration; raw Started history remains framed protobuf from fetched events.",
+        "Activity cases retain actual notification count, no-run results and actual retention RPC exception/context. Runtime-exit and SIGTERM controls compare full initial/final owner state and perform direct no-run queries.",
+        "Startup saves literal stdout/stderr and complete before/after tree fingerprints. The passive trap is not a Temporal server: its persisted zero connection counts are the appropriate no-connect oracle.",
+        "The noncreate admission-wait fixture is SQL-only and explicitly labels Temporal queries inapplicable.",
+        "Fixture-fault observations label the simulated process probe and unknown ownership; actual helper/thread/socket state remains private.",
+        "Common crash prepare saves initial tree and actual marker bytes; recovered and history-deleted quarantine paths retain final trees and compare them to initial state.",
+        "Workspace cases save actual marker bytes or symlink target, metadata, before/after tree rows, external sentinel bytes, workspace SQL row and actual no-run results."
+      ]
+    },
+    {
+      "id": "FENCES-RAW",
+      "status": "accepted_static_after_fix",
+      "resolved_findings": [
+        "Previously discarded wrong-run and direct-table denials now retain actual SQLSTATE; partial-window and malformed-command failures retain actual constraint/SQLSTATE and observed state.",
+        "The retained SQL receipt case now records eight literal owner-row boundaries before claim, after reserve/admission, before/after first projection, before/after revocation and after replay.",
+        "History-deletion quarantine now captures and checks its final workspace tree instead of bypassing the new recovery evidence.",
+        "Authentication attempts retain actual private OperationalError messages before assertions and require the expected C-locale authentication/no-password reason."
+      ],
+      "evidence": [
+        "All four retained schema FENCES cases are SQL/auth fixtures; generated run UUID and direct SQL admission are not Temporal starts. This review requires no invented Temporal evidence for them.",
+        "_capture_job_rows uses PostgreSQL to_jsonb(t), so PostgreSQL timestamps/UUIDs/bytea are JSON-decoded values rather than unsupported Python datetime/UUID/bytes objects.",
+        "Role OID/ACL/function metadata, replacement OID/registry/privileges, HBA order and actual login/denial outcomes are retained under the private root.",
+        "Additional boundary reads are conditional on enabled evidence and have connect2s/lock1s/statement2s native bounds; no business case or original case deadline is added or extended."
+      ]
+    },
+    {
+      "id": "EARLIER-FIXES",
+      "status": "accepted_static",
+      "evidence": [
+        "Crash timings use the private IFPMIC_H2_CRASH_TIMINGS_ROOT and sha256(nodeid).json, eliminating the prior shared O_EXCL target while retaining original215+25s clock semantics.",
+        "Foreign reservation continues to require actual SQLSTATE42501 after removal of the undefined foreign_reserve_rejected name.",
+        "Foreign-server list, registry before/after, actual projector/reservation outcomes and the proposal are saved privately."
+      ]
+    },
+    {
+      "id": "RUNNER-DELTA",
+      "status": "accepted_static_scoped",
+      "evidence": [
+        "safe_environment routes the retained runtime watchdog to its JSON timings file; per-node watchdogs receive their observation directories.",
+        "Normal exit0/absence/no-forced-cleanup validation now reads runtime-normal lifecycle rows, separately from negative-case observations.",
+        "The source-review observation that this old predicate necessarily rejected a current negative producer was not established and is not asserted as a proven defect here."
+      ]
+    }
+  ],
+  "open_confirmed_source_amendment_blockers": [],
+  "validation": {
+    "method": "Read-only source/diff/contract inspection and SHA256; git diff --check passed before writing this review.",
+    "imports": false,
+    "collection": false,
+    "tests": false,
+    "sql": false,
+    "services": false,
+    "network": false
+  },
+  "risks_and_edge_cases": [
+    "Frequent private fsync and extra owner reads consume original case budgets; fresh execution must prove all existing timing bounds without extending them.",
+    "Static serialization reasoning is not a successful write or runtime proof.",
+    "Evidence records must remain gitignored0700/0600 private artifacts; no raw SQL/history/auth error/log/absolute path/process identity is approved for public publication.",
+    "Full evidence mapping for every required node, including explicit SQL-only/no-server applicability, is a separate TC obligation."
+  ],
+  "recommendation": "Proceed with amended inventory/ledger/contract and exact independent/TC source and pre-gate reviews. Execute nothing on this review alone.",
+  "remaining_uncertainty": [
+    "No current amended test, SQL function, RPC, fixture cleanup or runner path has been executed in this review.",
+    "All490 fresh actual passes and raw evidence/resource/environment/privacy audits remain mandatory.",
+    "Complete runner review and final independent evidence acceptance remain pending."
+  ]
+}

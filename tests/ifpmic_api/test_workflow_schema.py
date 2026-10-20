@@ -9,7 +9,10 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 from pathlib import Path
+import stat
+import time
 from uuid import uuid4
 
 import psycopg
@@ -53,6 +56,174 @@ BUILD_ID = "b2576b14c813fb095fcb81023b66f16f73e1ef59c5ea3e828e3d37f7cc87ede2"
 WORKFLOW_SHA256 = "bab40a7abb3929896add1ef2cd074893dd2a7de14d200a5d6cea4b7a77eb0e89"
 STATE_SHA256 = "0248e130017043539319c56af854f5388a95d33e7e687902a3438fdff414244a"
 AGENT_SHA256 = "ca6d4bea7abf0fffe7354c482af0d521c3a2e367217a69923a4bfe43fa27ab64"
+
+
+def _record_retained_fence_evidence(case_name: str, evidence: dict[str, object]) -> None:
+    """Write actual observations only when the H2 runner supplies its private root."""
+    raw_root = os.environ.get("IFPMIC_H2_RUNTIME_EVIDENCE_ROOT")
+    if raw_root is None:
+        return
+    root = Path(raw_root)
+    assert root.is_absolute()
+    info = root.lstat()
+    assert stat.S_ISDIR(info.st_mode) and not root.is_symlink()
+    assert info.st_uid == os.getuid() and stat.S_IMODE(info.st_mode) == 0o700
+    case_root = root / "retained-fences"
+    case_root.mkdir(mode=0o700, exist_ok=True)
+    case_info = case_root.lstat()
+    assert stat.S_ISDIR(case_info.st_mode) and not case_root.is_symlink()
+    assert case_info.st_uid == os.getuid() and stat.S_IMODE(case_info.st_mode) == 0o700
+    current = os.environ.get("PYTEST_CURRENT_TEST")
+    assert current is not None and current
+    node_id = current.split(" (", 1)[0]
+    canonical = json.dumps(evidence, ensure_ascii=True, sort_keys=True,
+                           separators=(",", ":"), allow_nan=False).encode("ascii")
+    document = {
+        "kind": "ifpmic.b03.h2.retained-fence-observation.v1",
+        "case_id": case_name,
+        "pytest_current_test": node_id,
+        "observed_monotonic_ns": time.monotonic_ns(),
+        "evidence_sha256": hashlib.sha256(canonical).hexdigest(),
+        "evidence": evidence,
+    }
+    payload = json.dumps(document, ensure_ascii=True, sort_keys=True,
+                         separators=(",", ":"), allow_nan=False).encode("ascii") + b"\n"
+    filename = hashlib.sha256(node_id.encode("utf-8")).hexdigest() + ".json"
+    fd = os.open(case_root / filename,
+                 os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW | os.O_CLOEXEC,
+                 0o600)
+    try:
+        os.fchmod(fd, 0o600)
+        opened = os.fstat(fd)
+        assert stat.S_ISREG(opened.st_mode) and opened.st_uid == os.getuid()
+        assert opened.st_nlink == 1 and stat.S_IMODE(opened.st_mode) == 0o600
+        view = memoryview(payload)
+        while view:
+            written = os.write(fd, view)
+            if written <= 0:
+                raise OSError("short retained-fence evidence write")
+            view = view[written:]
+        os.fsync(fd)
+    finally:
+        os.close(fd)
+
+
+def _capture_job_rows(owner, job_id: str) -> dict[str, list[dict[str, object]]]:
+    """Read actual final rows for one synthetic job, retaining full JSONB rows."""
+    queries = {
+        "jobs": ("SELECT to_jsonb(t) FROM ifpmic.jobs t WHERE job_id=%s", (job_id,)),
+        "commands": ("SELECT to_jsonb(t) FROM ifpmic.commands t WHERE job_id=%s ORDER BY command_id",
+                     (job_id,)),
+        "commands_outbox": ("SELECT to_jsonb(t) FROM ifpmic.commands_outbox t WHERE command_id IN "
+                            "(SELECT command_id FROM ifpmic.commands WHERE job_id=%s) ORDER BY command_id",
+                            (job_id,)),
+        "workspace_intents": ("SELECT to_jsonb(t) FROM ifpmic.workspace_intents t WHERE job_id=%s", (job_id,)),
+        "execution_bindings": ("SELECT to_jsonb(t) FROM ifpmic.execution_bindings t WHERE job_id=%s", (job_id,)),
+        "worker_run_scopes": ("SELECT to_jsonb(t) FROM ifpmic.worker_run_scopes t WHERE job_id=%s", (job_id,)),
+        "projection_receipts": ("SELECT to_jsonb(t) FROM ifpmic.projection_receipts t WHERE job_id=%s "
+                                "ORDER BY transition_sequence", (job_id,)),
+        "delivery_attempts": ("SELECT to_jsonb(t) FROM ifpmic.delivery_attempts t WHERE command_id IN "
+                              "(SELECT command_id FROM ifpmic.commands WHERE job_id=%s) ORDER BY generation",
+                              (job_id,)),
+    }
+    return {name: [row[0] for row in owner.execute(query, params).fetchall()]
+            for name, (query, params) in queries.items()}
+
+
+def _record_fence_job_boundary(harness, job_id: str, boundary: str) -> None:
+    if os.environ.get("IFPMIC_H2_RUNTIME_EVIDENCE_ROOT") is None:
+        return
+    from tests.ifpmic_api.h2_snapshot_evidence import record_query_observation
+
+    with psycopg.connect(owner_dsn(harness["database"]), connect_timeout=2,
+                         options="-c lock_timeout=1000 -c statement_timeout=2000") as owner:
+        rows = _capture_job_rows(owner, job_id)
+    record_query_observation("sql.fence.job_rows", job_id,
+                             {"boundary": boundary, "rows": rows})
+
+
+def _capture_role_acl_observations(database, cluster) -> dict[str, object]:
+    roles = {
+        "runtime": database.roles.runtime,
+        "operator": database.roles.operator,
+        "dispatcher": database.roles.dispatcher,
+        "projector": database.roles.projector,
+    }
+    with psycopg.connect(database.owner_dsn(cluster)) as owner:
+        role_config = owner.execute(
+            "SELECT singleton,migration_version,runtime_role_oid::bigint,runtime_role_name,"
+            "operator_role_oid::bigint,operator_role_name,dispatcher_role_oid::bigint,"
+            "dispatcher_role_name,projector_role_oid::bigint,projector_role_name "
+            "FROM ifpmic.execution_role_config"
+        ).fetchall()
+        role_rows = owner.execute(
+            "SELECT rolname,oid::bigint,rolsuper,rolcreatedb,rolcreaterole,rolbypassrls,rolcanlogin,"
+            "rolreplication,EXISTS(SELECT 1 FROM pg_auth_members m WHERE m.member=p.oid OR m.roleid=p.oid) "
+            "FROM pg_roles p WHERE rolname=ANY(%s) ORDER BY rolname", (list(roles.values()),),
+        ).fetchall()
+        functions = []
+        for signature, allowed_kinds in WORKER_FUNCTIONS.items():
+            metadata = owner.execute(
+                "SELECT p.oid::bigint,p.proacl::text,pg_get_userbyid(p.proowner),p.prosecdef,p.proconfig "
+                "FROM pg_proc p WHERE p.oid=%s::regprocedure", (signature,),
+            ).fetchone()
+            role_execute = {
+                kind: owner.execute(
+                    "SELECT has_function_privilege(%s,%s,'EXECUTE')", (role, signature),
+                ).fetchone()[0]
+                for kind, role in roles.items()
+            }
+            public_execute = owner.execute(
+                "SELECT coalesce(bool_or(x.grantee=0 AND x.privilege_type='EXECUTE'),false) "
+                "FROM pg_proc p CROSS JOIN LATERAL aclexplode(coalesce(p.proacl,acldefault('f',p.proowner))) x "
+                "WHERE p.oid=%s::regprocedure", (signature,),
+            ).fetchone()[0]
+            functions.append({"signature": signature, "expected_allowed_kinds": sorted(allowed_kinds),
+                              "metadata": metadata, "role_execute": role_execute,
+                              "public_execute": public_execute})
+        table_privileges = []
+        for table in sorted(H2_TABLES):
+            for kind, role in roles.items():
+                privileges = owner.execute(
+                    "SELECT has_table_privilege(%s,%s,'SELECT'),has_table_privilege(%s,%s,'INSERT'),"
+                    "has_table_privilege(%s,%s,'UPDATE'),has_table_privilege(%s,%s,'DELETE')",
+                    (role, f"ifpmic.{table}", role, f"ifpmic.{table}", role,
+                     f"ifpmic.{table}", role, f"ifpmic.{table}"),
+                ).fetchone()
+                table_privileges.append({"role_kind": kind, "table": table, "privileges": privileges})
+        columns = (
+            "project_id", "version_key", "snapshot_id", "record_bytes", "record_bytes_sha256",
+            "profile_version_json", "mode", "enabled", "configuration_complete",
+        )
+        catalog_privileges = []
+        for kind, role in roles.items():
+            table_update_delete = owner.execute(
+                "SELECT has_table_privilege(%s,'ifpmic.profile_catalog','UPDATE'),"
+                "has_table_privilege(%s,'ifpmic.profile_catalog','DELETE')", (role, role),
+            ).fetchone()
+            for column in columns:
+                column_update = owner.execute(
+                    "SELECT has_column_privilege(%s,'ifpmic.profile_catalog',%s,'UPDATE')",
+                    (role, column),
+                ).fetchone()[0]
+                catalog_privileges.append({"role_kind": kind, "column": column,
+                                           "table_update_delete": table_update_delete,
+                                           "column_update": column_update})
+        job_create_column = {
+            privilege: owner.execute(
+                "SELECT has_column_privilege(%s,'ifpmic.jobs','create_command_id',%s)",
+                (database.roles.runtime, privilege),
+            ).fetchone()[0]
+            for privilege in ("INSERT", "UPDATE")
+        }
+        principals = owner.execute(
+            "SELECT role_oid::bigint,role_name,kind,deployment_id,build_id,active "
+            "FROM ifpmic.worker_principals ORDER BY kind,role_name"
+        ).fetchall()
+    return {"role_config": role_config, "roles": role_rows, "functions": functions,
+            "table_privileges": table_privileges, "catalog_privileges": catalog_privileges,
+            "job_create_command_column_privileges": job_create_column,
+            "worker_principals": principals}
 
 # This is a literal role matrix from the approved H2 contract, not generated
 # from pg_proc or the installed migration.
@@ -418,15 +589,19 @@ def test_h2_role_registry_and_function_acl_match_static_contract(workflow_schema
         database.roles.dispatcher: database.dispatcher_dsn(cluster),
         database.roles.projector: database.projector_dsn(cluster),
     }
+    denied = []
     for role, dsn in role_dsns.items():
         with psycopg.connect(dsn, autocommit=True) as service_role:
-            with pytest.raises(psycopg.errors.InsufficientPrivilege):
+            with pytest.raises(psycopg.errors.InsufficientPrivilege) as raised:
                 service_role.execute("UPDATE ifpmic.profile_catalog SET enabled=enabled WHERE false")
-            with pytest.raises(psycopg.errors.InsufficientPrivilege):
+            denied.append({"role": role, "statement": "profile_catalog UPDATE", "sqlstate": raised.value.sqlstate})
+            with pytest.raises(psycopg.errors.InsufficientPrivilege) as raised:
                 service_role.execute("DELETE FROM ifpmic.profile_catalog WHERE false")
+            denied.append({"role": role, "statement": "profile_catalog DELETE", "sqlstate": raised.value.sqlstate})
 
     with psycopg.connect(database.dispatcher_dsn(cluster), autocommit=True) as dispatcher:
-        assert dispatcher.execute("SELECT session_user,current_user").fetchone() == (
+        dispatcher_identity = dispatcher.execute("SELECT session_user,current_user").fetchone()
+        assert dispatcher_identity == (
             database.roles.dispatcher, database.roles.dispatcher,
         )
         config = dispatcher.execute("SELECT ifpmic.read_dispatch_config()").fetchone()[0]
@@ -440,12 +615,16 @@ def test_h2_role_registry_and_function_acl_match_static_contract(workflow_schema
         assert config["builds"][0]["environment_manifest_sha256"] == ENVIRONMENT_MANIFEST_SHA256
         dispatcher.execute("SET application_name='ifpmic_h2_projector'")
         assert dispatcher.execute("SELECT session_user").fetchone() == (database.roles.dispatcher,)
-        with pytest.raises(psycopg.errors.InsufficientPrivilege):
+        with pytest.raises(psycopg.errors.InsufficientPrivilege) as raised:
             dispatcher.execute("SELECT ifpmic.read_registered_build(%s)", (BUILD_ID,))
-        with pytest.raises(psycopg.errors.InsufficientPrivilege):
+        denied.append({"role": "dispatcher", "statement": "read_registered_build", "sqlstate": raised.value.sqlstate})
+        with pytest.raises(psycopg.errors.InsufficientPrivilege) as raised:
             dispatcher.execute(sql.SQL("SET ROLE {}").format(sql.Identifier(database.roles.projector)))
-        with pytest.raises(psycopg.errors.InsufficientPrivilege):
+        denied.append({"role": "dispatcher", "statement": "SET ROLE projector", "sqlstate": raised.value.sqlstate})
+        with pytest.raises(psycopg.errors.InsufficientPrivilege) as raised:
             dispatcher.execute("UPDATE ifpmic.execution_deployments SET enabled=false")
+        denied.append({"role": "dispatcher", "statement": "execution_deployments UPDATE",
+                       "sqlstate": raised.value.sqlstate})
 
     with psycopg.connect(database.projector_dsn(cluster), autocommit=True) as projector:
         registered = projector.execute("SELECT ifpmic.read_registered_build(%s)", (BUILD_ID,)).fetchone()[0]
@@ -457,15 +636,29 @@ def test_h2_role_registry_and_function_acl_match_static_contract(workflow_schema
         assert registered["server_config_sha256"] == SERVER_CONFIG_SHA256
         assert registered["source_manifest_sha256"] == SOURCE_MANIFEST_SHA256
         assert registered["environment_manifest_sha256"] == ENVIRONMENT_MANIFEST_SHA256
-        with pytest.raises(psycopg.errors.InsufficientPrivilege):
+        projector_identity = projector.execute("SELECT session_user,current_user").fetchone()
+        with pytest.raises(psycopg.errors.InsufficientPrivilege) as raised:
             projector.execute("SELECT ifpmic.read_dispatch_config()")
-        with pytest.raises(psycopg.errors.InsufficientPrivilege):
+        denied.append({"role": "projector", "statement": "read_dispatch_config", "sqlstate": raised.value.sqlstate})
+        with pytest.raises(psycopg.errors.InsufficientPrivilege) as raised:
             projector.execute("SELECT ifpmic.read_registered_build(%s)", ("a" * 64,))
-        with pytest.raises(psycopg.errors.InsufficientPrivilege):
+        denied.append({"role": "projector", "statement": "read_registered_build_unknown", "sqlstate": raised.value.sqlstate})
+        with pytest.raises(psycopg.errors.InsufficientPrivilege) as raised:
             projector.execute("INSERT INTO ifpmic.projection_receipts(job_id,transition_sequence,command_id,"
                               "admitted_run_id,build_id,proposal_sha256,expected_revision,outcome,result_json) "
                               "VALUES(%s,1,%s,%s,%s,%s,0,'applied','{}')",
                               (str(uuid4()), str(uuid4()), str(uuid4()), "b" * 64, "a" * 64))
+        denied.append({"role": "projector", "statement": "projection_receipts INSERT",
+                       "sqlstate": raised.value.sqlstate})
+    acl_observations = _capture_role_acl_observations(database, cluster)
+    _record_retained_fence_evidence("role_registry_and_function_acl", {
+        "role_acl_observations": acl_observations,
+        "dispatcher_session_identity": dispatcher_identity,
+        "dispatcher_read_config": config,
+        "projector_session_identity": projector_identity,
+        "projector_registered_build": registered,
+        "denied_operations": denied,
+    })
 
 
 def test_h2_four_role_oid_recreation_is_drift_and_does_not_rebind(pg_cluster, pg_roles):
@@ -489,6 +682,10 @@ def test_h2_four_role_oid_recreation_is_drift_and_does_not_rebind(pg_cluster, pg
                 dispatcher_role=dispatcher_name, projector_role=pg_roles.projector,
             )
             assert first == {"applied": CURRENT_VERSIONS, "unchanged": []}
+            original_config = owner.execute(
+                "SELECT dispatcher_role_oid::bigint,dispatcher_role_name "
+                "FROM ifpmic.execution_role_config"
+            ).fetchone()
         with psycopg.connect(pg_cluster.dsn(), autocommit=True) as bootstrap:
             with psycopg.connect(dsn, autocommit=True) as owner:
                 owner.execute(sql.SQL("REVOKE ALL ON SCHEMA ifpmic FROM {}").format(sql.Identifier(dispatcher_name)))
@@ -498,6 +695,9 @@ def test_h2_four_role_oid_recreation_is_drift_and_does_not_rebind(pg_cluster, pg
                 sql.SQL("CREATE ROLE {} LOGIN PASSWORD {} NOSUPERUSER NOCREATEDB NOCREATEROLE "
                         "NOBYPASSRLS NOINHERIT").format(sql.Identifier(dispatcher_name), sql.Literal(uuid4().hex))
             )
+            replacement_oid = bootstrap.execute(
+                "SELECT oid::bigint FROM pg_roles WHERE rolname=%s", (dispatcher_name,),
+            ).fetchone()[0]
         with psycopg.connect(dsn, autocommit=True) as owner:
             with pytest.raises(MigrationError) as raised:
                 apply_migrations(
@@ -506,10 +706,37 @@ def test_h2_four_role_oid_recreation_is_drift_and_does_not_rebind(pg_cluster, pg
                 )
         assert raised.value.code == "MIGRATION_ROLE_DRIFT"
         with psycopg.connect(dsn) as owner:
-            assert owner.execute("SELECT count(*) FROM ifpmic.execution_role_config").fetchone() == (1,)
-            assert owner.execute(
+            final_config = owner.execute(
+                "SELECT singleton,migration_version,dispatcher_role_oid::bigint,dispatcher_role_name "
+                "FROM ifpmic.execution_role_config"
+            ).fetchall()
+            assert len(final_config) == 1
+            current_oid = owner.execute(
                 "SELECT dispatcher_role_oid FROM ifpmic.execution_role_config"
-            ).fetchone()[0] != owner.execute("SELECT oid FROM pg_roles WHERE rolname=%s", (dispatcher_name,)).fetchone()[0]
+            ).fetchone()[0]
+            current_role_oid = owner.execute(
+                "SELECT oid::bigint FROM pg_roles WHERE rolname=%s", (dispatcher_name,),
+            ).fetchone()[0]
+            principal_rows = owner.execute(
+                "SELECT role_oid::bigint,role_name,kind,deployment_id,build_id,active "
+                "FROM ifpmic.worker_principals WHERE role_name=%s", (dispatcher_name,),
+            ).fetchall()
+            replacement_privileges = owner.execute(
+                "SELECT has_schema_privilege(%s,'ifpmic','USAGE'),"
+                "has_function_privilege(%s,'ifpmic.claim_delivery(uuid)','EXECUTE')",
+                (dispatcher_name, dispatcher_name),
+            ).fetchone()
+            assert current_oid != current_role_oid
+        _record_retained_fence_evidence("four_role_oid_recreation", {
+            "migration_result": first,
+            "original_config": original_config,
+            "replacement_role_oid": replacement_oid,
+            "migration_error": {"type": type(raised.value).__name__, "code": raised.value.code},
+            "final_config": final_config,
+            "current_role_oid": current_role_oid,
+            "immutable_principal_rows": principal_rows,
+            "replacement_role_privileges": replacement_privileges,
+        })
     finally:
         with psycopg.connect(pg_cluster.dsn(), autocommit=True) as bootstrap:
             bootstrap.execute(sql.SQL("DROP DATABASE IF EXISTS {} WITH (FORCE)").format(sql.Identifier(database_name)))
@@ -560,18 +787,31 @@ def test_h2_service_roles_use_scram_without_trust_fallthrough(workflow_schema_db
         database.runtime_dsn(cluster), database.operator_dsn(cluster),
         database.dispatcher_dsn(cluster), database.projector_dsn(cluster),
     )
+    good_session_users = []
     for dsn in good_dsns:
         with psycopg.connect(dsn) as connection:
-            assert connection.execute("SELECT session_user").fetchone()[0]
+            session_user = connection.execute("SELECT session_user").fetchone()[0]
+            assert session_user
+            good_session_users.append(session_user)
 
     wrong_password_dsns = (
         cluster.dsn(user=database.roles.runtime, database=database.name, password="wrong-private-test-password"),
         cluster.dsn(user=database.roles.dispatcher, database=database.name),
         cluster.dsn(user=database.roles.dispatcher, database=database.name, password=database.roles.projector_password),
     )
-    for dsn in wrong_password_dsns:
-        with pytest.raises(psycopg.OperationalError):
+    rejected = []
+    for index, dsn in enumerate(wrong_password_dsns):
+        with pytest.raises(psycopg.OperationalError) as raised:
             psycopg.connect(dsn, connect_timeout=2)
+        message = str(raised.value)
+        expected_reason = "no password supplied" if index == 1 else "password authentication failed"
+        rejected.append({"attempt": index, "exception_type": type(raised.value).__name__,
+                         "sqlstate": getattr(raised.value, "sqlstate", None),
+                         "message": message, "expected_reason": expected_reason})
+        from tests.ifpmic_api.h2_snapshot_evidence import record_query_observation
+
+        record_query_observation("sql.scram.authentication_rejection", database.name, rejected[-1])
+        assert expected_reason in message.lower()
 
     with psycopg.connect(cluster.dsn()) as owner:
         rules = owner.execute(
@@ -584,6 +824,11 @@ def test_h2_service_roles_use_scram_without_trust_fallthrough(workflow_schema_db
         (3, [database.roles.dispatcher], "scram-sha-256"),
         (4, [database.roles.projector], "scram-sha-256"),
     ]
+    _record_retained_fence_evidence("service_role_scram_hba", {
+        "successful_session_users": good_session_users,
+        "rejected_password_attempts": rejected,
+        "actual_hba_rules": rules,
+    })
 
 
 def test_h2_real_create_activation_receipt_replay_and_run_fences(workflow_scram_hba, g4_harness):
@@ -606,9 +851,10 @@ def test_h2_real_create_activation_receipt_replay_and_run_fences(workflow_scram_
     assert nul_response.headers.get("cache-control") == "no-store"
     assert nul_response.headers.get("referrer-policy") == "no-referrer"
     with psycopg.connect(owner_dsn(harness["database"])) as owner:
-        assert owner.execute(
+        nul_counts_after = owner.execute(
             "SELECT (SELECT count(*) FROM ifpmic.jobs),(SELECT count(*) FROM ifpmic.commands)"
-        ).fetchone() == before_counts
+        ).fetchone()
+        assert nul_counts_after == before_counts
 
     payload = valid_create_job(
         harness,
@@ -655,8 +901,11 @@ def test_h2_real_create_activation_receipt_replay_and_run_fences(workflow_scram_
         owner.commit()
     deployment_id, build_id = registry
 
+    _record_fence_job_boundary(harness, job_id, "before_claim")
+    function_results = {}
     with psycopg.connect(database.dispatcher_dsn(cluster), autocommit=True) as dispatcher:
         claim = dispatcher.execute("SELECT ifpmic.claim_delivery(%s)", (command_id,)).fetchone()[0]
+        function_results["claim"] = claim
         assert claim["status"] == "claimed"
         assert str(claim["job_id"]) == job_id
         assert claim["payload_sha256"] == payload_sha
@@ -667,12 +916,15 @@ def test_h2_real_create_activation_receipt_replay_and_run_fences(workflow_scram_
             "SELECT ifpmic.reserve_execution(%s,%s,%s,%s,%s,%s)",
             (command_id, generation, str(uuid4()), build_id, workspace_token, workspace_generation),
         ).fetchone()[0]
+        function_results["stale_reserve"] = stale_reserve
         assert stale_reserve == {"status": "stale", "code": "CLAIM_STALE"}
 
         reserved = dispatcher.execute(
             "SELECT ifpmic.reserve_execution(%s,%s,%s,%s,%s,%s)",
             (command_id, generation, token, build_id, workspace_token, workspace_generation),
         ).fetchone()[0]
+        function_results["reserve"] = reserved
+        _record_fence_job_boundary(harness, job_id, "after_reserve")
         assert reserved["status"] == "reserved"
         assert reserved["binding"]["state"] == "reserved"
         assert reserved["binding"]["workspace_token"] == workspace_token
@@ -717,6 +969,7 @@ def test_h2_real_create_activation_receipt_replay_and_run_fences(workflow_scram_
                 "SELECT first_start_attempt_at,uncertain_until,observed_retention_seconds "
                 "FROM ifpmic.execution_bindings WHERE job_id=%s", (job_id,),
             ).fetchone()
+            function_results["initial_window"] = initial_window
             assert initial_window == (None, None, None)
             partial_windows = (
                 ("SET first_start_attempt_at=clock_timestamp()",),
@@ -730,25 +983,35 @@ def test_h2_real_create_activation_receipt_replay_and_run_fences(workflow_scram_
                             f"UPDATE ifpmic.execution_bindings {assignment} WHERE job_id=%s", (job_id,),
                         )
                 assert violation.value.diag.constraint_name == "binding_start_window_shape"
-                assert owner.execute(
+                restored_window = owner.execute(
                     "SELECT first_start_attempt_at,uncertain_until,observed_retention_seconds "
                     "FROM ifpmic.execution_bindings WHERE job_id=%s", (job_id,),
-                ).fetchone() == initial_window
+                ).fetchone()
+                function_results.setdefault("partial_window_rejections", []).append({
+                    "assignment": assignment, "sqlstate": violation.value.sqlstate,
+                    "constraint": violation.value.diag.constraint_name,
+                    "restored_window": restored_window,
+                })
+                assert restored_window == initial_window
 
         start = dispatcher.execute(
             "SELECT ifpmic.record_start_attempt(%s,%s,%s,3601)", (command_id, generation, token)
         ).fetchone()[0]
+        function_results["start_attempt"] = start
         assert start["status"] == "permitted"
         run_id = str(uuid4())
         stale_admission = dispatcher.execute(
             "SELECT ifpmic.admit_run(%s,%s,%s,%s,%s)",
             (command_id, generation + 1, token, run_id, binding_sha),
         ).fetchone()[0]
+        function_results["stale_admission"] = stale_admission
         assert stale_admission == {"status": "stale", "code": "CLAIM_STALE"}
         admission = dispatcher.execute(
             "SELECT ifpmic.admit_run(%s,%s,%s,%s,%s)",
             (command_id, generation, token, run_id, binding_sha),
         ).fetchone()[0]
+        function_results["admission"] = admission
+        _record_fence_job_boundary(harness, job_id, "after_admission")
         assert admission["status"] == "admitted"
         assert admission["binding"]["admitted_run_id"] == run_id
 
@@ -759,6 +1022,7 @@ def test_h2_real_create_activation_receipt_replay_and_run_fences(workflow_scram_
             waiting_workspace = projector.execute(
                 "SELECT ifpmic.read_activation(%s,%s,%s)", (job_id, run_id, build_id),
             ).fetchone()[0]
+            function_results["workspace_wait"] = waiting_workspace
             assert waiting_workspace == {"status": "wait", "code": "WORKSPACE_NOT_READY"}
         with psycopg.connect(owner_dsn(harness["database"])) as owner:
             owner.execute("UPDATE ifpmic.workspace_intents SET state='READY' WHERE job_id=%s", (job_id,))
@@ -768,6 +1032,7 @@ def test_h2_real_create_activation_receipt_replay_and_run_fences(workflow_scram_
             "SELECT ifpmic.record_delivery(%s,%s,%s,'started',%s,NULL)",
             (command_id, generation + 1, token, run_id),
         ).fetchone()[0]
+        function_results["stale_ack"] = stale_ack
         assert stale_ack == {"status": "stale", "affected": 0, "code": "CLAIM_STALE"}
         # Dispatcher is intentionally not granted table SELECT. Observe the
         # lease through an independent owner connection instead.
@@ -782,21 +1047,25 @@ def test_h2_real_create_activation_receipt_replay_and_run_fences(workflow_scram_
             "SELECT ifpmic.record_delivery(%s,%s,%s,'started',%s,NULL)",
             (command_id, generation, token, run_id),
         ).fetchone()[0]
+        function_results["ack"] = ack
         assert ack == {"status": "dispatched", "affected": 1}
 
     with psycopg.connect(database.projector_dsn(cluster), autocommit=True) as projector:
         activation = projector.execute(
             "SELECT ifpmic.read_activation(%s,%s,%s)", (job_id, run_id, build_id),
         ).fetchone()[0]
+        function_results["activation_ready"] = activation
         assert activation == {
             "status": "ready", "job_id": job_id, "binding_sha256": binding_sha,
             "command_id": command_id, "command_payload_sha256": payload_sha,
             "revision": 0, "workspace_token": workspace_token, "workspace_generation": workspace_generation,
         }
-        with pytest.raises(psycopg.errors.InsufficientPrivilege):
+        with pytest.raises(psycopg.errors.InsufficientPrivilege) as wrong_run:
             projector.execute("SELECT ifpmic.read_activation(%s,%s,%s)", (job_id, str(uuid4()), build_id))
-        with pytest.raises(psycopg.errors.InsufficientPrivilege):
+        function_results["wrong_run_denial"] = {"sqlstate": wrong_run.value.sqlstate}
+        with pytest.raises(psycopg.errors.InsufficientPrivilege) as direct_table:
             projector.execute("SELECT payload_sha256 FROM ifpmic.commands WHERE command_id=%s", (command_id,))
+        function_results["direct_command_table_denial"] = {"sqlstate": direct_table.value.sqlstate}
 
     # The proposal oracle is independently assembled from the approved fixed
     # H2 DTO fields and canonical JSON rule.
@@ -807,15 +1076,18 @@ def test_h2_real_create_activation_receipt_replay_and_run_fences(workflow_scram_
     }
     proposal_bytes = json.dumps(proposal, ensure_ascii=True, sort_keys=True, separators=(",", ":"), allow_nan=False).encode("ascii")
     proposal_hash = hashlib.sha256(b"ifpmic.b03.transition.v1\0" + proposal_bytes).hexdigest()
+    _record_fence_job_boundary(harness, job_id, "before_first_projection")
     with psycopg.connect(database.projector_dsn(cluster), autocommit=True) as projector:
         applied = projector.execute(
             "SELECT ifpmic.project_activation(%s,%s,%s,1,0,%s,%s)",
             (job_id, run_id, build_id, command_id, proposal_hash),
         ).fetchone()[0]
+        function_results["project_activation"] = applied
         assert applied == {
             "status": "applied", "command_id": command_id, "applied_revision": 1, "error_code": None,
             "job_id": job_id, "job_status": "QUEUED", "revision": 1,
         }
+    _record_fence_job_boundary(harness, job_id, "after_first_projection")
 
     # A later human-route command has no profile_version and must not replace
     # the immutable create-command source used by the job read DTO.
@@ -856,6 +1128,8 @@ def test_h2_real_create_activation_receipt_replay_and_run_fences(workflow_scram_
     )
     assert replay_response.status_code == 202
     assert replay_response.json() == accepted
+    function_results["api_replay"] = {"status_code": replay_response.status_code,
+                                       "json": replay_response.json()}
 
     # Exercise a separate accepted job whose verified workspace identity
     # changes after reserve/admission but before its first projection. The
@@ -885,6 +1159,7 @@ def test_h2_real_create_activation_receipt_replay_and_run_fences(workflow_scram_
         conflict_claim = dispatcher.execute(
             "SELECT ifpmic.claim_delivery(%s)", (conflict_command,),
         ).fetchone()[0]
+        function_results["conflict_claim"] = conflict_claim
         assert conflict_claim["status"] == "claimed"
         conflict_generation = conflict_claim["generation"]
         conflict_claim_token = str(conflict_claim["claim_token"])
@@ -893,23 +1168,27 @@ def test_h2_real_create_activation_receipt_replay_and_run_fences(workflow_scram_
             (conflict_command, conflict_generation, conflict_claim_token, build_id,
              conflict_workspace_token, conflict_workspace_generation),
         ).fetchone()[0]
+        function_results["conflict_reserve"] = conflict_reserved
         assert conflict_reserved["status"] == "reserved"
         conflict_binding_sha = conflict_reserved["binding"]["binding_sha256"]
         conflict_start = dispatcher.execute(
             "SELECT ifpmic.record_start_attempt(%s,%s,%s,3601)",
             (conflict_command, conflict_generation, conflict_claim_token),
         ).fetchone()[0]
+        function_results["conflict_start_attempt"] = conflict_start
         assert conflict_start["status"] == "permitted"
         conflict_run_id = str(uuid4())
         conflict_admission = dispatcher.execute(
             "SELECT ifpmic.admit_run(%s,%s,%s,%s,%s)",
             (conflict_command, conflict_generation, conflict_claim_token, conflict_run_id, conflict_binding_sha),
         ).fetchone()[0]
+        function_results["conflict_admission"] = conflict_admission
         assert conflict_admission["status"] == "admitted"
         conflict_ack = dispatcher.execute(
             "SELECT ifpmic.record_delivery(%s,%s,%s,'started',%s,NULL)",
             (conflict_command, conflict_generation, conflict_claim_token, conflict_run_id),
         ).fetchone()[0]
+        function_results["conflict_ack"] = conflict_ack
         assert conflict_ack == {"status": "dispatched", "affected": 1}
     with psycopg.connect(owner_dsn(harness["database"])) as owner:
         owner.execute(
@@ -934,6 +1213,7 @@ def test_h2_real_create_activation_receipt_replay_and_run_fences(workflow_scram_
             "SELECT ifpmic.project_activation(%s,%s,%s,1,0,%s,%s)",
             (conflict_job, conflict_run_id, build_id, conflict_command, conflict_proposal_sha),
         ).fetchone()[0]
+    function_results["conflict_projection"] = conflict_projection
     assert conflict_projection == {"status": "quarantined", "code": "WORKSPACE_IDENTITY_CONFLICT"}
     with psycopg.connect(owner_dsn(harness["database"])) as owner:
         conflict_state = owner.execute(
@@ -946,6 +1226,7 @@ def test_h2_real_create_activation_receipt_replay_and_run_fences(workflow_scram_
             "DRAFT", 0, "accepted", "quarantined", "WORKSPACE_IDENTITY_CONFLICT", 0,
         )
 
+    _record_fence_job_boundary(harness, job_id, "before_authority_revocation")
     with psycopg.connect(owner_dsn(harness["database"])) as owner:
         # The first job's immutable applied receipt is replayed even after its
         # workspace generation changes and mutable human authority is revoked.
@@ -962,12 +1243,16 @@ def test_h2_real_create_activation_receipt_replay_and_run_fences(workflow_scram_
             (harness["project_id"], harness["record"].snapshot_id),
         )
         owner.commit()
+    _record_fence_job_boundary(harness, job_id, "after_authority_revocation_before_replay")
     with psycopg.connect(database.projector_dsn(cluster), autocommit=True) as projector:
         replay = projector.execute(
             "SELECT ifpmic.project_activation(%s,%s,%s,1,0,%s,%s)",
             (job_id, run_id, build_id, command_id, proposal_hash),
         ).fetchone()[0]
-        assert replay == applied
+    function_results["replay_after_revocation"] = replay
+    assert replay == applied
+    _record_fence_job_boundary(harness, job_id, "after_receipt_replay")
+    revoked_api_responses = []
     for response in (
         harness["client"].get(f"/api/v1/jobs/{job_id}"),
         harness["client"].get(f"/api/v1/commands/{command_id}"),
@@ -978,6 +1263,7 @@ def test_h2_real_create_activation_receipt_replay_and_run_fences(workflow_scram_
     ):
         assert response.status_code == 403
         assert response.json()["code"] == "FORBIDDEN"
+        revoked_api_responses.append({"status_code": response.status_code, "body": response.json()})
 
     for invalid_status, invalid_revision, invalid_error in (
         ("applied", None, None),
@@ -992,10 +1278,11 @@ def test_h2_real_create_activation_receipt_replay_and_run_fences(workflow_scram_
                  f"POST /api/v1/jobs/{job_id}/human-submissions", f"h2-malformed-{uuid4().hex}",
                  harness["project_id"], job_id, "8" * 64),
             )
-            assert owner.execute(
+            malformed_before = owner.execute(
                 "SELECT status,applied_revision,error_code FROM ifpmic.commands WHERE command_id=%s",
                 (malformed_command_id,),
-            ).fetchone() == ("accepted", None, None)
+            ).fetchone()
+            assert malformed_before == ("accepted", None, None)
             with pytest.raises(psycopg.errors.CheckViolation) as violation:
                 with owner.transaction():
                     owner.execute(
@@ -1003,6 +1290,35 @@ def test_h2_real_create_activation_receipt_replay_and_run_fences(workflow_scram_
                         (invalid_status, invalid_revision, invalid_error, malformed_command_id),
                     )
             assert violation.value.diag.constraint_name == "command_outcome_shape"
+            function_results.setdefault("command_outcome_rejections", []).append({
+                "command_id": malformed_command_id, "before": malformed_before,
+                "requested": [invalid_status, invalid_revision, invalid_error],
+                "sqlstate": violation.value.sqlstate,
+                "constraint": violation.value.diag.constraint_name,
+            })
+
+    with psycopg.connect(owner_dsn(harness["database"])) as owner:
+        primary_rows = _capture_job_rows(owner, job_id)
+        conflict_rows = _capture_job_rows(owner, conflict_job)
+    _record_retained_fence_evidence("real_create_activation_receipt_replay_and_run_fences", {
+        "nul_rejection": {"status_code": nul_response.status_code, "body": nul_error,
+                          "counts_before": before_counts, "counts_after": nul_counts_after},
+        "accepted_create": accepted,
+        "payload_sha256": payload_sha,
+        "function_results": function_results,
+        "workspace_identity": {"token": workspace_token, "generation": workspace_generation},
+        "binding_sha256": binding_sha,
+        "proposal_sha256": proposal_hash,
+        "api_listing": {"status_code": listing.status_code, "matching_job": matching[0]},
+        "api_detail": detail.json(),
+        "api_command": command_detail.json(),
+        "revoked_api_responses": revoked_api_responses,
+        "conflict": {"accepted": conflict_receipt, "payload_sha256": conflict_payload_sha,
+                     "binding_sha256": conflict_binding_sha, "proposal_sha256": conflict_proposal_sha,
+                     "state": conflict_state},
+        "primary_final_rows": primary_rows,
+        "conflict_final_rows": conflict_rows,
+    })
 
 
 def test_h2_lone_surrogate_profile_version_survives_real_create_and_activation(

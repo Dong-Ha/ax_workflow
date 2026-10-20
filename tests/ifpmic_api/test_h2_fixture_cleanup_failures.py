@@ -21,6 +21,7 @@ from tests.ifpmic_api import h2_dispatcher_crash_support as crash
 from tests.ifpmic_api import oidc_provider
 from tests.ifpmic_api.oidc_provider import SyntheticOIDCProvider
 from tests.ifpmic_api import test_h2_runtime_normal_flow as normal
+from tests.ifpmic_api.h2_snapshot_evidence import record_query_observation
 
 
 def _deadline(request):
@@ -42,6 +43,11 @@ def test_restore_error_keeps_exact_primary_and_notes_secondary(request):
         cleanup.restore_preserving_error(lambda: (_ for _ in ()).throw(secondary))
         assert caught is primary
         assert caught.__notes__ == ["H2 deadline restore also failed: OSError"]
+        record_query_observation("fixture.restore_preserving_error", request.node.nodeid,
+                                 {"primary_object_id": id(primary), "caught_object_id": id(caught),
+                                  "primary_type": type(primary).__qualname__,
+                                  "secondary_type": type(secondary).__qualname__,
+                                  "notes": caught.__notes__})
 
 
 def test_restore_only_failure_escapes_by_identity(request):
@@ -50,6 +56,10 @@ def test_restore_only_failure_escapes_by_identity(request):
     with pytest.raises(RuntimeError) as caught:
         cleanup.restore_preserving_error(lambda: (_ for _ in ()).throw(expected))
     assert caught.value is expected
+    record_query_observation("fixture.restore_only_failure", request.node.nodeid,
+                             {"expected_object_id": id(expected),
+                              "caught_object_id": id(caught.value),
+                              "caught_type": type(caught.value).__qualname__})
 
 
 class _OwnedProcessProbe:
@@ -117,6 +127,12 @@ def test_expired_cleanup_budget_performs_no_new_lifecycle_action(request, monkey
     outcome = json.loads((root / "process-cleanup.json").read_text(encoding="ascii"))
     assert outcome["processes"] == [{"role": "injected-owned-handle", "pid": owned.pid,
                                     "returncode": None, "forced": False, "absent": False}]
+    record_query_observation("fixture.exhausted_cleanup", request.node.nodeid,
+                             {"synthetic_process_probe": True, "actions": owned.actions,
+                              "identity_lookups": identity_lookups,
+                              "remaining_checks": exhausted.remaining_checks,
+                              "retained_same_object": case["processes"][0] is owned,
+                              "physical_process_absence_proven": False})
 
 
 def test_partial_oidc_start_fails_closed_for_unstarted_thread_handle(
@@ -148,6 +164,10 @@ def test_partial_oidc_start_fails_closed_for_unstarted_thread_handle(
         assert all(sock.fileno() >= 0 for sock in sockets)
         assert started[0].ident is not None and started[0].is_alive()
         assert started[1].ident is None and not started[1].is_alive()
+        record_query_observation("fixture.partial_oidc_start.before_close", request.node.nodeid,
+                                 {"socket_fds": [sock.fileno() for sock in sockets],
+                                  "threads": [{"ident": thread.ident, "alive": thread.is_alive()}
+                                              for thread in started]})
         cleanup.record(request.config, "partial_oidc_start_owned_handles",
                        socket_count=len(sockets), registered_thread_count=len(started),
                        started_thread_count=1, unstarted_thread_count=1,
@@ -162,6 +182,12 @@ def test_partial_oidc_start_fails_closed_for_unstarted_thread_handle(
         assert len(provider._servers) == 2 and len(provider._threads) == 2
         saved = tuple(getattr(provider, "_last_h2_threads", ()))
         assert saved and started[1] in saved and all(not thread.is_alive() for thread in saved)
+        record_query_observation("fixture.partial_oidc_start.after_close", request.node.nodeid,
+                                 {"socket_fds": [sock.fileno() for sock in sockets],
+                                  "threads": [{"ident": thread.ident, "alive": thread.is_alive()}
+                                              for thread in saved],
+                                  "unstarted_handle_retained": started[1] in saved,
+                                  "ownership_status": "unknown"})
         cleanup.record(request.config, "partial_oidc_start_finalized",
                        socket_count=len(sockets), started_thread_count=len(started),
                        saved_thread_count=len(saved), unstarted_thread_retained=True,
@@ -240,6 +266,10 @@ def test_unconfirmed_testclient_exit_records_unknown_ownership(request, monkeypa
         assert records and records[-1]["status"] == "failed"
         assert records[-1]["helper_alive"] is True
         assert records[-1]["helper_thread_ident"] == helper.ident
+        record_query_observation("fixture.testclient.unconfirmed_exit", request.node.nodeid,
+                                 {"helper_ident": helper.ident, "helper_alive": helper.is_alive(),
+                                  "portal_ident": portal.ident, "portal_alive": portal.is_alive(),
+                                  "close_record": records[-1], "ownership_status": "unknown"})
         cleanup.record(request.config, "testclient_exit_unconfirmed",
                        helper_alive=True, helper_thread_ident=helper.ident,
                        portal_thread_ident=portal.ident, ownership_status="unknown")
@@ -252,3 +282,6 @@ def test_unconfirmed_testclient_exit_records_unknown_ownership(request, monkeypa
             helper.join(timeout=deadline.cleanup_remaining(3))
             portal.join(timeout=deadline.cleanup_remaining(3))
             assert not helper.is_alive() and not portal.is_alive()
+            record_query_observation("fixture.testclient.after_release_and_join", request.node.nodeid,
+                                     {"helper_ident": helper.ident, "helper_alive": helper.is_alive(),
+                                      "portal_ident": portal.ident, "portal_alive": portal.is_alive()})

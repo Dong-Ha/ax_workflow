@@ -338,6 +338,14 @@ async def _observe_persisted_started(case, binding, evidence_path: Path, deadlin
             f'WorkflowId = "{workflow_id}"', limit=10,
             rpc_timeout=timedelta(seconds=min(5, deadline - time.monotonic()))):
         runs.append(item)
+    from tests.ifpmic_api.h2_snapshot_evidence import record_query_observation
+
+    record_query_observation("temporal.list_workflows", workflow_id, {
+        "endpoint": case["identity"]["server_endpoint"],
+        "namespace": case["identity"]["namespace"],
+        "runs": [{"workflow_id": item.id, "run_id": item.run_id,
+                  "status": getattr(item.status, "name", str(item.status))} for item in runs],
+    })
     assert len(runs) == 1
     handle = client.get_workflow_handle(workflow_id, run_id=runs[0].run_id)
     description = await handle.describe(rpc_timeout=timedelta(seconds=5))

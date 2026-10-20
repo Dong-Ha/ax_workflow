@@ -191,7 +191,11 @@ def _assert_crash_final(
     }]
     assert temporal["project_id"] == harness["project_id"]
     assert temporal["observed_retention_seconds"] == binding[23]
-    assert normal.tree_fingerprint(Path(harness["workspace_root"]) / job_id) == case["tree_before"]
+    tree_after = normal.tree_fingerprint(Path(harness["workspace_root"]) / job_id)
+    normal._write_private(case["root"] / "workspace-recovered-observation.json",
+                          normal._canonical({"before": case["tree_before"],
+                                             "after": tree_after}) + b"\n")
+    assert tree_after == case["tree_before"]
     assert (case["temporal_store"].stat().st_dev, case["temporal_store"].stat().st_ino) == case["temporal_store_identity"]
     evidence = {"case_id": case["case_name"], "status": "passed",
                 "snapshot_sha256": hashlib.sha256(
@@ -499,5 +503,10 @@ def test_admitted_missing_history_is_quarantined_without_replacement(
             "ifpmic.job." + case["job_id"], deadline.body_deadline)) == []
         normal._write_private(case["root"] / "owner-after-history-missing-quarantine.json",
                               normal._canonical(quarantined) + b"\n")
+        tree_after = normal.tree_fingerprint(Path(case["harness"]["workspace_root"]) / case["job_id"])
+        normal._write_private(case["root"] / "workspace-after-history-missing-quarantine.json",
+                              normal._canonical({"before": case["tree_before"],
+                                                 "after": tree_after}) + b"\n")
+        assert tree_after == case["tree_before"]
     finally:
         _cleanup(case, deadline)

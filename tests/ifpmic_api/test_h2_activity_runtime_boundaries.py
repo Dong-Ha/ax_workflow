@@ -32,6 +32,7 @@ from tests.ifpmic_api import h2_dispatcher_crash_support as crash
 from tests.ifpmic_api import test_h2_runtime_normal_flow as normal
 from tests.ifpmic_api.jobs_fixture import operator_dsn, owner_dsn
 from tests.ifpmic_api.workspace_fixture import accept_workspace_job
+from tests.ifpmic_api.h2_snapshot_evidence import record_query_observation
 
 
 REPO_ROOT = Path.cwd().resolve()
@@ -527,7 +528,10 @@ def test_h2_noncreate_waits_until_admission(h2_activity_runtime_harness):
     assert row == ("accepted", None, None, "pending", 0, None)
     normal._write_private(case["root"] / "noncreate-not-admitted.json",
         normal._canonical({"claim": claim, "command_id": command["command_id"],
-                          "command_status": row[0], "outbox": row[3]}) + b"\n")
+                          "command_status": row[0], "outbox": row[3],
+                          "command_and_outbox_row": row,
+                          "temporal_query_applicable": False,
+                          "reason": "SQL-only fixture; no Temporal server is started"}) + b"\n")
 
 
 def test_h2_noncreate_signal_targets_admitted_run_without_business_consumption(
@@ -561,7 +565,12 @@ def test_h2_noncreate_signal_targets_admitted_run_without_business_consumption(
         assert payloads == [{"command_id": command["command_id"],
                              "payload_sha256": command["payload_sha256"]}]
         handle = client.get_workflow_handle("ifpmic.job." + case["job_id"], run_id=run_id)
-        assert asyncio.run(handle.query("notification_count", rpc_timeout=normal.timedelta(seconds=10))) == 1
+        notification_count = asyncio.run(handle.query(
+            "notification_count", rpc_timeout=normal.timedelta(seconds=10)))
+        record_query_observation("temporal.query.notification_count", case["job_id"],
+                                 {"run_id": run_id, "result": notification_count,
+                                  "command_and_outbox_state": state})
+        assert notification_count == 1
     finally:
         _case_cleanup(deadline, case)
 
@@ -573,6 +582,9 @@ async def _list_runs(identity, job_id: str):
     async for item in client.list_workflows(f'WorkflowId = "ifpmic.job.{job_id}"', limit=10,
                                             rpc_timeout=normal.timedelta(seconds=10)):
         values.append((item.id, item.run_id, getattr(item.status, "name", str(item.status))))
+    record_query_observation("temporal.list_workflows", job_id,
+                             {"endpoint": identity["server_endpoint"],
+                              "namespace": identity["namespace"], "runs": values})
     return values
 
 
@@ -606,6 +618,9 @@ def test_h2_missing_history_then_retention_rpc_failure_never_starts(
         assert rpc["event"] == "actual_retention_rpc_begin"
         final = _wait_snapshot(case, lambda value: bool(value["bindings"])
             and value["bindings"][0][20] == "quarantined", deadline.body_deadline, (dispatcher,))
+        failed_rpc = _wait_event(barrier / "actual_retention_rpc_failed.json", case,
+                                min(deadline.body_deadline, time.monotonic() + 5))
+        assert failed_rpc["event"] == "actual_retention_rpc_failed"
         binding = final["bindings"][0]
         assert binding[19] is None and binding[20] == "quarantined"
         assert binding[21:26] == (None, None, None, None, None)
@@ -615,6 +630,7 @@ def test_h2_missing_history_then_retention_rpc_failure_never_starts(
         assert final["attempts"] == [(1, "quarantined", None, "RETENTION_UNVERIFIED", True)]
         normal._write_private(case["root"] / "retention-unavailable.json", normal._canonical({
             "actual_missing_history_event": missing["event"], "actual_retention_rpc_event": rpc["event"],
+            "actual_retention_rpc_failure": failed_rpc,
             "binding_state": binding[20], "quarantine_code": binding[26],
             "start_attempt_at": binding[21], "admitted_run_id": binding[19],
         }) + b"\n")
@@ -663,7 +679,9 @@ def test_h2_execution_runtime_surfaces_unrequested_worker_exit(
         assert exit_code == 3 and normal.process_identity(process.pid) is None
         expected_codes[process.pid] = 3
         assert record["stdout"].read_bytes() == b'{"error":{"code":"DEPENDENCY_UNAVAILABLE"}}\n'
-        assert normal._read_owner_snapshot(case["harness"], case["job_id"])["bindings"] == []
+        final = normal._read_owner_snapshot(case["harness"], case["job_id"])
+        assert final == case["before"]
+        assert asyncio.run(_list_runs(case["identity"], case["job_id"])) == []
     finally:
         if barrier is not None:
             _release(barrier, "release-worker-task")
@@ -690,6 +708,8 @@ def test_h2_execution_runtime_normal_sigterm_control(
         assert exit_code == 0 and normal.process_identity(process.pid) is None
         expected_codes[process.pid] = 0
         assert record["stdout"].read_bytes() == b""
+        assert normal._read_owner_snapshot(case["harness"], case["job_id"]) == case["before"]
+        assert asyncio.run(_list_runs(case["identity"], case["job_id"])) == []
     finally:
         _case_cleanup(deadline, case, expected_exit_codes=expected_codes)
 

@@ -39,7 +39,7 @@ from scripts.ifpmic_temporal_toolchain import (
     CLI_SHA, owned_listeners, process_identity, start_server, stop_all_owned,
 )
 from tests.ifpmic_api.h2_runtime_case_budget import BODY_SECONDS, CLEANUP_SECONDS
-from tests.ifpmic_api.h2_snapshot_evidence import record_owner_snapshot
+from tests.ifpmic_api.h2_snapshot_evidence import record_owner_snapshot, record_query_observation
 
 REPO_ROOT = Path.cwd().resolve()
 WORKFLOW_TYPE = "IFPMICJobWorkflow"
@@ -486,6 +486,9 @@ async def _observe_real_temporal(identity: dict[str, str], job_id: str, project_
         ):
             executions.append({"workflow_id": item.id, "run_id": item.run_id,
                                "status": getattr(item.status, "name", str(item.status))})
+        record_query_observation("temporal.list_workflows", workflow_name,
+                                 {"endpoint": identity["server_endpoint"],
+                                  "namespace": identity["namespace"], "runs": executions})
         if len(executions) > 1:
             raise AssertionError("more than one logical Temporal execution was observed")
         if executions:

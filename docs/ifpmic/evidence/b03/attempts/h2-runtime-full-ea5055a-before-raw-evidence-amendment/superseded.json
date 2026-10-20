@@ -1,0 +1,18 @@
+{
+  "status": "historical_authoring_only_candidate_returned_for_raw_evidence_amendment",
+  "original_checkpoint": "ea5055a2b6fda99dd697d042deddc0d3245bf222",
+  "handoff_checkpoint": "0de641d",
+  "files_sha256": {
+    "h2-runtime-full-integrated-ledger.json": "cf4f3bfc023341c22e0c8fc7c072c54838d62f7adeb39d817a4ce3b6589f8d60",
+    "h2-runtime-full-execution-contract.json": "c10c7cb329ea82b758cfa7db34ac330e4b7ec472320b5904e8086f8067865a2d",
+    "h2-runtime-full-inventory-source-review.json": "4fda632e7eed5ee10f8aad0ffa13443d169f0dc9d4469991d9af75cc192f123a",
+    "h2-runtime-full-inventory-tc-review.json": "cd8752ab97742e829a920de827a09ca2c113b563e87a69560d8d8549ef2da388",
+    "h2-runtime-full-execution-contract-review.json": "481604abb4cfe602e16cbd65fae8f290f5a61f3ec405d350c9ebbbf6b7fe7c79",
+    "h2-runtime-full-execution-tc-review.json": "17da5950d52deed48d454b026e152415d4e3eadd9eba20da4503009a41bf46b9",
+    "h2-runtime-full-runner-authoring-acceptance.json": "09509b02d3743119babaf175a4cc8d160428daeacc3fa8dbbdebb5d2529791ef",
+    "h2-runtime-full-case-evidence-index.json": "5eaa7704eca86ccccccc3beba8fe0a464cb992ac8941740f2744c814bfcf9cea"
+  },
+  "reason": "Raw required state was often asserted in memory but not persisted; singular crash timing path and undefined assertion found before execution.",
+  "execution_performed": false,
+  "approvals_apply_to_original_bytes_only": true
+}

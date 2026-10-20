@@ -2,6 +2,8 @@
 from __future__ import annotations
 
 import asyncio
+import base64
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -99,7 +101,67 @@ async def _list_runs(identity, job_id: str):
 
 
 def _no_runs(case):
-    assert asyncio.run(_list_runs(case["identity"], case["job_id"])) == []
+    values = asyncio.run(_list_runs(case["identity"], case["job_id"]))
+    from tests.ifpmic_api.h2_snapshot_evidence import record_query_observation
+
+    record_query_observation("temporal.list_workflows",
+                             "ifpmic.job." + case["job_id"], values)
+    assert values == []
+
+
+def _record_workspace_observation(case, phase: str, *, external: Path | None = None,
+                                  details: dict[str, object] | None = None) -> None:
+    """Persist actual marker/tree/sentinel state under the private case root."""
+    root = Path(case["harness"]["workspace_root"])
+    marker = root / case["job_id"] / WORKSPACE_MARKER_NAME
+    marker_lstat = None
+    marker_bytes = None
+    if marker.exists() or marker.is_symlink():
+        info = marker.lstat()
+        marker_lstat = {"mode": info.st_mode, "uid": info.st_uid, "device": info.st_dev,
+                        "inode": info.st_ino, "size": info.st_size}
+        if marker.is_symlink():
+            marker_lstat["symlink_target"] = os.readlink(marker)
+        elif info.st_mode & 0o170000 == 0o100000:
+            fd = os.open(marker, os.O_RDONLY | os.O_NOFOLLOW | os.O_CLOEXEC)
+            try:
+                opened = os.fstat(fd)
+                assert (opened.st_dev, opened.st_ino) == (info.st_dev, info.st_ino)
+                chunks = []
+                while chunk := os.read(fd, 65536):
+                    chunks.append(chunk)
+                marker_bytes = b"".join(chunks)
+            finally:
+                os.close(fd)
+    sentinel = None
+    if external is not None:
+        info = external.lstat()
+        assert info.st_mode & 0o170000 == 0o100000
+        fd = os.open(external, os.O_RDONLY | os.O_NOFOLLOW | os.O_CLOEXEC)
+        try:
+            opened = os.fstat(fd)
+            assert (opened.st_dev, opened.st_ino) == (info.st_dev, info.st_ino)
+            chunks = []
+            while chunk := os.read(fd, 65536):
+                chunks.append(chunk)
+            sentinel_bytes = b"".join(chunks)
+        finally:
+            os.close(fd)
+        sentinel = {"path": external.name, "sha256": hashlib.sha256(sentinel_bytes).hexdigest(),
+                    "bytes_base64": base64.b64encode(sentinel_bytes).decode("ascii")}
+    from tests.ifpmic_api.h2_snapshot_evidence import record_query_observation
+
+    record_query_observation("workspace.filesystem_snapshot", case["job_id"], {
+        "phase": phase,
+        "workspace_root": str(root),
+        "tree": tree_fingerprint(root),
+        "marker_lstat": marker_lstat,
+        "marker_bytes_base64": None if marker_bytes is None else base64.b64encode(marker_bytes).decode("ascii"),
+        "marker_sha256": None if marker_bytes is None else hashlib.sha256(marker_bytes).hexdigest(),
+        "external_sentinel": sentinel,
+        "workspace_row": _workspace_row(case["harness"], case["job_id"]),
+        "details": details or {},
+    })
 
 
 def _start_barrier(case, phase: str, deadline):
@@ -304,15 +366,21 @@ def test_h2_workspace_nonready_blocks_dispatcher_before_start(
                               "workspace-dispatch-nonready-" + state.lower(), cleanup_controller=deadline)
     expected_codes = {}
     try:
+        _record_workspace_observation(case, "before-state-change",
+                                      details={"target_state": state})
         tree = tree_fingerprint(Path(case["harness"]["workspace_root"]))
         workspace = _set_workspace_state(case["harness"], case["job_id"], state)
         assert workspace[0] == state
+        _record_workspace_observation(case, "after-state-change-before-dispatch",
+                                      details={"observed_workspace_row": workspace})
         process, _record, _barrier = _start_barrier(case, "after_claim_commit", deadline)
         final = _finish_dispatcher_cut(case, deadline, process, "pending", "retry",
                                        "WORKSPACE_NOT_READY")
         assert final["accepted"][3:8] == ("DRAFT", 0, 0, [], None)
         assert _workspace_row(case["harness"], case["job_id"])[0] == state
         assert tree_fingerprint(Path(case["harness"]["workspace_root"])) == tree
+        _record_workspace_observation(case, "after-dispatch-rejection",
+                                      details={"attempts": final["attempts"]})
         expected_codes[process.pid] = 3
         normal._write_private(case["root"] / "workspace-nonready-dispatcher.json",
             normal._canonical({"state": state, "attempts": final["attempts"],
@@ -331,7 +399,11 @@ def test_h2_workspace_invalid_ready_fails_closed(
                               "workspace-invalid-" + damage, cleanup_controller=deadline)
     expected_codes = {}
     try:
+        _record_workspace_observation(case, "before-marker-damage",
+                                      details={"damage": damage})
         damaged_tree, outside = _damage_marker(case, damage)
+        _record_workspace_observation(case, "after-marker-damage-before-dispatch",
+                                      external=outside, details={"damage": damage})
         workspace = _workspace_row(case["harness"], case["job_id"])
         assert workspace[0] == "READY" and workspace[1] == case["workspace"]["workspace_generation"]
         process, _record, _barrier = _start_barrier(case, "after_claim_commit", deadline)
@@ -340,6 +412,9 @@ def test_h2_workspace_invalid_ready_fails_closed(
         assert final["accepted"][3:8] == ("DRAFT", 0, 0, [], None)
         assert _workspace_row(case["harness"], case["job_id"])[0:2] == workspace[0:2]
         _assert_workspace_tree_unchanged(case, damaged_tree, outside)
+        _record_workspace_observation(case, "after-dispatch-quarantine",
+                                      external=outside, details={"damage": damage,
+                                                                "attempts": final["attempts"]})
         expected_codes[process.pid] = 3
         normal._write_private(case["root"] / "workspace-invalid-ready.json",
             normal._canonical({"damage": damage, "workspace_state": workspace[0],
@@ -357,6 +432,7 @@ def test_h2_workspace_stale_generation_claim_is_fenced(
                               "workspace-stale-generation-claim", cleanup_controller=deadline)
     expected_codes = {}
     try:
+        _record_workspace_observation(case, "before-dispatch-claim")
         root = Path(case["harness"]["workspace_root"])
         tree_before = tree_fingerprint(root)
         token_before = case["workspace"]["workspace_token"]
@@ -368,11 +444,16 @@ def test_h2_workspace_stale_generation_claim_is_fenced(
         assert claimed["accepted"][17] is not None
         workspace_claimed = _workspace_row(case["harness"], case["job_id"])
         assert workspace_claimed[0:3] == ("READY", 1, token_before)
+        _record_workspace_observation(case, "after-claim-before-generation-change",
+                                      details={"workspace_row": workspace_claimed})
         g5_result = _set_g5_error_then_reconcile(case)
         workspace_recovered = _workspace_row(case["harness"], case["job_id"])
         assert g5_result["status"] == "ready"
         assert workspace_recovered[0:3] == ("READY", 2, token_before)
         assert tree_fingerprint(root) == tree_before
+        _record_workspace_observation(case, "after-generation-change-before-dispatch-release",
+                                      details={"workspace_row": workspace_recovered,
+                                               "reconcile_result": g5_result})
         with bounded_connect(owner_dsn(case["harness"]["database"])) as owner:
             lease_live = owner.execute(
                 "SELECT claim_expires_at>clock_timestamp() FROM ifpmic.commands_outbox WHERE command_id=%s",
@@ -389,6 +470,9 @@ def test_h2_workspace_stale_generation_claim_is_fenced(
         assert final["accepted"][15] == "quarantined"
         assert _workspace_row(case["harness"], case["job_id"])[0:2] == ("READY", 2)
         _no_runs(case)
+        _record_workspace_observation(case, "after-stale-generation-quarantine",
+                                      details={"attempts": final["attempts"],
+                                               "run_id": run_id})
         expected_codes[process.pid] = 3
         normal._write_private(case["root"] / "workspace-generation-fenced.json",
             normal._canonical({"claimed_generation": 1, "current_generation": 2,
@@ -408,6 +492,8 @@ def test_h2_workspace_nonready_blocks_admitted_worker(
                               "workspace-worker-nonready-" + state.lower(), cleanup_controller=deadline)
     expected_codes = {}
     try:
+        _record_workspace_observation(case, "before-admission-and-state-change",
+                                      details={"target_state": state})
         dispatcher, _record, barrier = _start_barrier(case, "after_run_admitted", deadline)
         admitted = normal._read_owner_snapshot(case["harness"], case["job_id"])
         assert admitted["accepted"][3:8] == ("DRAFT", 0, 0, [], None)
@@ -416,6 +502,9 @@ def test_h2_workspace_nonready_blocks_admitted_worker(
         run_id = admitted["bindings"][0][19]
         workspace = _set_workspace_state(case["harness"], case["job_id"], state)
         assert workspace[0] == state
+        _record_workspace_observation(case, "after-admission-state-change-before-worker",
+                                      details={"workspace_row": workspace,
+                                               "run_id": admitted["bindings"][0][19]})
         barrier.release()
         assert _wait_process(dispatcher, deadline) == 0
         expected_codes[dispatcher.pid] = 0
@@ -428,6 +517,10 @@ def test_h2_workspace_nonready_blocks_admitted_worker(
         assert not any(name == "ifpmic.h2.project_activation" for name in scheduled.values())
         assert any(name == "ifpmic.h2.read_activation" for name in scheduled.values())
         assert read_result == {"status": "wait", "code": "DEPENDENCY_UNAVAILABLE"}
+        _record_workspace_observation(case, "after-real-worker-read-wait",
+                                      details={"run_id": run_id,
+                                               "history_events": len(events),
+                                               "read_result": read_result})
         history_bytes = b"".join(
             len(raw).to_bytes(8, "big") + raw
             for raw in (event.SerializeToString(deterministic=True) for event in events)
@@ -439,6 +532,9 @@ def test_h2_workspace_nonready_blocks_admitted_worker(
         assert final["bindings"][0][19] == run_id and final["bindings"][0][20] == "admitted"
         assert final["receipts"] == [] and final["attempts"] == [(1, "started", run_id, None, True)]
         assert _workspace_row(case["harness"], case["job_id"])[0] == state
+        _record_workspace_observation(case, "after-worker-boundary-final-sql",
+                                      details={"run_id": run_id, "receipts": final["receipts"],
+                                               "attempts": final["attempts"]})
         normal._write_private(case["root"] / "workspace-worker-wait.json",
             normal._canonical({"state": state, "run_id": run_id,
                               "read_result": read_result, "project_activation_scheduled": False,

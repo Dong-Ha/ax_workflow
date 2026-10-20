@@ -279,6 +279,13 @@ async def _observe_started_direct(endpoint: str, namespace: str, workflow_id: st
             rpc_timeout=timedelta(seconds=min(5, _remaining(deadline))),
         ):
             runs.append(item)
+        from tests.ifpmic_api.h2_snapshot_evidence import record_query_observation
+
+        record_query_observation("temporal.list_workflows", workflow_id, {
+            "endpoint": endpoint, "namespace": namespace,
+            "runs": [{"workflow_id": item.id, "run_id": item.run_id,
+                      "status": getattr(item.status, "name", str(item.status))} for item in runs],
+        })
         if len(runs) > 1:
             raise AssertionError("direct backend observer found multiple logical executions")
         if runs:
@@ -335,6 +342,11 @@ async def _list_workflow_runs(endpoint: str, namespace: str, workflow_id: str,
     ):
         found.append({"workflow_id": item.id, "run_id": item.run_id,
                       "status": getattr(item.status, "name", str(item.status))})
+    from tests.ifpmic_api.h2_snapshot_evidence import record_query_observation
+
+    record_query_observation(
+        "temporal.list_workflows", workflow_id,
+        {"endpoint": endpoint, "namespace": namespace, "runs": found})
     return found
 
 

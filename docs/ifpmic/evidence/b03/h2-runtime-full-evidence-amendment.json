@@ -1,6 +1,6 @@
 {
   "kind": "ifpmic.b03.h2.runtime-full-evidence-amendment.v1",
-  "status": "paused_by_user_unreviewed_source_checkpoint_not_executed",
+  "status": "scoped_source_reviewed_checkpoint_deferred_behind_visible_agile_delivery",
   "goal_status": "active",
   "prior_checkpoint_commit": "ea5055a2b6fda99dd697d042deddc0d3245bf222",
   "prior_candidate": {
@@ -37,25 +37,45 @@
     },
     "draft_source_pins": {
       "tests/ifpmic_api/h2_crash_case_budget.py": "b382b7096b4f3abb73357f851804a8f2427ab36971a0641e49e25ce045b457b5",
-      "tests/ifpmic_api/test_h2_started_deployment_boundaries.py": "2bccaebf9df70459f26dea3e742aa15289e6cee642278cd8151e9e14ea21c7eb",
-      "tests/ifpmic_api/test_h2_runtime_normal_flow.py": "c459515ef3ecb2992481ed8d10ebceb4be030f64c95859c030857ced0a3776bc",
-      "tests/ifpmic_api/h2_snapshot_evidence.py": "5b483045cb0cf402d9c7abfd228c9a975c00ddcac90e04aa4f274f318c9189b3"
+      "tests/ifpmic_api/h2_snapshot_evidence.py": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c",
+      "tests/ifpmic_api/test_h2_runtime_normal_flow.py": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d",
+      "tests/ifpmic_api/h2_activity_runtime_boundary_child.py": "c140c731869ce13a4e3a13306a7e9bfa48ff1233ac1ea50fdef016020449f281",
+      "tests/ifpmic_api/h2_dispatcher_crash_support.py": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472",
+      "tests/ifpmic_api/test_accepted_start_response_loss.py": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8",
+      "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py": "11db8cfc513c4845128e26558ae2d5ca6d87beea485e524ebdd949b974c89954",
+      "tests/ifpmic_api/test_h2_dispatcher_crashes.py": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52",
+      "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py": "c0dd1e2a3e732ceea482e286a0f97bbb270dfab4040d88eff0403efc846e8688",
+      "tests/ifpmic_api/test_h2_runtime_startup_rejections.py": "80376fad5e864c4ac07cc0fc1cf75fce205d06da64f22e74a67b542ca60fb1b1",
+      "tests/ifpmic_api/test_h2_started_deployment_boundaries.py": "034ae6eb4399d8e4b906ffc27401d2b1d4d3799e44159b7a711d6e174c25bbdf",
+      "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py": "682eb21235786607802e4f108331afa7050d54d94ddd4d92d087a278e3c76a95",
+      "tests/ifpmic_api/test_workflow_schema.py": "b76ebd44dc6e98323501fea1c03e3f5c1838484b3f7b359693a2e5ef52159224",
+      "scripts/verify_ifpmic_b03_h2_runtime_full.py": "82b2d78e26d894b3012b50837bb454f8547c429de695976c64126907a21abaa5"
     },
-    "dynamic_results": null
+    "dynamic_results": null,
+    "independent_scoped_source_review": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-full-evidence-amendment-independent-review.json",
+      "sha256": "f592572eb433717f13cdc2029e50e12be9b6c083d3b5ccf6b3109fd6d332664a"
+    }
   },
   "recovery_and_reverification": "Keep prior approvals bound to original bytes. Preserve failed attempts. Resolve every actual gap; refresh source closure, ledgers and exact reviews; review runner and pre-gate before imports/collection/tests/services.",
   "limitations": [
-    "Shared owner observer does not cover direct SQL in startup/FENCES or workspace tree evidence; explicit gap resolution remains pending.",
-    "Existing source audit describes ea5055a and must remain historical when draft sources change.",
-    "New observer has only static validation so far; no actual SQL/test/service was executed."
+    "No H2 product/SDK imports, collection, tests, SQL or services executed. Separate existing Node UI build/browser checks do not qualify H2.",
+    "Scoped independent source review does not approve whole runner or per-case raw evidence validator.",
+    "Original ledger/contract/reviews remain historical exact bytes; current changed source requires fresh inventory, contract and paired pre-gate reviews.",
+    "User changed delivery order: visible local UI and short user-facing increments now take priority. H2 evidence remains mandatory before real execution acceptance."
   ],
   "execution_authorized": false,
   "h2_complete": false,
   "resume_document": "docs/ifpmic/RESUME.md",
   "unreviewed_runner_draft": {
     "path": "scripts/verify_ifpmic_b03_h2_runtime_full.py",
-    "sha256": "88b298f5749f435a00c97fc1f648add3aabc49aa2a2c04afd93bf0648d18acbd",
+    "sha256": "82b2d78e26d894b3012b50837bb454f8547c429de695976c64126907a21abaa5",
     "provisional_old_pins": true,
     "executed": false
+  },
+  "raw_evidence_contract_draft": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-full-raw-evidence-contract.json",
+    "sha256": "a083c16240d614fe0e40a30c0e98b0a41de887a38c92050f33e37dbe45c15004",
+    "reviewed_for_execution": false
   }
 }

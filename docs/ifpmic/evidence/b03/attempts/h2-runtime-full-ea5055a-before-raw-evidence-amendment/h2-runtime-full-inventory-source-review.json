@@ -1,0 +1,189 @@
+{
+  "kind": "ifpmic.b03.h2.runtime-full-inventory-source-review.v1",
+  "verdict": "no_remaining_blocking_findings_in_reviewed_source_and_inventory_scope",
+  "reviewed_utc": "2026-10-19T15:06:26.292622+00:00",
+  "reviewer": {
+    "agent_id": "/root/h2_prebinding_advice",
+    "actual_role": "senior_sol",
+    "independence": "Root owns integration and repairs; separate TC authored cases. Reviewer authored only this new review JSON. Main orchestrator retains final ownership."
+  },
+  "scope": {
+    "full_source_review": "Workspace11, Started9 plus foreign deployment1, activity/runtime12, transport3 and fixture prerequisite5 methods/oracles/resources; named shared helper changes. Current hashes identify the actual reviewed candidate, not runtime qualification.",
+    "delta_only_review": "Other listed crash/startup/window files were reviewed for native-bound/controller/cleanup changes and inventory/budget consistency, not every pre-existing causal oracle anew. Previous shared fixture review is a reference, not qualification of changed bytes.",
+    "outside_scope": "No whole-repository or fresh full review of the other ledger-pinned product/test bytes. An84-pin equality check establishes current identity only; it does not certify all84 sources."
+  },
+  "integrated_ledger": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger.json",
+    "sha256": "cf4f3bfc023341c22e0c8fc7c072c54838d62f7adeb39d817a4ce3b6589f8d60"
+  },
+  "reviewed_source_sha256": {
+    "tests/ifpmic_api/h2_native_bounds.py": "deaae9cfc75ac6021bde78f66122ddfaca02283f8f29a49a2d1bff9d2fe7a3fb",
+    "tests/ifpmic_api/h2_dispatcher_crash_support.py": "1cb2d9ba3f12d2cd0d73843fbdd778211467f82ec6c67fcd0fdb9f3eb4a3fe9a",
+    "tests/ifpmic_api/h2_fixture_cleanup.py": "99b277b7532ebc0e12d80dacd40d7b3e6a2af7f7aebfc46c93b35c3a04c50500",
+    "tests/ifpmic_api/jobs_fixture.py": "b8fefc39f3005b3a662124ae3182cee4e7a293e18dd4e84d18facd09c0e0d539",
+    "tests/ifpmic_api/oidc_provider.py": "38c4e014c16cf43bc28ff384999dcc8468d0e6ac0cbcc92c1a69b2d4cccd84e0",
+    "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py": "31a990fd06c4b90fed2bb152ef6aceb765bb2ec12dc8d358abea675658547b52",
+    "tests/ifpmic_api/h2_workspace_activation_case_budget.py": "3ac6604aa1921b011bd6b7016129e94c918776f5b97eefa4a1e1bb1eee8c9ff8",
+    "tests/ifpmic_api/test_h2_started_deployment_boundaries.py": "bcaa885a61e33a6bd3fc3c2e83d16380d32d9e1676ba1a36e76e7f1c1ad70125",
+    "tests/ifpmic_api/h2_started_deployment_case_budget.py": "305e2991d642804cf23f223ec875783a1df3517ba58f88e805cdbf121d7f1f35",
+    "tests/ifpmic_api/h2_foreign_dispatcher_child.py": "4a3bcf89bc86892f259f47f868e734885e3ed26a4c7cfe30274aa90bdf5bb913",
+    "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py": "1c9a565e6a81c79aedf64173798f99d720b63f3f3de42b182e0f8cb067abef1b",
+    "tests/ifpmic_api/h2_activity_runtime_boundary_child.py": "8ff853ce784f4e7d9f9dc9205675b14deb91688156410656fa9a83970b9a9347",
+    "tests/ifpmic_api/h2_activity_runtime_case_budget.py": "34df11020b89f884207fd8ebdb8aef3e0d1acf452c1429bb9ec2d4735af3da4c",
+    "tests/ifpmic_api/test_h2_transport_boundaries.py": "059b7f61e6da19f9177bb0ab833dd2ebbf0409d88bfdd9ebf914166688525ad2",
+    "tests/ifpmic_api/h2_transport_boundary_child.py": "ddac239eb8244b08671922c5cee255e608ad2c4589099499c1f3dd7ccc796300",
+    "tests/ifpmic_api/h2_transport_case_budget.py": "a507a9e5a00b0bfbd061ca1bf59693315ad09dcf95d5b9c84bc5a987ad8af19a",
+    "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py": "88f69b44ca25894f620375f2fda8a83a1afd996cb58ccbed765d988a114b6d90",
+    "tests/ifpmic_api/h2_fixture_failure_case_budget.py": "503a1fc22d2ddece87fa83336fc5c26b003c094a7cf793339d3dbe0d61a06791"
+  },
+  "reviewed_delta_source_sha256": {
+    "tests/ifpmic_api/test_accepted_start_response_loss.py": "6db41f1b0d7ebaf2b9c60cfd9528a6e2b1b92db8cc6fdf7efb025e9fae15afa8",
+    "tests/ifpmic_api/test_h2_worker_api_crashes.py": "b72814e85ba31ad97c27f01bc4f5f92d171ff066b097541f0e4d66da80244a76",
+    "tests/ifpmic_api/test_h2_dispatcher_crashes.py": "7e2431c6bfadb22242a1f9e9f87cb5c639d6d6d2675255114b70d7636b376596",
+    "tests/ifpmic_api/test_h2_runtime_restart_and_history.py": "606db627f5efd4ba6f9158da6ef538b95fe70d77444cb0775191265a10a2b546",
+    "tests/ifpmic_api/test_h2_reconciliation_window.py": "7fe6f3856b408d8d1f1e9fefc58ae47db00cfe1f8f5b45b41836523c63881a01",
+    "tests/ifpmic_api/test_h2_runtime_startup_rejections.py": "6893b1c989909801b38be54db322adcb7c589694ea9230b3785d9705786b397b",
+    "tests/ifpmic_api/h2_crash_case_budget.py": "51a0a85d6126ef422e58c2ac1ab58312ef11e5c8e9e465db27f01459f5614c03",
+    "tests/ifpmic_api/h2_worker_api_case_budget.py": "afce78ccbb4988dcb9028ba75ddb852f71a74cdfb1a4868d6601dd8823635f35",
+    "tests/ifpmic_api/h2_window_case_budget.py": "da04f059de0e1b487b40a50f997797874e7373947f5dc251fc88a138a5231f19",
+    "tests/ifpmic_api/h2_startup_case_budget.py": "35e8b7431c0f54e269392f5a958628f39cce1ae1039e1ea37bee318a2ae7a0a7"
+  },
+  "reference_sha256": {
+    "docs/ifpmic/evidence/b03/h2-runtime-full-verification-plan.json": "c6964bccff0d4cec1ac00f18fbb267d5d1a4a5887e53844c604333b7c059486c",
+    "docs/ifpmic/evidence/b03/h2-runtime-normal-tc-ledger.json": "ec5c419f853741f2ea0c127bbf8fbd58e3e2bdc7a2ef0d04975a47f7033600c7",
+    "docs/ifpmic/evidence/b03/h2-runtime-hung-driver-observation-amendment.json": "64221818979de7e45931e03b3c1987ad29a413ad78674f0fdeff814e086d0f2c",
+    "docs/ifpmic/evidence/b03/h2-runtime-fixture-integration-contract.json": "5be7612bbd9be9a8ef251f07ec577386a0c7f5ab4a1f249aa99fdc8f4ff93ed7",
+    "docs/ifpmic/evidence/b03/h2-runtime-fixture-integration-source-review.json": "f4f0ba7c3aba47ddc1eb89467c0b8b667fdcb77a9462db80718da806aaf42ebb"
+  },
+  "derivative_ledger_sha256": {
+    "docs/ifpmic/evidence/b03/h2-runtime-startup-tc-ledger.json": "b6752ef8bf241b461add6981a3a05720548c07a1cba3c62dc9ee280c86d40c81",
+    "docs/ifpmic/evidence/b03/h2-runtime-window-tc-ledger.json": "3baf07cf336868b7c8bfbdfbb7b233f49d4f606660aefb14dffe93cfee965153",
+    "docs/ifpmic/evidence/b03/h2-runtime-activity-runtime-tc-ledger.json": "550e6e3ece333ebf00deb582c0d3a4aade169509de0abbe7a0f11307adc69ecb",
+    "docs/ifpmic/evidence/b03/h2-runtime-transport-tc-ledger.json": "3595c686c01c1188f9f52bec4168c5aa79718df8c667398641e3296737f0daad",
+    "docs/ifpmic/evidence/b03/h2-runtime-workspace-tc-ledger.json": "d4a2bbde9853b4784c75cd65cbf9188b8d7b0ad649c903998c7a23b2ca7edf92",
+    "docs/ifpmic/evidence/b03/h2-runtime-started-deployment-tc-ledger.json": "3a756d74f25626f3e066bf30b66af8a4767c42575c7e12cfa993135567e0bd2c",
+    "docs/ifpmic/evidence/b03/h2-runtime-fixture-failure-tc-ledger.json": "921740bfcbcfbdddb1b5cbae3ee6b9c72e581877353c85413f507757f4c4af2b"
+  },
+  "findings": {
+    "blocking": [],
+    "resolved": [
+      {
+        "id": "WORKSPACE-DEADLINE-TYPE",
+        "source_resolution": "Three process-wait callers supplied a float to a helper requiring the controller. All now pass the controller.",
+        "runtime_status": "not_executed"
+      },
+      {
+        "id": "WORKSPACE-PENDING-AND-DECODE",
+        "source_resolution": "Non-READY retry now expects public pending with attempt retry. Worker history unwraps one payload and filters actual read_activation scheduled IDs.",
+        "runtime_status": "not_executed"
+      },
+      {
+        "id": "TRANSPORT-HISTORY-AND-QUERY",
+        "source_resolution": "Pre-admission observer now checks the exact decoded single wait payload for read_activation and passes result_type=str to the SDK query.",
+        "runtime_status": "not_executed"
+      },
+      {
+        "id": "HUNG-NATIVE-OBSERVATION",
+        "source_resolution": "Actual pg_sleep/local timeout is30s. The unchanged12..18s worker self-exit check is separate from exact backend disappearance by pre-query event+40s capped by body deadline. Native observation refuses insufficient allowance and asserts observation timestamp within cap; recovery starts only after rollback evidence.",
+        "runtime_status": "not_executed"
+      },
+      {
+        "id": "STARTED-SDK-AND-DEADLINES",
+        "source_resolution": "Started helpers pass args= for multiple inputs, omit nonexistent Client.close, use absolute case deadlines, and bound connect/start by10s. Nine actual persisted malformed/foreign Started variants check literal code and immutable no-admission/no-projection state.",
+        "runtime_status": "not_executed"
+      },
+      {
+        "id": "FOREIGN-AUTHENTICATION",
+        "source_resolution": "Bootstrap principal creates/drops isolated roles; strict temporary SCRAM rules precede trust fallback. Correct, wrong and missing-password controls use explicit passfile handling and bounded connections. Successful foreign child bootstrap/transport with literal idle excludes generic startup-failure substitution.",
+        "runtime_status": "not_executed"
+      },
+      {
+        "id": "FOREIGN-PROJECTION-CAUSALITY",
+        "source_resolution": "Foreign reserve uses the original exact live claim. Foreign projection uses an actual owning-deployment admitted run and independently reconstructed valid proposal; the identical arguments immediately apply under the owning projector. SQLSTATE42501 and unchanged snapshots isolate scoped authority denial.",
+        "runtime_status": "not_executed"
+      },
+      {
+        "id": "SHARED-CLEANUP-AND-IDENTITY",
+        "source_resolution": "New prepare_case callers pass their installed controller. Barrier release/close and process fallback consume the same remaining cleanup epoch; fallback rechecks allowance then saved PID/start ticks before signalling and bounds each wait. No-controller behavior remains the legacy path.",
+        "runtime_status": "not_executed"
+      },
+      {
+        "id": "PRIMARY-ERROR-PRESERVATION",
+        "source_resolution": "Controller cleanup_case, foreign partial setup/HBA/role cleanup and H2 OIDC fixture cleanup use the shared primary-preserving helper; restore-only failure remains an error.",
+        "runtime_status": "not_executed"
+      },
+      {
+        "id": "NATIVE-SQL-LIMITS",
+        "source_resolution": "New boundary direct SQL uses explicit connect3/lock5/statement30 bounds. A copied harness with a delegating database proxy adds DSN options for inherited owner observers without replacing SQL/results or changing frozen normal helper bytes. Production runtime config DSNs retain their exact allowed five fields. Tighter backend/cleanup options are explicit; foreign cleanup refuses less than3.5s before max-two-statement native sequences.",
+        "runtime_status": "not_executed"
+      },
+      {
+        "id": "OIDC-PARTIAL-START",
+        "source_resolution": "Never-started serving threads no longer enter blocking server.shutdown. Server sockets close in finally, actual started threads join under remaining time, and unconfirmed handles/errors remain retained and fail closed.",
+        "runtime_status": "not_executed"
+      },
+      {
+        "id": "FIXTURE-REGRESSION-CAUSALITY",
+        "source_resolution": "Five prerequisites exercise actual error-preservation helpers, actual cleanup_case fallback, actual partial OIDC sockets/threads and actual TestClient exit/portal. The exhausted controller is separate from the real case watchdog; matching fake identity and zero lookup/signal/wait assertions expose a missing fallback budget guard, while absent=false/handle retention prevents manufactured success.",
+        "runtime_status": "not_executed"
+      },
+      {
+        "id": "INVENTORY-EXACT-BUDGETS",
+        "source_resolution": "The SQL-only noncreate pre-admission case is25+5 rather than215+25. All83 additions now match the nine controller literal inventories exactly with no overlap; fixture prerequisites are appended under existing infrastructure requirements without inventing a new business obligation group.",
+        "runtime_status": "not_executed"
+      }
+    ]
+  },
+  "evidence": {
+    "method": "Static source/diff reading plus standard-library JSON, hash and AST-literal processing only. No product/SDK import, collection, tests, SQL, services or network.",
+    "pin_consistency": {
+      "current_source_pins": 84,
+      "mismatches": 0,
+      "current_derivative_ledgers": 7,
+      "derivative_mismatches": 0,
+      "historical_pin_transitions_explicitly_listed": 14
+    },
+    "inventory": {
+      "retained_literal_ids": 407,
+      "retained_phase_counts": [
+        1,
+        5,
+        93,
+        50,
+        91,
+        167
+      ],
+      "historical_ids_exact": true,
+      "node_normalization_preserves_parameter_suffixes": true,
+      "additions": 83,
+      "unique_union": 490,
+      "retained_and_additional_disjoint": true,
+      "default_25_5": 34,
+      "extended_215_25": 49,
+      "controller_inventories": 9,
+      "controller_overlap": 0,
+      "controller_id_and_budget_map_equals_ledger": true,
+      "additional_phase_id_union_exact": true,
+      "business_obligation_groups": 25,
+      "fixture_prerequisites": 5
+    },
+    "phase_caps": "Nine additional phases exactly cover83 IDs. Each cap is its literal case allowances plus60s; combined with six retained phases the caps sum15420s. This is candidate inventory arithmetic, not a runner or aggregate execution contract approval.",
+    "source_identity_limit": "All407 retained ID names remain mandatory, but historical evidence cannot qualify changed fixture/helper bytes. The candidate explicitly lists14 historical-to-current transitions and requires the full fresh490-case gate."
+  },
+  "risks_and_edge_cases": [
+    "The hung-driver method no longer assumes a server backend dies immediately when a client process exits. Both the self-only watchdog and actual rollback cap still need runtime proof; no cancellation/early restart may substitute.",
+    "OIDC unstarted handles remain conservatively unknown even after actual sockets/started threads close. The expected failure regression must not be normalized as confirmed absence.",
+    "Fixture probe handles/controllers cover cleanup only; foreign business SQL, actual persisted Started/history and real Temporal worker behavior remain runtime obligations.",
+    "Actual PostgreSQL SCRAM/DDL permissions, SDK/server field behavior, concurrent disable/fatal/SIGTERM ordering, timing and cleanup cannot be established by source review."
+  ],
+  "recommendation": "Proceed to separate exact whole-ledger/execution-contract TC and independent reviews. Runner authoring/review and frozen pre-gate approval must follow before any execution. Preserve failed gates and qualify the current source with all490 IDs and privacy/evidence checks.",
+  "remaining_uncertainty": [
+    "No collection or test result exists for this candidate; exact actual collected IDs must be checked by an authorized gate.",
+    "Existing complete ledger semantic coverage and out-of-scope source bytes still require their designated reviews; a node-ID mapping is not independent causal proof for every obligation.",
+    "No H2 completion, final AX visualization or later B03/H3-H7/original acceptance duties are discharged."
+  ],
+  "execution_authorized": false,
+  "runner_authoring_authorized": false,
+  "runtime_acceptance": false,
+  "full_h2_acceptance": false
+}

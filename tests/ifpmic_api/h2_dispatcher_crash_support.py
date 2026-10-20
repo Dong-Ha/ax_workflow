@@ -296,6 +296,11 @@ def _prepare_case_impl(harness, deadline: float, case_name: str, ownership) -> d
     journal = root / "process-journal.jsonl"
     normal._create_private_journal(journal)
     ownership.update({"root": root, "journal": journal})
+    normal._write_private(root / "workspace-initial-observation.json",
+                          normal._canonical({"job_id": job_id, "tree": tree_before,
+                                             "marker_bytes_hex": (
+                                                 workspace_root / job_id / normal.WORKSPACE_MARKER_NAME
+                                             ).read_bytes().hex()}) + b"\n")
     toolchain = normal._read_h1_toolchain()
     ports = normal._allocate_loopback_ports()
     temporal_root = root / "temporal-data"
