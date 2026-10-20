@@ -1,0 +1,65 @@
+{
+  "kind": "ifpmic.b03.h2.activity-source-projection-review.v3",
+  "review_date": "2026-10-21",
+  "reviewer": "/root/h2_evidence_amendment_review",
+  "decision": "request_changes",
+  "proposal": {
+    "path": "docs/ifpmic/evidence/b03/h2-machine-resolution-activity-v3.json",
+    "sha256": "39ded9f1aedfae61157427e28b1f0c7a6bae78d0f2e062d09f5e4d4786bd76e3"
+  },
+  "input_machine": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules.json",
+    "commit": "8d208eb",
+    "sha256": "33622d9944cafea7345526e25db524d06c6f64b2c04a73e7d0b55dbd8986bbd5"
+  },
+  "findings": [
+    {
+      "severity": "blocking_source_mapping",
+      "issue": "Both authority rows require nonexistent case directories.",
+      "evidence": "test_h2_activity_runtime_boundaries.py:376 passes activity-authority-before- + authority to crash.prepare_case. The proposal instead names authority-before-first-projection-eligibility/membership.",
+      "minimal_fix": "Use activity-authority-before-eligibility/membership consistently in the two proposed rows and their annotation metadata."
+    },
+    {
+      "severity": "blocking_raw_semantics",
+      "issue": "All10 actual PBSeq artifact rules use opaque bytes and bypass the mandatory qualified history decoder.",
+      "evidence": "authority-rejected-history.pbseq x2; history-before-lost-activity-result.pbseq x2; history-after-receipt-replay.pbseq x2; history-after-hung-driver-kill.pbseq; history-after-driver-rollback-recovery.pbseq; history-after-real-noncreate-signal.pbseq; temporal-history.pbseq.",
+      "minimal_fix": "Change exactly these10 artifact formats from bytes to pbseq, retaining counts, required_keys and all actual runtime/history obligations."
+    },
+    {
+      "severity": "blocking_manifest_closure",
+      "issue": "Five actual successful release markers are not indexed.",
+      "evidence": "The authority cases write authority-before-barrier/release-project-activation (lines394/439); replay cases write receipt-replay-barrier/release-activity-result (line490); retention writes retention-rpc-barrier/allow_retention_rpc (lines623/647). These are actual private files, including finally release paths.",
+      "minimal_fix": "Add the five per-case literal paths as bytes, minimum=maximum=1, required_keys=[]. Do not invent releases for normal-SIGTERM or hung-driver."
+    },
+    {
+      "severity": "incorrect_current_source_metadata",
+      "issue": "remaining_limitations still declares the noncreate-signal O_EXCL duplicate dispatcher-log collision as a current defect.",
+      "evidence": "The separately accepted local wrapper repair now labels the second dispatcher dispatcher-noncreate-signal at line557, preserving logical role/configuration; source_repair_facts already describes this repair.",
+      "minimal_fix": "Describe the collision as a historical source defect repaired by the accepted exact source change, with actual runtime verification still pending."
+    }
+  ],
+  "supported_source_findings": {
+    "literal_rows": 12,
+    "original_annotations_compared_verbatim": 83,
+    "current_rules": 191,
+    "supporting_source_pins": 5,
+    "schemas_and_binding": "All191 rules otherwise use supported fields, obligatory required_keys, min/max1 and unique per-case paths. Node/phase/profile, owner/query bounds and original annotations match the input. Current source pins and active source-location SHA references match actual bytes.",
+    "runtime_applicability": "Eleven Temporal cases retain actual common preparation, CLI/server, SQLite and cleanup outputs; noncreate-unadmitted-* is SQL-only and retains its actual JSON without invented Temporal outputs.",
+    "hung_driver": "The actual producer stores pg_stat_activity transaction/backend observations in pg_state and observed post-kill backend disappearance in pg_backend_after_kill within hung-driver-rollback.json. Its exact result keys and other literal JSON result/child event schemas match actual source. Source applicability does not prove actual timing, rollback, recovery or receipt invariants.",
+    "separate_source_repair_review": {
+      "path": "docs/ifpmic/evidence/b03/h2-three-source-repairs-review-v2.json",
+      "sha256": "be6a2898074d58db1deb32ee68c652886ea91478bf0d9fcda034ffe44e0d6522"
+    }
+  },
+  "authorization": {
+    "integrate_proposed_rows_or_clear_83_annotations": false,
+    "imports_collection_tests_sql_sdk_services_network_execution": false,
+    "whole_mapping_contract_h2_iteration_or_goal_acceptance": false
+  },
+  "risks_and_remaining_uncertainty": [
+    "File/schema/digest/history framing alone cannot establish actual authority, causal barrier order, process identity, backend rollback, timing or successful cleanup. Fresh490/JUnit/raw evidence remains required.",
+    "Preserve this rejected draft and exact review. A corrected projection requires independent exact-delta review; this review changes no producer, checker, source pin, runtime oracle or budget."
+  ],
+  "recommendation": "Correct all four bounded data issues in a new version. Expected rule count is196 after the five actual marker additions; preserve all83 original annotation strings and all runtime obligations.",
+  "review_method": "Read-only actual source/AST/JSON/SHA and pinned-input comparison; no repository imports, collection, tests, SQL, SDK, services or network."
+}

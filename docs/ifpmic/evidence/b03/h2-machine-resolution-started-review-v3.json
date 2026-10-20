@@ -1,0 +1,44 @@
+{
+  "kind": "ifpmic.b03.h2.started-deployment-source-projection-review.v3",
+  "review_date": "2026-10-21",
+  "reviewer": "/root/h2_evidence_amendment_review",
+  "decision": "approve_exact_10_row_source_projection_only",
+  "proposal": {
+    "path": "docs/ifpmic/evidence/b03/h2-machine-resolution-started-v3.json",
+    "sha256": "dd71c60e04402c487c7644cb5855912fba4953a34e0f435f50b7aa8011934a52"
+  },
+  "input_machine": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules.json",
+    "commit": "911ee83",
+    "sha256": "c3142155333886eb7514c7361e437a15964dd13d2cc24893726302457ab3728e"
+  },
+  "compatible_current_machine_sha256": "33622d9944cafea7345526e25db524d06c6f64b2c04a73e7d0b55dbd8986bbd5",
+  "historical_request_changes": {
+    "proposal_sha256": "519437232f36182f39b5e279e19f776d46b8f5958a13b344e3e63ceba588de2e",
+    "review_path": "docs/ifpmic/evidence/b03/h2-machine-resolution-started-review-v2.json",
+    "review_sha256": "e26be74060c4a33258159dc07e5eeede902557ab7b8b1e2a02276a3f2662a9cd",
+    "disposition": "The one blocking history-format finding is closed in this separate exact projection; the rejected v2 remains historical."
+  },
+  "findings": [],
+  "evidence": {
+    "rows": 10,
+    "rules": 159,
+    "original_source_annotations": 43,
+    "exact_delta": "All10 actual history entries now use pbseq rather than bytes:9 rogue Started sequences and1 owning-server Started sequence in foreign-deployment. All proposed rows are otherwise identical to v2. Case annotations, source pins, limitations and pinned input are unchanged.",
+    "binding_and_source": "All10 target rows remain identical to the pinned c314 input within the compatible current machine. All10 proposal source pins match current bytes. Previously reviewed actual paths, conditional JSON fields, private preparation/cleanup outputs, owner/query requirements and indexed digest links remain valid.",
+    "semantic_boundary": "The mandatory qualified SDK history decoder will now run on these rules under future approved runtime gates. Malformed payload tests still preserve their original Started/input/type/queue/quarantine assertions. Generic PBSeq checks are structural and do not replace those business oracles."
+  },
+  "authorization": {
+    "replace_only_exact_10_proposed_rows_and_clear_their_43_source_annotations": true,
+    "add_exact_proposal_and_this_review_sha_source_resolution_pointers": true,
+    "change_other_rows_source_tests_checker_or_runtime_oracles": false,
+    "imports_collection_tests_sql_sdk_services_network_execution": false,
+    "whole_mapping_contract_h2_iteration_or_goal_acceptance": false
+  },
+  "risks_and_remaining_uncertainty": [
+    "Foreign HBA restoration has no persisted post-restore effective-rule readback. The nested proposal uses a source-asserted domain digest, not a standalone raw-file SHA. Neither absent artifact is invented or claimed independently proven; all original auth/HBA/SQL assertions and future raw result review remain mandatory.",
+    "Applying only these10 rows to the compatible current machine leaves19 unresolved rows with134 annotations. Whole-source/versioned ledger/contract review, paired pre-gates and fresh490/25+5 remain required. No actual artifact, case pass, cleanup outcome or runtime acceptance is established here."
+  ],
+  "recommendation": "Integrate only these10 exact rows and bound review pointers, retaining the rejected draft/review and all remaining source/runtime obligations.",
+  "review_method": "Read-only delta/source-pin/JSON/SHA and pinned Git-input comparison; no repository imports, collection, tests, SQL, SDK, services or network."
+}

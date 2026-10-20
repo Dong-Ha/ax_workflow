@@ -1,0 +1,49 @@
+{
+  "kind": "ifpmic.b03.h2.transport-worker-source-projection-review.v4",
+  "review_date": "2026-10-21",
+  "reviewer": "/root/h2_evidence_amendment_review",
+  "decision": "approve_exact_7_row_source_projection_only",
+  "proposal": {
+    "path": "docs/ifpmic/evidence/b03/h2-machine-resolution-transport-worker-v4.json",
+    "sha256": "a0b43cd55b496c06c4c68da4916fbf7330f41e8db8ea9c09c652eba76f8d50bf"
+  },
+  "input_machine": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules.json",
+    "commit": "8d208eb",
+    "sha256": "33622d9944cafea7345526e25db524d06c6f64b2c04a73e7d0b55dbd8986bbd5"
+  },
+  "historical_request_changes": {
+    "proposal_sha256": "8be0f6c5fee6cf58ee0fd2d1fba5686a9122c3228f49d75d097ab853dd08c966",
+    "review_path": "docs/ifpmic/evidence/b03/h2-machine-resolution-transport-worker-review-v3.json",
+    "review_sha256": "bafa0074e3897c536e88af7c0f50e757ac753fb856a3f449395ffb9eb0657bc3"
+  },
+  "separate_exact_source_repairs": {
+    "path": "docs/ifpmic/evidence/b03/h2-three-source-repairs-review-v2.json",
+    "sha256": "be6a2898074d58db1deb32ee68c652886ea91478bf0d9fcda034ffe44e0d6522",
+    "scope": "Transport receives the missing empty-bytes argument and the worker call resolves to its existing helper. Prior prestarted filename repair remains retained. This mapping review does not expand those source repairs."
+  },
+  "findings": [],
+  "evidence": {
+    "literal_rows": 7,
+    "original_annotations_compared_verbatim": 51,
+    "rules": 141,
+    "closed_findings": "All5 v3 findings are addressed: actual source defects have separate exact-source acceptance;4 first server-record schemas require role/pid/start_ticks/log;9 transport common preparation rules and1 actual stopped-dispatcher record are added;2 machine-race results bind exact3-key/7-key literal branches. Three actual Temporal SQLite outputs are additionally indexed.",
+    "binding_and_schema": "Nodes/phases/profiles/directories/identity_file/owner/query requirements match the input. Four UUID worker-api roots retain actual case-node markers and exact node filtering. All141 rules use supported fields, required_keys, min/max1 and unique per-case paths. Byte/PBSeq constraints are compatible; every history sequence uses pbseq and every digest target is explicitly indexed.",
+    "actual_paths": "Transport preparation writes the added initial workspace/manifests/SQLite files. Worker process00 is the server on all4 paths, including the API outer root before runtime context update; ordinary process01/02 retain CLI schemas. Activity-completed requires its actual stopped dispatcher record and both early/canonical server records. History, authority revocation, nested API runtime files, logs, barriers and cleanup retain actual branch applicability.",
+    "pins_and_metadata": "All13 supporting source pins match current bytes and the7 target input rows remain compatible with current canonical data. The one stale early-server row location now points to9ad3c1be. Replacing only that active SHA with7001cf8c reconstructs the earlier unintegrated97dd8aab v4 draft, confirming the final metadata-only delta."
+  },
+  "authorization": {
+    "replace_only_exact_7_proposed_rows_and_clear_their_51_source_annotations": true,
+    "add_exact_proposal_and_this_review_sha_source_resolution_pointers": true,
+    "change_other_rows_source_tests_checker_or_runtime_oracles": false,
+    "imports_collection_tests_sql_sdk_services_network_execution": false,
+    "whole_mapping_contract_h2_iteration_or_goal_acceptance": false
+  },
+  "risks_and_remaining_uncertainty": [
+    "Raw structure, file hashes and history framing do not establish nested SQL, proxy chronology, authority, process identity, barrier ordering, cleanup success or complete invocation coverage. These remain actual fresh490/JUnit/raw evidence obligations.",
+    "API settings, database/log files and raw identity records remain private. Failure-only cleanup evidence cannot be relabeled successful, and source repairs are not runtime pass evidence.",
+    "All unrelated unresolved annotations, original full490/25+5 inventory/budgets, complete versioned source closure/ledger/contract and paired pre-gates remain mandatory."
+  ],
+  "recommendation": "Integrate only these7 exact rows and bound review pointers, preserving rejected drafts, separate source reviews and every remaining runtime gate.",
+  "review_method": "Read-only actual source/AST/JSON/SHA and pinned-input comparison; no repository imports, collection, tests, SQL, SDK, services or network."
+}

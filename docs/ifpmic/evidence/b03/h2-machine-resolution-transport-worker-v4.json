@@ -1,0 +1,3352 @@
+{
+  "case_annotations": [
+    {
+      "case_directory": "transport-preadmission",
+      "identity_binding": "Literal case directory passed to crash.prepare_case from _prepare.",
+      "node_id": "tests/ifpmic_api/test_h2_transport_boundaries.py::test_h2_activity_waits_until_admission_same_run",
+      "original_unresolved": [
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_transport_boundaries.py:69-78,85-105,108-145,179-240 Private writers for control markers, dispatcher logs, cleanup receipt, process journal and common prepare-case binding.",
+            "tests/ifpmic_api/h2_transport_boundary_child.py:22-58,73-110 Transport child emits exact reached-marker JSON and waits on a literal release file.",
+            "tests/ifpmic_api/h2_dispatcher_crash_support.py:281-364 Shared case root is literal label under runtime evidence root; creates process journal, Temporal server log/store and owner snapshots.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:85-137,289-317,389-432,483-535,548-600 Private journal/owner/query/history writers and normal CLI log paths.",
+            "tests/ifpmic_api/test_accepted_start_response_loss.py:275-350 Direct started-history observation writes raw PBSeq and observer JSON under the exact preadmission subdirectory.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Owner and query observation records are canonical private evidence with actual output paths."
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: preadmission-final-history/** direct observation",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_transport_boundaries.py:69-78,85-105,108-145,179-240 Private writers for control markers, dispatcher logs, cleanup receipt, process journal and common prepare-case binding.",
+            "tests/ifpmic_api/h2_transport_boundary_child.py:22-58,73-110 Transport child emits exact reached-marker JSON and waits on a literal release file.",
+            "tests/ifpmic_api/h2_dispatcher_crash_support.py:281-364 Shared case root is literal label under runtime evidence root; creates process journal, Temporal server log/store and owner snapshots.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:85-137,289-317,389-432,483-535,548-600 Private journal/owner/query/history writers and normal CLI log paths.",
+            "tests/ifpmic_api/test_accepted_start_response_loss.py:275-350 Direct started-history observation writes raw PBSeq and observer JSON under the exact preadmission subdirectory.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Owner and query observation records are canonical private evidence with actual output paths."
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: barriers and cleanup",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_transport_boundaries.py:69-78,85-105,108-145,179-240 Private writers for control markers, dispatcher logs, cleanup receipt, process journal and common prepare-case binding.",
+            "tests/ifpmic_api/h2_transport_boundary_child.py:22-58,73-110 Transport child emits exact reached-marker JSON and waits on a literal release file.",
+            "tests/ifpmic_api/h2_dispatcher_crash_support.py:281-364 Shared case root is literal label under runtime evidence root; creates process journal, Temporal server log/store and owner snapshots.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:85-137,289-317,389-432,483-535,548-600 Private journal/owner/query/history writers and normal CLI log paths.",
+            "tests/ifpmic_api/test_accepted_start_response_loss.py:275-350 Direct started-history observation writes raw PBSeq and observer JSON under the exact preadmission subdirectory.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Owner and query observation records are canonical private evidence with actual output paths."
+          ],
+          "original": "JSON top-level keys not fully source-verified for preadmission-owner-at-cut.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_transport_boundaries.py:69-78,85-105,108-145,179-240 Private writers for control markers, dispatcher logs, cleanup receipt, process journal and common prepare-case binding.",
+            "tests/ifpmic_api/h2_transport_boundary_child.py:22-58,73-110 Transport child emits exact reached-marker JSON and waits on a literal release file.",
+            "tests/ifpmic_api/h2_dispatcher_crash_support.py:281-364 Shared case root is literal label under runtime evidence root; creates process journal, Temporal server log/store and owner snapshots.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:85-137,289-317,389-432,483-535,548-600 Private journal/owner/query/history writers and normal CLI log paths.",
+            "tests/ifpmic_api/test_accepted_start_response_loss.py:275-350 Direct started-history observation writes raw PBSeq and observer JSON under the exact preadmission subdirectory.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Owner and query observation records are canonical private evidence with actual output paths."
+          ],
+          "original": "JSON top-level keys not fully source-verified for preadmission-owner-before-admission.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_transport_boundaries.py:69-78,85-105,108-145,179-240 Private writers for control markers, dispatcher logs, cleanup receipt, process journal and common prepare-case binding.",
+            "tests/ifpmic_api/h2_transport_boundary_child.py:22-58,73-110 Transport child emits exact reached-marker JSON and waits on a literal release file.",
+            "tests/ifpmic_api/h2_dispatcher_crash_support.py:281-364 Shared case root is literal label under runtime evidence root; creates process journal, Temporal server log/store and owner snapshots.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:85-137,289-317,389-432,483-535,548-600 Private journal/owner/query/history writers and normal CLI log paths.",
+            "tests/ifpmic_api/test_accepted_start_response_loss.py:275-350 Direct started-history observation writes raw PBSeq and observer JSON under the exact preadmission subdirectory.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Owner and query observation records are canonical private evidence with actual output paths."
+          ],
+          "original": "JSON top-level keys not fully source-verified for preadmission-result.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_transport_boundaries.py:69-78,85-105,108-145,179-240 Private writers for control markers, dispatcher logs, cleanup receipt, process journal and common prepare-case binding.",
+            "tests/ifpmic_api/h2_transport_boundary_child.py:22-58,73-110 Transport child emits exact reached-marker JSON and waits on a literal release file.",
+            "tests/ifpmic_api/h2_dispatcher_crash_support.py:281-364 Shared case root is literal label under runtime evidence root; creates process journal, Temporal server log/store and owner snapshots.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:85-137,289-317,389-432,483-535,548-600 Private journal/owner/query/history writers and normal CLI log paths.",
+            "tests/ifpmic_api/test_accepted_start_response_loss.py:275-350 Direct started-history observation writes raw PBSeq and observer JSON under the exact preadmission subdirectory.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Owner and query observation records are canonical private evidence with actual output paths."
+          ],
+          "original": "JSON top-level keys not fully source-verified for process-journal.jsonl",
+          "status": "source_mapped"
+        }
+      ],
+      "source_evidence_refs": [
+        {
+          "path": "tests/ifpmic_api/test_h2_transport_boundaries.py",
+          "sha256": "6679eea681edd6f847e18aa75f1cee4d44f230d7ac9e7b88bc6253cbe5918372"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_transport_boundary_child.py",
+          "sha256": "ddac239eb8244b08671922c5cee255e608ad2c4589099499c1f3dd7ccc796300"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "sha256": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d"
+        },
+        {
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "sha256": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "sha256": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c"
+        }
+      ],
+      "source_findings": {
+        "owner_query_source_mapping": {
+          "owner_minimum_preserved": 1,
+          "owner_producer": "normal._read_owner_snapshot calls record_owner_snapshot; case-specific call sites are listed in source_evidence_refs.",
+          "queries_max_preserved": {},
+          "queries_min_preserved": {
+            "temporal.list_workflows": 1
+          },
+          "query_producer": "accepted start observer and/or normal._observe_temporal calls record_query_observation(\"temporal.list_workflows\"); no query cap was introduced."
+        },
+        "private_auxiliary_outputs": [
+          "temporal-data/temporal.sqlite",
+          "temporal-data/temporal-server.log"
+        ],
+        "raw_artifacts": {
+          "preadmission-final-history/temporal-history.pbseq": "test_h2_transport_boundaries.py calls normal._observe_temporal with this directory.",
+          "preadmission-start-history/accepted-start-history-before-kill.pbseq": "accepted._observe_started_direct writes the raw started history there.",
+          "preadmission-wait-history.pbseq": "test_h2_transport_boundaries.py::_wait_pre_admission_activity writes directly in the case root.",
+          "transport-control/reached-after_history_observed": "h2_transport_boundary_child.py::_write_event from dispatcher_gate."
+        }
+      },
+      "structure_vs_oracle_boundary": {
+        "projected_artifact_rules": "File count/format, source-confirmed top-level JSON keys and SHA-256 links only. PBSeq framing/event meaning is delegated to the pinned history decoder.",
+        "runtime_status": "Source mapping only. No evidence artifact or runtime result was read or accepted.",
+        "source_test_oracles_not_enforced_by_artifact_rules": [
+          "actual owner SQL value assertions",
+          "Temporal admitted-run/history/event ordering",
+          "barrier ordering and expected child exit/SIGKILL",
+          "proxy chronology/held bytes",
+          "process identity/lifecycle and cleanup outcomes",
+          "workspace or authority state assertions"
+        ]
+      }
+    },
+    {
+      "case_directory": "transport-machine-claim-before-disable",
+      "identity_binding": "Literal case directory passed to crash.prepare_case from _prepare.",
+      "node_id": "tests/ifpmic_api/test_h2_transport_boundaries.py::test_h2_machine_authority_disable_serializes_with_claim[claim-before-disable]",
+      "original_unresolved": [
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_transport_boundaries.py:69-78,85-105,108-145,179-240 Private writers for control markers, dispatcher logs, cleanup receipt, process journal and common prepare-case binding.",
+            "tests/ifpmic_api/h2_transport_boundary_child.py:22-58,73-110 Transport child emits exact reached-marker JSON and waits on a literal release file.",
+            "tests/ifpmic_api/h2_dispatcher_crash_support.py:281-364 Shared case root is literal label under runtime evidence root; creates process journal, Temporal server log/store and owner snapshots.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:85-137,289-317,389-432,483-535,548-600 Private journal/owner/query/history writers and normal CLI log paths.",
+            "tests/ifpmic_api/test_accepted_start_response_loss.py:275-350 Direct started-history observation writes raw PBSeq and observer JSON under the exact preadmission subdirectory.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Owner and query observation records are canonical private evidence with actual output paths.",
+            "tests/ifpmic_api/test_h2_transport_boundaries.py:253-351 The selected literal param case executes one branch; claim-before-disable has two store-phase markers, disable-before-claim has no test barriers.",
+            "tests/ifpmic_api/h2_transport_boundary_child.py:73-84 Store gate names write reached JSON and block until same-name release file."
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: process logs/cleanup",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_transport_boundaries.py:69-78,85-105,108-145,179-240 Private writers for control markers, dispatcher logs, cleanup receipt, process journal and common prepare-case binding.",
+            "tests/ifpmic_api/h2_transport_boundary_child.py:22-58,73-110 Transport child emits exact reached-marker JSON and waits on a literal release file.",
+            "tests/ifpmic_api/h2_dispatcher_crash_support.py:281-364 Shared case root is literal label under runtime evidence root; creates process journal, Temporal server log/store and owner snapshots.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:85-137,289-317,389-432,483-535,548-600 Private journal/owner/query/history writers and normal CLI log paths.",
+            "tests/ifpmic_api/test_accepted_start_response_loss.py:275-350 Direct started-history observation writes raw PBSeq and observer JSON under the exact preadmission subdirectory.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Owner and query observation records are canonical private evidence with actual output paths.",
+            "tests/ifpmic_api/test_h2_transport_boundaries.py:253-351 The selected literal param case executes one branch; claim-before-disable has two store-phase markers, disable-before-claim has no test barriers.",
+            "tests/ifpmic_api/h2_transport_boundary_child.py:73-84 Store gate names write reached JSON and block until same-name release file."
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: barrier synchronization records",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_transport_boundaries.py:69-78,85-105,108-145,179-240 Private writers for control markers, dispatcher logs, cleanup receipt, process journal and common prepare-case binding.",
+            "tests/ifpmic_api/h2_transport_boundary_child.py:22-58,73-110 Transport child emits exact reached-marker JSON and waits on a literal release file.",
+            "tests/ifpmic_api/h2_dispatcher_crash_support.py:281-364 Shared case root is literal label under runtime evidence root; creates process journal, Temporal server log/store and owner snapshots.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:85-137,289-317,389-432,483-535,548-600 Private journal/owner/query/history writers and normal CLI log paths.",
+            "tests/ifpmic_api/test_accepted_start_response_loss.py:275-350 Direct started-history observation writes raw PBSeq and observer JSON under the exact preadmission subdirectory.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Owner and query observation records are canonical private evidence with actual output paths.",
+            "tests/ifpmic_api/test_h2_transport_boundaries.py:253-351 The selected literal param case executes one branch; claim-before-disable has two store-phase markers, disable-before-claim has no test barriers.",
+            "tests/ifpmic_api/h2_transport_boundary_child.py:73-84 Store gate names write reached JSON and block until same-name release file."
+          ],
+          "original": "JSON top-level keys not fully source-verified for machine-race-result.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_transport_boundaries.py:69-78,85-105,108-145,179-240 Private writers for control markers, dispatcher logs, cleanup receipt, process journal and common prepare-case binding.",
+            "tests/ifpmic_api/h2_transport_boundary_child.py:22-58,73-110 Transport child emits exact reached-marker JSON and waits on a literal release file.",
+            "tests/ifpmic_api/h2_dispatcher_crash_support.py:281-364 Shared case root is literal label under runtime evidence root; creates process journal, Temporal server log/store and owner snapshots.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:85-137,289-317,389-432,483-535,548-600 Private journal/owner/query/history writers and normal CLI log paths.",
+            "tests/ifpmic_api/test_accepted_start_response_loss.py:275-350 Direct started-history observation writes raw PBSeq and observer JSON under the exact preadmission subdirectory.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Owner and query observation records are canonical private evidence with actual output paths.",
+            "tests/ifpmic_api/test_h2_transport_boundaries.py:253-351 The selected literal param case executes one branch; claim-before-disable has two store-phase markers, disable-before-claim has no test barriers.",
+            "tests/ifpmic_api/h2_transport_boundary_child.py:73-84 Store gate names write reached JSON and block until same-name release file."
+          ],
+          "original": "JSON top-level keys not fully source-verified for process-journal.jsonl",
+          "status": "source_mapped"
+        }
+      ],
+      "source_evidence_refs": [
+        {
+          "path": "tests/ifpmic_api/test_h2_transport_boundaries.py",
+          "sha256": "6679eea681edd6f847e18aa75f1cee4d44f230d7ac9e7b88bc6253cbe5918372"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_transport_boundary_child.py",
+          "sha256": "ddac239eb8244b08671922c5cee255e608ad2c4589099499c1f3dd7ccc796300"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "sha256": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d"
+        },
+        {
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "sha256": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "sha256": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_transport_boundaries.py",
+          "sha256": "6679eea681edd6f847e18aa75f1cee4d44f230d7ac9e7b88bc6253cbe5918372"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_transport_boundary_child.py",
+          "sha256": "ddac239eb8244b08671922c5cee255e608ad2c4589099499c1f3dd7ccc796300"
+        }
+      ],
+      "source_findings": {
+        "owner_query_source_mapping": {
+          "owner_minimum_preserved": 1,
+          "owner_producer": "normal._read_owner_snapshot calls record_owner_snapshot; case-specific call sites are listed in source_evidence_refs.",
+          "queries_max_preserved": {},
+          "queries_min_preserved": {
+            "temporal.list_workflows": 1
+          },
+          "query_producer": "accepted start observer and/or normal._observe_temporal calls record_query_observation(\"temporal.list_workflows\"); no query cap was introduced."
+        },
+        "private_auxiliary_outputs": [
+          "temporal-data/temporal.sqlite",
+          "temporal-data/temporal-server.log"
+        ],
+        "raw_artifacts": {
+          "transport-control/reached-after_claim_delivery_commit": "h2_transport_boundary_child.py::_write_event from ExecutionStore hook.",
+          "transport-control/reached-before_claim_delivery_commit": "h2_transport_boundary_child.py::_write_event from ExecutionStore hook."
+        }
+      },
+      "structure_vs_oracle_boundary": {
+        "projected_artifact_rules": "File count/format, source-confirmed top-level JSON keys and SHA-256 links only. PBSeq framing/event meaning is delegated to the pinned history decoder.",
+        "runtime_status": "Source mapping only. No evidence artifact or runtime result was read or accepted.",
+        "source_test_oracles_not_enforced_by_artifact_rules": [
+          "actual owner SQL value assertions",
+          "Temporal admitted-run/history/event ordering",
+          "barrier ordering and expected child exit/SIGKILL",
+          "proxy chronology/held bytes",
+          "process identity/lifecycle and cleanup outcomes",
+          "workspace or authority state assertions"
+        ]
+      }
+    },
+    {
+      "case_directory": "transport-machine-disable-before-claim",
+      "identity_binding": "Literal case directory passed to crash.prepare_case from _prepare.",
+      "node_id": "tests/ifpmic_api/test_h2_transport_boundaries.py::test_h2_machine_authority_disable_serializes_with_claim[disable-before-claim]",
+      "original_unresolved": [
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_transport_boundaries.py:69-78,85-105,108-145,179-240 Private writers for control markers, dispatcher logs, cleanup receipt, process journal and common prepare-case binding.",
+            "tests/ifpmic_api/h2_transport_boundary_child.py:22-58,73-110 Transport child emits exact reached-marker JSON and waits on a literal release file.",
+            "tests/ifpmic_api/h2_dispatcher_crash_support.py:281-364 Shared case root is literal label under runtime evidence root; creates process journal, Temporal server log/store and owner snapshots.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:85-137,289-317,389-432,483-535,548-600 Private journal/owner/query/history writers and normal CLI log paths.",
+            "tests/ifpmic_api/test_accepted_start_response_loss.py:275-350 Direct started-history observation writes raw PBSeq and observer JSON under the exact preadmission subdirectory.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Owner and query observation records are canonical private evidence with actual output paths.",
+            "tests/ifpmic_api/test_h2_transport_boundaries.py:253-351 The selected literal param case executes one branch; claim-before-disable has two store-phase markers, disable-before-claim has no test barriers.",
+            "tests/ifpmic_api/h2_transport_boundary_child.py:73-84 Store gate names write reached JSON and block until same-name release file."
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: process logs/cleanup",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_transport_boundaries.py:69-78,85-105,108-145,179-240 Private writers for control markers, dispatcher logs, cleanup receipt, process journal and common prepare-case binding.",
+            "tests/ifpmic_api/h2_transport_boundary_child.py:22-58,73-110 Transport child emits exact reached-marker JSON and waits on a literal release file.",
+            "tests/ifpmic_api/h2_dispatcher_crash_support.py:281-364 Shared case root is literal label under runtime evidence root; creates process journal, Temporal server log/store and owner snapshots.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:85-137,289-317,389-432,483-535,548-600 Private journal/owner/query/history writers and normal CLI log paths.",
+            "tests/ifpmic_api/test_accepted_start_response_loss.py:275-350 Direct started-history observation writes raw PBSeq and observer JSON under the exact preadmission subdirectory.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Owner and query observation records are canonical private evidence with actual output paths.",
+            "tests/ifpmic_api/test_h2_transport_boundaries.py:253-351 The selected literal param case executes one branch; claim-before-disable has two store-phase markers, disable-before-claim has no test barriers.",
+            "tests/ifpmic_api/h2_transport_boundary_child.py:73-84 Store gate names write reached JSON and block until same-name release file."
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: barrier synchronization records",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_transport_boundaries.py:69-78,85-105,108-145,179-240 Private writers for control markers, dispatcher logs, cleanup receipt, process journal and common prepare-case binding.",
+            "tests/ifpmic_api/h2_transport_boundary_child.py:22-58,73-110 Transport child emits exact reached-marker JSON and waits on a literal release file.",
+            "tests/ifpmic_api/h2_dispatcher_crash_support.py:281-364 Shared case root is literal label under runtime evidence root; creates process journal, Temporal server log/store and owner snapshots.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:85-137,289-317,389-432,483-535,548-600 Private journal/owner/query/history writers and normal CLI log paths.",
+            "tests/ifpmic_api/test_accepted_start_response_loss.py:275-350 Direct started-history observation writes raw PBSeq and observer JSON under the exact preadmission subdirectory.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Owner and query observation records are canonical private evidence with actual output paths.",
+            "tests/ifpmic_api/test_h2_transport_boundaries.py:253-351 The selected literal param case executes one branch; claim-before-disable has two store-phase markers, disable-before-claim has no test barriers.",
+            "tests/ifpmic_api/h2_transport_boundary_child.py:73-84 Store gate names write reached JSON and block until same-name release file."
+          ],
+          "original": "JSON top-level keys not fully source-verified for machine-race-result.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_transport_boundaries.py:69-78,85-105,108-145,179-240 Private writers for control markers, dispatcher logs, cleanup receipt, process journal and common prepare-case binding.",
+            "tests/ifpmic_api/h2_transport_boundary_child.py:22-58,73-110 Transport child emits exact reached-marker JSON and waits on a literal release file.",
+            "tests/ifpmic_api/h2_dispatcher_crash_support.py:281-364 Shared case root is literal label under runtime evidence root; creates process journal, Temporal server log/store and owner snapshots.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:85-137,289-317,389-432,483-535,548-600 Private journal/owner/query/history writers and normal CLI log paths.",
+            "tests/ifpmic_api/test_accepted_start_response_loss.py:275-350 Direct started-history observation writes raw PBSeq and observer JSON under the exact preadmission subdirectory.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Owner and query observation records are canonical private evidence with actual output paths.",
+            "tests/ifpmic_api/test_h2_transport_boundaries.py:253-351 The selected literal param case executes one branch; claim-before-disable has two store-phase markers, disable-before-claim has no test barriers.",
+            "tests/ifpmic_api/h2_transport_boundary_child.py:73-84 Store gate names write reached JSON and block until same-name release file."
+          ],
+          "original": "JSON top-level keys not fully source-verified for process-journal.jsonl",
+          "status": "source_mapped"
+        }
+      ],
+      "source_evidence_refs": [
+        {
+          "path": "tests/ifpmic_api/test_h2_transport_boundaries.py",
+          "sha256": "6679eea681edd6f847e18aa75f1cee4d44f230d7ac9e7b88bc6253cbe5918372"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_transport_boundary_child.py",
+          "sha256": "ddac239eb8244b08671922c5cee255e608ad2c4589099499c1f3dd7ccc796300"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "sha256": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d"
+        },
+        {
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "sha256": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "sha256": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_transport_boundaries.py",
+          "sha256": "6679eea681edd6f847e18aa75f1cee4d44f230d7ac9e7b88bc6253cbe5918372"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_transport_boundary_child.py",
+          "sha256": "ddac239eb8244b08671922c5cee255e608ad2c4589099499c1f3dd7ccc796300"
+        }
+      ],
+      "source_findings": {
+        "owner_query_source_mapping": {
+          "owner_minimum_preserved": 1,
+          "owner_producer": "normal._read_owner_snapshot calls record_owner_snapshot; case-specific call sites are listed in source_evidence_refs.",
+          "queries_max_preserved": {},
+          "queries_min_preserved": {
+            "temporal.list_workflows": 1
+          },
+          "query_producer": "accepted start observer and/or normal._observe_temporal calls record_query_observation(\"temporal.list_workflows\"); no query cap was introduced."
+        },
+        "private_auxiliary_outputs": [
+          "temporal-data/temporal.sqlite",
+          "temporal-data/temporal-server.log"
+        ],
+        "raw_artifacts": {}
+      },
+      "structure_vs_oracle_boundary": {
+        "projected_artifact_rules": "File count/format, source-confirmed top-level JSON keys and SHA-256 links only. PBSeq framing/event meaning is delegated to the pinned history decoder.",
+        "runtime_status": "Source mapping only. No evidence artifact or runtime result was read or accepted.",
+        "source_test_oracles_not_enforced_by_artifact_rules": [
+          "actual owner SQL value assertions",
+          "Temporal admitted-run/history/event ordering",
+          "barrier ordering and expected child exit/SIGKILL",
+          "proxy chronology/held bytes",
+          "process identity/lifecycle and cleanup outcomes",
+          "workspace or authority state assertions"
+        ]
+      }
+    },
+    {
+      "case_directory": "worker-api-*",
+      "identity_binding": "Strict case-node.json marker emitted by _root, UUID suffix generated from uuid4().hex.",
+      "node_id": "tests/ifpmic_api/test_h2_worker_api_crashes.py::test_h2_activity_completed_before_workflow_decision_sigkill_replays_history",
+      "original_unresolved": [
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:228-237 _root creates private UUID worker-api-* case directory and exact case-node.json identity marker derived from PYTEST_CURRENT_TEST.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:155-168,246-309 Canonical private JSON writer; runtime world, manifests, server record, config and process logs.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:24-45,88-90 Private barrier writes ready/reached event JSON; release marker is used only where the test writes it.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:96-137,289-317,389-432,483-535,548-600 Private process outputs, owner snapshots, query recorder and raw Temporal history writer.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Shared owner and temporal.list_workflows observation records.",
+            "tests/ifpmic_api/jobs_fixture.py:344-366 Private settings JSON writer and exact top-level field list.",
+            "tests/ifpmic_api/h2_private_values.py:1-30 Path values are normalized recursively while unsupported objects are not stringified.",
+            "scripts/ifpmic_temporal_toolchain.py:source-pinned helper use Owned process identity/cleanup APIs are called by the producer; raw PID evidence remains private.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:723-844 Activity completion cut, held proxy snapshot, worker history PBSeqs, restart JSON and cleanup; duplicate prestarted-server record write is noted as a source blocker.",
+            "tests/ifpmic_api/response_loss_proxy.py:1-220 TCPResponseHoldingProxy.snapshot returns the proxy observation embedded in activity-completed-cut.json; no separate snapshot JSON writer exists."
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: proxy snapshots (activity-result case)",
+          "proposed_correction_or_scope": "Applicable only here: activity-completed-cut.json contains the actual proxy.snapshot() object at /proxy; the source creates no separate proxy JSON snapshot file.",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:228-237 _root creates private UUID worker-api-* case directory and exact case-node.json identity marker derived from PYTEST_CURRENT_TEST.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:155-168,246-309 Canonical private JSON writer; runtime world, manifests, server record, config and process logs.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:24-45,88-90 Private barrier writes ready/reached event JSON; release marker is used only where the test writes it.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:96-137,289-317,389-432,483-535,548-600 Private process outputs, owner snapshots, query recorder and raw Temporal history writer.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Shared owner and temporal.list_workflows observation records.",
+            "tests/ifpmic_api/jobs_fixture.py:344-366 Private settings JSON writer and exact top-level field list.",
+            "tests/ifpmic_api/h2_private_values.py:1-30 Path values are normalized recursively while unsupported objects are not stringified.",
+            "scripts/ifpmic_temporal_toolchain.py:source-pinned helper use Owned process identity/cleanup APIs are called by the producer; raw PID evidence remains private.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:723-844 Activity completion cut, held proxy snapshot, worker history PBSeqs, restart JSON and cleanup; duplicate prestarted-server record write is noted as a source blocker.",
+            "tests/ifpmic_api/response_loss_proxy.py:1-220 TCPResponseHoldingProxy.snapshot returns the proxy observation embedded in activity-completed-cut.json; no separate snapshot JSON writer exists."
+          ],
+          "original": "JSON top-level keys not fully source-verified for owned-temporal-server.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:228-237 _root creates private UUID worker-api-* case directory and exact case-node.json identity marker derived from PYTEST_CURRENT_TEST.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:155-168,246-309 Canonical private JSON writer; runtime world, manifests, server record, config and process logs.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:24-45,88-90 Private barrier writes ready/reached event JSON; release marker is used only where the test writes it.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:96-137,289-317,389-432,483-535,548-600 Private process outputs, owner snapshots, query recorder and raw Temporal history writer.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Shared owner and temporal.list_workflows observation records.",
+            "tests/ifpmic_api/jobs_fixture.py:344-366 Private settings JSON writer and exact top-level field list.",
+            "tests/ifpmic_api/h2_private_values.py:1-30 Path values are normalized recursively while unsupported objects are not stringified.",
+            "scripts/ifpmic_temporal_toolchain.py:source-pinned helper use Owned process identity/cleanup APIs are called by the producer; raw PID evidence remains private.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:723-844 Activity completion cut, held proxy snapshot, worker history PBSeqs, restart JSON and cleanup; duplicate prestarted-server record write is noted as a source blocker.",
+            "tests/ifpmic_api/response_loss_proxy.py:1-220 TCPResponseHoldingProxy.snapshot returns the proxy observation embedded in activity-completed-cut.json; no separate snapshot JSON writer exists."
+          ],
+          "original": "JSON top-level keys not fully source-verified for source-manifest.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:228-237 _root creates private UUID worker-api-* case directory and exact case-node.json identity marker derived from PYTEST_CURRENT_TEST.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:155-168,246-309 Canonical private JSON writer; runtime world, manifests, server record, config and process logs.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:24-45,88-90 Private barrier writes ready/reached event JSON; release marker is used only where the test writes it.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:96-137,289-317,389-432,483-535,548-600 Private process outputs, owner snapshots, query recorder and raw Temporal history writer.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Shared owner and temporal.list_workflows observation records.",
+            "tests/ifpmic_api/jobs_fixture.py:344-366 Private settings JSON writer and exact top-level field list.",
+            "tests/ifpmic_api/h2_private_values.py:1-30 Path values are normalized recursively while unsupported objects are not stringified.",
+            "scripts/ifpmic_temporal_toolchain.py:source-pinned helper use Owned process identity/cleanup APIs are called by the producer; raw PID evidence remains private.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:723-844 Activity completion cut, held proxy snapshot, worker history PBSeqs, restart JSON and cleanup; duplicate prestarted-server record write is noted as a source blocker.",
+            "tests/ifpmic_api/response_loss_proxy.py:1-220 TCPResponseHoldingProxy.snapshot returns the proxy observation embedded in activity-completed-cut.json; no separate snapshot JSON writer exists."
+          ],
+          "original": "JSON top-level keys not fully source-verified for environment-manifest.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:228-237 _root creates private UUID worker-api-* case directory and exact case-node.json identity marker derived from PYTEST_CURRENT_TEST.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:155-168,246-309 Canonical private JSON writer; runtime world, manifests, server record, config and process logs.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:24-45,88-90 Private barrier writes ready/reached event JSON; release marker is used only where the test writes it.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:96-137,289-317,389-432,483-535,548-600 Private process outputs, owner snapshots, query recorder and raw Temporal history writer.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Shared owner and temporal.list_workflows observation records.",
+            "tests/ifpmic_api/jobs_fixture.py:344-366 Private settings JSON writer and exact top-level field list.",
+            "tests/ifpmic_api/h2_private_values.py:1-30 Path values are normalized recursively while unsupported objects are not stringified.",
+            "scripts/ifpmic_temporal_toolchain.py:source-pinned helper use Owned process identity/cleanup APIs are called by the producer; raw PID evidence remains private.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:723-844 Activity completion cut, held proxy snapshot, worker history PBSeqs, restart JSON and cleanup; duplicate prestarted-server record write is noted as a source blocker.",
+            "tests/ifpmic_api/response_loss_proxy.py:1-220 TCPResponseHoldingProxy.snapshot returns the proxy observation embedded in activity-completed-cut.json; no separate snapshot JSON writer exists."
+          ],
+          "original": "JSON top-level keys not fully source-verified for worker-cut-history-before-recovery.json",
+          "proposed_correction_or_scope": "These files are written by _post_crash_recovery only; the literal API-commit and activity-completed nodes use their own api-crash-recovery or activity-completed cut/restart outputs.",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:228-237 _root creates private UUID worker-api-* case directory and exact case-node.json identity marker derived from PYTEST_CURRENT_TEST.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:155-168,246-309 Canonical private JSON writer; runtime world, manifests, server record, config and process logs.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:24-45,88-90 Private barrier writes ready/reached event JSON; release marker is used only where the test writes it.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:96-137,289-317,389-432,483-535,548-600 Private process outputs, owner snapshots, query recorder and raw Temporal history writer.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Shared owner and temporal.list_workflows observation records.",
+            "tests/ifpmic_api/jobs_fixture.py:344-366 Private settings JSON writer and exact top-level field list.",
+            "tests/ifpmic_api/h2_private_values.py:1-30 Path values are normalized recursively while unsupported objects are not stringified.",
+            "scripts/ifpmic_temporal_toolchain.py:source-pinned helper use Owned process identity/cleanup APIs are called by the producer; raw PID evidence remains private.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:723-844 Activity completion cut, held proxy snapshot, worker history PBSeqs, restart JSON and cleanup; duplicate prestarted-server record write is noted as a source blocker.",
+            "tests/ifpmic_api/response_loss_proxy.py:1-220 TCPResponseHoldingProxy.snapshot returns the proxy observation embedded in activity-completed-cut.json; no separate snapshot JSON writer exists."
+          ],
+          "original": "JSON top-level keys not fully source-verified for worker-crash-recovery.json",
+          "proposed_correction_or_scope": "These files are written by _post_crash_recovery only; the literal API-commit and activity-completed nodes use their own api-crash-recovery or activity-completed cut/restart outputs.",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:228-237 _root creates private UUID worker-api-* case directory and exact case-node.json identity marker derived from PYTEST_CURRENT_TEST.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:155-168,246-309 Canonical private JSON writer; runtime world, manifests, server record, config and process logs.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:24-45,88-90 Private barrier writes ready/reached event JSON; release marker is used only where the test writes it.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:96-137,289-317,389-432,483-535,548-600 Private process outputs, owner snapshots, query recorder and raw Temporal history writer.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Shared owner and temporal.list_workflows observation records.",
+            "tests/ifpmic_api/jobs_fixture.py:344-366 Private settings JSON writer and exact top-level field list.",
+            "tests/ifpmic_api/h2_private_values.py:1-30 Path values are normalized recursively while unsupported objects are not stringified.",
+            "scripts/ifpmic_temporal_toolchain.py:source-pinned helper use Owned process identity/cleanup APIs are called by the producer; raw PID evidence remains private.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:723-844 Activity completion cut, held proxy snapshot, worker history PBSeqs, restart JSON and cleanup; duplicate prestarted-server record write is noted as a source blocker.",
+            "tests/ifpmic_api/response_loss_proxy.py:1-220 TCPResponseHoldingProxy.snapshot returns the proxy observation embedded in activity-completed-cut.json; no separate snapshot JSON writer exists."
+          ],
+          "original": "JSON top-level keys not fully source-verified for activity-completed-cut.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:228-237 _root creates private UUID worker-api-* case directory and exact case-node.json identity marker derived from PYTEST_CURRENT_TEST.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:155-168,246-309 Canonical private JSON writer; runtime world, manifests, server record, config and process logs.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:24-45,88-90 Private barrier writes ready/reached event JSON; release marker is used only where the test writes it.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:96-137,289-317,389-432,483-535,548-600 Private process outputs, owner snapshots, query recorder and raw Temporal history writer.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Shared owner and temporal.list_workflows observation records.",
+            "tests/ifpmic_api/jobs_fixture.py:344-366 Private settings JSON writer and exact top-level field list.",
+            "tests/ifpmic_api/h2_private_values.py:1-30 Path values are normalized recursively while unsupported objects are not stringified.",
+            "scripts/ifpmic_temporal_toolchain.py:source-pinned helper use Owned process identity/cleanup APIs are called by the producer; raw PID evidence remains private.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:723-844 Activity completion cut, held proxy snapshot, worker history PBSeqs, restart JSON and cleanup; duplicate prestarted-server record write is noted as a source blocker.",
+            "tests/ifpmic_api/response_loss_proxy.py:1-220 TCPResponseHoldingProxy.snapshot returns the proxy observation embedded in activity-completed-cut.json; no separate snapshot JSON writer exists."
+          ],
+          "original": "JSON top-level keys not fully source-verified for activity-completed-restart.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:228-237 _root creates private UUID worker-api-* case directory and exact case-node.json identity marker derived from PYTEST_CURRENT_TEST.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:155-168,246-309 Canonical private JSON writer; runtime world, manifests, server record, config and process logs.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:24-45,88-90 Private barrier writes ready/reached event JSON; release marker is used only where the test writes it.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:96-137,289-317,389-432,483-535,548-600 Private process outputs, owner snapshots, query recorder and raw Temporal history writer.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Shared owner and temporal.list_workflows observation records.",
+            "tests/ifpmic_api/jobs_fixture.py:344-366 Private settings JSON writer and exact top-level field list.",
+            "tests/ifpmic_api/h2_private_values.py:1-30 Path values are normalized recursively while unsupported objects are not stringified.",
+            "scripts/ifpmic_temporal_toolchain.py:source-pinned helper use Owned process identity/cleanup APIs are called by the producer; raw PID evidence remains private.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:723-844 Activity completion cut, held proxy snapshot, worker history PBSeqs, restart JSON and cleanup; duplicate prestarted-server record write is noted as a source blocker.",
+            "tests/ifpmic_api/response_loss_proxy.py:1-220 TCPResponseHoldingProxy.snapshot returns the proxy observation embedded in activity-completed-cut.json; no separate snapshot JSON writer exists."
+          ],
+          "original": "JSON top-level keys not fully source-verified for owned-process-cleanup.json",
+          "proposed_correction_or_scope": "_cleanup writes the stop_all_owned result list directly; JSON top-level is an array, so required_keys=[] is the source-correct schema.",
+          "status": "source_mapped"
+        }
+      ],
+      "remaining_source_blockers": [],
+      "resolved_source_blocker": {
+        "independent_exact_source_review": {
+          "path": "docs/ifpmic/evidence/b03/h2-worker-prestarted-server-source-review-v2.json",
+          "sha256": "7427ba60b8bc4c51582c9d9877ba3a1b8b477482f97a4b437c4275ddc4682f20"
+        },
+        "original": "Source blocker: the activity-completed test writes owned-temporal-server.json before calling _create_runtime_world, whose helper unconditionally O_EXCL-writes the same path again; source-only projection is not runtime-passable until the producer is repaired.",
+        "resolution": "Early filename is now owned-temporal-prestarted-server.json, sharedhelper canonical owned-temporal-server.json unchanged. Both required onlyinthisactualprestartedcase; actualvalueidentity/runtimeproofstillpending."
+      },
+      "source_evidence_refs": [
+        {
+          "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py",
+          "sha256": "9ad3c1be60c3975cfe3a30fab972463361ac90c8e5f5b3a47461307d20ef35d3"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py",
+          "sha256": "9ad3c1be60c3975cfe3a30fab972463361ac90c8e5f5b3a47461307d20ef35d3"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_worker_crash_child.py",
+          "sha256": "003ba93a06fb3d5a81c0661e7c68ae4cfc56b95fb70c9bbf8afdd2c45b83b4cd"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "sha256": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "sha256": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c"
+        },
+        {
+          "path": "tests/ifpmic_api/jobs_fixture.py",
+          "sha256": "b8fefc39f3005b3a662124ae3182cee4e7a293e18dd4e84d18facd09c0e0d539"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_private_values.py",
+          "sha256": "ea2e828b0956f5e5bf9dd7f3c35441b948e1d0d17a49367b1d6ddd0c039cf86e"
+        },
+        {
+          "path": "scripts/ifpmic_temporal_toolchain.py",
+          "sha256": "8cadab76ccfa1f93392cf759991d6906415c75ed5a116093c53aee9f4a445564"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py",
+          "sha256": "9ad3c1be60c3975cfe3a30fab972463361ac90c8e5f5b3a47461307d20ef35d3"
+        },
+        {
+          "path": "tests/ifpmic_api/response_loss_proxy.py",
+          "sha256": "b6f8ca62f21724bf26aac6395528092257e7c48b729d19df02adf7281b9ed512"
+        }
+      ],
+      "source_findings": {
+        "owner_query_source_mapping": {
+          "owner_minimum_preserved": 1,
+          "owner_producer": "normal._read_owner_snapshot calls record_owner_snapshot; case-specific call sites are listed in source_evidence_refs.",
+          "queries_max_preserved": {},
+          "queries_min_preserved": {
+            "temporal.list_workflows": 1
+          },
+          "query_producer": "accepted start observer and/or normal._observe_temporal calls record_query_observation(\"temporal.list_workflows\"); no query cap was introduced."
+        },
+        "private_auxiliary_outputs": [
+          "temporal-data/temporal.sqlite",
+          "temporal-data/temporal.log",
+          "api-settings.json (contains client_secret, csrf_key and database_dsn; private only)"
+        ],
+        "raw_artifacts": {
+          "activity-before-decision-barrier/release": "test body creates the empty release marker before awaiting held response completion.",
+          "activity-completed-cut.json#/proxy": "test body embeds proxy.snapshot(); response_loss_proxy.py defines snapshot fields.",
+          "activity-completed-restart.json": "test body writes source SQL snapshots and history counts after restart.",
+          "history-activity-completed-before-decision.pbseq": "_record_history stores exact history before killing the worker.",
+          "history-after-workflow-restart.pbseq": "_record_history stores history after restarting the worker.",
+          "owned-temporal-prestarted-server.json": "Actual early _record_private at test_h2_worker_api_crashes.py:747 emits role/pid/start_ticks/log before proxy setup; helper line272 emits distinctcanonicalrecord for same actual server."
+        }
+      },
+      "structure_vs_oracle_boundary": {
+        "projected_artifact_rules": "File count/format, source-confirmed top-level JSON keys and SHA-256 links only. PBSeq framing/event meaning is delegated to the pinned history decoder.",
+        "runtime_status": "Source mapping only. No evidence artifact or runtime result was read or accepted.",
+        "source_test_oracles_not_enforced_by_artifact_rules": [
+          "actual owner SQL value assertions",
+          "Temporal admitted-run/history/event ordering",
+          "barrier ordering and expected child exit/SIGKILL",
+          "proxy chronology/held bytes",
+          "process identity/lifecycle and cleanup outcomes",
+          "workspace or authority state assertions"
+        ]
+      }
+    },
+    {
+      "case_directory": "worker-api-*",
+      "identity_binding": "Strict case-node.json marker emitted by _root, UUID suffix generated from uuid4().hex.",
+      "node_id": "tests/ifpmic_api/test_h2_worker_api_crashes.py::test_h2_api_commit_before_response_sigkill_retry_applies_once",
+      "original_unresolved": [
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:228-237 _root creates private UUID worker-api-* case directory and exact case-node.json identity marker derived from PYTEST_CURRENT_TEST.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:155-168,246-309 Canonical private JSON writer; runtime world, manifests, server record, config and process logs.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:24-45,88-90 Private barrier writes ready/reached event JSON; release marker is used only where the test writes it.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:96-137,289-317,389-432,483-535,548-600 Private process outputs, owner snapshots, query recorder and raw Temporal history writer.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Shared owner and temporal.list_workflows observation records.",
+            "tests/ifpmic_api/jobs_fixture.py:344-366 Private settings JSON writer and exact top-level field list.",
+            "tests/ifpmic_api/h2_private_values.py:1-30 Path values are normalized recursively while unsupported objects are not stringified.",
+            "scripts/ifpmic_temporal_toolchain.py:source-pinned helper use Owned process identity/cleanup APIs are called by the producer; raw PID evidence remains private.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:457-578 API crash branch writes settings, commit observation, retry receipt, runtime recovery with raw history and exact process records.",
+            "tests/ifpmic_api/h2_api_crash_child.py:15-61 API child writes reached.json after durable commit and blocks until release; test kills it before release."
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: proxy snapshots (activity-result case)",
+          "proposed_correction_or_scope": "This literal case does not instantiate TCPResponseHoldingProxy; the proxy observation applies only to the activity-completed case and is nested in that case’s activity-completed-cut.json.",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:228-237 _root creates private UUID worker-api-* case directory and exact case-node.json identity marker derived from PYTEST_CURRENT_TEST.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:155-168,246-309 Canonical private JSON writer; runtime world, manifests, server record, config and process logs.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:24-45,88-90 Private barrier writes ready/reached event JSON; release marker is used only where the test writes it.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:96-137,289-317,389-432,483-535,548-600 Private process outputs, owner snapshots, query recorder and raw Temporal history writer.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Shared owner and temporal.list_workflows observation records.",
+            "tests/ifpmic_api/jobs_fixture.py:344-366 Private settings JSON writer and exact top-level field list.",
+            "tests/ifpmic_api/h2_private_values.py:1-30 Path values are normalized recursively while unsupported objects are not stringified.",
+            "scripts/ifpmic_temporal_toolchain.py:source-pinned helper use Owned process identity/cleanup APIs are called by the producer; raw PID evidence remains private.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:457-578 API crash branch writes settings, commit observation, retry receipt, runtime recovery with raw history and exact process records.",
+            "tests/ifpmic_api/h2_api_crash_child.py:15-61 API child writes reached.json after durable commit and blocks until release; test kills it before release."
+          ],
+          "original": "JSON top-level keys not fully source-verified for owned-temporal-server.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:228-237 _root creates private UUID worker-api-* case directory and exact case-node.json identity marker derived from PYTEST_CURRENT_TEST.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:155-168,246-309 Canonical private JSON writer; runtime world, manifests, server record, config and process logs.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:24-45,88-90 Private barrier writes ready/reached event JSON; release marker is used only where the test writes it.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:96-137,289-317,389-432,483-535,548-600 Private process outputs, owner snapshots, query recorder and raw Temporal history writer.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Shared owner and temporal.list_workflows observation records.",
+            "tests/ifpmic_api/jobs_fixture.py:344-366 Private settings JSON writer and exact top-level field list.",
+            "tests/ifpmic_api/h2_private_values.py:1-30 Path values are normalized recursively while unsupported objects are not stringified.",
+            "scripts/ifpmic_temporal_toolchain.py:source-pinned helper use Owned process identity/cleanup APIs are called by the producer; raw PID evidence remains private.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:457-578 API crash branch writes settings, commit observation, retry receipt, runtime recovery with raw history and exact process records.",
+            "tests/ifpmic_api/h2_api_crash_child.py:15-61 API child writes reached.json after durable commit and blocks until release; test kills it before release."
+          ],
+          "original": "JSON top-level keys not fully source-verified for source-manifest.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:228-237 _root creates private UUID worker-api-* case directory and exact case-node.json identity marker derived from PYTEST_CURRENT_TEST.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:155-168,246-309 Canonical private JSON writer; runtime world, manifests, server record, config and process logs.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:24-45,88-90 Private barrier writes ready/reached event JSON; release marker is used only where the test writes it.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:96-137,289-317,389-432,483-535,548-600 Private process outputs, owner snapshots, query recorder and raw Temporal history writer.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Shared owner and temporal.list_workflows observation records.",
+            "tests/ifpmic_api/jobs_fixture.py:344-366 Private settings JSON writer and exact top-level field list.",
+            "tests/ifpmic_api/h2_private_values.py:1-30 Path values are normalized recursively while unsupported objects are not stringified.",
+            "scripts/ifpmic_temporal_toolchain.py:source-pinned helper use Owned process identity/cleanup APIs are called by the producer; raw PID evidence remains private.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:457-578 API crash branch writes settings, commit observation, retry receipt, runtime recovery with raw history and exact process records.",
+            "tests/ifpmic_api/h2_api_crash_child.py:15-61 API child writes reached.json after durable commit and blocks until release; test kills it before release."
+          ],
+          "original": "JSON top-level keys not fully source-verified for environment-manifest.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:228-237 _root creates private UUID worker-api-* case directory and exact case-node.json identity marker derived from PYTEST_CURRENT_TEST.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:155-168,246-309 Canonical private JSON writer; runtime world, manifests, server record, config and process logs.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:24-45,88-90 Private barrier writes ready/reached event JSON; release marker is used only where the test writes it.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:96-137,289-317,389-432,483-535,548-600 Private process outputs, owner snapshots, query recorder and raw Temporal history writer.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Shared owner and temporal.list_workflows observation records.",
+            "tests/ifpmic_api/jobs_fixture.py:344-366 Private settings JSON writer and exact top-level field list.",
+            "tests/ifpmic_api/h2_private_values.py:1-30 Path values are normalized recursively while unsupported objects are not stringified.",
+            "scripts/ifpmic_temporal_toolchain.py:source-pinned helper use Owned process identity/cleanup APIs are called by the producer; raw PID evidence remains private.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:457-578 API crash branch writes settings, commit observation, retry receipt, runtime recovery with raw history and exact process records.",
+            "tests/ifpmic_api/h2_api_crash_child.py:15-61 API child writes reached.json after durable commit and blocks until release; test kills it before release."
+          ],
+          "original": "JSON top-level keys not fully source-verified for api-settings.json",
+          "proposed_correction_or_scope": "private_settings_file writes an object with the exact settings fields listed in the projected required_keys.",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:228-237 _root creates private UUID worker-api-* case directory and exact case-node.json identity marker derived from PYTEST_CURRENT_TEST.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:155-168,246-309 Canonical private JSON writer; runtime world, manifests, server record, config and process logs.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:24-45,88-90 Private barrier writes ready/reached event JSON; release marker is used only where the test writes it.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:96-137,289-317,389-432,483-535,548-600 Private process outputs, owner snapshots, query recorder and raw Temporal history writer.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Shared owner and temporal.list_workflows observation records.",
+            "tests/ifpmic_api/jobs_fixture.py:344-366 Private settings JSON writer and exact top-level field list.",
+            "tests/ifpmic_api/h2_private_values.py:1-30 Path values are normalized recursively while unsupported objects are not stringified.",
+            "scripts/ifpmic_temporal_toolchain.py:source-pinned helper use Owned process identity/cleanup APIs are called by the producer; raw PID evidence remains private.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:457-578 API crash branch writes settings, commit observation, retry receipt, runtime recovery with raw history and exact process records.",
+            "tests/ifpmic_api/h2_api_crash_child.py:15-61 API child writes reached.json after durable commit and blocks until release; test kills it before release."
+          ],
+          "original": "JSON top-level keys not fully source-verified for api-commit-before-kill.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:228-237 _root creates private UUID worker-api-* case directory and exact case-node.json identity marker derived from PYTEST_CURRENT_TEST.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:155-168,246-309 Canonical private JSON writer; runtime world, manifests, server record, config and process logs.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:24-45,88-90 Private barrier writes ready/reached event JSON; release marker is used only where the test writes it.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:96-137,289-317,389-432,483-535,548-600 Private process outputs, owner snapshots, query recorder and raw Temporal history writer.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Shared owner and temporal.list_workflows observation records.",
+            "tests/ifpmic_api/jobs_fixture.py:344-366 Private settings JSON writer and exact top-level field list.",
+            "tests/ifpmic_api/h2_private_values.py:1-30 Path values are normalized recursively while unsupported objects are not stringified.",
+            "scripts/ifpmic_temporal_toolchain.py:source-pinned helper use Owned process identity/cleanup APIs are called by the producer; raw PID evidence remains private.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:457-578 API crash branch writes settings, commit observation, retry receipt, runtime recovery with raw history and exact process records.",
+            "tests/ifpmic_api/h2_api_crash_child.py:15-61 API child writes reached.json after durable commit and blocks until release; test kills it before release."
+          ],
+          "original": "JSON top-level keys not fully source-verified for api-retry-receipt.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:228-237 _root creates private UUID worker-api-* case directory and exact case-node.json identity marker derived from PYTEST_CURRENT_TEST.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:155-168,246-309 Canonical private JSON writer; runtime world, manifests, server record, config and process logs.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:24-45,88-90 Private barrier writes ready/reached event JSON; release marker is used only where the test writes it.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:96-137,289-317,389-432,483-535,548-600 Private process outputs, owner snapshots, query recorder and raw Temporal history writer.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Shared owner and temporal.list_workflows observation records.",
+            "tests/ifpmic_api/jobs_fixture.py:344-366 Private settings JSON writer and exact top-level field list.",
+            "tests/ifpmic_api/h2_private_values.py:1-30 Path values are normalized recursively while unsupported objects are not stringified.",
+            "scripts/ifpmic_temporal_toolchain.py:source-pinned helper use Owned process identity/cleanup APIs are called by the producer; raw PID evidence remains private.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:457-578 API crash branch writes settings, commit observation, retry receipt, runtime recovery with raw history and exact process records.",
+            "tests/ifpmic_api/h2_api_crash_child.py:15-61 API child writes reached.json after durable commit and blocks until release; test kills it before release."
+          ],
+          "original": "JSON top-level keys not fully source-verified for api-crash-recovery.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:228-237 _root creates private UUID worker-api-* case directory and exact case-node.json identity marker derived from PYTEST_CURRENT_TEST.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:155-168,246-309 Canonical private JSON writer; runtime world, manifests, server record, config and process logs.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:24-45,88-90 Private barrier writes ready/reached event JSON; release marker is used only where the test writes it.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:96-137,289-317,389-432,483-535,548-600 Private process outputs, owner snapshots, query recorder and raw Temporal history writer.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Shared owner and temporal.list_workflows observation records.",
+            "tests/ifpmic_api/jobs_fixture.py:344-366 Private settings JSON writer and exact top-level field list.",
+            "tests/ifpmic_api/h2_private_values.py:1-30 Path values are normalized recursively while unsupported objects are not stringified.",
+            "scripts/ifpmic_temporal_toolchain.py:source-pinned helper use Owned process identity/cleanup APIs are called by the producer; raw PID evidence remains private.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:457-578 API crash branch writes settings, commit observation, retry receipt, runtime recovery with raw history and exact process records.",
+            "tests/ifpmic_api/h2_api_crash_child.py:15-61 API child writes reached.json after durable commit and blocks until release; test kills it before release."
+          ],
+          "original": "JSON top-level keys not fully source-verified for worker-cut-history-before-recovery.json",
+          "proposed_correction_or_scope": "These files are written by _post_crash_recovery only; the literal API-commit and activity-completed nodes use their own api-crash-recovery or activity-completed cut/restart outputs.",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:228-237 _root creates private UUID worker-api-* case directory and exact case-node.json identity marker derived from PYTEST_CURRENT_TEST.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:155-168,246-309 Canonical private JSON writer; runtime world, manifests, server record, config and process logs.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:24-45,88-90 Private barrier writes ready/reached event JSON; release marker is used only where the test writes it.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:96-137,289-317,389-432,483-535,548-600 Private process outputs, owner snapshots, query recorder and raw Temporal history writer.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Shared owner and temporal.list_workflows observation records.",
+            "tests/ifpmic_api/jobs_fixture.py:344-366 Private settings JSON writer and exact top-level field list.",
+            "tests/ifpmic_api/h2_private_values.py:1-30 Path values are normalized recursively while unsupported objects are not stringified.",
+            "scripts/ifpmic_temporal_toolchain.py:source-pinned helper use Owned process identity/cleanup APIs are called by the producer; raw PID evidence remains private.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:457-578 API crash branch writes settings, commit observation, retry receipt, runtime recovery with raw history and exact process records.",
+            "tests/ifpmic_api/h2_api_crash_child.py:15-61 API child writes reached.json after durable commit and blocks until release; test kills it before release."
+          ],
+          "original": "JSON top-level keys not fully source-verified for worker-crash-recovery.json",
+          "proposed_correction_or_scope": "These files are written by _post_crash_recovery only; the literal API-commit and activity-completed nodes use their own api-crash-recovery or activity-completed cut/restart outputs.",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:228-237 _root creates private UUID worker-api-* case directory and exact case-node.json identity marker derived from PYTEST_CURRENT_TEST.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:155-168,246-309 Canonical private JSON writer; runtime world, manifests, server record, config and process logs.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:24-45,88-90 Private barrier writes ready/reached event JSON; release marker is used only where the test writes it.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:96-137,289-317,389-432,483-535,548-600 Private process outputs, owner snapshots, query recorder and raw Temporal history writer.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Shared owner and temporal.list_workflows observation records.",
+            "tests/ifpmic_api/jobs_fixture.py:344-366 Private settings JSON writer and exact top-level field list.",
+            "tests/ifpmic_api/h2_private_values.py:1-30 Path values are normalized recursively while unsupported objects are not stringified.",
+            "scripts/ifpmic_temporal_toolchain.py:source-pinned helper use Owned process identity/cleanup APIs are called by the producer; raw PID evidence remains private.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:457-578 API crash branch writes settings, commit observation, retry receipt, runtime recovery with raw history and exact process records.",
+            "tests/ifpmic_api/h2_api_crash_child.py:15-61 API child writes reached.json after durable commit and blocks until release; test kills it before release."
+          ],
+          "original": "JSON top-level keys not fully source-verified for owned-process-cleanup.json",
+          "proposed_correction_or_scope": "_cleanup writes the stop_all_owned result list directly; JSON top-level is an array, so required_keys=[] is the source-correct schema.",
+          "status": "source_mapped"
+        }
+      ],
+      "source_evidence_refs": [
+        {
+          "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py",
+          "sha256": "9ad3c1be60c3975cfe3a30fab972463361ac90c8e5f5b3a47461307d20ef35d3"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py",
+          "sha256": "9ad3c1be60c3975cfe3a30fab972463361ac90c8e5f5b3a47461307d20ef35d3"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_worker_crash_child.py",
+          "sha256": "003ba93a06fb3d5a81c0661e7c68ae4cfc56b95fb70c9bbf8afdd2c45b83b4cd"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "sha256": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "sha256": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c"
+        },
+        {
+          "path": "tests/ifpmic_api/jobs_fixture.py",
+          "sha256": "b8fefc39f3005b3a662124ae3182cee4e7a293e18dd4e84d18facd09c0e0d539"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_private_values.py",
+          "sha256": "ea2e828b0956f5e5bf9dd7f3c35441b948e1d0d17a49367b1d6ddd0c039cf86e"
+        },
+        {
+          "path": "scripts/ifpmic_temporal_toolchain.py",
+          "sha256": "8cadab76ccfa1f93392cf759991d6906415c75ed5a116093c53aee9f4a445564"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py",
+          "sha256": "9ad3c1be60c3975cfe3a30fab972463361ac90c8e5f5b3a47461307d20ef35d3"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_api_crash_child.py",
+          "sha256": "29100b07e82334a2fc3193fbc55c784e7ede69cb4f0aa6dc60a4152e2d0cd4db"
+        }
+      ],
+      "source_findings": {
+        "owner_query_source_mapping": {
+          "owner_minimum_preserved": 1,
+          "owner_producer": "normal._read_owner_snapshot calls record_owner_snapshot; case-specific call sites are listed in source_evidence_refs.",
+          "queries_max_preserved": {},
+          "queries_min_preserved": {
+            "temporal.list_workflows": 1
+          },
+          "query_producer": "accepted start observer and/or normal._observe_temporal calls record_query_observation(\"temporal.list_workflows\"); no query cap was introduced."
+        },
+        "private_auxiliary_outputs": [
+          "temporal-data/temporal.sqlite",
+          "temporal-data/temporal.log",
+          "api-settings.json (contains client_secret, csrf_key and database_dsn; private only)"
+        ],
+        "raw_artifacts": {
+          "api-commit-barrier/reached.json": "h2_api_crash_child.py writes the commit cut marker; no release is created because the child is SIGKILLed.",
+          "api-commit-before-kill.json": "test_h2_worker_api_crashes.py records database row plus reached barrier event.",
+          "api-crash-recovery.json": "Post-retry SQL snapshot and Temporal observer result are embedded; the latter hashes runtime/temporal-history.pbseq.",
+          "api-retry-receipt.json": "Retry POST response JSON is recorded directly.",
+          "api-settings.json": "jobs_fixture.private_settings_file emits the exact runtime settings object."
+        }
+      },
+      "structure_vs_oracle_boundary": {
+        "projected_artifact_rules": "File count/format, source-confirmed top-level JSON keys and SHA-256 links only. PBSeq framing/event meaning is delegated to the pinned history decoder.",
+        "runtime_status": "Source mapping only. No evidence artifact or runtime result was read or accepted.",
+        "source_test_oracles_not_enforced_by_artifact_rules": [
+          "actual owner SQL value assertions",
+          "Temporal admitted-run/history/event ordering",
+          "barrier ordering and expected child exit/SIGKILL",
+          "proxy chronology/held bytes",
+          "process identity/lifecycle and cleanup outcomes",
+          "workspace or authority state assertions"
+        ]
+      }
+    },
+    {
+      "case_directory": "worker-api-*",
+      "identity_binding": "Strict case-node.json marker emitted by _root, UUID suffix generated from uuid4().hex.",
+      "node_id": "tests/ifpmic_api/test_h2_worker_api_crashes.py::test_h2_worker_projection_after_pg_commit_sigkill_replays_receipt",
+      "original_unresolved": [
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:228-237 _root creates private UUID worker-api-* case directory and exact case-node.json identity marker derived from PYTEST_CURRENT_TEST.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:155-168,246-309 Canonical private JSON writer; runtime world, manifests, server record, config and process logs.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:24-45,88-90 Private barrier writes ready/reached event JSON; release marker is used only where the test writes it.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:96-137,289-317,389-432,483-535,548-600 Private process outputs, owner snapshots, query recorder and raw Temporal history writer.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Shared owner and temporal.list_workflows observation records.",
+            "tests/ifpmic_api/jobs_fixture.py:344-366 Private settings JSON writer and exact top-level field list.",
+            "tests/ifpmic_api/h2_private_values.py:1-30 Path values are normalized recursively while unsupported objects are not stringified.",
+            "scripts/ifpmic_temporal_toolchain.py:source-pinned helper use Owned process identity/cleanup APIs are called by the producer; raw PID evidence remains private.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:619-685 Projection cut/recovery helper writes owner snapshots, before/after PBSeq histories, history summary, crash-recovery object, process ownership records.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:686-722 Literal before-commit / after-commit test cases call the shared helper with their distinct hook phase.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:17-45,88-90 Worker phase barrier JSON writer.",
+            "tests/ifpmic_api/h2_worker_api_crashes.py:228-237 Case identity marker and UUID directory writer."
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: proxy snapshots (activity-result case)",
+          "proposed_correction_or_scope": "This literal case does not instantiate TCPResponseHoldingProxy; the proxy observation applies only to the activity-completed case and is nested in that case’s activity-completed-cut.json.",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:228-237 _root creates private UUID worker-api-* case directory and exact case-node.json identity marker derived from PYTEST_CURRENT_TEST.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:155-168,246-309 Canonical private JSON writer; runtime world, manifests, server record, config and process logs.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:24-45,88-90 Private barrier writes ready/reached event JSON; release marker is used only where the test writes it.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:96-137,289-317,389-432,483-535,548-600 Private process outputs, owner snapshots, query recorder and raw Temporal history writer.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Shared owner and temporal.list_workflows observation records.",
+            "tests/ifpmic_api/jobs_fixture.py:344-366 Private settings JSON writer and exact top-level field list.",
+            "tests/ifpmic_api/h2_private_values.py:1-30 Path values are normalized recursively while unsupported objects are not stringified.",
+            "scripts/ifpmic_temporal_toolchain.py:source-pinned helper use Owned process identity/cleanup APIs are called by the producer; raw PID evidence remains private.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:619-685 Projection cut/recovery helper writes owner snapshots, before/after PBSeq histories, history summary, crash-recovery object, process ownership records.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:686-722 Literal before-commit / after-commit test cases call the shared helper with their distinct hook phase.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:17-45,88-90 Worker phase barrier JSON writer.",
+            "tests/ifpmic_api/h2_worker_api_crashes.py:228-237 Case identity marker and UUID directory writer."
+          ],
+          "original": "JSON top-level keys not fully source-verified for owned-temporal-server.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:228-237 _root creates private UUID worker-api-* case directory and exact case-node.json identity marker derived from PYTEST_CURRENT_TEST.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:155-168,246-309 Canonical private JSON writer; runtime world, manifests, server record, config and process logs.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:24-45,88-90 Private barrier writes ready/reached event JSON; release marker is used only where the test writes it.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:96-137,289-317,389-432,483-535,548-600 Private process outputs, owner snapshots, query recorder and raw Temporal history writer.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Shared owner and temporal.list_workflows observation records.",
+            "tests/ifpmic_api/jobs_fixture.py:344-366 Private settings JSON writer and exact top-level field list.",
+            "tests/ifpmic_api/h2_private_values.py:1-30 Path values are normalized recursively while unsupported objects are not stringified.",
+            "scripts/ifpmic_temporal_toolchain.py:source-pinned helper use Owned process identity/cleanup APIs are called by the producer; raw PID evidence remains private.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:619-685 Projection cut/recovery helper writes owner snapshots, before/after PBSeq histories, history summary, crash-recovery object, process ownership records.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:686-722 Literal before-commit / after-commit test cases call the shared helper with their distinct hook phase.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:17-45,88-90 Worker phase barrier JSON writer.",
+            "tests/ifpmic_api/h2_worker_api_crashes.py:228-237 Case identity marker and UUID directory writer."
+          ],
+          "original": "JSON top-level keys not fully source-verified for source-manifest.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:228-237 _root creates private UUID worker-api-* case directory and exact case-node.json identity marker derived from PYTEST_CURRENT_TEST.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:155-168,246-309 Canonical private JSON writer; runtime world, manifests, server record, config and process logs.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:24-45,88-90 Private barrier writes ready/reached event JSON; release marker is used only where the test writes it.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:96-137,289-317,389-432,483-535,548-600 Private process outputs, owner snapshots, query recorder and raw Temporal history writer.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Shared owner and temporal.list_workflows observation records.",
+            "tests/ifpmic_api/jobs_fixture.py:344-366 Private settings JSON writer and exact top-level field list.",
+            "tests/ifpmic_api/h2_private_values.py:1-30 Path values are normalized recursively while unsupported objects are not stringified.",
+            "scripts/ifpmic_temporal_toolchain.py:source-pinned helper use Owned process identity/cleanup APIs are called by the producer; raw PID evidence remains private.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:619-685 Projection cut/recovery helper writes owner snapshots, before/after PBSeq histories, history summary, crash-recovery object, process ownership records.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:686-722 Literal before-commit / after-commit test cases call the shared helper with their distinct hook phase.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:17-45,88-90 Worker phase barrier JSON writer.",
+            "tests/ifpmic_api/h2_worker_api_crashes.py:228-237 Case identity marker and UUID directory writer."
+          ],
+          "original": "JSON top-level keys not fully source-verified for environment-manifest.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:228-237 _root creates private UUID worker-api-* case directory and exact case-node.json identity marker derived from PYTEST_CURRENT_TEST.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:155-168,246-309 Canonical private JSON writer; runtime world, manifests, server record, config and process logs.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:24-45,88-90 Private barrier writes ready/reached event JSON; release marker is used only where the test writes it.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:96-137,289-317,389-432,483-535,548-600 Private process outputs, owner snapshots, query recorder and raw Temporal history writer.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Shared owner and temporal.list_workflows observation records.",
+            "tests/ifpmic_api/jobs_fixture.py:344-366 Private settings JSON writer and exact top-level field list.",
+            "tests/ifpmic_api/h2_private_values.py:1-30 Path values are normalized recursively while unsupported objects are not stringified.",
+            "scripts/ifpmic_temporal_toolchain.py:source-pinned helper use Owned process identity/cleanup APIs are called by the producer; raw PID evidence remains private.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:619-685 Projection cut/recovery helper writes owner snapshots, before/after PBSeq histories, history summary, crash-recovery object, process ownership records.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:686-722 Literal before-commit / after-commit test cases call the shared helper with their distinct hook phase.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:17-45,88-90 Worker phase barrier JSON writer.",
+            "tests/ifpmic_api/h2_worker_api_crashes.py:228-237 Case identity marker and UUID directory writer."
+          ],
+          "original": "JSON top-level keys not fully source-verified for owner-at-worker-cut.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:228-237 _root creates private UUID worker-api-* case directory and exact case-node.json identity marker derived from PYTEST_CURRENT_TEST.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:155-168,246-309 Canonical private JSON writer; runtime world, manifests, server record, config and process logs.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:24-45,88-90 Private barrier writes ready/reached event JSON; release marker is used only where the test writes it.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:96-137,289-317,389-432,483-535,548-600 Private process outputs, owner snapshots, query recorder and raw Temporal history writer.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Shared owner and temporal.list_workflows observation records.",
+            "tests/ifpmic_api/jobs_fixture.py:344-366 Private settings JSON writer and exact top-level field list.",
+            "tests/ifpmic_api/h2_private_values.py:1-30 Path values are normalized recursively while unsupported objects are not stringified.",
+            "scripts/ifpmic_temporal_toolchain.py:source-pinned helper use Owned process identity/cleanup APIs are called by the producer; raw PID evidence remains private.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:619-685 Projection cut/recovery helper writes owner snapshots, before/after PBSeq histories, history summary, crash-recovery object, process ownership records.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:686-722 Literal before-commit / after-commit test cases call the shared helper with their distinct hook phase.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:17-45,88-90 Worker phase barrier JSON writer.",
+            "tests/ifpmic_api/h2_worker_api_crashes.py:228-237 Case identity marker and UUID directory writer."
+          ],
+          "original": "JSON top-level keys not fully source-verified for worker-cut-history-before-recovery.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:228-237 _root creates private UUID worker-api-* case directory and exact case-node.json identity marker derived from PYTEST_CURRENT_TEST.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:155-168,246-309 Canonical private JSON writer; runtime world, manifests, server record, config and process logs.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:24-45,88-90 Private barrier writes ready/reached event JSON; release marker is used only where the test writes it.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:96-137,289-317,389-432,483-535,548-600 Private process outputs, owner snapshots, query recorder and raw Temporal history writer.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Shared owner and temporal.list_workflows observation records.",
+            "tests/ifpmic_api/jobs_fixture.py:344-366 Private settings JSON writer and exact top-level field list.",
+            "tests/ifpmic_api/h2_private_values.py:1-30 Path values are normalized recursively while unsupported objects are not stringified.",
+            "scripts/ifpmic_temporal_toolchain.py:source-pinned helper use Owned process identity/cleanup APIs are called by the producer; raw PID evidence remains private.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:619-685 Projection cut/recovery helper writes owner snapshots, before/after PBSeq histories, history summary, crash-recovery object, process ownership records.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:686-722 Literal before-commit / after-commit test cases call the shared helper with their distinct hook phase.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:17-45,88-90 Worker phase barrier JSON writer.",
+            "tests/ifpmic_api/h2_worker_api_crashes.py:228-237 Case identity marker and UUID directory writer."
+          ],
+          "original": "JSON top-level keys not fully source-verified for worker-crash-recovery.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:228-237 _root creates private UUID worker-api-* case directory and exact case-node.json identity marker derived from PYTEST_CURRENT_TEST.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:155-168,246-309 Canonical private JSON writer; runtime world, manifests, server record, config and process logs.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:24-45,88-90 Private barrier writes ready/reached event JSON; release marker is used only where the test writes it.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:96-137,289-317,389-432,483-535,548-600 Private process outputs, owner snapshots, query recorder and raw Temporal history writer.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Shared owner and temporal.list_workflows observation records.",
+            "tests/ifpmic_api/jobs_fixture.py:344-366 Private settings JSON writer and exact top-level field list.",
+            "tests/ifpmic_api/h2_private_values.py:1-30 Path values are normalized recursively while unsupported objects are not stringified.",
+            "scripts/ifpmic_temporal_toolchain.py:source-pinned helper use Owned process identity/cleanup APIs are called by the producer; raw PID evidence remains private.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:619-685 Projection cut/recovery helper writes owner snapshots, before/after PBSeq histories, history summary, crash-recovery object, process ownership records.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:686-722 Literal before-commit / after-commit test cases call the shared helper with their distinct hook phase.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:17-45,88-90 Worker phase barrier JSON writer.",
+            "tests/ifpmic_api/h2_worker_api_crashes.py:228-237 Case identity marker and UUID directory writer."
+          ],
+          "original": "JSON top-level keys not fully source-verified for authority-revoked-before-replay.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:228-237 _root creates private UUID worker-api-* case directory and exact case-node.json identity marker derived from PYTEST_CURRENT_TEST.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:155-168,246-309 Canonical private JSON writer; runtime world, manifests, server record, config and process logs.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:24-45,88-90 Private barrier writes ready/reached event JSON; release marker is used only where the test writes it.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:96-137,289-317,389-432,483-535,548-600 Private process outputs, owner snapshots, query recorder and raw Temporal history writer.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Shared owner and temporal.list_workflows observation records.",
+            "tests/ifpmic_api/jobs_fixture.py:344-366 Private settings JSON writer and exact top-level field list.",
+            "tests/ifpmic_api/h2_private_values.py:1-30 Path values are normalized recursively while unsupported objects are not stringified.",
+            "scripts/ifpmic_temporal_toolchain.py:source-pinned helper use Owned process identity/cleanup APIs are called by the producer; raw PID evidence remains private.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:619-685 Projection cut/recovery helper writes owner snapshots, before/after PBSeq histories, history summary, crash-recovery object, process ownership records.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:686-722 Literal before-commit / after-commit test cases call the shared helper with their distinct hook phase.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:17-45,88-90 Worker phase barrier JSON writer.",
+            "tests/ifpmic_api/h2_worker_api_crashes.py:228-237 Case identity marker and UUID directory writer."
+          ],
+          "original": "JSON top-level keys not fully source-verified for owned-process-cleanup.json",
+          "proposed_correction_or_scope": "_cleanup writes the stop_all_owned result list directly; JSON top-level is an array, so required_keys=[] is the source-correct schema.",
+          "status": "source_mapped"
+        }
+      ],
+      "source_evidence_refs": [
+        {
+          "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py",
+          "sha256": "9ad3c1be60c3975cfe3a30fab972463361ac90c8e5f5b3a47461307d20ef35d3"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py",
+          "sha256": "9ad3c1be60c3975cfe3a30fab972463361ac90c8e5f5b3a47461307d20ef35d3"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_worker_crash_child.py",
+          "sha256": "003ba93a06fb3d5a81c0661e7c68ae4cfc56b95fb70c9bbf8afdd2c45b83b4cd"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "sha256": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "sha256": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c"
+        },
+        {
+          "path": "tests/ifpmic_api/jobs_fixture.py",
+          "sha256": "b8fefc39f3005b3a662124ae3182cee4e7a293e18dd4e84d18facd09c0e0d539"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_private_values.py",
+          "sha256": "ea2e828b0956f5e5bf9dd7f3c35441b948e1d0d17a49367b1d6ddd0c039cf86e"
+        },
+        {
+          "path": "scripts/ifpmic_temporal_toolchain.py",
+          "sha256": "8cadab76ccfa1f93392cf759991d6906415c75ed5a116093c53aee9f4a445564"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py",
+          "sha256": "9ad3c1be60c3975cfe3a30fab972463361ac90c8e5f5b3a47461307d20ef35d3"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py",
+          "sha256": "9ad3c1be60c3975cfe3a30fab972463361ac90c8e5f5b3a47461307d20ef35d3"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_worker_crash_child.py",
+          "sha256": "003ba93a06fb3d5a81c0661e7c68ae4cfc56b95fb70c9bbf8afdd2c45b83b4cd"
+        }
+      ],
+      "source_findings": {
+        "owner_query_source_mapping": {
+          "owner_minimum_preserved": 1,
+          "owner_producer": "normal._read_owner_snapshot calls record_owner_snapshot; case-specific call sites are listed in source_evidence_refs.",
+          "queries_max_preserved": {},
+          "queries_min_preserved": {
+            "temporal.list_workflows": 1
+          },
+          "query_producer": "accepted start observer and/or normal._observe_temporal calls record_query_observation(\"temporal.list_workflows\"); no query cap was introduced."
+        },
+        "private_auxiliary_outputs": [
+          "temporal-data/temporal.sqlite",
+          "temporal-data/temporal.log",
+          "api-settings.json (contains client_secret, csrf_key and database_dsn; private only)"
+        ],
+        "raw_artifacts": {
+          "case-node.json": "_root writes actual qualified node identity and pytest phase marker.",
+          "worker-crash-recovery.json": "Shared _post_crash_recovery writer, includes exact before/after PBSeq hashes.",
+          "worker-cut-history-before-recovery.json": "Shared _post_crash_recovery writer counts events at cut."
+        }
+      },
+      "structure_vs_oracle_boundary": {
+        "projected_artifact_rules": "File count/format, source-confirmed top-level JSON keys and SHA-256 links only. PBSeq framing/event meaning is delegated to the pinned history decoder.",
+        "runtime_status": "Source mapping only. No evidence artifact or runtime result was read or accepted.",
+        "source_test_oracles_not_enforced_by_artifact_rules": [
+          "actual owner SQL value assertions",
+          "Temporal admitted-run/history/event ordering",
+          "barrier ordering and expected child exit/SIGKILL",
+          "proxy chronology/held bytes",
+          "process identity/lifecycle and cleanup outcomes",
+          "workspace or authority state assertions"
+        ]
+      }
+    },
+    {
+      "case_directory": "worker-api-*",
+      "identity_binding": "Strict case-node.json marker emitted by _root, UUID suffix generated from uuid4().hex.",
+      "node_id": "tests/ifpmic_api/test_h2_worker_api_crashes.py::test_h2_worker_projection_before_pg_commit_sigkill_rolls_back_then_retries",
+      "original_unresolved": [
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:228-237 _root creates private UUID worker-api-* case directory and exact case-node.json identity marker derived from PYTEST_CURRENT_TEST.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:155-168,246-309 Canonical private JSON writer; runtime world, manifests, server record, config and process logs.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:24-45,88-90 Private barrier writes ready/reached event JSON; release marker is used only where the test writes it.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:96-137,289-317,389-432,483-535,548-600 Private process outputs, owner snapshots, query recorder and raw Temporal history writer.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Shared owner and temporal.list_workflows observation records.",
+            "tests/ifpmic_api/jobs_fixture.py:344-366 Private settings JSON writer and exact top-level field list.",
+            "tests/ifpmic_api/h2_private_values.py:1-30 Path values are normalized recursively while unsupported objects are not stringified.",
+            "scripts/ifpmic_temporal_toolchain.py:source-pinned helper use Owned process identity/cleanup APIs are called by the producer; raw PID evidence remains private.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:619-685 Projection cut/recovery helper writes owner snapshots, before/after PBSeq histories, history summary, crash-recovery object, process ownership records.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:686-722 Literal before-commit / after-commit test cases call the shared helper with their distinct hook phase.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:17-45,88-90 Worker phase barrier JSON writer.",
+            "tests/ifpmic_api/h2_worker_api_crashes.py:228-237 Case identity marker and UUID directory writer."
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: proxy snapshots (activity-result case)",
+          "proposed_correction_or_scope": "This literal case does not instantiate TCPResponseHoldingProxy; the proxy observation applies only to the activity-completed case and is nested in that case’s activity-completed-cut.json.",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:228-237 _root creates private UUID worker-api-* case directory and exact case-node.json identity marker derived from PYTEST_CURRENT_TEST.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:155-168,246-309 Canonical private JSON writer; runtime world, manifests, server record, config and process logs.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:24-45,88-90 Private barrier writes ready/reached event JSON; release marker is used only where the test writes it.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:96-137,289-317,389-432,483-535,548-600 Private process outputs, owner snapshots, query recorder and raw Temporal history writer.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Shared owner and temporal.list_workflows observation records.",
+            "tests/ifpmic_api/jobs_fixture.py:344-366 Private settings JSON writer and exact top-level field list.",
+            "tests/ifpmic_api/h2_private_values.py:1-30 Path values are normalized recursively while unsupported objects are not stringified.",
+            "scripts/ifpmic_temporal_toolchain.py:source-pinned helper use Owned process identity/cleanup APIs are called by the producer; raw PID evidence remains private.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:619-685 Projection cut/recovery helper writes owner snapshots, before/after PBSeq histories, history summary, crash-recovery object, process ownership records.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:686-722 Literal before-commit / after-commit test cases call the shared helper with their distinct hook phase.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:17-45,88-90 Worker phase barrier JSON writer.",
+            "tests/ifpmic_api/h2_worker_api_crashes.py:228-237 Case identity marker and UUID directory writer."
+          ],
+          "original": "JSON top-level keys not fully source-verified for owned-temporal-server.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:228-237 _root creates private UUID worker-api-* case directory and exact case-node.json identity marker derived from PYTEST_CURRENT_TEST.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:155-168,246-309 Canonical private JSON writer; runtime world, manifests, server record, config and process logs.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:24-45,88-90 Private barrier writes ready/reached event JSON; release marker is used only where the test writes it.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:96-137,289-317,389-432,483-535,548-600 Private process outputs, owner snapshots, query recorder and raw Temporal history writer.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Shared owner and temporal.list_workflows observation records.",
+            "tests/ifpmic_api/jobs_fixture.py:344-366 Private settings JSON writer and exact top-level field list.",
+            "tests/ifpmic_api/h2_private_values.py:1-30 Path values are normalized recursively while unsupported objects are not stringified.",
+            "scripts/ifpmic_temporal_toolchain.py:source-pinned helper use Owned process identity/cleanup APIs are called by the producer; raw PID evidence remains private.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:619-685 Projection cut/recovery helper writes owner snapshots, before/after PBSeq histories, history summary, crash-recovery object, process ownership records.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:686-722 Literal before-commit / after-commit test cases call the shared helper with their distinct hook phase.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:17-45,88-90 Worker phase barrier JSON writer.",
+            "tests/ifpmic_api/h2_worker_api_crashes.py:228-237 Case identity marker and UUID directory writer."
+          ],
+          "original": "JSON top-level keys not fully source-verified for source-manifest.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:228-237 _root creates private UUID worker-api-* case directory and exact case-node.json identity marker derived from PYTEST_CURRENT_TEST.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:155-168,246-309 Canonical private JSON writer; runtime world, manifests, server record, config and process logs.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:24-45,88-90 Private barrier writes ready/reached event JSON; release marker is used only where the test writes it.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:96-137,289-317,389-432,483-535,548-600 Private process outputs, owner snapshots, query recorder and raw Temporal history writer.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Shared owner and temporal.list_workflows observation records.",
+            "tests/ifpmic_api/jobs_fixture.py:344-366 Private settings JSON writer and exact top-level field list.",
+            "tests/ifpmic_api/h2_private_values.py:1-30 Path values are normalized recursively while unsupported objects are not stringified.",
+            "scripts/ifpmic_temporal_toolchain.py:source-pinned helper use Owned process identity/cleanup APIs are called by the producer; raw PID evidence remains private.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:619-685 Projection cut/recovery helper writes owner snapshots, before/after PBSeq histories, history summary, crash-recovery object, process ownership records.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:686-722 Literal before-commit / after-commit test cases call the shared helper with their distinct hook phase.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:17-45,88-90 Worker phase barrier JSON writer.",
+            "tests/ifpmic_api/h2_worker_api_crashes.py:228-237 Case identity marker and UUID directory writer."
+          ],
+          "original": "JSON top-level keys not fully source-verified for environment-manifest.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:228-237 _root creates private UUID worker-api-* case directory and exact case-node.json identity marker derived from PYTEST_CURRENT_TEST.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:155-168,246-309 Canonical private JSON writer; runtime world, manifests, server record, config and process logs.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:24-45,88-90 Private barrier writes ready/reached event JSON; release marker is used only where the test writes it.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:96-137,289-317,389-432,483-535,548-600 Private process outputs, owner snapshots, query recorder and raw Temporal history writer.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Shared owner and temporal.list_workflows observation records.",
+            "tests/ifpmic_api/jobs_fixture.py:344-366 Private settings JSON writer and exact top-level field list.",
+            "tests/ifpmic_api/h2_private_values.py:1-30 Path values are normalized recursively while unsupported objects are not stringified.",
+            "scripts/ifpmic_temporal_toolchain.py:source-pinned helper use Owned process identity/cleanup APIs are called by the producer; raw PID evidence remains private.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:619-685 Projection cut/recovery helper writes owner snapshots, before/after PBSeq histories, history summary, crash-recovery object, process ownership records.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:686-722 Literal before-commit / after-commit test cases call the shared helper with their distinct hook phase.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:17-45,88-90 Worker phase barrier JSON writer.",
+            "tests/ifpmic_api/h2_worker_api_crashes.py:228-237 Case identity marker and UUID directory writer."
+          ],
+          "original": "JSON top-level keys not fully source-verified for owner-at-worker-cut.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:228-237 _root creates private UUID worker-api-* case directory and exact case-node.json identity marker derived from PYTEST_CURRENT_TEST.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:155-168,246-309 Canonical private JSON writer; runtime world, manifests, server record, config and process logs.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:24-45,88-90 Private barrier writes ready/reached event JSON; release marker is used only where the test writes it.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:96-137,289-317,389-432,483-535,548-600 Private process outputs, owner snapshots, query recorder and raw Temporal history writer.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Shared owner and temporal.list_workflows observation records.",
+            "tests/ifpmic_api/jobs_fixture.py:344-366 Private settings JSON writer and exact top-level field list.",
+            "tests/ifpmic_api/h2_private_values.py:1-30 Path values are normalized recursively while unsupported objects are not stringified.",
+            "scripts/ifpmic_temporal_toolchain.py:source-pinned helper use Owned process identity/cleanup APIs are called by the producer; raw PID evidence remains private.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:619-685 Projection cut/recovery helper writes owner snapshots, before/after PBSeq histories, history summary, crash-recovery object, process ownership records.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:686-722 Literal before-commit / after-commit test cases call the shared helper with their distinct hook phase.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:17-45,88-90 Worker phase barrier JSON writer.",
+            "tests/ifpmic_api/h2_worker_api_crashes.py:228-237 Case identity marker and UUID directory writer."
+          ],
+          "original": "JSON top-level keys not fully source-verified for worker-cut-history-before-recovery.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:228-237 _root creates private UUID worker-api-* case directory and exact case-node.json identity marker derived from PYTEST_CURRENT_TEST.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:155-168,246-309 Canonical private JSON writer; runtime world, manifests, server record, config and process logs.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:24-45,88-90 Private barrier writes ready/reached event JSON; release marker is used only where the test writes it.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:96-137,289-317,389-432,483-535,548-600 Private process outputs, owner snapshots, query recorder and raw Temporal history writer.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Shared owner and temporal.list_workflows observation records.",
+            "tests/ifpmic_api/jobs_fixture.py:344-366 Private settings JSON writer and exact top-level field list.",
+            "tests/ifpmic_api/h2_private_values.py:1-30 Path values are normalized recursively while unsupported objects are not stringified.",
+            "scripts/ifpmic_temporal_toolchain.py:source-pinned helper use Owned process identity/cleanup APIs are called by the producer; raw PID evidence remains private.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:619-685 Projection cut/recovery helper writes owner snapshots, before/after PBSeq histories, history summary, crash-recovery object, process ownership records.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:686-722 Literal before-commit / after-commit test cases call the shared helper with their distinct hook phase.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:17-45,88-90 Worker phase barrier JSON writer.",
+            "tests/ifpmic_api/h2_worker_api_crashes.py:228-237 Case identity marker and UUID directory writer."
+          ],
+          "original": "JSON top-level keys not fully source-verified for worker-crash-recovery.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:228-237 _root creates private UUID worker-api-* case directory and exact case-node.json identity marker derived from PYTEST_CURRENT_TEST.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:155-168,246-309 Canonical private JSON writer; runtime world, manifests, server record, config and process logs.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:24-45,88-90 Private barrier writes ready/reached event JSON; release marker is used only where the test writes it.",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:96-137,289-317,389-432,483-535,548-600 Private process outputs, owner snapshots, query recorder and raw Temporal history writer.",
+            "tests/ifpmic_api/h2_snapshot_evidence.py:25-100 Shared owner and temporal.list_workflows observation records.",
+            "tests/ifpmic_api/jobs_fixture.py:344-366 Private settings JSON writer and exact top-level field list.",
+            "tests/ifpmic_api/h2_private_values.py:1-30 Path values are normalized recursively while unsupported objects are not stringified.",
+            "scripts/ifpmic_temporal_toolchain.py:source-pinned helper use Owned process identity/cleanup APIs are called by the producer; raw PID evidence remains private.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:619-685 Projection cut/recovery helper writes owner snapshots, before/after PBSeq histories, history summary, crash-recovery object, process ownership records.",
+            "tests/ifpmic_api/test_h2_worker_api_crashes.py:686-722 Literal before-commit / after-commit test cases call the shared helper with their distinct hook phase.",
+            "tests/ifpmic_api/h2_worker_crash_child.py:17-45,88-90 Worker phase barrier JSON writer.",
+            "tests/ifpmic_api/h2_worker_api_crashes.py:228-237 Case identity marker and UUID directory writer."
+          ],
+          "original": "JSON top-level keys not fully source-verified for owned-process-cleanup.json",
+          "proposed_correction_or_scope": "_cleanup writes the stop_all_owned result list directly; JSON top-level is an array, so required_keys=[] is the source-correct schema.",
+          "status": "source_mapped"
+        }
+      ],
+      "source_evidence_refs": [
+        {
+          "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py",
+          "sha256": "9ad3c1be60c3975cfe3a30fab972463361ac90c8e5f5b3a47461307d20ef35d3"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py",
+          "sha256": "9ad3c1be60c3975cfe3a30fab972463361ac90c8e5f5b3a47461307d20ef35d3"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_worker_crash_child.py",
+          "sha256": "003ba93a06fb3d5a81c0661e7c68ae4cfc56b95fb70c9bbf8afdd2c45b83b4cd"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "sha256": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "sha256": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c"
+        },
+        {
+          "path": "tests/ifpmic_api/jobs_fixture.py",
+          "sha256": "b8fefc39f3005b3a662124ae3182cee4e7a293e18dd4e84d18facd09c0e0d539"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_private_values.py",
+          "sha256": "ea2e828b0956f5e5bf9dd7f3c35441b948e1d0d17a49367b1d6ddd0c039cf86e"
+        },
+        {
+          "path": "scripts/ifpmic_temporal_toolchain.py",
+          "sha256": "8cadab76ccfa1f93392cf759991d6906415c75ed5a116093c53aee9f4a445564"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py",
+          "sha256": "9ad3c1be60c3975cfe3a30fab972463361ac90c8e5f5b3a47461307d20ef35d3"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py",
+          "sha256": "9ad3c1be60c3975cfe3a30fab972463361ac90c8e5f5b3a47461307d20ef35d3"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_worker_crash_child.py",
+          "sha256": "003ba93a06fb3d5a81c0661e7c68ae4cfc56b95fb70c9bbf8afdd2c45b83b4cd"
+        }
+      ],
+      "source_findings": {
+        "owner_query_source_mapping": {
+          "owner_minimum_preserved": 1,
+          "owner_producer": "normal._read_owner_snapshot calls record_owner_snapshot; case-specific call sites are listed in source_evidence_refs.",
+          "queries_max_preserved": {},
+          "queries_min_preserved": {
+            "temporal.list_workflows": 1
+          },
+          "query_producer": "accepted start observer and/or normal._observe_temporal calls record_query_observation(\"temporal.list_workflows\"); no query cap was introduced."
+        },
+        "private_auxiliary_outputs": [
+          "temporal-data/temporal.sqlite",
+          "temporal-data/temporal.log",
+          "api-settings.json (contains client_secret, csrf_key and database_dsn; private only)"
+        ],
+        "raw_artifacts": {
+          "case-node.json": "_root writes actual qualified node identity and pytest phase marker.",
+          "worker-crash-recovery.json": "Shared _post_crash_recovery writer, includes exact before/after PBSeq hashes.",
+          "worker-cut-history-before-recovery.json": "Shared _post_crash_recovery writer counts events at cut."
+        }
+      },
+      "structure_vs_oracle_boundary": {
+        "projected_artifact_rules": "File count/format, source-confirmed top-level JSON keys and SHA-256 links only. PBSeq framing/event meaning is delegated to the pinned history decoder.",
+        "runtime_status": "Source mapping only. No evidence artifact or runtime result was read or accepted.",
+        "source_test_oracles_not_enforced_by_artifact_rules": [
+          "actual owner SQL value assertions",
+          "Temporal admitted-run/history/event ordering",
+          "barrier ordering and expected child exit/SIGKILL",
+          "proxy chronology/held bytes",
+          "process identity/lifecycle and cleanup outcomes",
+          "workspace or authority state assertions"
+        ]
+      }
+    }
+  ],
+  "input_machine": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules.json",
+    "sha256": "33622d9944cafea7345526e25db524d06c6f64b2c04a73e7d0b55dbd8986bbd5",
+    "commit": "8d208eb"
+  },
+  "kind": "ifpmic.b03.h2.machine_evidence_source_projection.v2",
+  "proposed_rows": [
+    {
+      "artifact_sources": {
+        "preadmission-final-history/temporal-history.pbseq": "test_h2_transport_boundaries.py calls normal._observe_temporal with this directory.",
+        "preadmission-start-history/accepted-start-history-before-kill.pbseq": "accepted._observe_started_direct writes the raw started history there.",
+        "preadmission-wait-history.pbseq": "test_h2_transport_boundaries.py::_wait_pre_admission_activity writes directly in the case root.",
+        "transport-control/reached-after_history_observed": "h2_transport_boundary_child.py::_write_event from dispatcher_gate."
+      },
+      "artifacts": [
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "preadmission-owner-at-cut.json",
+          "required_keys": [
+            "accepted",
+            "bindings",
+            "scopes",
+            "receipts",
+            "attempts",
+            "noncreate_commands"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "preadmission-owner-before-admission.json",
+          "required_keys": [
+            "accepted",
+            "bindings",
+            "scopes",
+            "receipts",
+            "attempts",
+            "noncreate_commands"
+          ]
+        },
+        {
+          "format": "pbseq",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "preadmission-wait-history.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "preadmission-result.json",
+          "required_keys": [
+            "phase",
+            "pre_admission",
+            "run_id",
+            "snapshot_sha256",
+            "temporal_history_sha256",
+            "started_history_sha256"
+          ],
+          "sha256_links": {
+            "/pre_admission/history_sha256": "preadmission-wait-history.pbseq",
+            "/started_history_sha256": "preadmission-start-history/accepted-start-history-before-kill.pbseq",
+            "/temporal_history_sha256": "preadmission-final-history/temporal-history.pbseq"
+          }
+        },
+        {
+          "format": "jsonl",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-journal.jsonl",
+          "required_keys": [
+            "event"
+          ]
+        },
+        {
+          "format": "pbseq",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "preadmission-final-history/temporal-history.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "pbseq",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "preadmission-start-history/accepted-start-history-before-kill.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "preadmission-start-history/accepted-start-observer.json",
+          "required_keys": [
+            "workflow_id",
+            "run_id",
+            "observed_started_monotonic",
+            "execution_count",
+            "started_event_count",
+            "started_input",
+            "event_ids",
+            "status",
+            "retention_seconds",
+            "raw_history_sha256",
+            "raw_history_bytes"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "transport-control/reached-after_history_observed",
+          "required_keys": [
+            "event",
+            "monotonic"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "transport-control/release-after_history_observed",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "transport-dispatcher-logs/stdout.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "transport-dispatcher-logs/stderr.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/transport-preadmission-worker-stdout.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/transport-preadmission-worker-stderr.log",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "transport-cleanup.json",
+          "required_keys": [
+            "status",
+            "mismatch_pids",
+            "outcomes"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal-server.log",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "workspace-initial-observation.json",
+          "required_keys": [
+            "job_id",
+            "tree",
+            "marker_bytes_hex"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "source-manifest.json",
+          "required_keys": [
+            "format",
+            "files"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "environment-manifest.json",
+          "required_keys": [
+            "format",
+            "files",
+            "interpreter_sha256",
+            "python_version"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal.sqlite",
+          "required_keys": []
+        }
+      ],
+      "case_directory": "transport-preadmission",
+      "minimum_owner": 1,
+      "node_id": "tests/ifpmic_api/test_h2_transport_boundaries.py::test_h2_activity_waits_until_admission_same_run",
+      "phase": "transport",
+      "profile": "preadmission",
+      "queries_max": {},
+      "queries_min": {
+        "temporal.list_workflows": 1
+      },
+      "source_locations": [
+        {
+          "fact": "Private writers for control markers, dispatcher logs, cleanup receipt, process journal and common prepare-case binding.",
+          "lines": "69-78,85-105,108-145,179-240",
+          "path": "tests/ifpmic_api/test_h2_transport_boundaries.py"
+        },
+        {
+          "fact": "Transport child emits exact reached-marker JSON and waits on a literal release file.",
+          "lines": "22-58,73-110",
+          "path": "tests/ifpmic_api/h2_transport_boundary_child.py"
+        },
+        {
+          "fact": "Shared case root is literal label under runtime evidence root; creates process journal, Temporal server log/store and owner snapshots.",
+          "lines": "281-364",
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py"
+        },
+        {
+          "fact": "Private journal/owner/query/history writers and normal CLI log paths.",
+          "lines": "85-137,289-317,389-432,483-535,548-600",
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py"
+        },
+        {
+          "fact": "Direct started-history observation writes raw PBSeq and observer JSON under the exact preadmission subdirectory.",
+          "lines": "275-350",
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py"
+        },
+        {
+          "fact": "Owner and query observation records are canonical private evidence with actual output paths.",
+          "lines": "25-100",
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py"
+        }
+      ],
+      "unresolved": []
+    },
+    {
+      "artifact_sources": {
+        "transport-control/reached-after_claim_delivery_commit": "h2_transport_boundary_child.py::_write_event from ExecutionStore hook.",
+        "transport-control/reached-before_claim_delivery_commit": "h2_transport_boundary_child.py::_write_event from ExecutionStore hook."
+      },
+      "artifacts": [
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "machine-race-result.json",
+          "required_keys": [
+            "variant",
+            "status",
+            "blocked_update_pid",
+            "first_barrier",
+            "second_barrier",
+            "before",
+            "after"
+          ]
+        },
+        {
+          "format": "jsonl",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-journal.jsonl",
+          "required_keys": [
+            "event"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "transport-dispatcher-logs/stdout.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "transport-dispatcher-logs/stderr.log",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "transport-cleanup.json",
+          "required_keys": [
+            "status",
+            "mismatch_pids",
+            "outcomes"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal-server.log",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "transport-control/reached-before_claim_delivery_commit",
+          "required_keys": [
+            "event",
+            "monotonic"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "transport-control/release-before_claim_delivery_commit",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "transport-control/reached-after_claim_delivery_commit",
+          "required_keys": [
+            "event",
+            "monotonic"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "transport-control/release-after_claim_delivery_commit",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "workspace-initial-observation.json",
+          "required_keys": [
+            "job_id",
+            "tree",
+            "marker_bytes_hex"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "source-manifest.json",
+          "required_keys": [
+            "format",
+            "files"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "environment-manifest.json",
+          "required_keys": [
+            "format",
+            "files",
+            "interpreter_sha256",
+            "python_version"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal.sqlite",
+          "required_keys": []
+        }
+      ],
+      "case_directory": "transport-machine-claim-before-disable",
+      "minimum_owner": 1,
+      "node_id": "tests/ifpmic_api/test_h2_transport_boundaries.py::test_h2_machine_authority_disable_serializes_with_claim[claim-before-disable]",
+      "phase": "transport",
+      "profile": "machine_claim_first",
+      "queries_max": {},
+      "queries_min": {
+        "temporal.list_workflows": 1
+      },
+      "source_locations": [
+        {
+          "fact": "Private writers for control markers, dispatcher logs, cleanup receipt, process journal and common prepare-case binding.",
+          "lines": "69-78,85-105,108-145,179-240",
+          "path": "tests/ifpmic_api/test_h2_transport_boundaries.py"
+        },
+        {
+          "fact": "Transport child emits exact reached-marker JSON and waits on a literal release file.",
+          "lines": "22-58,73-110",
+          "path": "tests/ifpmic_api/h2_transport_boundary_child.py"
+        },
+        {
+          "fact": "Shared case root is literal label under runtime evidence root; creates process journal, Temporal server log/store and owner snapshots.",
+          "lines": "281-364",
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py"
+        },
+        {
+          "fact": "Private journal/owner/query/history writers and normal CLI log paths.",
+          "lines": "85-137,289-317,389-432,483-535,548-600",
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py"
+        },
+        {
+          "fact": "Direct started-history observation writes raw PBSeq and observer JSON under the exact preadmission subdirectory.",
+          "lines": "275-350",
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py"
+        },
+        {
+          "fact": "Owner and query observation records are canonical private evidence with actual output paths.",
+          "lines": "25-100",
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py"
+        },
+        {
+          "fact": "The selected literal param case executes one branch; claim-before-disable has two store-phase markers, disable-before-claim has no test barriers.",
+          "lines": "253-351",
+          "path": "tests/ifpmic_api/test_h2_transport_boundaries.py"
+        },
+        {
+          "fact": "Store gate names write reached JSON and block until same-name release file.",
+          "lines": "73-84",
+          "path": "tests/ifpmic_api/h2_transport_boundary_child.py"
+        }
+      ],
+      "unresolved": []
+    },
+    {
+      "artifact_sources": {},
+      "artifacts": [
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "machine-race-result.json",
+          "required_keys": [
+            "variant",
+            "status",
+            "exit_code"
+          ]
+        },
+        {
+          "format": "jsonl",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-journal.jsonl",
+          "required_keys": [
+            "event"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "transport-dispatcher-logs/stdout.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "transport-dispatcher-logs/stderr.log",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "transport-cleanup.json",
+          "required_keys": [
+            "status",
+            "mismatch_pids",
+            "outcomes"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal-server.log",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "workspace-initial-observation.json",
+          "required_keys": [
+            "job_id",
+            "tree",
+            "marker_bytes_hex"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "source-manifest.json",
+          "required_keys": [
+            "format",
+            "files"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "environment-manifest.json",
+          "required_keys": [
+            "format",
+            "files",
+            "interpreter_sha256",
+            "python_version"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal.sqlite",
+          "required_keys": []
+        }
+      ],
+      "case_directory": "transport-machine-disable-before-claim",
+      "minimum_owner": 1,
+      "node_id": "tests/ifpmic_api/test_h2_transport_boundaries.py::test_h2_machine_authority_disable_serializes_with_claim[disable-before-claim]",
+      "phase": "transport",
+      "profile": "machine_disable_first",
+      "queries_max": {},
+      "queries_min": {
+        "temporal.list_workflows": 1
+      },
+      "source_locations": [
+        {
+          "fact": "Private writers for control markers, dispatcher logs, cleanup receipt, process journal and common prepare-case binding.",
+          "lines": "69-78,85-105,108-145,179-240",
+          "path": "tests/ifpmic_api/test_h2_transport_boundaries.py"
+        },
+        {
+          "fact": "Transport child emits exact reached-marker JSON and waits on a literal release file.",
+          "lines": "22-58,73-110",
+          "path": "tests/ifpmic_api/h2_transport_boundary_child.py"
+        },
+        {
+          "fact": "Shared case root is literal label under runtime evidence root; creates process journal, Temporal server log/store and owner snapshots.",
+          "lines": "281-364",
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py"
+        },
+        {
+          "fact": "Private journal/owner/query/history writers and normal CLI log paths.",
+          "lines": "85-137,289-317,389-432,483-535,548-600",
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py"
+        },
+        {
+          "fact": "Direct started-history observation writes raw PBSeq and observer JSON under the exact preadmission subdirectory.",
+          "lines": "275-350",
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py"
+        },
+        {
+          "fact": "Owner and query observation records are canonical private evidence with actual output paths.",
+          "lines": "25-100",
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py"
+        },
+        {
+          "fact": "The selected literal param case executes one branch; claim-before-disable has two store-phase markers, disable-before-claim has no test barriers.",
+          "lines": "253-351",
+          "path": "tests/ifpmic_api/test_h2_transport_boundaries.py"
+        },
+        {
+          "fact": "Store gate names write reached JSON and block until same-name release file.",
+          "lines": "73-84",
+          "path": "tests/ifpmic_api/h2_transport_boundary_child.py"
+        }
+      ],
+      "unresolved": []
+    },
+    {
+      "artifact_sources": {
+        "activity-before-decision-barrier/release": "test body creates the empty release marker before awaiting held response completion.",
+        "activity-completed-cut.json#/proxy": "test body embeds proxy.snapshot(); response_loss_proxy.py defines snapshot fields.",
+        "activity-completed-restart.json": "test body writes source SQL snapshots and history counts after restart.",
+        "history-activity-completed-before-decision.pbseq": "_record_history stores exact history before killing the worker.",
+        "history-after-workflow-restart.pbseq": "_record_history stores history after restarting the worker."
+      },
+      "artifacts": [
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "owned-temporal-server.json",
+          "required_keys": [
+            "role",
+            "pid",
+            "start_ticks",
+            "log"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "source-manifest.json",
+          "required_keys": [
+            "format",
+            "files"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "environment-manifest.json",
+          "required_keys": [
+            "format",
+            "files",
+            "interpreter_sha256",
+            "python_version"
+          ]
+        },
+        {
+          "format": "pbseq",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "history-activity-completed-before-decision.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "activity-completed-cut.json",
+          "required_keys": [
+            "killed_process",
+            "owner",
+            "history_event_count",
+            "activity_completed_event_id",
+            "proxy"
+          ]
+        },
+        {
+          "format": "pbseq",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "history-after-workflow-restart.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "activity-completed-restart.json",
+          "required_keys": [
+            "sql_before",
+            "sql_after",
+            "history_before_restart",
+            "history_after_restart",
+            "project_activity_completions",
+            "phase"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "owned-process-cleanup.json",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "case-node.json",
+          "required_keys": [
+            "kind",
+            "node_id",
+            "pytest_current_test"
+          ]
+        },
+        {
+          "format": "pbseq",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-history.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "activity-before-decision-barrier/ready.json",
+          "required_keys": [
+            "status",
+            "monotonic"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "activity-before-decision-barrier/reached.json",
+          "required_keys": [
+            "phase",
+            "monotonic"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "owned-worker-cut-after_project_activation_commit.json",
+          "required_keys": [
+            "role",
+            "pid",
+            "start_ticks",
+            "stdout",
+            "stderr"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "child-logs/worker-cut-after_project_activation_commit.stdout",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "child-logs/worker-cut-after_project_activation_commit.stderr",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "owned-process-00.json",
+          "required_keys": [
+            "role",
+            "pid",
+            "start_ticks",
+            "log"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "owned-process-01.json",
+          "required_keys": [
+            "role",
+            "pid",
+            "start_ticks",
+            "stdout",
+            "stderr"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "owned-process-02.json",
+          "required_keys": [
+            "role",
+            "pid",
+            "start_ticks",
+            "stdout",
+            "stderr"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/dispatcher-stdout.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/dispatcher-stderr.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/worker-stdout.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/worker-stderr.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "activity-before-decision-barrier/release",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "owned-temporal-prestarted-server.json",
+          "required_keys": [
+            "role",
+            "pid",
+            "start_ticks",
+            "log"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "stopped-dispatcher-before-activity-result-cut.json",
+          "required_keys": [
+            "role",
+            "pid",
+            "start_ticks",
+            "stop"
+          ]
+        }
+      ],
+      "case_directory": "worker-api-*",
+      "identity_file": "case-node.json",
+      "minimum_owner": 1,
+      "node_id": "tests/ifpmic_api/test_h2_worker_api_crashes.py::test_h2_activity_completed_before_workflow_decision_sigkill_replays_history",
+      "phase": "worker_api_crashes",
+      "profile": "worker_api",
+      "queries_max": {},
+      "queries_min": {
+        "temporal.list_workflows": 1
+      },
+      "source_locations": [
+        {
+          "fact": "_root creates private UUID worker-api-* case directory and exact case-node.json identity marker derived from PYTEST_CURRENT_TEST.",
+          "lines": "228-237",
+          "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py"
+        },
+        {
+          "fact": "Canonical private JSON writer; runtime world, manifests, server record, config and process logs.",
+          "lines": "155-168,246-309",
+          "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py"
+        },
+        {
+          "fact": "Private barrier writes ready/reached event JSON; release marker is used only where the test writes it.",
+          "lines": "24-45,88-90",
+          "path": "tests/ifpmic_api/h2_worker_crash_child.py"
+        },
+        {
+          "fact": "Private process outputs, owner snapshots, query recorder and raw Temporal history writer.",
+          "lines": "96-137,289-317,389-432,483-535,548-600",
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py"
+        },
+        {
+          "fact": "Shared owner and temporal.list_workflows observation records.",
+          "lines": "25-100",
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py"
+        },
+        {
+          "fact": "Private settings JSON writer and exact top-level field list.",
+          "lines": "344-366",
+          "path": "tests/ifpmic_api/jobs_fixture.py"
+        },
+        {
+          "fact": "Path values are normalized recursively while unsupported objects are not stringified.",
+          "lines": "1-30",
+          "path": "tests/ifpmic_api/h2_private_values.py"
+        },
+        {
+          "fact": "verify_binary/process_identity/stop_all_owned helper definitions underpin exact server binary and process lifecycle records.",
+          "lines": "22-142",
+          "path": "scripts/ifpmic_temporal_toolchain.py"
+        },
+        {
+          "fact": "Activity completion cut, held proxy snapshot, worker history PBSeqs, restart JSON and cleanup; duplicate prestarted-server record write is noted as a source blocker.",
+          "lines": "723-844",
+          "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py"
+        },
+        {
+          "fact": "TCPResponseHoldingProxy.snapshot returns the proxy observation embedded in activity-completed-cut.json; no separate snapshot JSON writer exists.",
+          "lines": "1-220",
+          "path": "tests/ifpmic_api/response_loss_proxy.py"
+        },
+        {
+          "artifact": "owned-temporal-prestarted-server.json",
+          "line": 747,
+          "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py",
+          "sha256": "9ad3c1be60c3975cfe3a30fab972463361ac90c8e5f5b3a47461307d20ef35d3",
+          "symbol": "early prestarted server record before proxy startup"
+        }
+      ],
+      "unresolved": []
+    },
+    {
+      "artifact_sources": {
+        "api-commit-barrier/reached.json": "h2_api_crash_child.py writes the commit cut marker; no release is created because the child is SIGKILLed.",
+        "api-commit-before-kill.json": "test_h2_worker_api_crashes.py records database row plus reached barrier event.",
+        "api-crash-recovery.json": "Post-retry SQL snapshot and Temporal observer result are embedded; the latter hashes runtime/temporal-history.pbseq.",
+        "api-retry-receipt.json": "Retry POST response JSON is recorded directly.",
+        "api-settings.json": "jobs_fixture.private_settings_file emits the exact runtime settings object."
+      },
+      "artifacts": [
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "api-settings.json",
+          "required_keys": [
+            "mode",
+            "api_origin",
+            "issuer",
+            "client_id",
+            "authorization_endpoint",
+            "token_endpoint",
+            "jwks_uri",
+            "redirect_uri",
+            "post_login_url",
+            "allowed_ui_origins",
+            "csrf_key",
+            "database_dsn",
+            "client_secret",
+            "client_auth_method",
+            "signing_algorithms",
+            "auth_gc_interval_seconds",
+            "node_executable",
+            "profile_store"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "api-commit-before-kill.json",
+          "required_keys": [
+            "row",
+            "barrier"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "api-retry-receipt.json",
+          "required_keys": [
+            "resource_id",
+            "command_id",
+            "status"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "api-crash-recovery.json",
+          "required_keys": [
+            "killed_process",
+            "sql",
+            "temporal"
+          ],
+          "sha256_links": {
+            "/temporal/raw_history_sha256": "runtime/temporal-history.pbseq"
+          }
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "case-node.json",
+          "required_keys": [
+            "kind",
+            "node_id",
+            "pytest_current_test"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "runtime/owned-temporal-server.json",
+          "required_keys": [
+            "role",
+            "pid",
+            "start_ticks",
+            "log"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "runtime/source-manifest.json",
+          "required_keys": [
+            "format",
+            "files"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "runtime/environment-manifest.json",
+          "required_keys": [
+            "format",
+            "files",
+            "interpreter_sha256",
+            "python_version"
+          ]
+        },
+        {
+          "format": "pbseq",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "runtime/temporal-history.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "runtime/owned-process-cleanup.json",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "runtime/owned-process-01.json",
+          "required_keys": [
+            "role",
+            "pid",
+            "start_ticks",
+            "stdout",
+            "stderr"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "runtime/owned-process-02.json",
+          "required_keys": [
+            "role",
+            "pid",
+            "start_ticks",
+            "stdout",
+            "stderr"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "runtime/temporal-data/temporal.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "runtime/process-logs/worker-stdout.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "runtime/process-logs/worker-stderr.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "runtime/process-logs/dispatcher-stdout.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "runtime/process-logs/dispatcher-stderr.log",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "api-commit-barrier/reached.json",
+          "required_keys": [
+            "phase",
+            "monotonic"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "child-logs/api-commit-child.stdout",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "child-logs/api-commit-child.stderr",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "owned-api-commit-child.json",
+          "required_keys": [
+            "role",
+            "pid",
+            "start_ticks",
+            "stdout",
+            "stderr"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "owned-process-00.json",
+          "required_keys": [
+            "role",
+            "pid",
+            "start_ticks",
+            "log"
+          ]
+        }
+      ],
+      "case_directory": "worker-api-*",
+      "identity_file": "case-node.json",
+      "minimum_owner": 1,
+      "node_id": "tests/ifpmic_api/test_h2_worker_api_crashes.py::test_h2_api_commit_before_response_sigkill_retry_applies_once",
+      "phase": "worker_api_crashes",
+      "profile": "worker_api",
+      "queries_max": {},
+      "queries_min": {
+        "temporal.list_workflows": 1
+      },
+      "source_locations": [
+        {
+          "fact": "_root creates private UUID worker-api-* case directory and exact case-node.json identity marker derived from PYTEST_CURRENT_TEST.",
+          "lines": "228-237",
+          "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py"
+        },
+        {
+          "fact": "Canonical private JSON writer; runtime world, manifests, server record, config and process logs.",
+          "lines": "155-168,246-309",
+          "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py"
+        },
+        {
+          "fact": "Private barrier writes ready/reached event JSON; release marker is used only where the test writes it.",
+          "lines": "24-45,88-90",
+          "path": "tests/ifpmic_api/h2_worker_crash_child.py"
+        },
+        {
+          "fact": "Private process outputs, owner snapshots, query recorder and raw Temporal history writer.",
+          "lines": "96-137,289-317,389-432,483-535,548-600",
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py"
+        },
+        {
+          "fact": "Shared owner and temporal.list_workflows observation records.",
+          "lines": "25-100",
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py"
+        },
+        {
+          "fact": "Private settings JSON writer and exact top-level field list.",
+          "lines": "344-366",
+          "path": "tests/ifpmic_api/jobs_fixture.py"
+        },
+        {
+          "fact": "Path values are normalized recursively while unsupported objects are not stringified.",
+          "lines": "1-30",
+          "path": "tests/ifpmic_api/h2_private_values.py"
+        },
+        {
+          "fact": "verify_binary/process_identity/stop_all_owned helper definitions underpin exact server binary and process lifecycle records.",
+          "lines": "22-142",
+          "path": "scripts/ifpmic_temporal_toolchain.py"
+        },
+        {
+          "fact": "API crash branch writes settings, commit observation, retry receipt, runtime recovery with raw history and exact process records.",
+          "lines": "457-578",
+          "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py"
+        },
+        {
+          "fact": "API child writes reached.json after durable commit and blocks until release; test kills it before release.",
+          "lines": "15-61",
+          "path": "tests/ifpmic_api/h2_api_crash_child.py"
+        }
+      ],
+      "unresolved": []
+    },
+    {
+      "artifact_sources": {
+        "case-node.json": "_root writes actual qualified node identity and pytest phase marker.",
+        "worker-crash-recovery.json": "Shared _post_crash_recovery writer, includes exact before/after PBSeq hashes.",
+        "worker-cut-history-before-recovery.json": "Shared _post_crash_recovery writer counts events at cut."
+      },
+      "artifacts": [
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "owned-temporal-server.json",
+          "required_keys": [
+            "role",
+            "pid",
+            "start_ticks",
+            "log"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "source-manifest.json",
+          "required_keys": [
+            "format",
+            "files"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "environment-manifest.json",
+          "required_keys": [
+            "format",
+            "files",
+            "interpreter_sha256",
+            "python_version"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "owner-at-worker-cut.json",
+          "required_keys": [
+            "accepted",
+            "bindings",
+            "scopes",
+            "receipts",
+            "attempts",
+            "noncreate_commands"
+          ]
+        },
+        {
+          "format": "pbseq",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "history-at-worker-cut.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "pbseq",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "history-after-worker-recovery.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "worker-cut-history-before-recovery.json",
+          "required_keys": [
+            "event_count",
+            "project_activity_started",
+            "project_activity_completed"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "worker-crash-recovery.json",
+          "required_keys": [
+            "killed_process",
+            "before",
+            "after",
+            "temporal_before_event_count",
+            "temporal_after_event_count",
+            "temporal_before_sha256",
+            "temporal_after_sha256",
+            "project_activity_started_events",
+            "project_activity_completed_events",
+            "phase"
+          ],
+          "sha256_links": {
+            "/temporal_after_sha256": "history-after-worker-recovery.pbseq",
+            "/temporal_before_sha256": "history-at-worker-cut.pbseq"
+          }
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "authority-revoked-before-replay.json",
+          "required_keys": [
+            "membership_active",
+            "matching_profile_revocations"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "owned-process-cleanup.json",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "case-node.json",
+          "required_keys": [
+            "kind",
+            "node_id",
+            "pytest_current_test"
+          ]
+        },
+        {
+          "format": "pbseq",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-history.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "after_project_activation_commit-barrier/ready.json",
+          "required_keys": [
+            "status",
+            "monotonic"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "after_project_activation_commit-barrier/reached.json",
+          "required_keys": [
+            "phase",
+            "monotonic"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "owned-worker-cut-after_project_activation_commit.json",
+          "required_keys": [
+            "role",
+            "pid",
+            "start_ticks",
+            "stdout",
+            "stderr"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "child-logs/worker-cut-after_project_activation_commit.stdout",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "child-logs/worker-cut-after_project_activation_commit.stderr",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "owned-process-00.json",
+          "required_keys": [
+            "role",
+            "pid",
+            "start_ticks",
+            "log"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "owned-process-01.json",
+          "required_keys": [
+            "role",
+            "pid",
+            "start_ticks",
+            "stdout",
+            "stderr"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "owned-process-02.json",
+          "required_keys": [
+            "role",
+            "pid",
+            "start_ticks",
+            "stdout",
+            "stderr"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/dispatcher-stdout.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/dispatcher-stderr.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/worker-stdout.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/worker-stderr.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal.log",
+          "required_keys": []
+        }
+      ],
+      "case_directory": "worker-api-*",
+      "identity_file": "case-node.json",
+      "minimum_owner": 1,
+      "node_id": "tests/ifpmic_api/test_h2_worker_api_crashes.py::test_h2_worker_projection_after_pg_commit_sigkill_replays_receipt",
+      "phase": "worker_api_crashes",
+      "profile": "worker_api",
+      "queries_max": {},
+      "queries_min": {
+        "temporal.list_workflows": 1
+      },
+      "source_locations": [
+        {
+          "fact": "_root creates private UUID worker-api-* case directory and exact case-node.json identity marker derived from PYTEST_CURRENT_TEST.",
+          "lines": "228-237",
+          "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py"
+        },
+        {
+          "fact": "Canonical private JSON writer; runtime world, manifests, server record, config and process logs.",
+          "lines": "155-168,246-309",
+          "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py"
+        },
+        {
+          "fact": "Private barrier writes ready/reached event JSON; release marker is used only where the test writes it.",
+          "lines": "24-45,88-90",
+          "path": "tests/ifpmic_api/h2_worker_crash_child.py"
+        },
+        {
+          "fact": "Private process outputs, owner snapshots, query recorder and raw Temporal history writer.",
+          "lines": "96-137,289-317,389-432,483-535,548-600",
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py"
+        },
+        {
+          "fact": "Shared owner and temporal.list_workflows observation records.",
+          "lines": "25-100",
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py"
+        },
+        {
+          "fact": "Private settings JSON writer and exact top-level field list.",
+          "lines": "344-366",
+          "path": "tests/ifpmic_api/jobs_fixture.py"
+        },
+        {
+          "fact": "Path values are normalized recursively while unsupported objects are not stringified.",
+          "lines": "1-30",
+          "path": "tests/ifpmic_api/h2_private_values.py"
+        },
+        {
+          "fact": "verify_binary/process_identity/stop_all_owned helper definitions underpin exact server binary and process lifecycle records.",
+          "lines": "22-142",
+          "path": "scripts/ifpmic_temporal_toolchain.py"
+        },
+        {
+          "fact": "Projection cut/recovery helper writes owner snapshots, before/after PBSeq histories, history summary, crash-recovery object, process ownership records.",
+          "lines": "619-685",
+          "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py"
+        },
+        {
+          "fact": "Literal before-commit / after-commit test cases call the shared helper with their distinct hook phase.",
+          "lines": "686-722",
+          "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py"
+        },
+        {
+          "fact": "Worker phase barrier JSON writer.",
+          "lines": "17-45,88-90",
+          "path": "tests/ifpmic_api/h2_worker_crash_child.py"
+        },
+        {
+          "fact": "Case identity marker and UUID directory writer.",
+          "lines": "228-237",
+          "path": "tests/ifpmic_api/h2_worker_api_crashes.py"
+        }
+      ],
+      "unresolved": []
+    },
+    {
+      "artifact_sources": {
+        "case-node.json": "_root writes actual qualified node identity and pytest phase marker.",
+        "worker-crash-recovery.json": "Shared _post_crash_recovery writer, includes exact before/after PBSeq hashes.",
+        "worker-cut-history-before-recovery.json": "Shared _post_crash_recovery writer counts events at cut."
+      },
+      "artifacts": [
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "owned-temporal-server.json",
+          "required_keys": [
+            "role",
+            "pid",
+            "start_ticks",
+            "log"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "source-manifest.json",
+          "required_keys": [
+            "format",
+            "files"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "environment-manifest.json",
+          "required_keys": [
+            "format",
+            "files",
+            "interpreter_sha256",
+            "python_version"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "owner-at-worker-cut.json",
+          "required_keys": [
+            "accepted",
+            "bindings",
+            "scopes",
+            "receipts",
+            "attempts",
+            "noncreate_commands"
+          ]
+        },
+        {
+          "format": "pbseq",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "history-at-worker-cut.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "pbseq",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "history-after-worker-recovery.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "worker-cut-history-before-recovery.json",
+          "required_keys": [
+            "event_count",
+            "project_activity_started",
+            "project_activity_completed"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "worker-crash-recovery.json",
+          "required_keys": [
+            "killed_process",
+            "before",
+            "after",
+            "temporal_before_event_count",
+            "temporal_after_event_count",
+            "temporal_before_sha256",
+            "temporal_after_sha256",
+            "project_activity_started_events",
+            "project_activity_completed_events",
+            "phase"
+          ],
+          "sha256_links": {
+            "/temporal_after_sha256": "history-after-worker-recovery.pbseq",
+            "/temporal_before_sha256": "history-at-worker-cut.pbseq"
+          }
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "owned-process-cleanup.json",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "case-node.json",
+          "required_keys": [
+            "kind",
+            "node_id",
+            "pytest_current_test"
+          ]
+        },
+        {
+          "format": "pbseq",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-history.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "before_project_activation_commit-barrier/ready.json",
+          "required_keys": [
+            "status",
+            "monotonic"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "before_project_activation_commit-barrier/reached.json",
+          "required_keys": [
+            "phase",
+            "monotonic"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "owned-worker-cut-before_project_activation_commit.json",
+          "required_keys": [
+            "role",
+            "pid",
+            "start_ticks",
+            "stdout",
+            "stderr"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "child-logs/worker-cut-before_project_activation_commit.stdout",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "child-logs/worker-cut-before_project_activation_commit.stderr",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "owned-process-00.json",
+          "required_keys": [
+            "role",
+            "pid",
+            "start_ticks",
+            "log"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "owned-process-01.json",
+          "required_keys": [
+            "role",
+            "pid",
+            "start_ticks",
+            "stdout",
+            "stderr"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "owned-process-02.json",
+          "required_keys": [
+            "role",
+            "pid",
+            "start_ticks",
+            "stdout",
+            "stderr"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/dispatcher-stdout.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/dispatcher-stderr.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/worker-stdout.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/worker-stderr.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal.log",
+          "required_keys": []
+        }
+      ],
+      "case_directory": "worker-api-*",
+      "identity_file": "case-node.json",
+      "minimum_owner": 1,
+      "node_id": "tests/ifpmic_api/test_h2_worker_api_crashes.py::test_h2_worker_projection_before_pg_commit_sigkill_rolls_back_then_retries",
+      "phase": "worker_api_crashes",
+      "profile": "worker_api",
+      "queries_max": {},
+      "queries_min": {
+        "temporal.list_workflows": 1
+      },
+      "source_locations": [
+        {
+          "fact": "_root creates private UUID worker-api-* case directory and exact case-node.json identity marker derived from PYTEST_CURRENT_TEST.",
+          "lines": "228-237",
+          "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py"
+        },
+        {
+          "fact": "Canonical private JSON writer; runtime world, manifests, server record, config and process logs.",
+          "lines": "155-168,246-309",
+          "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py"
+        },
+        {
+          "fact": "Private barrier writes ready/reached event JSON; release marker is used only where the test writes it.",
+          "lines": "24-45,88-90",
+          "path": "tests/ifpmic_api/h2_worker_crash_child.py"
+        },
+        {
+          "fact": "Private process outputs, owner snapshots, query recorder and raw Temporal history writer.",
+          "lines": "96-137,289-317,389-432,483-535,548-600",
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py"
+        },
+        {
+          "fact": "Shared owner and temporal.list_workflows observation records.",
+          "lines": "25-100",
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py"
+        },
+        {
+          "fact": "Private settings JSON writer and exact top-level field list.",
+          "lines": "344-366",
+          "path": "tests/ifpmic_api/jobs_fixture.py"
+        },
+        {
+          "fact": "Path values are normalized recursively while unsupported objects are not stringified.",
+          "lines": "1-30",
+          "path": "tests/ifpmic_api/h2_private_values.py"
+        },
+        {
+          "fact": "verify_binary/process_identity/stop_all_owned helper definitions underpin exact server binary and process lifecycle records.",
+          "lines": "22-142",
+          "path": "scripts/ifpmic_temporal_toolchain.py"
+        },
+        {
+          "fact": "Projection cut/recovery helper writes owner snapshots, before/after PBSeq histories, history summary, crash-recovery object, process ownership records.",
+          "lines": "619-685",
+          "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py"
+        },
+        {
+          "fact": "Literal before-commit / after-commit test cases call the shared helper with their distinct hook phase.",
+          "lines": "686-722",
+          "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py"
+        },
+        {
+          "fact": "Worker phase barrier JSON writer.",
+          "lines": "17-45,88-90",
+          "path": "tests/ifpmic_api/h2_worker_crash_child.py"
+        },
+        {
+          "fact": "Case identity marker and UUID directory writer.",
+          "lines": "228-237",
+          "path": "tests/ifpmic_api/h2_worker_api_crashes.py"
+        }
+      ],
+      "unresolved": []
+    }
+  ],
+  "remaining_limitations": [
+    "This proposal maps source writers and their expected artifacts; it does not establish runtime production or a passing case.",
+    "Duplicate O_EXCL source defect repaired by separately reviewed onefilename change; both actualphase files nowrequired here. No actualruntime/identity/lifecycle acceptance follows from source repair.",
+    "The artifact checker does not enforce nested SQL, Temporal, proxy chronology, process identity, barrier order, workspace, authority, or cleanup semantics; the test and gate oracles must do so.",
+    "The API settings file contains authentication/database secrets and must remain private; it must never enter the proposed public archive.",
+    "For transport cleanup, transport-cleanup-failure.json is emitted only along an error path; positive artifact rules require transport-cleanup.json and a passing runner must reject the failure-only artifact if present.",
+    "Temporal database files and server logs are private auxiliary outputs. This proposal maps their paths but does not propose publishing them."
+  ],
+  "scope": {
+    "note": "Source-only corrected projection. The canonical machine rules, seven literal rows, phase/profile/directory/identity bindings, owner/query constraints and all original unresolved strings are preserved. This proposal maps reviewer-confirmed source repairs and missing conditional/common artifacts; it authorizes no execution and accepts no runtime evidence.",
+    "original_artifact_count": 106,
+    "original_unresolved_count": 51,
+    "phase_rows": 7,
+    "phases": [
+      "transport",
+      "worker_api_crashes"
+    ],
+    "proposed_artifact_count": 141,
+    "remaining_new_source_blockers": 0,
+    "source_mapped_original_unresolved_count": 51
+  },
+  "scope_compatibility": {
+    "bounded_source_repair_already_repin_committed": true,
+    "exact_current_input_scope_rows": 7,
+    "original51_unresolved_annotations_unchanged": true,
+    "sha256_sorted_compact_json": "56be7c4a971766eb4d236cf11c4621ef31fe86fb64221eb8e704a31279269489"
+  },
+  "source_pins": {
+    "scripts/ifpmic_temporal_toolchain.py": "8cadab76ccfa1f93392cf759991d6906415c75ed5a116093c53aee9f4a445564",
+    "tests/ifpmic_api/h2_api_crash_child.py": "29100b07e82334a2fc3193fbc55c784e7ede69cb4f0aa6dc60a4152e2d0cd4db",
+    "tests/ifpmic_api/h2_dispatcher_crash_support.py": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472",
+    "tests/ifpmic_api/h2_private_values.py": "ea2e828b0956f5e5bf9dd7f3c35441b948e1d0d17a49367b1d6ddd0c039cf86e",
+    "tests/ifpmic_api/h2_snapshot_evidence.py": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c",
+    "tests/ifpmic_api/h2_transport_boundary_child.py": "ddac239eb8244b08671922c5cee255e608ad2c4589099499c1f3dd7ccc796300",
+    "tests/ifpmic_api/h2_worker_crash_child.py": "003ba93a06fb3d5a81c0661e7c68ae4cfc56b95fb70c9bbf8afdd2c45b83b4cd",
+    "tests/ifpmic_api/jobs_fixture.py": "b8fefc39f3005b3a662124ae3182cee4e7a293e18dd4e84d18facd09c0e0d539",
+    "tests/ifpmic_api/response_loss_proxy.py": "b6f8ca62f21724bf26aac6395528092257e7c48b729d19df02adf7281b9ed512",
+    "tests/ifpmic_api/test_accepted_start_response_loss.py": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8",
+    "tests/ifpmic_api/test_h2_runtime_normal_flow.py": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d",
+    "tests/ifpmic_api/test_h2_transport_boundaries.py": "6679eea681edd6f847e18aa75f1cee4d44f230d7ac9e7b88bc6253cbe5918372",
+    "tests/ifpmic_api/test_h2_worker_api_crashes.py": "9ad3c1be60c3975cfe3a30fab972463361ac90c8e5f5b3a47461307d20ef35d3"
+  },
+  "status": "source_repair_projection_pending_exact_independent_review_no_execution",
+  "superseded_proposal": {
+    "path": "docs/ifpmic/evidence/b03/h2-machine-resolution-transport-worker-v3.json",
+    "sha256": "8be0f6c5fee6cf58ee0fd2d1fba5686a9122c3228f49d75d097ab853dd08c966",
+    "reason": "Rejected by exact review; this v4 corrects its five findings without changing the canonical input."
+  },
+  "source_repair_review": {
+    "review_path": "docs/ifpmic/evidence/b03/h2-machine-resolution-transport-worker-review-v3.json",
+    "review_sha256": "bafa0074e3897c536e88af7c0f50e757ac753fb856a3f449395ffb9eb0657bc3",
+    "review_findings_addressed": [
+      {
+        "finding": "transport _release passed one argument to a two-argument private writer",
+        "source": "tests/ifpmic_api/test_h2_transport_boundaries.py:69-81,108",
+        "correction": "The call now supplies the exact empty-byte payload; O_EXCL/private mode/fsync writer remains."
+      },
+      {
+        "finding": "worker activity-completed called an undefined barrier helper",
+        "source": "tests/ifpmic_api/test_h2_worker_api_crashes.py:399,761",
+        "correction": "The call now names _wait_for_activity_barrier with unchanged arguments."
+      },
+      {
+        "finding": "worker API outer owned-process-00 is the Temporal server record",
+        "source": "tests/ifpmic_api/test_h2_worker_api_crashes.py:161-165,260-271",
+        "correction": "Require role,pid,start_ticks,log for all four first records; retain separate API child record and ordinary CLI stdout/stderr rules."
+      },
+      {
+        "finding": "transport machine result schemas were incomplete",
+        "source": "tests/ifpmic_api/test_h2_transport_boundaries.py:252-274,276-349",
+        "correction": "Branch-specific exact top-level key sets now reflect literal writes."
+      },
+      {
+        "finding": "transport prepare-case common artifacts and stopped dispatcher record were omitted",
+        "source": "tests/ifpmic_api/h2_dispatcher_crash_support.py:299,326-328; tests/ifpmic_api/test_h2_worker_api_crashes.py:613-620,767",
+        "correction": "Added three common prepare-case artifacts to each transport row and activity-completed stopped-dispatcher JSON."
+      }
+    ],
+    "preservation": "All seven node IDs, phases, profiles, case directory/identity rules, owner minima, query minima/maxima and 51 original unresolved strings are retained. No evidence was produced, opened, or accepted."
+  }
+}

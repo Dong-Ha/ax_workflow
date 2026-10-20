@@ -1,0 +1,42 @@
+{
+  "kind": "ifpmic.b03.h2.activity-source-projection-review.v4.addendum",
+  "review_date": "2026-10-21",
+  "reviewer": "/root/h2_evidence_amendment_review",
+  "decision": "block_direct_v4_integration_pending_exact_corrected_projection",
+  "original_review": {
+    "path": "docs/ifpmic/evidence/b03/h2-machine-resolution-activity-review-v4.json",
+    "sha256": "b9f93168c54082afdb6cd2197ac2d1e2df0e30716cf7c907fac79672f11767e1",
+    "preserved_unchanged": true
+  },
+  "proposal": {
+    "path": "docs/ifpmic/evidence/b03/h2-machine-resolution-activity-v4.json",
+    "sha256": "b80ab6b3fbc4b9ce25735512884c95812b0ecfa5f2ed552590a81260e099a1c3"
+  },
+  "finding": {
+    "issue": "The review failed to account for2 retained nonempty row unresolved arrays. Its direct integration authorization is therefore withdrawn for v4;196-rule source findings and the bounded descriptive metadata finding remain supported.",
+    "retained_rows": [
+      {
+        "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_execution_runtime_kills_hung_real_driver_and_rolls_back",
+        "unresolved": [
+          "Raw source gap: post-SIGTERM PostgreSQL backend disappearance is measured dynamically and bounded by the source deadline, but static source cannot prove the observed backend disappearance timing or successful result. Keep the exact private rollback JSON and require runtime semantic review."
+        ]
+      },
+      {
+        "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_noncreate_signal_targets_admitted_run_without_business_consumption",
+        "unresolved": [
+          "Source-level duplicate dispatcher log collision: _start_pair creates process-logs/dispatcher-{stdout,stderr}.log using O_EXCL, then this test calls _start_cli(case,\"dispatcher\") again; normal._spawn_runtime_cli opens the same exact filenames with O_EXCL. The source cannot reach the intended second dispatcher unless log ownership is repaired. Keep this node blocked."
+        ]
+      }
+    ],
+    "source_disposition": "The hung-driver producer already serializes actual PG observations; its dynamic timing/result is a mandatory runtime semantic obligation, not a missing source writer. The noncreate dispatcher path collision is historical and separately repaired in exact source3c5bff7d. Preserve both original strings with explicit runtime/historical classifications outside projected unresolved arrays."
+  },
+  "integration_state": {
+    "canonical_sha256": "e3ea6894bb18efcae94b13b51037b383cef64d23157b9cfbf91d9dc77bd73774",
+    "canonical_unchanged": true,
+    "resolved_rows": 75,
+    "remaining_rows": 12,
+    "runtime_executed": false
+  },
+  "required_next_action": "Independently review a new exact projection that clears only these2 arrays, preserves their verbatim strings as external obligations and leaves all other source mappings/runtime gates intact. This addendum authorizes no canonical writes or execution.",
+  "review_method": "Static JSON/source/hash reads only; no imports, tests, SQL, SDK, services or network."
+}

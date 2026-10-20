@@ -1,0 +1,73 @@
+{
+  "kind": "ifpmic.b03.h2.activity-source-projection-review.v5",
+  "review_date": "2026-10-21",
+  "reviewer": "/root/h2_evidence_amendment_review",
+  "decision": "approve_exact_12_row_source_projection_and_bounded_descriptive_metadata_only",
+  "proposal": {
+    "path": "docs/ifpmic/evidence/b03/h2-machine-resolution-activity-v5.json",
+    "sha256": "dec7bfe9f9bb9648a405e74c89e8e11676388406f97c94b6b4118659e3044870"
+  },
+  "input_machine": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules.json",
+    "commit": "8d208eb",
+    "sha256": "33622d9944cafea7345526e25db524d06c6f64b2c04a73e7d0b55dbd8986bbd5",
+    "compatible_current_sha256": "e3ea6894bb18efcae94b13b51037b383cef64d23157b9cfbf91d9dc77bd73774",
+    "compatibility": "All12 literal target input rows are byte-value identical to the current canonical rows; unrelated prior integrations are preserved."
+  },
+  "retained_review_correction": {
+    "v4_review": {
+      "path": "docs/ifpmic/evidence/b03/h2-machine-resolution-activity-review-v4.json",
+      "sha256": "b9f93168c54082afdb6cd2197ac2d1e2df0e30716cf7c907fac79672f11767e1"
+    },
+    "addendum": {
+      "path": "docs/ifpmic/evidence/b03/h2-machine-resolution-activity-review-v4-addendum.json",
+      "sha256": "3cd26ef3867cde9de0a72ee40b4a01dc68cb200eae7b811fd85c4dd066b8b5ad"
+    },
+    "correction": "v4 retained2 nonempty row unresolved arrays overlooked by the original reviewer. Its direct integration approval was withdrawn before canonical writes. This v5 review explicitly resolves only their source-applicability classification; the original files remain unchanged."
+  },
+  "findings": [],
+  "evidence": {
+    "literal_rows": 12,
+    "rules": 196,
+    "original_source_annotations": 83,
+    "supporting_source_pins": 5,
+    "exact_delta": "Compared to exact b80ab6 v4, the only proposed-row changes are unresolved=[] on hung-driver row4 and noncreate-signal row10. Every artifact, node, parameter, source location, bound and all other row fields are identical. All12 rows now have empty unresolved arrays. The83 original annotation records and5 current source pins are unchanged. Both removed blocker arrays are preserved verbatim in resolved_leftover_row_blockers with literal node IDs and source dispositions. Only external provenance/version/status/disposition metadata otherwise changes.",
+    "hung_driver_resolution": "Actual source725-764 queries the exact database/projector/backend identity and observes active transaction then backend absence under an absolute native-call bound. The test writes the actual returned values as pg_state and pg_backend_after_kill in hung-driver-rollback.json at source831-843. This closes the claimed missing source writer only. Actual timing, identity, rollback, receipt recovery, history and successful cleanup remain mandatory runtime semantic obligations.",
+    "noncreate_resolution": "Exact separately reviewed source3c5bff7d validates an activity-local instance_label before I/O, passes distinct dispatcher-noncreate-signal paths on the second call, retains logical config and normalizes record role before ownership/journal recording. The prior deterministic O_EXCL collision is historical. Actual second launch, delivery and cleanup remain runtime obligations.",
+    "prior_supported_source_findings": "All196 literal artifact/parser/schema/path bindings and the corrected authority roots, mandatory10 PBSeq formats and5 success marker rules remain those statically accepted in the preserved v4 source review. No producer/checker/oracle/budget changed.",
+    "canonical_unchanged_at_review": "e3ea6894bb18efcae94b13b51037b383cef64d23157b9cfbf91d9dc77bd73774"
+  },
+  "separate_bounded_descriptive_metadata_authorization": {
+    "object": "schema_scope.owner_snapshot_observation",
+    "delete_only": {
+      ",": "), allow_nan=false over snapshot"
+    },
+    "replace_only": {
+      "semantic_digest": {
+        "before": "canonical JSON ensure_ascii=true, sort_keys=true, separators=(",
+        "after": "SHA256 of json.dumps(snapshot, ensure_ascii=True, sort_keys=True, separators=(',', ':'), allow_nan=False).encode('ascii')"
+      }
+    },
+    "source_evidence": {
+      "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+      "sha256": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c",
+      "lines": "86-97",
+      "finding": "record_owner_snapshot builds these exact canonical snapshot bytes and stores their SHA256."
+    },
+    "scope": "Descriptive typo correction only. Preserve this object required_keys/source and all checker constraints, source bytes, other metadata and runtime oracles."
+  },
+  "authorization": {
+    "replace_only_exact_12_v5_proposed_rows_and_clear_their_83_source_annotations": true,
+    "add_exact_v5_proposal_and_this_review_sha_source_resolution_pointers": true,
+    "perform_only_the_explicit_separate_owner_digest_metadata_correction": true,
+    "change_other_rows_source_tests_checker_or_runtime_oracles": false,
+    "imports_collection_tests_sql_sdk_services_network_execution": false,
+    "whole_mapping_contract_h2_iteration_or_goal_acceptance": false
+  },
+  "risks_and_remaining_uncertainty": [
+    "Completing all87 source mappings does not establish actual invocation completeness, nested SQL/history semantics, authority, barrier ordering, process identity, deadline behavior or cleanup success. These require the complete versioned closure/ledger/contract, whole-source review, paired pre-gates and actual fresh490/JUnit/private raw evidence.",
+    "The retained407 and119 synthetic proof cannot substitute for the current490 candidate. Original inventory,25+5 obligations, case/phase caps and16220-second outer budget remain mandatory."
+  ],
+  "recommendation": "Integrate only exact v5 rows and bound pointers, preserve both external source/runtime dispositions and all earlier reviews, and apply only the explicit descriptive metadata correction. Whole source/contract/paired gates and actual fresh490 evidence remain prerequisites to runtime acceptance.",
+  "review_method": "Read-only source/JSON/SHA and exact structural comparison; no repository imports, collection, tests, SQL, SDK, services or network."
+}

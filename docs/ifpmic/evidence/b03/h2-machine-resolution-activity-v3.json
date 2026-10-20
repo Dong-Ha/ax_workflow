@@ -1,0 +1,3438 @@
+{
+  "case_annotations": [
+    {
+      "case_directory": "authority-before-first-projection-eligibility",
+      "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_authority_revoked_before_first_projection[eligibility]",
+      "original_unresolved": [
+        {
+          "evidence": [
+            "The parameter value is literal membership or eligibility. _revoke_authority writes authority-<authority>.json; child _event writes barrier JSON with event/monotonic. History is explicitly written after rejected completion."
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: before_first_projection_sql.json barrier",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The parameter value is literal membership or eligibility. _revoke_authority writes authority-<authority>.json; child _event writes barrier JSON with event/monotonic. History is explicitly written after rejected completion."
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: process logs",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The parameter value is literal membership or eligibility. _revoke_authority writes authority-<authority>.json; child _event writes barrier JSON with event/monotonic. History is explicitly written after rejected completion."
+          ],
+          "original": "JSON top-level keys not fully source-verified for before_first_projection_sql.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The parameter value is literal membership or eligibility. _revoke_authority writes authority-<authority>.json; child _event writes barrier JSON with event/monotonic. History is explicitly written after rejected completion."
+          ],
+          "original": "JSON top-level keys not fully source-verified for authority-eligibility.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The parameter value is literal membership or eligibility. _revoke_authority writes authority-<authority>.json; child _event writes barrier JSON with event/monotonic. History is explicitly written after rejected completion."
+          ],
+          "original": "JSON top-level keys not fully source-verified for process-journal.jsonl",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The parameter value is literal membership or eligibility. _revoke_authority writes authority-<authority>.json; child _event writes barrier JSON with event/monotonic. History is explicitly written after rejected completion."
+          ],
+          "original": "JSON top-level keys not fully source-verified for process-cleanup.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The parameter value is literal membership or eligibility. _revoke_authority writes authority-<authority>.json; child _event writes barrier JSON with event/monotonic. History is explicitly written after rejected completion."
+          ],
+          "original": "Artifact write source location not resolved statically: authority-eligibility.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The parameter value is literal membership or eligibility. _revoke_authority writes authority-<authority>.json; child _event writes barrier JSON with event/monotonic. History is explicitly written after rejected completion."
+          ],
+          "original": "Artifact write source location not resolved statically: authority-rejected-history.pbseq",
+          "status": "source_mapped"
+        }
+      ],
+      "owner_query_source_mapping": {
+        "explanation": "Owner/query records are emitted by actual recorder call sites in the pinned test/runtime helpers; this proposal retains the literal existing bounds.",
+        "minimum_owner_preserved": 1,
+        "queries_max_preserved": {},
+        "queries_min_preserved": {}
+      },
+      "source_evidence_refs": [
+        {
+          "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
+          "sha256": "3c5bff7d8f858cad04665b850124f04bdab3684b7732592aad69dc2f8fda58f7"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_activity_runtime_boundary_child.py",
+          "sha256": "c140c731869ce13a4e3a13306a7e9bfa48ff1233ac1ea50fdef016020449f281"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "sha256": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "sha256": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c"
+        }
+      ],
+      "source_mapping_note": "The parameter value is literal membership or eligibility. _revoke_authority writes authority-<authority>.json; child _event writes barrier JSON with event/monotonic. History is explicitly written after rejected completion."
+    },
+    {
+      "case_directory": "authority-before-first-projection-membership",
+      "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_authority_revoked_before_first_projection[membership]",
+      "original_unresolved": [
+        {
+          "evidence": [
+            "The parameter value is literal membership or eligibility. _revoke_authority writes authority-<authority>.json; child _event writes barrier JSON with event/monotonic. History is explicitly written after rejected completion."
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: before_first_projection_sql.json barrier",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The parameter value is literal membership or eligibility. _revoke_authority writes authority-<authority>.json; child _event writes barrier JSON with event/monotonic. History is explicitly written after rejected completion."
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: process logs",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The parameter value is literal membership or eligibility. _revoke_authority writes authority-<authority>.json; child _event writes barrier JSON with event/monotonic. History is explicitly written after rejected completion."
+          ],
+          "original": "JSON top-level keys not fully source-verified for before_first_projection_sql.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The parameter value is literal membership or eligibility. _revoke_authority writes authority-<authority>.json; child _event writes barrier JSON with event/monotonic. History is explicitly written after rejected completion."
+          ],
+          "original": "JSON top-level keys not fully source-verified for authority-membership.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The parameter value is literal membership or eligibility. _revoke_authority writes authority-<authority>.json; child _event writes barrier JSON with event/monotonic. History is explicitly written after rejected completion."
+          ],
+          "original": "JSON top-level keys not fully source-verified for process-journal.jsonl",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The parameter value is literal membership or eligibility. _revoke_authority writes authority-<authority>.json; child _event writes barrier JSON with event/monotonic. History is explicitly written after rejected completion."
+          ],
+          "original": "JSON top-level keys not fully source-verified for process-cleanup.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The parameter value is literal membership or eligibility. _revoke_authority writes authority-<authority>.json; child _event writes barrier JSON with event/monotonic. History is explicitly written after rejected completion."
+          ],
+          "original": "Artifact write source location not resolved statically: authority-membership.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The parameter value is literal membership or eligibility. _revoke_authority writes authority-<authority>.json; child _event writes barrier JSON with event/monotonic. History is explicitly written after rejected completion."
+          ],
+          "original": "Artifact write source location not resolved statically: authority-rejected-history.pbseq",
+          "status": "source_mapped"
+        }
+      ],
+      "owner_query_source_mapping": {
+        "explanation": "Owner/query records are emitted by actual recorder call sites in the pinned test/runtime helpers; this proposal retains the literal existing bounds.",
+        "minimum_owner_preserved": 1,
+        "queries_max_preserved": {},
+        "queries_min_preserved": {}
+      },
+      "source_evidence_refs": [
+        {
+          "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
+          "sha256": "3c5bff7d8f858cad04665b850124f04bdab3684b7732592aad69dc2f8fda58f7"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_activity_runtime_boundary_child.py",
+          "sha256": "c140c731869ce13a4e3a13306a7e9bfa48ff1233ac1ea50fdef016020449f281"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "sha256": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "sha256": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c"
+        }
+      ],
+      "source_mapping_note": "The parameter value is literal membership or eligibility. _revoke_authority writes authority-<authority>.json; child _event writes barrier JSON with event/monotonic. History is explicitly written after rejected completion."
+    },
+    {
+      "case_directory": "activity-receipt-replay-eligibility",
+      "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_committed_receipt_replays_after_authority_revoke[eligibility]",
+      "original_unresolved": [
+        {
+          "evidence": [
+            "The source writes both before/after PBSeq snapshots and authority file. No worker-crash-recovery.json writer exists in this literal path; process journal plus intended SIGKILL and process cleanup are the actual child lifecycle evidence."
+          ],
+          "original": "JSON top-level keys not fully source-verified for worker-crash-recovery.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The source writes both before/after PBSeq snapshots and authority file. No worker-crash-recovery.json writer exists in this literal path; process journal plus intended SIGKILL and process cleanup are the actual child lifecycle evidence."
+          ],
+          "original": "JSON top-level keys not fully source-verified for authority-eligibility.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The source writes both before/after PBSeq snapshots and authority file. No worker-crash-recovery.json writer exists in this literal path; process journal plus intended SIGKILL and process cleanup are the actual child lifecycle evidence."
+          ],
+          "original": "JSON top-level keys not fully source-verified for process-journal.jsonl",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The source writes both before/after PBSeq snapshots and authority file. No worker-crash-recovery.json writer exists in this literal path; process journal plus intended SIGKILL and process cleanup are the actual child lifecycle evidence."
+          ],
+          "original": "JSON top-level keys not fully source-verified for process-cleanup.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The source writes both before/after PBSeq snapshots and authority file. No worker-crash-recovery.json writer exists in this literal path; process journal plus intended SIGKILL and process cleanup are the actual child lifecycle evidence."
+          ],
+          "original": "Artifact write source location not resolved statically: worker-crash-recovery.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The source writes both before/after PBSeq snapshots and authority file. No worker-crash-recovery.json writer exists in this literal path; process journal plus intended SIGKILL and process cleanup are the actual child lifecycle evidence."
+          ],
+          "original": "Artifact write source location not resolved statically: history-before-lost-activity-result.pbseq",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The source writes both before/after PBSeq snapshots and authority file. No worker-crash-recovery.json writer exists in this literal path; process journal plus intended SIGKILL and process cleanup are the actual child lifecycle evidence."
+          ],
+          "original": "Artifact write source location not resolved statically: history-after-receipt-replay.pbseq",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The source writes both before/after PBSeq snapshots and authority file. No worker-crash-recovery.json writer exists in this literal path; process journal plus intended SIGKILL and process cleanup are the actual child lifecycle evidence."
+          ],
+          "original": "Artifact write source location not resolved statically: authority-eligibility.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The source writes both before/after PBSeq snapshots and authority file. No worker-crash-recovery.json writer exists in this literal path; process journal plus intended SIGKILL and process cleanup are the actual child lifecycle evidence."
+          ],
+          "original": "Raw contract names worker-crash-recovery.json, but no writer for that filename is present in this literal activity receipt replay source/support set; exclude until provenance is reconciled.",
+          "status": "source_mapped"
+        }
+      ],
+      "owner_query_source_mapping": {
+        "explanation": "Owner/query records are emitted by actual recorder call sites in the pinned test/runtime helpers; this proposal retains the literal existing bounds.",
+        "minimum_owner_preserved": 1,
+        "queries_max_preserved": {},
+        "queries_min_preserved": {}
+      },
+      "source_evidence_refs": [
+        {
+          "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
+          "sha256": "3c5bff7d8f858cad04665b850124f04bdab3684b7732592aad69dc2f8fda58f7"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_activity_runtime_boundary_child.py",
+          "sha256": "c140c731869ce13a4e3a13306a7e9bfa48ff1233ac1ea50fdef016020449f281"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "sha256": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "sha256": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c"
+        }
+      ],
+      "source_mapping_note": "The source writes both before/after PBSeq snapshots and authority file. No worker-crash-recovery.json writer exists in this literal path; process journal plus intended SIGKILL and process cleanup are the actual child lifecycle evidence."
+    },
+    {
+      "case_directory": "activity-receipt-replay-membership",
+      "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_committed_receipt_replays_after_authority_revoke[membership]",
+      "original_unresolved": [
+        {
+          "evidence": [
+            "The source writes both before/after PBSeq snapshots and authority file. No worker-crash-recovery.json writer exists in this literal path; process journal plus intended SIGKILL and process cleanup are the actual child lifecycle evidence."
+          ],
+          "original": "JSON top-level keys not fully source-verified for worker-crash-recovery.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The source writes both before/after PBSeq snapshots and authority file. No worker-crash-recovery.json writer exists in this literal path; process journal plus intended SIGKILL and process cleanup are the actual child lifecycle evidence."
+          ],
+          "original": "JSON top-level keys not fully source-verified for authority-membership.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The source writes both before/after PBSeq snapshots and authority file. No worker-crash-recovery.json writer exists in this literal path; process journal plus intended SIGKILL and process cleanup are the actual child lifecycle evidence."
+          ],
+          "original": "JSON top-level keys not fully source-verified for process-journal.jsonl",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The source writes both before/after PBSeq snapshots and authority file. No worker-crash-recovery.json writer exists in this literal path; process journal plus intended SIGKILL and process cleanup are the actual child lifecycle evidence."
+          ],
+          "original": "JSON top-level keys not fully source-verified for process-cleanup.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The source writes both before/after PBSeq snapshots and authority file. No worker-crash-recovery.json writer exists in this literal path; process journal plus intended SIGKILL and process cleanup are the actual child lifecycle evidence."
+          ],
+          "original": "Artifact write source location not resolved statically: worker-crash-recovery.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The source writes both before/after PBSeq snapshots and authority file. No worker-crash-recovery.json writer exists in this literal path; process journal plus intended SIGKILL and process cleanup are the actual child lifecycle evidence."
+          ],
+          "original": "Artifact write source location not resolved statically: history-before-lost-activity-result.pbseq",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The source writes both before/after PBSeq snapshots and authority file. No worker-crash-recovery.json writer exists in this literal path; process journal plus intended SIGKILL and process cleanup are the actual child lifecycle evidence."
+          ],
+          "original": "Artifact write source location not resolved statically: history-after-receipt-replay.pbseq",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The source writes both before/after PBSeq snapshots and authority file. No worker-crash-recovery.json writer exists in this literal path; process journal plus intended SIGKILL and process cleanup are the actual child lifecycle evidence."
+          ],
+          "original": "Artifact write source location not resolved statically: authority-membership.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The source writes both before/after PBSeq snapshots and authority file. No worker-crash-recovery.json writer exists in this literal path; process journal plus intended SIGKILL and process cleanup are the actual child lifecycle evidence."
+          ],
+          "original": "Raw contract names worker-crash-recovery.json, but no writer for that filename is present in this literal activity receipt replay source/support set; exclude until provenance is reconciled.",
+          "status": "source_mapped"
+        }
+      ],
+      "owner_query_source_mapping": {
+        "explanation": "Owner/query records are emitted by actual recorder call sites in the pinned test/runtime helpers; this proposal retains the literal existing bounds.",
+        "minimum_owner_preserved": 1,
+        "queries_max_preserved": {},
+        "queries_min_preserved": {}
+      },
+      "source_evidence_refs": [
+        {
+          "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
+          "sha256": "3c5bff7d8f858cad04665b850124f04bdab3684b7732592aad69dc2f8fda58f7"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_activity_runtime_boundary_child.py",
+          "sha256": "c140c731869ce13a4e3a13306a7e9bfa48ff1233ac1ea50fdef016020449f281"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "sha256": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "sha256": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c"
+        }
+      ],
+      "source_mapping_note": "The source writes both before/after PBSeq snapshots and authority file. No worker-crash-recovery.json writer exists in this literal path; process journal plus intended SIGKILL and process cleanup are the actual child lifecycle evidence."
+    },
+    {
+      "case_directory": "runtime-hung-driver",
+      "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_execution_runtime_kills_hung_real_driver_and_rolls_back",
+      "original_unresolved": [
+        {
+          "evidence": [
+            "The two live PostgreSQL observations are nested in hung-driver-rollback.json under pg_state and pg_backend_after_kill; source does not write separate PG observation files."
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: PostgreSQL backend observation records",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The two live PostgreSQL observations are nested in hung-driver-rollback.json under pg_state and pg_backend_after_kill; source does not write separate PG observation files."
+          ],
+          "original": "JSON top-level keys not fully source-verified for projection_driver_blocked.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The two live PostgreSQL observations are nested in hung-driver-rollback.json under pg_state and pg_backend_after_kill; source does not write separate PG observation files."
+          ],
+          "original": "JSON top-level keys not fully source-verified for hung-driver-rollback.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The two live PostgreSQL observations are nested in hung-driver-rollback.json under pg_state and pg_backend_after_kill; source does not write separate PG observation files."
+          ],
+          "original": "JSON top-level keys not fully source-verified for process-journal.jsonl",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The two live PostgreSQL observations are nested in hung-driver-rollback.json under pg_state and pg_backend_after_kill; source does not write separate PG observation files."
+          ],
+          "original": "JSON top-level keys not fully source-verified for process-cleanup.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The checker can validate private nested observations, but source-only mapping cannot establish observed disappearance timing."
+          ],
+          "original": "Raw source gap: backend disappearance timing remains dynamically unverified; use bound from pinned plan and do not claim from source.",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The two live PostgreSQL observations are nested in hung-driver-rollback.json under pg_state and pg_backend_after_kill; source does not write separate PG observation files."
+          ],
+          "original": "Artifact write source location not resolved statically: history-after-hung-driver-kill.pbseq",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The two live PostgreSQL observations are nested in hung-driver-rollback.json under pg_state and pg_backend_after_kill; source does not write separate PG observation files."
+          ],
+          "original": "Artifact write source location not resolved statically: history-after-driver-rollback-recovery.pbseq",
+          "status": "source_mapped"
+        }
+      ],
+      "owner_query_source_mapping": {
+        "explanation": "Owner/query records are emitted by actual recorder call sites in the pinned test/runtime helpers; this proposal retains the literal existing bounds.",
+        "minimum_owner_preserved": 1,
+        "queries_max_preserved": {},
+        "queries_min_preserved": {}
+      },
+      "source_evidence_refs": [
+        {
+          "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
+          "sha256": "3c5bff7d8f858cad04665b850124f04bdab3684b7732592aad69dc2f8fda58f7"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_activity_runtime_boundary_child.py",
+          "sha256": "c140c731869ce13a4e3a13306a7e9bfa48ff1233ac1ea50fdef016020449f281"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "sha256": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "sha256": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c"
+        }
+      ],
+      "source_mapping_note": "The raw producer writes hung-driver-rollback.json with pg_state (the actual pg_stat_activity row during the blocked query), pg_backend_after_kill (the actual disappearance poll result), and associated process/deadline/recovery fields. These rows are source-mapped; actual values, timing predicates and recovery assertions remain mandatory runtime oracles for a fresh full run.",
+      "runtime_obligations": [
+        "On execution, require the private hung-driver-rollback.json and both PBSeq histories to be present and validate their source-confirmed structures.",
+        "Independently enforce pg_state identity/query/state and pg_backend_after_kill absent=true with observed_monotonic no later than backend_deadline_monotonic; source mapping does not claim these runtime conditions passed.",
+        "Require the existing test oracle to prove bounded worker self-exit, no projection/receipt before recovery, one successful recovery projection, and matching Temporal event history."
+      ]
+    },
+    {
+      "case_directory": "runtime-normal-sigterm",
+      "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_execution_runtime_normal_sigterm_control",
+      "original_unresolved": [
+        {
+          "evidence": [
+            "The child emits worker_run_entered, then test sends SIGTERM. _list_runs records an empty result as a shared query; no history file is emitted because the result is empty."
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: process logs",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The child emits worker_run_entered, then test sends SIGTERM. _list_runs records an empty result as a shared query; no history file is emitted because the result is empty."
+          ],
+          "original": "JSON top-level keys not fully source-verified for worker_run_entered.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The child emits worker_run_entered, then test sends SIGTERM. _list_runs records an empty result as a shared query; no history file is emitted because the result is empty."
+          ],
+          "original": "JSON top-level keys not fully source-verified for process-journal.jsonl",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The child emits worker_run_entered, then test sends SIGTERM. _list_runs records an empty result as a shared query; no history file is emitted because the result is empty."
+          ],
+          "original": "JSON top-level keys not fully source-verified for process-cleanup.json",
+          "status": "source_mapped"
+        }
+      ],
+      "owner_query_source_mapping": {
+        "explanation": "Owner/query records are emitted by actual recorder call sites in the pinned test/runtime helpers; this proposal retains the literal existing bounds.",
+        "minimum_owner_preserved": 1,
+        "queries_max_preserved": {},
+        "queries_min_preserved": {
+          "temporal.list_workflows": 1
+        }
+      },
+      "source_evidence_refs": [
+        {
+          "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
+          "sha256": "3c5bff7d8f858cad04665b850124f04bdab3684b7732592aad69dc2f8fda58f7"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_activity_runtime_boundary_child.py",
+          "sha256": "c140c731869ce13a4e3a13306a7e9bfa48ff1233ac1ea50fdef016020449f281"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "sha256": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "sha256": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c"
+        }
+      ],
+      "source_mapping_note": "The child emits worker_run_entered, then test sends SIGTERM. _list_runs records an empty result as a shared query; no history file is emitted because the result is empty."
+    },
+    {
+      "case_directory": "runtime-exit-runtime-concurrent-fatal",
+      "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_execution_runtime_surfaces_unrequested_worker_exit[runtime-concurrent-fatal]",
+      "original_unresolved": [
+        {
+          "evidence": [
+            "Child _event records action JSON. For concurrent-fatal the mode self-sends SIGTERM and the test releases worker task; for fatal/return the test writes literal action bytes then release. Expected exit 3 is a test oracle. Empty list query is recorder evidence; no history bytes exist."
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: task action files",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Child _event records action JSON. For concurrent-fatal the mode self-sends SIGTERM and the test releases worker task; for fatal/return the test writes literal action bytes then release. Expected exit 3 is a test oracle. Empty list query is recorder evidence; no history bytes exist."
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: process logs",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Child _event records action JSON. For concurrent-fatal the mode self-sends SIGTERM and the test releases worker task; for fatal/return the test writes literal action bytes then release. Expected exit 3 is a test oracle. Empty list query is recorder evidence; no history bytes exist."
+          ],
+          "original": "JSON top-level keys not fully source-verified for worker_run_entered.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Child _event records action JSON. For concurrent-fatal the mode self-sends SIGTERM and the test releases worker task; for fatal/return the test writes literal action bytes then release. Expected exit 3 is a test oracle. Empty list query is recorder evidence; no history bytes exist."
+          ],
+          "original": "JSON top-level keys not fully source-verified for worker_fatal_armed.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Child _event records action JSON. For concurrent-fatal the mode self-sends SIGTERM and the test releases worker task; for fatal/return the test writes literal action bytes then release. Expected exit 3 is a test oracle. Empty list query is recorder evidence; no history bytes exist."
+          ],
+          "original": "JSON top-level keys not fully source-verified for concurrent_sigterm_sent.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Child _event records action JSON. For concurrent-fatal the mode self-sends SIGTERM and the test releases worker task; for fatal/return the test writes literal action bytes then release. Expected exit 3 is a test oracle. Empty list query is recorder evidence; no history bytes exist."
+          ],
+          "original": "JSON top-level keys not fully source-verified for process-journal.jsonl",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Child _event records action JSON. For concurrent-fatal the mode self-sends SIGTERM and the test releases worker task; for fatal/return the test writes literal action bytes then release. Expected exit 3 is a test oracle. Empty list query is recorder evidence; no history bytes exist."
+          ],
+          "original": "JSON top-level keys not fully source-verified for process-cleanup.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Child _event records action JSON. For concurrent-fatal the mode self-sends SIGTERM and the test releases worker task; for fatal/return the test writes literal action bytes then release. Expected exit 3 is a test oracle. Empty list query is recorder evidence; no history bytes exist."
+          ],
+          "original": "Raw source gap: Temporal list is actually queried and persisted as an empty result; raw workflow history is inapplicable because the observed result contains no runs.",
+          "status": "source_mapped"
+        }
+      ],
+      "owner_query_source_mapping": {
+        "explanation": "Owner/query records are emitted by actual recorder call sites in the pinned test/runtime helpers; this proposal retains the literal existing bounds.",
+        "minimum_owner_preserved": 2,
+        "queries_max_preserved": {},
+        "queries_min_preserved": {
+          "temporal.list_workflows": 1
+        }
+      },
+      "source_evidence_refs": [
+        {
+          "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
+          "sha256": "3c5bff7d8f858cad04665b850124f04bdab3684b7732592aad69dc2f8fda58f7"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_activity_runtime_boundary_child.py",
+          "sha256": "c140c731869ce13a4e3a13306a7e9bfa48ff1233ac1ea50fdef016020449f281"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "sha256": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "sha256": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c"
+        }
+      ],
+      "source_mapping_note": "Child _event records action JSON. For concurrent-fatal the mode self-sends SIGTERM and the test releases worker task; for fatal/return the test writes literal action bytes then release. Expected exit 3 is a test oracle. Empty list query is recorder evidence; no history bytes exist."
+    },
+    {
+      "case_directory": "runtime-exit-runtime-fatal",
+      "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_execution_runtime_surfaces_unrequested_worker_exit[runtime-fatal]",
+      "original_unresolved": [
+        {
+          "evidence": [
+            "Child _event records action JSON. For concurrent-fatal the mode self-sends SIGTERM and the test releases worker task; for fatal/return the test writes literal action bytes then release. Expected exit 3 is a test oracle. Empty list query is recorder evidence; no history bytes exist."
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: task action files",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Child _event records action JSON. For concurrent-fatal the mode self-sends SIGTERM and the test releases worker task; for fatal/return the test writes literal action bytes then release. Expected exit 3 is a test oracle. Empty list query is recorder evidence; no history bytes exist."
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: process logs",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Child _event records action JSON. For concurrent-fatal the mode self-sends SIGTERM and the test releases worker task; for fatal/return the test writes literal action bytes then release. Expected exit 3 is a test oracle. Empty list query is recorder evidence; no history bytes exist."
+          ],
+          "original": "JSON top-level keys not fully source-verified for worker_run_entered.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Child _event records action JSON. For concurrent-fatal the mode self-sends SIGTERM and the test releases worker task; for fatal/return the test writes literal action bytes then release. Expected exit 3 is a test oracle. Empty list query is recorder evidence; no history bytes exist."
+          ],
+          "original": "JSON top-level keys not fully source-verified for worker_fatal_armed.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Child _event records action JSON. For concurrent-fatal the mode self-sends SIGTERM and the test releases worker task; for fatal/return the test writes literal action bytes then release. Expected exit 3 is a test oracle. Empty list query is recorder evidence; no history bytes exist."
+          ],
+          "original": "JSON top-level keys not fully source-verified for process-journal.jsonl",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Child _event records action JSON. For concurrent-fatal the mode self-sends SIGTERM and the test releases worker task; for fatal/return the test writes literal action bytes then release. Expected exit 3 is a test oracle. Empty list query is recorder evidence; no history bytes exist."
+          ],
+          "original": "JSON top-level keys not fully source-verified for process-cleanup.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Child _event records action JSON. For concurrent-fatal the mode self-sends SIGTERM and the test releases worker task; for fatal/return the test writes literal action bytes then release. Expected exit 3 is a test oracle. Empty list query is recorder evidence; no history bytes exist."
+          ],
+          "original": "Raw source gap: Temporal list is actually queried and persisted as an empty result; raw workflow history is inapplicable because the observed result contains no runs.",
+          "status": "source_mapped"
+        }
+      ],
+      "owner_query_source_mapping": {
+        "explanation": "Owner/query records are emitted by actual recorder call sites in the pinned test/runtime helpers; this proposal retains the literal existing bounds.",
+        "minimum_owner_preserved": 2,
+        "queries_max_preserved": {},
+        "queries_min_preserved": {
+          "temporal.list_workflows": 1
+        }
+      },
+      "source_evidence_refs": [
+        {
+          "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
+          "sha256": "3c5bff7d8f858cad04665b850124f04bdab3684b7732592aad69dc2f8fda58f7"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_activity_runtime_boundary_child.py",
+          "sha256": "c140c731869ce13a4e3a13306a7e9bfa48ff1233ac1ea50fdef016020449f281"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "sha256": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "sha256": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c"
+        }
+      ],
+      "source_mapping_note": "Child _event records action JSON. For concurrent-fatal the mode self-sends SIGTERM and the test releases worker task; for fatal/return the test writes literal action bytes then release. Expected exit 3 is a test oracle. Empty list query is recorder evidence; no history bytes exist."
+    },
+    {
+      "case_directory": "runtime-exit-runtime-return",
+      "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_execution_runtime_surfaces_unrequested_worker_exit[runtime-return]",
+      "original_unresolved": [
+        {
+          "evidence": [
+            "Child _event records action JSON. For concurrent-fatal the mode self-sends SIGTERM and the test releases worker task; for fatal/return the test writes literal action bytes then release. Expected exit 3 is a test oracle. Empty list query is recorder evidence; no history bytes exist."
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: task action files",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Child _event records action JSON. For concurrent-fatal the mode self-sends SIGTERM and the test releases worker task; for fatal/return the test writes literal action bytes then release. Expected exit 3 is a test oracle. Empty list query is recorder evidence; no history bytes exist."
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: process logs",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Child _event records action JSON. For concurrent-fatal the mode self-sends SIGTERM and the test releases worker task; for fatal/return the test writes literal action bytes then release. Expected exit 3 is a test oracle. Empty list query is recorder evidence; no history bytes exist."
+          ],
+          "original": "JSON top-level keys not fully source-verified for worker_run_entered.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Child _event records action JSON. For concurrent-fatal the mode self-sends SIGTERM and the test releases worker task; for fatal/return the test writes literal action bytes then release. Expected exit 3 is a test oracle. Empty list query is recorder evidence; no history bytes exist."
+          ],
+          "original": "JSON top-level keys not fully source-verified for process-journal.jsonl",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Child _event records action JSON. For concurrent-fatal the mode self-sends SIGTERM and the test releases worker task; for fatal/return the test writes literal action bytes then release. Expected exit 3 is a test oracle. Empty list query is recorder evidence; no history bytes exist."
+          ],
+          "original": "JSON top-level keys not fully source-verified for process-cleanup.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "Child _event records action JSON. For concurrent-fatal the mode self-sends SIGTERM and the test releases worker task; for fatal/return the test writes literal action bytes then release. Expected exit 3 is a test oracle. Empty list query is recorder evidence; no history bytes exist."
+          ],
+          "original": "Raw source gap: Temporal list is actually queried and persisted as an empty result; raw workflow history is inapplicable because the observed result contains no runs.",
+          "status": "source_mapped"
+        }
+      ],
+      "owner_query_source_mapping": {
+        "explanation": "Owner/query records are emitted by actual recorder call sites in the pinned test/runtime helpers; this proposal retains the literal existing bounds.",
+        "minimum_owner_preserved": 2,
+        "queries_max_preserved": {},
+        "queries_min_preserved": {
+          "temporal.list_workflows": 1
+        }
+      },
+      "source_evidence_refs": [
+        {
+          "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
+          "sha256": "3c5bff7d8f858cad04665b850124f04bdab3684b7732592aad69dc2f8fda58f7"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_activity_runtime_boundary_child.py",
+          "sha256": "c140c731869ce13a4e3a13306a7e9bfa48ff1233ac1ea50fdef016020449f281"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "sha256": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "sha256": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c"
+        }
+      ],
+      "source_mapping_note": "Child _event records action JSON. For concurrent-fatal the mode self-sends SIGTERM and the test releases worker task; for fatal/return the test writes literal action bytes then release. Expected exit 3 is a test oracle. Empty list query is recorder evidence; no history bytes exist."
+    },
+    {
+      "case_directory": "retention-rpc-failure",
+      "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_missing_history_then_retention_rpc_failure_never_starts",
+      "original_unresolved": [
+        {
+          "evidence": [
+            "The dispatcher child writes all three event markers; failure adds error/context fields. The test writes retention-unavailable.json. It records an empty list query before stopping the Temporal service; no run history exists."
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: actual_history_not_found.json barrier",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The dispatcher child writes all three event markers; failure adds error/context fields. The test writes retention-unavailable.json. It records an empty list query before stopping the Temporal service; no run history exists."
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: actual_retention_rpc_begin.json barrier",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The dispatcher child writes all three event markers; failure adds error/context fields. The test writes retention-unavailable.json. It records an empty list query before stopping the Temporal service; no run history exists."
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: actual_retention_rpc_failed.json barrier",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The dispatcher child writes all three event markers; failure adds error/context fields. The test writes retention-unavailable.json. It records an empty list query before stopping the Temporal service; no run history exists."
+          ],
+          "original": "JSON top-level keys not fully source-verified for actual_history_not_found.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The dispatcher child writes all three event markers; failure adds error/context fields. The test writes retention-unavailable.json. It records an empty list query before stopping the Temporal service; no run history exists."
+          ],
+          "original": "JSON top-level keys not fully source-verified for actual_retention_rpc_begin.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The dispatcher child writes all three event markers; failure adds error/context fields. The test writes retention-unavailable.json. It records an empty list query before stopping the Temporal service; no run history exists."
+          ],
+          "original": "JSON top-level keys not fully source-verified for actual_retention_rpc_failed.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The dispatcher child writes all three event markers; failure adds error/context fields. The test writes retention-unavailable.json. It records an empty list query before stopping the Temporal service; no run history exists."
+          ],
+          "original": "JSON top-level keys not fully source-verified for retention-unavailable.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The dispatcher child writes all three event markers; failure adds error/context fields. The test writes retention-unavailable.json. It records an empty list query before stopping the Temporal service; no run history exists."
+          ],
+          "original": "JSON top-level keys not fully source-verified for process-journal.jsonl",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The dispatcher child writes all three event markers; failure adds error/context fields. The test writes retention-unavailable.json. It records an empty list query before stopping the Temporal service; no run history exists."
+          ],
+          "original": "JSON top-level keys not fully source-verified for process-cleanup.json",
+          "status": "source_mapped"
+        }
+      ],
+      "owner_query_source_mapping": {
+        "explanation": "Owner/query records are emitted by actual recorder call sites in the pinned test/runtime helpers; this proposal retains the literal existing bounds.",
+        "minimum_owner_preserved": 1,
+        "queries_max_preserved": {},
+        "queries_min_preserved": {
+          "temporal.list_workflows": 1
+        }
+      },
+      "source_evidence_refs": [
+        {
+          "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
+          "sha256": "3c5bff7d8f858cad04665b850124f04bdab3684b7732592aad69dc2f8fda58f7"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_activity_runtime_boundary_child.py",
+          "sha256": "c140c731869ce13a4e3a13306a7e9bfa48ff1233ac1ea50fdef016020449f281"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "sha256": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "sha256": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c"
+        }
+      ],
+      "source_mapping_note": "The dispatcher child writes all three event markers; failure adds error/context fields. The test writes retention-unavailable.json. It records an empty list query before stopping the Temporal service; no run history exists."
+    },
+    {
+      "case_directory": "noncreate-signal",
+      "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_noncreate_signal_targets_admitted_run_without_business_consumption",
+      "original_unresolved": [
+        {
+          "evidence": [
+            "The relevant filenames/keys are source-confirmed, but the duplicate O_EXCL dispatcher launch prevents this test reaching a terminal result."
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: process logs",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The relevant filenames/keys are source-confirmed, but the duplicate O_EXCL dispatcher launch prevents this test reaching a terminal result."
+          ],
+          "original": "JSON top-level keys not fully source-verified for process-journal.jsonl",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The path is admitted: _start_pair starts a dispatcher and worker; _normal_outcome captures workflow history; a second dispatcher is then launched to deliver the noncreate signal, and test captures final history and query recorder evidence."
+          ],
+          "original": "JSON top-level keys not fully source-verified for process-cleanup.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "The path is admitted: _start_pair starts a dispatcher and worker; _normal_outcome captures workflow history; a second dispatcher is then launched to deliver the noncreate signal, and test captures final history and query recorder evidence."
+          ],
+          "original": "Artifact write source location not resolved statically: history-after-real-noncreate-signal.pbseq",
+          "status": "source_mapped"
+        }
+      ],
+      "owner_query_source_mapping": {
+        "explanation": "Owner/query records are emitted by actual recorder call sites in the pinned test/runtime helpers; this proposal retains the literal existing bounds.",
+        "minimum_owner_preserved": 1,
+        "queries_max_preserved": {},
+        "queries_min_preserved": {
+          "temporal.list_workflows": 1,
+          "temporal.query.notification_count": 1
+        }
+      },
+      "source_evidence_refs": [
+        {
+          "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
+          "sha256": "3c5bff7d8f858cad04665b850124f04bdab3684b7732592aad69dc2f8fda58f7"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_activity_runtime_boundary_child.py",
+          "sha256": "c140c731869ce13a4e3a13306a7e9bfa48ff1233ac1ea50fdef016020449f281"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "sha256": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "sha256": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c"
+        }
+      ],
+      "source_mapping_note": "The path is admitted: _start_pair starts a dispatcher and worker; _normal_outcome captures workflow history; a second dispatcher is then launched to deliver the noncreate signal, and test captures final history and query recorder evidence."
+    },
+    {
+      "case_directory": "noncreate-unadmitted-*",
+      "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_noncreate_waits_until_admission",
+      "original_unresolved": [
+        {
+          "evidence": [
+            "SQL-only branch starts no child/process journal/cleanup; proposed artifacts remove process-journal.jsonl."
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: process logs/cleanup",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "SQL-only fixture: _sql_only_unadmitted_case creates the private root but starts no Temporal server/CLI, no process journal or process cleanup. Remove the impossible process-journal rule; owner snapshots are shared recorder evidence, and query is correctly inapplicable."
+          ],
+          "original": "JSON top-level keys not fully source-verified for noncreate-not-admitted.json",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "SQL-only branch starts no child/process journal/cleanup; proposed artifacts remove process-journal.jsonl."
+          ],
+          "original": "JSON top-level keys not fully source-verified for process-journal.jsonl",
+          "status": "source_mapped"
+        }
+      ],
+      "owner_query_source_mapping": {
+        "explanation": "Owner/query records are emitted by actual recorder call sites in the pinned test/runtime helpers; this proposal retains the literal existing bounds.",
+        "minimum_owner_preserved": 1,
+        "queries_max_preserved": {},
+        "queries_min_preserved": {}
+      },
+      "source_evidence_refs": [
+        {
+          "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
+          "sha256": "3c5bff7d8f858cad04665b850124f04bdab3684b7732592aad69dc2f8fda58f7"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_activity_runtime_boundary_child.py",
+          "sha256": "c140c731869ce13a4e3a13306a7e9bfa48ff1233ac1ea50fdef016020449f281"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "sha256": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "sha256": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c"
+        }
+      ],
+      "source_mapping_note": "SQL-only fixture: _sql_only_unadmitted_case creates the private root but starts no Temporal server/CLI, no process journal or process cleanup. Remove the impossible process-journal rule; owner snapshots are shared recorder evidence, and query is correctly inapplicable."
+    }
+  ],
+  "input_machine": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules.json",
+    "sha256": "33622d9944cafea7345526e25db524d06c6f64b2c04a73e7d0b55dbd8986bbd5",
+    "commit": "8d208eb"
+  },
+  "kind": "ifpmic.b03.h2.machine_evidence_source_projection.v2",
+  "proposed_rows": [
+    {
+      "applicability_clarifications": [
+        {
+          "rule": "Barrier event JSON is retained in the named case-root barrier directory; release markers and socket state are synchronization controls, not asserted output artifacts.",
+          "source": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py:_barrier and named _wait_event calls"
+        }
+      ],
+      "artifact_sources": {
+        "formats": "bytes are private log/history/release files; json keys mirror literal writer payloads; jsonl process records are filtered by event as emitted.",
+        "mapping": "The parameter value is literal membership or eligibility. _revoke_authority writes authority-<authority>.json; child _event writes barrier JSON with event/monotonic. History is explicitly written after rejected completion.",
+        "runtime_acceptance": "No files have been produced or checked; this only maps writers and conditional paths."
+      },
+      "artifacts": [
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "authority-eligibility.json",
+          "required_keys": [
+            "authority",
+            "state"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "authority-rejected-history.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "jsonl",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-journal.jsonl",
+          "required_keys": [
+            "event"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-cleanup.json",
+          "required_keys": [
+            "processes",
+            "status"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "authority-before-barrier/before_first_projection_sql.json",
+          "required_keys": [
+            "event",
+            "monotonic"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/dispatcher-stdout.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/dispatcher-stderr.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "logs-worker-authority-before/stdout.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "logs-worker-authority-before/stderr.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal-server.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal.sqlite",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "workspace-initial-observation.json",
+          "required_keys": [
+            "job_id",
+            "tree",
+            "marker_bytes_hex"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "source-manifest.json",
+          "required_keys": [
+            "format",
+            "files"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "environment-manifest.json",
+          "required_keys": [
+            "format",
+            "files",
+            "interpreter_sha256",
+            "python_version"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-config.json",
+          "required_keys": [
+            "format",
+            "mode",
+            "identity",
+            "dsn",
+            "workspace_root",
+            "source_manifest_path",
+            "environment_manifest_path"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "worker-config.json",
+          "required_keys": [
+            "format",
+            "mode",
+            "identity",
+            "dsn",
+            "workspace_root",
+            "source_manifest_path",
+            "environment_manifest_path"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/isolated-env.json",
+          "required_keys": []
+        }
+      ],
+      "case_directory": "authority-before-first-projection-eligibility",
+      "minimum_owner": 1,
+      "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_authority_revoked_before_first_projection[eligibility]",
+      "phase": "activity_runtime",
+      "profile": "activity_authority",
+      "queries_max": {},
+      "queries_min": {},
+      "source_locations": [
+        {
+          "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
+          "symbol": "test_h2_authority_revoked_before_first_projection[eligibility]"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_activity_runtime_boundary_child.py",
+          "symbol": "_event"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "symbol": "_prepare_case_impl / cleanup_case"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "symbol": "_spawn_runtime_cli / _append_private_journal"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "symbol": "record_owner_snapshot / record_query_observation"
+        }
+      ],
+      "unresolved": []
+    },
+    {
+      "applicability_clarifications": [
+        {
+          "rule": "Barrier event JSON is retained in the named case-root barrier directory; release markers and socket state are synchronization controls, not asserted output artifacts.",
+          "source": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py:_barrier and named _wait_event calls"
+        }
+      ],
+      "artifact_sources": {
+        "formats": "bytes are private log/history/release files; json keys mirror literal writer payloads; jsonl process records are filtered by event as emitted.",
+        "mapping": "The parameter value is literal membership or eligibility. _revoke_authority writes authority-<authority>.json; child _event writes barrier JSON with event/monotonic. History is explicitly written after rejected completion.",
+        "runtime_acceptance": "No files have been produced or checked; this only maps writers and conditional paths."
+      },
+      "artifacts": [
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "authority-membership.json",
+          "required_keys": [
+            "authority",
+            "state"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "authority-rejected-history.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "jsonl",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-journal.jsonl",
+          "required_keys": [
+            "event"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-cleanup.json",
+          "required_keys": [
+            "processes",
+            "status"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "authority-before-barrier/before_first_projection_sql.json",
+          "required_keys": [
+            "event",
+            "monotonic"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/dispatcher-stdout.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/dispatcher-stderr.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "logs-worker-authority-before/stdout.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "logs-worker-authority-before/stderr.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal-server.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal.sqlite",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "workspace-initial-observation.json",
+          "required_keys": [
+            "job_id",
+            "tree",
+            "marker_bytes_hex"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "source-manifest.json",
+          "required_keys": [
+            "format",
+            "files"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "environment-manifest.json",
+          "required_keys": [
+            "format",
+            "files",
+            "interpreter_sha256",
+            "python_version"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-config.json",
+          "required_keys": [
+            "format",
+            "mode",
+            "identity",
+            "dsn",
+            "workspace_root",
+            "source_manifest_path",
+            "environment_manifest_path"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "worker-config.json",
+          "required_keys": [
+            "format",
+            "mode",
+            "identity",
+            "dsn",
+            "workspace_root",
+            "source_manifest_path",
+            "environment_manifest_path"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/isolated-env.json",
+          "required_keys": []
+        }
+      ],
+      "case_directory": "authority-before-first-projection-membership",
+      "minimum_owner": 1,
+      "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_authority_revoked_before_first_projection[membership]",
+      "phase": "activity_runtime",
+      "profile": "activity_authority",
+      "queries_max": {},
+      "queries_min": {},
+      "source_locations": [
+        {
+          "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
+          "symbol": "test_h2_authority_revoked_before_first_projection[membership]"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_activity_runtime_boundary_child.py",
+          "symbol": "_event"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "symbol": "_prepare_case_impl / cleanup_case"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "symbol": "_spawn_runtime_cli / _append_private_journal"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "symbol": "record_owner_snapshot / record_query_observation"
+        }
+      ],
+      "unresolved": []
+    },
+    {
+      "applicability_clarifications": [
+        {
+          "rule": "Barrier event JSON is retained in the named case-root barrier directory; release markers and socket state are synchronization controls, not asserted output artifacts.",
+          "source": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py:_barrier and named _wait_event calls"
+        }
+      ],
+      "artifact_sources": {
+        "formats": "bytes are private log/history/release files; json keys mirror literal writer payloads; jsonl process records are filtered by event as emitted.",
+        "mapping": "The source writes both before/after PBSeq snapshots and authority file. No worker-crash-recovery.json writer exists in this literal path; process journal plus intended SIGKILL and process cleanup are the actual child lifecycle evidence.",
+        "runtime_acceptance": "No files have been produced or checked; this only maps writers and conditional paths."
+      },
+      "artifacts": [
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "history-before-lost-activity-result.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "history-after-receipt-replay.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "authority-eligibility.json",
+          "required_keys": [
+            "authority",
+            "state"
+          ]
+        },
+        {
+          "format": "jsonl",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-journal.jsonl",
+          "required_keys": [
+            "event"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-cleanup.json",
+          "required_keys": [
+            "processes",
+            "status"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "receipt-replay-barrier/projection_commit_complete.json",
+          "required_keys": [
+            "event",
+            "monotonic"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/dispatcher-stdout.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/dispatcher-stderr.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/worker-stdout.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/worker-stderr.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "logs-worker-before-lost-activity-result/stdout.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "logs-worker-before-lost-activity-result/stderr.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal-server.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal.sqlite",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "workspace-initial-observation.json",
+          "required_keys": [
+            "job_id",
+            "tree",
+            "marker_bytes_hex"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "source-manifest.json",
+          "required_keys": [
+            "format",
+            "files"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "environment-manifest.json",
+          "required_keys": [
+            "format",
+            "files",
+            "interpreter_sha256",
+            "python_version"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-config.json",
+          "required_keys": [
+            "format",
+            "mode",
+            "identity",
+            "dsn",
+            "workspace_root",
+            "source_manifest_path",
+            "environment_manifest_path"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "worker-config.json",
+          "required_keys": [
+            "format",
+            "mode",
+            "identity",
+            "dsn",
+            "workspace_root",
+            "source_manifest_path",
+            "environment_manifest_path"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/isolated-env.json",
+          "required_keys": []
+        }
+      ],
+      "case_directory": "activity-receipt-replay-eligibility",
+      "minimum_owner": 1,
+      "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_committed_receipt_replays_after_authority_revoke[eligibility]",
+      "phase": "activity_runtime",
+      "profile": "activity_receipt_replay",
+      "queries_max": {},
+      "queries_min": {},
+      "source_locations": [
+        {
+          "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
+          "symbol": "test_h2_committed_receipt_replays_after_authority_revoke[eligibility]"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_activity_runtime_boundary_child.py",
+          "symbol": "_event"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "symbol": "_prepare_case_impl / cleanup_case"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "symbol": "_spawn_runtime_cli / _append_private_journal"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "symbol": "record_owner_snapshot / record_query_observation"
+        }
+      ],
+      "unresolved": []
+    },
+    {
+      "applicability_clarifications": [
+        {
+          "rule": "Barrier event JSON is retained in the named case-root barrier directory; release markers and socket state are synchronization controls, not asserted output artifacts.",
+          "source": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py:_barrier and named _wait_event calls"
+        }
+      ],
+      "artifact_sources": {
+        "formats": "bytes are private log/history/release files; json keys mirror literal writer payloads; jsonl process records are filtered by event as emitted.",
+        "mapping": "The source writes both before/after PBSeq snapshots and authority file. No worker-crash-recovery.json writer exists in this literal path; process journal plus intended SIGKILL and process cleanup are the actual child lifecycle evidence.",
+        "runtime_acceptance": "No files have been produced or checked; this only maps writers and conditional paths."
+      },
+      "artifacts": [
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "history-before-lost-activity-result.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "history-after-receipt-replay.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "authority-membership.json",
+          "required_keys": [
+            "authority",
+            "state"
+          ]
+        },
+        {
+          "format": "jsonl",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-journal.jsonl",
+          "required_keys": [
+            "event"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-cleanup.json",
+          "required_keys": [
+            "processes",
+            "status"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "receipt-replay-barrier/projection_commit_complete.json",
+          "required_keys": [
+            "event",
+            "monotonic"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/dispatcher-stdout.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/dispatcher-stderr.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/worker-stdout.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/worker-stderr.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "logs-worker-before-lost-activity-result/stdout.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "logs-worker-before-lost-activity-result/stderr.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal-server.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal.sqlite",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "workspace-initial-observation.json",
+          "required_keys": [
+            "job_id",
+            "tree",
+            "marker_bytes_hex"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "source-manifest.json",
+          "required_keys": [
+            "format",
+            "files"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "environment-manifest.json",
+          "required_keys": [
+            "format",
+            "files",
+            "interpreter_sha256",
+            "python_version"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-config.json",
+          "required_keys": [
+            "format",
+            "mode",
+            "identity",
+            "dsn",
+            "workspace_root",
+            "source_manifest_path",
+            "environment_manifest_path"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "worker-config.json",
+          "required_keys": [
+            "format",
+            "mode",
+            "identity",
+            "dsn",
+            "workspace_root",
+            "source_manifest_path",
+            "environment_manifest_path"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/isolated-env.json",
+          "required_keys": []
+        }
+      ],
+      "case_directory": "activity-receipt-replay-membership",
+      "minimum_owner": 1,
+      "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_committed_receipt_replays_after_authority_revoke[membership]",
+      "phase": "activity_runtime",
+      "profile": "activity_receipt_replay",
+      "queries_max": {},
+      "queries_min": {},
+      "source_locations": [
+        {
+          "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
+          "symbol": "test_h2_committed_receipt_replays_after_authority_revoke[membership]"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_activity_runtime_boundary_child.py",
+          "symbol": "_event"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "symbol": "_prepare_case_impl / cleanup_case"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "symbol": "_spawn_runtime_cli / _append_private_journal"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "symbol": "record_owner_snapshot / record_query_observation"
+        }
+      ],
+      "unresolved": []
+    },
+    {
+      "applicability_clarifications": [
+        {
+          "rule": "Barrier event JSON is retained in the named case-root barrier directory; release markers and socket state are synchronization controls, not asserted output artifacts.",
+          "source": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py:_barrier and named _wait_event calls"
+        }
+      ],
+      "artifact_sources": {
+        "formats": "bytes are private log/history/release files; json keys mirror literal writer payloads; jsonl process records are filtered by event as emitted.",
+        "mapping": "The two live PostgreSQL observations are nested in hung-driver-rollback.json under pg_state and pg_backend_after_kill; source does not write separate PG observation files.",
+        "runtime_acceptance": "No files have been produced or checked; this only maps writers and conditional paths."
+      },
+      "artifacts": [
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "hung-driver-rollback.json",
+          "required_keys": [
+            "killed_pid",
+            "start_ticks",
+            "exit_code",
+            "pg_state",
+            "pg_backend_after_kill",
+            "self_exit_seconds",
+            "query_event_monotonic",
+            "sigterm_monotonic",
+            "backend_deadline_monotonic",
+            "backend_absent_monotonic",
+            "receipt_count_after_kill",
+            "receipt_count_after_recovery",
+            "run_id"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "history-after-hung-driver-kill.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "history-after-driver-rollback-recovery.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "jsonl",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-journal.jsonl",
+          "required_keys": [
+            "event"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-cleanup.json",
+          "required_keys": [
+            "processes",
+            "status"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "hung-driver-barrier/projection_driver_blocked.json",
+          "required_keys": [
+            "event",
+            "monotonic",
+            "backend_pid"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/dispatcher-stdout.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/dispatcher-stderr.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/worker-stdout.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/worker-stderr.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "logs-runtime-hung-real-driver/stdout.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "logs-runtime-hung-real-driver/stderr.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal-server.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal.sqlite",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "workspace-initial-observation.json",
+          "required_keys": [
+            "job_id",
+            "tree",
+            "marker_bytes_hex"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "source-manifest.json",
+          "required_keys": [
+            "format",
+            "files"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "environment-manifest.json",
+          "required_keys": [
+            "format",
+            "files",
+            "interpreter_sha256",
+            "python_version"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-config.json",
+          "required_keys": [
+            "format",
+            "mode",
+            "identity",
+            "dsn",
+            "workspace_root",
+            "source_manifest_path",
+            "environment_manifest_path"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "worker-config.json",
+          "required_keys": [
+            "format",
+            "mode",
+            "identity",
+            "dsn",
+            "workspace_root",
+            "source_manifest_path",
+            "environment_manifest_path"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/isolated-env.json",
+          "required_keys": []
+        }
+      ],
+      "case_directory": "runtime-hung-driver",
+      "minimum_owner": 1,
+      "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_execution_runtime_kills_hung_real_driver_and_rolls_back",
+      "phase": "activity_runtime",
+      "profile": "hung_driver",
+      "queries_max": {},
+      "queries_min": {},
+      "source_locations": [
+        {
+          "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
+          "symbol": "test_h2_execution_runtime_kills_hung_real_driver_and_rolls_back"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_activity_runtime_boundary_child.py",
+          "symbol": "_event"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "symbol": "_prepare_case_impl / cleanup_case"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "symbol": "_spawn_runtime_cli / _append_private_journal"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "symbol": "record_owner_snapshot / record_query_observation"
+        }
+      ],
+      "unresolved": [
+        "Raw source gap: post-SIGTERM PostgreSQL backend disappearance is measured dynamically and bounded by the source deadline, but static source cannot prove the observed backend disappearance timing or successful result. Keep the exact private rollback JSON and require runtime semantic review."
+      ]
+    },
+    {
+      "applicability_clarifications": [
+        {
+          "rule": "Barrier event JSON is retained in the named case-root barrier directory; release markers and socket state are synchronization controls, not asserted output artifacts.",
+          "source": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py:_barrier and named _wait_event calls"
+        }
+      ],
+      "artifact_sources": {
+        "formats": "bytes are private log/history/release files; json keys mirror literal writer payloads; jsonl process records are filtered by event as emitted.",
+        "mapping": "The child emits worker_run_entered, then test sends SIGTERM. _list_runs records an empty result as a shared query; no history file is emitted because the result is empty.",
+        "runtime_acceptance": "No files have been produced or checked; this only maps writers and conditional paths."
+      },
+      "artifacts": [
+        {
+          "format": "jsonl",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-journal.jsonl",
+          "required_keys": [
+            "event"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-cleanup.json",
+          "required_keys": [
+            "processes",
+            "status"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "normal-sigterm-barrier/worker_run_entered.json",
+          "required_keys": [
+            "event",
+            "monotonic"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "logs-runtime-normal-sigterm-child/stdout.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "logs-runtime-normal-sigterm-child/stderr.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal-server.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal.sqlite",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "workspace-initial-observation.json",
+          "required_keys": [
+            "job_id",
+            "tree",
+            "marker_bytes_hex"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "source-manifest.json",
+          "required_keys": [
+            "format",
+            "files"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "environment-manifest.json",
+          "required_keys": [
+            "format",
+            "files",
+            "interpreter_sha256",
+            "python_version"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-config.json",
+          "required_keys": [
+            "format",
+            "mode",
+            "identity",
+            "dsn",
+            "workspace_root",
+            "source_manifest_path",
+            "environment_manifest_path"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "worker-config.json",
+          "required_keys": [
+            "format",
+            "mode",
+            "identity",
+            "dsn",
+            "workspace_root",
+            "source_manifest_path",
+            "environment_manifest_path"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/isolated-env.json",
+          "required_keys": []
+        }
+      ],
+      "case_directory": "runtime-normal-sigterm",
+      "minimum_owner": 1,
+      "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_execution_runtime_normal_sigterm_control",
+      "phase": "activity_runtime",
+      "profile": "runtime_sigterm",
+      "queries_max": {},
+      "queries_min": {
+        "temporal.list_workflows": 1
+      },
+      "source_locations": [
+        {
+          "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
+          "symbol": "test_h2_execution_runtime_normal_sigterm_control"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_activity_runtime_boundary_child.py",
+          "symbol": "_event"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "symbol": "_prepare_case_impl / cleanup_case"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "symbol": "_spawn_runtime_cli / _append_private_journal"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "symbol": "record_owner_snapshot / record_query_observation"
+        }
+      ],
+      "unresolved": []
+    },
+    {
+      "applicability_clarifications": [
+        {
+          "rule": "Barrier event JSON is retained in the named case-root barrier directory; release markers and socket state are synchronization controls, not asserted output artifacts.",
+          "source": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py:_barrier and named _wait_event calls"
+        }
+      ],
+      "artifact_sources": {
+        "formats": "bytes are private log/history/release files; json keys mirror literal writer payloads; jsonl process records are filtered by event as emitted.",
+        "mapping": "Child _event records action JSON. For concurrent-fatal the mode self-sends SIGTERM and the test releases worker task; for fatal/return the test writes literal action bytes then release. Expected exit 3 is a test oracle. Empty list query is recorder evidence; no history bytes exist.",
+        "runtime_acceptance": "No files have been produced or checked; this only maps writers and conditional paths."
+      },
+      "artifacts": [
+        {
+          "format": "jsonl",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-journal.jsonl",
+          "required_keys": [
+            "event"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-cleanup.json",
+          "required_keys": [
+            "processes",
+            "status"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "runtime-exit-barrier/worker_run_entered.json",
+          "required_keys": [
+            "event",
+            "monotonic"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "runtime-exit-barrier/worker_task_action.json",
+          "required_keys": [
+            "event",
+            "monotonic",
+            "action"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "runtime-exit-barrier/worker_fatal_armed.json",
+          "required_keys": [
+            "event",
+            "monotonic"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "runtime-exit-barrier/concurrent_sigterm_sent.json",
+          "required_keys": [
+            "event",
+            "monotonic"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "runtime-exit-barrier/release-worker-task",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "logs-runtime-exit-child/stdout.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "logs-runtime-exit-child/stderr.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal-server.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal.sqlite",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "workspace-initial-observation.json",
+          "required_keys": [
+            "job_id",
+            "tree",
+            "marker_bytes_hex"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "source-manifest.json",
+          "required_keys": [
+            "format",
+            "files"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "environment-manifest.json",
+          "required_keys": [
+            "format",
+            "files",
+            "interpreter_sha256",
+            "python_version"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-config.json",
+          "required_keys": [
+            "format",
+            "mode",
+            "identity",
+            "dsn",
+            "workspace_root",
+            "source_manifest_path",
+            "environment_manifest_path"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "worker-config.json",
+          "required_keys": [
+            "format",
+            "mode",
+            "identity",
+            "dsn",
+            "workspace_root",
+            "source_manifest_path",
+            "environment_manifest_path"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/isolated-env.json",
+          "required_keys": []
+        }
+      ],
+      "case_directory": "runtime-exit-runtime-concurrent-fatal",
+      "minimum_owner": 2,
+      "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_execution_runtime_surfaces_unrequested_worker_exit[runtime-concurrent-fatal]",
+      "phase": "activity_runtime",
+      "profile": "runtime_exit",
+      "queries_max": {},
+      "queries_min": {
+        "temporal.list_workflows": 1
+      },
+      "source_locations": [
+        {
+          "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
+          "symbol": "test_h2_execution_runtime_surfaces_unrequested_worker_exit[runtime-concurrent-fatal]"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_activity_runtime_boundary_child.py",
+          "symbol": "_event"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "symbol": "_prepare_case_impl / cleanup_case"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "symbol": "_spawn_runtime_cli / _append_private_journal"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "symbol": "record_owner_snapshot / record_query_observation"
+        }
+      ],
+      "unresolved": []
+    },
+    {
+      "applicability_clarifications": [
+        {
+          "rule": "Barrier event JSON is retained in the named case-root barrier directory; release markers and socket state are synchronization controls, not asserted output artifacts.",
+          "source": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py:_barrier and named _wait_event calls"
+        }
+      ],
+      "artifact_sources": {
+        "formats": "bytes are private log/history/release files; json keys mirror literal writer payloads; jsonl process records are filtered by event as emitted.",
+        "mapping": "Child _event records action JSON. For concurrent-fatal the mode self-sends SIGTERM and the test releases worker task; for fatal/return the test writes literal action bytes then release. Expected exit 3 is a test oracle. Empty list query is recorder evidence; no history bytes exist.",
+        "runtime_acceptance": "No files have been produced or checked; this only maps writers and conditional paths."
+      },
+      "artifacts": [
+        {
+          "format": "jsonl",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-journal.jsonl",
+          "required_keys": [
+            "event"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-cleanup.json",
+          "required_keys": [
+            "processes",
+            "status"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "runtime-exit-barrier/worker_run_entered.json",
+          "required_keys": [
+            "event",
+            "monotonic"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "runtime-exit-barrier/worker_task_action.json",
+          "required_keys": [
+            "event",
+            "monotonic",
+            "action"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "runtime-exit-barrier/worker-action",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "runtime-exit-barrier/release-worker-task",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "logs-runtime-exit-child/stdout.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "logs-runtime-exit-child/stderr.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal-server.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal.sqlite",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "workspace-initial-observation.json",
+          "required_keys": [
+            "job_id",
+            "tree",
+            "marker_bytes_hex"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "source-manifest.json",
+          "required_keys": [
+            "format",
+            "files"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "environment-manifest.json",
+          "required_keys": [
+            "format",
+            "files",
+            "interpreter_sha256",
+            "python_version"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-config.json",
+          "required_keys": [
+            "format",
+            "mode",
+            "identity",
+            "dsn",
+            "workspace_root",
+            "source_manifest_path",
+            "environment_manifest_path"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "worker-config.json",
+          "required_keys": [
+            "format",
+            "mode",
+            "identity",
+            "dsn",
+            "workspace_root",
+            "source_manifest_path",
+            "environment_manifest_path"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/isolated-env.json",
+          "required_keys": []
+        }
+      ],
+      "case_directory": "runtime-exit-runtime-fatal",
+      "minimum_owner": 2,
+      "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_execution_runtime_surfaces_unrequested_worker_exit[runtime-fatal]",
+      "phase": "activity_runtime",
+      "profile": "runtime_exit",
+      "queries_max": {},
+      "queries_min": {
+        "temporal.list_workflows": 1
+      },
+      "source_locations": [
+        {
+          "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
+          "symbol": "test_h2_execution_runtime_surfaces_unrequested_worker_exit[runtime-fatal]"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_activity_runtime_boundary_child.py",
+          "symbol": "_event"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "symbol": "_prepare_case_impl / cleanup_case"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "symbol": "_spawn_runtime_cli / _append_private_journal"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "symbol": "record_owner_snapshot / record_query_observation"
+        }
+      ],
+      "unresolved": []
+    },
+    {
+      "applicability_clarifications": [
+        {
+          "rule": "Barrier event JSON is retained in the named case-root barrier directory; release markers and socket state are synchronization controls, not asserted output artifacts.",
+          "source": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py:_barrier and named _wait_event calls"
+        }
+      ],
+      "artifact_sources": {
+        "formats": "bytes are private log/history/release files; json keys mirror literal writer payloads; jsonl process records are filtered by event as emitted.",
+        "mapping": "Child _event records action JSON. For concurrent-fatal the mode self-sends SIGTERM and the test releases worker task; for fatal/return the test writes literal action bytes then release. Expected exit 3 is a test oracle. Empty list query is recorder evidence; no history bytes exist.",
+        "runtime_acceptance": "No files have been produced or checked; this only maps writers and conditional paths."
+      },
+      "artifacts": [
+        {
+          "format": "jsonl",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-journal.jsonl",
+          "required_keys": [
+            "event"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-cleanup.json",
+          "required_keys": [
+            "processes",
+            "status"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "runtime-exit-barrier/worker_run_entered.json",
+          "required_keys": [
+            "event",
+            "monotonic"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "runtime-exit-barrier/worker_task_action.json",
+          "required_keys": [
+            "event",
+            "monotonic",
+            "action"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "runtime-exit-barrier/worker-action",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "runtime-exit-barrier/release-worker-task",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "logs-runtime-exit-child/stdout.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "logs-runtime-exit-child/stderr.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal-server.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal.sqlite",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "workspace-initial-observation.json",
+          "required_keys": [
+            "job_id",
+            "tree",
+            "marker_bytes_hex"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "source-manifest.json",
+          "required_keys": [
+            "format",
+            "files"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "environment-manifest.json",
+          "required_keys": [
+            "format",
+            "files",
+            "interpreter_sha256",
+            "python_version"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-config.json",
+          "required_keys": [
+            "format",
+            "mode",
+            "identity",
+            "dsn",
+            "workspace_root",
+            "source_manifest_path",
+            "environment_manifest_path"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "worker-config.json",
+          "required_keys": [
+            "format",
+            "mode",
+            "identity",
+            "dsn",
+            "workspace_root",
+            "source_manifest_path",
+            "environment_manifest_path"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/isolated-env.json",
+          "required_keys": []
+        }
+      ],
+      "case_directory": "runtime-exit-runtime-return",
+      "minimum_owner": 2,
+      "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_execution_runtime_surfaces_unrequested_worker_exit[runtime-return]",
+      "phase": "activity_runtime",
+      "profile": "runtime_exit",
+      "queries_max": {},
+      "queries_min": {
+        "temporal.list_workflows": 1
+      },
+      "source_locations": [
+        {
+          "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
+          "symbol": "test_h2_execution_runtime_surfaces_unrequested_worker_exit[runtime-return]"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_activity_runtime_boundary_child.py",
+          "symbol": "_event"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "symbol": "_prepare_case_impl / cleanup_case"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "symbol": "_spawn_runtime_cli / _append_private_journal"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "symbol": "record_owner_snapshot / record_query_observation"
+        }
+      ],
+      "unresolved": []
+    },
+    {
+      "applicability_clarifications": [
+        {
+          "rule": "Barrier event JSON is retained in the named case-root barrier directory; release markers and socket state are synchronization controls, not asserted output artifacts.",
+          "source": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py:_barrier and named _wait_event calls"
+        }
+      ],
+      "artifact_sources": {
+        "formats": "bytes are private log/history/release files; json keys mirror literal writer payloads; jsonl process records are filtered by event as emitted.",
+        "mapping": "The dispatcher child writes all three event markers; failure adds error/context fields. The test writes retention-unavailable.json. It records an empty list query before stopping the Temporal service; no run history exists.",
+        "runtime_acceptance": "No files have been produced or checked; this only maps writers and conditional paths."
+      },
+      "artifacts": [
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "retention-unavailable.json",
+          "required_keys": [
+            "actual_missing_history_event",
+            "actual_retention_rpc_event",
+            "actual_retention_rpc_failure",
+            "binding_state",
+            "quarantine_code",
+            "start_attempt_at",
+            "admitted_run_id"
+          ]
+        },
+        {
+          "format": "jsonl",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-journal.jsonl",
+          "required_keys": [
+            "event"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-cleanup.json",
+          "required_keys": [
+            "processes",
+            "status"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "retention-rpc-barrier/actual_history_not_found.json",
+          "required_keys": [
+            "event",
+            "monotonic"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "retention-rpc-barrier/actual_retention_rpc_begin.json",
+          "required_keys": [
+            "event",
+            "monotonic"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "retention-rpc-barrier/actual_retention_rpc_failed.json",
+          "required_keys": [
+            "event",
+            "monotonic",
+            "error_type",
+            "context_type",
+            "context_detail"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "logs-dispatcher-real-retention-rpc/stdout.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "logs-dispatcher-real-retention-rpc/stderr.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal-server.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal.sqlite",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "workspace-initial-observation.json",
+          "required_keys": [
+            "job_id",
+            "tree",
+            "marker_bytes_hex"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "source-manifest.json",
+          "required_keys": [
+            "format",
+            "files"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "environment-manifest.json",
+          "required_keys": [
+            "format",
+            "files",
+            "interpreter_sha256",
+            "python_version"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-config.json",
+          "required_keys": [
+            "format",
+            "mode",
+            "identity",
+            "dsn",
+            "workspace_root",
+            "source_manifest_path",
+            "environment_manifest_path"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "worker-config.json",
+          "required_keys": [
+            "format",
+            "mode",
+            "identity",
+            "dsn",
+            "workspace_root",
+            "source_manifest_path",
+            "environment_manifest_path"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/isolated-env.json",
+          "required_keys": []
+        }
+      ],
+      "case_directory": "retention-rpc-failure",
+      "minimum_owner": 1,
+      "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_missing_history_then_retention_rpc_failure_never_starts",
+      "phase": "activity_runtime",
+      "profile": "retention_rpc",
+      "queries_max": {},
+      "queries_min": {
+        "temporal.list_workflows": 1
+      },
+      "source_locations": [
+        {
+          "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
+          "symbol": "test_h2_missing_history_then_retention_rpc_failure_never_starts"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_activity_runtime_boundary_child.py",
+          "symbol": "_event"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "symbol": "_prepare_case_impl / cleanup_case"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "symbol": "_spawn_runtime_cli / _append_private_journal"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "symbol": "record_owner_snapshot / record_query_observation"
+        }
+      ],
+      "unresolved": []
+    },
+    {
+      "artifact_sources": {
+        "formats": "bytes are private log/history/release files; json keys mirror literal writer payloads; jsonl process records are filtered by event as emitted.",
+        "mapping": "The path is admitted: _start_pair starts a dispatcher and worker; _normal_outcome captures workflow history; a second dispatcher is then launched to deliver the noncreate signal, and test captures final history and query recorder evidence.",
+        "runtime_acceptance": "No files have been produced or checked; this only maps writers and conditional paths."
+      },
+      "artifacts": [
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "history-after-real-noncreate-signal.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-history.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "jsonl",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-journal.jsonl",
+          "required_keys": [
+            "event"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-cleanup.json",
+          "required_keys": [
+            "processes",
+            "status"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/dispatcher-stdout.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/dispatcher-stderr.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/worker-stdout.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/worker-stderr.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal-server.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal.sqlite",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "workspace-initial-observation.json",
+          "required_keys": [
+            "job_id",
+            "tree",
+            "marker_bytes_hex"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "source-manifest.json",
+          "required_keys": [
+            "format",
+            "files"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "environment-manifest.json",
+          "required_keys": [
+            "format",
+            "files",
+            "interpreter_sha256",
+            "python_version"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-config.json",
+          "required_keys": [
+            "format",
+            "mode",
+            "identity",
+            "dsn",
+            "workspace_root",
+            "source_manifest_path",
+            "environment_manifest_path"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "worker-config.json",
+          "required_keys": [
+            "format",
+            "mode",
+            "identity",
+            "dsn",
+            "workspace_root",
+            "source_manifest_path",
+            "environment_manifest_path"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/isolated-env.json",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/dispatcher-noncreate-signal-stdout.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/dispatcher-noncreate-signal-stderr.log",
+          "required_keys": []
+        }
+      ],
+      "case_directory": "noncreate-signal",
+      "minimum_owner": 1,
+      "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_noncreate_signal_targets_admitted_run_without_business_consumption",
+      "phase": "activity_runtime",
+      "profile": "noncreate_signal",
+      "queries_max": {},
+      "queries_min": {
+        "temporal.list_workflows": 1,
+        "temporal.query.notification_count": 1
+      },
+      "source_locations": [
+        {
+          "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
+          "symbol": "test_h2_noncreate_signal_targets_admitted_run_without_business_consumption"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_activity_runtime_boundary_child.py",
+          "symbol": "_event"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "symbol": "_prepare_case_impl / cleanup_case"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "symbol": "_spawn_runtime_cli / _append_private_journal"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "symbol": "record_owner_snapshot / record_query_observation"
+        }
+      ],
+      "unresolved": [
+        "Source-level duplicate dispatcher log collision: _start_pair creates process-logs/dispatcher-{stdout,stderr}.log using O_EXCL, then this test calls _start_cli(case,\"dispatcher\") again; normal._spawn_runtime_cli opens the same exact filenames with O_EXCL. The source cannot reach the intended second dispatcher unless log ownership is repaired. Keep this node blocked."
+      ]
+    },
+    {
+      "artifact_sources": {
+        "formats": "bytes are private log/history/release files; json keys mirror literal writer payloads; jsonl process records are filtered by event as emitted.",
+        "mapping": "SQL-only fixture: _sql_only_unadmitted_case creates the private root but starts no Temporal server/CLI, no process journal or process cleanup. Remove the impossible process-journal rule; owner snapshots are shared recorder evidence, and query is correctly inapplicable.",
+        "runtime_acceptance": "No files have been produced or checked; this only maps writers and conditional paths."
+      },
+      "artifacts": [
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "noncreate-not-admitted.json",
+          "required_keys": [
+            "claim",
+            "command_id",
+            "command_status",
+            "outbox",
+            "command_and_outbox_row",
+            "temporal_query_applicable",
+            "reason"
+          ]
+        }
+      ],
+      "case_directory": "noncreate-unadmitted-*",
+      "minimum_owner": 1,
+      "node_id": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py::test_h2_noncreate_waits_until_admission",
+      "phase": "activity_runtime",
+      "profile": "noncreate_wait",
+      "queries_max": {},
+      "queries_min": {},
+      "source_locations": [
+        {
+          "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
+          "symbol": "test_h2_noncreate_waits_until_admission"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_activity_runtime_boundary_child.py",
+          "symbol": "_event"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "symbol": "_prepare_case_impl / cleanup_case"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "symbol": "_spawn_runtime_cli / _append_private_journal"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "symbol": "record_owner_snapshot / record_query_observation"
+        }
+      ],
+      "unresolved": []
+    }
+  ],
+  "remaining_limitations": [
+    "This is a source mapping proposal only. Actual artifacts, private permissions, query recorder output, PBSeq decoding and process cleanup remain runtime gates.",
+    "The noncreate-signal case has an O_EXCL duplicate dispatcher-log collision.",
+    "The hung-driver case dynamically observes PG backend disappearance; source mapping cannot prove actual timing/result."
+  ],
+  "scope": {
+    "new_source_blockers": 0,
+    "note": "Source-only corrected projection. Original 83 annotation strings, 12 literal rows and owner/query bounds are preserved. Actual source-produced common preparation/config/runtime artifacts are included for each regular Temporal case, while SQL-only noncreate-unadmitted stays limited to its one actual JSON. Source mapping never constitutes actual execution acceptance.",
+    "original_artifact_count": 55,
+    "original_unresolved_count": 83,
+    "phase": "activity_runtime",
+    "phase_rows": 12,
+    "proposed_artifact_count": 191,
+    "remaining_original_unresolved_count": 0,
+    "source_mapped_original_unresolved_count": 83,
+    "runtime_acceptance": "pending_fresh_full_490_case_execution_and_independent_evidence_review",
+    "original_source_annotations": 83,
+    "proposed_rows": 12
+  },
+  "source_pins": {
+    "tests/ifpmic_api/h2_activity_runtime_boundary_child.py": "c140c731869ce13a4e3a13306a7e9bfa48ff1233ac1ea50fdef016020449f281",
+    "tests/ifpmic_api/h2_dispatcher_crash_support.py": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472",
+    "tests/ifpmic_api/h2_snapshot_evidence.py": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c",
+    "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py": "3c5bff7d8f858cad04665b850124f04bdab3684b7732592aad69dc2f8fda58f7",
+    "tests/ifpmic_api/test_h2_runtime_normal_flow.py": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d"
+  },
+  "status": "source_repair_projection_pending_exact_independent_review_no_execution",
+  "superseded_proposal": {
+    "path": "docs/ifpmic/evidence/b03/h2-machine-resolution-activity-v2.json",
+    "sha256": "4ff971943177ea8411cfc2fac2c26ab0570047ed26da6733e3a73cb582dfb104",
+    "reason": "Superseded after source repair and complete common-output closure; prior activity source gap incorrectly treated a source-written PG observation as absent."
+  },
+  "source_repair_facts": {
+    "activity_source_sha256": "3c5bff7d8f858cad04665b850124f04bdab3684b7732592aad69dc2f8fda58f7",
+    "current_positions": [
+      {
+        "location": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py:549,557",
+        "fact": "noncreate-signal starts a second dispatcher with instance_label=\"dispatcher-noncreate-signal\"; normal._spawn_runtime_cli uses this label for unique stdout/stderr filenames."
+      },
+      {
+        "location": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py:803-839",
+        "fact": "hung-driver polls actual backend disappearance and writes pg_state and pg_backend_after_kill into hung-driver-rollback.json before cleanup."
+      },
+      {
+        "location": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py:545-568",
+        "fact": "noncreate-signal writes history-after-real-noncreate-signal.pbseq and also retains the case-root temporal-history.pbseq from the shared outcome helper."
+      },
+      {
+        "location": "tests/ifpmic_api/h2_dispatcher_crash_support.py:299,326-350",
+        "fact": "Every regular case preparation writes workspace-initial-observation.json, source-manifest.json, environment-manifest.json, dispatcher-config.json and worker-config.json."
+      },
+      {
+        "location": "tests/ifpmic_api/h2_dispatcher_crash_support.py:222-240; tests/ifpmic_api/test_h2_activity_runtime_boundaries.py:210-224",
+        "fact": "Temporal setup creates isolated-env.json; cleanup success writes process-cleanup.json with processes and status."
+      },
+      {
+        "location": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py:491-543",
+        "fact": "noncreate-unadmitted uses SQL-only setup and writes only noncreate-not-admitted.json; regular Temporal/CLI/common preparation outputs are inapplicable."
+      }
+    ],
+    "hung_driver_source_resolution": "The prior proposal marked backend disappearance source gap as remaining. That is corrected: _wait_hung_projector_query and _wait_projector_backend_gone produce actual embedded raw SQL observation dictionaries, and the test serializes both into hung-driver-rollback.json. This is source closure only; execution remains pending."
+  }
+}

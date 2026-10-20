@@ -11,6 +11,16 @@
 
 전체 필수 단계 완료율은 **2/16=12.5%**다. 동일 비중의 단계 수이며 제품 작업량 추정치는 아니다. 새 단위 검사 통과를 단계 완료율에 더하지 않는다.
 
+## 최신 체크포인트: 실행 전 규칙 소스 대조87/87
+
+새 화면 기능은 없다. 독립 검토한 batch를 모두 반영해87개 규칙·475개 기존 검토 표시의 source 대조를 완료했다. 최종953개 artifact 규칙·10 phase·38 source pins가 실제 소스와 일치하며 외부490 inventory의83 new+4 retained fence ID와 정확히 같다. [현재 진행 기록](../../evidence/b03/h2-machine-resolution-progress-v2.json)을 따른다.
+
+마지막 activity v4에는 수정 설명과 별개로2개 row 차단 배열이 남아 있었다. 반영 전 정적 검사가 이를 거절했고 canonical을 바꾸지 않았다. 기존 승인은 [별도 addendum](../../evidence/b03/h2-machine-resolution-activity-review-v4-addendum.json)으로 직접 적용 권한을 철회하고 보존했으며, 두 원문을 별도로 보존한 [v5 exact review](../../evidence/b03/h2-machine-resolution-activity-review-v5.json)를 받아 적용했다. 단순한 문구 삭제로 실제 runtime 의무를 해소한 것이 아니다.
+
+확정된 도우미 결함5건을 수정했고4개 모듈의269개 assertion은 유지했다. 기존119 합성 unit의12개 소스 해시도 그대로다. 이번에는 테스트를 새로 실행하지 않았으며 actual main/SDK/SQL/full490과 실제 접수 UI는 미완료다. 전체 단계 완료율은2/16=12.5%로 유지한다.
+
+다음은 기존 c10/cf4와 주기02를 보존한 v2 ledger/contract(103 code+최종 machine closure), paired authoring/source/pre-gates, fresh490이다. 아래58/87·29/177 등의 수치는 진행 중 체크포인트의 역사 기록이다.
+
 ## 2026-10-21 소스 대조 체크포인트
 
 새 화면 기능은 없다. startup21·window/fixture14·workspace11·dispatcher8을 실제 생성 코드와 독립 대조하고 규칙에 반영했다. 기존 fence4를 합해 **58/87행의 소스 대조 완료,29행·177항목 미해결**, 현재661개 artifact 규칙이다. 이는 실행 전 source mapping이며 제품 전체 완료율은2/16=12.5%로 유지한다.

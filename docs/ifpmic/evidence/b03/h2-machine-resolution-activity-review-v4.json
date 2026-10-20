@@ -1,0 +1,70 @@
+{
+  "kind": "ifpmic.b03.h2.activity-source-projection-review.v4",
+  "review_date": "2026-10-21",
+  "reviewer": "/root/h2_evidence_amendment_review",
+  "decision": "approve_exact_12_row_source_projection_and_bounded_descriptive_metadata_only",
+  "proposal": {
+    "path": "docs/ifpmic/evidence/b03/h2-machine-resolution-activity-v4.json",
+    "sha256": "b80ab6b3fbc4b9ce25735512884c95812b0ecfa5f2ed552590a81260e099a1c3"
+  },
+  "input_machine": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules.json",
+    "commit": "8d208eb",
+    "sha256": "33622d9944cafea7345526e25db524d06c6f64b2c04a73e7d0b55dbd8986bbd5",
+    "compatible_current_sha256": "e3ea6894bb18efcae94b13b51037b383cef64d23157b9cfbf91d9dc77bd73774",
+    "compatibility": "All12 literal target input rows are byte-value identical to the current canonical rows; unrelated prior integrations are preserved."
+  },
+  "historical_request_changes": {
+    "proposal_sha256": "39ded9f1aedfae61157427e28b1f0c7a6bae78d0f2e062d09f5e4d4786bd76e3",
+    "review_path": "docs/ifpmic/evidence/b03/h2-machine-resolution-activity-review-v3.json",
+    "review_sha256": "dfdc15d80164d40ca884c30f6daf0fc0f43823b7312da55e1dae446ed7675de3"
+  },
+  "findings": [],
+  "evidence": {
+    "literal_rows": 12,
+    "original_annotations_compared_verbatim": 83,
+    "rules": 196,
+    "supporting_source_pins": 5,
+    "exact_delta": "The substantive v4 row/annotation changes reverse exactly to retained v3:2 authority directory corrections in rows and annotations;10 history bytes-to-pbseq changes;5 actual release marker rules and matching source locations. Other changes are bounded provenance/count/status text and the historical collision limitation. All5 producer/support source pins still match current bytes.",
+    "closed_findings": "Authority directories now match activity-authority-before-eligibility/membership at source376. All10 actual history sequences invoke the mandatory qualified decoder. Authority release-project-activation x2, replay release-activity-result x2 and retention allow_retention_rpc x1 are indexed as exact private byte files, min/max1, required_keys=[], with actual writer locations394/490/623. The separately repaired noncreate collision is correctly historical and runtime verification remains pending.",
+    "parser_and_binding": "All196 rules use supported fields, obligatory required_keys, min/max1 and unique per-case paths. Literal nodes, phases, profiles, owner/query bounds and all83 original annotations remain bound to the input. Source-only applicability is preserved for the SQL-only noncreate-unadmitted case; no Temporal artifact is invented there.",
+    "hung_driver_and_runtime_limits": "Actual source serializes the active PG backend/transaction observation and observed post-kill disappearance under pg_state/pg_backend_after_kill in hung-driver-rollback.json. This supports source mapping only; actual self-exit timing, backend deadline, rollback, receipt recovery and cleanup remain fresh490 obligations.",
+    "separate_source_repair_review": {
+      "path": "docs/ifpmic/evidence/b03/h2-three-source-repairs-review-v2.json",
+      "sha256": "be6a2898074d58db1deb32ee68c652886ea91478bf0d9fcda034ffe44e0d6522"
+    }
+  },
+  "separate_bounded_descriptive_metadata_authorization": {
+    "object": "schema_scope.owner_snapshot_observation",
+    "delete_only": {
+      ",": "), allow_nan=false over snapshot"
+    },
+    "replace_only": {
+      "semantic_digest": {
+        "before": "canonical JSON ensure_ascii=true, sort_keys=true, separators=(",
+        "after": "SHA256 of json.dumps(snapshot, ensure_ascii=True, sort_keys=True, separators=(',', ':'), allow_nan=False).encode('ascii')"
+      }
+    },
+    "source_evidence": {
+      "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+      "sha256": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c",
+      "lines": "86-97",
+      "finding": "record_owner_snapshot builds these exact canonical snapshot bytes and stores their SHA256."
+    },
+    "scope": "Descriptive typo correction only. Preserve this object required_keys/source and all checker constraints, source bytes, other metadata and runtime oracles."
+  },
+  "authorization": {
+    "replace_only_exact_12_proposed_rows_and_clear_their_83_source_annotations": true,
+    "add_exact_proposal_and_this_review_sha_source_resolution_pointers": true,
+    "perform_only_the_explicit_separate_owner_digest_metadata_correction": true,
+    "change_other_rows_source_tests_checker_or_runtime_oracles": false,
+    "imports_collection_tests_sql_sdk_services_network_execution": false,
+    "whole_mapping_contract_h2_iteration_or_goal_acceptance": false
+  },
+  "risks_and_remaining_uncertainty": [
+    "Completing all87 source mappings does not establish actual invocation completeness, nested SQL/history semantics, authority, barrier ordering, process identity, deadline behavior or cleanup success. These require the complete versioned closure/ledger/contract, whole-source review, paired pre-gates and actual fresh490/JUnit/private raw evidence.",
+    "The retained407 and119 synthetic proof cannot substitute for the current490 candidate. Original inventory,25+5 obligations, case/phase caps and16220-second outer budget remain mandatory."
+  ],
+  "recommendation": "Integrate only these12 exact rows, bound resolution pointers and the explicit descriptive typo correction, retaining all rejected drafts and actual runtime obligations.",
+  "review_method": "Read-only actual source/AST/JSON/SHA and pinned-input comparison; no repository imports, collection, tests, SQL, SDK, services or network."
+}

@@ -660,14 +660,14 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "Iteration03: review corrected transport-worker7/activity12/started10 projections. Five deterministic harness defects repaired under independent plan/exact-source reviews, but no new tests executed. Mapping58/87 rows accepted;29 rows177 annotations remain. Freeze v2 source closure/contract, exact runner/paired gates, fresh490, then actual admission UI.",
+  "next_step": "Iteration03: all87 source-mapping rows integrated (953 artifact rules,475 original annotations resolved). Freeze separate v2 ledger/contract with103 code-source pins plus final machine; paired authoring reviews, bind runner constants, exact source/paired pre-gates, fresh490, then actual admission/run/receipt UI. Oldc10/cf4/I02 remain immutable; no actual490 run yet.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",
     "Approved Bedrock/Claude runtime profile"
   ],
   "publication_policy": "Only authorized git repository documentation, source and synthetic verification summaries/screenshots; never runtime credentials or application logs.",
-  "updated_at": "2026-10-20T15:29:02.670342+00:00",
+  "updated_at": "2026-10-20T16:30:00.734693+00:00",
   "session_handoff": {
     "status": "resumed_by_user",
     "resume_document": "docs/ifpmic/RESUME.md",
@@ -697,14 +697,16 @@
       "percent": 12.5,
       "method": "Unweighted count of verified stages; not estimated implementation effort."
     },
-    "pending_source_proposal": "evidence/b03/h2-machine-resolution-transport-worker-v2.json",
-    "pending_source_proposal_review": "evidence/b03/h2-three-source-repairs-review-v2.json",
-    "pending_source_proposal_status": "three_source_repairs_exact_review_accepted; remaining29_mapping_projections_pending_review",
+    "pending_source_proposal": "evidence/b03/h2-machine-resolution-progress-v2.json",
+    "pending_source_proposal_review": "evidence/b03/h2-machine-resolution-activity-review-v5.json",
+    "pending_source_proposal_status": "all87_source_rows_integrated; versioned_full_candidate_reviews_and_execution_pending",
     "latest_source_mapping": {
-      "resolved_cases": 58,
+      "resolved_cases": 87,
       "total_cases": 87,
-      "remaining_cases": 29,
-      "remaining_annotations": 177,
+      "remaining_cases": 0,
+      "remaining_annotations": 0,
+      "artifact_rules": 953,
+      "machine_sha256": "8c948efa993a1ba6837af28746af42ad532342eca5d5b299ac133f0377c0b74c",
       "scope": "Source path/schema/applicability only; no actual execution acceptance."
     }
   },
@@ -737,7 +739,7 @@
       "verification": "delivery/iteration-03/full-runner-repair-verification.json",
       "foundation_status": "accepted_119_cache_isolated_synthetic_units_only",
       "actual_job_execution": false,
-      "scope": "Original119 cache-isolated synthetic units remain historical accepted proof. Source mapping58/87 rows independently integrated,29 rows/177 annotations remain. Workspace undefined run_id source repair reviewed; worker duplicate O_EXCL source defect newly identified. Full H2 and actual admission UI incomplete.",
+      "scope": "All87 source rows/953 artifact rules integrated through independent exact reviews;475 original annotations source-resolved. Five harness defects repaired and269 assertions statically preserved. Original119 unit source closure unchanged. No new tests/full490 or actual admission UI accepted.",
       "mapping_resolution_progress": "evidence/b03/h2-machine-resolution-progress-v2.json"
     }
   ]

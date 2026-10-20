@@ -1,0 +1,48 @@
+{
+  "kind": "ifpmic.b03.h2.started-deployment-machine-resolution-review.v2",
+  "review_date": "2026-10-21",
+  "reviewer": "/root/h2_evidence_amendment_review",
+  "decision": "request_changes_no_integration_no_execution",
+  "proposal": {
+    "path": "docs/ifpmic/evidence/b03/h2-machine-resolution-started-v2.json",
+    "sha256": "519437232f36182f39b5e279e19f776d46b8f5958a13b344e3e63ceba588de2e"
+  },
+  "input_machine": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules.json",
+    "commit": "911ee83",
+    "sha256": "c3142155333886eb7514c7361e437a15964dd13d2cc24893726302457ab3728e"
+  },
+  "findings": [
+    {
+      "severity": "blocking_history_validation_bypass",
+      "location": "All10 proposed .pbseq artifact rules",
+      "problem": "The9 rogue-started-history.pbseq rules and the foreign-deployment accepted-start-history-before-kill.pbseq rule use format=bytes. This bypasses PBSeq framing and the mandatory injected qualified SDK decoder, despite the declared runtime requirement for PBSeq decode. Malformed Started input changes payload semantics, not the fact that these are actual deterministic HistoryEvent sequences.",
+      "minimal_fix": "Change exactly these10 history formats to pbseq, retaining required_keys:[], min/max1, paths, digest links and all original business oracles. Preserve this rejected draft and submit the corrected exact projection for independent review; no producer change or invented evidence is needed."
+    }
+  ],
+  "supported_source_findings": {
+    "literal_rows": 10,
+    "artifact_rules": 159,
+    "original_annotations_compared_verbatim": 43,
+    "pins_and_input": "All10 source pins match current files. All10 target rows remain identical to the c314 Git input despite disjoint changes in other phases. Nodes/phases/profiles/directories/owner/query requirements are unchanged.",
+    "paths_and_closure": "The9 mismatch directories are started-<literal variant>; foreign-deployment uses2 actual owned server roots. Actual initial workspace/manifests/runtime configs/private server environment/log/store outputs, cut CLI logs, journal/cleanup and case-specific JSON/history paths are indexed. No released-barrier-only dispatcher-barrier.json is invented. Foreign CLI logs/config and foreign login cleanup apply only to that row.",
+    "json_and_digest_links": "Case-specific required JSON key sets match actual literal writer dictionaries by AST/source comparison; common prepare/config/observer fields match their transitive writers. Every declared digest target is mandatory and indexed. Rogue summary history_sha256 and direct Started observer raw_history_sha256 use hashes of their actual serialized event bytes.",
+    "foreign_observations": "The actual foreign backend list is saved and asserted empty; old registry rows, foreign reserve/projector SQLSTATE42501, owning-projector positive result and complete proposal are retained in SQL observations. The source recomputes the proposal domain digest and checks receipt identity. Generic raw parsing does not independently establish these semantic outcomes.",
+    "hba_boundary": "Source temporarily prepends strict SCRAM rules, reloads, checks actual rules, authenticates correct credentials and rejects wrong/absent credentials. Restoration writes the retained original bytes and invokes the bounded reload helper. There is no persisted post-restore effective-rule readback. This is an explicit evidence limitation, not permission to waive HBA/auth assertions or claim independent restoration proof.",
+    "proposal_digest_boundary": "The actual proposal object is nested in foreign-deployment-sql-observations.json, with a domain digest value in the summary/receipt. No standalone proposal file exists. A cross-file SHA link would misrepresent the domain-envelope digest and must not be invented; retain source computation/assertions and actual future SQL/raw result review."
+  },
+  "authorization": {
+    "integrate_rows_or_clear_any_43_annotations": false,
+    "change_source_tests_checker_auth_or_runtime_oracles": false,
+    "invent_post_restore_hba_or_standalone_proposal_files": false,
+    "imports_collection_tests_sql_sdk_services_network_execution": false,
+    "whole_mapping_contract_h2_iteration_or_goal_acceptance": false
+  },
+  "risks_and_remaining_uncertainty": [
+    "File presence, hashes and generic JSON schemas do not establish quarantine reason, foreign authority isolation, registry immutability, proposal correctness, effective HBA restoration or owned cleanup. These remain actual fresh490/JUnit/raw evidence obligations and independent result-review concerns.",
+    "Configs and stores contain private connection/authentication/state data; their index/raw files remain in private0700/0600 evidence, excluded from public output. Quiescent file ownership, size bounds and hashes remain actual runtime checks.",
+    "The corrected projection still needs separate exact review. Original full490/25+5 inventory/budgets, complete versioned source closure/ledger/contract and paired pre-gates remain mandatory."
+  ],
+  "recommendation": "Preserve the exact v2 draft; author a corrected projection with all10 history formats restored to pbseq and all explicit HBA/proposal limitations retained, then request exact review.",
+  "review_method": "Read-only actual source/AST/JSON/SHA and pinned Git-input comparison; no repository imports, collection, tests, SQL, SDK, services or network."
+}
