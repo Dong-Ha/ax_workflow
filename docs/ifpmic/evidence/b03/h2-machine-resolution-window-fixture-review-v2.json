@@ -1,0 +1,49 @@
+{
+  "kind": "ifpmic.b03.h2.window-fixture-source-projection-review.v2",
+  "review_date": "2026-10-21",
+  "reviewer": "/root/h2_evidence_amendment_review",
+  "decision": "approve_exact_14_row_source_projection_only",
+  "proposal": {
+    "path": "docs/ifpmic/evidence/b03/h2-machine-resolution-window-fixture-v2.json",
+    "sha256": "30c814cc0f16ffa8d82ce201c88f91a2947b73f9f311acd962fdf2c311aef00b"
+  },
+  "input_machine": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules.json",
+    "sha256": "5b6915f481840872c8fbaef8dbf77a8296cea6d4a72b70cb595a04e254795c25"
+  },
+  "findings": [],
+  "evidence": {
+    "cases": 14,
+    "original_annotations_compared_verbatim": 47,
+    "old_artifacts": 37,
+    "proposed_artifacts": 47,
+    "corrected_directories": 6,
+    "restore_watchdog_substitutions": 2,
+    "added_actual_runtime_artifacts": 10,
+    "parser_compatibility": "All47 artifact entries use only loader-supported fields, include required_keys, and declare minimum=maximum=1. Byte/PBSeq entries have empty required_keys. Every digest target is also a mandatory indexed artifact. No repository module was imported to establish this static comparison.",
+    "directory_applicability": "Partial-shape uses neg-window-partial-shape-constraint; the3 clock cases use neg-window-clock-seam-<boundary>; actual runtime uses neg-window-actual-before/after. The3 retention paths retain their source-generated function/parameter names.",
+    "json_and_journal_fields": "Window result and watchdog required-key sets match actual literal writer dictionaries by source/AST. Actual runtime and synthetic expiry journals share event/pid/start_ticks across their applicable entries. OIDC/TestClient shared journal rules retain nodeid filtering and event/nodeid/monotonic common fields.",
+    "restore_attribution": "Restore2 never emit a per-node fixture-cleanup journal entry. Each actual watchdog writes sha256(full nodeid).json at the observations root, with11 fields and nodeid attribution. Existing exact exception-identity query minima remain1. The proposal removes their two false fixture-journal source locations; source_resolution references watchdog facts and the newly pinned writer, so a duplicate row-local writer location is unnecessary.",
+    "runtime_applicability": "Both runtime branches add initial workspace JSON, process-cleanup JSON, actual Temporal log and both dispatcher byte logs. Before additionally requires the actual Started PBSeq/observer JSON and links /raw_history_sha256 to that PBSeq. After retains the actual backend empty list inside runtime-boundary JSON and its existing temporal.list_workflows minimum; no Started file is required. No socket barrier is produced on this path.",
+    "invariants": "All14 literal node IDs, phases, profiles, owner minima and query minima/maxima equal the input. No producer, test assertion, budget or original119 reviewed source byte is changed by the projection.",
+    "source_pins": "All10 proposal source_pins match current file bytes; only the actual fixture watchdog pin is newly added to the machine source closure."
+  },
+  "approved_additional_machine_source_pins": {
+    "tests/ifpmic_api/h2_fixture_failure_case_budget.py": "503a1fc22d2ddece87fa83336fc5c26b003c094a7cf793339d3dbe0d61a06791"
+  },
+  "authorization": {
+    "replace_only_exact_14_proposed_rows_and_clear_their_47_source_annotations": true,
+    "add_only_listed_watchdog_source_pin": true,
+    "add_exact_proposal_and_this_review_sha_source_resolution_pointers": true,
+    "change_other_rows_source_tests_or_checker": false,
+    "imports_collection_tests_sql_sdk_services_network_execution": false,
+    "full_mapping_contract_h2_iteration_or_goal_acceptance": false
+  },
+  "risks_and_remaining_uncertainty": [
+    "This resolves source path/schema/applicability annotations only. Generic parsing does not establish nested SQL invariants, lifecycle outcomes, exception/thread identity, query completeness or actual execution.",
+    "The watchdog supplies attribution/timing; restore exception identity remains raw query values and fresh JUnit assertions. Expiry uses a synthetic retained handle and proves no physical OS-process absence. Clock cases use an owner-injected private-DB clock seam, not production-clock proof.",
+    "Only applying these14 rows leaves73 other rows with422 unresolved annotations. Startup146 remains unapproved until its separate canonical projection review. Full490/25+5 source closure, versioned contract/ledger and paired pre-gates remain mandatory."
+  ],
+  "recommendation": "Integrate only the exact proposed14 rows, the one listed source pin and bound review pointers; preserve the historical input and all remaining unresolved items.",
+  "review_method": "Read-only current source/JSON/AST/SHA comparison. No repository imports, test execution, collection, SQL, SDK, services or network."
+}

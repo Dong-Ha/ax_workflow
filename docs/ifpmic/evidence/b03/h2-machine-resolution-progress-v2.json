@@ -3,14 +3,14 @@
   "status": "partial_source_mapping_only_runtime_blocked",
   "machine": {
     "path": "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules.json",
-    "sha256": "5b6915f481840872c8fbaef8dbf77a8296cea6d4a72b70cb595a04e254795c25"
+    "sha256": "536c59f441312abb3e1b57a60b77e919f470032d610e6957ae05ab467d0a0e3c"
   },
   "cases": 87,
-  "artifacts": 535,
-  "source_resolved_cases": 4,
-  "remaining_cases": 83,
-  "resolved_original_annotations": 6,
-  "remaining_annotations": 469,
+  "artifacts": 505,
+  "source_resolved_cases": 39,
+  "remaining_cases": 48,
+  "resolved_original_annotations": 199,
+  "remaining_annotations": 276,
   "input_commit": "a303cc65480615946d9439d48e6127e7870a0a38",
   "input_sha256": "1ec018486a118cbe2474751fcb06b70c2923d8d0b04b53705385823ec5ba3f88",
   "addendum": {
@@ -22,15 +22,19 @@
     "sha256": "10f0b533d9ff0c1b365b5e673e8a96a75082e7f5adac866c7385f379fe32394f"
   },
   "structural_verification": {
-    "only_approved_four_rows_unresolved_and_resolution_pointers_changed": true,
-    "other83_rows_byte_semantics_unchanged": true,
-    "all_source_pins_unchanged": true,
-    "all_artifact_count_and_query_requirements_unchanged": true
+    "latest35_disjoint_rows_integrated_against_input5b6915": true,
+    "other52_rows_unchanged_in_latest_batch": true,
+    "only_one_new_watchdog_source_pin_in_latest_batch": true,
+    "runtime_acceptance_unchanged": true
   },
   "unit_scope": "119 cache-isolated synthetic checks remain accepted against unchanged source bytes; this JSON-only source resolution did not execute new tests or actual cases.",
-  "next_single_batch": "Startup phase21 rows: resolve each existing annotation against concrete helper/producer paths and JSON schemas; no blanket clearing. Then subsequent remaining phases, full v2 freeze/reviews and fresh490.",
+  "next_single_batch": "Apply only independently reviewed source repair pin; review dispatcher8/workspace11 proposals. Remaining phases still block full490 versioned closure, pre-gates and actual admission UI.",
   "full_mapping_accepted": false,
   "h2_accepted": false,
   "iteration03_complete": false,
-  "goal_complete": false
+  "goal_complete": false,
+  "latest_integration": {
+    "path": "docs/ifpmic/evidence/b03/h2-machine-resolution-integration-v2.json",
+    "sha256": "7d3a72c438df585e11adffe080e084b1d7d3be18f222a51a93df9a2b388b87b4"
+  }
 }

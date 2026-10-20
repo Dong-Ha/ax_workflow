@@ -1,0 +1,1661 @@
+{
+  "additional_machine_source_pins": {
+    "tests/ifpmic_api/h2_fixture_failure_case_budget.py": "503a1fc22d2ddece87fa83336fc5c26b003c094a7cf793339d3dbe0d61a06791"
+  },
+  "basis": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules.json",
+    "plan": "docs/ifpmic/delivery/iteration-03/RAW-AUDIT-INTEGRATION.md",
+    "plan_review": "docs/ifpmic/delivery/iteration-03/raw-integration-plan-review.json",
+    "sha256": "5b6915f481840872c8fbaef8dbf77a8296cea6d4a72b70cb595a04e254795c25"
+  },
+  "cases": [
+    {
+      "evidence_refs": [
+        "watchdog",
+        "expiry",
+        "journal"
+      ],
+      "node_id": "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py::test_expired_cleanup_budget_performs_no_new_lifecycle_action",
+      "original_unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: JUnit assertions",
+        "JSON top-level keys not fully source-verified for process-cleanup.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl",
+        "Raw source gap: test uses a narrow retained-handle probe; do not mislabel synthetic handle as actual OS subprocess."
+      ],
+      "proposed_row": {
+        "artifacts": [
+          {
+            "format": "json",
+            "maximum": 1,
+            "minimum": 1,
+            "path": "process-cleanup.json",
+            "required_keys": [
+              "processes"
+            ]
+          },
+          {
+            "format": "jsonl",
+            "maximum": 1,
+            "minimum": 1,
+            "path": "process-journal.jsonl",
+            "required_keys": [
+              "event",
+              "pid",
+              "start_ticks"
+            ]
+          }
+        ],
+        "case_directory": "cleanup-fallback-probe-0380168db84faae2",
+        "minimum_owner": 0,
+        "node_id": "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py::test_expired_cleanup_budget_performs_no_new_lifecycle_action",
+        "phase": "fixture_failure",
+        "profile": "fixture_budget",
+        "queries_max": {},
+        "queries_min": {
+          "fixture.exhausted_cleanup": 1
+        },
+        "source_locations": [
+          {
+            "line": 91,
+            "path": "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py",
+            "sha256": "c0dd1e2a3e732ceea482e286a0f97bbb270dfab4040d88eff0403efc846e8688",
+            "symbol": "test_expired_cleanup_budget_performs_no_new_lifecycle_action"
+          },
+          {
+            "line": 389,
+            "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+            "symbol": "_read_owner_snapshot / record_owner_snapshot"
+          },
+          {
+            "line": 50,
+            "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+            "symbol": "record_query_observation"
+          },
+          {
+            "line": 63,
+            "path": "tests/ifpmic_api/h2_fixture_cleanup.py",
+            "symbol": "record"
+          },
+          {
+            "artifact": "process-cleanup.json",
+            "line": 127,
+            "path": "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py",
+            "symbol": "source artifact write/read literal"
+          },
+          {
+            "artifact": "process-journal.jsonl",
+            "line": 102,
+            "path": "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py",
+            "symbol": "source artifact write/read literal"
+          }
+        ],
+        "source_resolution": {
+          "evidence_refs": [
+            "watchdog",
+            "expiry",
+            "journal"
+          ],
+          "proposal": "docs/ifpmic/evidence/b03/h2-machine-resolution-window-fixture-v2.json",
+          "scope": "source_path_schema_applicability_only_runtime_pending"
+        },
+        "unresolved": []
+      }
+    },
+    {
+      "evidence_refs": [
+        "watchdog",
+        "oidc"
+      ],
+      "node_id": "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py::test_partial_oidc_start_fails_closed_for_unstarted_thread_handle",
+      "original_unresolved": [
+        "JSON top-level keys not fully source-verified for fixture-cleanup.jsonl",
+        "Raw source gap: file log must retain descriptor/handle identity and unknown ownership; JUnit observes actual open/started state."
+      ],
+      "proposed_row": {
+        "artifacts": [
+          {
+            "format": "jsonl",
+            "maximum": 1,
+            "minimum": 1,
+            "node_field": "nodeid",
+            "path": "fixture-cleanup.jsonl",
+            "required_keys": [
+              "event",
+              "nodeid",
+              "monotonic"
+            ]
+          }
+        ],
+        "case_directory": ".",
+        "minimum_owner": 0,
+        "node_id": "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py::test_partial_oidc_start_fails_closed_for_unstarted_thread_handle",
+        "phase": "fixture_failure",
+        "profile": "fixture_oidc",
+        "queries_max": {},
+        "queries_min": {
+          "fixture.partial_oidc_start.after_close": 1,
+          "fixture.partial_oidc_start.before_close": 1
+        },
+        "source_locations": [
+          {
+            "line": 138,
+            "path": "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py",
+            "sha256": "c0dd1e2a3e732ceea482e286a0f97bbb270dfab4040d88eff0403efc846e8688",
+            "symbol": "test_partial_oidc_start_fails_closed_for_unstarted_thread_handle"
+          },
+          {
+            "line": 389,
+            "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+            "symbol": "_read_owner_snapshot / record_owner_snapshot"
+          },
+          {
+            "line": 50,
+            "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+            "symbol": "record_query_observation"
+          },
+          {
+            "line": 63,
+            "path": "tests/ifpmic_api/h2_fixture_cleanup.py",
+            "symbol": "record"
+          },
+          {
+            "artifact": "fixture-cleanup.jsonl",
+            "line": 261,
+            "path": "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py",
+            "symbol": "source artifact write/read literal"
+          }
+        ],
+        "source_resolution": {
+          "evidence_refs": [
+            "watchdog",
+            "oidc"
+          ],
+          "proposal": "docs/ifpmic/evidence/b03/h2-machine-resolution-window-fixture-v2.json",
+          "scope": "source_path_schema_applicability_only_runtime_pending"
+        },
+        "unresolved": []
+      }
+    },
+    {
+      "evidence_refs": [
+        "watchdog",
+        "restore_primary"
+      ],
+      "node_id": "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py::test_restore_error_keeps_exact_primary_and_notes_secondary",
+      "original_unresolved": [
+        "JSON top-level keys not fully source-verified for fixture-cleanup.jsonl",
+        "Raw source gap: private query observation records types/identity result, not entire exception trace; JUnit assertion retains object identity check."
+      ],
+      "proposed_row": {
+        "artifacts": [
+          {
+            "format": "json",
+            "maximum": 1,
+            "minimum": 1,
+            "node_field": "nodeid",
+            "path": "db382fa98aa7183b269f6a5e7ea26f35a5f7eae47a75d1fb7a2e8937934729dd.json",
+            "required_keys": [
+              "kind",
+              "nodeid",
+              "started_monotonic",
+              "cleanup_started_monotonic",
+              "finished_monotonic",
+              "body_elapsed_seconds",
+              "cleanup_elapsed_seconds",
+              "body_budget_seconds",
+              "cleanup_budget_seconds",
+              "body_timeout_triggered",
+              "cleanup_timeout_triggered"
+            ]
+          }
+        ],
+        "case_directory": ".",
+        "minimum_owner": 0,
+        "node_id": "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py::test_restore_error_keeps_exact_primary_and_notes_secondary",
+        "phase": "fixture_failure",
+        "profile": "fixture_restore_primary",
+        "queries_max": {},
+        "queries_min": {
+          "fixture.restore_preserving_error": 1
+        },
+        "source_locations": [
+          {
+            "line": 34,
+            "path": "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py",
+            "sha256": "c0dd1e2a3e732ceea482e286a0f97bbb270dfab4040d88eff0403efc846e8688",
+            "symbol": "test_restore_error_keeps_exact_primary_and_notes_secondary"
+          },
+          {
+            "line": 389,
+            "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+            "symbol": "_read_owner_snapshot / record_owner_snapshot"
+          },
+          {
+            "line": 50,
+            "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+            "symbol": "record_query_observation"
+          },
+          {
+            "line": 63,
+            "path": "tests/ifpmic_api/h2_fixture_cleanup.py",
+            "symbol": "record"
+          }
+        ],
+        "source_resolution": {
+          "evidence_refs": [
+            "watchdog",
+            "restore_primary"
+          ],
+          "proposal": "docs/ifpmic/evidence/b03/h2-machine-resolution-window-fixture-v2.json",
+          "scope": "source_path_schema_applicability_only_runtime_pending"
+        },
+        "unresolved": []
+      }
+    },
+    {
+      "evidence_refs": [
+        "watchdog",
+        "restore_only"
+      ],
+      "node_id": "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py::test_restore_only_failure_escapes_by_identity",
+      "original_unresolved": [
+        "JSON top-level keys not fully source-verified for fixture-cleanup.jsonl"
+      ],
+      "proposed_row": {
+        "artifacts": [
+          {
+            "format": "json",
+            "maximum": 1,
+            "minimum": 1,
+            "node_field": "nodeid",
+            "path": "45b75a416cfcf984c41723dcd7bfe72661e63af38d7fdeaa2b44422fc4e6af10.json",
+            "required_keys": [
+              "kind",
+              "nodeid",
+              "started_monotonic",
+              "cleanup_started_monotonic",
+              "finished_monotonic",
+              "body_elapsed_seconds",
+              "cleanup_elapsed_seconds",
+              "body_budget_seconds",
+              "cleanup_budget_seconds",
+              "body_timeout_triggered",
+              "cleanup_timeout_triggered"
+            ]
+          }
+        ],
+        "case_directory": ".",
+        "minimum_owner": 0,
+        "node_id": "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py::test_restore_only_failure_escapes_by_identity",
+        "phase": "fixture_failure",
+        "profile": "fixture_restore_only",
+        "queries_max": {},
+        "queries_min": {
+          "fixture.restore_only_failure": 1
+        },
+        "source_locations": [
+          {
+            "line": 53,
+            "path": "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py",
+            "sha256": "c0dd1e2a3e732ceea482e286a0f97bbb270dfab4040d88eff0403efc846e8688",
+            "symbol": "test_restore_only_failure_escapes_by_identity"
+          },
+          {
+            "line": 389,
+            "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+            "symbol": "_read_owner_snapshot / record_owner_snapshot"
+          },
+          {
+            "line": 50,
+            "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+            "symbol": "record_query_observation"
+          },
+          {
+            "line": 63,
+            "path": "tests/ifpmic_api/h2_fixture_cleanup.py",
+            "symbol": "record"
+          }
+        ],
+        "source_resolution": {
+          "evidence_refs": [
+            "watchdog",
+            "restore_only"
+          ],
+          "proposal": "docs/ifpmic/evidence/b03/h2-machine-resolution-window-fixture-v2.json",
+          "scope": "source_path_schema_applicability_only_runtime_pending"
+        },
+        "unresolved": []
+      }
+    },
+    {
+      "evidence_refs": [
+        "watchdog",
+        "testclient"
+      ],
+      "node_id": "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py::test_unconfirmed_testclient_exit_records_unknown_ownership",
+      "original_unresolved": [
+        "JSON top-level keys not fully source-verified for fixture-cleanup.jsonl",
+        "Raw source gap: do not claim absence from only serialized thread id; require source JUnit inspection and finalizer log."
+      ],
+      "proposed_row": {
+        "artifacts": [
+          {
+            "format": "jsonl",
+            "maximum": 1,
+            "minimum": 1,
+            "node_field": "nodeid",
+            "path": "fixture-cleanup.jsonl",
+            "required_keys": [
+              "event",
+              "nodeid",
+              "monotonic"
+            ]
+          }
+        ],
+        "case_directory": ".",
+        "minimum_owner": 0,
+        "node_id": "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py::test_unconfirmed_testclient_exit_records_unknown_ownership",
+        "phase": "fixture_failure",
+        "profile": "fixture_testclient",
+        "queries_max": {},
+        "queries_min": {
+          "fixture.testclient.after_release_and_join": 1,
+          "fixture.testclient.unconfirmed_exit": 1
+        },
+        "source_locations": [
+          {
+            "line": 224,
+            "path": "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py",
+            "sha256": "c0dd1e2a3e732ceea482e286a0f97bbb270dfab4040d88eff0403efc846e8688",
+            "symbol": "test_unconfirmed_testclient_exit_records_unknown_ownership"
+          },
+          {
+            "line": 389,
+            "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+            "symbol": "_read_owner_snapshot / record_owner_snapshot"
+          },
+          {
+            "line": 50,
+            "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+            "symbol": "record_query_observation"
+          },
+          {
+            "line": 63,
+            "path": "tests/ifpmic_api/h2_fixture_cleanup.py",
+            "symbol": "record"
+          },
+          {
+            "artifact": "fixture-cleanup.jsonl",
+            "line": 261,
+            "path": "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py",
+            "symbol": "source artifact write/read literal"
+          }
+        ],
+        "source_resolution": {
+          "evidence_refs": [
+            "watchdog",
+            "testclient"
+          ],
+          "proposal": "docs/ifpmic/evidence/b03/h2-machine-resolution-window-fixture-v2.json",
+          "scope": "source_path_schema_applicability_only_runtime_pending"
+        },
+        "unresolved": []
+      }
+    },
+    {
+      "evidence_refs": [
+        "manifest",
+        "runtime",
+        "journal",
+        "expired"
+      ],
+      "node_id": "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_actual_dispatcher_boundary[actual-after-deadline]",
+      "original_unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: history/** raw direct event sequence",
+        "Source-declared evidence item needs a concrete path/condition mapping: barrier and cleanup records",
+        "JSON top-level keys not fully source-verified for neg-window-runtime-boundary.json",
+        "JSON top-level keys not fully source-verified for source-manifest.json",
+        "JSON top-level keys not fully source-verified for environment-manifest.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl"
+      ],
+      "proposed_row": {
+        "artifacts": [
+          {
+            "format": "json",
+            "maximum": 1,
+            "minimum": 1,
+            "path": "neg-window-runtime-boundary.json",
+            "required_keys": [
+              "boundary",
+              "window_seed",
+              "sql_before_cut",
+              "sql_lease_expired_cut",
+              "sql_after",
+              "temporal_history_or_empty_list",
+              "process_identity"
+            ]
+          },
+          {
+            "format": "json",
+            "maximum": 1,
+            "minimum": 1,
+            "path": "source-manifest.json",
+            "required_keys": [
+              "format",
+              "files"
+            ]
+          },
+          {
+            "format": "json",
+            "maximum": 1,
+            "minimum": 1,
+            "path": "environment-manifest.json",
+            "required_keys": [
+              "format",
+              "files",
+              "interpreter_sha256",
+              "python_version"
+            ]
+          },
+          {
+            "format": "jsonl",
+            "maximum": 1,
+            "minimum": 1,
+            "path": "process-journal.jsonl",
+            "required_keys": [
+              "event",
+              "pid",
+              "start_ticks"
+            ]
+          },
+          {
+            "format": "json",
+            "maximum": 1,
+            "minimum": 1,
+            "path": "workspace-initial-observation.json",
+            "required_keys": [
+              "job_id",
+              "tree",
+              "marker_bytes_hex"
+            ]
+          },
+          {
+            "format": "json",
+            "maximum": 1,
+            "minimum": 1,
+            "path": "process-cleanup.json",
+            "required_keys": [
+              "processes"
+            ]
+          },
+          {
+            "format": "bytes",
+            "maximum": 1,
+            "minimum": 1,
+            "path": "temporal-data/temporal-server.log",
+            "required_keys": []
+          },
+          {
+            "format": "bytes",
+            "maximum": 1,
+            "minimum": 1,
+            "path": "process-logs/dispatcher-stdout.log",
+            "required_keys": []
+          },
+          {
+            "format": "bytes",
+            "maximum": 1,
+            "minimum": 1,
+            "path": "process-logs/dispatcher-stderr.log",
+            "required_keys": []
+          }
+        ],
+        "case_directory": "neg-window-actual-after",
+        "minimum_owner": 1,
+        "node_id": "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_actual_dispatcher_boundary[actual-after-deadline]",
+        "phase": "window",
+        "profile": "window_runtime",
+        "queries_max": {},
+        "queries_min": {
+          "temporal.list_workflows": 1
+        },
+        "source_locations": [
+          {
+            "line": 465,
+            "path": "tests/ifpmic_api/test_h2_reconciliation_window.py",
+            "sha256": "7fe6f3856b408d8d1f1e9fefc58ae47db00cfe1f8f5b45b41836523c63881a01",
+            "symbol": "test_h2_window_actual_dispatcher_boundary"
+          },
+          {
+            "line": 389,
+            "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+            "symbol": "_read_owner_snapshot / record_owner_snapshot"
+          },
+          {
+            "line": 50,
+            "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+            "symbol": "record_query_observation"
+          },
+          {
+            "artifact": "neg-window-runtime-boundary.json",
+            "line": 540,
+            "path": "tests/ifpmic_api/test_h2_reconciliation_window.py",
+            "symbol": "source artifact write/read literal"
+          },
+          {
+            "artifact": "source-manifest.json",
+            "line": 51,
+            "path": "tests/ifpmic_api/test_h2_reconciliation_window.py",
+            "symbol": "source artifact write/read literal"
+          },
+          {
+            "artifact": "environment-manifest.json",
+            "line": 52,
+            "path": "tests/ifpmic_api/test_h2_reconciliation_window.py",
+            "symbol": "source artifact write/read literal"
+          },
+          {
+            "artifact": "process-journal.jsonl",
+            "line": 296,
+            "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+            "symbol": "source artifact write/read literal"
+          }
+        ],
+        "source_resolution": {
+          "evidence_refs": [
+            "manifest",
+            "runtime",
+            "journal",
+            "expired"
+          ],
+          "proposal": "docs/ifpmic/evidence/b03/h2-machine-resolution-window-fixture-v2.json",
+          "scope": "source_path_schema_applicability_only_runtime_pending"
+        },
+        "unresolved": []
+      }
+    },
+    {
+      "evidence_refs": [
+        "manifest",
+        "runtime",
+        "journal",
+        "started"
+      ],
+      "node_id": "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_actual_dispatcher_boundary[actual-before-deadline]",
+      "original_unresolved": [
+        "Source-declared evidence item needs a concrete path/condition mapping: history/** raw direct event sequence",
+        "Source-declared evidence item needs a concrete path/condition mapping: barrier and cleanup records",
+        "JSON top-level keys not fully source-verified for neg-window-runtime-boundary.json",
+        "JSON top-level keys not fully source-verified for source-manifest.json",
+        "JSON top-level keys not fully source-verified for environment-manifest.json",
+        "JSON top-level keys not fully source-verified for process-journal.jsonl"
+      ],
+      "proposed_row": {
+        "artifacts": [
+          {
+            "format": "json",
+            "maximum": 1,
+            "minimum": 1,
+            "path": "neg-window-runtime-boundary.json",
+            "required_keys": [
+              "boundary",
+              "window_seed",
+              "sql_before_cut",
+              "sql_lease_expired_cut",
+              "sql_after",
+              "temporal_history_or_empty_list",
+              "process_identity"
+            ]
+          },
+          {
+            "format": "json",
+            "maximum": 1,
+            "minimum": 1,
+            "path": "source-manifest.json",
+            "required_keys": [
+              "format",
+              "files"
+            ]
+          },
+          {
+            "format": "json",
+            "maximum": 1,
+            "minimum": 1,
+            "path": "environment-manifest.json",
+            "required_keys": [
+              "format",
+              "files",
+              "interpreter_sha256",
+              "python_version"
+            ]
+          },
+          {
+            "format": "jsonl",
+            "maximum": 1,
+            "minimum": 1,
+            "path": "process-journal.jsonl",
+            "required_keys": [
+              "event",
+              "pid",
+              "start_ticks"
+            ]
+          },
+          {
+            "format": "pbseq",
+            "maximum": 1,
+            "minimum": 1,
+            "path": "accepted-start-history-before-kill.pbseq",
+            "required_keys": []
+          },
+          {
+            "format": "json",
+            "maximum": 1,
+            "minimum": 1,
+            "path": "accepted-start-observer.json",
+            "required_keys": [
+              "workflow_id",
+              "run_id",
+              "observed_started_monotonic",
+              "execution_count",
+              "started_event_count",
+              "started_input",
+              "event_ids",
+              "status",
+              "retention_seconds",
+              "raw_history_sha256",
+              "raw_history_bytes"
+            ],
+            "sha256_links": {
+              "/raw_history_sha256": "accepted-start-history-before-kill.pbseq"
+            }
+          },
+          {
+            "format": "json",
+            "maximum": 1,
+            "minimum": 1,
+            "path": "workspace-initial-observation.json",
+            "required_keys": [
+              "job_id",
+              "tree",
+              "marker_bytes_hex"
+            ]
+          },
+          {
+            "format": "json",
+            "maximum": 1,
+            "minimum": 1,
+            "path": "process-cleanup.json",
+            "required_keys": [
+              "processes"
+            ]
+          },
+          {
+            "format": "bytes",
+            "maximum": 1,
+            "minimum": 1,
+            "path": "temporal-data/temporal-server.log",
+            "required_keys": []
+          },
+          {
+            "format": "bytes",
+            "maximum": 1,
+            "minimum": 1,
+            "path": "process-logs/dispatcher-stdout.log",
+            "required_keys": []
+          },
+          {
+            "format": "bytes",
+            "maximum": 1,
+            "minimum": 1,
+            "path": "process-logs/dispatcher-stderr.log",
+            "required_keys": []
+          }
+        ],
+        "case_directory": "neg-window-actual-before",
+        "minimum_owner": 1,
+        "node_id": "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_actual_dispatcher_boundary[actual-before-deadline]",
+        "phase": "window",
+        "profile": "window_runtime",
+        "queries_max": {},
+        "queries_min": {
+          "temporal.list_workflows": 1
+        },
+        "source_locations": [
+          {
+            "line": 465,
+            "path": "tests/ifpmic_api/test_h2_reconciliation_window.py",
+            "sha256": "7fe6f3856b408d8d1f1e9fefc58ae47db00cfe1f8f5b45b41836523c63881a01",
+            "symbol": "test_h2_window_actual_dispatcher_boundary"
+          },
+          {
+            "line": 389,
+            "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+            "symbol": "_read_owner_snapshot / record_owner_snapshot"
+          },
+          {
+            "line": 50,
+            "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+            "symbol": "record_query_observation"
+          },
+          {
+            "artifact": "neg-window-runtime-boundary.json",
+            "line": 540,
+            "path": "tests/ifpmic_api/test_h2_reconciliation_window.py",
+            "symbol": "source artifact write/read literal"
+          },
+          {
+            "artifact": "source-manifest.json",
+            "line": 51,
+            "path": "tests/ifpmic_api/test_h2_reconciliation_window.py",
+            "symbol": "source artifact write/read literal"
+          },
+          {
+            "artifact": "environment-manifest.json",
+            "line": 52,
+            "path": "tests/ifpmic_api/test_h2_reconciliation_window.py",
+            "symbol": "source artifact write/read literal"
+          },
+          {
+            "artifact": "process-journal.jsonl",
+            "line": 296,
+            "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+            "symbol": "source artifact write/read literal"
+          },
+          {
+            "line": 525,
+            "path": "tests/ifpmic_api/test_h2_reconciliation_window.py",
+            "symbol": "transitive _observe_started_direct call with private evidence root"
+          },
+          {
+            "artifact": "accepted-start-history-before-kill.pbseq",
+            "line": 315,
+            "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+            "symbol": "shared raw Temporal history write to evidence_root"
+          },
+          {
+            "artifact": "accepted-start-observer.json",
+            "line": 326,
+            "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+            "symbol": "shared Started observer JSON write to evidence_root"
+          }
+        ],
+        "source_resolution": {
+          "evidence_refs": [
+            "manifest",
+            "runtime",
+            "journal",
+            "started"
+          ],
+          "proposal": "docs/ifpmic/evidence/b03/h2-machine-resolution-window-fixture-v2.json",
+          "scope": "source_path_schema_applicability_only_runtime_pending"
+        },
+        "unresolved": []
+      }
+    },
+    {
+      "evidence_refs": [
+        "manifest",
+        "clock"
+      ],
+      "node_id": "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_exact_deadline_with_isolated_clock_seam[after-deadline]",
+      "original_unresolved": [
+        "JSON top-level keys not fully source-verified for neg-window-clock-seam.json",
+        "JSON top-level keys not fully source-verified for source-manifest.json",
+        "JSON top-level keys not fully source-verified for environment-manifest.json",
+        "Raw source gap: clock-seam mutation remains unexecuted; no production clock evidence."
+      ],
+      "proposed_row": {
+        "artifacts": [
+          {
+            "format": "json",
+            "maximum": 1,
+            "minimum": 1,
+            "path": "neg-window-clock-seam.json",
+            "required_keys": [
+              "case",
+              "status",
+              "primary_failure_type",
+              "restoration_failure_type",
+              "frozen_instant",
+              "before",
+              "while_replaced",
+              "after_restore",
+              "original_definition",
+              "expected_replacement_definition",
+              "claim_generation",
+              "claim_token",
+              "claim_live_expiry_at_frozen_instant",
+              "result",
+              "sql_before_cut",
+              "sql_before_call",
+              "sql_after"
+            ]
+          },
+          {
+            "format": "json",
+            "maximum": 1,
+            "minimum": 1,
+            "path": "source-manifest.json",
+            "required_keys": [
+              "format",
+              "files"
+            ]
+          },
+          {
+            "format": "json",
+            "maximum": 1,
+            "minimum": 1,
+            "path": "environment-manifest.json",
+            "required_keys": [
+              "format",
+              "files",
+              "interpreter_sha256",
+              "python_version"
+            ]
+          }
+        ],
+        "case_directory": "neg-window-clock-seam-after-deadline",
+        "minimum_owner": 1,
+        "node_id": "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_exact_deadline_with_isolated_clock_seam[after-deadline]",
+        "phase": "window",
+        "profile": "window_clock",
+        "queries_max": {},
+        "queries_min": {},
+        "source_locations": [
+          {
+            "line": 342,
+            "path": "tests/ifpmic_api/test_h2_reconciliation_window.py",
+            "sha256": "7fe6f3856b408d8d1f1e9fefc58ae47db00cfe1f8f5b45b41836523c63881a01",
+            "symbol": "test_h2_window_exact_deadline_with_isolated_clock_seam"
+          },
+          {
+            "line": 389,
+            "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+            "symbol": "_read_owner_snapshot / record_owner_snapshot"
+          },
+          {
+            "artifact": "neg-window-clock-seam.json",
+            "line": 424,
+            "path": "tests/ifpmic_api/test_h2_reconciliation_window.py",
+            "symbol": "source artifact write/read literal"
+          },
+          {
+            "artifact": "source-manifest.json",
+            "line": 51,
+            "path": "tests/ifpmic_api/test_h2_reconciliation_window.py",
+            "symbol": "source artifact write/read literal"
+          },
+          {
+            "artifact": "environment-manifest.json",
+            "line": 52,
+            "path": "tests/ifpmic_api/test_h2_reconciliation_window.py",
+            "symbol": "source artifact write/read literal"
+          }
+        ],
+        "source_resolution": {
+          "evidence_refs": [
+            "manifest",
+            "clock"
+          ],
+          "proposal": "docs/ifpmic/evidence/b03/h2-machine-resolution-window-fixture-v2.json",
+          "scope": "source_path_schema_applicability_only_runtime_pending"
+        },
+        "unresolved": []
+      }
+    },
+    {
+      "evidence_refs": [
+        "manifest",
+        "clock"
+      ],
+      "node_id": "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_exact_deadline_with_isolated_clock_seam[at-deadline]",
+      "original_unresolved": [
+        "JSON top-level keys not fully source-verified for neg-window-clock-seam.json",
+        "JSON top-level keys not fully source-verified for source-manifest.json",
+        "JSON top-level keys not fully source-verified for environment-manifest.json",
+        "Raw source gap: clock-seam mutation remains unexecuted; no production clock evidence."
+      ],
+      "proposed_row": {
+        "artifacts": [
+          {
+            "format": "json",
+            "maximum": 1,
+            "minimum": 1,
+            "path": "neg-window-clock-seam.json",
+            "required_keys": [
+              "case",
+              "status",
+              "primary_failure_type",
+              "restoration_failure_type",
+              "frozen_instant",
+              "before",
+              "while_replaced",
+              "after_restore",
+              "original_definition",
+              "expected_replacement_definition",
+              "claim_generation",
+              "claim_token",
+              "claim_live_expiry_at_frozen_instant",
+              "result",
+              "sql_before_cut",
+              "sql_before_call",
+              "sql_after"
+            ]
+          },
+          {
+            "format": "json",
+            "maximum": 1,
+            "minimum": 1,
+            "path": "source-manifest.json",
+            "required_keys": [
+              "format",
+              "files"
+            ]
+          },
+          {
+            "format": "json",
+            "maximum": 1,
+            "minimum": 1,
+            "path": "environment-manifest.json",
+            "required_keys": [
+              "format",
+              "files",
+              "interpreter_sha256",
+              "python_version"
+            ]
+          }
+        ],
+        "case_directory": "neg-window-clock-seam-at-deadline",
+        "minimum_owner": 1,
+        "node_id": "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_exact_deadline_with_isolated_clock_seam[at-deadline]",
+        "phase": "window",
+        "profile": "window_clock",
+        "queries_max": {},
+        "queries_min": {},
+        "source_locations": [
+          {
+            "line": 342,
+            "path": "tests/ifpmic_api/test_h2_reconciliation_window.py",
+            "sha256": "7fe6f3856b408d8d1f1e9fefc58ae47db00cfe1f8f5b45b41836523c63881a01",
+            "symbol": "test_h2_window_exact_deadline_with_isolated_clock_seam"
+          },
+          {
+            "line": 389,
+            "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+            "symbol": "_read_owner_snapshot / record_owner_snapshot"
+          },
+          {
+            "artifact": "neg-window-clock-seam.json",
+            "line": 424,
+            "path": "tests/ifpmic_api/test_h2_reconciliation_window.py",
+            "symbol": "source artifact write/read literal"
+          },
+          {
+            "artifact": "source-manifest.json",
+            "line": 51,
+            "path": "tests/ifpmic_api/test_h2_reconciliation_window.py",
+            "symbol": "source artifact write/read literal"
+          },
+          {
+            "artifact": "environment-manifest.json",
+            "line": 52,
+            "path": "tests/ifpmic_api/test_h2_reconciliation_window.py",
+            "symbol": "source artifact write/read literal"
+          }
+        ],
+        "source_resolution": {
+          "evidence_refs": [
+            "manifest",
+            "clock"
+          ],
+          "proposal": "docs/ifpmic/evidence/b03/h2-machine-resolution-window-fixture-v2.json",
+          "scope": "source_path_schema_applicability_only_runtime_pending"
+        },
+        "unresolved": []
+      }
+    },
+    {
+      "evidence_refs": [
+        "manifest",
+        "clock"
+      ],
+      "node_id": "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_exact_deadline_with_isolated_clock_seam[before-deadline]",
+      "original_unresolved": [
+        "JSON top-level keys not fully source-verified for neg-window-clock-seam.json",
+        "JSON top-level keys not fully source-verified for source-manifest.json",
+        "JSON top-level keys not fully source-verified for environment-manifest.json",
+        "Raw source gap: clock-seam mutation remains unexecuted; no production clock evidence."
+      ],
+      "proposed_row": {
+        "artifacts": [
+          {
+            "format": "json",
+            "maximum": 1,
+            "minimum": 1,
+            "path": "neg-window-clock-seam.json",
+            "required_keys": [
+              "case",
+              "status",
+              "primary_failure_type",
+              "restoration_failure_type",
+              "frozen_instant",
+              "before",
+              "while_replaced",
+              "after_restore",
+              "original_definition",
+              "expected_replacement_definition",
+              "claim_generation",
+              "claim_token",
+              "claim_live_expiry_at_frozen_instant",
+              "result",
+              "sql_before_cut",
+              "sql_before_call",
+              "sql_after"
+            ]
+          },
+          {
+            "format": "json",
+            "maximum": 1,
+            "minimum": 1,
+            "path": "source-manifest.json",
+            "required_keys": [
+              "format",
+              "files"
+            ]
+          },
+          {
+            "format": "json",
+            "maximum": 1,
+            "minimum": 1,
+            "path": "environment-manifest.json",
+            "required_keys": [
+              "format",
+              "files",
+              "interpreter_sha256",
+              "python_version"
+            ]
+          }
+        ],
+        "case_directory": "neg-window-clock-seam-before-deadline",
+        "minimum_owner": 1,
+        "node_id": "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_exact_deadline_with_isolated_clock_seam[before-deadline]",
+        "phase": "window",
+        "profile": "window_clock",
+        "queries_max": {},
+        "queries_min": {},
+        "source_locations": [
+          {
+            "line": 342,
+            "path": "tests/ifpmic_api/test_h2_reconciliation_window.py",
+            "sha256": "7fe6f3856b408d8d1f1e9fefc58ae47db00cfe1f8f5b45b41836523c63881a01",
+            "symbol": "test_h2_window_exact_deadline_with_isolated_clock_seam"
+          },
+          {
+            "line": 389,
+            "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+            "symbol": "_read_owner_snapshot / record_owner_snapshot"
+          },
+          {
+            "artifact": "neg-window-clock-seam.json",
+            "line": 424,
+            "path": "tests/ifpmic_api/test_h2_reconciliation_window.py",
+            "symbol": "source artifact write/read literal"
+          },
+          {
+            "artifact": "source-manifest.json",
+            "line": 51,
+            "path": "tests/ifpmic_api/test_h2_reconciliation_window.py",
+            "symbol": "source artifact write/read literal"
+          },
+          {
+            "artifact": "environment-manifest.json",
+            "line": 52,
+            "path": "tests/ifpmic_api/test_h2_reconciliation_window.py",
+            "symbol": "source artifact write/read literal"
+          }
+        ],
+        "source_resolution": {
+          "evidence_refs": [
+            "manifest",
+            "clock"
+          ],
+          "proposal": "docs/ifpmic/evidence/b03/h2-machine-resolution-window-fixture-v2.json",
+          "scope": "source_path_schema_applicability_only_runtime_pending"
+        },
+        "unresolved": []
+      }
+    },
+    {
+      "evidence_refs": [
+        "manifest",
+        "shape"
+      ],
+      "node_id": "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_partial_shape_constraint",
+      "original_unresolved": [
+        "JSON top-level keys not fully source-verified for neg-window-partial-shape.json",
+        "JSON top-level keys not fully source-verified for source-manifest.json",
+        "JSON top-level keys not fully source-verified for environment-manifest.json"
+      ],
+      "proposed_row": {
+        "artifacts": [
+          {
+            "format": "json",
+            "maximum": 1,
+            "minimum": 1,
+            "path": "neg-window-partial-shape.json",
+            "required_keys": [
+              "initial_window",
+              "invalid_partial_assignments",
+              "sql_before_cut",
+              "sql_after"
+            ]
+          },
+          {
+            "format": "json",
+            "maximum": 1,
+            "minimum": 1,
+            "path": "source-manifest.json",
+            "required_keys": [
+              "format",
+              "files"
+            ]
+          },
+          {
+            "format": "json",
+            "maximum": 1,
+            "minimum": 1,
+            "path": "environment-manifest.json",
+            "required_keys": [
+              "format",
+              "files",
+              "interpreter_sha256",
+              "python_version"
+            ]
+          }
+        ],
+        "case_directory": "neg-window-partial-shape-constraint",
+        "minimum_owner": 1,
+        "node_id": "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_partial_shape_constraint",
+        "phase": "window",
+        "profile": "window_shape",
+        "queries_max": {},
+        "queries_min": {},
+        "source_locations": [
+          {
+            "line": 289,
+            "path": "tests/ifpmic_api/test_h2_reconciliation_window.py",
+            "sha256": "7fe6f3856b408d8d1f1e9fefc58ae47db00cfe1f8f5b45b41836523c63881a01",
+            "symbol": "test_h2_window_partial_shape_constraint"
+          },
+          {
+            "line": 389,
+            "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+            "symbol": "_read_owner_snapshot / record_owner_snapshot"
+          },
+          {
+            "artifact": "neg-window-partial-shape.json",
+            "line": 326,
+            "path": "tests/ifpmic_api/test_h2_reconciliation_window.py",
+            "symbol": "source artifact write/read literal"
+          },
+          {
+            "artifact": "source-manifest.json",
+            "line": 51,
+            "path": "tests/ifpmic_api/test_h2_reconciliation_window.py",
+            "symbol": "source artifact write/read literal"
+          },
+          {
+            "artifact": "environment-manifest.json",
+            "line": 52,
+            "path": "tests/ifpmic_api/test_h2_reconciliation_window.py",
+            "symbol": "source artifact write/read literal"
+          }
+        ],
+        "source_resolution": {
+          "evidence_refs": [
+            "manifest",
+            "shape"
+          ],
+          "proposal": "docs/ifpmic/evidence/b03/h2-machine-resolution-window-fixture-v2.json",
+          "scope": "source_path_schema_applicability_only_runtime_pending"
+        },
+        "unresolved": []
+      }
+    },
+    {
+      "evidence_refs": [
+        "manifest",
+        "retention"
+      ],
+      "node_id": "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_retention[retention-3600]",
+      "original_unresolved": [
+        "JSON top-level keys not fully source-verified for neg-window-retention.json",
+        "JSON top-level keys not fully source-verified for source-manifest.json",
+        "JSON top-level keys not fully source-verified for environment-manifest.json"
+      ],
+      "proposed_row": {
+        "artifacts": [
+          {
+            "format": "json",
+            "maximum": 1,
+            "minimum": 1,
+            "path": "neg-window-retention.json",
+            "required_keys": [
+              "retention_seconds",
+              "result",
+              "claim_generation",
+              "claim_token",
+              "sql_before_cut",
+              "sql_after"
+            ]
+          },
+          {
+            "format": "json",
+            "maximum": 1,
+            "minimum": 1,
+            "path": "source-manifest.json",
+            "required_keys": [
+              "format",
+              "files"
+            ]
+          },
+          {
+            "format": "json",
+            "maximum": 1,
+            "minimum": 1,
+            "path": "environment-manifest.json",
+            "required_keys": [
+              "format",
+              "files",
+              "interpreter_sha256",
+              "python_version"
+            ]
+          }
+        ],
+        "case_directory": "neg-window-test_h2_window_retention-retention-3600",
+        "minimum_owner": 1,
+        "node_id": "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_retention[retention-3600]",
+        "phase": "window",
+        "profile": "window_retention",
+        "queries_max": {},
+        "queries_min": {},
+        "source_locations": [
+          {
+            "line": 247,
+            "path": "tests/ifpmic_api/test_h2_reconciliation_window.py",
+            "sha256": "7fe6f3856b408d8d1f1e9fefc58ae47db00cfe1f8f5b45b41836523c63881a01",
+            "symbol": "test_h2_window_retention"
+          },
+          {
+            "line": 389,
+            "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+            "symbol": "_read_owner_snapshot / record_owner_snapshot"
+          },
+          {
+            "artifact": "neg-window-retention.json",
+            "line": 277,
+            "path": "tests/ifpmic_api/test_h2_reconciliation_window.py",
+            "symbol": "source artifact write/read literal"
+          },
+          {
+            "artifact": "source-manifest.json",
+            "line": 51,
+            "path": "tests/ifpmic_api/test_h2_reconciliation_window.py",
+            "symbol": "source artifact write/read literal"
+          },
+          {
+            "artifact": "environment-manifest.json",
+            "line": 52,
+            "path": "tests/ifpmic_api/test_h2_reconciliation_window.py",
+            "symbol": "source artifact write/read literal"
+          }
+        ],
+        "source_resolution": {
+          "evidence_refs": [
+            "manifest",
+            "retention"
+          ],
+          "proposal": "docs/ifpmic/evidence/b03/h2-machine-resolution-window-fixture-v2.json",
+          "scope": "source_path_schema_applicability_only_runtime_pending"
+        },
+        "unresolved": []
+      }
+    },
+    {
+      "evidence_refs": [
+        "manifest",
+        "retention"
+      ],
+      "node_id": "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_retention[retention-3601]",
+      "original_unresolved": [
+        "JSON top-level keys not fully source-verified for neg-window-retention.json",
+        "JSON top-level keys not fully source-verified for source-manifest.json",
+        "JSON top-level keys not fully source-verified for environment-manifest.json"
+      ],
+      "proposed_row": {
+        "artifacts": [
+          {
+            "format": "json",
+            "maximum": 1,
+            "minimum": 1,
+            "path": "neg-window-retention.json",
+            "required_keys": [
+              "retention_seconds",
+              "result",
+              "claim_generation",
+              "claim_token",
+              "sql_before_cut",
+              "sql_after"
+            ]
+          },
+          {
+            "format": "json",
+            "maximum": 1,
+            "minimum": 1,
+            "path": "source-manifest.json",
+            "required_keys": [
+              "format",
+              "files"
+            ]
+          },
+          {
+            "format": "json",
+            "maximum": 1,
+            "minimum": 1,
+            "path": "environment-manifest.json",
+            "required_keys": [
+              "format",
+              "files",
+              "interpreter_sha256",
+              "python_version"
+            ]
+          }
+        ],
+        "case_directory": "neg-window-test_h2_window_retention-retention-3601",
+        "minimum_owner": 1,
+        "node_id": "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_retention[retention-3601]",
+        "phase": "window",
+        "profile": "window_retention",
+        "queries_max": {},
+        "queries_min": {},
+        "source_locations": [
+          {
+            "line": 247,
+            "path": "tests/ifpmic_api/test_h2_reconciliation_window.py",
+            "sha256": "7fe6f3856b408d8d1f1e9fefc58ae47db00cfe1f8f5b45b41836523c63881a01",
+            "symbol": "test_h2_window_retention"
+          },
+          {
+            "line": 389,
+            "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+            "symbol": "_read_owner_snapshot / record_owner_snapshot"
+          },
+          {
+            "artifact": "neg-window-retention.json",
+            "line": 277,
+            "path": "tests/ifpmic_api/test_h2_reconciliation_window.py",
+            "symbol": "source artifact write/read literal"
+          },
+          {
+            "artifact": "source-manifest.json",
+            "line": 51,
+            "path": "tests/ifpmic_api/test_h2_reconciliation_window.py",
+            "symbol": "source artifact write/read literal"
+          },
+          {
+            "artifact": "environment-manifest.json",
+            "line": 52,
+            "path": "tests/ifpmic_api/test_h2_reconciliation_window.py",
+            "symbol": "source artifact write/read literal"
+          }
+        ],
+        "source_resolution": {
+          "evidence_refs": [
+            "manifest",
+            "retention"
+          ],
+          "proposal": "docs/ifpmic/evidence/b03/h2-machine-resolution-window-fixture-v2.json",
+          "scope": "source_path_schema_applicability_only_runtime_pending"
+        },
+        "unresolved": []
+      }
+    },
+    {
+      "evidence_refs": [
+        "manifest",
+        "retention"
+      ],
+      "node_id": "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_retention[retention-null]",
+      "original_unresolved": [
+        "JSON top-level keys not fully source-verified for neg-window-retention.json",
+        "JSON top-level keys not fully source-verified for source-manifest.json",
+        "JSON top-level keys not fully source-verified for environment-manifest.json"
+      ],
+      "proposed_row": {
+        "artifacts": [
+          {
+            "format": "json",
+            "maximum": 1,
+            "minimum": 1,
+            "path": "neg-window-retention.json",
+            "required_keys": [
+              "retention_seconds",
+              "result",
+              "claim_generation",
+              "claim_token",
+              "sql_before_cut",
+              "sql_after"
+            ]
+          },
+          {
+            "format": "json",
+            "maximum": 1,
+            "minimum": 1,
+            "path": "source-manifest.json",
+            "required_keys": [
+              "format",
+              "files"
+            ]
+          },
+          {
+            "format": "json",
+            "maximum": 1,
+            "minimum": 1,
+            "path": "environment-manifest.json",
+            "required_keys": [
+              "format",
+              "files",
+              "interpreter_sha256",
+              "python_version"
+            ]
+          }
+        ],
+        "case_directory": "neg-window-test_h2_window_retention-retention-null",
+        "minimum_owner": 1,
+        "node_id": "tests/ifpmic_api/test_h2_reconciliation_window.py::test_h2_window_retention[retention-null]",
+        "phase": "window",
+        "profile": "window_retention",
+        "queries_max": {},
+        "queries_min": {},
+        "source_locations": [
+          {
+            "line": 247,
+            "path": "tests/ifpmic_api/test_h2_reconciliation_window.py",
+            "sha256": "7fe6f3856b408d8d1f1e9fefc58ae47db00cfe1f8f5b45b41836523c63881a01",
+            "symbol": "test_h2_window_retention"
+          },
+          {
+            "line": 389,
+            "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+            "symbol": "_read_owner_snapshot / record_owner_snapshot"
+          },
+          {
+            "artifact": "neg-window-retention.json",
+            "line": 277,
+            "path": "tests/ifpmic_api/test_h2_reconciliation_window.py",
+            "symbol": "source artifact write/read literal"
+          },
+          {
+            "artifact": "source-manifest.json",
+            "line": 51,
+            "path": "tests/ifpmic_api/test_h2_reconciliation_window.py",
+            "symbol": "source artifact write/read literal"
+          },
+          {
+            "artifact": "environment-manifest.json",
+            "line": 52,
+            "path": "tests/ifpmic_api/test_h2_reconciliation_window.py",
+            "symbol": "source artifact write/read literal"
+          }
+        ],
+        "source_resolution": {
+          "evidence_refs": [
+            "manifest",
+            "retention"
+          ],
+          "proposal": "docs/ifpmic/evidence/b03/h2-machine-resolution-window-fixture-v2.json",
+          "scope": "source_path_schema_applicability_only_runtime_pending"
+        },
+        "unresolved": []
+      }
+    }
+  ],
+  "expected_changes": {
+    "cases": 14,
+    "corrected_case_directories": 6,
+    "new_case_artifacts": 47,
+    "new_runtime_artifacts": 10,
+    "old_case_artifacts": 37,
+    "original_annotations": 47,
+    "restore_journal_replaced_by_actual_watchdog": 2
+  },
+  "kind": "ifpmic.b03.h2.window-fixture-source-projection.v2",
+  "source_facts": {
+    "clock": {
+      "source": [
+        "tests/ifpmic_api/test_h2_reconciliation_window.py:342-453"
+      ],
+      "statement": "Directory neg-window-clock-seam- plus boundary literal before/at/after-deadline. Frozen private-DB function clock assignment tests the isolated boundary; original function definition and metadata restored in finally and raw failures retained. This is owner-injected clock proof only; actual execution and restoration must be checked by fresh JUnit and raw SQL before runtime acceptance."
+    },
+    "expired": {
+      "source": [
+        "tests/ifpmic_api/test_h2_reconciliation_window.py:500-516"
+      ],
+      "statement": "After boundary queries actual backend list, asserts empty, and embeds [] in temporal_history_or_empty_list. No Started history exists in this branch; raw query observations remain required. Do not invent a PBSeq or mislabel no-history as a missing artifact."
+    },
+    "expiry": {
+      "source": [
+        "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py:91-135"
+      ],
+      "statement": "Retained synthetic _OwnedProcessProbe, not a real OS child. Original25+5 watchdog is installed; only exhausted cleanup callback injected. Raw query has actions/identity_lookups/remaining_checks/retained_same_object/physical_process_absence_proven=false. JUnit asserts no action or identity lookup; cleanup JSON records absent=false and retained object. No physical-process-absence claim."
+    },
+    "journal": {
+      "source": [
+        "tests/ifpmic_api/h2_dispatcher_crash_support.py:489-533"
+      ],
+      "statement": "Every applicable started/stop_requested/stopped entry has event/pid/start_ticks. Role is not common to all events. Exhausted synthetic cleanup path has stop_requested/stopped with the same common keys."
+    },
+    "manifest": {
+      "source": [
+        "tests/ifpmic_api/test_h2_reconciliation_window.py:35-82",
+        "services/ifpmic_api/execution_manifest.py:86-115"
+      ],
+      "statement": "_prepare_sql_case writes both actual manifests; source has format/files; environment additionally interpreter_sha256/python_version. Actual-runtime uses crash._prepare_case_impl with the same generators."
+    },
+    "oidc": {
+      "source": [
+        "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py:138-204",
+        "tests/ifpmic_api/h2_fixture_cleanup.py:63-75"
+      ],
+      "statement": "Actual sockets/started thread and unstarted retained handle checked by test; before_close and after_close raw query snapshots retain descriptor/handle state. journal partial_oidc_start_owned_handles/finalized is node-attributed and records unknown retained ownership. No absence inferred from an ID."
+    },
+    "restore_only": {
+      "source": [
+        "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py:53-61",
+        "tests/ifpmic_api/h2_fixture_cleanup.py:41-50"
+      ],
+      "statement": "Expected error escapes and is compared by identity; query records expected/caught IDs/type. No cleanup.record call, so per-node fixture-cleanup journal is impossible. Use actual watchdog for file structure with query+JUnit for exception identity."
+    },
+    "restore_primary": {
+      "source": [
+        "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py:34-50",
+        "tests/ifpmic_api/h2_fixture_cleanup.py:28-50"
+      ],
+      "statement": "Actual exception objects compared by is, secondary note exact checked; private query stores both IDs/types/notes. No fixture-cleanup record call. Replace nonexistent per-node journal with real watchdog; watchdog provides attribution/timing only, never exception identity/traceback. Fresh JUnit and query bytes remain mandatory; entire serialized traceback is not a producer contract."
+    },
+    "retention": {
+      "source": [
+        "tests/ifpmic_api/test_h2_reconciliation_window.py:240-284"
+      ],
+      "statement": "Three literal retention branches use _case_name; raw result includes SQL before/after and claim identity. None/null and3600 quarantine;3601 permitted. No Temporal server/history is used by this SQL-only case."
+    },
+    "runtime": {
+      "source": [
+        "tests/ifpmic_api/test_h2_reconciliation_window.py:459-553",
+        "tests/ifpmic_api/h2_dispatcher_crash_support.py:282-331",
+        "tests/ifpmic_api/h2_dispatcher_crash_support.py:475-556",
+        "tests/ifpmic_api/test_h2_runtime_normal_flow.py:289-326"
+      ],
+      "statement": "Actual root neg-window-actual-before/after, prepare writes initial workspace marker/tree, manifests, lifecycle journal, Temporal log. Dispatcher writes stdout/stderr. SQL cut/lease-expiry cut and process identity are in runtime boundary JSON. finally cleanup writes process-cleanup; no socket barrier exists in this path. The causal cut is actual lease expiry plus SQL snapshots, not an invented barrier file."
+    },
+    "shape": {
+      "source": [
+        "tests/ifpmic_api/test_h2_reconciliation_window.py:289-331"
+      ],
+      "statement": "Literal directory neg-window-partial-shape-constraint; six invalid SQL partial assignments fail named constraint and rollback. Raw initial_window/invalid_partial_assignments/sql_before_cut/sql_after are written."
+    },
+    "started": {
+      "source": [
+        "tests/ifpmic_api/test_h2_reconciliation_window.py:517-539",
+        "tests/ifpmic_api/test_accepted_start_response_loss.py:267-327"
+      ],
+      "statement": "Before boundary calls direct Started observer writing raw deterministic event PBSeq and observer JSON with digest. Expected run/input/single Started asserted. Both files required and digest linked."
+    },
+    "testclient": {
+      "source": [
+        "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py:224-287",
+        "tests/ifpmic_api/h2_fixture_cleanup.py:116-180",
+        "tests/ifpmic_api/h2_fixture_cleanup.py:63-75"
+      ],
+      "statement": "Actual held TestClient exit/helper/portal observed, ownership unknown while retained. Private queries unconfirmed_exit and after_release_and_join plus finalizer journal and JUnit prove actual joins. Journal base event/nodeid/monotonic keys; serialized IDs alone never prove absence."
+    },
+    "watchdog": {
+      "source": [
+        "tests/ifpmic_api/h2_fixture_failure_case_budget.py:37-96",
+        "tests/ifpmic_api/h2_fixture_failure_case_budget.py:135-167",
+        "scripts/verify_ifpmic_b03_h2_runtime_full.py:319-354"
+      ],
+      "statement": "Plugin writes observations/<sha256(full literal nodeid)>.json using IFPMIC_H2_FIXTURE_FAILURE_TIMINGS_ROOT set to observations. Top-level11 keys from _write, nodeid attribution required. All5 watchdog checks also remain mandatory in whole-runner verify_phase_watchdogs; no fabricated file or producer change."
+    }
+  },
+  "source_pins": {
+    "scripts/ifpmic_h2_artifacts.py": "712d5800835cd8f5e8f3ac513e2dd44b8f0fb2d035e83775ff989f4f24940b47",
+    "scripts/verify_ifpmic_b03_h2_runtime_full.py": "c11bb4fea9184e274ec11402e0d6cf1385256700938ac9bb35c8b5762a517d57",
+    "services/ifpmic_api/execution_manifest.py": "0f08e5c86992edc9ee9b62b19d50f981282d125e39810e0f0d6e75d39bfd07b6",
+    "tests/ifpmic_api/h2_dispatcher_crash_support.py": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472",
+    "tests/ifpmic_api/h2_fixture_cleanup.py": "99b277b7532ebc0e12d80dacd40d7b3e6a2af7f7aebfc46c93b35c3a04c50500",
+    "tests/ifpmic_api/h2_fixture_failure_case_budget.py": "503a1fc22d2ddece87fa83336fc5c26b003c094a7cf793339d3dbe0d61a06791",
+    "tests/ifpmic_api/test_accepted_start_response_loss.py": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8",
+    "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py": "c0dd1e2a3e732ceea482e286a0f97bbb270dfab4040d88eff0403efc846e8688",
+    "tests/ifpmic_api/test_h2_reconciliation_window.py": "7fe6f3856b408d8d1f1e9fefc58ae47db00cfe1f8f5b45b41836523c63881a01",
+    "tests/ifpmic_api/test_h2_runtime_normal_flow.py": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d"
+  },
+  "status": "proposal_pending_independent_review_no_execution",
+  "verification_boundary": {
+    "enforcement": "Artifact rules enforce actual paths/formats/top-level keys/node attribution/digest links. Nested values, event outcomes, SQL invariants and exception/thread identity require actual fresh490/JUnit/raw evidence and existing specialized watchdog/resource validators. Source resolution does not waive these.",
+    "not_proven": [
+      "Actual business outcomes",
+      "Actual physical process absence",
+      "Clock mutation/restoration execution",
+      "Full H2 or iteration03 acceptance"
+    ],
+    "performed": "Read-only source/AST/JSON/hash comparison; no repository imports/test collection/runtime. Original rows preserved verbatim by committed input SHA.",
+    "preserved": [
+      "All87 literal node IDs and phase binding",
+      "Original490 inventory and budgets",
+      "Original119 reviewed source bytes",
+      "Original mandatory AT32 and approval roles",
+      "All queries minima/maxima and owner minima in these14 rows"
+    ]
+  }
+}

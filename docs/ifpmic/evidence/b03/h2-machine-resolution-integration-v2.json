@@ -1,0 +1,56 @@
+{
+  "batches": [
+    {
+      "proposal": "docs/ifpmic/evidence/b03/h2-machine-resolution-startup-projection-v2.json",
+      "review": "docs/ifpmic/evidence/b03/h2-machine-resolution-startup-projection-review-v2.json",
+      "review_sha256": "eafdb7e74eacb42914be3f32ab407dcd37ab7b7f9243f7a22a72d3d6fd30abe6",
+      "rows": 21,
+      "sha256": "8c1612913ee8a9fe98994ed18fdda79cdbfcc5ec1620abff6f143461ce17d26d",
+      "source_annotations": 146
+    },
+    {
+      "proposal": "docs/ifpmic/evidence/b03/h2-machine-resolution-window-fixture-v2.json",
+      "review": "docs/ifpmic/evidence/b03/h2-machine-resolution-window-fixture-review-v2.json",
+      "review_sha256": "ed674ab682f5f6f5f394f62a90ded9ed830d2d3b1e2e3a1e5c880cc32879bd7a",
+      "rows": 14,
+      "sha256": "30c814cc0f16ffa8d82ce201c88f91a2947b73f9f311acd962fdf2c311aef00b",
+      "source_annotations": 47
+    }
+  ],
+  "goal_complete": false,
+  "h2_accepted": false,
+  "input": {
+    "commit": "16e2dc3",
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules.json",
+    "sha256": "5b6915f481840872c8fbaef8dbf77a8296cea6d4a72b70cb595a04e254795c25"
+  },
+  "iteration03_complete": false,
+  "kind": "ifpmic.b03.h2.machine-projection-integration.v2",
+  "not_executed": [
+    "repository_imports",
+    "pytest_collection",
+    "tests",
+    "SQL",
+    "SDK",
+    "services",
+    "full490",
+    "actual_admission_UI"
+  ],
+  "output": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules.json",
+    "sha256": "536c59f441312abb3e1b57a60b77e919f470032d610e6957ae05ab467d0a0e3c"
+  },
+  "status": "35_source_rows_integrated_runtime_blocked",
+  "verified_static": {
+    "all38_source_pins_match": true,
+    "all_original119_twelve_source_pins_unchanged": true,
+    "all_other52_rows_equal_input": true,
+    "artifacts": 505,
+    "cases": 87,
+    "disjoint_case_sets": true,
+    "remaining_annotations": 276,
+    "remaining_cases": 48,
+    "source_pins": 38,
+    "total_resolved_cases": 39
+  }
+}

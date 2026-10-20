@@ -1,0 +1,48 @@
+{
+  "kind": "ifpmic.b03.h2.startup-machine-canonical-projection-review.v2",
+  "review_date": "2026-10-21",
+  "reviewer": "/root/h2_evidence_amendment_review",
+  "decision": "approve_exact_21_row_source_projection_only",
+  "projection": {
+    "path": "docs/ifpmic/evidence/b03/h2-machine-resolution-startup-projection-v2.json",
+    "sha256": "8c1612913ee8a9fe98994ed18fdda79cdbfcc5ec1620abff6f143461ce17d26d"
+  },
+  "input_machine": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules.json",
+    "sha256": "5b6915f481840872c8fbaef8dbf77a8296cea6d4a72b70cb595a04e254795c25"
+  },
+  "preserved_source_proposal": {
+    "path": "docs/ifpmic/evidence/b03/h2-machine-resolution-startup-v2.json",
+    "sha256": "149f73822c9140c87d3583fc1e6c62d3739542eef62eef64e2e32b4678966018"
+  },
+  "prior_request_changes_review": {
+    "path": "docs/ifpmic/evidence/b03/h2-machine-resolution-startup-review-v2.json",
+    "sha256": "3a12104c3941dbf8a08a8fff475b779c95ab6ad3b4a00b78c45597dfeade46aa",
+    "disposition": "Historical unsupported direct-integration proposal remains preserved. This separate supported projection closes those two parser-shape findings."
+  },
+  "findings": [],
+  "evidence": {
+    "literal_startup_rows": 21,
+    "artifact_rules": 148,
+    "original_annotations_compared_verbatim": 146,
+    "parser_compatibility": "All148 projected artifacts exactly equal the supported-field projection of the reviewed source proposal, with required_keys:[] inserted for bytes. No unsupported annotation key remains in artifact rules; minimum/maximum1 and literal branch applicability are preserved.",
+    "conditional_shapes": "The20 job-backed rows require workspace before/after and their8-field result branch; no_job_missing_registration omits workspace JSON and requires its9-field count branch. Both real base manifests are required in all21 rows, with the selected mismatch file additionally required only in its corresponding row.",
+    "source_metadata": "All row-local artifact source locations refer to projected artifact paths and matching pinned writer bytes. No stale *-manifest.json location remains. The no-job result points to its actual line530 writer; ordinary results point to line509. Nested/event/value annotations remain separately linked to the immutable source proposal.",
+    "recorder_requirements": "Owner minima are2 for20 job-backed rows and0 for the no-job row, supported by the previously traced three actual snapshot calls versus embedded table counts. Query minima/maxima remain empty for all21. These counts are requirements, not observed execution results.",
+    "traceability": "All21 annotation-to-canonical-row pointers and146 original strings match the pinned input. Every pinned projection input and row-local source SHA matches current retained bytes. The source semantics and supporting source pins are those independently recorded in the preserved prior review."
+  },
+  "authorization": {
+    "replace_only_exact_21_canonical_case_rows_and_clear_their_146_source_annotations": true,
+    "add_exact_projection_source_proposal_and_this_review_sha_pointers": true,
+    "change_other_rows_product_source_checker_tests_or_budgets": false,
+    "imports_collection_tests_sql_sdk_services_network_execution": false,
+    "full_mapping_contract_h2_iteration_or_goal_acceptance": false
+  },
+  "risks_and_remaining_uncertainty": [
+    "Generic artifact rules enforce paths, formats, file count bounds and declared top-level keys. They do not enforce nested schemas, expected bytes, SQL equality, event sequence, process identity or zero listener counts. Fresh JUnit, original raw observations and specialized validators remain mandatory.",
+    "The input already has4 resolved fence rows. Applying only these21 startup rows leaves62 unresolved rows with323 annotations. Combining the separately approved disjoint window/fixture14 projection leaves48 unresolved rows with276 annotations and39 resolved rows in total; this review does not approve those remaining rows.",
+    "No startup case, raw artifact or runtime oracle was executed or accepted here. Exact whole-source/contract/ledger review and paired pre-gates remain necessary before full490 execution."
+  ],
+  "recommendation": "Integrate only these21 projected rows with the exact source-proposal/projection/review pointers, preserving the original proposal, request-changes review and historical canonical input.",
+  "review_method": "Read-only source/JSON/AST/hash comparison and supported-field projection equality; no repository imports, test collection/execution, SQL, SDK, services or network."
+}
