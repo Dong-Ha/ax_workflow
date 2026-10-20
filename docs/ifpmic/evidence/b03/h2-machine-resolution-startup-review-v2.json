@@ -1,0 +1,58 @@
+{
+  "kind": "ifpmic.b03.h2.startup-machine-resolution-review.v2",
+  "review_date": "2026-10-21",
+  "reviewer": "/root/h2_evidence_amendment_review",
+  "decision": "request_changes_no_canonical_integration_no_execution",
+  "proposal": {
+    "path": "docs/ifpmic/evidence/b03/h2-machine-resolution-startup-v2.json",
+    "sha256": "149f73822c9140c87d3583fc1e6c62d3739542eef62eef64e2e32b4678966018"
+  },
+  "input_machine": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules.json",
+    "sha256": "5b6915f481840872c8fbaef8dbf77a8296cea6d4a72b70cb595a04e254795c25"
+  },
+  "findings": [
+    {
+      "severity": "blocker_for_direct_canonical_integration",
+      "location": "proposal cases[*].proposed_artifacts; scripts/ifpmic_h2_artifacts.py:322",
+      "problem": "Proposed artifacts contain source_condition, expected_bytes_repr, nested_required_keys, nested_expected_values, event_schemas, expected_started_role, expected_success_event_sequence, expected_format and additional_files_key annotations. The current loader permits only path, format, minimum, maximum, required_keys, node_field and sha256_links and rejects these annotations with UNKNOWN_ARTIFACT_CONSTRAINT. Bytes proposals additionally omit required_keys, which the loader requires for every artifact.",
+      "minimal_fix": "Author an explicit canonical projection using only supported fields and required_keys:[] for bytes. Retain nested/event/value/source annotations separately as source-mapping evidence; the current checker does not enforce them. Submit the exact projection and source-evidence link for independent review without editing the checker in this checkpoint."
+    }
+  ],
+  "supported_source_findings": {
+    "literal_cases": 21,
+    "current_artifact_count": 188,
+    "proposed_artifact_count": 148,
+    "original_annotations_compared_verbatim_to_input": 146,
+    "source_shape_annotations": 104,
+    "stale_manifest_path_annotations": 42,
+    "case_binding": "All21 variants exactly match the literal startup CASE_IDS and startup-<variant> directory writer; every proposed artifact has source-supported applicability and file minimum/maximum1.",
+    "manifest_paths": "Every variant writes source.json and environment.json. Only the selected source/environment mismatch variant additionally writes its corresponding mismatch file; both base files remain. The42 *-manifest.json declarations are stale; the two omitted base-file declarations need restoration.",
+    "conditional_result_shapes": "The20 job-backed variants write workspace before/after and the8-field result branch. no_job_missing_registration omits workspace observations and writes the9-field count branch with8 actual table counts. Both branches write the5-field nested process result. The source-backed successful journal sequence has started, stop_requested, stopped, listeners_drained and cleanup_listeners_drained; failure paths can add lifecycle entries.",
+    "owner_minima": "The20 job-backed paths each call the actual owner recorder three times on successful execution: setup, post-child and teardown. Proposed minimum2 is supported. The no-job path uses embedded actual owner counts and no owner snapshot recorder, supporting minimum0.",
+    "query_requirements": "Empty query minima/maxima match the traced startup and fixture paths, which have no query-recorder call. This is a source trace, not an observed runtime count.",
+    "stdout_stderr": "The producer retains both raw byte logs and asserts the fixed DEPENDENCY_UNAVAILABLE JSON stdout, empty stderr, child exit3, no forced cleanup and saved-identity absence. Passive TCP traps provide connection-count observations; they are not Temporal servers."
+  },
+  "supporting_source_pins": {
+    "tests/ifpmic_api/test_h2_runtime_startup_rejections.py": "80376fad5e864c4ac07cc0fc1cf75fce205d06da64f22e74a67b542ca60fb1b1",
+    "tests/ifpmic_api/h2_startup_case_budget.py": "35e8b7431c0f54e269392f5a958628f39cce1ae1039e1ea37bee318a2ae7a0a7",
+    "tests/ifpmic_api/test_h2_runtime_normal_flow.py": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d",
+    "tests/ifpmic_api/h2_snapshot_evidence.py": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c",
+    "tests/ifpmic_api/workspace_fixture.py": "66b0d11faaa343542fe27e1254e0ed28a968d73518a7a1ac2aab106e4ef126b6",
+    "services/ifpmic_api/execution_manifest.py": "0f08e5c86992edc9ee9b62b19d50f981282d125e39810e0f0d6e75d39bfd07b6",
+    "scripts/ifpmic_h2_artifacts.py": "712d5800835cd8f5e8f3ac513e2dd44b8f0fb2d035e83775ff989f4f24940b47"
+  },
+  "authorization": {
+    "clear_146_annotations_or_integrate_proposed_artifacts": false,
+    "change_source_checker_or_tests": false,
+    "imports_tests_sql_sdk_services_network_execution": false,
+    "full_mapping_contract_h2_iteration_or_goal_acceptance": false
+  },
+  "risks_and_remaining_uncertainty": [
+    "Source-supported nested shapes, expected values and event conditions are annotations; current generic artifact validation checks declared top-level keys and raw structure, not these additional semantics.",
+    "The input retains469 unresolved items in total:146 in startup and323 elsewhere. None are cleared by this review.",
+    "No retained runtime artifacts were produced or validated here. Exact canonical projection, whole-source/contract/ledger reviews and paired pre-gates remain necessary before any full490 execution."
+  ],
+  "recommendation": "Preserve this proposal as an unintegrated source-only draft; author and independently review the explicit supported canonical projection next.",
+  "review_method": "Read-only source/JSON comparison, AST extraction of literal CASE_IDS, exact original-annotation/count/path checks and SHA256. No repository imports, collection, tests, SQL, SDK, services or network."
+}

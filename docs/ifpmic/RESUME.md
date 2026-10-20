@@ -1,5 +1,7 @@
 # 다음 세션 재개 안내 — 2026-10-21
 
+> **먼저 사용자에게 보여줄 결과:** [애자일 계획의 현재 상태표](./AGILE-DELIVERY.md)를 확인한다. 전체2/16=12.5%, 공개된 흐름은 설계 탐색·요청 저장 두 가지다. 다음 공개 결과는 저장 요청의 실제 QUEUED/run/receipt다. 이번 세션에는 새 화면 기능을 추가하지 않았다. startup21행 제안은 `evidence/b03/h2-machine-resolution-startup-v2.json`에 별도 보존했으며 canonical에 적용하지 않았다. 독립 검토에서 직접 적용 시 미지원 필드와 bytes 규칙의 required_keys 누락이 발견됐다. 검토 기록을 확인한 뒤 실제 지원 필드로 투영한 규칙과 참고 설명을 분리하고 재검토한다. window/fixture14행 제안은 아직 작성하지 않았다. 기존 소스·실행 승인 경계를 유지한다.
+
 > 최신 개발 체크포인트: [119건 검증 요약](./delivery/iteration-03/full-runner-repair-verification.json), [주기03 기록](./delivery/iteration-03/README.md). 전체 실행기 집계/watchdog 경로/helper pin/pyc 격리/부모 deadline·TERM·정리/프로세스 수 집계를 수정했고, exact 승인된 stdlib 함수로 새 cache 경로에서119/119 통과했다. 독립 결과 검토가 합성119건과 원본 보존 증거를 수용했다. **실제 main/전체490은 실행하지 않았다.** 새 machine은87case·535artifact지만최초87행에 미해결 표시475개가 있어 [TC가 변경 요청](./evidence/b03/h2-runtime-full-machine-rules-tc-review-v2.json)했다. 과거 미해결0건 요약은 잘못됐으며 이를 근거로 freeze하지 않는다. [SQL fence4행의6개 해소 기록](./evidence/b03/h2-machine-resolution-progress-v2.json)은 독립 검토를 거쳐 적용했다. 현재83행·469개가 남았다. 다음은 startup21행부터 표시별 실제 source/key/path/조건 근거를 연결해 해소 → 새 버전490 ledger/계약 고정 → 전체 source/paired pre-gate → fresh490 → 실제 run/receipt 화면이다. 기존 c10/cf4·주기02 참조를 보존한다.
 
 > 최신 제품 결과: [주기02 실제 요청 저장 화면](./delivery/iteration-02/README.md), http://127.0.0.1:8769/ . 실제 API/DB 저장·재시작 유지 검증 완료, 독립 결과 검토 상태는 해당 증빙을 확인한다. 다음 단위는 필수 H2 검증 후 실제 실행 한 구간 연결이다.

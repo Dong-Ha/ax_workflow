@@ -687,7 +687,19 @@
       "next_single_flow",
       "commit_and_push"
     ],
-    "existing_mandatory_gates_preserved": true
+    "existing_mandatory_gates_preserved": true,
+    "latest_user_visible_change": "No new product behavior in this checkpoint; existing explorer and persisted-request pages both returned HTTP200 on 2026-10-21.",
+    "reporting_rule": "Lead with visible behavior; explicitly report no new visible feature when only internal evidence advances. Keep stage completion, visible flows, and test counts separate.",
+    "next_visible_acceptance": "One persisted request admitted by the actual execution engine; matching job/run/receipt and QUEUED displayed, with duplicate, authorization and reload checks. Mandatory execution gates preserved.",
+    "current_stage_completion": {
+      "verified": 2,
+      "total": 16,
+      "percent": 12.5,
+      "method": "Unweighted count of verified stages; not estimated implementation effort."
+    },
+    "pending_source_proposal": "evidence/b03/h2-machine-resolution-startup-v2.json",
+    "pending_source_proposal_review": "evidence/b03/h2-machine-resolution-startup-review-v2.json",
+    "pending_source_proposal_status": "request_changes_no_canonical_integration_no_execution"
   },
   "visible_deliveries": [
     {
