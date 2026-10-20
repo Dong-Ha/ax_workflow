@@ -1,0 +1,58 @@
+{
+  "kind": "ifpmic.delivery.iteration-03.independent-plan-review.v1",
+  "review_date": "2026-10-20",
+  "reviewer": {
+    "agent": "/root/h2_evidence_amendment_review",
+    "independence": "Did not author the iteration plan or checker implementation."
+  },
+  "decision": "approve_plan_for_authoring_only",
+  "plan": {
+    "path": "docs/ifpmic/delivery/iteration-03/PLAN.md",
+    "sha256": "bf8ebf4e66632a45cfa54608d7d94e20b718177021a63725273343b01b3ce397"
+  },
+  "authorization": {
+    "checker_mapping_and_tc_authoring": true,
+    "scoped_checker_unit_execution": false,
+    "product_import_collection_sql_services_network": false,
+    "full_h2_execution": false,
+    "iteration_or_business_acceptance": false
+  },
+  "findings": [],
+  "evidence": [
+    "All seven planned stages have the eight required fields: stage, purpose, target, method, responsible agent, pass criteria, expected result/evidence, and failure recovery/reverification.",
+    "Normal, error, boundary and regression cases are explicit. Missing/corrupt/cross-node/hash-only evidence and unsafe paths fail closed; empty actual results remain raw records; SQL/auth-only controls do not acquire invented Temporal evidence.",
+    "The plan preserves all 407 retained plus 83 new literal IDs, 25 obligations and five fixture prerequisites. Historic407 and synthetic checker units cannot establish current490 acceptance.",
+    "The current raw contract has87 mappings and descriptive conditional artifacts; the current runner aggregates hashes/counts globally. The plan identifies this limitation and requires case-specific machine-readable rules rather than treating the existing mapping as an executable gate.",
+    "Current workflow source parks at queued after an applied activation projection; the projector accepts revision1/QUEUED. The plan correctly distinguishes this execution-engine admission from business P01 or a human outcome.",
+    "Full closure/inventory/contract/runner freeze, exact independent and TC reviews, separate pre-gates, fresh full490 and affected G1-G5/H1, owned cleanup and immutable-original audits remain prerequisites. Later demo integration requires concrete criteria and independent source review first."
+  ],
+  "context_pins": {
+    "docs/ifpmic/evidence/b03/h2-runtime-full-verification-plan.json": "c6964bccff0d4cec1ac00f18fbb267d5d1a4a5887e53844c604333b7c059486c",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger.json": "cf4f3bfc023341c22e0c8fc7c072c54838d62f7adeb39d817a4ce3b6589f8d60",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-execution-contract.json": "c10c7cb329ea82b758cfa7db34ac330e4b7ec472320b5904e8086f8067865a2d",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-raw-evidence-contract.json": "a083c16240d614fe0e40a30c0e98b0a41de887a38c92050f33e37dbe45c15004",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-evidence-amendment-independent-review.json": "f592572eb433717f13cdc2029e50e12be9b6c083d3b5ccf6b3109fd6d332664a",
+    "scripts/verify_ifpmic_b03_h2_runtime_full.py": "82b2d78e26d894b3012b50837bb454f8547c429de695976c64126907a21abaa5",
+    "services/ifpmic_api/execution_workflow.py": "78f1a408ac6e80d56294c488e8bde434b03bddb1d17ed19278bfb87d5e85b3d7",
+    "services/ifpmic_api/execution_activities.py": "ac81ad4ba4f5fad22bb2880f65cf0a833b78e4c8f8e90729833b60d14cdf9c2c"
+  },
+  "risks_and_edge_cases": [
+    "The87 supplemental mappings do not replace proof for the full490. All existing normal, negative, regression and fixture obligations remain mandatory.",
+    "Actual invocation counts and conditional history applicability need reviewed explicit rules. Descriptive placeholders, permissive globs or inferred N/A cannot authorize runtime acceptance.",
+    "An internally consistent raw record is not independent proof of execution; actual producer assertions, causal SQL/history/resource evidence and exact runtime inventory remain necessary."
+  ],
+  "recommendation": "Author the stdlib checker, explicit mapping and independent TC units. Obtain a separate exact-byte source review authorizing only the bounded synthetic checker units before executing them. Preserve all full-H2 review and execution gates.",
+  "remaining_uncertainty": [
+    "No checker implementation, mapping revision or TC unit source is approved by this plan review.",
+    "No current490 runtime evidence or later integration behavior has been accepted. H2, H3-H7, full AT16/21/32, business execution and the overall goal remain unaccepted."
+  ],
+  "validation": {
+    "method": "Read-only plan, JSON contract and source inspection plus SHA256; review-document JSON validation only.",
+    "product_imports": false,
+    "collection": false,
+    "tests": false,
+    "sql": false,
+    "services": false,
+    "network": false
+  }
+}

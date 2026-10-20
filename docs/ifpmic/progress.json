@@ -709,6 +709,16 @@
       "actual_request_persistence": true,
       "actual_job_execution": false,
       "scope": "Local synthetic OIDC/mock profile; actual API/PostgreSQL create/read/reload/same-data restart, no full B-stage or AT acceptance."
+    },
+    {
+      "id": "iteration-03",
+      "status": "in_progress",
+      "title": "Connect persisted API job to real execution-engine admission and visible run/receipt",
+      "path": "delivery/iteration-03/README.md",
+      "verification": "delivery/iteration-03/recorder-verification.json",
+      "foundation_status": "accepted_28_synthetic_recorder_unit_checks_only",
+      "actual_job_execution": false,
+      "scope": "Recorder foundation verified by unit tests only; literal87 full raw mapping, full490 gates and actual execution UI remain pending."
     }
   ]
 }

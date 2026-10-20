@@ -1,0 +1,64 @@
+{
+  "kind": "ifpmic.delivery.iteration-03.recorder-source-review.v1",
+  "review_date": "2026-10-20",
+  "reviewer": {
+    "agent": "/root/h2_evidence_amendment_review",
+    "independence": "Did not author the checker or TC unit source; implementation and tests were independently inspected."
+  },
+  "decision": "approve_exact_source_for_synthetic_stdlib_units_only",
+  "scope": "Read-only owner/query recorder audit foundation; not full per-case H2 evidence validation.",
+  "source_pins": {
+    "scripts/ifpmic_h2_raw_evidence.py": "7b02c3b6a5713d6abe0e589d75835f5f6519e2aa5daee690e811497f20b7b4fe",
+    "tests/ifpmic_evidence/test_raw_observations.py": "684ee4f7c85b8347b7b76cf988eab3f3aaafcc93c2262882a8781fdd87e63fb7"
+  },
+  "context_pins": {
+    "docs/ifpmic/delivery/iteration-03/PLAN.md": "bf8ebf4e66632a45cfa54608d7d94e20b718177021a63725273343b01b3ce397",
+    "docs/ifpmic/delivery/iteration-03/plan-review.json": "0439569144dbb5551e12886985b28af124165d4f075637ae468370f6b2dac4d0",
+    "tests/ifpmic_api/h2_snapshot_evidence.py": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c",
+    "tests/ifpmic_api/test_h2_runtime_normal_flow.py": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d"
+  },
+  "authorization": {
+    "command": "/usr/bin/python3 -S -B -m unittest discover -s tests/ifpmic_evidence -v",
+    "working_directory": "repository root",
+    "maximum_wall_seconds": 60,
+    "environment": "Minimal PATH=/usr/bin, LC_ALL=C.UTF-8, PYTHONDONTWRITEBYTECODE=1; no site initialization or SDK environment.",
+    "result_capture": "Private stdout/stderr, AST-derived exact28 unit IDs and source hashes before/after; timeout or any missing/extra/failing unit prevents unit-result acceptance.",
+    "only_inputs": "The two exact source pins and synthetic files owned by unittest TemporaryDirectory fixtures; stdlib imports only.",
+    "other_test_discovery_or_product_sdk_imports": false,
+    "sql_services_network": false,
+    "h2_runner_or_runtime_execution": false,
+    "h2_or_iteration_acceptance": false,
+    "source_change_rule": "Any source-pin or discovery-scope change requires a new scoped source review before execution."
+  },
+  "findings": [],
+  "resolved_finding": {
+    "location": "scripts/ifpmic_h2_raw_evidence.py:219",
+    "issue": "The initial root lstat could escape as an OSError containing the private absolute path if the root disappeared after resolution.",
+    "resolution": "Root lstat now shares the fixed PRIVATE_ROOT_UNAVAILABLE error boundary. Verified in the pinned source; no dynamic race test was executed."
+  },
+  "evidence": [
+    "The checker imports stdlib only, opens evidence read-only, checks root resolution/identity, opens child directories relative to trusted descriptors with no-follow, and requires current-user mode0700 directories and regular mode0600 single-link files.",
+    "Per-file reads are size-bounded and compare descriptor identity, mode, link count, size and timestamps before/after reading; the returned manifest hashes the actual bytes read. Descriptors close on all inspected paths.",
+    "JSON decoding rejects duplicate keys, nonfinite values, malformed encoding and unsupported canonical values. Exact node/pytest phase, positive observation time, filename timestamp and caller shape are checked before counting.",
+    "Owner snapshots require the original raw fields and producer row widths: accepted23, bindings27, scopes6, receipts9 and attempts5. The canonical SHA256 recipe matches the actual unchanged producer.",
+    "Queries require the actual result field, operation and subject. Empty and null results remain valid raw observations; operation-specific result semantics are deliberately outside this foundation.",
+    "Counts belong to each exact node and operation; another known node cannot satisfy minima. Canonically identical copied records cannot inflate counts. Invalid/duplicate requirements and inconsistent min/max bounds fail closed.",
+    "All28 TC methods use synthetic TemporaryDirectory files and import only stdlib plus this checker. They check positive owner/query manifests, phases, empty/null results, missing/cross-node records, digest/shape/duplicate/count errors, JSON failures, filename/size/mode errors and symlink/hardlink rejection with exact error codes."
+  ],
+  "risks_and_edge_cases": [
+    "This foundation does not freeze the whole directory namespace or certify completeness under concurrent additions, renames or replacement. A later runtime integration must operate on quiescent preserved evidence and review its archive/namespace integrity separately.",
+    "Canonical duplicate detection rejects literal observation copies; changing metadata is not proof of another real invocation. Actual invocation completeness, producer causality and raw query/SQL semantics remain separate mandatory checks.",
+    "History/list/tree/process rules, the87 explicit mappings, full490 inventory/runner integration, all25 obligations and five fixture prerequisites, exact paired reviews and full-H2 pre-gates remain pending. No existing H2 producer or full runner is approved or changed by this review."
+  ],
+  "recommendation": "Execute only the bounded pinned synthetic unit command and retain its actual result. Continue explicit mapping and full-runner integration through their separate reviews; do not treat these units as H2 evidence acceptance.",
+  "remaining_uncertainty": "This review executed no tests. Actual unit outcomes and all runtime evidence remain unaccepted.",
+  "validation": {
+    "method": "Static checker/TC/producer inspection, source SHA256 and review-document JSON validation only.",
+    "product_imports": false,
+    "collection": false,
+    "tests": false,
+    "sql": false,
+    "services": false,
+    "network": false
+  }
+}

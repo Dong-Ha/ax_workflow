@@ -1,5 +1,7 @@
 # 다음 세션 재개 안내 — 2026-10-20
 
+> 최신 개발 체크포인트: [주기03 실행 연결 진행 기록](./delivery/iteration-03/README.md). 케이스별 owner/query 원본 검사기와 TC 합성28건을 작성·실행했다. 독립 검토는 해당 증빙을 따른다. 다음은87개 조건부 artifact 규칙의 machine mapping과 full runner 통합이다. full490 및 실제 실행 화면은 아직 미수용이다.
+
 > 최신 제품 결과: [주기02 실제 요청 저장 화면](./delivery/iteration-02/README.md), http://127.0.0.1:8769/ . 실제 API/DB 저장·재시작 유지 검증 완료, 독립 결과 검토 상태는 해당 증빙을 확인한다. 다음 단위는 필수 H2 검증 후 실제 실행 한 구간 연결이다.
 
 > 최신 사용자 지시: [애자일 전달 계획](./AGILE-DELIVERY.md)을 우선한다. 목표는 재개되었으며, [첫 화면 공개](./delivery/iteration-01/README.md)에 이어 [실제 요청 저장 흐름](./delivery/iteration-02/README.md)을 전달했다. 이후에도 한 사용자 흐름씩 구현·시연·검증한다. H2 소스 증빙 보완은 `fa3fe7e`에 보존했으며 아직 실행 승인이 없다. 아래 내용은 중단 당시의 상세 기술 인계다.

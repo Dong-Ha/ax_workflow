@@ -1,0 +1,116 @@
+{
+  "kind": "ifpmic.agile.iteration-03.recorder-verification.v1",
+  "status": "unit_checks_passed",
+  "scope": "Owner/query recorder audit foundation only; synthetic temporary evidence.",
+  "passed": 28,
+  "failed_or_missing": 0,
+  "exit_code": 0,
+  "command": [
+    "/usr/bin/python3",
+    "-S",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests/ifpmic_evidence",
+    "-v"
+  ],
+  "test_ids": [
+    "test_raw_observations.RawRecorderAuditTests.test_cross_node_record_cannot_satisfy_requirement",
+    "test_raw_observations.RawRecorderAuditTests.test_duplicate_copied_owner_observation_does_not_count_twice",
+    "test_raw_observations.RawRecorderAuditTests.test_duplicate_copied_query_observation_does_not_count_twice",
+    "test_raw_observations.RawRecorderAuditTests.test_duplicate_json_keys_are_rejected",
+    "test_raw_observations.RawRecorderAuditTests.test_duplicate_requirement_node_is_rejected",
+    "test_raw_observations.RawRecorderAuditTests.test_empty_actual_query_result_is_valid",
+    "test_raw_observations.RawRecorderAuditTests.test_hardlinked_raw_file_is_rejected",
+    "test_raw_observations.RawRecorderAuditTests.test_invalid_requirement_bounds_are_rejected",
+    "test_raw_observations.RawRecorderAuditTests.test_missing_required_owner_record_fails",
+    "test_raw_observations.RawRecorderAuditTests.test_missing_required_query_operation_fails",
+    "test_raw_observations.RawRecorderAuditTests.test_nonfinite_json_number_is_rejected",
+    "test_raw_observations.RawRecorderAuditTests.test_null_actual_query_result_is_valid_and_preserved_as_an_observation",
+    "test_raw_observations.RawRecorderAuditTests.test_overflowed_json_float_is_rejected",
+    "test_raw_observations.RawRecorderAuditTests.test_oversized_observation_is_rejected",
+    "test_raw_observations.RawRecorderAuditTests.test_owner_snapshot_digest_tampering_fails",
+    "test_raw_observations.RawRecorderAuditTests.test_owner_snapshot_shape_is_enforced",
+    "test_raw_observations.RawRecorderAuditTests.test_preserves_setup_call_and_teardown_phase_metadata",
+    "test_raw_observations.RawRecorderAuditTests.test_required_query_maximum_is_enforced",
+    "test_raw_observations.RawRecorderAuditTests.test_sql_only_case_can_require_no_owner_observations",
+    "test_raw_observations.RawRecorderAuditTests.test_symlinked_observation_directory_is_rejected",
+    "test_raw_observations.RawRecorderAuditTests.test_symlinked_record_is_rejected",
+    "test_raw_observations.RawRecorderAuditTests.test_symlinked_root_ancestor_is_rejected",
+    "test_raw_observations.RawRecorderAuditTests.test_unknown_node_fails_without_allowlist",
+    "test_raw_observations.RawRecorderAuditTests.test_valid_owner_and_query_records_return_private_file_manifest",
+    "test_raw_observations.RawRecorderAuditTests.test_very_long_json_integer_is_rejected",
+    "test_raw_observations.RawRecorderAuditTests.test_wrong_directory_mode_is_rejected",
+    "test_raw_observations.RawRecorderAuditTests.test_wrong_file_mode_is_rejected",
+    "test_raw_observations.RawRecorderAuditTests.test_wrong_filename_timestamp_is_rejected"
+  ],
+  "raw_result": {
+    "path": "workflow-artifacts/verification/agile/iteration-03/recorder-unit-2026-10-20T14-10-12-083070Z/result.json",
+    "sha256": "f4918ddadb1a0dc85ee12c353e2fe3537bacfa1d341b6464399faeaaee68168b"
+  },
+  "raw_stdout": {
+    "path": "workflow-artifacts/verification/agile/iteration-03/recorder-unit-2026-10-20T14-10-12-083070Z/stdout.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "raw_stderr": {
+    "path": "workflow-artifacts/verification/agile/iteration-03/recorder-unit-2026-10-20T14-10-12-083070Z/stderr.log",
+    "sha256": "bc761d54eac12a7677c8805b222aa705fd8b21aee7b46803aeb531e4e66e8cd0"
+  },
+  "source_pins": {
+    "scripts/ifpmic_h2_raw_evidence.py": "7b02c3b6a5713d6abe0e589d75835f5f6519e2aa5daee690e811497f20b7b4fe",
+    "tests/ifpmic_evidence/test_raw_observations.py": "684ee4f7c85b8347b7b76cf988eab3f3aaafcc93c2262882a8781fdd87e63fb7"
+  },
+  "source_review": {
+    "path": "docs/ifpmic/delivery/iteration-03/recorder-source-review.json",
+    "sha256": "17c65b4f46684b7bf14419fead4a2dab545ce459546a6471fc21e4295c84d769"
+  },
+  "plan_review": {
+    "path": "docs/ifpmic/delivery/iteration-03/plan-review.json",
+    "sha256": "0439569144dbb5551e12886985b28af124165d4f075637ae468370f6b2dac4d0"
+  },
+  "source_unchanged": true,
+  "preservation": {
+    "protected_ax_hashes": 96,
+    "inventory": 89,
+    "design": 17,
+    "uploads": 2,
+    "environments": {
+      "original32": {
+        "files": 1777,
+        "unchanged": true
+      },
+      "qualified36": {
+        "files": 3072,
+        "unchanged": true
+      }
+    },
+    "all_unchanged": true
+  },
+  "preservation_raw": {
+    "path": "workflow-artifacts/verification/agile/iteration-03/recorder-unit-2026-10-20T14-10-12-083070Z/preservation.json",
+    "sha256": "11fc7f030b46d3babf13557f2c791b1e343016365761e8696f67e5101707c223"
+  },
+  "independent_result_review": "recorder-result-review.json",
+  "h2_accepted": false,
+  "iteration03_complete": false,
+  "goal_complete": false,
+  "not_executed_this_checkpoint": {
+    "build_and_UI_browser": "No product/UI/dependency change; same protected96/89 and source pins verified. Re-run affected checks at I03 connection/full gate; prior I02 validation does not accept new execution UI.",
+    "full490_and_services": "Current exact raw mapping/ledger/contract/full runner pre-gates remain incomplete. No product/SDK import, pytest collection, SQL or services executed for I03."
+  },
+  "remaining": [
+    "Machine-readable literal87 artifact/history/list/tree/process/SQL-fence rules and their negative tests.",
+    "Connect complete raw validation to every applicable full-runner phase and public proposal boundary.",
+    "Reconcile current source closure/490 inventory/contract and paired reviews; complete runner/source/pre-gate approval.",
+    "Fresh full490 execution and independent raw evidence acceptance.",
+    "Connect stored API job to actual READY/run/QUEUED receipt, browser verification and independent iteration03 acceptance."
+  ],
+  "limits": [
+    "Recorder minima do not prove complete causal invocation sequences.",
+    "Raw record schema/count/digest checks do not prove SQL business semantics.",
+    "History protobuf contents/process lifecycle/conditional artifact rules are not inspected by this foundation.",
+    "Concurrent namespace integrity is not certified; full runner must establish frozen evidence/owned writer cleanup."
+  ]
+}

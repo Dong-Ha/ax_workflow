@@ -1,0 +1,52 @@
+{
+  "kind": "ifpmic.delivery.iteration-03.recorder-result-review.v1",
+  "review_date": "2026-10-20",
+  "reviewer": "/root/h2_evidence_amendment_review",
+  "decision": "accept_28_synthetic_recorder_unit_results_only",
+  "findings": [],
+  "accepted_scope": "The approved stdlib owner/query raw-recorder audit foundation passed its28 synthetic unit cases. This is partial iteration03 progress.",
+  "source_review_sha256": "17c65b4f46684b7bf14419fead4a2dab545ce459546a6471fc21e4295c84d769",
+  "source_pins": {
+    "scripts/ifpmic_h2_raw_evidence.py": "7b02c3b6a5713d6abe0e589d75835f5f6519e2aa5daee690e811497f20b7b4fe",
+    "tests/ifpmic_evidence/test_raw_observations.py": "684ee4f7c85b8347b7b76cf988eab3f3aaafcc93c2262882a8781fdd87e63fb7"
+  },
+  "raw_evidence": {
+    "directory": "workflow-artifacts/verification/agile/iteration-03/recorder-unit-2026-10-20T14-10-12-083070Z",
+    "sha256": {
+      "result.json": "f4918ddadb1a0dc85ee12c353e2fe3537bacfa1d341b6464399faeaaee68168b",
+      "source-before.json": "50bf392e221d46abf1006135f373054b3e83bf182721896b6398384e62b30153",
+      "source-after.json": "50bf392e221d46abf1006135f373054b3e83bf182721896b6398384e62b30153",
+      "stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr.log": "bc761d54eac12a7677c8805b222aa705fd8b21aee7b46803aeb531e4e66e8cd0"
+    }
+  },
+  "evidence": [
+    "Recorded command exactly matches the approved /usr/bin/python3 -S -B -m unittest discover -s tests/ifpmic_evidence -v; exit_code0.",
+    "The actual verbose stderr contains28 unique passing test IDs and Ran28 tests/OK. Their sorted IDs independently match all28 test methods in the pinned source and both expected/passed lists in result.json; no missing, extra, failed or skipped case was observed.",
+    "Source-before, source-after, current files and approved source pins match. Recomputed raw stdout/stderr hashes match the result record; stdout is empty.",
+    "The raw evidence directory is mode0700 and all five retained files are mode0600. Only reviewed counts/hashes and synthetic-unit conclusions are accepted for publication."
+  ],
+  "accepted_counts": {
+    "tests": 28,
+    "passed": 28,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "missing_or_extra": 0
+  },
+  "risks_and_edge_cases": [
+    "These synthetic units do not certify real producer execution, invocation completeness, concurrent namespace integrity, query/SQL semantics, history or process lifecycle. The source-review limitations remain in force."
+  ],
+  "recommendation": "Record this foundation result and continue the explicit87 artifact mappings and full runner integration through separate source and TC reviews.",
+  "remaining_uncertainty": [
+    "Full490 inventory/rebinding, all25 obligations and five fixture prerequisites, exact paired pre-gates, fresh runtime evidence and execution-state UI remain pending."
+  ],
+  "acceptance": {
+    "foundation_units": true,
+    "full_machine_readable_evidence_mapping": false,
+    "full_h2_or_runtime": false,
+    "iteration03_complete": false,
+    "business_p01_or_full_at16_at21_at32_or_goal": false
+  },
+  "review_method": "Read-only raw output/result/source/hash/mode inspection and review-document validation; no tests, product imports, SQL, services or network executed by the reviewer."
+}
