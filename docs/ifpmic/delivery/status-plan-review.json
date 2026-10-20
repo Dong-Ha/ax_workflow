@@ -1,0 +1,39 @@
+{
+  "kind": "ifpmic.delivery.status-plan-review.v1",
+  "status": "approve_bounded_status_dashboard_authoring_only",
+  "plan": {
+    "path": "docs/ifpmic/delivery/STATUS-PLAN.md",
+    "sha256": "28434ae5fe23e548fd084e09ffcea6b2f62f3311abe2be4ecd6056e121ce9b0d"
+  },
+  "basis": {
+    "progress_path": "docs/ifpmic/progress.json",
+    "progress_sha256": "f29f235b9bd513b51dbcacc5b01a6197cb423a2e2149737df4c36e8cfbd3d2e4",
+    "attempt_02_path": "docs/ifpmic/evidence/b03/attempts/h2-runtime-full-runner-source-review-v2-attempt-02.json",
+    "attempt_02_sha256": "1185b7ce0c9668d83f19fa9b2a21f34d6bfee8d9e47c3a6a1280362178ed5dbf"
+  },
+  "review": {
+    "purpose_and_scope": "A separate static delivery/status page and captures can make existing results and next steps visible without changing the product workflow, execution runner, or frozen contracts.",
+    "status_truth": "progress.json has 16 stage records; exactly V0 and V1 have status=verified. The 2/16 (12.5%) figure is therefore supported as an unweighted stage count. It must not be described as effort completion or as H2/full acceptance.",
+    "delivered_flows": "Iteration 01 is the design explorer and synthetic replay. Iteration 02 is local synthetic-OIDC/mock-profile request registration and PostgreSQL persistence. Neither is real job execution or final acceptance.",
+    "attempt_02_blockers": [
+      "FULL-STOPPED-BOUNDARY-LABEL-IS-NOT-REGISTRY-ROLE",
+      "FULL-SYNTHETIC-CLEANUP-JOURNAL-IS-NOT-CLI",
+      "FULL-RETAINED-H1-README-ANCHOR-DRIFT"
+    ],
+    "next_demo": "Persisted request admission with the same run/receipt and QUEUED state, including normal, duplicate, authorization-error, and reload behavior; it remains pending.",
+    "privacy_and_provenance": "Existing delivery captures may be reused only with their capture date labeled. Keep private/raw execution evidence and original uploads out of the public page. Show direct links to the reviewed status/evidence documents.",
+    "validation_scope": "The plan's desktop/mobile rendering, links/images, overflow, page errors, external requests, visible count reconciliation, and existing-link regression are bounded and suitable for this static page."
+  },
+  "required_display_boundaries": [
+    "Do not present synthetic replay, persisted request creation, or accepted synthetic runner units as actual execution.",
+    "Do not imply that a page or screenshot closes any of the three attempt-02 blockers or authorizes fresh490 execution.",
+    "Keep full H2, H3-H7, original AT acceptance, and the complete workflow explicitly pending."
+  ],
+  "authorization": {
+    "status_page_authoring": true,
+    "product_or_runner_changes": false,
+    "h2_execution_or_acceptance": false,
+    "goal_completion": false
+  },
+  "review_method": "Read-only review of the plan, progress stage statuses, iteration delivery summaries, and exact attempt-02 finding identifiers. No product changes or runtime execution."
+}

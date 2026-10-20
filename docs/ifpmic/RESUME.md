@@ -2,6 +2,8 @@
 
 ## 먼저 볼 결과
 
+**[진행 현황판](./delivery/status.html)**: 기존 두 화면의 캡처,12.5%의 의미,현재 장애3건과 다음 데모를 한 화면에서 확인한다. 새 업무 기능은 추가되지 않았다.
+
 | 결과 | 직접 확인 | 검증된 범위 |
 |---|---|---|
 | 설계 workflow 탐색 | http://127.0.0.1:4173/ifpmic.html | 29단계·6구간·41연결,74개 합성 시나리오 |
@@ -27,7 +29,7 @@
 ## 이어서 수행할 순서
 
 1. 실제 Git 상태와 최신140건 결과·독립 수용을 확인한다. runner SHA는 `8494e13c40b82540d198a0762fb4b392e131860f8a9df5cb0e3a38087141f37c`. 정확한 소스를 바꾸면 관련 승인을 재사용하지 않는다.
-2. 전체 runner source 검토를 마치고 exact independent/TC execution pre-gates를 받는다. 단위 승인으로 전체 main을 실행하지 않는다. 두 결함·v2 연결과 전체 검토의 추가3종을 구현·140 합성 재검증했다. 첫 source 변경 요청은 attempts/h2-runtime-full-runner-source-review-v2-attempt-01.json에 보존했다.
+2. [전체 소스 검토 attempt02](./evidence/b03/attempts/h2-runtime-full-runner-source-review-v2-attempt-02.json)의 남은3건을 먼저 수정한다: stopped envelope의 경계 label을 canonical role로 오인, synthetic fixture journal을 실제 CLI로 오분류, retained H1 테스트의 README 해시 불일치. 현재 전체 실행 승인은 없다. 첫 시도의3종을 고친140건 수용은 유지하되 이후 바이트 변경에는 재사용하지 않는다. 새 계획/소스/관련 단위 검증·후보 검토 뒤 exact independent/TC execution pre-gates를 받는다.
 3. full pre-gates 이후 fresh490을 실행한다. 아직 실제 main/SDK/pytest collection/SQL/service/full490은 실행하지 않았다. 실행이 시작되면 실제 도구 session/handle과 private gate를 기록하고 동일 handle을 관찰한다.
 4. 실패 증빙·소유 자원 정리를 보존하고 원인 단계로 복귀한다. 전건 통과·독립 실제 결과 수용 뒤 저장 요청의 실제 접수 UI를 연결하고 브라우저 시연한다.
 5. 검토한 변경을 커밋/push하고 새 화면 유무·확인 위치·실제 검증·남은 한 가지를 먼저 전달한다.
@@ -41,3 +43,9 @@
 - 원래32 venv와 qualified36 venv는 별도다. exact toolchain/환경 기준과 실행 전 계획은 [RAW 통합 계획](./delivery/iteration-03/RAW-AUDIT-INTEGRATION.md), v2 계약과 기존 source 리뷰를 따른다. 설치·다운로드·원본 기록 수정 없이 진행한다.
 
 [이전 상세 인계 기록](./RESUME-HISTORY-2026-10-21.md)은 역사 자료다. 그 안의 과거 미해결 수와 실행 순서를 현재 지시로 사용하지 않는다.
+
+### 세 장애를 수정할 때의 구체 경계
+
+- `stopped-*.json`의 외부 role은 경계 이름이다. 같은 case의 owned metadata에 있는 실제 역할과 nested stop의 PID/start identity를 대조해야 한다. 이름을 일괄 변경해 증빙을 맞추지 않는다.
+- cleanup-fallback-probe의 가상 PID/journal은 실제 OS process가 아니다. 해당 시험의 query observation·actions 없음·identity lookup 없음·physical absence 미입증과 함께 좁게 분류한다. 가상 PID를 조회/종료하거나 실제 종료 수에 넣지 않는다.
+- H1 test의 README 예상값은 `1aa570…`, 원래 H1 계약은 `0964d4…`, 현재 README는 `ee21e2…`다. 과거 bytes는 각각 Git `09ebf40`/`4fc25fb`에 있다. 현재 문서는 과거1aa 버전에서 주기02 안내2줄이 추가됐다. 역사 승인과 현재 문서 검증을 구분하는 별도 계획을 먼저 검토한다. README 되돌리기·조용한 상수 교체로 통과시키지 않는다. H1 test 수정은 full ledger source pin을 바꾸므로 새 후보 검토가 필요하다. machine38에는 H1 test/README pin이 없다. 기존I02 c10/cf4 참조는 보존한다.

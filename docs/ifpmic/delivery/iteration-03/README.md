@@ -1,5 +1,7 @@
 # 주기03 — 저장 요청의 실제 실행 접수
 
+**최신 상태:** [진행 현황판](../status.html).140개 합성 단위 수용 후 [전체 소스 검토 attempt02](../../evidence/b03/attempts/h2-runtime-full-runner-source-review-v2-attempt-02.json)가 추가 장애3건을 확인했다. stopped envelope 경계 label/실제 role 충돌, synthetic cleanup journal의 실제 CLI 오분류, retained H1 README 해시 불일치다. 이 세 건은 미수정이며 전체 source/실행 승인은 없다. 아래140건은 당시 정확한 소스의 합성 검증이다. 다음은 세 장애의 검토된 수정·재검증이고, 이후에 실행 전 검토·fresh490·화면 연결을 진행한다.
+
 **다음에 보여줄 결과:** 저장한 요청 한 건을 실제 실행 엔진에 접수하고, 같은 작업의 실행 ID·receipt·QUEUED 상태를 화면에서 확인한다.
 
 | 사용자 흐름 | 현재 상태 | 직접 확인 |

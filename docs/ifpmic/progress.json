@@ -660,14 +660,14 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "Iteration03: initial131 accepted at e77e2fa; full-source attempt01 rejected3 input-oracle classes. These are now repaired and140 cache-isolated synthetic units (131+9) passed with independent acceptance. Current runner8494e13..., ledger104/machine38 pins unchanged. Complete renewed whole-runner source review and exact paired execution pre-gates; then fresh actual490/raw/final independent acceptance and saved-request admission UI. Actual main/SDK/pytest collection/SQL/services not yet run.",
+  "next_step": "Iteration03: whole-source attempt02 requests changes for stopped-envelope boundary-label role collision, synthetic fixture journal CLI misclassification, and retained H1 README anchor drift. Existing140 synthetic units remain accepted only for their exact source; actual490 and admission UI remain pending. Repair with reviewed plans, qualify changed source/inputs and renew exact source/paired execution gates before fresh490 and real saved-request admission.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",
     "Approved Bedrock/Claude runtime profile"
   ],
   "publication_policy": "Only authorized git repository documentation, source and synthetic verification summaries/screenshots; never runtime credentials or application logs.",
-  "updated_at": "2026-10-20T17:18:57.831627+00:00",
+  "updated_at": "2026-10-20T17:28:17.772468+00:00",
   "session_handoff": {
     "status": "resumed_by_user",
     "resume_document": "docs/ifpmic/RESUME.md",
@@ -688,7 +688,7 @@
       "commit_and_push"
     ],
     "existing_mandatory_gates_preserved": true,
-    "latest_user_visible_change": "No new product behavior in this checkpoint; existing explorer and persisted-request pages both returned HTTP200 on 2026-10-21.",
+    "latest_user_visible_change": "A separate static progress dashboard now brings together the two existing deliveries, their dated screenshots, 2/16 stage count, three current blockers and next demo. No new workflow execution behavior.",
     "reporting_rule": "Lead with visible behavior; explicitly report no new visible feature when only internal evidence advances. Keep stage completion, visible flows, and test counts separate.",
     "next_visible_acceptance": "One persisted request admitted by the actual execution engine; matching job/run/receipt and QUEUED displayed, with duplicate, authorization and reload checks. Mandatory execution gates preserved.",
     "current_stage_completion": {
@@ -710,7 +710,7 @@
       "scope": "Source path/schema/applicability only; no actual execution acceptance."
     },
     "current_candidate_static_verification": "delivery/iteration-03/full-candidate-v2-static-verification.json",
-    "next_foundation_scope": "Renewed whole-runner source and exact paired execution gates; all known3classes repaired and140 synthetic units accepted.",
+    "next_foundation_scope": "Repair the three concrete attempt02 blockers with reviewed scope, then renew source/input and execution reviews. No execution approval exists.",
     "candidate_authoring_reviews": {
       "independent": "evidence/b03/h2-runtime-full-execution-contract-review-v2.json",
       "tc": "evidence/b03/h2-runtime-full-execution-tc-review-v2.json"
@@ -723,7 +723,25 @@
       "independent_acceptance": "delivery/iteration-03/full-input-repair-result-review.json",
       "actual_full490": false
     },
-    "full_source_rejected_attempt": "evidence/b03/attempts/h2-runtime-full-runner-source-review-v2-attempt-01.json"
+    "full_source_rejected_attempt": "evidence/b03/attempts/h2-runtime-full-runner-source-review-v2-attempt-02.json",
+    "status_dashboard": "delivery/status.html",
+    "current_blockers": [
+      {
+        "id": "FULL-STOPPED-BOUNDARY-LABEL-IS-NOT-REGISTRY-ROLE",
+        "summary": "Stopped envelope label conflicts with canonical process role",
+        "status": "open"
+      },
+      {
+        "id": "FULL-SYNTHETIC-CLEANUP-JOURNAL-IS-NOT-CLI",
+        "summary": "Synthetic fixture journal is incorrectly interpreted as real CLI proof",
+        "status": "open"
+      },
+      {
+        "id": "FULL-RETAINED-H1-README-ANCHOR-DRIFT",
+        "summary": "Retained H1 test README hash differs from current authorized documentation",
+        "status": "open"
+      }
+    ]
   },
   "visible_deliveries": [
     {
@@ -752,9 +770,9 @@
       "title": "Connect persisted API job to real execution-engine admission and visible run/receipt",
       "path": "delivery/iteration-03/README.md",
       "verification": "delivery/iteration-03/full-input-repair-verification.json",
-      "foundation_status": "accepted_140_cache_isolated_synthetic_units_only",
+      "foundation_status": "140_synthetic_units_accepted_only; whole_source_attempt02_requests_changes",
       "actual_job_execution": false,
-      "scope": "Current runner includes original2 repairs/v2binding and3 full-source input-oracle repairs.140 synthetic units(131+9) independently accepted;104ledger/38machine pins unchanged. Actual490 and admission/run/receipt UI remain pending.",
+      "scope": "140 synthetic units independently accepted for exact reviewed source. Attempt02 found three remaining source/input blockers. Actual490, full execution approval and admission/run/receipt UI remain pending.",
       "mapping_resolution_progress": "evidence/b03/h2-machine-resolution-progress-v2.json",
       "candidate_static_verification": "delivery/iteration-03/full-candidate-v2-static-verification.json"
     }
