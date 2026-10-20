@@ -701,8 +701,14 @@
     },
     {
       "id": "iteration-02",
-      "status": "planned",
-      "title": "One real request registration and persisted job/current-stage/wait detail"
+      "status": "accepted_local_real_api_request_persistence_only",
+      "title": "One real request registration and persisted job/current-stage/wait detail",
+      "path": "delivery/iteration-02/README.md",
+      "verification": "delivery/iteration-02/verification.json",
+      "independent_result_review": "delivery/iteration-02/result-review.json",
+      "actual_request_persistence": true,
+      "actual_job_execution": false,
+      "scope": "Local synthetic OIDC/mock profile; actual API/PostgreSQL create/read/reload/same-data restart, no full B-stage or AT acceptance."
     }
   ]
 }

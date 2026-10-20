@@ -1,0 +1,161 @@
+{
+  "kind": "ifpmic.delivery.iteration-02.source-review.v1",
+  "status": "approve_exact_source_for_bounded_iteration_02_local_execution",
+  "reviewer": {
+    "agent": "/root/h2_evidence_amendment_review",
+    "type": "independent static source and verifier review",
+    "authorship": "Reviewer authored this review only; launcher/OIDC, UI and browser verifier were authored by other agents."
+  },
+  "decision": {
+    "source_review_passed": true,
+    "execution_authorized": true,
+    "authorized_scope": [
+      "Only the reviewed iteration-02 local launcher, synthetic two-account OIDC and fixed mock profile on loopback API8769/issuer8770 with a separate private PostgreSQL data/socket directory.",
+      "The reviewed create-and-read browser phase, exact-key response-loss retry, actual API validation/CSRF/ownership probes, reload, mobile display, duplicate-submit and unavailable-storage probes.",
+      "Stop/restart the owned local launcher with the same retained demo data, then the reviewed --persist-read browser phase and read-only SQL/resource/evidence checks.",
+      "Planned existing build/iteration-one regressions and original source/environment/design preservation checks without changing protected sources or contacting external services."
+    ],
+    "not_authorized": [
+      "H2/full490 execution or acceptance",
+      "Dispatcher, worker or Temporal startup",
+      "Real agents, equipment, publishing or external deployment",
+      "Company SSO, production identity/database/profile/Paperclip integration",
+      "Full AT-16, AT-21, AT-32 or final workflow acceptance",
+      "Package installation/download or source/environment drift"
+    ],
+    "iteration_acceptance": false,
+    "final_goal_complete": false,
+    "condition": "Approval binds the exact source and context hashes below. Changes to implementation or verifier require review before affected execution. Actual evidence and a later independent result review remain required."
+  },
+  "source_pins": {
+    "experiments/ifpmic-live/launcher.py": "4f7a01c8142310b394d332a50e4eefba7ee065f8163c2b14114788e31cc032b5",
+    "experiments/ifpmic-live/local_oidc.py": "12f3d52aeda11aeab7c2fa9956ed064fe48dd0d2ef0a996636b3b072d0841c1a",
+    "experiments/ifpmic-live/seed-profile.mjs": "af2464c65578a086ca67970eaf4ea35f982dc336387f7e0464e47d8662b4dea2",
+    "experiments/ifpmic-live/web/app.js": "9fd53069eb08584ebaac617339a0b666a696b7166c2f76a2a79b58f81809a28c",
+    "experiments/ifpmic-live/web/style.css": "74afb7c765e30a7e13c7d6daa6e9fe50c38aac92e396cd19e33842d6f00656b5",
+    "experiments/ifpmic-live/web/index.html": "a96a84fed49cb88b3269a8f6b8bd14c9b91368093f0d95361163dddb186b635f",
+    "experiments/ifpmic-live/verify.browser.mjs": "b8282cd053613381b69e1e0949a8d028b23bbd5502baaca9690945c1a83b6fe3"
+  },
+  "context_and_unchanged_dependency_pins": {
+    "docs/ifpmic/delivery/iteration-02/PLAN.md": "79c8c8460338fcdf8e24a22d420c9eb4e5bceeed1557b5848ba2e7e8d9052814",
+    "docs/ifpmic/delivery/iteration-02/plan-review.json": "c73e582eb69e63dccb6791284dc567f9a725cfda68cc03bb238f4c1b076d0e5e",
+    "services/ifpmic_api/app.py": "a65c3d44a14ecae7b819e5042d4f490ce68c8b9b5f5962d1b5f2bbfe52fef192",
+    "services/ifpmic_api/auth.py": "9fef8084e8b11a7e1d0929a1842ab4fdddb0361adcbaa70700529a5e9999a887",
+    "services/ifpmic_api/oidc.py": "78bc0d3194a987fe2232595e21719dc5dee2f79bbe41faeb9fcb8597a1f24478",
+    "services/ifpmic_api/jobs.py": "0538e460a6be42e3129d2e8d5e9f262bba357e621e0b5e800f4495ebdf99ecf9",
+    "services/ifpmic_api/settings.py": "2974a462c9a60e05faf8ae7c1b684090d33adfddc1f2d24e1b7638074d36eb02",
+    "services/ifpmic_api/migrate.py": "36518fdd4d296455947df76fd72bf11d68aa44317549bd527037499b98a9eb86",
+    "services/ifpmic_api/catalog.py": "65cfaae738728a957ba73587bdc3caaa582a90650624bb1c31bd11f66fb2db1f",
+    "services/ifpmic_api/request_contract.py": "ad88f756ce4bf526bb3c2d89dab64765bcfc42ab7f8b2832dcb012b271e07fe0",
+    "services/ifpmic_api/snapshot_bridge.py": "743f357fed62a37770d4bfef2a3321fab649b25a3a1b040f64d61bec628443e8",
+    "services/ifpmic_api/migrations/001_initial.sql": "cf0437a5f32e1589e4ea821afbb2ef2480d780a276667880aa9a08a0f4c77f12",
+    "services/ifpmic_api/migrations/002_auth_retention.sql": "95c01f06eb586e0c1067f04672edfed8e0a11215752ad859ac9e4744da5a504e",
+    "services/ifpmic_api/migrations/003_workflow_execution.sql": "5ef29521944e18551728dd285ce3ae21fa03c2b06f77c25430da6acb0ce1f102",
+    "runtime/ifpmic/snapshot.mjs": "9bbfdcaf483167c931f0b6e0a453697cd8ea92f3b12f33ab30ffa0b2dd52b789",
+    "runtime/ifpmic/store.mjs": "0f532d26504b1975b61b8e67c87225c29d4d576115ed81d2314ecb6ae359477e",
+    "tests/helpers/ifpmic-profile-fixtures.mjs": "a3b3aa11d0647557a270173e06191be4c2f7e017cc4360753f68d637948b2d22",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-execution-contract.json": "c10c7cb329ea82b758cfa7db34ac330e4b7ec472320b5904e8086f8067865a2d"
+  },
+  "findings": [],
+  "resolved_source_findings": [
+    {
+      "severity": "P1",
+      "issue": "Static mount and HTML asset paths differed; required DOM/test identifiers were absent.",
+      "resolution": "HTML uses /app.js and /style.css for the root static mount; app IDs align. Verifier uses actual #auth-gate/#signed-in/#pending-title IDs. Static literal selector inventory has zero unresolved references, including generated job-row."
+    },
+    {
+      "severity": "P1",
+      "issue": "Request could be transmitted without durable pending key/body, or storage read failure could look like no pending request.",
+      "resolution": "Initial pending storage is mandatory and read back before POST. Storage read/parse errors fail closed. Receipt persistence is confirmed before discarding pending retry material; ambiguous results retain the original key/body."
+    },
+    {
+      "severity": "P1",
+      "issue": "HTTP could remain pending indefinitely and stale reads could update the wrong selection/account.",
+      "resolution": "UI fetch/body handling has a30s AbortController bound. Account/list/detail/command epochs reject stale results; logout clears previous account UI and user storage is keyed by actual API user_id."
+    },
+    {
+      "severity": "P2",
+      "issue": "PROFILE_INELIGIBLE used the wrong HTTP classification.",
+      "resolution": "Definitive rejection matches unchanged API422 for PROFILE_INELIGIBLE;409 PROFILE_VERSION_CONFLICT remains separate. Unknown on-disk profile in the browser probe expects actual503 DEPENDENCY_UNAVAILABLE from the existing bridge/capture path."
+    },
+    {
+      "severity": "P1",
+      "issue": "Daemonized PostgreSQL startup could fail before PID ownership was registered.",
+      "resolution": "Postgres is a directly retained Popen child before identity/log/readiness work. stop derives its PID from the retained handle if needed, checks start ticks, uses bounded fast shutdown/reaping and fails on forced cleanup. Reuse requires the exact private ownership manifest and executable."
+    },
+    {
+      "severity": "P1",
+      "issue": "OIDC request threads/sockets were not fully owned or joined.",
+      "resolution": "Accepted sockets and request threads are registered under a closing lock; active requests cap at16. Completed/closed handles are pruned with a retired count. Shutdown closes sockets and joins request/serving/helper threads within one5s epoch, raising on survivors and retaining actual close observations."
+    },
+    {
+      "severity": "P1",
+      "issue": "Browser launch and teardown could lose ownership or hide cleanup failure.",
+      "resolution": "Chromium uses its native20s launch timeout. The180s watchdog closes known browser/context handles; context/browser close errors fail the report. Private source drift, route errors, unexpected origins/page errors and unexpected console errors prevent a passing verdict."
+    },
+    {
+      "severity": "P1",
+      "issue": "Verifier assertions raced asynchronous context, lost-response, command and list completion.",
+      "resolution": "The verifier now waits for exact context values, actual uncertain-response state, accepted command status and matching job row before asserting. Reload and post-restart UI selection are explicit. Intentional post-commit response loss uses actual upstream202 bytes."
+    }
+  ],
+  "evidence_and_reasoning": {
+    "auth_session": [
+      "Launcher calls the unchanged production create_app(Settings(...)) without injected auth/db/clock/transport factories or middleware replacement.",
+      "Production Boundary, AuthService, OIDC exchange/JWKS signature/issuer/audience/nonce validation, callback session minting and CSRF/origin checks remain in the path.",
+      "Local issuer accepts only the two named synthetic accounts, validates fixed client/redirect/code flow/S256, uses one-use expiring code and consent maps, authenticates token exchange and signs RS256 tokens.",
+      "Consent requires issuer Origin and unguessable ticket. CSP permits only the known issuer/API form targets. Both binds use127.0.0.1; this is explicitly not company identity verification.",
+      "Bootstrap inserts synthetic users, project, memberships and mock catalog/eligibility only. No new source directly inserts a session, job, command, outbox or workspace intent.",
+      "/demo/context invokes production JobService.pre_authenticate and adds only fixed demo metadata."
+    ],
+    "database_catalog": [
+      "API Settings uses the non-owner runtime DSN; owner migration and operator bootstrap connections are separate. Four service roles are created non-superuser/non-createdb/non-createrole/non-bypassrls/noinherit and match explicit leading SCRAM HBA rules.",
+      "PostgreSQL TCP listen is disabled and socket/data locations are separate private demo paths. Existing source migrations enforce role identity/ACL contracts.",
+      "Catalog import receives a SnapshotRecord from the real Node bridge and an IDLE autocommit operator connection; import_snapshot owns its real transaction.",
+      "Seed profile is the existing fixed fixture cloned as project ifpmic-local-demo/mode mock and published through actual snapshot/store code. It grants no real device or release authority."
+    ],
+    "dto_ui": [
+      "Actual create/list/detail/command endpoints and JobService authorization/transactions are unchanged.",
+      "The existing job DTO exposes job_id/owner/status/revision/cycle/workflow/current_step_ids/fingerprint/profile_version; it does not provide title/request_text/wait_reason.",
+      "UI renders actual DRAFT as saved/execution pending, accepted as command acceptance and [] as no started steps. Missing wait reason is labeled not provided. Generic list labels are derived from job IDs, without fabricated server title.",
+      "Rendered server/request strings use textContent or form values, not HTML insertion. Session/CSRF are not serialized to storage or URLs."
+    ],
+    "isolation_resources": [
+      "New code is confined to experiments/ifpmic-live and iteration-02 review documents, outside the frozen H2 source closure. Git diff showed existing API/runtime/profile-fixture/src dependencies unchanged.",
+      "Launcher checks qualified Python prefix and immutable binary hashes from the pinned contract, scrubs process/subprocess environment, supplies explicit empty PG fallback files, preserves HOME and binds only loopback.",
+      "Private demo directories/files require0700/0600 and reject final symlinks; launcher lock prevents concurrent reuse of one state. PostgreSQL log is explicitly opened0600.",
+      "No worker, Temporal, equipment, publisher or agent execution is launched by the reviewed code.",
+      "Static source approval does not replace actual PID/start-tick/socket/thread absence, HBA/runtime identity and before/after source/environment checks."
+    ],
+    "verifier": [
+      "Browser blocks requests outside the exact API/issuer HTTP origins and blocks service workers. It records only callback path, never code/state/query strings or cookies/CSRF/token values.",
+      "The first create receives an actual upstream202 before route abort; retry compares exact idempotency key, JSON body and original receipt. Same-key changed body must409.",
+      "Actual401/403/422/409 and the specifically scoped unknown-profile503 are checked; page/route/source/cleanup failures cannot be called pass.",
+      "User A has one logical request despite retries; user B has one deliberate duplicate-submit probe request. Final SQL must therefore show two total jobs/commands/outboxes/intents and one per owner/logical request, with zero additions from rejected probes.",
+      "Browser evidence cannot establish physical API restart or database row counts alone. Root orchestration must retain actual shutdown/restart and private SQL evidence."
+    ]
+  },
+  "static_validation": {
+    "methods": [
+      "Read-only source, plan and API-path inspection",
+      "SHA256 for seven new sources and18 plan/dependency anchors",
+      "Literal app/verifier DOM selector comparison",
+      "Git diff confirming unchanged tracked API/runtime/src/profile fixture"
+    ],
+    "repository_or_sdk_imports": false,
+    "collection": false,
+    "tests_or_browser_execution": false,
+    "sql": false,
+    "services": false,
+    "network": false,
+    "scope_of_approval": "I02-SOURCE only, authorizing subsequent bounded iteration-02 execution; no dynamic pass is asserted."
+  },
+  "risks_and_remaining_uncertainty": [
+    "No reviewed code has been executed by this reviewer. Actual OIDC exchange, PostgreSQL startup/role ACLs/catalog import, browser timing and cleanup are unverified until the authorized run.",
+    "Launcher and browser operations consume existing limits; an actual failure must be preserved and repaired with newly reviewed bytes, never called success.",
+    "Before/after original96/inventory89, design17/upload2 and qualified environment preservation remain execution/result review obligations.",
+    "Raw SQL/auth/config/log/process/browser evidence stays gitignored0700/0600. Public summaries/screenshots require inspection of actual captured content.",
+    "Company SSO/TLS, production integrations, actual workflow execution, H2/B03/H3-H7 and remaining AT acceptance stay pending."
+  ],
+  "recommendation": "Run the exact reviewed iteration-02 scope using existing qualified tools, preserve raw private evidence and actual restart/cleanup/SQL results, then request independent result review before accepting this iteration."
+}

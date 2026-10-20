@@ -1,0 +1,115 @@
+{
+  "kind": "ifpmic.delivery.iteration-02.result-review.v1",
+  "decision": "accept_local_request_intake_and_persistence_only",
+  "reviewer": "independent agent /root/h2_evidence_amendment_review",
+  "findings": [],
+  "accepted_scope": "Actual existing HTTP API, signed local OIDC callback/session/CSRF, user-scoped request creation/list/detail/command reads, idempotent retry, reload and same-data API/PostgreSQL/issuer restart using two explicitly synthetic accounts and one fixed mock profile.",
+  "iteration_increment_accepted": true,
+  "goal_complete": false,
+  "full_AT16_accepted": false,
+  "full_AT21_accepted": false,
+  "AT32_accepted": false,
+  "H2_accepted": false,
+  "workflow_execution_accepted": false,
+  "reviewed_public_artifacts": {
+    "docs/ifpmic/delivery/iteration-02/verification.json": "0660c4171747f8c1aef0aa4157d490a1c61c84d873a2afd49be5e857fb41331a",
+    "docs/ifpmic/delivery/iteration-02/README.md": "44c85157f7d424951603ec75836874f5f2788c5e6a8b59c3dc31485a8dc5da9c",
+    "docs/ifpmic/delivery/iteration-02/runtime-attempts.json": "74e7afb32a872123f63aa0440a75af8e98a6b9a04db2649cbf3d31093366081d",
+    "docs/ifpmic/delivery/iteration-02/source-review.json": "2c6ca7f1309bc4e6ec5408a5bb32750b0a02772a2fdcbe9d3a5646e4af921b52"
+  },
+  "reviewed_referenced_evidence_sha256": {
+    "docs/ifpmic/delivery/iteration-02/PLAN.md": "79c8c8460338fcdf8e24a22d420c9eb4e5bceeed1557b5848ba2e7e8d9052814",
+    "docs/ifpmic/delivery/iteration-02/plan-review.json": "c73e582eb69e63dccb6791284dc567f9a725cfda68cc03bb238f4c1b076d0e5e",
+    "docs/ifpmic/delivery/iteration-02/source-review.json": "2c6ca7f1309bc4e6ec5408a5bb32750b0a02772a2fdcbe9d3a5646e4af921b52",
+    "workflow-artifacts/verification/agile/iteration-02/run-2026-10-20T13-51-56.398Z-134a4957-8381-47b4-8ab1-3923d3b4f1df/browser-private.json": "db6d6aa1474b789190a3790a6ec620bcde36c959eca6f7ef52ea615ec6820275",
+    "workflow-artifacts/verification/agile/iteration-02/run-2026-10-20T13-53-34.766Z-a725c6a2-bd68-40a0-b33e-6486385b5d01/browser-private.json": "8dab4088d4c173a2e61038baa572b2fa8a2989ef9c4a4a4f5d3a8bd2c90d3693",
+    "workflow-artifacts/verification/agile/iteration-02/run-2026-10-20T13-51-56.398Z-134a4957-8381-47b4-8ab1-3923d3b4f1df/sql-before-restart.json": "9153401d43304ada4221af4dac09969b07678102d3cf14e2841744ef57a25f7c",
+    "workflow-artifacts/verification/agile/iteration-02/run-2026-10-20T13-51-56.398Z-134a4957-8381-47b4-8ab1-3923d3b4f1df/sql-after-restart.json": "923a940cc742d3d043727b5e047073fb9f396ed6d7d3c6fc980b70b523e212d7",
+    "workflow-artifacts/verification/agile/iteration-02/run-2026-10-20T13-51-56.398Z-134a4957-8381-47b4-8ab1-3923d3b4f1df/stop-observed.json": "f7f92173689864f3bd4436273237854935aca282e8d78d5dcb015e2cb5918785",
+    "workflow-artifacts/verification/agile/iteration-02/run-2026-10-20T13-51-56.398Z-134a4957-8381-47b4-8ab1-3923d3b4f1df/issuer-stopped.json": "8a144ff024285f9d13ef864358fe9f6e92a7d086cf089483869b9aa3ca07a332",
+    "workflow-artifacts/verification/agile/iteration-02/run-2026-10-20T13-51-56.398Z-134a4957-8381-47b4-8ab1-3923d3b4f1df/postgres-stopped.json": "5452f909b24f0569d99a8fbad5735a682722652cbfc4968b7dba96cd3a7a4402",
+    "workflow-artifacts/verification/agile/iteration-02/regression/2026-10-20T13-47-25Z/npm-build.log": "1e2831327d04ad5f78799abd871d480db339f75068b2d006a96fbe270941435e",
+    "workflow-artifacts/verification/agile/iteration-02/regression/2026-10-20T13-47-25Z/npm-design-browser.log": "0ac428bd021e553ca8f3a293eb2c36382eee7049bd465de45b713ec259b09343",
+    "workflow-artifacts/verification/agile/iteration-02/regression/2026-10-20T13-47-25Z/npm-replay-browser.log": "90c44a87581ea5c78f4edec07b0d9801690994ae8cc177ab0289e585b0efa141",
+    "workflow-artifacts/verification/agile/iteration-02/regression/2026-10-20T13-47-25Z/workflow-artifacts/verification/V1/browser.json": "3ee24820c1862f73f01c0ebb114e4dcafb46a360eb646094bdb42ae7076ef1ec",
+    "workflow-artifacts/verification/agile/iteration-02/regression/2026-10-20T13-47-25Z/workflow-artifacts/verification/V2/ui/standalone-browser.json": "40603985393e68fb8bbcd0f81f2cd2181cf3129d10dd5831194e8551d3690090",
+    "docs/ifpmic/delivery/iteration-02/iteration-02-user-a-desktop.png": "369fc8ea0ab914b693243d390eab237a68d8c0aa74026297713a18da1b4d533a",
+    "docs/ifpmic/delivery/iteration-02/iteration-02-user-a-mobile.png": "f51f302d6356acd7610fbacbb9a741d43bf8baafb10affa60d7dc35c1065735c"
+  },
+  "results": {
+    "browser": {
+      "create_and_read": {
+        "passed": 17,
+        "failed": 0
+      },
+      "after_same_data_restart": {
+        "passed": 2,
+        "failed": 0
+      },
+      "unexpected_origins": 0,
+      "route_errors": 0,
+      "page_errors": 0,
+      "unexpected_console_errors": 0
+    },
+    "sql": {
+      "logical_requests": 2,
+      "owners": 2,
+      "jobs": 2,
+      "commands": 2,
+      "pending_outbox": 2,
+      "reserved_workspace_intents": 2,
+      "execution_bindings": 0,
+      "delivery_attempts": 0,
+      "worker_run_scopes": 0,
+      "projection_receipts": 0,
+      "all_rows_in_eight_observed_tables_unchanged": true
+    },
+    "cleanup": {
+      "first_successful_instance_launcher_exit": 0,
+      "its_api_and_postgres_pids_absent": true,
+      "its_api_and_issuer_ports_closed": true,
+      "issuer_request_serving_shutdown_threads_stopped": true,
+      "issuer_sockets_closed": true,
+      "data_retained": true,
+      "restarted_instance_intentionally_available": true
+    },
+    "regression": {
+      "build_exit": 0,
+      "existing_design_browser_passed": 8,
+      "existing_replay_browser_passed": 19,
+      "failed": 0
+    },
+    "preservation": {
+      "all_unchanged": true,
+      "source_review_pins": 26,
+      "protected_ax_hashes": 96,
+      "protected_inventory": 89,
+      "imported_design": 17,
+      "original_uploads": 2,
+      "original32_environment_files": 1777,
+      "actual_browser_sources_match_approved_review": true
+    }
+  },
+  "independent_evidence_checks": [
+    "Compared actual browser transaction records, not just check counts: original upstream202 precedes intentional response loss; retry keeps the exact key/body and returns the same receipt. Changed body409, unauthenticated401, CSRF403 and cross-owner403 are recorded. Invalid probes add no rows.",
+    "Read and compared every captured row from all8 SQL tables before/after restart. Independently recomputed both command payload digests using canonical ASCII JSON of the documented format/payload envelope; verified canonical stored payload, actor/owner/job/create-command/outbox/intent linkage and A browser receipt.",
+    "Both logical requests remain DRAFT revision0/cycle0/empty current steps, commands accepted, outbox pending and intents RESERVED. One belongs to A response-loss/retry and the other to B's deliberate duplicate-submit probe.",
+    "Read stop, issuer and PostgreSQL observations plus before/restarted lifecycle records: the exercised instance exited0 and its resources stopped; restart uses the same retained data. This does not claim the intentionally retained final demo is stopped.",
+    "Verified all26 approved source/context hashes and that both actual browser source manifests match approved code with no before/after changes. Independently rehashed the accepted1777-entry environment baseline, protected96-file/89-entry AX inventory, imported17 design files and original2 uploads; all match.",
+    "Read build output and the structured existing8/19 browser regression results. No failures, console/page errors, external requests or regression browser writes were recorded.",
+    "Viewed desktop/mobile screenshots and checked public copies against raw image hashes. They show actual DRAFT/accepted/empty-step state, explicit synthetic/mock limitations and no cookies, CSRF, credentials, private paths or process identities.",
+    "All17 hash references in public verification match actual files; public browser check lists match raw reports. Reviewed10 current private raw/image artifacts are mode0600 with one owner."
+  ],
+  "attempt_history": {
+    "first_live_attempt": "Failed consent and TERM cleanup attempt remains preserved and unaccepted in runtime-attempts.json; the exact source delta was reviewed before the successful rerun.",
+    "initial_sql_audit": "The first inline audit used the wrong digest recipe. Corrected documented format-envelope digest was independently recomputed from actual rows; product source and stored rows were not changed to satisfy the audit."
+  },
+  "limits": [
+    "Acceptance is this local visible request-intake increment only. Synthetic OIDC and mock eligibility do not accept company SSO/TLS, production identity/profile or operational integration.",
+    "No dispatcher, worker, Temporal, real agent, equipment or publisher execution is accepted. Persistence across stack restart is not AT16 outbox delivery/redelivery proof.",
+    "Full AT21/AT32, B-stage completion, H2/full490, H3-H7 and final workflow acceptance remain pending; original16-stage progress is not increased by this partial delivery.",
+    "Raw SQL/auth/config/log/process evidence remains private; public screenshots contain only the reviewed synthetic display."
+  ],
+  "review_method": "Read-only review and byte/data analysis of existing artifacts; no application import, browser/test rerun, SQL query, service action or network request was performed by this reviewer.",
+  "recommendation": "Deliver the reviewed local demo and commit/push the reviewed increment. Keep final demo ownership explicit; next connect one real execution segment only after its required H2 source/evidence/execution gates."
+}

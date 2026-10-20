@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0b111b" />
+    <meta name="description" content="IFPMIC 로컬 데모 요청 등록과 저장 상태 확인" />
+    <title>IFPMIC · 요청 관제</title>
+    <link rel="stylesheet" href="/style.css" />
+    <script type="module" src="/app.js"></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="/" aria-label="IFPMIC 요청 관제 홈">
+          <span class="brand-mark" aria-hidden="true">IF</span>
+          <span><strong>IFPMIC</strong><small>ENGINEERING CONTROL</small></span>
+        </a>
+        <a class="viewer-link" href="http://127.0.0.1:4173/ifpmic.html">Workflow viewer <span aria-hidden="true">↗</span></a>
+        <div class="account-area">
+          <span class="connection"><i aria-hidden="true"></i><span data-testid="connection-state">연결 확인 중</span></span>
+          <span class="account-name" id="account-name" data-testid="account-name">로그인 필요</span>
+          <button class="button button-quiet button-small" id="logout-button" type="button" data-testid="logout-button" hidden>로그아웃</button>
+        </div>
+      </header>
+
+      <main class="page" id="main-content">
+        <section class="page-heading" aria-labelledby="page-title">
+          <div>
+            <p class="eyebrow">LOCAL DEMO · REQUEST INTAKE</p>
+            <h1 id="page-title">요청 관제</h1>
+            <p class="lede">요청을 등록하고 PostgreSQL에 저장된 접수 상태를 확인합니다.</p>
+          </div>
+          <div class="context-chip" aria-label="데모 환경 정보">
+            <span class="context-icon" aria-hidden="true">⌂</span>
+            <span><strong id="context-project" data-testid="context-project">데모 프로젝트 확인 중</strong><small><span id="context-storage" data-testid="context-storage">저장소 확인 중</span> · <span id="context-identity" data-testid="context-identity">로컬 데모 계정</span></small></span>
+          </div>
+        </section>
+
+        <div class="notice" role="note" data-testid="scope-notice">
+          <span class="notice-icon" aria-hidden="true">i</span>
+          <p><strong>접수와 실행은 별도 단계입니다.</strong> 저장된 요청은 <code>DRAFT</code> · 실행 전 상태로 표시됩니다. 이 데모는 합성 계정과 mock 프로파일을 사용하며 실제 장비나 사내 SSO에 연결되지 않습니다.</p>
+        </div>
+
+        <section class="auth-gate" id="auth-gate" aria-labelledby="auth-title" hidden>
+          <div class="auth-symbol" aria-hidden="true">↗</div>
+          <div class="auth-copy">
+            <p class="eyebrow">SECURE SIGN-IN</p>
+            <h2 id="auth-title">데모 계정으로 로그인하세요</h2>
+            <p>별도 로그인 화면에서 계정을 선택합니다. 인증은 실제 OIDC callback과 API 세션 검증을 거칩니다.</p>
+          </div>
+          <button class="button button-primary" id="login-button" type="button" data-testid="login-button">OIDC 로그인 <span aria-hidden="true">→</span></button>
+        </section>
+
+        <section class="signed-in" id="signed-in" hidden>
+          <div class="section-kicker"><span class="live-dot" aria-hidden="true"></span><span data-testid="demo-mode">세션 확인됨</span><span class="kicker-divider">/</span><span>프로젝트 범위 요청</span></div>
+
+          <div class="main-grid">
+            <section class="panel composer-panel" aria-labelledby="form-title">
+              <div class="panel-heading">
+                <div><p class="eyebrow">NEW REQUEST</p><h2 id="form-title">요청 등록</h2></div>
+                <span class="step-tag"><span>01</span> 접수</span>
+              </div>
+              <p class="panel-intro">요청 내용은 접수 명령에 저장됩니다. 첨부 파일은 이번 데모에서 지원하지 않습니다.</p>
+              <form id="request-form" data-testid="request-form" novalidate>
+                <label class="field" for="field-title">
+                  <span>요청 제목 <b aria-hidden="true">*</b></span>
+                  <input id="field-title" data-testid="field-title" name="title" type="text" maxlength="160" autocomplete="off" placeholder="예: USB-C 전원 경로 보호 검토" required />
+                </label>
+                <label class="field" for="field-request-text">
+                  <span>요청 설명 <b aria-hidden="true">*</b></span>
+                  <textarea id="field-request-text" data-testid="field-request-text" name="request_text" rows="5" maxlength="4000" placeholder="변경 목적과 확인할 동작을 적어 주세요." required></textarea>
+                  <small class="field-hint">요청 내용은 안전한 텍스트로만 표시됩니다.</small>
+                </label>
+                <div class="field-row">
+                  <label class="field" for="field-change-type">
+                    <span>변경 유형 <b aria-hidden="true">*</b></span>
+                    <select id="field-change-type" data-testid="field-change-type" name="change_type" required>
+                      <option value="FEATURE">기능 개선</option>
+                      <option value="NEW_HW">신규 하드웨어</option>
+                      <option value="BUGFIX">오류 수정</option>
+                    </select>
+                  </label>
+                  <label class="field" for="field-base-ref">
+                    <span>기준 브랜치 <b aria-hidden="true">*</b></span>
+                    <input id="field-base-ref" data-testid="field-base-ref" name="base_ref" type="text" maxlength="200" value="refs/heads/main" required />
+                  </label>
+                </div>
+                <div class="fixed-fields" aria-label="고정된 데모 설정">
+                  <div><span class="fixed-icon" aria-hidden="true">⌘</span><span><small>릴리스 방식</small><strong>팀 Git tag</strong></span><span class="fixed-value">team_github_tag</span></div>
+                  <div><span class="fixed-icon" aria-hidden="true">◈</span><span><small>프로파일</small><strong id="profile-version" data-testid="profile-version">확인 중</strong></span><span class="fixed-lock" aria-label="고정 설정">고정</span></div>
+                </div>
+                <div class="form-footer">
+                  <p class="form-footnote"><span aria-hidden="true">↳</span> 제출 후 동일 요청 재전송은 같은 접수 키를 사용합니다.</p>
+                  <button class="button button-primary submit-button" id="submit-request" data-testid="submit-request" type="submit">요청 저장 <span aria-hidden="true">→</span></button>
+                </div>
+              </form>
+              <div class="pending-card" id="pending-card" data-testid="pending-card" hidden>
+                <div class="pending-icon" aria-hidden="true">↻</div>
+                <div class="pending-content"><strong id="pending-title">응답을 확인할 수 없습니다</strong><p id="pending-message">같은 접수 키와 저장된 내용으로 재시도하세요.</p></div>
+                <button class="button button-primary button-small" id="retry-request" type="button" data-testid="retry-request">같은 요청 재시도</button>
+              </div>
+              <div class="rejected-card" id="rejected-card" data-testid="rejected-card" hidden>
+                <p id="rejected-message"></p>
+                <button class="button button-quiet button-small" id="discard-rejected" type="button" data-testid="discard-rejected">거절된 초안 지우기</button>
+              </div>
+            </section>
+
+            <div class="right-column">
+              <section class="panel detail-panel" aria-labelledby="detail-title">
+                <div class="panel-heading detail-heading">
+                  <div><p class="eyebrow">PERSISTED JOB</p><h2 id="detail-title">작업 상세</h2></div>
+                  <button class="icon-button" id="refresh-detail" type="button" aria-label="작업 상세 새로고침" data-testid="refresh-detail">↻</button>
+                </div>
+                <div class="empty-detail" id="empty-detail" data-testid="empty-detail">
+                  <span class="empty-illustration" aria-hidden="true"><i></i><i></i><i></i></span>
+                  <strong>선택된 작업이 없습니다</strong>
+                  <p>요청을 저장하면 API에서 상세 상태를 다시 읽어옵니다.</p>
+                </div>
+                <div class="job-detail" id="job-detail" data-testid="job-detail" hidden>
+                  <div class="job-status-line"><span class="status-pill" data-testid="detail-status">DRAFT</span><span class="status-explainer">요청 저장됨 · 실행 전</span></div>
+                  <div class="job-id-block"><span>JOB ID</span><code id="detail-job-id" data-testid="detail-job-id"></code><button class="copy-button" id="copy-job-id" type="button" data-testid="copy-job-id">복사</button></div>
+                  <dl class="detail-grid">
+                    <div><dt>현재 단계</dt><dd data-testid="detail-current-steps">아직 시작된 단계 없음</dd></div>
+                    <div><dt>대기 사유</dt><dd class="not-provided" data-testid="detail-wait-reason">API에서 제공하지 않음</dd></div>
+                    <div><dt>사이클</dt><dd data-testid="detail-cycle">—</dd></div>
+                    <div><dt>리비전</dt><dd data-testid="detail-revision">—</dd></div>
+                    <div><dt>워크플로 버전</dt><dd data-testid="detail-workflow">—</dd></div>
+                    <div><dt>프로파일</dt><dd data-testid="detail-profile">—</dd></div>
+                  </dl>
+                  <div class="command-receipt" id="command-receipt" data-testid="command-receipt" hidden>
+                    <div><span class="receipt-mark" aria-hidden="true">✓</span><span><small>저장된 접수 명령</small><strong data-testid="command-status">확인 중</strong></span></div>
+                    <code data-testid="command-id"></code>
+                  </div>
+                  <p class="detail-note"><span aria-hidden="true">i</span> 이 화면은 실제 저장된 API DTO만 표시합니다. 실행 단계와 대기 이유는 아직 제공되지 않습니다.</p>
+                </div>
+                <p class="detail-error" id="detail-error" role="status" data-testid="detail-error" hidden></p>
+              </section>
+
+              <section class="panel list-panel" aria-labelledby="list-title">
+                <div class="panel-heading list-heading">
+                  <div><p class="eyebrow">RECENT REQUESTS</p><h2 id="list-title">최근 작업</h2></div>
+                  <button class="button button-quiet button-small" id="refresh-jobs" type="button" data-testid="refresh-jobs">새로고침 <span aria-hidden="true">↻</span></button>
+                </div>
+                <p class="list-caption">로그인한 계정에 허용된 작업만 API가 반환합니다.</p>
+                <div class="job-list" id="job-list" data-testid="job-list" aria-live="polite">
+                  <p class="list-empty">작업 목록을 불러오는 중입니다.</p>
+                </div>
+                <button class="load-more" id="load-more" type="button" data-testid="load-more" hidden>이전 작업 더 보기</button>
+              </section>
+            </div>
+          </div>
+        </section>
+
+        <div class="global-status" id="global-status" role="status" aria-live="polite" data-testid="global-status">세션과 데모 설정을 확인하고 있습니다.</div>
+      </main>
+      <footer class="footer"><span>IFPMIC CONTROL PLANE</span><span>Iteration 02 · 요청 저장 확인</span></footer>
+    </div>
+  </body>
+</html>

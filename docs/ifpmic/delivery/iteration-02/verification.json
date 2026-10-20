@@ -1,0 +1,232 @@
+{
+  "kind": "ifpmic.agile.iteration-02.visible-delivery.v1",
+  "status": "checks_passed",
+  "goal_complete": false,
+  "route": "http://127.0.0.1:8769/",
+  "scope": "Real existing API, OIDC callback/session and PostgreSQL request persistence with synthetic local accounts and fixed mock profile; no workflow execution.",
+  "plan": {
+    "path": "docs/ifpmic/delivery/iteration-02/PLAN.md",
+    "sha256": "79c8c8460338fcdf8e24a22d420c9eb4e5bceeed1557b5848ba2e7e8d9052814"
+  },
+  "plan_review": {
+    "path": "docs/ifpmic/delivery/iteration-02/plan-review.json",
+    "sha256": "c73e582eb69e63dccb6791284dc567f9a725cfda68cc03bb238f4c1b076d0e5e"
+  },
+  "source_review": {
+    "path": "docs/ifpmic/delivery/iteration-02/source-review.json",
+    "sha256": "2c6ca7f1309bc4e6ec5408a5bb32750b0a02772a2fdcbe9d3a5646e4af921b52"
+  },
+  "browser_create_and_read": {
+    "verdict": "pass",
+    "passed": 17,
+    "failed": 0,
+    "checks": [
+      {
+        "name": "unauthenticated API session and job list are rejected with 401",
+        "verdict": "pass"
+      },
+      {
+        "name": "user A signs in through the local OIDC issuer and real API callback",
+        "verdict": "pass",
+        "api_mode": "mock"
+      },
+      {
+        "name": "authenticated write with invalid CSRF is rejected with 403 before creating a job",
+        "verdict": "pass"
+      },
+      {
+        "name": "invalid enum, missing required field, and unknown profile are rejected by the actual API DTO",
+        "verdict": "pass"
+      },
+      {
+        "name": "UI retains the original key and body when an actual post-commit 202 response is lost",
+        "verdict": "pass"
+      },
+      {
+        "name": "same-key/body retry returns the original receipt and the UI shows one saved DRAFT job",
+        "verdict": "pass"
+      },
+      {
+        "name": "reload restores the same job and command receipt from the actual API",
+        "verdict": "pass"
+      },
+      {
+        "name": "owner can read exact job snapshot and command status from the actual API",
+        "verdict": "pass"
+      },
+      {
+        "name": "same key/body returns one original receipt; same key/changed body returns 409 without duplicate job",
+        "verdict": "pass"
+      },
+      {
+        "name": "literal HTML in submitted text is not parsed or executed by the UI",
+        "verdict": "pass"
+      },
+      {
+        "name": "desktop and mobile persisted-job detail render without page overflow",
+        "verdict": "pass"
+      },
+      {
+        "name": "user B callback/session cannot see A detail or command by list or direct URL",
+        "verdict": "pass"
+      },
+      {
+        "name": "account switch does not retain A request input in B composer",
+        "verdict": "pass"
+      },
+      {
+        "name": "same-tick duplicate submit events issue one POST and one receipt",
+        "verdict": "pass"
+      },
+      {
+        "name": "private restart receipt contains identifiers and content hashes only, never session credentials",
+        "verdict": "pass"
+      },
+      {
+        "name": "unavailable sessionStorage prevents a POST and leaves the request unsent",
+        "verdict": "pass"
+      },
+      {
+        "name": "source tree hashes remain unchanged across browser evidence capture",
+        "verdict": "pass",
+        "file_count": 85
+      }
+    ],
+    "unexpected_origins": 0,
+    "page_errors": 0,
+    "console_errors": 0,
+    "source_unchanged": true,
+    "raw_report": {
+      "path": "workflow-artifacts/verification/agile/iteration-02/run-2026-10-20T13-51-56.398Z-134a4957-8381-47b4-8ab1-3923d3b4f1df/browser-private.json",
+      "sha256": "db6d6aa1474b789190a3790a6ec620bcde36c959eca6f7ef52ea615ec6820275"
+    }
+  },
+  "browser_after_same_data_restart": {
+    "verdict": "pass",
+    "passed": 2,
+    "failed": 0,
+    "checks": [
+      {
+        "name": "after externally orchestrated API restart, a new OIDC session reads the same persisted DRAFT job and accepted receipt",
+        "verdict": "pass"
+      },
+      {
+        "name": "source tree hashes remain unchanged across browser evidence capture",
+        "verdict": "pass",
+        "file_count": 85
+      }
+    ],
+    "unexpected_origins": 0,
+    "page_errors": 0,
+    "console_errors": 0,
+    "source_unchanged": true,
+    "raw_report": {
+      "path": "workflow-artifacts/verification/agile/iteration-02/run-2026-10-20T13-53-34.766Z-a725c6a2-bd68-40a0-b33e-6486385b5d01/browser-private.json",
+      "sha256": "8dab4088d4c173a2e61038baa572b2fa8a2989ef9c4a4a4f5d3a8bd2c90d3693"
+    }
+  },
+  "sql": {
+    "before": {
+      "path": "workflow-artifacts/verification/agile/iteration-02/run-2026-10-20T13-51-56.398Z-134a4957-8381-47b4-8ab1-3923d3b4f1df/sql-before-restart.json",
+      "sha256": "9153401d43304ada4221af4dac09969b07678102d3cf14e2841744ef57a25f7c"
+    },
+    "after": {
+      "path": "workflow-artifacts/verification/agile/iteration-02/run-2026-10-20T13-51-56.398Z-134a4957-8381-47b4-8ab1-3923d3b4f1df/sql-after-restart.json",
+      "sha256": "923a940cc742d3d043727b5e047073fb9f396ed6d7d3c6fc980b70b523e212d7"
+    },
+    "all_observed_rows_unchanged": true,
+    "logical_requests": 2,
+    "per_request": {
+      "jobs": 1,
+      "commands": 1,
+      "pending_outbox": 1,
+      "reserved_workspace_intents": 1
+    },
+    "execution_bindings": 0,
+    "delivery_attempts": 0,
+    "worker_run_scopes": 0,
+    "projection_receipts": 0,
+    "payload_and_receipt_match": true
+  },
+  "cleanup": {
+    "owned_launcher_exit_code": 0,
+    "api_and_postgres_pids_absent": true,
+    "ports_closed": [
+      8769,
+      8770
+    ],
+    "issuer_threads_and_sockets_closed": true,
+    "data_preserved": true,
+    "stop_observation": {
+      "path": "workflow-artifacts/verification/agile/iteration-02/run-2026-10-20T13-51-56.398Z-134a4957-8381-47b4-8ab1-3923d3b4f1df/stop-observed.json",
+      "sha256": "f7f92173689864f3bd4436273237854935aca282e8d78d5dcb015e2cb5918785"
+    },
+    "issuer_observation": {
+      "path": "workflow-artifacts/verification/agile/iteration-02/run-2026-10-20T13-51-56.398Z-134a4957-8381-47b4-8ab1-3923d3b4f1df/issuer-stopped.json",
+      "sha256": "8a144ff024285f9d13ef864358fe9f6e92a7d086cf089483869b9aa3ca07a332"
+    },
+    "postgres_observation": {
+      "path": "workflow-artifacts/verification/agile/iteration-02/run-2026-10-20T13-51-56.398Z-134a4957-8381-47b4-8ab1-3923d3b4f1df/postgres-stopped.json",
+      "sha256": "5452f909b24f0569d99a8fbad5735a682722652cbfc4968b7dba96cd3a7a4402"
+    },
+    "final_demo_restarted": true
+  },
+  "preservation": {
+    "protected_ax_hashes": 96,
+    "protected_inventory": 89,
+    "imported_design": 17,
+    "original_uploads": 2,
+    "original32_environment_files": 1777,
+    "all_unchanged": true,
+    "environment_manifest_sha256": "5e487cf2e846c1a8cde337a75892a9b8180ace9c651ddc4148a123e15fd69cb2"
+  },
+  "regression": {
+    "build_exit_code": 0,
+    "design_passed": 8,
+    "replay_passed": 19,
+    "failed": 0,
+    "root": "workflow-artifacts/verification/agile/iteration-02/regression/2026-10-20T13-47-25Z",
+    "evidence": [
+      {
+        "path": "workflow-artifacts/verification/agile/iteration-02/regression/2026-10-20T13-47-25Z/npm-build.log",
+        "sha256": "1e2831327d04ad5f78799abd871d480db339f75068b2d006a96fbe270941435e"
+      },
+      {
+        "path": "workflow-artifacts/verification/agile/iteration-02/regression/2026-10-20T13-47-25Z/npm-design-browser.log",
+        "sha256": "0ac428bd021e553ca8f3a293eb2c36382eee7049bd465de45b713ec259b09343"
+      },
+      {
+        "path": "workflow-artifacts/verification/agile/iteration-02/regression/2026-10-20T13-47-25Z/npm-replay-browser.log",
+        "sha256": "90c44a87581ea5c78f4edec07b0d9801690994ae8cc177ab0289e585b0efa141"
+      },
+      {
+        "path": "workflow-artifacts/verification/agile/iteration-02/regression/2026-10-20T13-47-25Z/workflow-artifacts/verification/V1/browser.json",
+        "sha256": "3ee24820c1862f73f01c0ebb114e4dcafb46a360eb646094bdb42ae7076ef1ec"
+      },
+      {
+        "path": "workflow-artifacts/verification/agile/iteration-02/regression/2026-10-20T13-47-25Z/workflow-artifacts/verification/V2/ui/standalone-browser.json",
+        "sha256": "40603985393e68fb8bbcd0f81f2cd2181cf3129d10dd5831194e8551d3690090"
+      }
+    ]
+  },
+  "failed_attempts": "runtime-attempts.json",
+  "limits": [
+    "Synthetic identity and mock profile only; company SSO/production profile unaccepted.",
+    "Job stays DRAFT, command accepted, current steps empty. API wait reason is unavailable.",
+    "No dispatcher/worker/Temporal/real agent/equipment/publishing started.",
+    "No full AT16/AT21/AT32, H2 full490 or final-goal acceptance.",
+    "API+PG+issuer stack restarted on same data; this is persistence proof, not outbox delivery proof."
+  ],
+  "next_single_flow": "Connect one real execution segment after the required current H2 evidence/source/execution gates.",
+  "screenshots": [
+    {
+      "path": "docs/ifpmic/delivery/iteration-02/iteration-02-user-a-desktop.png",
+      "sha256": "369fc8ea0ab914b693243d390eab237a68d8c0aa74026297713a18da1b4d533a"
+    },
+    {
+      "path": "docs/ifpmic/delivery/iteration-02/iteration-02-user-a-mobile.png",
+      "sha256": "f51f302d6356acd7610fbacbb9a741d43bf8baafb10affa60d7dc35c1065735c"
+    }
+  ],
+  "independent_acceptance_record": "result-review.json"
+}

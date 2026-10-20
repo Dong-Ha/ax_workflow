@@ -6,6 +6,8 @@ IFPMIC workflow 시각화로 확장하는 방향은 [기준 자료와 이관 계
 
 ## IFPMIC 흐름 보기
 
+실제 요청 등록·저장·상세 화면은 [주기02 실행 안내](./docs/ifpmic/delivery/iteration-02/README.md)를 따른다. 로컬 주소는 **http://127.0.0.1:8769/**이며 데모 계정으로 로그인한다. 실제 API/PostgreSQL 저장을 사용하고, 합성 계정/mock 프로파일과 실행 전 상태를 화면에 표시한다. 기존 AX 기록 API는 계속 읽기 전용이다.
+
 B02의 인증·요청 저장·작업 공간은 [독립 검토한 계획](./docs/ifpmic/B02-IDENTITY.md)에 따라 개발 중입니다. 현재 G1 기반은 Python3.12, 고정 Python 의존성, PostgreSQL18.1 migration과 분리된 DB 역할입니다. 실제 로그인·요청 API·작업 공간 reconciler는 후속 단계이며 기존 AX 서버는 계속 읽기 전용입니다.
 
 G2는 B01 스냅샷을 고정 Node subprocess로 검증하고 원본 바이트를 PostgreSQL catalog에 그대로 보관하는 연결 계층입니다. 현재 지원 환경은 Linux CPython3.12이며, 프로세스 시작 취소 때 자식 프로세스를 종료·회수하는 CPython Unix subprocess 동작을 사용합니다. child 실행은 최대10초, 동시4개·대기16개로 제한하며, 종료·회수가 끝나야 슬롯을 반환합니다. profile version의 astral/lone surrogate는 ASCII JSON label로 손실 없이 보존합니다.

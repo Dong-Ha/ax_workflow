@@ -1,0 +1,26 @@
+{
+  "kind": "ifpmic.agile.iteration-02.runtime-attempts.v1",
+  "attempts": [
+    {
+      "id": "first-live-attempt",
+      "status": "failed_preserved",
+      "browser_report": "workflow-artifacts/verification/agile/iteration-02/run-2026-10-20T13-48-13.061Z-134675c3-3ec3-43a6-b36f-035e33ab9983/browser-private.json",
+      "findings": [
+        "Authorize no-referrer response made browser consent POST Origin null; strict issuer Origin validation rejected it.",
+        "Pinned Uvicorn restores and re-raises TERM, which bypassed outer finally under the default handler. Owned PostgreSQL was recovered using pinned pg_ctl after exact PID/start-ticks validation."
+      ],
+      "recovery": {
+        "postgres_stop_exit_code": 0,
+        "postgres_pid_absent": true,
+        "data_preserved": true,
+        "no_job_creation_reached": true
+      },
+      "fixes": [
+        "Authorize HTML uses same-origin Referrer-Policy; strict Origin check unchanged.",
+        "Install TERM-to-Python-unwind handler before owned resource startup; ignore repeat TERM during cleanup; cleanup failure always fails."
+      ],
+      "acceptance": false,
+      "browser_report_sha256": "0206f5b335ffc5ebca2466e6f9b703e17f5b7e2f59a2e58fbb72b5f0e72f2730"
+    }
+  ]
+}

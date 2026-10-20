@@ -1,0 +1,103 @@
+{
+  "kind": "ifpmic.delivery.iteration-02.plan-review.v1",
+  "status": "approve_iteration_plan_for_authoring_subject_to_source_review",
+  "reviewer": {
+    "agent": "/root/h2_worker_crash_tc",
+    "review_type": "independent static plan review before implementation",
+    "scope": "Review the iteration-02 request persistence/detail flow against the original OpenAPI, acceptance cases, backlog and overall plan. This is not source, test, execution or acceptance review."
+  },
+  "reviewed_inputs": {
+    "iteration_plan": {
+      "path": "docs/ifpmic/delivery/iteration-02/PLAN.md",
+      "sha256": "79c8c8460338fcdf8e24a22d420c9eb4e5bceeed1557b5848ba2e7e8d9052814"
+    },
+    "original_plan": {
+      "path": "docs/ifpmic/PLAN.md",
+      "sha256": "dc0b2547866c42bd262adcd29c0c5b7939267462a03123bfdd7f0a64df1e665a"
+    },
+    "agile_delivery_plan": {
+      "path": "docs/ifpmic/AGILE-DELIVERY.md",
+      "sha256": "358d3ce5ad836b3a7ac2a36cb9cfcda99c7d129d5c7c67f10ea5bff651ed0b59"
+    },
+    "openapi": {
+      "path": "docs/ifpmic/design-v1/specs/openapi.v1.json",
+      "sha256": "2ed780cfa06349b18f5025937e050fd98a5cefa34b552eb836cfaccad416dd7a"
+    },
+    "acceptance_cases": {
+      "path": "docs/ifpmic/design-v1/specs/acceptance-cases.json",
+      "sha256": "f7163553edc9e8e753965cb8748ab04aac8f68c1a453f567f62284a01b38b0d5"
+    },
+    "implementation_backlog": {
+      "path": "docs/ifpmic/design-v1/specs/implementation-backlog.json",
+      "sha256": "115e48568e0464b8e67ef17274dba97b3046a8de902e1cf426d9b70e1528e5d0"
+    },
+    "related_design_contracts": {
+      "workflow.v1.json": "bab40a7abb3929896add1ef2cd074893dd2a7de14d200a5d6cea4b7a77eb0e89",
+      "state-contract.json": "0248e130017043539319c56af854f5388a95d33e7e687902a3438fdff414244a",
+      "requirements.json": "6e1dc87cdbcaa66ed690ffd13d2d70242dff43410c9f822447bd520719ce249b"
+    }
+  },
+  "decision": {
+    "result": "The iteration is a bounded real-request persistence flow. It follows the contracted create/list/detail/command endpoints, uses the real OIDC callback and API authorization path with a clearly synthetic local issuer, and keeps dispatcher/worker/Temporal/device/publisher execution out of scope. The corrected AT mapping is accurate: AT-21 is a related authorization slice only; the API restart probe is a narrow persistence check and does not accept AT-16. All original workflow and acceptance scope remains pending where not separately evidenced.",
+    "implementation_authoring_allowed": true,
+    "test_or_service_execution_authorized_by_this_review": false,
+    "iteration_or_final_acceptance": false
+  },
+  "contract_and_acceptance_mapping": {
+    "openapi_operations": [
+      "POST /api/v1/jobs returns a 202 CommandReceipt and requires Idempotency-Key and X-CSRF-Token.",
+      "GET /api/v1/jobs returns the caller-scoped list.",
+      "GET /api/v1/jobs/{job_id} returns the persisted snapshot.",
+      "GET /api/v1/commands/{command_id} returns command acceptance/application status."
+    ],
+    "response_semantics": "202 and accepted are durable command acceptance, not execution completion. The plan keeps the UI at DRAFT/current_step_ids=[] with no fabricated step progress or wait reason while dispatcher, worker, Temporal and device execution are stopped.",
+    "AT_21": "AT-21 is user isolation across jobs, logs, images and devices. This iteration tests the relevant list/detail/command authorization surface, invalid session/CSRF and A/B ownership; it explicitly does not claim full AT-21 completion or test unrelated image/device surfaces.",
+    "AT_16": "AT-16 requires command acceptance followed by server stop before outbox delivery, restart, redelivery by command_id and duplicate suppression. This iteration's API-only restart/re-read persistence probe does not exercise outbox delivery and is explicitly deferred; full AT-16 remains a mandatory later gate.",
+    "backlog_mapping": "B01/B02 and G3/G4 are relevant to request validation, user-scoped persistence and API authorization. They are not marked complete by this plan review.",
+    "original_scope": "B03-H2, all 25 H2 obligations/490 candidate IDs, H3-H7, all remaining AT cases including AT-16/AT-21/AT-32, and final workflow acceptance remain in scope."
+  },
+  "eight_verification_fields": {
+    "purpose": "Register one user request and display its persisted receipt/job detail.",
+    "target": "The current detailed plan and actual DTO/API boundaries; future implementation must bind concrete requirement, AT and test IDs before execution.",
+    "method": "Real browser/API/PostgreSQL path; OIDC authorization-code flow; normal, error, idempotency, ownership, persistence and relevant UI regressions.",
+    "agent": "Code-dev implements, TC authors/verifies checks, and an independent reviewer inspects source and evidence; human/agent/product roles stay unchanged.",
+    "pass_criteria": "One persisted job/command/outbox/intent; stable receipt on same key/body; changed body conflict; A/B reads isolated; actual callback/session/CSRF enforced; DRAFT accepted state remains distinct from execution.",
+    "expected": "After submit and reload/API restart, show the same saved job and command receipt with explicit execution-not-started state.",
+    "evidence": "Synthetic-account display, normalized browser outcome and screenshots/hashes public; raw SQL/HTTP/log/config/credentials private.",
+    "recovery": "Preserve failed request/evidence, correct the boundary and rerun affected normal/error/ownership regressions without deleting or resetting the original request."
+  },
+  "security_and_isolation_review": {
+    "local_oidc_vs_company_sso": "The issuer and two accounts are synthetic. The plan requires authorization code plus PKCE/nonce/signature/JWKS and the actual API callback/session/CSRF path; this is not company SSO or production identity acceptance.",
+    "no_session_mint_or_auth_bypass": "Plan explicitly forbids direct session creation and auth middleware bypass. I02-LIVE checks unauthenticated 401, bad-CSRF 403 and cross-user list/detail/command denial. Before any execution, I02-SOURCE must independently inspect that the login cookie, callback verifier, role identity and runtime authorization are not bypassed by demo settings/routes.",
+    "launcher_and_api_boundary": "All new routes are confined to `experiments/ifpmic-live/` launcher/adapter; existing `services/ifpmic_api` factory/routes and protected AX UI remain unchanged. New demo routes cannot alter DTOs, authorization, writes or directly insert jobs.",
+    "privileged_runtime": "The API uses the non-owner runtime account and real SQL functions; bootstrap is limited to test-local project/account membership and fixed mock profile/catalog/eligibility. Plan requires SCRAM service connections and disables PostgreSQL TCP.",
+    "environment_and_privacy": "Loopback-only, isolated gitignored 0700 data, pinned local PostgreSQL/Python environment, no installation/download/company connection; secrets, sessions and raw SQL/HTTP/log evidence remain private."
+  },
+  "scope_and_gate_checks": {
+    "8_verification_fields_present": true,
+    "normal_error_boundary_and_regression_cases_present": true,
+    "iteration_one_and_original_ax_regressions_retained": true,
+    "no_protected_ax_or_existing_ifpmic_api_source_change_planned": true,
+    "no_worker_temporal_device_or_publisher_run_planned": true,
+    "no_synthetic_sso_or_profile_claimed_as_company_or_real": true,
+    "pending_h2_b03_h3_h7_at32_and_final_acceptance_preserved": true,
+    "source_independent_review_precedes_execution": true,
+    "actual_error_codes_and_sanitized_ui_only": true,
+    "idempotent_replay_keeps_same_key_and_body_until_receipt_or_clear_rejection": true
+  },
+  "findings": [],
+  "review_limit": {
+    "methods": [
+      "Read-only iteration Markdown review",
+      "Read-only JSON inspection of OpenAPI, acceptance cases and backlog",
+      "Static SHA-256 checks of reviewed files"
+    ],
+    "not_performed": [
+      "Source implementation review",
+      "Tests/browser execution or collection",
+      "API/server/database/SQL/network execution",
+      "Session or authorization behavior testing",
+      "Iteration result or final acceptance"
+    ]
+  }
+}
