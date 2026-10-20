@@ -471,8 +471,7 @@ def test_h2_workspace_stale_generation_claim_is_fenced(
         assert _workspace_row(case["harness"], case["job_id"])[0:2] == ("READY", 2)
         _no_runs(case)
         _record_workspace_observation(case, "after-stale-generation-quarantine",
-                                      details={"attempts": final["attempts"],
-                                               "run_id": run_id})
+                                      details={"attempts": final["attempts"]})
         expected_codes[process.pid] = 3
         normal._write_private(case["root"] / "workspace-generation-fenced.json",
             normal._canonical({"claimed_generation": 1, "current_generation": 2,

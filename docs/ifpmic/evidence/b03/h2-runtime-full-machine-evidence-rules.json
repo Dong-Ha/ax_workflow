@@ -10847,7 +10847,7 @@
         {
           "line": 394,
           "path": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py",
-          "sha256": "682eb21235786607802e4f108331afa7050d54d94ddd4d92d087a278e3c76a95",
+          "sha256": "ad48c0a6dd84d08e2839a9ba5a4b3d4f8b4cad82df99e0a090ae5d4387eb2f2f",
           "symbol": "test_h2_workspace_invalid_ready_fails_closed"
         },
         {
@@ -10916,7 +10916,7 @@
         {
           "line": 394,
           "path": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py",
-          "sha256": "682eb21235786607802e4f108331afa7050d54d94ddd4d92d087a278e3c76a95",
+          "sha256": "ad48c0a6dd84d08e2839a9ba5a4b3d4f8b4cad82df99e0a090ae5d4387eb2f2f",
           "symbol": "test_h2_workspace_invalid_ready_fails_closed"
         },
         {
@@ -10992,7 +10992,7 @@
         {
           "line": 394,
           "path": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py",
-          "sha256": "682eb21235786607802e4f108331afa7050d54d94ddd4d92d087a278e3c76a95",
+          "sha256": "ad48c0a6dd84d08e2839a9ba5a4b3d4f8b4cad82df99e0a090ae5d4387eb2f2f",
           "symbol": "test_h2_workspace_invalid_ready_fails_closed"
         },
         {
@@ -11068,7 +11068,7 @@
         {
           "line": 394,
           "path": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py",
-          "sha256": "682eb21235786607802e4f108331afa7050d54d94ddd4d92d087a278e3c76a95",
+          "sha256": "ad48c0a6dd84d08e2839a9ba5a4b3d4f8b4cad82df99e0a090ae5d4387eb2f2f",
           "symbol": "test_h2_workspace_invalid_ready_fails_closed"
         },
         {
@@ -11142,9 +11142,9 @@
       },
       "source_locations": [
         {
-          "line": 487,
+          "line": 486,
           "path": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py",
-          "sha256": "682eb21235786607802e4f108331afa7050d54d94ddd4d92d087a278e3c76a95",
+          "sha256": "ad48c0a6dd84d08e2839a9ba5a4b3d4f8b4cad82df99e0a090ae5d4387eb2f2f",
           "symbol": "test_h2_workspace_nonready_blocks_admitted_worker"
         },
         {
@@ -11159,13 +11159,13 @@
         },
         {
           "artifact": "workspace-worker-history.pbseq",
-          "line": 528,
+          "line": 527,
           "path": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py",
           "symbol": "source artifact write/read literal"
         },
         {
           "artifact": "workspace-worker-wait.json",
-          "line": 538,
+          "line": 537,
           "path": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py",
           "symbol": "source artifact write/read literal"
         },
@@ -11224,9 +11224,9 @@
       },
       "source_locations": [
         {
-          "line": 487,
+          "line": 486,
           "path": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py",
-          "sha256": "682eb21235786607802e4f108331afa7050d54d94ddd4d92d087a278e3c76a95",
+          "sha256": "ad48c0a6dd84d08e2839a9ba5a4b3d4f8b4cad82df99e0a090ae5d4387eb2f2f",
           "symbol": "test_h2_workspace_nonready_blocks_admitted_worker"
         },
         {
@@ -11241,13 +11241,13 @@
         },
         {
           "artifact": "workspace-worker-history.pbseq",
-          "line": 528,
+          "line": 527,
           "path": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py",
           "symbol": "source artifact write/read literal"
         },
         {
           "artifact": "workspace-worker-wait.json",
-          "line": 538,
+          "line": 537,
           "path": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py",
           "symbol": "source artifact write/read literal"
         },
@@ -11306,9 +11306,9 @@
       },
       "source_locations": [
         {
-          "line": 487,
+          "line": 486,
           "path": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py",
-          "sha256": "682eb21235786607802e4f108331afa7050d54d94ddd4d92d087a278e3c76a95",
+          "sha256": "ad48c0a6dd84d08e2839a9ba5a4b3d4f8b4cad82df99e0a090ae5d4387eb2f2f",
           "symbol": "test_h2_workspace_nonready_blocks_admitted_worker"
         },
         {
@@ -11323,13 +11323,13 @@
         },
         {
           "artifact": "workspace-worker-history.pbseq",
-          "line": 528,
+          "line": 527,
           "path": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py",
           "symbol": "source artifact write/read literal"
         },
         {
           "artifact": "workspace-worker-wait.json",
-          "line": 538,
+          "line": 537,
           "path": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py",
           "symbol": "source artifact write/read literal"
         },
@@ -11391,7 +11391,7 @@
         {
           "line": 361,
           "path": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py",
-          "sha256": "682eb21235786607802e4f108331afa7050d54d94ddd4d92d087a278e3c76a95",
+          "sha256": "ad48c0a6dd84d08e2839a9ba5a4b3d4f8b4cad82df99e0a090ae5d4387eb2f2f",
           "symbol": "test_h2_workspace_nonready_blocks_dispatcher_before_start"
         },
         {
@@ -11475,7 +11475,7 @@
         {
           "line": 361,
           "path": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py",
-          "sha256": "682eb21235786607802e4f108331afa7050d54d94ddd4d92d087a278e3c76a95",
+          "sha256": "ad48c0a6dd84d08e2839a9ba5a4b3d4f8b4cad82df99e0a090ae5d4387eb2f2f",
           "symbol": "test_h2_workspace_nonready_blocks_dispatcher_before_start"
         },
         {
@@ -11559,7 +11559,7 @@
         {
           "line": 361,
           "path": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py",
-          "sha256": "682eb21235786607802e4f108331afa7050d54d94ddd4d92d087a278e3c76a95",
+          "sha256": "ad48c0a6dd84d08e2839a9ba5a4b3d4f8b4cad82df99e0a090ae5d4387eb2f2f",
           "symbol": "test_h2_workspace_nonready_blocks_dispatcher_before_start"
         },
         {
@@ -11636,7 +11636,7 @@
         {
           "line": 427,
           "path": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py",
-          "sha256": "682eb21235786607802e4f108331afa7050d54d94ddd4d92d087a278e3c76a95",
+          "sha256": "ad48c0a6dd84d08e2839a9ba5a4b3d4f8b4cad82df99e0a090ae5d4387eb2f2f",
           "symbol": "test_h2_workspace_stale_generation_claim_is_fenced"
         },
         {
@@ -11651,7 +11651,7 @@
         },
         {
           "artifact": "workspace-generation-fenced.json",
-          "line": 477,
+          "line": 476,
           "path": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py",
           "symbol": "source artifact write/read literal"
         },
@@ -12187,7 +12187,7 @@
     "tests/ifpmic_api/test_h2_started_deployment_boundaries.py": "034ae6eb4399d8e4b906ffc27401d2b1d4d3799e44159b7a711d6e174c25bbdf",
     "tests/ifpmic_api/test_h2_transport_boundaries.py": "059b7f61e6da19f9177bb0ab833dd2ebbf0409d88bfdd9ebf914166688525ad2",
     "tests/ifpmic_api/test_h2_worker_api_crashes.py": "b17b0b46b7e17a8fe9cf17b02b760eefa54c21565479805dd5d2a5c832b98630",
-    "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py": "682eb21235786607802e4f108331afa7050d54d94ddd4d92d087a278e3c76a95",
+    "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py": "ad48c0a6dd84d08e2839a9ba5a4b3d4f8b4cad82df99e0a090ae5d4387eb2f2f",
     "tests/ifpmic_api/test_workflow_schema.py": "b76ebd44dc6e98323501fea1c03e3f5c1838484b3f7b359693a2e5ef52159224",
     "tests/ifpmic_api/workflow_schema_fixture.py": "dd1eba1754a8985dd704f0ed63271cc73beca8b03c72aaa2f14acdd41e5e3681",
     "tests/ifpmic_api/workspace_fixture.py": "66b0d11faaa343542fe27e1254e0ed28a968d73518a7a1ac2aab106e4ef126b6",

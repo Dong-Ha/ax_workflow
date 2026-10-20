@@ -1,0 +1,46 @@
+{
+  "kind": "ifpmic.b03.h2.workspace-stale-observation-source-review.v2",
+  "review_date": "2026-10-21",
+  "reviewer": "/root/h2_evidence_amendment_review",
+  "decision": "approve_exact_single_field_repair_and_bounded_source_repin_only",
+  "plan_review": {
+    "path": "docs/ifpmic/evidence/b03/h2-workspace-stale-observation-repair-plan-review-v2.json",
+    "sha256": "fc08714bed48a982ca635427244644e367d1d7a1bd71bd9d84691a570273cee4"
+  },
+  "source_check": {
+    "path": "docs/ifpmic/evidence/b03/h2-workspace-stale-observation-source-check-v2.json",
+    "sha256": "97152c822ff9a5799d83165c95de1f77003a58264908b3bff9f134f7aca788f1"
+  },
+  "source": {
+    "path": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py",
+    "before_commit": "16e2dc3",
+    "before_sha256": "682eb21235786607802e4f108331afa7050d54d94ddd4d92d087a278e3c76a95",
+    "after_sha256": "ad48c0a6dd84d08e2839a9ba5a4b3d4f8b4cad82df99e0a090ae5d4387eb2f2f"
+  },
+  "input_machine": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules.json",
+    "sha256": "536c59f441312abb3e1b57a60b77e919f470032d610e6957ae05ab467d0a0e3c"
+  },
+  "findings": [],
+  "evidence": {
+    "independent_ast_check": "Read the original file from Git16e2dc3 and parsed both complete files with stdlib AST. Removing exactly the run_id:run_id dictionary entry from the after-stale-generation-quarantine observation in the original produces an AST identical to the current entire file, excluding source-position attributes.",
+    "assertions": "All58 assertions and every other function/call/value remain unchanged. Actual attempts, observation phase, _no_runs query/assertion, final workspace-generation-fenced.json writer, generation/token/tree/lease/quarantine checks and cleanup are preserved.",
+    "machine_scope": "The workspace file is the sole stale pin in the input machine source_pins. All11 workspace rows retain their unresolved arrays, totaling37 original source annotations; matching row-local source SHA values still equal the reviewed original hash.",
+    "line_shift": "The two-line details dictionary becomes one line. Only row-local source locations for this exact file with original line>475 need decrement by1; for example the following admitted-worker definition moves487 to486."
+  },
+  "authorization": {
+    "retain_exact_reviewed_source_repair": true,
+    "repin_only_this_source_in_machine_source_pins_and_matching_11_workspace_row_source_locations": true,
+    "decrement_only_matching_workspace_source_location_lines_greater_than_475_by_one": true,
+    "clear_workspace_unresolved_items_or_change_other_row_metadata": false,
+    "change_other_sources_tests_inventory_assertions_or_budgets": false,
+    "imports_collection_tests_sql_sdk_services_network_execution": false,
+    "whole_source_mapping_contract_h2_iteration_or_goal_acceptance": false
+  },
+  "risks_and_remaining_uncertainty": [
+    "This source repair removes a deterministic NameError in evidence construction; it is not evidence that the workspace test or its SQL/Temporal/cleanup oracles passed.",
+    "Preserve historical source approvals and renew the complete versioned source closure, ledger/contract and paired pre-gates before actual fresh490. The prior119 synthetic-unit proof does not execute this workspace test."
+  ],
+  "recommendation": "Apply only the exact hash replacement and mechanical row-local line adjustments authorized here; retain all unresolved annotations and runtime gates.",
+  "review_method": "Read-only Git/source/AST/JSON/SHA checks; no repository imports, tests, collection, SQL, SDK, services or network."
+}

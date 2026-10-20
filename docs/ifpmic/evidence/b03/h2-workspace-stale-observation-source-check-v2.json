@@ -1,0 +1,28 @@
+{
+  "h2_accepted": false,
+  "independent_plan_review": {
+    "path": "docs/ifpmic/evidence/b03/h2-workspace-stale-observation-repair-plan-review-v2.json",
+    "sha256": "fc08714bed48a982ca635427244644e367d1d7a1bd71bd9d84691a570273cee4"
+  },
+  "iteration03_complete": false,
+  "kind": "ifpmic.b03.h2.workspace-stale-observation-source-check.v2",
+  "next_required": "Independent exact-source review, then repin actual source in new candidate closure. Fresh490 and actual raw/SQL/query/cleanup/JUnit still mandatory.",
+  "plan": {
+    "path": "docs/ifpmic/evidence/b03/h2-workspace-stale-observation-repair-plan-v2.json",
+    "sha256": "a1f4860c2b443aa1234b9119ea27bcac20ee2d7189fe53abc5a822064acf5f96"
+  },
+  "runtime_executed": false,
+  "source": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py",
+  "source_after_sha256": "ad48c0a6dd84d08e2839a9ba5a4b3d4f8b4cad82df99e0a090ae5d4387eb2f2f",
+  "source_before": {
+    "commit": "16e2dc3",
+    "sha256": "682eb21235786607802e4f108331afa7050d54d94ddd4d92d087a278e3c76a95"
+  },
+  "static_checks": {
+    "all_assertions_and_other_functions_preserved": true,
+    "no_new_test_oracles_or_budget_changes": true,
+    "removed_field_count": 1,
+    "whole_file_AST_equal_after_removing_one_named_Dict_field": true
+  },
+  "status": "source_repair_pending_exact_review_and_runtime"
+}

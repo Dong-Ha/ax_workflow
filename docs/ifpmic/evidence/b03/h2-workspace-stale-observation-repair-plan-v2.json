@@ -1,0 +1,52 @@
+{
+  "defect": {
+    "line": 475,
+    "problem": "The after-stale-generation-quarantine observation evaluates undefined run_id; this SQL dispatcher rejection branch intentionally has no admitted run. NameError prevents writing workspace-generation-fenced.json even after successful fencing assertions.",
+    "proposed_minimal_change": "Remove only the undefined run_id field from details in this branch. Preserve raw attempts, actual backend no-runs assertion, all SQL/workspace/lease oracles, and whole-case budgets. Do not replace with invented run ID.",
+    "sha256": "682eb21235786607802e4f108331afa7050d54d94ddd4d92d087a278e3c76a95",
+    "source": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py",
+    "symbol": "test_h2_workspace_stale_generation_claim_is_fenced"
+  },
+  "execution_authorization": false,
+  "kind": "ifpmic.b03.h2.workspace-stale-observation-repair-plan.v2",
+  "requirement_links": [
+    "RAW-MAPPING",
+    "RAW-RUNNER",
+    "RAW-LIVE",
+    "docs/ifpmic/delivery/iteration-03/PLAN.md"
+  ],
+  "status": "pending_independent_plan_review_no_execution",
+  "verification": {
+    "evidence": [
+      "Before/after source SHA and AST diff",
+      "Independent plan and exact source reviews",
+      "New versioned machine/ledger/contract source bindings",
+      "Private fresh490 JUnit/raw SQL/query/workspace/process records and sanitized result"
+    ],
+    "expected_result": "Actual stale-generation case writes its filesystem observation and final raw JSON after proving no backend runs and quarantine. Until fresh execution this remains source-only repair.",
+    "failure_recovery": "Preserve failed attempt and actual process ownership; return to source/rule stage, independently review corrected source and closure, renew exact pre-gates, rerun full490 including affected workspace cases. Never bypass missing raw files or relabel source checks as execution.",
+    "method": {
+      "boundary": "Existing live lease/generation1->2/token unchanged/quarantine assertions remain unchanged; no run should be admitted.",
+      "exception": "Existing marker-forged/missing/wrong-token/symlink and nonready cases remain untouched and execute under full490.",
+      "normal": "Static comparison preserves branch assertions, actual _no_runs invocation, observation phase and attempts, and final raw result writer. After exact whole-source gates, actual stale-generation case must pass in fresh490.",
+      "regression": "Compare entire file AST except single removed Dict key/value; original490 inventory unchanged. Run mandatory fresh490 only after final source/paired pre-gates. No product UI/browser change; no standalone device/API scope added."
+    },
+    "pass_criteria": [
+      "Independent plan approval before edit",
+      "Exactly one undefined Dict field removed, no other source semantic changes",
+      "All retained file/source pins updated in new candidate closure without overwriting historical approvals",
+      "Actual fresh490/JUnit/raw evidence and independent result acceptance required before any runtime/H2 completion"
+    ],
+    "purpose": "Ensure stale-generation quarantine can retain actual observation and reach its final raw result without weakening fencing checks.",
+    "responsible_agents": {
+      "independent_review": "/root/h2_evidence_amendment_review",
+      "integration": "Code-dev /root",
+      "test_contract": "TC /root/h2_full_runner_author"
+    },
+    "target": [
+      "Single stale-generation test function AST",
+      "Other10 workspace literal cases and transitive cleanup producers",
+      "Full490 source closure/case inventory and original case budgets"
+    ]
+  }
+}

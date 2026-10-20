@@ -1,0 +1,36 @@
+{
+  "kind": "ifpmic.b03.h2.workspace-stale-observation-repair-plan-review.v2",
+  "review_date": "2026-10-21",
+  "reviewer": "/root/h2_evidence_amendment_review",
+  "decision": "approve_single_field_repair_authoring_only",
+  "plan": {
+    "path": "docs/ifpmic/evidence/b03/h2-workspace-stale-observation-repair-plan-v2.json",
+    "sha256": "a1f4860c2b443aa1234b9119ea27bcac20ee2d7189fe53abc5a822064acf5f96"
+  },
+  "source_before": {
+    "path": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py",
+    "sha256": "682eb21235786607802e4f108331afa7050d54d94ddd4d92d087a278e3c76a95",
+    "line": 475,
+    "symbol": "test_h2_workspace_stale_generation_claim_is_fenced"
+  },
+  "findings": [],
+  "evidence": {
+    "actual_defect": "The stale-generation function has no run_id binding. Its details dictionary evaluates run_id after the actual _no_runs assertion, causing NameError before observation persistence, expected exit registration and the final workspace-generation-fenced.json writer. The other run_id bindings belong to distinct admitted-worker functions.",
+    "minimal_scope": "Remove only the run_id key/value from this details dictionary. Preserve phase, actual attempts, generation1-to2 checks, unchanged token/tree, live lease, process exit3, quarantine/error code and actual backend no-runs observation. No substitute run ID is warranted.",
+    "verification_fields": "All8 verification fields are present: purpose, target, method, expected_result, pass_criteria, evidence, responsible_agents and failure_recovery.",
+    "coverage": "Normal retention of the repaired observation/final file, exception marker/nonready cases, generation/lease boundary and regression via a one-dictionary-field AST delta plus mandatory fresh490 are explicitly covered. Other10 workspace literal cases and transitive cleanup remain in scope for full execution.",
+    "omission_rationale": "The repair changes only test evidence serialization. Product/API/UI/browser/device behavior is untouched, so no new standalone product test or service execution is needed to author it; actual workspace outcomes remain contingent on exact full-source gates and fresh490."
+  },
+  "authorization": {
+    "author_only_the_single_removed_undefined_dict_field": true,
+    "change_assertions_inventory_budgets_other_sources_or_runtime_gates": false,
+    "imports_collection_tests_sql_sdk_services_network_execution": false,
+    "exact_source_or_full_mapping_contract_h2_iteration_goal_acceptance": false
+  },
+  "risks_and_remaining_uncertainty": [
+    "An exact before/after source review must verify the entire file AST differs only by removal of this one dictionary key/value before new candidate source pins are accepted.",
+    "Static repair does not prove quarantine, backend absence, cleanup or file production. Preserve historical reviews and renew the complete source closure, versioned ledger/contract and paired pre-gates before mandatory fresh490 execution."
+  ],
+  "recommendation": "Implement the single-field removal, retain before/after hashes and AST delta, then obtain separate exact-source review. No execution is authorized by this plan review.",
+  "review_method": "Read-only plan/source/hash comparison; no repository imports, tests, collection, SQL, SDK, services or network."
+}

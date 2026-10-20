@@ -3,7 +3,7 @@
   "status": "partial_source_mapping_only_runtime_blocked",
   "machine": {
     "path": "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules.json",
-    "sha256": "536c59f441312abb3e1b57a60b77e919f470032d610e6957ae05ab467d0a0e3c"
+    "sha256": "c3142155333886eb7514c7361e437a15964dd13d2cc24893726302457ab3728e"
   },
   "cases": 87,
   "artifacts": 505,
@@ -36,5 +36,17 @@
   "latest_integration": {
     "path": "docs/ifpmic/evidence/b03/h2-machine-resolution-integration-v2.json",
     "sha256": "7d3a72c438df585e11adffe080e084b1d7d3be18f222a51a93df9a2b388b87b4"
+  },
+  "latest_source_repair": {
+    "source": "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py",
+    "sha256": "ad48c0a6dd84d08e2839a9ba5a4b3d4f8b4cad82df99e0a090ae5d4387eb2f2f",
+    "independent_review": {
+      "path": "docs/ifpmic/evidence/b03/h2-workspace-stale-observation-source-review-v2.json",
+      "sha256": "cbc2dfa4cab79c06b2bf2969d34b6887204ed6c17e7c0847aa48b6080273639f"
+    },
+    "preserved_input_commit": "570ce0f",
+    "input_machine_sha256": "536c59f441312abb3e1b57a60b77e919f470032d610e6957ae05ab467d0a0e3c",
+    "only11_row_local_pins_and_shifted_lines_changed": true,
+    "actual_workspace_test_executed": false
   }
 }
