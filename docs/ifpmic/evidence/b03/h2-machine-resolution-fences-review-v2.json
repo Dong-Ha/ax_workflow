@@ -1,0 +1,77 @@
+{
+  "kind": "ifpmic.b03.h2.machine-fence-source-resolution-review.v2",
+  "review_date": "2026-10-21",
+  "reviewer": "/root/h2_evidence_amendment_review",
+  "decision": "approve_only_four_retained_rows_six_source_mapping_resolutions",
+  "addendum": {
+    "path": "docs/ifpmic/evidence/b03/h2-machine-resolution-fences-v2.json",
+    "sha256": "e3071de38fef8f14d8182a7a606037eba5bf282bdab40d3a70ce0f331992804d"
+  },
+  "input_machine": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules.json",
+    "sha256": "1ec018486a118cbe2474751fcb06b70c2923d8d0b04b53705385823ec5ba3f88",
+    "preserved_commit": "a303cc65480615946d9439d48e6127e7870a0a38",
+    "preserved_commit_blob_sha256_verified": true,
+    "tc_verdict": "request_changes_no_execution"
+  },
+  "findings": [],
+  "approved_cases": [
+    {
+      "node_id": "tests/ifpmic_api/test_workflow_schema.py::test_h2_real_create_activation_receipt_replay_and_run_fences",
+      "case_id": "real_create_activation_receipt_replay_and_run_fences",
+      "resolved_original_statements": [
+        "JSON top-level keys not fully source-verified for retained-fences/ed0848adbdf80946dcc316ad389865262bba4be7deb1d5d340e3143b014d4f08.json"
+      ],
+      "evidence": "Actual producer emits14 evidence fields. Dedicated schema requires them, all24 function_results observations (18 SQL function return entries plus6 other observations), full DTO/error shapes and raw columns from all8 JSONB tables. Eight literal boundary calls emit the declared sql.fence.job_rows operation; recorder min/max8 is source-backed."
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_workflow_schema.py::test_h2_role_registry_and_function_acl_match_static_contract",
+      "case_id": "role_registry_and_function_acl",
+      "resolved_original_statements": [
+        "JSON top-level keys not fully source-verified for retained-fences/291c474be1300da2a2e1062b421b824d9eb73a8539e5e6c011540a5024649748.json"
+      ],
+      "evidence": "Actual producer emits6 evidence fields. Schema requires raw ACL/config/role/function/principal observations and session/read/denial results with source-matching widths, counts and nullable metadata."
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_workflow_schema.py::test_h2_four_role_oid_recreation_is_drift_and_does_not_rebind",
+      "case_id": "four_role_oid_recreation",
+      "resolved_original_statements": [
+        "JSON top-level keys not fully source-verified for retained-fences/5731d311492332cefc00ef2f08a3675ad1e4468d415f6cf3033259edb0d2244c.json",
+        "Raw source gap: no Temporal client/server in test; none should be invented."
+      ],
+      "evidence": "Actual producer emits8 fields and schema validates migration/config/OID/privilege records, including legitimate empty principal rows. The module scope and literal fixture/test path are SQL/auth-only, so Temporal is explicitly inapplicable rather than missing proof."
+    },
+    {
+      "node_id": "tests/ifpmic_api/test_workflow_schema.py::test_h2_service_roles_use_scram_without_trust_fallthrough",
+      "case_id": "service_role_scram_hba",
+      "resolved_original_statements": [
+        "JSON top-level keys not fully source-verified for retained-fences/b97ed7abe03f746e7c565fbcef5ae4ba8c3aa1a2e3fdd283449f12f76380a8b0.json",
+        "Raw source gap: failure exception/sqlstate may be null for connection-level OperationalError; HBA rows and failure exception type remain raw actual evidence."
+      ],
+      "evidence": "Actual producer emits3 fields and3 literal authentication-rejection records. It retains exception type/message/expected reason and getattr(sqlstate,None); schema requires those raw fields while allowing null SQLSTATE and retaining4 actual HBA rows. No absent value is fabricated."
+    }
+  ],
+  "supporting_source_pins": {
+    "tests/ifpmic_api/test_workflow_schema.py": "b76ebd44dc6e98323501fea1c03e3f5c1838484b3f7b359693a2e5ef52159224",
+    "tests/ifpmic_api/h2_snapshot_evidence.py": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c",
+    "scripts/ifpmic_h2_fences.py": "53836724368ab3dac9e7ccaeb6e603a3a2124926e73db452448bfd608d746a9f",
+    "scripts/ifpmic_h2_artifacts.py": "712d5800835cd8f5e8f3ac513e2dd44b8f0fb2d035e83775ff989f4f24940b47",
+    "scripts/ifpmic_h2_raw_evidence.py": "7b02c3b6a5713d6abe0e589d75835f5f6519e2aa5daee690e811497f20b7b4fe",
+    "tests/ifpmic_evidence/test_retained_fences.py": "d23b1fe244071654b1c23bfccd84499eff5407ad243a806686aee4e81916d54f"
+  },
+  "authorization": {
+    "clear_only_listed_six_statements_in_four_rows_and_add_resolution_pointers": true,
+    "change_other_83_rows_or_their_469_unresolved_items": false,
+    "change_source_or_claim_new_unit_execution": false,
+    "full_mapping_or_contract_approval": false,
+    "imports_tests_sql_sdk_services_network_execution": false,
+    "actual_full_h2_or_iteration_or_goal_acceptance": false
+  },
+  "risks_and_remaining_uncertainty": [
+    "This is source mapping and structural schema evidence, not actual SQL, privilege, projection, replay or invocation-completeness proof.",
+    "Only the original six statements reproduced here may be cleared. The remaining83 rows and469 unresolved statements remain blocked; every later edit must retain its historical input and exact review trail.",
+    "Full source closure, versioned contract/ledger, paired reviews/pre-gates and fresh490/25+5 remain mandatory."
+  ],
+  "recommendation": "Integrate only these four source-backed resolutions with the exact addendum/review pointers and retain the remaining469 items as unresolved.",
+  "review_method": "Read-only addendum/input-machine/producer/checker comparison and SHA256, including preserved Git input verification; no imports, tests, SQL, SDK, services or network."
+}

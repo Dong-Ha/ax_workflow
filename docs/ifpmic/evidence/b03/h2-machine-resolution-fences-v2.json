@@ -1,0 +1,513 @@
+{
+  "cases": [
+    {
+      "artifact_rule": {
+        "format": "retained_fence_json",
+        "maximum": 1,
+        "minimum": 1,
+        "node_field": "pytest_current_test",
+        "path": "retained-fences/ed0848adbdf80946dcc316ad389865262bba4be7deb1d5d340e3143b014d4f08.json",
+        "required_keys": [
+          "kind",
+          "case_id",
+          "pytest_current_test",
+          "observed_monotonic_ns",
+          "evidence_sha256",
+          "evidence"
+        ]
+      },
+      "case_directory": ".",
+      "case_id": "real_create_activation_receipt_replay_and_run_fences",
+      "evidence_keys": [
+        "nul_rejection",
+        "accepted_create",
+        "payload_sha256",
+        "function_results",
+        "workspace_identity",
+        "binding_sha256",
+        "proposal_sha256",
+        "api_listing",
+        "api_detail",
+        "api_command",
+        "revoked_api_responses",
+        "conflict",
+        "primary_final_rows",
+        "conflict_final_rows"
+      ],
+      "nested_schema": {
+        "additional_non_sql_function_result_count": 6,
+        "additional_non_sql_function_results": [
+          "initial_window",
+          "partial_window_rejections",
+          "wrong_run_denial",
+          "direct_command_table_denial",
+          "api_replay",
+          "command_outcome_rejections"
+        ],
+        "final_rows": "_capture_job_rows selects to_jsonb(t) from each table. Required rows are nonempty in both branches except conflict projection_receipts may be empty. worker_run_scopes is nonempty in both because admit_run inserts the scope even with no worker.",
+        "final_tables": [
+          "jobs",
+          "commands",
+          "commands_outbox",
+          "workspace_intents",
+          "execution_bindings",
+          "worker_run_scopes",
+          "projection_receipts",
+          "delivery_attempts"
+        ],
+        "function_results_note": "The 24 required function_results keys consist of 18 actual SQL function result entries and 6 other observations (initial window, partial-window rejections, two privilege denials, API replay, and command-outcome rejections). The existing unit test named each_of_the_18_function_results mutates the 18 SQL-operation result entries; the checker also requires the six other observations.",
+        "function_results_required_key_count": 24,
+        "function_results_required_keys": [
+          "claim",
+          "conflict_claim",
+          "reserve",
+          "start_attempt",
+          "admission",
+          "conflict_reserve",
+          "conflict_start_attempt",
+          "conflict_admission",
+          "stale_reserve",
+          "stale_admission",
+          "workspace_wait",
+          "conflict_projection",
+          "stale_ack",
+          "ack",
+          "conflict_ack",
+          "activation_ready",
+          "project_activation",
+          "replay_after_revocation",
+          "initial_window",
+          "partial_window_rejections",
+          "wrong_run_denial",
+          "direct_command_table_denial",
+          "api_replay",
+          "command_outcome_rejections"
+        ],
+        "query_boundaries": [
+          "before_claim",
+          "after_reserve",
+          "after_admission",
+          "before_first_projection",
+          "after_first_projection",
+          "before_authority_revocation",
+          "after_authority_revocation_before_replay",
+          "after_receipt_replay"
+        ],
+        "sql_function_result_key_count": 18,
+        "sql_function_result_keys": [
+          "claim",
+          "conflict_claim",
+          "reserve",
+          "start_attempt",
+          "admission",
+          "conflict_reserve",
+          "conflict_start_attempt",
+          "conflict_admission",
+          "stale_reserve",
+          "stale_admission",
+          "workspace_wait",
+          "conflict_projection",
+          "stale_ack",
+          "ack",
+          "conflict_ack",
+          "activation_ready",
+          "project_activation",
+          "replay_after_revocation"
+        ]
+      },
+      "node_id": "tests/ifpmic_api/test_workflow_schema.py::test_h2_real_create_activation_receipt_replay_and_run_fences",
+      "original_unresolved": [
+        "JSON top-level keys not fully source-verified for retained-fences/ed0848adbdf80946dcc316ad389865262bba4be7deb1d5d340e3143b014d4f08.json"
+      ],
+      "owner_minimum": 0,
+      "phase": "h2_schema_python",
+      "profile": "retained_sql_fence",
+      "queries_max": {
+        "sql.fence.job_rows": 8
+      },
+      "queries_min": {
+        "sql.fence.job_rows": 8
+      },
+      "remaining_source_mapping_items": [],
+      "resolution_items": [
+        {
+          "evidence": "Producer literal at test_workflow_schema.py:1303-1321 emits 14 outer evidence keys; _CREATE_SCHEMA requires them. Eight _record_fence_job_boundary calls at :904,:927,:1014,:1079,:1090,:1229,:1246,:1254 produce eight actual sql.fence.job_rows query records. _record_fence_job_boundary captures all eight raw JSONB tables.",
+          "original": "JSON top-level keys not fully source-verified for retained-fences/ed0848adbdf80946dcc316ad389865262bba4be7deb1d5d340e3143b014d4f08.json",
+          "status": "resolved_for_source_mapping"
+        }
+      ],
+      "runtime_execution_oracle_claimed": false,
+      "source_locations": [
+        {
+          "lines": "834-1321",
+          "path": "tests/ifpmic_api/test_workflow_schema.py",
+          "symbol": "test_h2_real_create_activation_receipt_replay_and_run_fences"
+        },
+        {
+          "lines": "111-142",
+          "path": "tests/ifpmic_api/test_workflow_schema.py",
+          "symbol": "_capture_job_rows and _record_fence_job_boundary"
+        },
+        {
+          "lines": "122-227",
+          "path": "scripts/ifpmic_h2_fences.py",
+          "symbol": "function, DTO and final-row schemas"
+        },
+        {
+          "lines": "102-118,142-175",
+          "path": "services/ifpmic_api/migrations/001_initial.sql",
+          "symbol": "jobs/commands/outbox/workspace DDL"
+        },
+        {
+          "lines": "76-122,123-155",
+          "path": "services/ifpmic_api/migrations/003_workflow_execution.sql",
+          "symbol": "bindings/scopes/delivery/receipt DDL"
+        },
+        {
+          "lines": "418-430,478-555",
+          "path": "tests/ifpmic_evidence/test_retained_fences.py",
+          "symbol": "full raw columns, row presence and operation-result checks"
+        }
+      ],
+      "writer_envelope": {
+        "digest": "SHA-256 over evidence only, canonical ensure_ascii/sorted compact JSON, allow_nan=False",
+        "exact_keys": [
+          "kind",
+          "case_id",
+          "pytest_current_test",
+          "observed_monotonic_ns",
+          "evidence_sha256",
+          "evidence"
+        ],
+        "filename": "retained-fences/ed0848adbdf80946dcc316ad389865262bba4be7deb1d5d340e3143b014d4f08.json",
+        "format": "retained_fence_json",
+        "kind": "ifpmic.b03.h2.retained-fence-observation.v1",
+        "path": "tests/ifpmic_api/test_workflow_schema.py:61-108"
+      }
+    },
+    {
+      "artifact_rule": {
+        "format": "retained_fence_json",
+        "maximum": 1,
+        "minimum": 1,
+        "node_field": "pytest_current_test",
+        "path": "retained-fences/291c474be1300da2a2e1062b421b824d9eb73a8539e5e6c011540a5024649748.json",
+        "required_keys": [
+          "kind",
+          "case_id",
+          "pytest_current_test",
+          "observed_monotonic_ns",
+          "evidence_sha256",
+          "evidence"
+        ]
+      },
+      "case_directory": ".",
+      "case_id": "role_registry_and_function_acl",
+      "evidence_keys": [
+        "role_acl_observations",
+        "dispatcher_session_identity",
+        "dispatcher_read_config",
+        "projector_session_identity",
+        "projector_registered_build",
+        "denied_operations"
+      ],
+      "nested_schema": {
+        "role_acl_observations": "role_config=1x10; roles=4x9; functions=11 (metadata row width 5, 4-role boolean map); table_privileges=32 (privilege row width 4); catalog_privileges=36; job_create_command_column_privileges INSERT/UPDATE booleans; worker_principals=2x6. Session identity rows width 2. Dispatcher config has deployment_id, namespace, endpoint, server-config SHA and exactly one build. Projector build has 8 required keys. denied_operations=14 records."
+      },
+      "node_id": "tests/ifpmic_api/test_workflow_schema.py::test_h2_role_registry_and_function_acl_match_static_contract",
+      "original_unresolved": [
+        "JSON top-level keys not fully source-verified for retained-fences/291c474be1300da2a2e1062b421b824d9eb73a8539e5e6c011540a5024649748.json"
+      ],
+      "owner_minimum": 0,
+      "phase": "h2_schema_python",
+      "profile": "retained_sql_fence",
+      "queries_max": {},
+      "queries_min": {},
+      "remaining_source_mapping_items": [],
+      "resolution_items": [
+        {
+          "evidence": "Producer call at test_workflow_schema.py:653-661 emits these six exact body keys; _ROLE_SCHEMA requires them and the nested shapes above.",
+          "original": "JSON top-level keys not fully source-verified for retained-fences/291c474be1300da2a2e1062b421b824d9eb73a8539e5e6c011540a5024649748.json",
+          "status": "resolved_for_source_mapping"
+        }
+      ],
+      "runtime_execution_oracle_claimed": false,
+      "source_locations": [
+        {
+          "lines": "145-216",
+          "path": "tests/ifpmic_api/test_workflow_schema.py",
+          "symbol": "_capture_role_acl_observations"
+        },
+        {
+          "lines": "495-661",
+          "path": "tests/ifpmic_api/test_workflow_schema.py",
+          "symbol": "test_h2_role_registry_and_function_acl_match_static_contract"
+        },
+        {
+          "lines": "78-108",
+          "path": "scripts/ifpmic_h2_fences.py",
+          "symbol": "_ROLE_SCHEMA"
+        },
+        {
+          "lines": "408-417,432-447",
+          "path": "tests/ifpmic_evidence/test_retained_fences.py",
+          "symbol": "source-shaped fixture and row-width checks"
+        }
+      ],
+      "writer_envelope": {
+        "digest": "SHA-256 over evidence only, canonical ensure_ascii/sorted compact JSON, allow_nan=False",
+        "exact_keys": [
+          "kind",
+          "case_id",
+          "pytest_current_test",
+          "observed_monotonic_ns",
+          "evidence_sha256",
+          "evidence"
+        ],
+        "filename": "retained-fences/291c474be1300da2a2e1062b421b824d9eb73a8539e5e6c011540a5024649748.json",
+        "format": "retained_fence_json",
+        "kind": "ifpmic.b03.h2.retained-fence-observation.v1",
+        "path": "tests/ifpmic_api/test_workflow_schema.py:61-108"
+      }
+    },
+    {
+      "artifact_rule": {
+        "format": "retained_fence_json",
+        "maximum": 1,
+        "minimum": 1,
+        "node_field": "pytest_current_test",
+        "path": "retained-fences/5731d311492332cefc00ef2f08a3675ad1e4468d415f6cf3033259edb0d2244c.json",
+        "required_keys": [
+          "kind",
+          "case_id",
+          "pytest_current_test",
+          "observed_monotonic_ns",
+          "evidence_sha256",
+          "evidence"
+        ]
+      },
+      "case_directory": ".",
+      "case_id": "four_role_oid_recreation",
+      "evidence_keys": [
+        "migration_result",
+        "original_config",
+        "replacement_role_oid",
+        "migration_error",
+        "final_config",
+        "current_role_oid",
+        "immutable_principal_rows",
+        "replacement_role_privileges"
+      ],
+      "nested_schema": {
+        "migration_result": "object: applied nonempty text array, unchanged text array (may be empty); original_config row width 2; replacement_role_oid positive int; migration_error type/code text; final_config exactly 1x4; current_role_oid positive int; immutable_principal_rows width-6 rows, empty allowed; replacement_role_privileges row width 2 booleans. No Temporal client/server/history applies to this schema/auth-only test."
+      },
+      "node_id": "tests/ifpmic_api/test_workflow_schema.py::test_h2_four_role_oid_recreation_is_drift_and_does_not_rebind",
+      "original_unresolved": [
+        "JSON top-level keys not fully source-verified for retained-fences/5731d311492332cefc00ef2f08a3675ad1e4468d415f6cf3033259edb0d2244c.json",
+        "Raw source gap: no Temporal client/server in test; none should be invented."
+      ],
+      "owner_minimum": 0,
+      "phase": "h2_schema_python",
+      "profile": "retained_sql_fence",
+      "queries_max": {},
+      "queries_min": {},
+      "remaining_source_mapping_items": [],
+      "resolution_items": [
+        {
+          "evidence": "Producer call at test_workflow_schema.py:730-739 emits eight fields; _OID_SCHEMA enforces their shape. The no-Temporal note is explicit non-applicability from module docstring, not missing evidence.",
+          "original": "JSON top-level keys not fully source-verified for retained-fences/5731d311492332cefc00ef2f08a3675ad1e4468d415f6cf3033259edb0d2244c.json",
+          "status": "resolved_for_source_mapping"
+        },
+        {
+          "evidence": "The module docstring at tests/ifpmic_api/test_workflow_schema.py:1-4 explicitly scopes this suite to SQL schema/authentication and says it does not exercise Temporal server/history. The test body at :664-743 recreates a PostgreSQL role and calls apply_migrations only; no Temporal fixture or client is present.",
+          "original": "Raw source gap: no Temporal client/server in test; none should be invented.",
+          "status": "resolved_as_explicit_non_applicability"
+        }
+      ],
+      "runtime_execution_oracle_claimed": false,
+      "source_locations": [
+        {
+          "lines": "1-4",
+          "path": "tests/ifpmic_api/test_workflow_schema.py",
+          "symbol": "module scope says SQL schema/authentication only; no Temporal"
+        },
+        {
+          "lines": "664-743",
+          "path": "tests/ifpmic_api/test_workflow_schema.py",
+          "symbol": "test_h2_four_role_oid_recreation_is_drift_and_does_not_rebind"
+        },
+        {
+          "lines": "109-115",
+          "path": "scripts/ifpmic_h2_fences.py",
+          "symbol": "_OID_SCHEMA"
+        },
+        {
+          "lines": "418-430,432-447",
+          "path": "tests/ifpmic_evidence/test_retained_fences.py",
+          "symbol": "empty principals and source-shaped row validation"
+        }
+      ],
+      "writer_envelope": {
+        "digest": "SHA-256 over evidence only, canonical ensure_ascii/sorted compact JSON, allow_nan=False",
+        "exact_keys": [
+          "kind",
+          "case_id",
+          "pytest_current_test",
+          "observed_monotonic_ns",
+          "evidence_sha256",
+          "evidence"
+        ],
+        "filename": "retained-fences/5731d311492332cefc00ef2f08a3675ad1e4468d415f6cf3033259edb0d2244c.json",
+        "format": "retained_fence_json",
+        "kind": "ifpmic.b03.h2.retained-fence-observation.v1",
+        "path": "tests/ifpmic_api/test_workflow_schema.py:61-108"
+      }
+    },
+    {
+      "artifact_rule": {
+        "format": "retained_fence_json",
+        "maximum": 1,
+        "minimum": 1,
+        "node_field": "pytest_current_test",
+        "path": "retained-fences/b97ed7abe03f746e7c565fbcef5ae4ba8c3aa1a2e3fdd283449f12f76380a8b0.json",
+        "required_keys": [
+          "kind",
+          "case_id",
+          "pytest_current_test",
+          "observed_monotonic_ns",
+          "evidence_sha256",
+          "evidence"
+        ]
+      },
+      "case_directory": ".",
+      "case_id": "service_role_scram_hba",
+      "evidence_keys": [
+        "successful_session_users",
+        "rejected_password_attempts",
+        "actual_hba_rules"
+      ],
+      "nested_schema": {
+        "actual_hba_rules": "exactly 4 rows width 3; first field positive line number, second is one-string user_name array, third auth method. SQLSTATE can be null because psycopg OperationalError may omit it.",
+        "rejected_password_attempts": "exactly 3 objects with attempt int, exception_type/message/expected_reason strings, nullable sqlstate",
+        "successful_session_users": "exactly 4 nonempty strings"
+      },
+      "node_id": "tests/ifpmic_api/test_workflow_schema.py::test_h2_service_roles_use_scram_without_trust_fallthrough",
+      "original_unresolved": [
+        "JSON top-level keys not fully source-verified for retained-fences/b97ed7abe03f746e7c565fbcef5ae4ba8c3aa1a2e3fdd283449f12f76380a8b0.json",
+        "Raw source gap: failure exception/sqlstate may be null for connection-level OperationalError; HBA rows and failure exception type remain raw actual evidence."
+      ],
+      "owner_minimum": 0,
+      "phase": "h2_schema_python",
+      "profile": "retained_sql_fence",
+      "queries_max": {
+        "sql.scram.authentication_rejection": 3
+      },
+      "queries_min": {
+        "sql.scram.authentication_rejection": 3
+      },
+      "remaining_source_mapping_items": [],
+      "resolution_items": [
+        {
+          "evidence": "Producer emits these keys at test_workflow_schema.py:827-831. The wrong-password loop at :803-813 emits exactly 3 sql.scram.authentication_rejection records. getattr(..., None) is preserved by nullable checker field; HBA rows remain in fence JSON.",
+          "original": "JSON top-level keys not fully source-verified for retained-fences/b97ed7abe03f746e7c565fbcef5ae4ba8c3aa1a2e3fdd283449f12f76380a8b0.json",
+          "status": "resolved_for_source_mapping"
+        },
+        {
+          "evidence": "At tests/ifpmic_api/test_workflow_schema.py:803-810, the producer records the actual exception type, getattr(exception, \"sqlstate\", None), full message and expected reason. _SCRAM_SCHEMA at scripts/ifpmic_h2_fences.py:118-120 explicitly allows null sqlstate; no value is coerced or invented.",
+          "original": "Raw source gap: failure exception/sqlstate may be null for connection-level OperationalError; HBA rows and failure exception type remain raw actual evidence.",
+          "status": "resolved_as_nullable_raw_field"
+        }
+      ],
+      "runtime_execution_oracle_claimed": false,
+      "source_locations": [
+        {
+          "lines": "784-831",
+          "path": "tests/ifpmic_api/test_workflow_schema.py",
+          "symbol": "test_h2_service_roles_use_scram_without_trust_fallthrough"
+        },
+        {
+          "lines": "116-121",
+          "path": "scripts/ifpmic_h2_fences.py",
+          "symbol": "_SCRAM_SCHEMA"
+        },
+        {
+          "lines": "55-71",
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "symbol": "record_query_observation"
+        },
+        {
+          "lines": "408-417,432-447",
+          "path": "tests/ifpmic_evidence/test_retained_fences.py",
+          "symbol": "source-shaped fixture and strict scalar/row checks"
+        }
+      ],
+      "writer_envelope": {
+        "digest": "SHA-256 over evidence only, canonical ensure_ascii/sorted compact JSON, allow_nan=False",
+        "exact_keys": [
+          "kind",
+          "case_id",
+          "pytest_current_test",
+          "observed_monotonic_ns",
+          "evidence_sha256",
+          "evidence"
+        ],
+        "filename": "retained-fences/b97ed7abe03f746e7c565fbcef5ae4ba8c3aa1a2e3fdd283449f12f76380a8b0.json",
+        "format": "retained_fence_json",
+        "kind": "ifpmic.b03.h2.retained-fence-observation.v1",
+        "path": "tests/ifpmic_api/test_workflow_schema.py:61-108"
+      }
+    }
+  ],
+  "common_writer_contract": {
+    "base_root": "IFPMIC_H2_RUNTIME_EVIDENCE_ROOT",
+    "canonical_digest": "hash canonical evidence object only; outer payload also canonical JSON with trailing newline",
+    "case_path": "retained-fences/<sha256(node_id UTF-8)>.json",
+    "lines": "61-108",
+    "node_source": "PYTEST_CURRENT_TEST without phase suffix",
+    "path": "tests/ifpmic_api/test_workflow_schema.py",
+    "private_write": "0700 parent directories; O_EXCL|O_NOFOLLOW; regular single-link file mode 0600; fsync",
+    "producer": "_record_retained_fence_evidence"
+  },
+  "dedicated_checker": {
+    "checks": "exact envelope keys, literal CASE_NODES/case match, filename hash, positive monotonic timestamp, case-specific nested raw schema, canonical digest. Structural checker; not SQL business oracle.",
+    "function": "validate_retained_fence",
+    "lines": "231-259",
+    "path": "scripts/ifpmic_h2_fences.py"
+  },
+  "execution_authority": false,
+  "kind": "ifpmic.b03.h2.machine-fence-source-resolution.v2",
+  "limitations": [
+    "Mapping/schema source review only. No test, SQL, service, SDK, runtime, source pin or registry execution performed.",
+    "Machine-rule original unresolved arrays remain unchanged; root must integrate separately.",
+    "OID case has no Temporal applicability by explicit module scope; no Temporal artifacts should be added. SCRAM connection-level sqlstate remains nullable as actually emitted."
+  ],
+  "machine_rules": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules.json",
+    "sha256": "1ec018486a118cbe2474751fcb06b70c2923d8d0b04b53705385823ec5ba3f88",
+    "status": "candidate_pending_exact_review"
+  },
+  "resolution_totals": {
+    "original_unresolved_items": 6,
+    "remaining_source_mapping_items": 0,
+    "source_backed_resolved_items": 6
+  },
+  "scope": "Source-backed mapping evidence for only the four retained SQL/auth fence rows. Does not edit canonical rules, clear original unresolved arrays, perform source pin/registry checks, or claim raw SQL execution.",
+  "shared_query_recorder": {
+    "audit": "scripts/ifpmic_h2_raw_evidence.py:189-280",
+    "caller_metadata": [
+      "file",
+      "function",
+      "line"
+    ],
+    "function": "record_query_observation",
+    "lines": "55-71",
+    "operation_and_result": "stores actual decoded result; no synthesized rows",
+    "path": "tests/ifpmic_api/h2_snapshot_evidence.py"
+  },
+  "status": "draft_source_mapping_evidence_only",
+  "supporting_unit_source": {
+    "lines": "408-717",
+    "path": "tests/ifpmic_evidence/test_retained_fences.py",
+    "static_fact": "28 unittest methods cover source-shaped examples, schema/row boundaries, nullable/empty cases, hashes, envelope, artifact integration and downgrade rejection; none executed in this task."
+  }
+}

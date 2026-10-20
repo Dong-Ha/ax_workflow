@@ -11560,12 +11560,24 @@
           "symbol": "source artifact write/read literal"
         }
       ],
-      "unresolved": [
-        "JSON top-level keys not fully source-verified for retained-fences/ed0848adbdf80946dcc316ad389865262bba4be7deb1d5d340e3143b014d4f08.json"
-      ],
+      "unresolved": [],
       "applicability_clarifications": [
         "Dedicated validator checks literal case/node/filename, exact envelope, canonical nested evidence digest and source-shaped internal raw observations. Structural acceptance does not establish SQL business semantics."
-      ]
+      ],
+      "source_mapping_resolution": {
+        "addendum": {
+          "path": "docs/ifpmic/evidence/b03/h2-machine-resolution-fences-v2.json",
+          "sha256": "e3071de38fef8f14d8182a7a606037eba5bf282bdab40d3a70ce0f331992804d"
+        },
+        "independent_review": {
+          "path": "docs/ifpmic/evidence/b03/h2-machine-resolution-fences-review-v2.json",
+          "sha256": "10f0b533d9ff0c1b365b5e673e8a96a75082e7f5adac866c7385f379fe32394f"
+        },
+        "historical_input_commit": "a303cc65480615946d9439d48e6127e7870a0a38",
+        "historical_unresolved": [
+          "JSON top-level keys not fully source-verified for retained-fences/ed0848adbdf80946dcc316ad389865262bba4be7deb1d5d340e3143b014d4f08.json"
+        ]
+      }
     },
     {
       "artifacts": [
@@ -11616,12 +11628,24 @@
           "symbol": "source artifact write/read literal"
         }
       ],
-      "unresolved": [
-        "JSON top-level keys not fully source-verified for retained-fences/291c474be1300da2a2e1062b421b824d9eb73a8539e5e6c011540a5024649748.json"
-      ],
+      "unresolved": [],
       "applicability_clarifications": [
         "Dedicated validator checks literal case/node/filename, exact envelope, canonical nested evidence digest and source-shaped internal raw observations. Structural acceptance does not establish SQL business semantics."
-      ]
+      ],
+      "source_mapping_resolution": {
+        "addendum": {
+          "path": "docs/ifpmic/evidence/b03/h2-machine-resolution-fences-v2.json",
+          "sha256": "e3071de38fef8f14d8182a7a606037eba5bf282bdab40d3a70ce0f331992804d"
+        },
+        "independent_review": {
+          "path": "docs/ifpmic/evidence/b03/h2-machine-resolution-fences-review-v2.json",
+          "sha256": "10f0b533d9ff0c1b365b5e673e8a96a75082e7f5adac866c7385f379fe32394f"
+        },
+        "historical_input_commit": "a303cc65480615946d9439d48e6127e7870a0a38",
+        "historical_unresolved": [
+          "JSON top-level keys not fully source-verified for retained-fences/291c474be1300da2a2e1062b421b824d9eb73a8539e5e6c011540a5024649748.json"
+        ]
+      }
     },
     {
       "artifacts": [
@@ -11672,13 +11696,25 @@
           "symbol": "source artifact write/read literal"
         }
       ],
-      "unresolved": [
-        "JSON top-level keys not fully source-verified for retained-fences/5731d311492332cefc00ef2f08a3675ad1e4468d415f6cf3033259edb0d2244c.json",
-        "Raw source gap: no Temporal client/server in test; none should be invented."
-      ],
+      "unresolved": [],
       "applicability_clarifications": [
         "Dedicated validator checks literal case/node/filename, exact envelope, canonical nested evidence digest and source-shaped internal raw observations. Structural acceptance does not establish SQL business semantics."
-      ]
+      ],
+      "source_mapping_resolution": {
+        "addendum": {
+          "path": "docs/ifpmic/evidence/b03/h2-machine-resolution-fences-v2.json",
+          "sha256": "e3071de38fef8f14d8182a7a606037eba5bf282bdab40d3a70ce0f331992804d"
+        },
+        "independent_review": {
+          "path": "docs/ifpmic/evidence/b03/h2-machine-resolution-fences-review-v2.json",
+          "sha256": "10f0b533d9ff0c1b365b5e673e8a96a75082e7f5adac866c7385f379fe32394f"
+        },
+        "historical_input_commit": "a303cc65480615946d9439d48e6127e7870a0a38",
+        "historical_unresolved": [
+          "JSON top-level keys not fully source-verified for retained-fences/5731d311492332cefc00ef2f08a3675ad1e4468d415f6cf3033259edb0d2244c.json",
+          "Raw source gap: no Temporal client/server in test; none should be invented."
+        ]
+      }
     },
     {
       "artifacts": [
@@ -11738,13 +11774,25 @@
           "symbol": "source artifact write/read literal"
         }
       ],
-      "unresolved": [
-        "JSON top-level keys not fully source-verified for retained-fences/b97ed7abe03f746e7c565fbcef5ae4ba8c3aa1a2e3fdd283449f12f76380a8b0.json",
-        "Raw source gap: failure exception/sqlstate may be null for connection-level OperationalError; HBA rows and failure exception type remain raw actual evidence."
-      ],
+      "unresolved": [],
       "applicability_clarifications": [
         "Dedicated validator checks literal case/node/filename, exact envelope, canonical nested evidence digest and source-shaped internal raw observations. Structural acceptance does not establish SQL business semantics."
-      ]
+      ],
+      "source_mapping_resolution": {
+        "addendum": {
+          "path": "docs/ifpmic/evidence/b03/h2-machine-resolution-fences-v2.json",
+          "sha256": "e3071de38fef8f14d8182a7a606037eba5bf282bdab40d3a70ce0f331992804d"
+        },
+        "independent_review": {
+          "path": "docs/ifpmic/evidence/b03/h2-machine-resolution-fences-review-v2.json",
+          "sha256": "10f0b533d9ff0c1b365b5e673e8a96a75082e7f5adac866c7385f379fe32394f"
+        },
+        "historical_input_commit": "a303cc65480615946d9439d48e6127e7870a0a38",
+        "historical_unresolved": [
+          "JSON top-level keys not fully source-verified for retained-fences/b97ed7abe03f746e7c565fbcef5ae4ba8c3aa1a2e3fdd283449f12f76380a8b0.json",
+          "Raw source gap: failure exception/sqlstate may be null for connection-level OperationalError; HBA rows and failure exception type remain raw actual evidence."
+        ]
+      }
     }
   ],
   "kind": "ifpmic.b03.h2.runtime-full-machine-evidence-rules.v1",

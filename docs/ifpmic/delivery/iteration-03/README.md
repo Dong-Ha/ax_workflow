@@ -18,7 +18,7 @@
 - **119/119 합성 단위 통과:** 기존93 + budget/cache16 + 실행기 순수 함수10. 새 비공개 pycache prefix에서 실행해 캐시가 비어 있음을 확인했고, 독립 결과 검토가 합성 범위와 원본 보존 증거를 수용했다. 이전 검사 수를 중복 합산하지 않는다.
 - [119건 증빙](./full-runner-repair-verification.json), [정확한 소스 승인](./full-runner-repair-source-review.json), [독립 결과 검토](./full-runner-repair-result-review.json), [복구 검증 계획](./FULL-RUNNER-REPAIR.md).
 - 보호 AX96 해시·89 목록, 설계17·업로드2, Python 환경1777/3072 항목을 원래 승인 기준과 비교해 before/after 모두 유지했다.
-- 실제 생성 코드에서 빠진 조건부 증빙18개를 더 연결해 mapping은87 case·535 artifact·10 phase다. 그러나 **87행에 미해결 검토 표시475개가 남아 있다.** 이전의 미해결0건 요약은 잘못됐으며, [TC의 변경 요청](../../evidence/b03/h2-runtime-full-machine-rules-tc-review-v2.json)이 이를 기록한다. 해당 표시를 실제 소스 근거 없이 지우지 않는다.
+- 실제 생성 코드에서 빠진 조건부 증빙18개를 더 연결해 mapping은87 case·535 artifact·10 phase다. 그러나 **최초87행에 미해결 검토 표시475개가 있었고, 독립 검토 후 SQL fence4행의6개를 근거와 연결해 해소했다. 현재는83행·469개가 남아 있다.** 이전의 미해결0건 요약은 잘못됐으며, [TC의 변경 요청](../../evidence/b03/h2-runtime-full-machine-rules-tc-review-v2.json)이 이를 기록한다. 해당 표시를 실제 소스 근거 없이 지우지 않는다.
 - 제품/UI/의존성이 바뀌지 않아 이 단위 checkpoint에서 build/browser를 반복하지 않았다. 실제 SDK/SQL/서비스 및 전체490 검증·주기03 완료는 미수용이다.
 
 ## 다음에 보여줄 한 가지
@@ -30,7 +30,7 @@
 ## 재개 위치
 
 1. 이번119건 독립 결과 검토와 mapping TC 변경 요청을 확인한다. 소스 변경 시 exact 승인을 재사용하지 않는다.
-2. 475개 mapping 검토 표시를 근거와 연결해 해소하고 새 버전 계약·ledger를 고정한다. fence helper와 TC를 새 source closure에 포함하고 옛 c10/cf4 계약·주기02 참조를 보존한다.
+2. [mapping 해소 기록](../../evidence/b03/h2-machine-resolution-progress-v2.json)에 따라 startup21행부터 남은83행·469개 표시를 실제 근거와 연결해 해소하고 새 버전 계약·ledger를 고정한다. fence helper와 TC를 새 source closure에 포함하고 옛 c10/cf4 계약·주기02 참조를 보존한다.
 3. 전체 runner 검토·정확한 paired pre-gate → fresh490 → 독립 결과 수용.
 4. 실제 접수 화면 연결·브라우저 검증·시연 → 커밋/push.
 

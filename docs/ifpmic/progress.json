@@ -660,14 +660,14 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "Iteration03: reconcile475 unresolved machine-row annotations with actual producer/path/condition/schema evidence; then freeze a versioned490 closure/contract, whole-runner and paired pre-gates, fresh490, and real request admission/run/receipt UI. Repaired runner pure functions have119 cache-isolated passing synthetic units; actual runtime remains blocked.",
+  "next_step": "Iteration03: resolve source/schema/path annotations for startup21 rows first, then remaining phases. Four retained fence rows/six annotations independently resolved;83 rows/469 annotations remain. Freeze versioned490 closure/contract and exact reviews/pre-gates only after complete mapping; then fresh490 and actual admission/run/receipt UI.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",
     "Approved Bedrock/Claude runtime profile"
   ],
   "publication_policy": "Only authorized git repository documentation, source and synthetic verification summaries/screenshots; never runtime credentials or application logs.",
-  "updated_at": "2026-10-20T15:26:04.133894+00:00",
+  "updated_at": "2026-10-20T15:29:02.670342+00:00",
   "session_handoff": {
     "status": "resumed_by_user",
     "resume_document": "docs/ifpmic/RESUME.md",
@@ -718,7 +718,8 @@
       "verification": "delivery/iteration-03/full-runner-repair-verification.json",
       "foundation_status": "accepted_119_cache_isolated_synthetic_units_only",
       "actual_job_execution": false,
-      "scope": "Source-only full-runner repairs and synthetic guard tests. TC mapping review requests changes for475 unresolved annotations across87 rows. No full H2 or execution UI acceptance."
+      "scope": "119 cache-isolated synthetic checks accepted. Four retained source-mapping rows/six annotations resolved;83 rows/469 annotations remain and full H2/execution UI remain incomplete.",
+      "mapping_resolution_progress": "evidence/b03/h2-machine-resolution-progress-v2.json"
     }
   ]
 }
