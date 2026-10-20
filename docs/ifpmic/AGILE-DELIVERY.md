@@ -24,7 +24,7 @@
 - 새 사용자 흐름이 완료되면 URL·화면 이미지·직접 해볼 순서·실제/모의 구분·커밋을 함께 전달한다. 전체 프로젝트 완료까지 시연을 미루지 않는다.
 - 전체 완료율, 공개된 사용자 흐름, 내부 검증 수를 별도로 보고한다. 테스트 수나 문서 수를 제품 완성률로 환산하지 않는다.
 
-이번 체크포인트의 새 화면 기능은 없다. **87개 검증 규칙의 소스 대조와475개 기존 검토 표시 해소를 완료했다.** 953개 artifact 규칙·10개 phase·38개 source pin을 확인했고, 외부490 inventory의 신규83+retained fence4 ID와 정확히 일치한다. 검증 도우미의 확정 오류5건은 계획·정확한 소스 검토를 거쳐 수정했으며4개 모듈의 기존269개 assertion을 유지했다. 이 결과는 실행 전 준비다. 실제490은 아직 실행하지 않았으며 전체 필수 단계 완료율은12.5%로 유지한다. 별도 v2 ledger/contract에104개 현재 소스를 고정했고 정적 정합성을 확인했다. [현재 후보 검사](./delivery/iteration-03/full-candidate-v2-static-verification.json)를 따른다. 다음은 실행기 자체 해시 재확인·실제 watchdog 형식 적응의 좁은 수정 계획/검토와 source/pre-gates 뒤 actual490이다.
+이번 체크포인트의 새 화면 기능은 없다. **87개 검증 규칙의 소스 대조와475개 기존 검토 표시 해소를 완료했다.** 953개 artifact 규칙·10개 phase·38개 source pin을 확인했고, 외부490 inventory의 신규83+retained fence4 ID와 정확히 일치한다. 검증 도우미의 확정 오류5건은 계획·정확한 소스 검토를 거쳐 수정했으며4개 모듈의 기존269개 assertion을 유지했다. 이 결과는 실행 전 준비다. 실제490은 아직 실행하지 않았으며 전체 필수 단계 완료율은12.5%로 유지한다. 별도 v2 ledger/contract에104개 현재 소스를 고정했고 정적 정합성을 확인했다. [현재 후보 검사](./delivery/iteration-03/full-candidate-v2-static-verification.json)를 따른다. 이후 두 실행기 결함과v2 연결을 수정하고 새 소스로131/131 합성 단위(기존119+새12)를 실행해 독립 수용받았다. [최신 결과](./delivery/iteration-03/runner-v2-repair-verification.json)·[독립 검토](./delivery/iteration-03/runner-v2-repair-result-review.json)를 따른다. 다음은 전체 source/paired pre-gates 뒤 actual490이다.
 
 ## 지금 확인할 결과
 
@@ -45,7 +45,7 @@ Node.js24 이상으로 실행한다. 기존 AX 서버를 사용하는 방법은 
 
 ## 짧은 제품 주기
 
-현재 진행: [주기03 실제 실행 연결](./delivery/iteration-03/README.md). 다음 공개 결과는 저장 요청의 실제 실행 접수·run/receipt 화면이다. [규칙 소스 대조 기록](./evidence/b03/h2-machine-resolution-progress-v2.json)은87/87행 완료·미해결0·953규칙을 기록한다. 이는 실제 실행 통과가 아니다. 기존 c10/cf4를 보존한 v2 후보를 작성했다. 실행기 수정·정확한 source/paired pre-gates와 fresh490이 남았다.
+현재 진행: [주기03 실제 실행 연결](./delivery/iteration-03/README.md). 다음 공개 결과는 저장 요청의 실제 실행 접수·run/receipt 화면이다. [규칙 소스 대조 기록](./evidence/b03/h2-machine-resolution-progress-v2.json)은87/87행 완료·미해결0·953규칙을 기록한다. 이는 실제 실행 통과가 아니다. 기존 c10/cf4를 보존한 v2 후보를 작성했다. 실행기 수정·131 합성 검증은 완료했으며 전체 source/paired pre-gates와 fresh490이 남았다.
 
 | 주기 | 사용자가 확인할 결과 | 연결되는 기존 단계 | 이번 완료 조건 |
 |---|---|---|---|

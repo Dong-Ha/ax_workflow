@@ -22,13 +22,13 @@ from datetime import datetime, timezone
 
 ROOT = Path(__file__).resolve().parents[1]
 EVIDENCE = ROOT / 'docs/ifpmic/evidence/b03'
-CONTRACT_PATH = EVIDENCE / 'h2-runtime-full-execution-contract.json'
-LEDGER_PATH = EVIDENCE / 'h2-runtime-full-integrated-ledger.json'
-CONTRACT_SHA = 'c10c7cb329ea82b758cfa7db34ac330e4b7ec472320b5904e8086f8067865a2d'
-LEDGER_SHA = 'cf4f3bfc023341c22e0c8fc7c072c54838d62f7adeb39d817a4ce3b6589f8d60'
+CONTRACT_PATH = EVIDENCE / 'h2-runtime-full-execution-contract-v2.json'
+LEDGER_PATH = EVIDENCE / 'h2-runtime-full-integrated-ledger-v2.json'
+CONTRACT_SHA = 'd2f0ef941e62cf6a6597b39a9eda676161cd616d723403a34f16a2903a91bfe6'
+LEDGER_SHA = '1512b767aa06961d8f80ed474a4bf44929d9db430a05317447eb49f4d71a0655'
 CONTRACT_REVIEW_SHAS = {
-    'h2-runtime-full-execution-contract-review.json': '481604abb4cfe602e16cbd65fae8f290f5a61f3ec405d350c9ebbbf6b7fe7c79',
-    'h2-runtime-full-execution-tc-review.json': '17da5950d52deed48d454b026e152415d4e3eadd9eba20da4503009a41bf46b9',
+    'h2-runtime-full-execution-contract-review-v2.json': '072951dc1d617d6be165ad10d2d922c2a8e63c4f2b53f377b46982eb4047cb0e',
+    'h2-runtime-full-execution-tc-review-v2.json': 'b30bf91a3a233c511d5acf259a599b17a153724e0fd18e285424c126006f337e',
 }
 ORDER = (
     'dispatcher_crashes', 'worker_api_crashes', 'startup', 'window',
@@ -72,6 +72,17 @@ def require_file_hash(path: Path, expected: str, what: str) -> bytes:
     if sha(raw) != expected:
         raise RuntimeError(f'{what} hash differs')
     return raw
+
+
+def verify_runner_source(expected_sha: str | None = None) -> str:
+    """Bind the fixed regular source file before execution and publication."""
+    path = ROOT / 'scripts/verify_ifpmic_b03_h2_runtime_full.py'
+    if path.is_symlink() or not path.is_file() or path.resolve() != path:
+        raise RuntimeError('Runner source is not the fixed regular repository file')
+    actual = sha(path.read_bytes())
+    if expected_sha is not None and actual != expected_sha:
+        raise RuntimeError('Runner source changed before public proposal')
+    return actual
 
 
 def verify_review(path: Path, expected_verdict: str, fields: dict[str, str]) -> tuple[dict, bytes]:
@@ -529,6 +540,8 @@ def plugin_literal_map(path: Path, name: str) -> dict:
 
 
 def validate_watchdog_record(record: dict, nodeid: str, budget: dict, expected_kind: str) -> dict:
+    if expected_kind not in WATCHDOG_KINDS.values():
+        raise RuntimeError('Unknown watchdog kind')
     if record.get('kind') != expected_kind or record.get('nodeid') != nodeid:
         raise RuntimeError('Watchdog kind or exact node ID differs')
     if record.get('status', 'finished') != 'finished':
@@ -544,7 +557,17 @@ def validate_watchdog_record(record: dict, nodeid: str, budget: dict, expected_k
         raise RuntimeError('Watchdog start/cleanup/finish clocks invalid')
     body = record.get('body_seconds', record.get('body_elapsed_seconds'))
     cleanup_seconds = record.get('cleanup_seconds', record.get('cleanup_elapsed_seconds'))
-    total = record.get('total_seconds')
+    # These exact producers record the component durations and original clocks,
+    # but no total field. A present invalid total must never use the fallback.
+    derived_total_kinds = {
+        WATCHDOG_KINDS[name] for name in (
+            'h2_window_case_budget', 'h2_activity_runtime_case_budget',
+            'h2_transport_case_budget', 'h2_workspace_activation_case_budget',
+            'h2_fixture_failure_case_budget',
+        )
+    }
+    total = (finish - start if 'total_seconds' not in record
+             and expected_kind in derived_total_kinds else record.get('total_seconds'))
     expected_body, expected_cleanup = budget['setup_and_body'], budget['shared_cleanup']
     derived_body, derived_cleanup = cleanup - start, finish - cleanup
     if (any(type(x) not in (int, float) or not math.isfinite(x) for x in (body, cleanup_seconds, total))
@@ -1021,7 +1044,7 @@ def main(*, start=None, release_bootstrap=None) -> int:
     phases = verify_contract_ledger(contract, ledger)
     verify_static_anchors(contract, ledger)
     raw_policy = verify_raw_policy_sources(contract, ledger)
-    runner_sha = sha(Path(__file__).read_bytes())
+    runner_sha = verify_runner_source()
     reviews = execution_gate(contract, ledger, runner_sha)
 
     # Source and review gates above are complete before any local helper import.
@@ -1314,6 +1337,7 @@ def main(*, start=None, release_bootstrap=None) -> int:
         report['collection_seconds'] = collection_total
         report['execution_seconds'] = execution_total
         report['verdict'] = 'running'
+        verify_runner_source(runner_sha)
         proposal = build_public_proposal(leaf, contract, ledger, report, layouts,
             normalized_cases, normalized_pg, temporal_evidence, source_before, env_before)
         budget.require_work_time()

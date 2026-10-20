@@ -1,0 +1,39 @@
+{
+  "kind": "ifpmic.b03.h2.runner-v2-repair-plan-review.v1",
+  "verdict": "approve_implementation_and_source_review_only",
+  "reviewed_utc": "2026-10-20T16:43:04.853721+00:00",
+  "reviewer": {
+    "agent_id": "/root/h2_evidence_amendment_review",
+    "independence": "Independent from Code-dev plan/runner and TC test authors; authored prior independent contract and source-evidence reviews."
+  },
+  "plan": {
+    "path": "docs/ifpmic/delivery/iteration-03/RUNNER-V2-REPAIR.md",
+    "sha256": "1543090e1e7188fdd8a33e863e01073b26148c2f83af749a15f0998bc4bbbd70"
+  },
+  "authoring_review": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-full-execution-contract-review-v2.json",
+    "sha256": "072951dc1d617d6be165ad10d2d922c2a8e63c4f2b53f377b46982eb4047cb0e"
+  },
+  "findings": [],
+  "evidence": {
+    "bounded_implementation": "Only current full runner v2 path/hash/paired authoring bindings, its initial/final fixed-file SHA validation and exact watchdog total-schema adaptation are authorized. One new pure-stdlib TC file is planned. Product/producer/current ledger/contract/machine and all existing review/unit source bytes remain unchanged. Active runner stays outside ledger to prevent a cycle.",
+    "eight_verification_fields": "VR-PLAN/SOURCE/UNIT/FULL specify purpose,target,method,agent,pass criteria,expected result,evidence,recovery. The expected-result/evidence column explicitly carries both fields. Implementation/source review precedes separately authorized synthetic execution; whole-source and paired full pre-gates remain later gates.",
+    "normal_error_boundary_regression": "Normal5 known producer schemas and40 literal node bindings are covered through actual producer AST/ledger reads. Missing total derives finish-start only for these known kinds. Explicit null/bool/nonfinite/mismatched supplied totals and unknown kinds are rejected. Ordered clocks, duration consistency, exact/exceeded25+5 and215+25 budgets, timeout flags and wrong node are retained. Runner original/changed/missing/symlink states are tested. Existing119 units remain mandatory alongside all new IDs, without product/SDK/pytest/main/SQL/service execution.",
+    "source_hash_boundary": "The initial and immediately pre-proposal checks target the fixed repository runner file and reject symlink/nonregular state or SHA mismatch. Final-source failure must prevent public proposal/pass; implementation and exact-source review must verify this behavior rather than merely record a diagnostic.",
+    "scope_budget_and_isolation": "Full490,25+5 obligations,87 raw cases/953 rules,case/phase limits and16220 outer epoch remain unchanged. Synthetic execution requires a later exact-source approval, fresh private cache, private0700/0600 evidence, minimal isolated interpreter flags,timeout60, actual IDs/logs and source/cache/protected/environment before-after checks.",
+    "omission_basis": "UI/build/browser omission is bounded to unchanged product/AX sources at this source repair checkpoint. Actual UI regression,full490,resource/environment evidence,originalAT32 and final acceptance remain required."
+  },
+  "risks_and_remaining_uncertainty": [
+    "This plan does not establish actual implementation correctness. Exact source review must pin the runner,new TC,all119 unit dependencies and the actual5 producers/ledger read by synthetic tests; preserved historical source/unit proofs cannot authorize new bytes.",
+    "The new TC file is outside runtime imports and the existing103 code ledger pins. Its separate unit evidence must not be represented as full-runtime source closure or full490 acceptance.",
+    "No unit command,pytest collection,product/SDK import,SQL,services,network or full runner execution is authorized by this review. Future execution requires its own exact scoped approval; full runtime additionally requires complete source and paired pre-gates."
+  ],
+  "recommendation": "Implement only the three bounded runner changes and new TC, then obtain exact source approval before any synthetic unit execution. Preserve the frozen v2 authoring candidate and original reviews.",
+  "authorization": {
+    "bounded_implementation_and_exact_source_review": true,
+    "synthetic_unit_execution": false,
+    "full_runner_import_collection_or_execution": false,
+    "h2_or_goal_acceptance": false
+  },
+  "review_method": "Static plan/current source and exact prior review comparison only; no repository imports or execution."
+}

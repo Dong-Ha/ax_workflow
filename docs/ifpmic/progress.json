@@ -660,14 +660,14 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "Iteration03: separate v2 ledger/contract prepared and statically cross-checked (104 source pins,490 IDs unchanged,87 raw nodes/953 rules). Paired exact authoring reviews approved; next plan/review two runner-only repairs (final self-rehash and actual watchdog schema adaptation), bind v2 runner, exact source/synthetic renewal and paired pre-gates, fresh490, then actual admission/run/receipt UI. Original c10/cf4/I02 remain immutable; no v2 runtime execution.",
+  "next_step": "Iteration03: both bounded runner repairs and exact v2 bindings implemented;131 cache-isolated synthetic units (119 retained+12 new) passed and independently accepted. Complete whole-runner exact source review and paired execution pre-gates, fresh actual490 with raw audits/final independent acceptance, then real saved-request admission/run/receipt UI. No actual main/SDK/pytest collection/SQL/services yet; original c10/cf4/I02 remain immutable.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",
     "Approved Bedrock/Claude runtime profile"
   ],
   "publication_policy": "Only authorized git repository documentation, source and synthetic verification summaries/screenshots; never runtime credentials or application logs.",
-  "updated_at": "2026-10-20T16:38:17.528148+00:00",
+  "updated_at": "2026-10-20T16:53:12.075648+00:00",
   "session_handoff": {
     "status": "resumed_by_user",
     "resume_document": "docs/ifpmic/RESUME.md",
@@ -710,10 +710,18 @@
       "scope": "Source path/schema/applicability only; no actual execution acceptance."
     },
     "current_candidate_static_verification": "delivery/iteration-03/full-candidate-v2-static-verification.json",
-    "next_foundation_scope": "Only two known runner repairs plus exact v2 binding/review; do not add unrelated infrastructure before the saved-request admission flow.",
+    "next_foundation_scope": "Whole-runner source and exact paired execution gates for unchanged490; two known runner repairs already implemented and131 synthetic units accepted.",
     "candidate_authoring_reviews": {
       "independent": "evidence/b03/h2-runtime-full-execution-contract-review-v2.json",
       "tc": "evidence/b03/h2-runtime-full-execution-tc-review-v2.json"
+    },
+    "latest_unit_result": {
+      "passed": 131,
+      "retained": 119,
+      "new": 12,
+      "verification": "delivery/iteration-03/runner-v2-repair-verification.json",
+      "independent_acceptance": "delivery/iteration-03/runner-v2-repair-result-review.json",
+      "actual_full490": false
     }
   },
   "visible_deliveries": [
@@ -742,10 +750,10 @@
       "status": "in_progress",
       "title": "Connect persisted API job to real execution-engine admission and visible run/receipt",
       "path": "delivery/iteration-03/README.md",
-      "verification": "delivery/iteration-03/full-runner-repair-verification.json",
-      "foundation_status": "accepted_119_cache_isolated_synthetic_units_only",
+      "verification": "delivery/iteration-03/runner-v2-repair-verification.json",
+      "foundation_status": "accepted_131_cache_isolated_synthetic_units_only",
       "actual_job_execution": false,
-      "scope": "All87 source rows/953 artifact rules integrated through independent exact reviews;475 original annotations source-resolved. Five harness defects repaired and269 assertions statically preserved. Original119 unit source closure unchanged. No new tests/full490 or actual admission UI accepted.",
+      "scope": "Current v2 runner bindings and two scoped repairs verified with131 synthetic units, including retained119 and12new; independent result accepted. Ledger104/machine38 exactpins unchanged. Actual490 and admission/run/receipt UI remain pending.",
       "mapping_resolution_progress": "evidence/b03/h2-machine-resolution-progress-v2.json",
       "candidate_static_verification": "delivery/iteration-03/full-candidate-v2-static-verification.json"
     }

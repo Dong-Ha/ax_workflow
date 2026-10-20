@@ -10,7 +10,7 @@
 
 위 두 주소는 이번 세션에서 HTTP200을 확인했다. 브라우저 기능 검증을 다시 실행한 것은 아니다. 로컬 주소에 접근할 수 없으면 [workflow 캡처](./delivery/iteration-01/workflow-desktop.png), [요청 화면 캡처](./delivery/iteration-02/iteration-02-user-a-desktop.png)를 본다. 재실행 방법은 각 [주기01](./delivery/iteration-01/README.md)·[주기02](./delivery/iteration-02/README.md) 안내에 있다.
 
-**전체 필수 단계 완료율:2/16=12.5%.** 같은 비중으로 센 단계 완료율이며 작업량/남은 시간 추정이 아니다. 이번 체크포인트에 새 화면 기능은 없다.
+**전체 필수 단계 완료율:2/16=12.5%.** 같은 비중으로 센 단계 완료율이며 작업량/남은 시간 추정이 아니다. 이번 체크포인트에 새 화면 기능은 없다. 실행기 두 결함과v2 binding을 수정했고 새 소스로131/131 합성 단위를 실행해 독립 결과 수용을 받았다.
 
 ## 다음에 완성할 사용자 흐름 하나
 
@@ -20,17 +20,17 @@
 
 - 87/87개 규칙의 소스 대조 완료,475개 기존 source annotation 해소,953 artifact 규칙·10 phase·38 machine source pins. 실제490 실행 증명이 아니다.
 - 확정된 테스트 도우미 오류5건 수정,4개 모듈의 기존269 assertion 정적 보존. [현재 규칙 대조 기록](./evidence/b03/h2-machine-resolution-progress-v2.json).
-- 기존119 합성 단위 검사는 과거 정확한 소스에 한정해 독립 수용됐다. 실행기 바이트를 바꾸면 새 정확한 승인과 관련 재검증이 필요하다. [증빙](./delivery/iteration-03/full-runner-repair-verification.json).
+- 최신 합성 단위131/131(기존119+새12) 통과·독립 수용. 실제5 producer/40node 형식·예산과 runner 초기/공개직전 SHA guard를 검증했다. [결과](./delivery/iteration-03/runner-v2-repair-verification.json), [독립 수용](./delivery/iteration-03/runner-v2-repair-result-review.json). 22개 정확한 입력·소스와 원본/환경 before-after·빈 private cache가 유지됐다. 과거119 증빙은 과거 소스에만 적용한다.
 - 새 별도 v2 후보: [ledger](./evidence/b03/h2-runtime-full-integrated-ledger-v2.json), [실행 계약](./evidence/b03/h2-runtime-full-execution-contract-v2.json).104 source pins(103 code+machine),490 ID(407+83),25업무 의무+5fixture 전제,15phase를 유지한다. phase cap15420초+overhead800초=outer16220초. 독립·TC paired 작성 검토는 완료됐으며 실제 실행·인수는 미승인이다. [정적 검사와 검토 연결](./delivery/iteration-03/full-candidate-v2-static-verification.json).
 - 원래 c10 계약/cf4 ledger와 주기02 toolchain 참조는 보존한다. active runner는 ledger에 넣지 않아 hash cycle을 피하고 별도 source/pre-gate에서 고정한다.
 
 ## 이어서 수행할 순서
 
-1. 실제 Git 상태와 새 v2 paired authoring review를 확인한다. 정확한 SHA가 바뀌면 과거 승인을 적용하지 않는다.
-2. runner-only 두 수정의8필드 계획과 독립 계획 검토를 먼저 작성한다: 공개 결과 생성 직전 runner 자체 SHA 재확인, 실제 watchdog5종의 total_seconds 부재에 대한 형식 적응(원래 시각/구간/예산 검증 유지). 승인 뒤 v2 경로·해시·리뷰 연결과 함께 수정하고 exact source 검토·관련 합성 재검증을 마친다. 아직 코드는 수정하지 않았다.
-3. 독립/TC exact source·paired pre-gates 이후에만 fresh490을 실행한다. 현재까지 이번 v2 후보의 SDK import/collection/test/SQL/service/main 실행은 없다.
-4. 실패 원인과 private 증빙을 보존하고 수정·재검토한다. 전건 통과와 독립 실제 결과 수용 뒤 실제 접수 UI를 연결하고 브라우저 시연한다.
-5. 변경을 검토·커밋하고 현재 브랜치에 push한다. 매 체크포인트는 새 화면 기능 유무·확인 위치·실제 검증·남은 한 가지를 먼저 전달한다.
+1. 실제 Git 상태와 최신131건 결과·독립 수용을 확인한다. runner SHA는 `c2ac31e5808909f04235b70e98be6f0a33810f5e57c588ada785d0847d30f5f6`. 정확한 소스를 바꾸면 관련 승인을 재사용하지 않는다.
+2. 전체 runner source 검토를 마치고 exact independent/TC execution pre-gates를 받는다. 단위 승인으로 전체 main을 실행하지 않는다. 두 결함·v2 경로/해시 연결은 구현/단위검증을 마쳤다.
+3. full pre-gates 이후 fresh490을 실행한다. 아직 실제 main/SDK/pytest collection/SQL/service/full490은 실행하지 않았다. 실행이 시작되면 실제 도구 session/handle과 private gate를 기록하고 동일 handle을 관찰한다.
+4. 실패 증빙·소유 자원 정리를 보존하고 원인 단계로 복귀한다. 전건 통과·독립 실제 결과 수용 뒤 저장 요청의 실제 접수 UI를 연결하고 브라우저 시연한다.
+5. 검토한 변경을 커밋/push하고 새 화면 유무·확인 위치·실제 검증·남은 한 가지를 먼저 전달한다.
 
 ## 유지할 경계
 

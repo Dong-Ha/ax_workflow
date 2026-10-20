@@ -1,0 +1,101 @@
+{
+  "kind": "ifpmic.delivery.iteration03.runner-v2-repair-result-review.v1",
+  "reviewed_utc": "2026-10-20T16:51:54.345132+00:00",
+  "reviewer": {
+    "agent_id": "/root/h2_evidence_amendment_review",
+    "independence": "Independent from runner/wrapper/test authors and execution operator; reviewed existing raw outputs without imports or execution."
+  },
+  "decision": "accept_131_cache_isolated_synthetic_units_only",
+  "verification": {
+    "path": "docs/ifpmic/delivery/iteration-03/runner-v2-repair-verification.json",
+    "sha256": "cf9ef3f6a239c47e4cf9abc9ae4580dd2f48f4793052db4a96683acc25223c1c",
+    "preserved_unchanged": true
+  },
+  "source_review": {
+    "path": "docs/ifpmic/delivery/iteration-03/runner-v2-repair-source-review.json",
+    "sha256": "dd226a255384615eddb8e4ecb819368812b9f5445ed59c5d3a47555f9f622842"
+  },
+  "plan_review": {
+    "path": "docs/ifpmic/delivery/iteration-03/runner-v2-repair-plan-review.json",
+    "sha256": "18f66d67251ce50f02642eb55942b29127373507d04f090a6b786a99e2cd5812"
+  },
+  "private_capture": {
+    "path": "workflow-artifacts/verification/agile/iteration-03/runner-v2-preparation/run_units.py",
+    "sha256": "a70a43267641448a23d27efe542d122e9cede8878abbc67d229733114389b054"
+  },
+  "raw_evidence": {
+    "result.json": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/runner-v2-unit-2026-10-20T16-50-04-254053Z/result.json",
+      "sha256": "faf98a223a341436bb8c5db310477c255c5b76f4ec2688eb9e008e52e6d5d389"
+    },
+    "stdout.log": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/runner-v2-unit-2026-10-20T16-50-04-254053Z/stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stderr.log": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/runner-v2-unit-2026-10-20T16-50-04-254053Z/stderr.log",
+      "sha256": "9bcf5dd394dbc9b682818f144602bf47dad4d6b70427013e86e95f29de8b1873"
+    },
+    "source-before.json": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/runner-v2-unit-2026-10-20T16-50-04-254053Z/source-before.json",
+      "sha256": "f54d96881f466004b9cc4fc4f1cdefa8a95f85ee4bf09ad133520251bdff6460"
+    },
+    "source-after.json": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/runner-v2-unit-2026-10-20T16-50-04-254053Z/source-after.json",
+      "sha256": "f54d96881f466004b9cc4fc4f1cdefa8a95f85ee4bf09ad133520251bdff6460"
+    },
+    "preservation-before.json": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/runner-v2-unit-2026-10-20T16-50-04-254053Z/preservation-before.json",
+      "sha256": "30b1204426dfb183ce2571455a4f03d209ef0c97507daa1273a22b49bd544346"
+    },
+    "preservation-after.json": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/runner-v2-unit-2026-10-20T16-50-04-254053Z/preservation-after.json",
+      "sha256": "30b1204426dfb183ce2571455a4f03d209ef0c97507daa1273a22b49bd544346"
+    }
+  },
+  "findings": [],
+  "evidence": {
+    "actual_results": {
+      "exit_code": 0,
+      "timed_out": false,
+      "passed": 131,
+      "retained": 119,
+      "new": 12,
+      "failed": 0,
+      "skipped": 0,
+      "reported_unittest_seconds": 0.519,
+      "test_id_set_sha256": "17a1c172e1ec63ab7c44117372ddb8f70829a9e84d128c23f84bb32c67fa07fe",
+      "comparison": "Parsed131 unique ... ok entries from actual stderr and its Ran131/OK terminal summary. Exact set equals current source AST,approved source-review IDs,raw expected_ids/actual_ids and public test_ids. Previous119 IDs are preserved exactly;only12 new module methods are added. stdout is empty."
+    },
+    "source_and_capture_integrity": "All7 raw file hashes equal the public pointers. Both source manifests equal all22 approved pins,raw result pins,public pins and current source bytes. Approval SHA equals the exact dd226a review and its start/end unchanged assertion. Runner c2ac31,TC b5b5b2 and capture a70a43 remain exact. Raw files are owned regular single-link0600;leaf/cache/tmp are owned nonsymlink0700. Cache is currently empty and pinned wrapper checks emptiness before/after.",
+    "preservation": {
+      "before_after_maps_identical": true,
+      "protected_hashes": 96,
+      "protected_inventory": 89,
+      "design_imports": 17,
+      "uploads": 2,
+      "environment_entries": {
+        "original32": 1777,
+        "qualified36": 3072
+      },
+      "baseline_comparison": "Saved before/after protected hashes and89 paths equal the pinned B01 selection;19 design/upload hashes equal the original source manifest;both full environment file/link maps equal the pinned accepted407 environment-before anchor. The pinned capture verifies anchor bytes and actual source/environment preservation. This is byte/inventory preservation evidence,not service qualification."
+    },
+    "bounded_behavior": "Pinned131-test code covers synthetic raw/fence/private-value checks,patched deadline/identity operations,the5 actual-schema/40-node text bindings,watchdog boundary/error guards and fixed runner file states. Only the previously approved2 short synthetic stale-pyc Python probes are permitted. Product/SDK/pytest/SQL/services and actual main are absent from the approved execution path; full_runtime_executed remains false."
+  },
+  "acceptance": {
+    "approved_131_synthetic_unit_proof": true,
+    "fresh_cache_and_22_pin_preservation_proof": true,
+    "whole_runner_source_approval": false,
+    "full_execution_pre_gate": false,
+    "actual_full490_or_runtime_acceptance": false,
+    "h2_or_iteration03_acceptance": false,
+    "goal_complete": false
+  },
+  "risks_and_remaining_uncertainty": [
+    "These131 synthetic methods establish only their exact guard/parser/schema scope. They do not establish actual native timing,authority/history/SQL causality,resource death/cleanup,collection completeness or privacy fidelity of a real490 run.",
+    "Whole-runner source review and exact independent/TC execution pre-gates remain separate mandatory steps. Actual fresh490,private raw/JUnit evidence and independent final review are still required; historical407 and this131 proof cannot substitute.",
+    "The public summary retains its pending-review status and is pinned unchanged;this separate record supplies the bounded independent acceptance without rewriting the reviewed bytes."
+  ],
+  "recommendation": "Accept this scoped131-unit proof and preserved original baseline. Proceed only to the separately requested whole-runner source review;grant no additional execution or product acceptance through this result review.",
+  "review_method": "Read-only raw log parsing,AST ID comparison,JSON/hash/mode/owner/cache and saved-baseline comparisons. No tests were rerun and no repository module,SDK,SQL,service or network was executed by the reviewer."
+}
