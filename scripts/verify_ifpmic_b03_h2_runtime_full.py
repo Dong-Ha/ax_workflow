@@ -502,8 +502,10 @@ def verify_progress(path: Path, phase: dict, normal_contract: dict) -> dict:
             raise RuntimeError('Extended case setup/body/cleanup limit exceeded')
         if identifier in exceptions and (durations['setup'] + durations['call'] > 215 or durations['teardown'] > 25):
             raise RuntimeError('Retained integration case body/cleanup limit exceeded')
-        if identifier in defaults and (durations['setup'] + durations['call'] > 25 or durations['teardown'] > 5):
-            raise RuntimeError('Default case setup/body/cleanup limit exceeded')
+        if identifier in defaults and (
+                durations['setup'] + durations['call'] > defaults[identifier]['setup_and_body']
+                or durations['teardown'] > defaults[identifier]['shared_cleanup']):
+            raise RuntimeError('Per-case setup/body/cleanup limit exceeded')
         elapsed.append(total)
         normalized.append({'case_id': identifier, 'elapsed_seconds': total,
                            'setup_seconds': durations['setup'], 'call_seconds': durations['call'],
@@ -686,6 +688,20 @@ def verify_postgres_lifecycle(path: Path, contract: dict) -> dict:
             'restart_observed': initial_pid != pid}
 
 
+def verify_phase_postgres_evidence(phase_id: str, lifecycle: Path, contract: dict) -> dict:
+    """Apply the pinned fixture reachability; absence is not invented PG proof."""
+    if phase_id not in ORDER:
+        raise RuntimeError('Unknown phase for PostgreSQL applicability')
+    if phase_id in ('h1_python', 'fixture_failure'):
+        if lifecycle.exists() or lifecycle.is_symlink():
+            raise RuntimeError('Unexpected PostgreSQL record in non-PG phase')
+        return {'applicable': False,
+                'reason': 'Pinned phase requests no PostgreSQL fixture; owned-resource and raw audits remain mandatory'}
+    if not lifecycle.is_file() or lifecycle.is_symlink():
+        raise RuntimeError('PostgreSQL lifecycle record missing or nonregular: ' + phase_id)
+    return {'applicable': True, 'lifecycle': verify_postgres_lifecycle(lifecycle, contract)}
+
+
 def verify_interpreter(run_owned_command, interpreter: Path, prefix: Path, expected_inventory: dict,
                        expected_sha: str, directory: Path, role: str) -> dict:
     code = (
@@ -745,9 +761,88 @@ def collect_private_temporal_evidence(observation_roots: list[Path],
             outcome_types_without_identity.add(outcome)
             return None
 
-    def visit(value):
+    registrations = {}
+    terminal_proofs = {}
+    killed_events = []
+
+    def identity_of(value):
+        pid, ticks = value.get('pid'), value.get('start_ticks')
+        if (type(pid) is int and pid > 0 and
+                (type(ticks) is int and ticks > 0 or
+                 type(ticks) is str and ticks.isascii() and ticks.isdecimal() and int(ticks) > 0)):
+            return pid, str(int(ticks))
+        return None
+
+    def register(value, path):
+        identity, role = identity_of(value), value.get('role')
+        if identity is None or not isinstance(role, str) or not role:
+            raise RuntimeError('Declared CLI registry lacks role or process identity')
+        key = (path.parent, identity)
+        if key in registrations and registrations[key] != role:
+            raise RuntimeError('Conflicting case-local CLI role registration')
+        registrations[key] = role
+
+    def terminal(value, path, *, declared=False):
+        identity, role = identity_of(value), value.get('role')
+        registered = registrations.get((path.parent, identity))
+        if registered is not None and role is not None and role != registered:
+            raise RuntimeError('Conflicting case-local CLI terminal role')
+        if declared:
+            if identity is None:
+                raise RuntimeError('Declared CLI terminal lacks process identity')
+            if path.name == 'process-journal.jsonl' and registered is None:
+                raise RuntimeError('Declared CLI journal terminal lacks case-local registration')
+            if role is None:
+                role = registered
+            if not isinstance(role, str) or not role or registered is not None and role != registered:
+                raise RuntimeError('Declared CLI terminal has unresolved or conflicting role')
+        code = value.get('exit_code', value.get('returncode'))
+        if type(code) is not int or code not in (0, 3, -9):
+            raise RuntimeError('Unexpected child exit oracle in private process evidence')
+        if value.get('absent') is not True or value.get('forced') is not False:
+            raise RuntimeError('Owned child process absence/forced-cleanup proof failed')
+        outcome = (role, code, 'SIGKILL' if code == -9 else None, False, True)
+        observed = observe_process(value, role, code, outcome[2])
+        if observed is not None:
+            key = (path.parent, observed)
+            if key in terminal_proofs and terminal_proofs[key] != outcome:
+                raise RuntimeError('Conflicting case-local CLI terminal observations')
+            terminal_proofs[key] = outcome
+
+    def visit(value, path, context=()):
         nonlocal fixture_unknown
         if isinstance(value, dict):
+            event = value.get('event')
+            journal = path.name == 'process-journal.jsonl'
+            # These exact source-shaped database observations are not CLI
+            # lifecycle proofs. Their actual PG checks remain separate.
+            if journal and event == 'service_stopped':
+                if (set(value) != {'event', 'role', 'pid', 'start_ticks', 'absent'}
+                        or value['role'] != 'postgres' or identity_of(value) is None
+                        or value['absent'] is not True):
+                    raise RuntimeError('Malformed PostgreSQL service observation')
+                return
+            if path.name == 'hung-driver-rollback.json' and context == ('pg_backend_after_kill',):
+                observed = value.get('observed_monotonic')
+                if (set(value) != {'backend_pid', 'role', 'absent', 'observed_monotonic'}
+                        or type(value['backend_pid']) is not int or value['backend_pid'] <= 0
+                        or not isinstance(value['role'], str) or not value['role']
+                        or value['absent'] is not True
+                        or type(observed) not in (int, float) or not math.isfinite(observed) or observed < 0):
+                    raise RuntimeError('Malformed PostgreSQL backend observation')
+                return
+            if journal and event in ('killed', 'killed_at_production_hook'):
+                expected_keys = {'event', 'pid', 'start_ticks', 'signal', 'absent'}
+                expected_keys |= {'role', 'exit_code'} if event == 'killed' else {'returncode'}
+                identity = identity_of(value)
+                role = registrations.get((path.parent, identity))
+                code = value.get('exit_code', value.get('returncode'))
+                if (set(value) != expected_keys or identity is None or role is None
+                        or value.get('role', role) != role or value['signal'] != 'SIGKILL'
+                        or type(code) is not int or code != -9 or value['absent'] is not True):
+                    raise RuntimeError('Malformed or unregistered intermediate CLI kill event')
+                killed_events.append((path.parent, identity, role))
+                return
             for key, item in value.items():
                 normalized = key.lower()
                 if normalized.endswith('_sha256') and isinstance(item, str) and re.fullmatch(r'[0-9a-f]{64}', item):
@@ -760,40 +855,64 @@ def collect_private_temporal_evidence(observation_roots: list[Path],
                     if item in ('QUEUED', 'OPEN', 'queued', 'open', 'unknown', 'owned', 'failed_closed', 'passed'):
                         statuses.add(item)
                 if isinstance(item, (dict, list)):
-                    visit(item)
+                    visit(item, path, context + (key,))
             role = value.get('role')
-            exit_value = value.get('exit_code', value.get('returncode'))
+            code = value.get('exit_code', value.get('returncode'))
             absent = value.get('absent')
-            forced = value.get('forced')
-            if isinstance(role, str) and (type(exit_value) is int or absent is not None):
-                if type(exit_value) is int and exit_value not in (0, 3, -9):
+            if isinstance(role, str) and (type(code) is int or absent is not None):
+                if type(code) is int and code not in (0, 3, -9):
                     raise RuntimeError('Unexpected child exit oracle in private process evidence')
-                if absent is True and forced is False and type(exit_value) is int:
-                    signal_name = 'SIGKILL' if exit_value == -9 else None
-                    observe_process(value, role, exit_value, signal_name)
-                elif absent is False and ('ownership_status' in value or role.startswith('injected-')):
+                if absent is False and ('ownership_status' in value or role.startswith('injected-')):
                     fixture_unknown += 1
-                else:
-                    raise RuntimeError('Owned child process absence/forced-cleanup proof failed')
+                    return
+            known_cleanup = path.name in ('process-cleanup.json', 'owned-process-cleanup.json')
+            declared = (journal and event == 'stopped' or known_cleanup and
+                        any(key in value for key in ('exit_code', 'returncode', 'forced', 'absent')))
+            if declared:
+                # Proper-role cleanup summaries without ticks remain explicitly
+                # unidentified outcomes. Never invent ticks or join by PID alone.
+                needs_identity = journal or not isinstance(role, str)
+                terminal(value, path, declared=needs_identity)
+                return
+            if isinstance(role, str) and (type(code) is int or absent is not None):
+                terminal(value, path)
         elif isinstance(value, list):
             for item in value:
-                visit(item)
+                visit(item, path, context)
 
-    for root in observation_roots:
-        if not root.exists():
-            continue
-        for path in sorted(root.rglob('*')):
-            if not path.is_file() or path.is_symlink():
-                continue
-            evidence_files += 1
-            if path.suffix == '.pbseq' or 'history' in path.name.lower() and path.suffix not in ('.json', '.jsonl'):
-                hashes['history'].add(sha(path.read_bytes()))
-            elif path.suffix == '.json':
-                visit(read_json(path))
-            elif path.suffix == '.jsonl':
-                for line in path.read_text().splitlines():
-                    if line.strip():
-                        visit(json.loads(line))
+    paths = [path for root in observation_roots if root.exists()
+             for path in sorted(root.rglob('*')) if path.is_file() and not path.is_symlink()]
+    # Only declared source contexts register roles, never arbitrary JSON fields.
+    # Read these small registries first so filesystem ordering cannot affect joins.
+    for path in paths:
+        if path.name == 'process-journal.jsonl':
+            for line in path.read_text().splitlines():
+                if line.strip():
+                    value = json.loads(line)
+                    if value.get('event') == 'started':
+                        register(value, path)
+        elif (path.suffix == '.json' and
+              (path.name.startswith(('owned-', 'stopped-')) or path.name == 'processes.json')):
+            value = read_json(path)
+            if path.name == 'processes.json':
+                if isinstance(value, dict) and value.get('kind') == 'ifpmic.b03.h1.processes.v1':
+                    for row in value.get('processes', []):
+                        register(row, path)
+            elif isinstance(value, dict) and 'role' in value and 'pid' in value:
+                register(value, path)
+    for path in paths:
+        evidence_files += 1
+        if path.suffix == '.pbseq' or 'history' in path.name.lower() and path.suffix not in ('.json', '.jsonl'):
+            hashes['history'].add(sha(path.read_bytes()))
+        elif path.suffix == '.json':
+            visit(read_json(path), path)
+        elif path.suffix == '.jsonl':
+            for line in path.read_text().splitlines():
+                if line.strip():
+                    visit(json.loads(line), path)
+    for scope, identity, role in killed_events:
+        if terminal_proofs.get((scope, identity)) != (role, -9, 'SIGKILL', False, True):
+            raise RuntimeError('Intermediate CLI kill lacks matching case-local authoritative cleanup')
 
     h1_result_path = h1_root / 'integration/result.json'
     if not h1_result_path.is_file():
@@ -1244,10 +1363,11 @@ def main(*, start=None, release_bootstrap=None) -> int:
             # Full progress, fixture causal evidence, timing plugin files and
             # PG/session shutdown are independently source-review requirements.
             # Require their private records; do not treat a parent exit as proof.
-            if name != 'h1_python':
-                if not lifecycle.is_file():
-                    raise RuntimeError('PostgreSQL lifecycle record missing: ' + name)
-                normalized_pg.append({'phase': name, **verify_postgres_lifecycle(lifecycle, contract)})
+            pg_proof = verify_phase_postgres_evidence(name, lifecycle, contract)
+            check['postgres_applicability'] = {key: value for key, value in pg_proof.items()
+                                               if key != 'lifecycle'}
+            if pg_proof['applicable']:
+                normalized_pg.append({'phase': name, **pg_proof['lifecycle']})
             if name == 'h1_python':
                 check['service_evidence'] = check_h1_evidence(observations,
                     [case_id(nodeid) for nodeid in phase['node_ids']])

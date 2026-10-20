@@ -11,11 +11,17 @@
 
 전체 필수 단계 완료율은 **2/16=12.5%**다. 같은 비중의 단계 수이며 작업량 추정치는 아니다. 이번 세션에서 두 주소의 HTTP200을 확인했다. 새 화면 기능이나 새 브라우저 검증 결과는 없다.
 
-## 최신 실행기 복구 결과
+## 최신 결과:140개 합성 단위 통과·독립 수용
 
-두 결함과v2 binding을 수정하고 **131/131 합성 단위(기존119+새12)**를 실제 실행했다. [정확한 소스 승인](./runner-v2-repair-source-review.json) 뒤 private cache 격리로 실행했으며, [결과](./runner-v2-repair-verification.json)와 [독립 수용](./runner-v2-repair-result-review.json)이 exact131 IDs·skip0·22개 입력/소스·원본96/89/17+2·환경1777/3072 전후 보존을 확인한다. 아직 전체 main/실제490은 실행하지 않았다.
+최초 두 결함·v2 binding을 고쳐131건을 수용받은 뒤, [전체 소스 검토 첫 시도](../../evidence/b03/attempts/h2-runtime-full-runner-source-review-v2-attempt-01.json)가 입력 불일치3종을 거절했다. 다음을 수정하고 현재 소스로 **140/140(기존131+새9)**을 실행해 [독립 수용](./full-input-repair-result-review.json)을 받았다.
 
-공개 직전 runner 자체 SHA 검사는 구현됐고 초기 source gate도 고정 regular/nonsymlink 파일을 검사한다. 실제 watchdog5종·40node의 total 누락은 검증된 finish-start에서만 파생하며 명시된 잘못된 total·unknown kind·다른 kind의 total 누락은 거절한다. exact/초과 예산·기록 오류 회귀가 통과했다. 새 TC는 별도 파일이므로 기존 ledger104·machine38 pins를 바꾸지 않았다.
+- extended49개에 default25+5를 재적용하던 오류를 고쳐 원래 ID별215+25/25+5와 기존 integration2개 예외를 유지한다.
+- PG를 요청하지 않는 h1_python/fixture_failure만 비적용으로 기록하고 다른13 phase는 실제 PG lifecycle을 요구한다. 가짜 DB나 기록을 만들지 않는다.
+- typed journal의 같은 case role/PID/start_ticks와 실제 최종 정리 증빙을 결합한다. 중간 kill은 실제 최종 정리가 없으면 거절한다. PG service/backend는 CLI 수에 넣지 않는다. 식별 정보 없는 요약·명시된 unknown fixture는 물리 process 수에0을 기여하며 실제 종료로 추정하지 않는다.
+
+[계획](./RUNNER-FULL-INPUT-REPAIR.md) → [독립 계획 검토](./full-input-repair-plan-review.json) → [정확한 소스 승인](./full-input-repair-source-review.json) → [실제140 결과](./full-input-repair-verification.json) → [독립 결과 검토](./full-input-repair-result-review.json)를 남겼다. 24개 exact 입력/소스·빈 private cache·보호 AX96/89·설계17+원본2·환경1777/3072의 전후 일치를 확인했다. ledger104/machine38 pins와490 ID는 바꾸지 않았다.
+
+전체 runner source 재검토·paired execution pre-gates·실제 fresh490은 아직 남았다. 새 화면 기능은 없다. 이전 [131건 결과](./runner-v2-repair-verification.json)와 [독립 수용](./runner-v2-repair-result-review.json)은 e77e2fa의 정확한 소스 범위로 보존한다.
 
 ## 이번에 해결한 장애
 
@@ -23,11 +29,11 @@
 
 이 결과를 별도 [v2 ledger](../../evidence/b03/h2-runtime-full-integrated-ledger-v2.json)와 [v2 계약](../../evidence/b03/h2-runtime-full-execution-contract-v2.json)에 연결했다.104개 현재 소스(103 code+machine JSON),490 ID·25업무 의무+5fixture 전제·15phase를 고정한다. 독립·TC의 정확한 작성 검토가 완료됐으며 실제 실행 승인은 포함하지 않는다. 원래 case/phase 예산을 유지하고, 원본 감사 overhead200초를 포함해 전체 cap은16220초다. 기존 c10/cf4와 주기02 참조는 보존했다.
 
-정적 검토에서 실행기 자체의 해시가 마지막 공개 결과 생성 전에 재확인되지 않는 누락도 확인했다. v2 계약에 그 검사를 필수로 명시했다. 또한 실행 시간 검사기가 실제 watchdog5종에 없는 total_seconds 필드를 필수로 요구하는 불일치를 확인했다. 원래 monotonic 시각·구간 길이·예산 검증을 유지하면서 실제 형식에 맞추는 runner 수정이 필요하다. 두 수정의 계획·정확한 소스 검토·관련131개 합성 재검증은 위 최신 결과에서 완료했다. 전체 실행 승인은 별도다. 파일 대조·작성 승인은 실제 실행 통과가 아니다.
+정적 검토에서 실행기 자체의 해시가 마지막 공개 결과 생성 전에 재확인되지 않는 누락도 확인했다. v2 계약에 그 검사를 필수로 명시했다. 또한 실행 시간 검사기가 실제 watchdog5종에 없는 total_seconds 필드를 필수로 요구하는 불일치를 확인했다. 원래 monotonic 시각·구간 길이·예산 검증을 유지하면서 실제 형식에 맞추는 runner 수정이 필요하다. 두 수정은131개 단계에서 완료했고, 이후 추가3종 수정까지140개로 재검증했다. 전체 실행 승인은 별도다. 파일 대조·작성 승인은 실제 실행 통과가 아니다.
 
 ## 남은 순서와 완료 조건
 
-1. **실행 후보 연결:** 완료된 v2 계약·ledger·raw rules paired 작성 검토 확인 → 완료된 두 수정·131 합성 수용 확인 → 전체 runner source review → paired execution pre-gates.
+1. **실행 후보 연결:** 완료된 v2 계약·ledger·raw rules paired 작성 검토 확인 → 완료된 수정·140 합성 수용 확인 → 전체 runner source review → paired execution pre-gates.
 2. **필수 실행 검증:** 승인된 현재 후보의 fresh490. 누락·중복·실패·오류·skip0, 실제 SQL/history/resource/환경/개인정보 검증, 독립 실제 결과 수용.
 3. **화면 연결:** 저장한 작업의 실제 접수·run/receipt·QUEUED 표시. 정상·중복 접수·권한 오류·새로고침 유지가 같은 API/DB 작업을 가리켜야 한다. QUEUED는 접수이며 업무 완료가 아니다.
 4. **전달:** 브라우저 결과·URL·화면 캡처·직접 해볼 순서·제한·커밋/push를 함께 제공한다.

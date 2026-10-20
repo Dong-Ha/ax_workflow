@@ -1,0 +1,42 @@
+{
+  "kind": "ifpmic.b03.h2.full-input-repair-plan-review.v1",
+  "verdict": "approve_implementation_and_source_review_only",
+  "reviewed_utc": "2026-10-20T17:03:26.447897+00:00",
+  "reviewer": {
+    "agent_id": "/root/h2_evidence_amendment_review",
+    "independence": "Independent from Code-dev plan/runner and TC test authors; authored rejected whole-source attempt and prior bounded unit reviews."
+  },
+  "plan": {
+    "path": "docs/ifpmic/delivery/iteration-03/RUNNER-FULL-INPUT-REPAIR.md",
+    "sha256": "25e83093cdda0062148f2c54cfa7b45209e4acf3508f0378b7087cb36559dc0a"
+  },
+  "rejected_whole_source_attempt": {
+    "path": "docs/ifpmic/evidence/b03/attempts/h2-runtime-full-runner-source-review-v2-attempt-01.json",
+    "sha256": "80af8596c0923c04fc2fe57113f8937d3241f9a2c2f2018f07bf35c697ffdadf"
+  },
+  "findings": [],
+  "evidence": {
+    "three_bounded_repairs": "The plan covers only per-ID progress caps,exact2 non-PG phase applicability and typed process observation/terminal classification. Runner and existing non-runtime TC file may change;actual producer,104 ledger pins,38 machine pins,490 IDs,25+5 obligations,case/phase/16220 outer limits and all runtime oracles remain unchanged. A new private capture wrapper is separately source-reviewed before use.",
+    "eight_verification_fields": "All6 stages specify purpose,target,method,agent,pass criteria,expected result,evidence and recovery. Expected result/evidence share a column while remaining explicit. The plan separates implementation/source review,exact scoped unit authorization,independent actual unit-result review and later whole-source/paired full execution gates.",
+    "progress_and_pg": "Use exact83 per-case ledger budgets,retain49 extended215+25 and34 default25+5 plus historical retained exceptions and strict timing/order/JUnit/watchdog predicates. Only h1_python/fixture_failure are non-PG;unknown phases or PG artifacts there reject. The remaining13 phases retain mandatory actual PG lifecycle proof;all owned-resource/raw/thread/socket checks remain.",
+    "case_local_typed_process_boundary": "The amended final section resolves the initial ambiguity:join only source-declared case-local started/stopped journals and known cleanup contexts,with actual path/schema binding. Never join role/identity globally or across cases and never promote arbitrary roleless JSON by its PID/ticks/exit keys. Preserve existing strict proper-role terminal handling. H1 _ProcessJournal processes.json final registry (test_temporal_toolchain.py:430-502) differs from roleless result.json.cleanup helper outputs (:793-795);unrelated roleless/DB/helper metadata contributes0 CLI processes. This prevents new requirements for terminal fields that those source records do not write.",
+    "killed_and_db_observations": "A typed killed event requires the same case registered role/canonical PID/ticks and actual authoritative -9/absent=True/forced=False terminal. Missing/mismatched/conflicting/forced terminal proof rejects;no forced field is invented in intermediate producer data. Exact PostgreSQL service_stopped chronology and hung-driver pg_backend_after_kill are validated separately and never published as CLI identities/SQL roles. Same physical identity is deduplicated only after valid case-local proof.",
+    "summary_and_completeness_scope": "The plan explicitly avoids promoting every registry entry to a new CLI-completeness obligation. Unresolved declared CLI/journal proof fails;existing identityless terminal summaries stay unidentified outcome types with0 physical count. Normal runtime still requires exactly3 distinct identities and its strict terminal oracles. No extra actual process or absence is inferred from helper metadata.",
+    "normal_error_boundary_regression": "Required new source-shaped tests cover valid joins/context classification,missing/conflicting identity-role/terminal proof,intentional SIGKILL vs forced cleanup,DB exclusion/dedup/anonymization,PG applicability and missing/unexpected records,extended/default exact and exceeded caps. All131 prior methods remain mandatory,with actual ID capture and no skip. Future exact source review must verify the real test cases rather than infer coverage from this plan.",
+    "isolation_and_omission": "Units require separate exact source approval,fresh private cache,timeout60,approved discovery module inventory,review/source stability and96/89/17+2/1777/3072 before-after preservation. Product/SDK/pytest/SQL/services/actual main remain forbidden. UI/build/browser omission is bounded to unchanged product source;fresh490/UI/originalAT32/full acceptance obligations remain."
+  },
+  "risks_and_remaining_uncertainty": [
+    "This is a design/implementation authorization only. Source review must check concrete context/path schemas,case-local keys,strict terminal rejection and all branches before any synthetic execution. Generic key-shape heuristics or broad missing-field exemptions would violate this approved boundary.",
+    "Typed lifecycle registration/terminal joins and global physical-count dedup are different operations;the latter must not supply a missing terminal from another case. Unknown fixture handles and nonphysical summaries must stay explicitly nonphysical.",
+    "The accepted131 source/result files remain historical exact evidence. New runner/TC/wrapper bytes require new source pins,approved synthetic regression evidence and independent result review;none of this authorizes actual full execution."
+  ],
+  "recommendation": "Implement only the approved3 runner classes and corresponding TC/capture changes,then obtain exact scoped source review before units. Preserve rejected whole-source attempts and original131 proof. Repeat whole-runner source review and paired pre-gates separately before fresh490.",
+  "authorization": {
+    "bounded_implementation_and_source_review": true,
+    "synthetic_unit_execution": false,
+    "product_sdk_pytest_sql_services_or_main_execution": false,
+    "active_full_source_or_pregate_approval": false,
+    "h2_or_goal_acceptance": false
+  },
+  "review_method": "Read-only exact plan,actual producer/registry/helper source context and prior review comparison;no module imports,tests,collection,SQL,SDK,services or network."
+}

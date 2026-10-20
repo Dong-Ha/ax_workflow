@@ -1,0 +1,229 @@
+{
+  "kind": "ifpmic.b03.h2.runtime-full-runner-source-review.v2.attempt-01",
+  "verdict": "request_changes",
+  "reviewed_utc": "2026-10-20T16:58:41.345427+00:00",
+  "reviewer": {
+    "agent_id": "/root/h2_evidence_amendment_review",
+    "independence": "Independent from Code-dev runner/contract/ledger and TC test authors; authored prior independent mapping/source/unit-result reviews. No runtime executed by reviewer."
+  },
+  "contract_sha256": "d2f0ef941e62cf6a6597b39a9eda676161cd616d723403a34f16a2903a91bfe6",
+  "ledger_sha256": "1512b767aa06961d8f80ed474a4bf44929d9db430a05317447eb49f4d71a0655",
+  "runner_sha256": "c2ac31e5808909f04235b70e98be6f0a33810f5e57c588ada785d0847d30f5f6",
+  "raw_rules_sha256": "8c948efa993a1ba6837af28746af42ad532342eca5d5b299ac133f0377c0b74c",
+  "source_pins": {
+    "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules.json": "8c948efa993a1ba6837af28746af42ad532342eca5d5b299ac133f0377c0b74c",
+    "scripts/ifpmic_h2_artifacts.py": "712d5800835cd8f5e8f3ac513e2dd44b8f0fb2d035e83775ff989f4f24940b47",
+    "scripts/ifpmic_h2_fences.py": "53836724368ab3dac9e7ccaeb6e603a3a2124926e73db452448bfd608d746a9f",
+    "scripts/ifpmic_h2_full_raw_adapter.py": "04efd3a7851e756a275df58efc83828df5cf7cf30ce51240b8f7721c918d8c46",
+    "scripts/ifpmic_h2_gate_budget.py": "5bb8fe646c499a371d160e057d3a049ecc845123efe01a7aba411c7521929f77",
+    "scripts/ifpmic_h2_raw_audit.py": "3670a6889a76596caaf3de474e607631228f27f7824ee0dea201dfea262f2b8d",
+    "scripts/ifpmic_h2_raw_evidence.py": "7b02c3b6a5713d6abe0e589d75835f5f6519e2aa5daee690e811497f20b7b4fe",
+    "scripts/ifpmic_temporal_toolchain.py": "8cadab76ccfa1f93392cf759991d6906415c75ed5a116093c53aee9f4a445564",
+    "scripts/verify_ifpmic_b03_h1.py": "9c20131082af1467f682d31fabb47daf359867aa5939ad818d97b7ac4c0d5573",
+    "scripts/verify_ifpmic_b03_h2_runtime_full.py": "c2ac31e5808909f04235b70e98be6f0a33810f5e57c588ada785d0847d30f5f6",
+    "scripts/verify_ifpmic_b03_h2_runtime_normal.py": "e38d62b8c64c2c8ce5e52df04ceac37e90ce802fe3d8c710a69d2b08f23c8728",
+    "scripts/verify_ifpmic_g1.py": "0f6603de4b0de546ccf2c23bc663c0568c2a178c8c19e31812c68b10a61e6d9b",
+    "scripts/verify_ifpmic_g4.py": "ad9b66b7463b84f22227d8ba924b42628f8abb463d0873ac9a90ab013708c13a",
+    "services/ifpmic_api/__init__.py": "19e632c5a93ee339f45313d5f6678de2a187286b159c258d1f70f1cf2cede9b5",
+    "services/ifpmic_api/app.py": "a65c3d44a14ecae7b819e5042d4f490ce68c8b9b5f5962d1b5f2bbfe52fef192",
+    "services/ifpmic_api/auth.py": "9fef8084e8b11a7e1d0929a1842ab4fdddb0361adcbaa70700529a5e9999a887",
+    "services/ifpmic_api/authority.py": "c1f8c91985f119b6435fc175cf21cc350c54ef2ba47959c4526bb22e6afa6734",
+    "services/ifpmic_api/catalog.py": "65cfaae738728a957ba73587bdc3caaa582a90650624bb1c31bd11f66fb2db1f",
+    "services/ifpmic_api/errors.py": "374b49dc97c616d8e4c9432d997d5c9bd9b4a542f236f451a3e43ae92d16e967",
+    "services/ifpmic_api/execution_activities.py": "ac81ad4ba4f5fad22bb2880f65cf0a833b78e4c8f8e90729833b60d14cdf9c2c",
+    "services/ifpmic_api/execution_dispatcher.py": "7baf91290938b3159b2e200e6fde8f81db5ec2d7b117351e03f689bbc75db209",
+    "services/ifpmic_api/execution_identity.py": "65927a0278db1ba9af218a777d692d87e1a4d847cdce1546a45c7ead8ef564f4",
+    "services/ifpmic_api/execution_manifest.py": "0f08e5c86992edc9ee9b62b19d50f981282d125e39810e0f0d6e75d39bfd07b6",
+    "services/ifpmic_api/execution_protocol.py": "543c801e902e28b1ada451aa98196275ccb271246c2772837386b7e7aca2c965",
+    "services/ifpmic_api/execution_runtime.py": "49c0c6208e62b26e808ecffadf278dd9c7cff45134a47b905d3a4f60987c4b08",
+    "services/ifpmic_api/execution_store.py": "2bdbc8b457a2da1f78d73c8e3ddda5059962a5931b154423a681a7cbb88d71bd",
+    "services/ifpmic_api/execution_temporal.py": "886d40d4dcb0e6e916f5cb76e5d514ce5890d2cd5a7f7069acafe84cfed1cea2",
+    "services/ifpmic_api/execution_workflow.py": "78f1a408ac6e80d56294c488e8bde434b03bddb1d17ed19278bfb87d5e85b3d7",
+    "services/ifpmic_api/execution_workspace.py": "d2794d8a8f20b78c6fe71ea36d2563c876a7372a14acd2e0a1944e2aff5fab05",
+    "services/ifpmic_api/jobs.py": "0538e460a6be42e3129d2e8d5e9f262bba357e621e0b5e800f4495ebdf99ecf9",
+    "services/ifpmic_api/migrate.py": "36518fdd4d296455947df76fd72bf11d68aa44317549bd527037499b98a9eb86",
+    "services/ifpmic_api/migrations/001_initial.sql": "cf0437a5f32e1589e4ea821afbb2ef2480d780a276667880aa9a08a0f4c77f12",
+    "services/ifpmic_api/migrations/002_auth_retention.sql": "95c01f06eb586e0c1067f04672edfed8e0a11215752ad859ac9e4744da5a504e",
+    "services/ifpmic_api/migrations/003_workflow_execution.sql": "5ef29521944e18551728dd285ce3ae21fa03c2b06f77c25430da6acb0ce1f102",
+    "services/ifpmic_api/migrations/004_prebinding_incident.sql": "9a7651ab063901e69a77f4b825dd21544dc018ed01941dc3a1bc76f8a65b541f",
+    "services/ifpmic_api/oidc.py": "78bc0d3194a987fe2232595e21719dc5dee2f79bbe41faeb9fcb8597a1f24478",
+    "services/ifpmic_api/request_contract.py": "ad88f756ce4bf526bb3c2d89dab64765bcfc42ab7f8b2832dcb012b271e07fe0",
+    "services/ifpmic_api/requirements-temporal.lock": "ccbbf7a8aab39cd80861f607afd4994bf461d07cbf592f6acfcc492e63ff85c6",
+    "services/ifpmic_api/requirements-test.in": "738049ca9fcfa198dc9919ebc10d0b877c77c910414f620b68780d0b7195c52e",
+    "services/ifpmic_api/requirements.in": "9d1622218da6e1cfe55b1f22db7bd771f421e54176653e00168e726d73272a00",
+    "services/ifpmic_api/requirements.lock": "6c8c950820a8c3ae9dea250e4080bc9dab09db17663e3d50118c5ac29211357e",
+    "services/ifpmic_api/serve.py": "2e45b6385ad15068f6d203e11caa7d447d4223aaefc9dce718aa57d55da3fe7e",
+    "services/ifpmic_api/settings.py": "2974a462c9a60e05faf8ae7c1b684090d33adfddc1f2d24e1b7638074d36eb02",
+    "services/ifpmic_api/snapshot_bridge.py": "743f357fed62a37770d4bfef2a3321fab649b25a3a1b040f64d61bec628443e8",
+    "services/ifpmic_api/workspace.py": "ad3e29f27ee20bc82eff9afcf51d9bb5ef6374d50b69bcf8fa508d81ecb60f67",
+    "services/ifpmic_api/workspace_fs.py": "77e22fe789229841b4883fd2d1606964d468760a25d3cac4ea83d557ce3c5893",
+    "tests/ifpmic_api/accepted_start_dispatcher_child.py": "87c6cf61d94188f5733e73fc02e8d3d2caeb78f4a802a6455a501317a6f859eb",
+    "tests/ifpmic_api/conftest.py": "dd3885f66ccc29fc987f4fa20dbdba0481a95c377f227c5ac17663f0f63c4b8f",
+    "tests/ifpmic_api/gate_progress.py": "2f902b38ff0436f3f85d3a9a1341f8b530c8b0d3f5211dfdd56dba37ae8a07e4",
+    "tests/ifpmic_api/h2_activity_runtime_boundary_child.py": "c140c731869ce13a4e3a13306a7e9bfa48ff1233ac1ea50fdef016020449f281",
+    "tests/ifpmic_api/h2_activity_runtime_case_budget.py": "34df11020b89f884207fd8ebdb8aef3e0d1acf452c1429bb9ec2d4735af3da4c",
+    "tests/ifpmic_api/h2_api_crash_child.py": "29100b07e82334a2fc3193fbc55c784e7ede69cb4f0aa6dc60a4152e2d0cd4db",
+    "tests/ifpmic_api/h2_crash_case_budget.py": "b382b7096b4f3abb73357f851804a8f2427ab36971a0641e49e25ce045b457b5",
+    "tests/ifpmic_api/h2_dispatcher_crash_support.py": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472",
+    "tests/ifpmic_api/h2_fixture_cleanup.py": "99b277b7532ebc0e12d80dacd40d7b3e6a2af7f7aebfc46c93b35c3a04c50500",
+    "tests/ifpmic_api/h2_fixture_failure_case_budget.py": "503a1fc22d2ddece87fa83336fc5c26b003c094a7cf793339d3dbe0d61a06791",
+    "tests/ifpmic_api/h2_foreign_dispatcher_child.py": "4a3bcf89bc86892f259f47f868e734885e3ed26a4c7cfe30274aa90bdf5bb913",
+    "tests/ifpmic_api/h2_native_bounds.py": "deaae9cfc75ac6021bde78f66122ddfaca02283f8f29a49a2d1bff9d2fe7a3fb",
+    "tests/ifpmic_api/h2_private_values.py": "ea2e828b0956f5e5bf9dd7f3c35441b948e1d0d17a49367b1d6ddd0c039cf86e",
+    "tests/ifpmic_api/h2_runtime_case_budget.py": "d33f8de5ad0e9b85435642c1d974b3c055f47f627d8db45092231d9132dd2ed1",
+    "tests/ifpmic_api/h2_snapshot_evidence.py": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c",
+    "tests/ifpmic_api/h2_started_deployment_case_budget.py": "305e2991d642804cf23f223ec875783a1df3517ba58f88e805cdbf121d7f1f35",
+    "tests/ifpmic_api/h2_startup_case_budget.py": "35e8b7431c0f54e269392f5a958628f39cce1ae1039e1ea37bee318a2ae7a0a7",
+    "tests/ifpmic_api/h2_transport_boundary_child.py": "ddac239eb8244b08671922c5cee255e608ad2c4589099499c1f3dd7ccc796300",
+    "tests/ifpmic_api/h2_transport_case_budget.py": "a507a9e5a00b0bfbd061ca1bf59693315ad09dcf95d5b9c84bc5a987ad8af19a",
+    "tests/ifpmic_api/h2_window_case_budget.py": "da04f059de0e1b487b40a50f997797874e7373947f5dc251fc88a138a5231f19",
+    "tests/ifpmic_api/h2_worker_api_case_budget.py": "afce78ccbb4988dcb9028ba75ddb852f71a74cdfb1a4868d6601dd8823635f35",
+    "tests/ifpmic_api/h2_worker_crash_child.py": "003ba93a06fb3d5a81c0661e7c68ae4cfc56b95fb70c9bbf8afdd2c45b83b4cd",
+    "tests/ifpmic_api/h2_workspace_activation_case_budget.py": "3ac6604aa1921b011bd6b7016129e94c918776f5b97eefa4a1e1bb1eee8c9ff8",
+    "tests/ifpmic_api/jobs_fixture.py": "b8fefc39f3005b3a662124ae3182cee4e7a293e18dd4e84d18facd09c0e0d539",
+    "tests/ifpmic_api/oidc_provider.py": "38c4e014c16cf43bc28ff384999dcc8468d0e6ac0cbcc92c1a69b2d4cccd84e0",
+    "tests/ifpmic_api/response_loss_proxy.py": "b6f8ca62f21724bf26aac6395528092257e7c48b729d19df02adf7281b9ed512",
+    "tests/ifpmic_api/temporal_toolchain_fixture.py": "495278f52a5b6c539cd2b846d59e65c2a9b6cacf87f6e5bdfb36fab1d6ab3906",
+    "tests/ifpmic_api/test_accepted_start_response_loss.py": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8",
+    "tests/ifpmic_api/test_auth.py": "a5da4f11401b0da6d43323a28a3fb82708680b2a611d56f62b1b77321d3e190a",
+    "tests/ifpmic_api/test_environment.py": "52f9c4eb67faef6022b926a543ad0a38b8d792e1966055a367cfdfff00d6ea69",
+    "tests/ifpmic_api/test_execution_manifest.py": "7124433d0642afaa7b44a1a7f18b2548aa3adf2497e367843463ddeea8e84c80",
+    "tests/ifpmic_api/test_execution_protocol.py": "e7e80577f40275529957cae9ef352a006c052ab5a27aa4310a65ca137b86535a",
+    "tests/ifpmic_api/test_execution_workspace.py": "666d8d4f233022b233c928ec6048a1ea7a91c6449331afc2b1d51e0551623bb0",
+    "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py": "3c5bff7d8f858cad04665b850124f04bdab3684b7732592aad69dc2f8fda58f7",
+    "tests/ifpmic_api/test_h2_dispatcher_crashes.py": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52",
+    "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py": "c0dd1e2a3e732ceea482e286a0f97bbb270dfab4040d88eff0403efc846e8688",
+    "tests/ifpmic_api/test_h2_reconciliation_window.py": "7fe6f3856b408d8d1f1e9fefc58ae47db00cfe1f8f5b45b41836523c63881a01",
+    "tests/ifpmic_api/test_h2_runtime_normal_flow.py": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d",
+    "tests/ifpmic_api/test_h2_runtime_restart_and_history.py": "606db627f5efd4ba6f9158da6ef538b95fe70d77444cb0775191265a10a2b546",
+    "tests/ifpmic_api/test_h2_runtime_startup_rejections.py": "80376fad5e864c4ac07cc0fc1cf75fce205d06da64f22e74a67b542ca60fb1b1",
+    "tests/ifpmic_api/test_h2_started_deployment_boundaries.py": "034ae6eb4399d8e4b906ffc27401d2b1d4d3799e44159b7a711d6e174c25bbdf",
+    "tests/ifpmic_api/test_h2_transport_boundaries.py": "6679eea681edd6f847e18aa75f1cee4d44f230d7ac9e7b88bc6253cbe5918372",
+    "tests/ifpmic_api/test_h2_worker_api_crashes.py": "9ad3c1be60c3975cfe3a30fab972463361ac90c8e5f5b3a47461307d20ef35d3",
+    "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py": "ad48c0a6dd84d08e2839a9ba5a4b3d4f8b4cad82df99e0a090ae5d4387eb2f2f",
+    "tests/ifpmic_api/test_jobs.py": "dc96141956bb93ff1d3b06214bf4d176265cea654c3f2235f4e281b071287a28",
+    "tests/ifpmic_api/test_migrations.py": "c5e9a8419fd6658af961a189f7764baedfd1e3cafce9393efe3d373d7151d2a9",
+    "tests/ifpmic_api/test_prebinding_incident.py": "789ea964c02a52cf9f311225a8d05b2fff0abeb195dedd8da63fccc1ab9f823e",
+    "tests/ifpmic_api/test_snapshot_bridge.py": "1f93fe8b5bf02545f1e04c0c2c555bdf9582d2da477a44a3abac6b51ad26d705",
+    "tests/ifpmic_api/test_temporal_toolchain.py": "b17cd7b100938286ca7f68d3d4e24b9ba68547fd82ee2bd38a8d55abdccd2d6a",
+    "tests/ifpmic_api/test_workflow_schema.py": "b76ebd44dc6e98323501fea1c03e3f5c1838484b3f7b359693a2e5ef52159224",
+    "tests/ifpmic_api/test_workspace.py": "46502aef6e69b3525f44b74e8fac6b9fa6d2ce199285365d7a013e85c30f2552",
+    "tests/ifpmic_api/workflow_schema_fixture.py": "dd1eba1754a8985dd704f0ed63271cc73beca8b03c72aaa2f14acdd41e5e3681",
+    "tests/ifpmic_api/workspace_fixture.py": "66b0d11faaa343542fe27e1254e0ed28a968d73518a7a1ac2aab106e4ef126b6",
+    "tests/ifpmic_evidence/test_full_runner_guards.py": "ac2219a1854783233a45bc870e0ba9e1a1233b65d9fd82af3ebe690e8a93601b",
+    "tests/ifpmic_evidence/test_gate_budget.py": "286036ac2dd8b67d0f76bc3eb86ab016c140a06c79ecd8e2504b0aa45e9097ee",
+    "tests/ifpmic_evidence/test_private_values.py": "fa675b2f32ec7fd68a38c2cdf84873af94ea312a1007aed532b6ed395c8ab811",
+    "tests/ifpmic_evidence/test_raw_artifacts.py": "765a054ba6e98d4bd3f61f29f4b64e4e5bba03aa96209c411ddb20aae32a7d8d",
+    "tests/ifpmic_evidence/test_raw_observations.py": "684ee4f7c85b8347b7b76cf988eab3f3aaafcc93c2262882a8781fdd87e63fb7",
+    "tests/ifpmic_evidence/test_retained_fences.py": "d23b1fe244071654b1c23bfccd84499eff5407ad243a806686aee4e81916d54f"
+  },
+  "findings": [
+    {
+      "id": "FULL-PROCESS-OBSERVATION-CLASSIFICATION",
+      "severity": "blocking_execution",
+      "runner_location": "scripts/verify_ifpmic_b03_h2_runtime_full.py:764-777",
+      "problem": "Recursive aggregation treats every role plus exit_code/returncode or absent field as a complete final child cleanup record. Valid intermediate process events and DB observations lack its required final forced/exit schema and therefore raise before public proposal.",
+      "actual_source_evidence": [
+        {
+          "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
+          "line": 169,
+          "shape": "event=killed,role,pid,start_ticks,signal=SIGKILL,exit_code=-9,absent=True;forced absent",
+          "applicability": "Both membership/eligibility receipt replay cases persist this journal event after an intentional saved-identity kill."
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_restart_and_history.py",
+          "line": 104,
+          "shape": "event=service_stopped,role=postgres,pid,start_ticks,absent=True;exit/forced absent",
+          "applicability": "Actual PostgreSQL restart chronology in the dispatcher restart case."
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
+          "line": 761,
+          "shape": "backend_pid,role,absent=True,observed_monotonic;exit/forced absent",
+          "applicability": "Actual backend disappearance result nested as pg_backend_after_kill in hung-driver-rollback.json;this is a DB observation,not a CLI process outcome."
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py",
+          "line": 214,
+          "shape": "Final stopped journal event has pid/start_ticks/exit_code/absent/forced,but no role;process-cleanup.json has outcomes without identities.",
+          "applicability": "Skipping the killed event alone would not bind its terminal proof or produce truthful identity counts."
+        }
+      ],
+      "impact": "Successful case source paths can be rejected by the final collector. Broadly assuming forced=False or accepting role/absent alone would instead weaken proof and could mislabel PostgreSQL backend identity/SQL role as an owned CLI process.",
+      "minimal_repair": "Use source-backed case-local classification and identity joins:registered started role/PID/ticks to authoritative stopped terminal outcome;intentional killed intermediate must match the same terminal identity/exit and does not create a second process. Keep exact PostgreSQL service chronology/backend observations separate from CLI counts. Preserve final absence,forced cleanup,expected exit and unknown fixture predicates;reject conflicts/missing authoritative terminal proof. Change runner/tests only;invent no producer forced field or fake evidence.",
+      "required_regression": "Synthetic fixtures with the actual3 nonterminal/DB shapes plus case journal registration/stopped records;valid join,count dedup,conflicting/missing/mismatched terminal identity,unexpected forced cleanup and DB observation exclusion;retain all131 existing methods."
+    },
+    {
+      "id": "FULL-NON-PG-FIXTURE-APPLICABILITY",
+      "severity": "blocking_execution",
+      "runner_location": "scripts/verify_ifpmic_b03_h2_runtime_full.py:1247-1250",
+      "problem": "Every phase except h1_python must provide postgres-lifecycle.json. All5 fixture_failure cases use restoration helpers,an explicitly synthetic retained process handle,local OIDC and TestClient;none requests pg_cluster/migration_db,so a successful phase cannot produce this file.",
+      "actual_source_evidence": [
+        {
+          "path": "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py",
+          "lines": [
+            34,
+            53,
+            91,
+            138,
+            224
+          ],
+          "shape": "All5 test signatures contain only request/monkeypatch;no PG fixture acquisition or database call. The explicit fixture watchdog only installs cleanup/timing control."
+        },
+        {
+          "path": "tests/ifpmic_api/conftest.py",
+          "line": 308,
+          "shape": "pg_cluster is session-scoped without autouse. Merely importing normal/crash support does not instantiate it."
+        }
+      ],
+      "impact": "The healthy fixture prerequisite phase always fails at the missing lifecycle check. Starting/fabricating an unrelated PG fixture would change applicability and consume resources without proving the intended mechanism.",
+      "minimal_repair": "Declare exactly h1_python and fixture_failure as non-PG phases with explicit source-backed disposition. Require the current PG lifecycle checks for the other13 phases and retain all5 fixture assertions,raw/watchdog/journal proof,actual thread/socket finalization,unknown-handle distinction and owned-descendant checks. Do not fabricate or launch a DB.",
+      "required_regression": "Exact15-phase applicability/13-PG inventory and2 explicit non-PG dispositions;missing/invalid PG evidence on a PG phase still rejects;fixture raw/ownership obligations cannot be skipped."
+    },
+    {
+      "id": "FULL-EXTENDED-PROGRESS-BOUNDS",
+      "severity": "blocking_execution",
+      "runner_location": "scripts/verify_ifpmic_b03_h2_runtime_full.py:447,501-506",
+      "problem": "defaults contains every phase per_case_budgets entry,including all49 extended IDs. After checking extended215+25,the independent defaults condition again enforces hardcoded25+5 on those same IDs.",
+      "actual_source_evidence": {
+        "ledger": "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger-v2.json",
+        "extended_counts": {
+          "dispatcher_crashes": 8,
+          "worker_api_crashes": 4,
+          "window": 2,
+          "activity_runtime": 11,
+          "transport": 3,
+          "workspace": 11,
+          "started_deployment": 10
+        },
+        "total": 49,
+        "logical_counterexample": "An extended case with finite ordered progress,setup+call=35,teardown=2,total=37 satisfies its215+25 budget but is rejected by the last default branch."
+      },
+      "impact": "All49 extended IDs receive an unauthorized smaller progress bound. Any valid body in(25,215] or cleanup in(5,25] is falsely rejected,including long native-driver/recovery scenarios. This finding is source logic,not a claim about observed runtime duration.",
+      "minimal_repair": "Enforce the exact per-ID ledger setup_and_body/shared_cleanup values or restrict the25+5 branch to actual default IDs. Preserve retained integration exceptions,all finite/ordered/unique progress predicates,Junit/watchdog agreement and original215+25/25+5 limits;increase no budget.",
+      "required_regression": "Synthetic complete progress records showing extended valid>25/exact215+25,extended epsilon overruns,default exact25+5/epsilon overruns,retained exceptions and missing/duplicate/nonpassing/invalid-clock events."
+    }
+  ],
+  "supported_static_evidence": {
+    "binding_and_order": "Exact v2 bindings and paired authoring SHA constants match reviewed artifacts. Initial source/review/raw/helper gates precede dynamic local imports. All104 ledger pins plus separately pinned runner remain current. Fresh parent/preflight/phase/raw-child cache prefixes and no-bytecode checks remain;all15 exact collections precede first case.",
+    "scope_and_raw": "490 unique IDs,407 retained+83 new,25+5 obligations,15 phase order/caps and87-node/953-rule raw inventory remain unchanged. Pinned adapter/auditor uses mandatory actual qualified SDK history decoding only after execution gates,10 quiescent phase audits and final indexed-file rehash. Prior exact87 source projections support applicability only.",
+    "repairs_and_unit_proof": "The previously identified initial/final runner SHA and actual5 missing-total watchdog schema repairs are implemented as reviewed. Their exact131 synthetic result review remains valid for that bounded scope;it did not cover the new whole-main progress,PG applicability or actual journal classification findings.",
+    "budget_cleanup_privacy": "GateBudget uses one16220 epoch,final15 recovery reserve,command remaining-minus7,TERM/INT/ALRM fail paths and bounded PID/tick/pidfd-owned cleanup. Parent recovery cannot turn failure into pass. Before/after environment/source/protected/design checks and exact6-member private public-proposal transformation are present. These code paths remain unqualified by an actual full run.",
+    "prior_independent_unit_result": {
+      "path": "docs/ifpmic/delivery/iteration-03/runner-v2-repair-result-review.json",
+      "sha256": "1c725be59c408160fc0639b71aa4900545ddac864339b66142442cf6ad43f487"
+    }
+  },
+  "risks_and_remaining_uncertainty": [
+    "This whole-source attempt does not approve_source or authorize imports,collection,tests,SDK,SQL,services or main. The active contract-named source-review path is intentionally absent and paired full pre-gates remain unavailable.",
+    "The3 blocker classes require a separate bounded eight-field repair plan/independent plan review,exact implementation/source approval and scoped synthetic regressions. Producer,raw mapping,case IDs and runtime oracle/budget changes are unnecessary.",
+    "Static review and131 synthetic proof cannot establish actual causal semantics,environment health,native timing,physical cleanup or privacy fidelity for fresh490. Full actual evidence and independent final review remain mandatory."
+  ],
+  "recommendation": "Preserve this exact rejected source attempt and accepted131 checkpoint. Repair only these3 runner classes through the required plan/source/synthetic review flow,then repeat whole-source review for the resulting exact SHA before any paired execution pre-gates.",
+  "authorization": {
+    "approve_source": false,
+    "execution": false,
+    "h2_or_goal_acceptance": false
+  },
+  "review_method": "Read-only whole current runner control flow,pinned helper/raw integration source,actual producer schemas/fixture dependencies and prior exact review/hash comparisons. No repository imports,tests,collection,SQL,SDK,services or network executed."
+}

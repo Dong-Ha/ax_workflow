@@ -660,14 +660,14 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "Iteration03: both bounded runner repairs and exact v2 bindings implemented;131 cache-isolated synthetic units (119 retained+12 new) passed and independently accepted. Complete whole-runner exact source review and paired execution pre-gates, fresh actual490 with raw audits/final independent acceptance, then real saved-request admission/run/receipt UI. No actual main/SDK/pytest collection/SQL/services yet; original c10/cf4/I02 remain immutable.",
+  "next_step": "Iteration03: initial131 accepted at e77e2fa; full-source attempt01 rejected3 input-oracle classes. These are now repaired and140 cache-isolated synthetic units (131+9) passed with independent acceptance. Current runner8494e13..., ledger104/machine38 pins unchanged. Complete renewed whole-runner source review and exact paired execution pre-gates; then fresh actual490/raw/final independent acceptance and saved-request admission UI. Actual main/SDK/pytest collection/SQL/services not yet run.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",
     "Approved Bedrock/Claude runtime profile"
   ],
   "publication_policy": "Only authorized git repository documentation, source and synthetic verification summaries/screenshots; never runtime credentials or application logs.",
-  "updated_at": "2026-10-20T16:53:12.075648+00:00",
+  "updated_at": "2026-10-20T17:18:57.831627+00:00",
   "session_handoff": {
     "status": "resumed_by_user",
     "resume_document": "docs/ifpmic/RESUME.md",
@@ -710,19 +710,20 @@
       "scope": "Source path/schema/applicability only; no actual execution acceptance."
     },
     "current_candidate_static_verification": "delivery/iteration-03/full-candidate-v2-static-verification.json",
-    "next_foundation_scope": "Whole-runner source and exact paired execution gates for unchanged490; two known runner repairs already implemented and131 synthetic units accepted.",
+    "next_foundation_scope": "Renewed whole-runner source and exact paired execution gates; all known3classes repaired and140 synthetic units accepted.",
     "candidate_authoring_reviews": {
       "independent": "evidence/b03/h2-runtime-full-execution-contract-review-v2.json",
       "tc": "evidence/b03/h2-runtime-full-execution-tc-review-v2.json"
     },
     "latest_unit_result": {
-      "passed": 131,
-      "retained": 119,
-      "new": 12,
-      "verification": "delivery/iteration-03/runner-v2-repair-verification.json",
-      "independent_acceptance": "delivery/iteration-03/runner-v2-repair-result-review.json",
+      "passed": 140,
+      "retained": 131,
+      "new": 9,
+      "verification": "delivery/iteration-03/full-input-repair-verification.json",
+      "independent_acceptance": "delivery/iteration-03/full-input-repair-result-review.json",
       "actual_full490": false
-    }
+    },
+    "full_source_rejected_attempt": "evidence/b03/attempts/h2-runtime-full-runner-source-review-v2-attempt-01.json"
   },
   "visible_deliveries": [
     {
@@ -750,10 +751,10 @@
       "status": "in_progress",
       "title": "Connect persisted API job to real execution-engine admission and visible run/receipt",
       "path": "delivery/iteration-03/README.md",
-      "verification": "delivery/iteration-03/runner-v2-repair-verification.json",
-      "foundation_status": "accepted_131_cache_isolated_synthetic_units_only",
+      "verification": "delivery/iteration-03/full-input-repair-verification.json",
+      "foundation_status": "accepted_140_cache_isolated_synthetic_units_only",
       "actual_job_execution": false,
-      "scope": "Current v2 runner bindings and two scoped repairs verified with131 synthetic units, including retained119 and12new; independent result accepted. Ledger104/machine38 exactpins unchanged. Actual490 and admission/run/receipt UI remain pending.",
+      "scope": "Current runner includes original2 repairs/v2binding and3 full-source input-oracle repairs.140 synthetic units(131+9) independently accepted;104ledger/38machine pins unchanged. Actual490 and admission/run/receipt UI remain pending.",
       "mapping_resolution_progress": "evidence/b03/h2-machine-resolution-progress-v2.json",
       "candidate_static_verification": "delivery/iteration-03/full-candidate-v2-static-verification.json"
     }
