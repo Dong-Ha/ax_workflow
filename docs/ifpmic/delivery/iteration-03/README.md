@@ -11,6 +11,16 @@
 
 전체 필수 단계 완료율은 **2/16=12.5%**다. 동일 비중의 단계 수이며 제품 작업량 추정치는 아니다. 새 단위 검사 통과를 단계 완료율에 더하지 않는다.
 
+## 2026-10-21 소스 대조 체크포인트
+
+새 화면 기능은 없다. startup21·window/fixture14·workspace11·dispatcher8을 실제 생성 코드와 독립 대조하고 규칙에 반영했다. 기존 fence4를 합해 **58/87행의 소스 대조 완료,29행·177항목 미해결**, 현재661개 artifact 규칙이다. 이는 실행 전 source mapping이며 제품 전체 완료율은2/16=12.5%로 유지한다.
+
+workspace stale-generation 테스트가 정의되지 않은 run_id 때문에 증빙 작성에서 실패하던 결함을 단일 필드 삭제로 수정했다. 전체 파일 AST에서 그 필드 하나만 달라지고58개 assertion이 보존됨을 독립 검토했다. [계획·source 검토](../../evidence/b03/h2-workspace-stale-observation-source-review-v2.json)와 [규칙 반영 기록](../../evidence/b03/h2-machine-resolution-progress-v2.json)을 참조한다. 실제 테스트를 실행한 것은 아니다.
+
+dispatcher의 생성되지 않는 파일 요구3개를 바로잡고 실제 분기 출력79개를 추가했다. 거절된 초안과 수정된 exact 승인 문서를 함께 보존했다. 현재119 합성 단위의12개 소스 해시는 그대로지만 단위 검사를 반복 실행하지 않았다. 기존 두 공개 주소의 HTTP200만 재확인했다.
+
+worker의 사전 기동 서버 기록을 같은 O_EXCL 경로에 두 번 작성하는 결함도 발견했다. 별도 수정 계획·exact source·projection 검토를 거쳐 해결한다. transport3/worker4와 activity12/started10이 남았으며 actual main/SDK/SQL/full490/실제 실행 접수는 이번 체크포인트에서 실행하지 않았다. 아래 내용의83행469항목은 이전 체크포인트 기록이다.
+
 ## 이번에 실제 검증한 것
 
 전체 실행기 정적 검토에서 찾은 집계·watchdog 경로·helper pin·기존 pyc 읽기·전체 deadline/TERM/정리·프로세스 수 집계 결함을 수정했다. 전체 실행기의 `main`을 실행한 것은 아니며, 별도 승인된 stdlib 함수와 합성 자료로 검사했다.

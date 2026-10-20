@@ -1,0 +1,3760 @@
+{
+  "added_output_source_evidence": {
+    "accepted_start_loss": {
+      "applicability": "Ownserver writesTemporal log; specializedstart-loss child logs plusactualnormal dispatcher+worker recoverylogs. Existingmanifests/observer/proxyraw/ownercuts/digestlinks retained; no inventedinitialworkspaceoutput.",
+      "source": [
+        "tests/ifpmic_api/test_accepted_start_response_loss.py:186-213",
+        "tests/ifpmic_api/test_accepted_start_response_loss.py:424-467",
+        "tests/ifpmic_api/test_accepted_start_response_loss.py:662-684"
+      ]
+    },
+    "common_prepare": {
+      "applicability": "Only7 rows: six dispatcher tests plus storage restart. Accepted-start-loss has separate preparation; do not require initialworkspace there.",
+      "source": [
+        "tests/ifpmic_api/h2_dispatcher_crash_support.py:282-331",
+        "services/ifpmic_api/execution_manifest.py:86-115"
+      ]
+    },
+    "dispatcher_logs": {
+      "applicability": "All6 dispatcher literal tests use actualbarrier child logs;5 positive cases startnormalworker;5 recoverycases startdispatcher-recovery (excludeack-before-worker).",
+      "source": [
+        "tests/ifpmic_api/h2_dispatcher_crash_support.py:368-426",
+        "tests/ifpmic_api/test_h2_dispatcher_crashes.py:138-208",
+        "tests/ifpmic_api/test_h2_dispatcher_crashes.py:222-228",
+        "tests/ifpmic_api/test_h2_runtime_normal_flow.py:289-326"
+      ]
+    },
+    "restart": {
+      "applicability": "Initialshared _assert_crash_final writes actual initialcase result/workspace plusworkerlogs; actualinitial/restarted dispatcher/worker/Temporal logs andfinalcleanupallrequired. Existing4 histories/restartoracle retained.",
+      "source": [
+        "tests/ifpmic_api/test_h2_runtime_restart_and_history.py:54-77",
+        "tests/ifpmic_api/test_h2_runtime_restart_and_history.py:148-219",
+        "tests/ifpmic_api/test_h2_dispatcher_crashes.py:138-208",
+        "tests/ifpmic_api/h2_dispatcher_crash_support.py:548-553"
+      ]
+    }
+  },
+  "case_annotations": [
+    {
+      "case_directory": "accepted-start-loss",
+      "case_directory_binding": "<IFPMIC_H2_RUNTIME_EVIDENCE_ROOT>/accepted-start-loss",
+      "node_id": "tests/ifpmic_api/test_accepted_start_response_loss.py::test_actual_started_event_survives_lost_start_response_and_recovers_same_run",
+      "original_unresolved": [
+        {
+          "evidence": [
+            "source mapping from literal producer/helper; see the per-row source_locations and source_pins"
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: barrier-sequence.json",
+          "proposed_correction_or_scope": null,
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_accepted_start_response_loss.py:714-717",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:525-540"
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: history-after-projection/** (direct history observation)",
+          "proposed_correction_or_scope": "Wildcard resolves to history-after-projection/temporal-history.pbseq.",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_accepted_start_response_loss.py:431-432"
+          ],
+          "original": "JSON top-level keys not fully source-verified for owner-before-dispatch.json",
+          "proposed_correction_or_scope": null,
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_accepted_start_response_loss.py:318-327"
+          ],
+          "original": "JSON top-level keys not fully source-verified for accepted-start-observer.json",
+          "proposed_correction_or_scope": null,
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_accepted_start_response_loss.py:595-617",
+            "tests/ifpmic_api/test_accepted_start_response_loss.py:156-163"
+          ],
+          "original": "JSON top-level keys not fully source-verified for barrier-sequence.json",
+          "proposed_correction_or_scope": null,
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_accepted_start_response_loss.py:655-656"
+          ],
+          "original": "JSON top-level keys not fully source-verified for owner-at-start-attempt.json",
+          "proposed_correction_or_scope": null,
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_accepted_start_response_loss.py:657-658"
+          ],
+          "original": "JSON top-level keys not fully source-verified for owner-after-kill.json",
+          "proposed_correction_or_scope": null,
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_accepted_start_response_loss.py:734-737"
+          ],
+          "original": "JSON top-level keys not fully source-verified for owner-after-projection-replay.json",
+          "proposed_correction_or_scope": null,
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/h2_dispatcher_crash_support.py:296-297",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:121-135"
+          ],
+          "original": "JSON top-level keys not fully source-verified for process-journal.jsonl",
+          "proposed_correction_or_scope": null,
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_accepted_start_response_loss.py:458-465"
+          ],
+          "original": "JSON top-level keys not fully source-verified for source-manifest.json",
+          "proposed_correction_or_scope": null,
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_accepted_start_response_loss.py:458-465"
+          ],
+          "original": "JSON top-level keys not fully source-verified for environment-manifest.json",
+          "proposed_correction_or_scope": null,
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_accepted_start_response_loss.py:742-775",
+            "tests/ifpmic_api/test_accepted_start_response_loss.py:845-873"
+          ],
+          "original": "JSON top-level keys not fully source-verified for response-loss-observation.json",
+          "proposed_correction_or_scope": null,
+          "status": "source_mapped"
+        }
+      ],
+      "owner_query_source_mapping": {
+        "owner_minimum_preserved": 1,
+        "owner_recorder_path": "dispatcher/restart: crash.read_owner_snapshot -> normal._read_owner_snapshot -> record_owner_snapshot; accepted-start: _read_owner_snapshot -> normal._read_owner_snapshot -> record_owner_snapshot",
+        "query_max_preserved": {},
+        "query_min_preserved": {
+          "temporal.list_workflows": 1
+        },
+        "query_recorder_path": "record_query_observation emits actual temporal.list_workflows query results in _observe_started_direct, _list_workflow_runs, and normal._observe_real_temporal."
+      },
+      "source_evidence_refs": [
+        {
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "sha256": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472"
+        },
+        {
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "sha256": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8"
+        },
+        {
+          "path": "tests/ifpmic_api/response_loss_proxy.py",
+          "sha256": "b6f8ca62f21724bf26aac6395528092257e7c48b729d19df02adf7281b9ed512"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_restart_and_history.py",
+          "sha256": "606db627f5efd4ba6f9158da6ef538b95fe70d77444cb0775191265a10a2b546"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "sha256": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "sha256": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c"
+        },
+        {
+          "path": "tests/ifpmic_api/conftest.py",
+          "sha256": "dd3885f66ccc29fc987f4fa20dbdba0481a95c377f227c5ac17663f0f63c4b8f"
+        },
+        {
+          "path": "tests/ifpmic_api/accepted_start_dispatcher_child.py",
+          "sha256": "87c6cf61d94188f5733e73fc02e8d3d2caeb78f4a802a6455a501317a6f859eb"
+        },
+        {
+          "path": "tests/ifpmic_api/jobs_fixture.py",
+          "sha256": "b8fefc39f3005b3a662124ae3182cee4e7a293e18dd4e84d18facd09c0e0d539"
+        }
+      ],
+      "source_findings": {
+        "digest_links": {
+          "barrier_sequence_sha256": "barrier-sequence.json",
+          "owner_after_kill_sha256": "owner-after-kill.json",
+          "owner_after_projection_sha256": "owner-after-projection-replay.json",
+          "owner_before_start_sha256": "owner-at-start-attempt.json",
+          "owner_initial_sha256": "owner-before-dispatch.json",
+          "process_journal_sha256": "process-journal.jsonl",
+          "proxy_before_kill_sha256": "proxy-before-kill.json",
+          "proxy_journal_sha256": "proxy-through-kill.json",
+          "proxy_through_kill_sha256": "proxy-through-kill.json",
+          "raw_history_after_sha256": "history-after-projection/temporal-history.pbseq",
+          "raw_history_before_sha256": "accepted-start-history-before-kill.pbseq"
+        },
+        "private_auxiliary_files": [
+          "process-logs/start-loss-child-stdout.log",
+          "process-logs/start-loss-child-stderr.log",
+          "temporal-data/temporal.sqlite",
+          "temporal-data/temporal-server.log"
+        ]
+      },
+      "structure_vs_oracle_boundary": {
+        "projected_artifact_rules": "File count/format, declared top-level JSON keys, raw SHA-256 link equality. PBSeq decoding requires runner decoder. JSON nested/business values are not validated by required_keys.",
+        "runtime_status": "source mapping only; no raw artifacts inspected or accepted.",
+        "source_test_oracles_not_enforced_by_artifact_rules": [
+          "SQL state and snapshot equality",
+          "Temporal run identity/Started-history semantics",
+          "cut-phase and barrier-event ordering",
+          "child/service exit, forced/absent cleanup outcomes",
+          "workspace tree equality",
+          "proxy byte counts and held response chronology",
+          "restart store identity and no duplicate execution"
+        ]
+      }
+    },
+    {
+      "case_directory": "dispatcher-ack-before-worker",
+      "case_directory_binding": "<IFPMIC_H2_RUNTIME_EVIDENCE_ROOT>/dispatcher-ack-before-worker",
+      "node_id": "tests/ifpmic_api/test_h2_dispatcher_crashes.py::test_ack_before_worker_activation_projects_once",
+      "original_unresolved": [
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_dispatcher_crashes.py:178-183",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:525-540"
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: history-after-projection/** (direct observation)",
+          "proposed_correction_or_scope": "Wildcard resolves to history-after-projection/temporal-history.pbseq.",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_dispatcher_crashes.py:211-219",
+            "tests/ifpmic_api/h2_dispatcher_crash_support.py:429-451"
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: barrier files",
+          "proposed_correction_or_scope": "Exact root file is dispatcher-barrier.json; barrier socket is transient TMPDIR synchronization state.",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_dispatcher_crashes.py:214-218"
+          ],
+          "original": "JSON top-level keys not fully source-verified for owner-at-cut.json",
+          "proposed_correction_or_scope": null,
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_dispatcher_crashes.py:194-198"
+          ],
+          "original": "JSON top-level keys not fully source-verified for workspace-recovered-observation.json",
+          "proposed_correction_or_scope": null,
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_dispatcher_crashes.py:200-207"
+          ],
+          "original": "JSON top-level keys not fully source-verified for case-result.json",
+          "proposed_correction_or_scope": null,
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/h2_dispatcher_crash_support.py:296-297",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:121-135"
+          ],
+          "original": "JSON top-level keys not fully source-verified for process-journal.jsonl",
+          "proposed_correction_or_scope": null,
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/h2_dispatcher_crash_support.py:525-552"
+          ],
+          "original": "JSON top-level keys not fully source-verified for process-cleanup.json",
+          "proposed_correction_or_scope": null,
+          "status": "source_mapped"
+        }
+      ],
+      "owner_query_source_mapping": {
+        "owner_minimum_preserved": 1,
+        "owner_recorder_path": "dispatcher/restart: crash.read_owner_snapshot -> normal._read_owner_snapshot -> record_owner_snapshot; accepted-start: _read_owner_snapshot -> normal._read_owner_snapshot -> record_owner_snapshot",
+        "query_max_preserved": {},
+        "query_min_preserved": {
+          "temporal.list_workflows": 1
+        },
+        "query_recorder_path": "record_query_observation emits actual temporal.list_workflows query results in _observe_started_direct, _list_workflow_runs, and normal._observe_real_temporal."
+      },
+      "source_evidence_refs": [
+        {
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "sha256": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472"
+        },
+        {
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "sha256": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8"
+        },
+        {
+          "path": "tests/ifpmic_api/response_loss_proxy.py",
+          "sha256": "b6f8ca62f21724bf26aac6395528092257e7c48b729d19df02adf7281b9ed512"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_restart_and_history.py",
+          "sha256": "606db627f5efd4ba6f9158da6ef538b95fe70d77444cb0775191265a10a2b546"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "sha256": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "sha256": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c"
+        },
+        {
+          "path": "tests/ifpmic_api/conftest.py",
+          "sha256": "dd3885f66ccc29fc987f4fa20dbdba0481a95c377f227c5ac17663f0f63c4b8f"
+        },
+        {
+          "path": "tests/ifpmic_api/accepted_start_dispatcher_child.py",
+          "sha256": "87c6cf61d94188f5733e73fc02e8d3d2caeb78f4a802a6455a501317a6f859eb"
+        },
+        {
+          "path": "tests/ifpmic_api/jobs_fixture.py",
+          "sha256": "b8fefc39f3005b3a662124ae3182cee4e7a293e18dd4e84d18facd09c0e0d539"
+        }
+      ],
+      "source_findings": {
+        "conditional_paths": {
+          "accepted-start-history-before-kill.pbseq": "written only when _observe_start is called",
+          "dispatcher-barrier.json": "written only when _kill_cut invokes kill_at_barrier",
+          "history-after-projection/temporal-history.pbseq": "written by _assert_crash_final after recovery"
+        }
+      },
+      "structure_vs_oracle_boundary": {
+        "projected_artifact_rules": "File count/format, declared top-level JSON keys, raw SHA-256 link equality. PBSeq decoding requires runner decoder. JSON nested/business values are not validated by required_keys.",
+        "runtime_status": "source mapping only; no raw artifacts inspected or accepted.",
+        "source_test_oracles_not_enforced_by_artifact_rules": [
+          "SQL state and snapshot equality",
+          "Temporal run identity/Started-history semantics",
+          "cut-phase and barrier-event ordering",
+          "child/service exit, forced/absent cleanup outcomes",
+          "workspace tree equality",
+          "proxy byte counts and held response chronology",
+          "restart store identity and no duplicate execution"
+        ]
+      }
+    },
+    {
+      "case_directory": "dispatcher-admitted-before-ack",
+      "case_directory_binding": "<IFPMIC_H2_RUNTIME_EVIDENCE_ROOT>/dispatcher-admitted-before-ack",
+      "node_id": "tests/ifpmic_api/test_h2_dispatcher_crashes.py::test_admission_before_ack_crash_recovers_same_run",
+      "original_unresolved": [
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_dispatcher_crashes.py:178-183",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:525-540"
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: history-after-projection/** (direct observation)",
+          "proposed_correction_or_scope": "Wildcard resolves to history-after-projection/temporal-history.pbseq.",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_dispatcher_crashes.py:211-219",
+            "tests/ifpmic_api/h2_dispatcher_crash_support.py:429-451"
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: barrier files",
+          "proposed_correction_or_scope": "Exact root file is dispatcher-barrier.json; barrier socket is transient TMPDIR synchronization state.",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_dispatcher_crashes.py:214-218"
+          ],
+          "original": "JSON top-level keys not fully source-verified for owner-at-cut.json",
+          "proposed_correction_or_scope": null,
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_dispatcher_crashes.py:194-198"
+          ],
+          "original": "JSON top-level keys not fully source-verified for workspace-recovered-observation.json",
+          "proposed_correction_or_scope": null,
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_dispatcher_crashes.py:200-207"
+          ],
+          "original": "JSON top-level keys not fully source-verified for case-result.json",
+          "proposed_correction_or_scope": null,
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/h2_dispatcher_crash_support.py:296-297",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:121-135"
+          ],
+          "original": "JSON top-level keys not fully source-verified for process-journal.jsonl",
+          "proposed_correction_or_scope": null,
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/h2_dispatcher_crash_support.py:525-552"
+          ],
+          "original": "JSON top-level keys not fully source-verified for process-cleanup.json",
+          "proposed_correction_or_scope": null,
+          "status": "source_mapped"
+        }
+      ],
+      "owner_query_source_mapping": {
+        "owner_minimum_preserved": 1,
+        "owner_recorder_path": "dispatcher/restart: crash.read_owner_snapshot -> normal._read_owner_snapshot -> record_owner_snapshot; accepted-start: _read_owner_snapshot -> normal._read_owner_snapshot -> record_owner_snapshot",
+        "query_max_preserved": {},
+        "query_min_preserved": {
+          "temporal.list_workflows": 1
+        },
+        "query_recorder_path": "record_query_observation emits actual temporal.list_workflows query results in _observe_started_direct, _list_workflow_runs, and normal._observe_real_temporal."
+      },
+      "source_evidence_refs": [
+        {
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "sha256": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472"
+        },
+        {
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "sha256": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8"
+        },
+        {
+          "path": "tests/ifpmic_api/response_loss_proxy.py",
+          "sha256": "b6f8ca62f21724bf26aac6395528092257e7c48b729d19df02adf7281b9ed512"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_restart_and_history.py",
+          "sha256": "606db627f5efd4ba6f9158da6ef538b95fe70d77444cb0775191265a10a2b546"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "sha256": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "sha256": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c"
+        },
+        {
+          "path": "tests/ifpmic_api/conftest.py",
+          "sha256": "dd3885f66ccc29fc987f4fa20dbdba0481a95c377f227c5ac17663f0f63c4b8f"
+        },
+        {
+          "path": "tests/ifpmic_api/accepted_start_dispatcher_child.py",
+          "sha256": "87c6cf61d94188f5733e73fc02e8d3d2caeb78f4a802a6455a501317a6f859eb"
+        },
+        {
+          "path": "tests/ifpmic_api/jobs_fixture.py",
+          "sha256": "b8fefc39f3005b3a662124ae3182cee4e7a293e18dd4e84d18facd09c0e0d539"
+        }
+      ],
+      "source_findings": {
+        "conditional_paths": {
+          "accepted-start-history-before-kill.pbseq": "written only when _observe_start is called",
+          "dispatcher-barrier.json": "written only when _kill_cut invokes kill_at_barrier",
+          "history-after-projection/temporal-history.pbseq": "written by _assert_crash_final after recovery"
+        }
+      },
+      "structure_vs_oracle_boundary": {
+        "projected_artifact_rules": "File count/format, declared top-level JSON keys, raw SHA-256 link equality. PBSeq decoding requires runner decoder. JSON nested/business values are not validated by required_keys.",
+        "runtime_status": "source mapping only; no raw artifacts inspected or accepted.",
+        "source_test_oracles_not_enforced_by_artifact_rules": [
+          "SQL state and snapshot equality",
+          "Temporal run identity/Started-history semantics",
+          "cut-phase and barrier-event ordering",
+          "child/service exit, forced/absent cleanup outcomes",
+          "workspace tree equality",
+          "proxy byte counts and held response chronology",
+          "restart store identity and no duplicate execution"
+        ]
+      }
+    },
+    {
+      "case_directory": "dispatcher-admitted-history-deleted",
+      "case_directory_binding": "<IFPMIC_H2_RUNTIME_EVIDENCE_ROOT>/dispatcher-admitted-history-deleted",
+      "node_id": "tests/ifpmic_api/test_h2_dispatcher_crashes.py::test_admitted_missing_history_is_quarantined_without_replacement",
+      "original_unresolved": [
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_dispatcher_crashes.py:412-512",
+            "tests/ifpmic_api/test_h2_dispatcher_crashes.py:53-208"
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: history-after-projection/** (direct observation)",
+          "proposed_correction_or_scope": "No after-projection history is written after exact deletion/quarantine; accepted-start-history-before-kill.pbseq is captured before deletion.",
+          "status": "source_mapped_as_intentionally_absent"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_dispatcher_crashes.py:211-219",
+            "tests/ifpmic_api/h2_dispatcher_crash_support.py:429-451"
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: barrier files",
+          "proposed_correction_or_scope": "Exact root file is dispatcher-barrier.json; barrier socket is transient TMPDIR synchronization state.",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_dispatcher_crashes.py:214-218"
+          ],
+          "original": "JSON top-level keys not fully source-verified for owner-at-cut.json",
+          "proposed_correction_or_scope": null,
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_dispatcher_crashes.py:506-510"
+          ],
+          "original": "JSON top-level keys not fully source-verified for workspace-recovered-observation.json",
+          "proposed_correction_or_scope": "Actual path is workspace-after-history-missing-quarantine.json, with before/after keys.",
+          "status": "resolved_by_proposed_path_correction"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_dispatcher_crashes.py:412-512",
+            "tests/ifpmic_api/test_h2_dispatcher_crashes.py:53-208"
+          ],
+          "original": "JSON top-level keys not fully source-verified for case-result.json",
+          "proposed_correction_or_scope": "Only _assert_crash_final writes case-result.json, and the deleted-history branch does not call it; remove the false required artifact.",
+          "status": "resolved_by_proposed_rule_removal"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_dispatcher_crashes.py:444-472"
+          ],
+          "original": "JSON top-level keys not fully source-verified for exact-owned-history-deletion.json",
+          "proposed_correction_or_scope": null,
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_dispatcher_crashes.py:478-505"
+          ],
+          "original": "JSON top-level keys not fully source-verified for owner-after-history-missing-quarantine.json",
+          "proposed_correction_or_scope": null,
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/h2_dispatcher_crash_support.py:296-297",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:121-135"
+          ],
+          "original": "JSON top-level keys not fully source-verified for process-journal.jsonl",
+          "proposed_correction_or_scope": null,
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/h2_dispatcher_crash_support.py:525-552"
+          ],
+          "original": "JSON top-level keys not fully source-verified for process-cleanup.json",
+          "proposed_correction_or_scope": null,
+          "status": "source_mapped"
+        }
+      ],
+      "owner_query_source_mapping": {
+        "owner_minimum_preserved": 1,
+        "owner_recorder_path": "dispatcher/restart: crash.read_owner_snapshot -> normal._read_owner_snapshot -> record_owner_snapshot; accepted-start: _read_owner_snapshot -> normal._read_owner_snapshot -> record_owner_snapshot",
+        "query_max_preserved": {},
+        "query_min_preserved": {
+          "temporal.list_workflows": 1
+        },
+        "query_recorder_path": "record_query_observation emits actual temporal.list_workflows query results in _observe_started_direct, _list_workflow_runs, and normal._observe_real_temporal."
+      },
+      "source_evidence_refs": [
+        {
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "sha256": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472"
+        },
+        {
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "sha256": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8"
+        },
+        {
+          "path": "tests/ifpmic_api/response_loss_proxy.py",
+          "sha256": "b6f8ca62f21724bf26aac6395528092257e7c48b729d19df02adf7281b9ed512"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_restart_and_history.py",
+          "sha256": "606db627f5efd4ba6f9158da6ef538b95fe70d77444cb0775191265a10a2b546"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "sha256": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "sha256": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c"
+        },
+        {
+          "path": "tests/ifpmic_api/conftest.py",
+          "sha256": "dd3885f66ccc29fc987f4fa20dbdba0481a95c377f227c5ac17663f0f63c4b8f"
+        },
+        {
+          "path": "tests/ifpmic_api/accepted_start_dispatcher_child.py",
+          "sha256": "87c6cf61d94188f5733e73fc02e8d3d2caeb78f4a802a6455a501317a6f859eb"
+        },
+        {
+          "path": "tests/ifpmic_api/jobs_fixture.py",
+          "sha256": "b8fefc39f3005b3a662124ae3182cee4e7a293e18dd4e84d18facd09c0e0d539"
+        }
+      ],
+      "source_findings": {
+        "conditional_paths": {
+          "accepted-start-history-before-kill.pbseq": "captured before deletion",
+          "dispatcher-barrier.json": "emitted before deletion",
+          "history-after-projection/temporal-history.pbseq": "absent by design after exact workflow deletion"
+        },
+        "path_deltas": {
+          "map_existing_actual": [
+            "workspace-after-history-missing-quarantine.json"
+          ],
+          "remove": [
+            "case-result.json"
+          ]
+        }
+      },
+      "structure_vs_oracle_boundary": {
+        "projected_artifact_rules": "File count/format, declared top-level JSON keys, raw SHA-256 link equality. PBSeq decoding requires runner decoder. JSON nested/business values are not validated by required_keys.",
+        "runtime_status": "source mapping only; no raw artifacts inspected or accepted.",
+        "source_test_oracles_not_enforced_by_artifact_rules": [
+          "SQL state and snapshot equality",
+          "Temporal run identity/Started-history semantics",
+          "cut-phase and barrier-event ordering",
+          "child/service exit, forced/absent cleanup outcomes",
+          "workspace tree equality",
+          "proxy byte counts and held response chronology",
+          "restart store identity and no duplicate execution"
+        ]
+      }
+    },
+    {
+      "case_directory": "dispatcher-claim-commit",
+      "case_directory_binding": "<IFPMIC_H2_RUNTIME_EVIDENCE_ROOT>/dispatcher-claim-commit",
+      "node_id": "tests/ifpmic_api/test_h2_dispatcher_crashes.py::test_claim_commit_crash_reclaims_only_after_expiry",
+      "original_unresolved": [
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_dispatcher_crashes.py:178-183",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:525-540"
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: history-after-projection/** (direct observation)",
+          "proposed_correction_or_scope": "Wildcard resolves to history-after-projection/temporal-history.pbseq.",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_dispatcher_crashes.py:211-219",
+            "tests/ifpmic_api/h2_dispatcher_crash_support.py:429-451"
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: barrier files",
+          "proposed_correction_or_scope": "Exact root file is dispatcher-barrier.json; barrier socket is transient TMPDIR synchronization state.",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_dispatcher_crashes.py:214-218"
+          ],
+          "original": "JSON top-level keys not fully source-verified for owner-at-cut.json",
+          "proposed_correction_or_scope": null,
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_dispatcher_crashes.py:194-198"
+          ],
+          "original": "JSON top-level keys not fully source-verified for workspace-recovered-observation.json",
+          "proposed_correction_or_scope": null,
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_dispatcher_crashes.py:200-207"
+          ],
+          "original": "JSON top-level keys not fully source-verified for case-result.json",
+          "proposed_correction_or_scope": null,
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/h2_dispatcher_crash_support.py:296-297",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:121-135"
+          ],
+          "original": "JSON top-level keys not fully source-verified for process-journal.jsonl",
+          "proposed_correction_or_scope": null,
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/h2_dispatcher_crash_support.py:525-552"
+          ],
+          "original": "JSON top-level keys not fully source-verified for process-cleanup.json",
+          "proposed_correction_or_scope": null,
+          "status": "source_mapped"
+        }
+      ],
+      "owner_query_source_mapping": {
+        "owner_minimum_preserved": 1,
+        "owner_recorder_path": "dispatcher/restart: crash.read_owner_snapshot -> normal._read_owner_snapshot -> record_owner_snapshot; accepted-start: _read_owner_snapshot -> normal._read_owner_snapshot -> record_owner_snapshot",
+        "query_max_preserved": {},
+        "query_min_preserved": {
+          "temporal.list_workflows": 1
+        },
+        "query_recorder_path": "record_query_observation emits actual temporal.list_workflows query results in _observe_started_direct, _list_workflow_runs, and normal._observe_real_temporal."
+      },
+      "source_evidence_refs": [
+        {
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "sha256": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472"
+        },
+        {
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "sha256": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8"
+        },
+        {
+          "path": "tests/ifpmic_api/response_loss_proxy.py",
+          "sha256": "b6f8ca62f21724bf26aac6395528092257e7c48b729d19df02adf7281b9ed512"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_restart_and_history.py",
+          "sha256": "606db627f5efd4ba6f9158da6ef538b95fe70d77444cb0775191265a10a2b546"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "sha256": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "sha256": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c"
+        },
+        {
+          "path": "tests/ifpmic_api/conftest.py",
+          "sha256": "dd3885f66ccc29fc987f4fa20dbdba0481a95c377f227c5ac17663f0f63c4b8f"
+        },
+        {
+          "path": "tests/ifpmic_api/accepted_start_dispatcher_child.py",
+          "sha256": "87c6cf61d94188f5733e73fc02e8d3d2caeb78f4a802a6455a501317a6f859eb"
+        },
+        {
+          "path": "tests/ifpmic_api/jobs_fixture.py",
+          "sha256": "b8fefc39f3005b3a662124ae3182cee4e7a293e18dd4e84d18facd09c0e0d539"
+        }
+      ],
+      "source_findings": {
+        "conditional_paths": {
+          "accepted-start-history-before-kill.pbseq": "written only when _observe_start is called",
+          "dispatcher-barrier.json": "written only when _kill_cut invokes kill_at_barrier",
+          "history-after-projection/temporal-history.pbseq": "written by _assert_crash_final after recovery"
+        }
+      },
+      "structure_vs_oracle_boundary": {
+        "projected_artifact_rules": "File count/format, declared top-level JSON keys, raw SHA-256 link equality. PBSeq decoding requires runner decoder. JSON nested/business values are not validated by required_keys.",
+        "runtime_status": "source mapping only; no raw artifacts inspected or accepted.",
+        "source_test_oracles_not_enforced_by_artifact_rules": [
+          "SQL state and snapshot equality",
+          "Temporal run identity/Started-history semantics",
+          "cut-phase and barrier-event ordering",
+          "child/service exit, forced/absent cleanup outcomes",
+          "workspace tree equality",
+          "proxy byte counts and held response chronology",
+          "restart store identity and no duplicate execution"
+        ]
+      }
+    },
+    {
+      "case_directory": "dispatcher-response-before-admission",
+      "case_directory_binding": "<IFPMIC_H2_RUNTIME_EVIDENCE_ROOT>/dispatcher-response-before-admission",
+      "node_id": "tests/ifpmic_api/test_h2_dispatcher_crashes.py::test_start_response_before_admission_crash_recovers_same_run",
+      "original_unresolved": [
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_dispatcher_crashes.py:178-183",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:525-540"
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: history-after-projection/** (direct observation)",
+          "proposed_correction_or_scope": "Wildcard resolves to history-after-projection/temporal-history.pbseq.",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_dispatcher_crashes.py:211-219",
+            "tests/ifpmic_api/h2_dispatcher_crash_support.py:429-451"
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: barrier files",
+          "proposed_correction_or_scope": "Exact root file is dispatcher-barrier.json; barrier socket is transient TMPDIR synchronization state.",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_dispatcher_crashes.py:214-218"
+          ],
+          "original": "JSON top-level keys not fully source-verified for owner-at-cut.json",
+          "proposed_correction_or_scope": null,
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_dispatcher_crashes.py:194-198"
+          ],
+          "original": "JSON top-level keys not fully source-verified for workspace-recovered-observation.json",
+          "proposed_correction_or_scope": null,
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_dispatcher_crashes.py:200-207"
+          ],
+          "original": "JSON top-level keys not fully source-verified for case-result.json",
+          "proposed_correction_or_scope": null,
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/h2_dispatcher_crash_support.py:296-297",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:121-135"
+          ],
+          "original": "JSON top-level keys not fully source-verified for process-journal.jsonl",
+          "proposed_correction_or_scope": null,
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/h2_dispatcher_crash_support.py:525-552"
+          ],
+          "original": "JSON top-level keys not fully source-verified for process-cleanup.json",
+          "proposed_correction_or_scope": null,
+          "status": "source_mapped"
+        }
+      ],
+      "owner_query_source_mapping": {
+        "owner_minimum_preserved": 1,
+        "owner_recorder_path": "dispatcher/restart: crash.read_owner_snapshot -> normal._read_owner_snapshot -> record_owner_snapshot; accepted-start: _read_owner_snapshot -> normal._read_owner_snapshot -> record_owner_snapshot",
+        "query_max_preserved": {},
+        "query_min_preserved": {
+          "temporal.list_workflows": 1
+        },
+        "query_recorder_path": "record_query_observation emits actual temporal.list_workflows query results in _observe_started_direct, _list_workflow_runs, and normal._observe_real_temporal."
+      },
+      "source_evidence_refs": [
+        {
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "sha256": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472"
+        },
+        {
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "sha256": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8"
+        },
+        {
+          "path": "tests/ifpmic_api/response_loss_proxy.py",
+          "sha256": "b6f8ca62f21724bf26aac6395528092257e7c48b729d19df02adf7281b9ed512"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_restart_and_history.py",
+          "sha256": "606db627f5efd4ba6f9158da6ef538b95fe70d77444cb0775191265a10a2b546"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "sha256": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "sha256": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c"
+        },
+        {
+          "path": "tests/ifpmic_api/conftest.py",
+          "sha256": "dd3885f66ccc29fc987f4fa20dbdba0481a95c377f227c5ac17663f0f63c4b8f"
+        },
+        {
+          "path": "tests/ifpmic_api/accepted_start_dispatcher_child.py",
+          "sha256": "87c6cf61d94188f5733e73fc02e8d3d2caeb78f4a802a6455a501317a6f859eb"
+        },
+        {
+          "path": "tests/ifpmic_api/jobs_fixture.py",
+          "sha256": "b8fefc39f3005b3a662124ae3182cee4e7a293e18dd4e84d18facd09c0e0d539"
+        }
+      ],
+      "source_findings": {
+        "conditional_paths": {
+          "accepted-start-history-before-kill.pbseq": "written only when _observe_start is called",
+          "dispatcher-barrier.json": "written only when _kill_cut invokes kill_at_barrier",
+          "history-after-projection/temporal-history.pbseq": "written by _assert_crash_final after recovery"
+        }
+      },
+      "structure_vs_oracle_boundary": {
+        "projected_artifact_rules": "File count/format, declared top-level JSON keys, raw SHA-256 link equality. PBSeq decoding requires runner decoder. JSON nested/business values are not validated by required_keys.",
+        "runtime_status": "source mapping only; no raw artifacts inspected or accepted.",
+        "source_test_oracles_not_enforced_by_artifact_rules": [
+          "SQL state and snapshot equality",
+          "Temporal run identity/Started-history semantics",
+          "cut-phase and barrier-event ordering",
+          "child/service exit, forced/absent cleanup outcomes",
+          "workspace tree equality",
+          "proxy byte counts and held response chronology",
+          "restart store identity and no duplicate execution"
+        ]
+      }
+    },
+    {
+      "case_directory": "dispatcher-two-live-stale-ack",
+      "case_directory_binding": "<IFPMIC_H2_RUNTIME_EVIDENCE_ROOT>/dispatcher-two-live-stale-ack",
+      "node_id": "tests/ifpmic_api/test_h2_dispatcher_crashes.py::test_two_live_dispatchers_stale_ack_cannot_change_recovered_run",
+      "original_unresolved": [
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_dispatcher_crashes.py:178-183",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:525-540"
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: history-after-projection/** (direct observation)",
+          "proposed_correction_or_scope": "Wildcard resolves to history-after-projection/temporal-history.pbseq.",
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_dispatcher_crashes.py:371-395",
+            "tests/ifpmic_api/h2_dispatcher_crash_support.py:368-426"
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: barrier files",
+          "proposed_correction_or_scope": "Remove dispatcher-barrier.json; start_barrier_dispatcher is released normally and does not call kill_at_barrier.",
+          "status": "resolved_by_proposed_rule_removal"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_dispatcher_crashes.py:363-411",
+            "tests/ifpmic_api/test_h2_dispatcher_crashes.py:210-219",
+            "tests/ifpmic_api/h2_dispatcher_crash_support.py:467-474"
+          ],
+          "original": "JSON top-level keys not fully source-verified for owner-at-cut.json",
+          "proposed_correction_or_scope": "This literal case never calls _kill_cut, sole owner-at-cut.json writer. Remove impossible file and stale producer location; actual pre_ack/recovered/after_old_ack owner snapshots remain recorded by common raw owner recorder with minimum_owner1 unchanged. Fresh actual equality assertions and original raw snapshots remain mandatory; no fabricated cut file.",
+          "status": "resolved_by_proposed_rule_removal"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_dispatcher_crashes.py:194-198"
+          ],
+          "original": "JSON top-level keys not fully source-verified for workspace-recovered-observation.json",
+          "proposed_correction_or_scope": null,
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_dispatcher_crashes.py:200-207"
+          ],
+          "original": "JSON top-level keys not fully source-verified for case-result.json",
+          "proposed_correction_or_scope": null,
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/h2_dispatcher_crash_support.py:296-297",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:121-135"
+          ],
+          "original": "JSON top-level keys not fully source-verified for process-journal.jsonl",
+          "proposed_correction_or_scope": null,
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/h2_dispatcher_crash_support.py:525-552"
+          ],
+          "original": "JSON top-level keys not fully source-verified for process-cleanup.json",
+          "proposed_correction_or_scope": null,
+          "status": "source_mapped"
+        }
+      ],
+      "owner_query_source_mapping": {
+        "owner_minimum_preserved": 1,
+        "owner_recorder_path": "dispatcher/restart: crash.read_owner_snapshot -> normal._read_owner_snapshot -> record_owner_snapshot; accepted-start: _read_owner_snapshot -> normal._read_owner_snapshot -> record_owner_snapshot",
+        "query_max_preserved": {},
+        "query_min_preserved": {
+          "temporal.list_workflows": 1
+        },
+        "query_recorder_path": "record_query_observation emits actual temporal.list_workflows query results in _observe_started_direct, _list_workflow_runs, and normal._observe_real_temporal."
+      },
+      "source_evidence_refs": [
+        {
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "sha256": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472"
+        },
+        {
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "sha256": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8"
+        },
+        {
+          "path": "tests/ifpmic_api/response_loss_proxy.py",
+          "sha256": "b6f8ca62f21724bf26aac6395528092257e7c48b729d19df02adf7281b9ed512"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_restart_and_history.py",
+          "sha256": "606db627f5efd4ba6f9158da6ef538b95fe70d77444cb0775191265a10a2b546"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "sha256": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "sha256": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c"
+        },
+        {
+          "path": "tests/ifpmic_api/conftest.py",
+          "sha256": "dd3885f66ccc29fc987f4fa20dbdba0481a95c377f227c5ac17663f0f63c4b8f"
+        },
+        {
+          "path": "tests/ifpmic_api/accepted_start_dispatcher_child.py",
+          "sha256": "87c6cf61d94188f5733e73fc02e8d3d2caeb78f4a802a6455a501317a6f859eb"
+        },
+        {
+          "path": "tests/ifpmic_api/jobs_fixture.py",
+          "sha256": "b8fefc39f3005b3a662124ae3182cee4e7a293e18dd4e84d18facd09c0e0d539"
+        }
+      ],
+      "source_findings": {
+        "conditional_paths": {
+          "accepted-start-history-before-kill.pbseq": "captured by _observe_start",
+          "dispatcher-barrier.json": "not written because no kill_at_barrier call",
+          "history-after-projection/temporal-history.pbseq": "captured by _assert_crash_final"
+        },
+        "path_deltas": {
+          "remove": [
+            "dispatcher-barrier.json"
+          ]
+        }
+      },
+      "structure_vs_oracle_boundary": {
+        "projected_artifact_rules": "File count/format, declared top-level JSON keys, raw SHA-256 link equality. PBSeq decoding requires runner decoder. JSON nested/business values are not validated by required_keys.",
+        "runtime_status": "source mapping only; no raw artifacts inspected or accepted.",
+        "source_test_oracles_not_enforced_by_artifact_rules": [
+          "SQL state and snapshot equality",
+          "Temporal run identity/Started-history semantics",
+          "cut-phase and barrier-event ordering",
+          "child/service exit, forced/absent cleanup outcomes",
+          "workspace tree equality",
+          "proxy byte counts and held response chronology",
+          "restart store identity and no duplicate execution"
+        ]
+      }
+    },
+    {
+      "case_directory": "runtime-independent-storage-restarts",
+      "case_directory_binding": "<IFPMIC_H2_RUNTIME_EVIDENCE_ROOT>/runtime-independent-storage-restarts",
+      "node_id": "tests/ifpmic_api/test_h2_runtime_restart_and_history.py::test_postgres_and_temporal_restart_preserve_same_execution_and_receipt",
+      "original_unresolved": [
+        {
+          "evidence": [
+            "source mapping from literal producer/helper; see the per-row source_locations and source_pins"
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: history-after-pg-restart/**",
+          "proposed_correction_or_scope": null,
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "source mapping from literal producer/helper; see the per-row source_locations and source_pins"
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: history-after-temporal-restart/**",
+          "proposed_correction_or_scope": null,
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "source mapping from literal producer/helper; see the per-row source_locations and source_pins"
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: history-after-cli-restart/**",
+          "proposed_correction_or_scope": null,
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/h2_dispatcher_crash_support.py:295-319",
+            "tests/ifpmic_api/test_h2_runtime_restart_and_history.py:89-119",
+            "tests/ifpmic_api/test_h2_runtime_restart_and_history.py:133-165",
+            "tests/ifpmic_api/conftest.py:321-326"
+          ],
+          "original": "Source-declared evidence item needs a concrete path/condition mapping: private PostgreSQL/Temporal stores and logs",
+          "proposed_correction_or_scope": "Temporal files are <case root>/temporal-data/temporal.sqlite, temporal-server.log and temporal-server-restart.log. PostgreSQL files are <pg_cluster.root>/data and <pg_cluster.root>/server.log, outside case_directory. They are not copied into proposed artifacts; restart-oracle records device/inode and journal records lifecycle.",
+          "status": "source_mapped_as_private_auxiliary_not_case_artifact"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/test_h2_runtime_restart_and_history.py:200-209"
+          ],
+          "original": "JSON top-level keys not fully source-verified for restart-oracle.json",
+          "proposed_correction_or_scope": null,
+          "status": "source_mapped"
+        },
+        {
+          "evidence": [
+            "tests/ifpmic_api/h2_dispatcher_crash_support.py:296-297",
+            "tests/ifpmic_api/test_h2_runtime_normal_flow.py:121-135"
+          ],
+          "original": "JSON top-level keys not fully source-verified for process-journal.jsonl",
+          "proposed_correction_or_scope": null,
+          "status": "source_mapped"
+        }
+      ],
+      "owner_query_source_mapping": {
+        "owner_minimum_preserved": 1,
+        "owner_recorder_path": "dispatcher/restart: crash.read_owner_snapshot -> normal._read_owner_snapshot -> record_owner_snapshot; accepted-start: _read_owner_snapshot -> normal._read_owner_snapshot -> record_owner_snapshot",
+        "query_max_preserved": {},
+        "query_min_preserved": {
+          "temporal.list_workflows": 1
+        },
+        "query_recorder_path": "record_query_observation emits actual temporal.list_workflows query results in _observe_started_direct, _list_workflow_runs, and normal._observe_real_temporal."
+      },
+      "source_evidence_refs": [
+        {
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "sha256": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472"
+        },
+        {
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "sha256": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8"
+        },
+        {
+          "path": "tests/ifpmic_api/response_loss_proxy.py",
+          "sha256": "b6f8ca62f21724bf26aac6395528092257e7c48b729d19df02adf7281b9ed512"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_restart_and_history.py",
+          "sha256": "606db627f5efd4ba6f9158da6ef538b95fe70d77444cb0775191265a10a2b546"
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "sha256": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d"
+        },
+        {
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "sha256": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c"
+        },
+        {
+          "path": "tests/ifpmic_api/conftest.py",
+          "sha256": "dd3885f66ccc29fc987f4fa20dbdba0481a95c377f227c5ac17663f0f63c4b8f"
+        },
+        {
+          "path": "tests/ifpmic_api/accepted_start_dispatcher_child.py",
+          "sha256": "87c6cf61d94188f5733e73fc02e8d3d2caeb78f4a802a6455a501317a6f859eb"
+        },
+        {
+          "path": "tests/ifpmic_api/jobs_fixture.py",
+          "sha256": "b8fefc39f3005b3a662124ae3182cee4e7a293e18dd4e84d18facd09c0e0d539"
+        }
+      ],
+      "source_findings": {
+        "history_path_mappings": {
+          "history-after-cli-restart/temporal-history.pbseq": "test_h2_runtime_restart_and_history.py:191-199",
+          "history-after-pg-restart/temporal-history.pbseq": "test_h2_runtime_restart_and_history.py:122-129",
+          "history-after-projection/temporal-history.pbseq": "test_h2_dispatcher_crashes.py:178-183",
+          "history-after-temporal-restart/temporal-history.pbseq": "test_h2_runtime_restart_and_history.py:168-176"
+        },
+        "private_stores_and_logs": {
+          "outside_case_artifact_tree": [
+            "PostgreSQL data directory and log"
+          ],
+          "postgres": [
+            "<pg_cluster.root>/data",
+            "<pg_cluster.root>/server.log"
+          ],
+          "temporal": [
+            "<case root>/temporal-data/temporal.sqlite",
+            "<case root>/temporal-data/temporal-server.log",
+            "<case root>/temporal-data/temporal-server-restart.log"
+          ]
+        }
+      },
+      "structure_vs_oracle_boundary": {
+        "projected_artifact_rules": "File count/format, declared top-level JSON keys, raw SHA-256 link equality. PBSeq decoding requires runner decoder. JSON nested/business values are not validated by required_keys.",
+        "runtime_status": "source mapping only; no raw artifacts inspected or accepted.",
+        "source_test_oracles_not_enforced_by_artifact_rules": [
+          "SQL state and snapshot equality",
+          "Temporal run identity/Started-history semantics",
+          "cut-phase and barrier-event ordering",
+          "child/service exit, forced/absent cleanup outcomes",
+          "workspace tree equality",
+          "proxy byte counts and held response chronology",
+          "restart store identity and no duplicate execution"
+        ]
+      }
+    }
+  ],
+  "input_machine": {
+    "commit": "911ee83",
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules.json",
+    "sha256": "c3142155333886eb7514c7361e437a15964dd13d2cc24893726302457ab3728e"
+  },
+  "kind": "ifpmic.b03.h2.dispatcher-source-projection.v3",
+  "proposed_rows": [
+    {
+      "artifact_sources": {
+        "history-after-projection/temporal-history.pbseq": {
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "symbol": "normal._observe_temporal call for final recovered run"
+        }
+      },
+      "artifacts": [
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "owner-before-dispatch.json",
+          "required_keys": [
+            "accepted",
+            "bindings",
+            "scopes",
+            "receipts",
+            "attempts",
+            "noncreate_commands"
+          ]
+        },
+        {
+          "format": "pbseq",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "accepted-start-history-before-kill.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "accepted-start-observer.json",
+          "required_keys": [
+            "workflow_id",
+            "run_id",
+            "observed_started_monotonic",
+            "execution_count",
+            "started_event_count",
+            "started_input",
+            "event_ids",
+            "status",
+            "retention_seconds",
+            "raw_history_sha256",
+            "raw_history_bytes"
+          ],
+          "sha256_links": {
+            "/raw_history_sha256": "accepted-start-history-before-kill.pbseq"
+          }
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "barrier-sequence.json",
+          "required_keys": [
+            "events",
+            "armed_monotonic",
+            "barrier_hit_monotonic",
+            "release_requested_monotonic",
+            "released_monotonic"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "owner-at-start-attempt.json",
+          "required_keys": [
+            "accepted",
+            "bindings",
+            "scopes",
+            "receipts",
+            "attempts",
+            "noncreate_commands"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "owner-after-kill.json",
+          "required_keys": [
+            "accepted",
+            "bindings",
+            "scopes",
+            "receipts",
+            "attempts",
+            "noncreate_commands"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "owner-after-projection-replay.json",
+          "required_keys": [
+            "accepted",
+            "bindings",
+            "scopes",
+            "receipts",
+            "attempts",
+            "noncreate_commands"
+          ]
+        },
+        {
+          "format": "jsonl",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-journal.jsonl",
+          "required_keys": [
+            "event"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "source-manifest.json",
+          "required_keys": [
+            "format",
+            "files"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "environment-manifest.json",
+          "required_keys": [
+            "format",
+            "files",
+            "interpreter_sha256",
+            "python_version"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "response-loss-observation.json",
+          "required_keys": [
+            "case_id",
+            "status",
+            "job_id",
+            "command_id",
+            "deployment_id",
+            "build_id",
+            "first_started_run_id",
+            "recovered_admitted_run_id",
+            "execution_count",
+            "started_event_count",
+            "projector_receipt_count",
+            "attempt_results",
+            "start_response_bytes_held",
+            "server_response_bytes_forwarded_after_arm",
+            "server_response_bytes_held_after_arm",
+            "kill_requested_monotonic",
+            "started_observed_monotonic",
+            "direct_backend_observer",
+            "worker_started_after_admission",
+            "workspace_tree_unchanged",
+            "temporal_server_identity_unchanged",
+            "temporal_store_device_inode_unchanged",
+            "same_identity_config_sha256",
+            "owner_initial_sha256",
+            "owner_before_start_sha256",
+            "owner_after_kill_sha256",
+            "owner_after_projection_sha256",
+            "raw_history_before_sha256",
+            "raw_history_after_sha256",
+            "proxy_before_kill_sha256",
+            "proxy_through_kill_sha256",
+            "barrier_sequence_sha256",
+            "response_frame_identity_claimed",
+            "processes",
+            "cleanup_process_count",
+            "process_journal_sha256",
+            "proxy_journal_sha256",
+            "cleanup_error_types",
+            "cleanup_violations"
+          ],
+          "sha256_links": {
+            "/barrier_sequence_sha256": "barrier-sequence.json",
+            "/owner_after_kill_sha256": "owner-after-kill.json",
+            "/owner_after_projection_sha256": "owner-after-projection-replay.json",
+            "/owner_before_start_sha256": "owner-at-start-attempt.json",
+            "/owner_initial_sha256": "owner-before-dispatch.json",
+            "/process_journal_sha256": "process-journal.jsonl",
+            "/proxy_before_kill_sha256": "proxy-before-kill.json",
+            "/proxy_journal_sha256": "proxy-through-kill.json",
+            "/proxy_through_kill_sha256": "proxy-through-kill.json",
+            "/raw_history_after_sha256": "history-after-projection/temporal-history.pbseq",
+            "/raw_history_before_sha256": "accepted-start-history-before-kill.pbseq"
+          }
+        },
+        {
+          "format": "pbseq",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "history-after-projection/temporal-history.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "proxy-before-kill.json",
+          "required_keys": [
+            "kind",
+            "armed",
+            "arm_monotonic",
+            "response_sequence",
+            "request_forwarded_bytes_after_arm",
+            "server_response_bytes_held_after_arm",
+            "server_response_bytes_forwarded_after_arm",
+            "server_response_bytes_total",
+            "held_response_bytes",
+            "overflowed",
+            "http2_or_grpc_frames_decoded",
+            "connection_records",
+            "events"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "proxy-through-kill.json",
+          "required_keys": [
+            "kind",
+            "armed",
+            "arm_monotonic",
+            "response_sequence",
+            "request_forwarded_bytes_after_arm",
+            "server_response_bytes_held_after_arm",
+            "server_response_bytes_forwarded_after_arm",
+            "server_response_bytes_total",
+            "held_response_bytes",
+            "overflowed",
+            "http2_or_grpc_frames_decoded",
+            "connection_records",
+            "events"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal-server.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/start-loss-child-stdout.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/start-loss-child-stderr.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/dispatcher-stdout.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/dispatcher-stderr.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/worker-stdout.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/worker-stderr.log",
+          "required_keys": []
+        }
+      ],
+      "case_directory": "accepted-start-loss",
+      "minimum_owner": 1,
+      "node_id": "tests/ifpmic_api/test_accepted_start_response_loss.py::test_actual_started_event_survives_lost_start_response_and_recovers_same_run",
+      "phase": "dispatcher_crashes",
+      "profile": "accepted_start_loss",
+      "queries_max": {},
+      "queries_min": {
+        "temporal.list_workflows": 1
+      },
+      "source_locations": [
+        {
+          "line": 398,
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "sha256": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8",
+          "symbol": "test_actual_started_event_survives_lost_start_response_and_recovers_same_run"
+        },
+        {
+          "line": 389,
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "sha256": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d",
+          "symbol": "_read_owner_snapshot / record_owner_snapshot"
+        },
+        {
+          "line": 50,
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "sha256": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c",
+          "symbol": "record_query_observation"
+        },
+        {
+          "line": 82,
+          "path": "tests/ifpmic_api/response_loss_proxy.py",
+          "sha256": "b6f8ca62f21724bf26aac6395528092257e7c48b729d19df02adf7281b9ed512",
+          "symbol": "TCPResponseHoldingProxy.snapshot raw output schema"
+        },
+        {
+          "line": 87,
+          "path": "tests/ifpmic_api/response_loss_proxy.py",
+          "sha256": "b6f8ca62f21724bf26aac6395528092257e7c48b729d19df02adf7281b9ed512",
+          "symbol": "raw TCP proxy observation kind and field schema"
+        },
+        {
+          "artifact": "owner-before-dispatch.json",
+          "line": 431,
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "sha256": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "accepted-start-history-before-kill.pbseq",
+          "line": 317,
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "sha256": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "accepted-start-observer.json",
+          "line": 326,
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "sha256": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "barrier-sequence.json",
+          "line": 616,
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "sha256": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "owner-at-start-attempt.json",
+          "line": 655,
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "sha256": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "owner-after-kill.json",
+          "line": 657,
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "sha256": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "owner-after-projection-replay.json",
+          "line": 736,
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "sha256": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "source-manifest.json",
+          "line": 464,
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "sha256": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "environment-manifest.json",
+          "line": 465,
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "sha256": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "response-loss-observation.json",
+          "line": 873,
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "sha256": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "history-after-projection/temporal-history.pbseq",
+          "line": 714,
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "sha256": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "proxy-before-kill.json",
+          "line": 590,
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "sha256": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "proxy-through-kill.json",
+          "line": 645,
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "sha256": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "process-journal.jsonl",
+          "line": 407,
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "sha256": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8",
+          "symbol": "journal creation and successful lifecycle appends"
+        }
+      ],
+      "unresolved": []
+    },
+    {
+      "applicability_clarifications": [
+        {
+          "rule": "The dispatcher cut evidence is the exact root-level dispatcher-barrier.json emitted by kill_at_barrier; the barrier socket itself is only synchronization state.",
+          "source": "tests/ifpmic_api/h2_dispatcher_crash_support.py:kill_at_barrier"
+        }
+      ],
+      "artifact_sources": {
+        "history-after-projection/temporal-history.pbseq": {
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "symbol": "_recover_dispatcher normal._observe_temporal; excluded missing-history quarantine case"
+        }
+      },
+      "artifacts": [
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "owner-at-cut.json",
+          "required_keys": [
+            "accepted",
+            "bindings",
+            "scopes",
+            "receipts",
+            "attempts",
+            "noncreate_commands"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "workspace-recovered-observation.json",
+          "required_keys": [
+            "before",
+            "after"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "case-result.json",
+          "required_keys": [
+            "case_id",
+            "status",
+            "snapshot_sha256",
+            "expected_generation",
+            "proposal_sha256",
+            "temporal_history_sha256",
+            "temporal_run_id",
+            "worker_pid"
+          ],
+          "sha256_links": {
+            "/temporal_history_sha256": "history-after-projection/temporal-history.pbseq"
+          }
+        },
+        {
+          "format": "jsonl",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-journal.jsonl",
+          "required_keys": [
+            "event"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-cleanup.json",
+          "required_keys": [
+            "processes"
+          ]
+        },
+        {
+          "format": "pbseq",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "history-after-projection/temporal-history.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-barrier.json",
+          "required_keys": [
+            "hook_phase",
+            "events",
+            "pid",
+            "start_ticks"
+          ]
+        },
+        {
+          "format": "pbseq",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "accepted-start-history-before-kill.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "accepted-start-observer.json",
+          "required_keys": [
+            "workflow_id",
+            "run_id",
+            "observed_started_monotonic",
+            "execution_count",
+            "started_event_count",
+            "started_input",
+            "event_ids",
+            "status",
+            "retention_seconds",
+            "raw_history_sha256",
+            "raw_history_bytes"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "workspace-initial-observation.json",
+          "required_keys": [
+            "job_id",
+            "tree",
+            "marker_bytes_hex"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "source-manifest.json",
+          "required_keys": [
+            "format",
+            "files"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "environment-manifest.json",
+          "required_keys": [
+            "format",
+            "files",
+            "interpreter_sha256",
+            "python_version"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal-server.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-cut-logs/dispatcher.stdout",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-cut-logs/dispatcher.stderr",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/worker-stdout.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/worker-stderr.log",
+          "required_keys": []
+        }
+      ],
+      "case_directory": "dispatcher-ack-before-worker",
+      "minimum_owner": 1,
+      "node_id": "tests/ifpmic_api/test_h2_dispatcher_crashes.py::test_ack_before_worker_activation_projects_once",
+      "phase": "dispatcher_crashes",
+      "profile": "dispatcher_crash",
+      "queries_max": {},
+      "queries_min": {
+        "temporal.list_workflows": 1
+      },
+      "source_locations": [
+        {
+          "line": 335,
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "sha256": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52",
+          "symbol": "test_ack_before_worker_activation_projects_once"
+        },
+        {
+          "line": 389,
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "sha256": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d",
+          "symbol": "_read_owner_snapshot / record_owner_snapshot"
+        },
+        {
+          "line": 50,
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "sha256": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c",
+          "symbol": "record_query_observation"
+        },
+        {
+          "line": 281,
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472",
+          "symbol": "_prepare_case_impl"
+        },
+        {
+          "line": 351,
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "sha256": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52",
+          "symbol": "transitive _observe_started_direct call with private evidence root"
+        },
+        {
+          "artifact": "owner-at-cut.json",
+          "line": 217,
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "sha256": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "workspace-recovered-observation.json",
+          "line": 195,
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "sha256": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "case-result.json",
+          "line": 207,
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "sha256": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "process-journal.jsonl",
+          "line": 296,
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "process-cleanup.json",
+          "line": 549,
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "history-after-projection/temporal-history.pbseq",
+          "line": 182,
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "sha256": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "dispatcher-barrier.json",
+          "line": 435,
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "accepted-start-history-before-kill.pbseq",
+          "line": 317,
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "sha256": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "accepted-start-observer.json",
+          "line": 326,
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "sha256": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8",
+          "symbol": "source artifact producer"
+        }
+      ],
+      "unresolved": []
+    },
+    {
+      "applicability_clarifications": [
+        {
+          "rule": "The dispatcher cut evidence is the exact root-level dispatcher-barrier.json emitted by kill_at_barrier; the barrier socket itself is only synchronization state.",
+          "source": "tests/ifpmic_api/h2_dispatcher_crash_support.py:kill_at_barrier"
+        }
+      ],
+      "artifact_sources": {
+        "history-after-projection/temporal-history.pbseq": {
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "symbol": "_recover_dispatcher normal._observe_temporal; excluded missing-history quarantine case"
+        }
+      },
+      "artifacts": [
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "owner-at-cut.json",
+          "required_keys": [
+            "accepted",
+            "bindings",
+            "scopes",
+            "receipts",
+            "attempts",
+            "noncreate_commands"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "workspace-recovered-observation.json",
+          "required_keys": [
+            "before",
+            "after"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "case-result.json",
+          "required_keys": [
+            "case_id",
+            "status",
+            "snapshot_sha256",
+            "expected_generation",
+            "proposal_sha256",
+            "temporal_history_sha256",
+            "temporal_run_id",
+            "worker_pid"
+          ],
+          "sha256_links": {
+            "/temporal_history_sha256": "history-after-projection/temporal-history.pbseq"
+          }
+        },
+        {
+          "format": "jsonl",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-journal.jsonl",
+          "required_keys": [
+            "event"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-cleanup.json",
+          "required_keys": [
+            "processes"
+          ]
+        },
+        {
+          "format": "pbseq",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "history-after-projection/temporal-history.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-barrier.json",
+          "required_keys": [
+            "hook_phase",
+            "events",
+            "pid",
+            "start_ticks"
+          ]
+        },
+        {
+          "format": "pbseq",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "accepted-start-history-before-kill.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "accepted-start-observer.json",
+          "required_keys": [
+            "workflow_id",
+            "run_id",
+            "observed_started_monotonic",
+            "execution_count",
+            "started_event_count",
+            "started_input",
+            "event_ids",
+            "status",
+            "retention_seconds",
+            "raw_history_sha256",
+            "raw_history_bytes"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "workspace-initial-observation.json",
+          "required_keys": [
+            "job_id",
+            "tree",
+            "marker_bytes_hex"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "source-manifest.json",
+          "required_keys": [
+            "format",
+            "files"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "environment-manifest.json",
+          "required_keys": [
+            "format",
+            "files",
+            "interpreter_sha256",
+            "python_version"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal-server.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-cut-logs/dispatcher.stdout",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-cut-logs/dispatcher.stderr",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/worker-stdout.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/worker-stderr.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/dispatcher-recovery-stdout.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/dispatcher-recovery-stderr.log",
+          "required_keys": []
+        }
+      ],
+      "case_directory": "dispatcher-admitted-before-ack",
+      "minimum_owner": 1,
+      "node_id": "tests/ifpmic_api/test_h2_dispatcher_crashes.py::test_admission_before_ack_crash_recovers_same_run",
+      "phase": "dispatcher_crashes",
+      "profile": "dispatcher_crash",
+      "queries_max": {},
+      "queries_min": {
+        "temporal.list_workflows": 1
+      },
+      "source_locations": [
+        {
+          "line": 303,
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "sha256": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52",
+          "symbol": "test_admission_before_ack_crash_recovers_same_run"
+        },
+        {
+          "line": 389,
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "sha256": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d",
+          "symbol": "_read_owner_snapshot / record_owner_snapshot"
+        },
+        {
+          "line": 50,
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "sha256": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c",
+          "symbol": "record_query_observation"
+        },
+        {
+          "line": 281,
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472",
+          "symbol": "_prepare_case_impl"
+        },
+        {
+          "line": 318,
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "sha256": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52",
+          "symbol": "transitive _observe_started_direct call with private evidence root"
+        },
+        {
+          "artifact": "owner-at-cut.json",
+          "line": 217,
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "sha256": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "workspace-recovered-observation.json",
+          "line": 195,
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "sha256": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "case-result.json",
+          "line": 207,
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "sha256": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "process-journal.jsonl",
+          "line": 296,
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "process-cleanup.json",
+          "line": 549,
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "history-after-projection/temporal-history.pbseq",
+          "line": 182,
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "sha256": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "dispatcher-barrier.json",
+          "line": 435,
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "accepted-start-history-before-kill.pbseq",
+          "line": 317,
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "sha256": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "accepted-start-observer.json",
+          "line": 326,
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "sha256": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8",
+          "symbol": "source artifact producer"
+        }
+      ],
+      "unresolved": []
+    },
+    {
+      "applicability_clarifications": [
+        {
+          "rule": "The dispatcher cut evidence is the exact root-level dispatcher-barrier.json emitted by kill_at_barrier; the barrier socket itself is only synchronization state.",
+          "source": "tests/ifpmic_api/h2_dispatcher_crash_support.py:kill_at_barrier"
+        }
+      ],
+      "artifact_sources": {
+        "workspace-after-history-missing-quarantine.json": {
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "symbol": "missing-history quarantine workspace unchanged observation"
+        }
+      },
+      "artifacts": [
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "owner-at-cut.json",
+          "required_keys": [
+            "accepted",
+            "bindings",
+            "scopes",
+            "receipts",
+            "attempts",
+            "noncreate_commands"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "exact-owned-history-deletion.json",
+          "required_keys": [
+            "workflow_id",
+            "run_id",
+            "rpc",
+            "confirmed"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "owner-after-history-missing-quarantine.json",
+          "required_keys": [
+            "accepted",
+            "bindings",
+            "scopes",
+            "receipts",
+            "attempts",
+            "noncreate_commands"
+          ]
+        },
+        {
+          "format": "jsonl",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-journal.jsonl",
+          "required_keys": [
+            "event"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-cleanup.json",
+          "required_keys": [
+            "processes"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-barrier.json",
+          "required_keys": [
+            "hook_phase",
+            "events",
+            "pid",
+            "start_ticks"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "workspace-after-history-missing-quarantine.json",
+          "required_keys": [
+            "before",
+            "after"
+          ]
+        },
+        {
+          "format": "pbseq",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "accepted-start-history-before-kill.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "accepted-start-observer.json",
+          "required_keys": [
+            "workflow_id",
+            "run_id",
+            "observed_started_monotonic",
+            "execution_count",
+            "started_event_count",
+            "started_input",
+            "event_ids",
+            "status",
+            "retention_seconds",
+            "raw_history_sha256",
+            "raw_history_bytes"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "workspace-initial-observation.json",
+          "required_keys": [
+            "job_id",
+            "tree",
+            "marker_bytes_hex"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "source-manifest.json",
+          "required_keys": [
+            "format",
+            "files"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "environment-manifest.json",
+          "required_keys": [
+            "format",
+            "files",
+            "interpreter_sha256",
+            "python_version"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal-server.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-cut-logs/dispatcher.stdout",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-cut-logs/dispatcher.stderr",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/dispatcher-recovery-stdout.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/dispatcher-recovery-stderr.log",
+          "required_keys": []
+        }
+      ],
+      "case_directory": "dispatcher-admitted-history-deleted",
+      "minimum_owner": 1,
+      "node_id": "tests/ifpmic_api/test_h2_dispatcher_crashes.py::test_admitted_missing_history_is_quarantined_without_replacement",
+      "phase": "dispatcher_crashes",
+      "profile": "dispatcher_crash",
+      "queries_max": {},
+      "queries_min": {
+        "temporal.list_workflows": 1
+      },
+      "source_locations": [
+        {
+          "line": 412,
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "sha256": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52",
+          "symbol": "test_admitted_missing_history_is_quarantined_without_replacement"
+        },
+        {
+          "line": 389,
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "sha256": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d",
+          "symbol": "_read_owner_snapshot / record_owner_snapshot"
+        },
+        {
+          "line": 50,
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "sha256": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c",
+          "symbol": "record_query_observation"
+        },
+        {
+          "line": 281,
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472",
+          "symbol": "_prepare_case_impl"
+        },
+        {
+          "line": 428,
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "sha256": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52",
+          "symbol": "transitive _observe_started_direct call with private evidence root"
+        },
+        {
+          "artifact": "owner-at-cut.json",
+          "line": 217,
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "sha256": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "exact-owned-history-deletion.json",
+          "line": 471,
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "sha256": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "owner-after-history-missing-quarantine.json",
+          "line": 504,
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "sha256": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "process-journal.jsonl",
+          "line": 296,
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "process-cleanup.json",
+          "line": 549,
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "dispatcher-barrier.json",
+          "line": 435,
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "workspace-after-history-missing-quarantine.json",
+          "line": 507,
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "sha256": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "accepted-start-history-before-kill.pbseq",
+          "line": 317,
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "sha256": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "accepted-start-observer.json",
+          "line": 326,
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "sha256": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8",
+          "symbol": "source artifact producer"
+        }
+      ],
+      "unresolved": []
+    },
+    {
+      "applicability_clarifications": [
+        {
+          "rule": "The dispatcher cut evidence is the exact root-level dispatcher-barrier.json emitted by kill_at_barrier; the barrier socket itself is only synchronization state.",
+          "source": "tests/ifpmic_api/h2_dispatcher_crash_support.py:kill_at_barrier"
+        }
+      ],
+      "artifact_sources": {
+        "history-after-projection/temporal-history.pbseq": {
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "symbol": "_recover_dispatcher normal._observe_temporal; excluded missing-history quarantine case"
+        }
+      },
+      "artifacts": [
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "owner-at-cut.json",
+          "required_keys": [
+            "accepted",
+            "bindings",
+            "scopes",
+            "receipts",
+            "attempts",
+            "noncreate_commands"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "workspace-recovered-observation.json",
+          "required_keys": [
+            "before",
+            "after"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "case-result.json",
+          "required_keys": [
+            "case_id",
+            "status",
+            "snapshot_sha256",
+            "expected_generation",
+            "proposal_sha256",
+            "temporal_history_sha256",
+            "temporal_run_id",
+            "worker_pid"
+          ],
+          "sha256_links": {
+            "/temporal_history_sha256": "history-after-projection/temporal-history.pbseq"
+          }
+        },
+        {
+          "format": "jsonl",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-journal.jsonl",
+          "required_keys": [
+            "event"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-cleanup.json",
+          "required_keys": [
+            "processes"
+          ]
+        },
+        {
+          "format": "pbseq",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "history-after-projection/temporal-history.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-barrier.json",
+          "required_keys": [
+            "hook_phase",
+            "events",
+            "pid",
+            "start_ticks"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "workspace-initial-observation.json",
+          "required_keys": [
+            "job_id",
+            "tree",
+            "marker_bytes_hex"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "source-manifest.json",
+          "required_keys": [
+            "format",
+            "files"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "environment-manifest.json",
+          "required_keys": [
+            "format",
+            "files",
+            "interpreter_sha256",
+            "python_version"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal-server.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-cut-logs/dispatcher.stdout",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-cut-logs/dispatcher.stderr",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/worker-stdout.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/worker-stderr.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/dispatcher-recovery-stdout.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/dispatcher-recovery-stderr.log",
+          "required_keys": []
+        }
+      ],
+      "case_directory": "dispatcher-claim-commit",
+      "minimum_owner": 1,
+      "node_id": "tests/ifpmic_api/test_h2_dispatcher_crashes.py::test_claim_commit_crash_reclaims_only_after_expiry",
+      "phase": "dispatcher_crashes",
+      "profile": "dispatcher_crash",
+      "queries_max": {},
+      "queries_min": {
+        "temporal.list_workflows": 1
+      },
+      "source_locations": [
+        {
+          "line": 236,
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "sha256": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52",
+          "symbol": "test_claim_commit_crash_reclaims_only_after_expiry"
+        },
+        {
+          "line": 389,
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "sha256": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d",
+          "symbol": "_read_owner_snapshot / record_owner_snapshot"
+        },
+        {
+          "line": 50,
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "sha256": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c",
+          "symbol": "record_query_observation"
+        },
+        {
+          "line": 281,
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472",
+          "symbol": "_prepare_case_impl"
+        },
+        {
+          "artifact": "owner-at-cut.json",
+          "line": 217,
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "sha256": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "workspace-recovered-observation.json",
+          "line": 195,
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "sha256": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "case-result.json",
+          "line": 207,
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "sha256": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "process-journal.jsonl",
+          "line": 296,
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "process-cleanup.json",
+          "line": 549,
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "history-after-projection/temporal-history.pbseq",
+          "line": 182,
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "sha256": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "dispatcher-barrier.json",
+          "line": 435,
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472",
+          "symbol": "source artifact producer"
+        }
+      ],
+      "unresolved": []
+    },
+    {
+      "applicability_clarifications": [
+        {
+          "rule": "The dispatcher cut evidence is the exact root-level dispatcher-barrier.json emitted by kill_at_barrier; the barrier socket itself is only synchronization state.",
+          "source": "tests/ifpmic_api/h2_dispatcher_crash_support.py:kill_at_barrier"
+        }
+      ],
+      "artifact_sources": {
+        "history-after-projection/temporal-history.pbseq": {
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "symbol": "_recover_dispatcher normal._observe_temporal; excluded missing-history quarantine case"
+        }
+      },
+      "artifacts": [
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "owner-at-cut.json",
+          "required_keys": [
+            "accepted",
+            "bindings",
+            "scopes",
+            "receipts",
+            "attempts",
+            "noncreate_commands"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "workspace-recovered-observation.json",
+          "required_keys": [
+            "before",
+            "after"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "case-result.json",
+          "required_keys": [
+            "case_id",
+            "status",
+            "snapshot_sha256",
+            "expected_generation",
+            "proposal_sha256",
+            "temporal_history_sha256",
+            "temporal_run_id",
+            "worker_pid"
+          ],
+          "sha256_links": {
+            "/temporal_history_sha256": "history-after-projection/temporal-history.pbseq"
+          }
+        },
+        {
+          "format": "jsonl",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-journal.jsonl",
+          "required_keys": [
+            "event"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-cleanup.json",
+          "required_keys": [
+            "processes"
+          ]
+        },
+        {
+          "format": "pbseq",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "history-after-projection/temporal-history.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-barrier.json",
+          "required_keys": [
+            "hook_phase",
+            "events",
+            "pid",
+            "start_ticks"
+          ]
+        },
+        {
+          "format": "pbseq",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "accepted-start-history-before-kill.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "accepted-start-observer.json",
+          "required_keys": [
+            "workflow_id",
+            "run_id",
+            "observed_started_monotonic",
+            "execution_count",
+            "started_event_count",
+            "started_input",
+            "event_ids",
+            "status",
+            "retention_seconds",
+            "raw_history_sha256",
+            "raw_history_bytes"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "workspace-initial-observation.json",
+          "required_keys": [
+            "job_id",
+            "tree",
+            "marker_bytes_hex"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "source-manifest.json",
+          "required_keys": [
+            "format",
+            "files"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "environment-manifest.json",
+          "required_keys": [
+            "format",
+            "files",
+            "interpreter_sha256",
+            "python_version"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal-server.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-cut-logs/dispatcher.stdout",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-cut-logs/dispatcher.stderr",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/worker-stdout.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/worker-stderr.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/dispatcher-recovery-stdout.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/dispatcher-recovery-stderr.log",
+          "required_keys": []
+        }
+      ],
+      "case_directory": "dispatcher-response-before-admission",
+      "minimum_owner": 1,
+      "node_id": "tests/ifpmic_api/test_h2_dispatcher_crashes.py::test_start_response_before_admission_crash_recovers_same_run",
+      "phase": "dispatcher_crashes",
+      "profile": "dispatcher_crash",
+      "queries_max": {},
+      "queries_min": {
+        "temporal.list_workflows": 1
+      },
+      "source_locations": [
+        {
+          "line": 271,
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "sha256": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52",
+          "symbol": "test_start_response_before_admission_crash_recovers_same_run"
+        },
+        {
+          "line": 389,
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "sha256": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d",
+          "symbol": "_read_owner_snapshot / record_owner_snapshot"
+        },
+        {
+          "line": 50,
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "sha256": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c",
+          "symbol": "record_query_observation"
+        },
+        {
+          "line": 281,
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472",
+          "symbol": "_prepare_case_impl"
+        },
+        {
+          "line": 285,
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "sha256": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52",
+          "symbol": "transitive _observe_started_direct call with private evidence root"
+        },
+        {
+          "artifact": "owner-at-cut.json",
+          "line": 217,
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "sha256": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "workspace-recovered-observation.json",
+          "line": 195,
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "sha256": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "case-result.json",
+          "line": 207,
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "sha256": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "process-journal.jsonl",
+          "line": 296,
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "process-cleanup.json",
+          "line": 549,
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "history-after-projection/temporal-history.pbseq",
+          "line": 182,
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "sha256": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "dispatcher-barrier.json",
+          "line": 435,
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "accepted-start-history-before-kill.pbseq",
+          "line": 317,
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "sha256": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "accepted-start-observer.json",
+          "line": 326,
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "sha256": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8",
+          "symbol": "source artifact producer"
+        }
+      ],
+      "unresolved": []
+    },
+    {
+      "applicability_clarifications": [
+        {
+          "rule": "This case pauses a second live dispatcher with PhaseBarrier and releases it to observe stale-ack exit; it does not invoke kill_at_barrier and emits no root-level dispatcher-barrier.json. The temporary Unix socket under TMPDIR is synchronization state only.",
+          "source": "tests/ifpmic_api/test_h2_dispatcher_crashes.py:371-395; tests/ifpmic_api/h2_dispatcher_crash_support.py:368-426"
+        }
+      ],
+      "artifact_sources": {
+        "history-after-projection/temporal-history.pbseq": {
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "symbol": "_recover_dispatcher normal._observe_temporal; excluded missing-history quarantine case"
+        }
+      },
+      "artifacts": [
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "workspace-recovered-observation.json",
+          "required_keys": [
+            "before",
+            "after"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "case-result.json",
+          "required_keys": [
+            "case_id",
+            "status",
+            "snapshot_sha256",
+            "expected_generation",
+            "proposal_sha256",
+            "temporal_history_sha256",
+            "temporal_run_id",
+            "worker_pid"
+          ],
+          "sha256_links": {
+            "/temporal_history_sha256": "history-after-projection/temporal-history.pbseq"
+          }
+        },
+        {
+          "format": "jsonl",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-journal.jsonl",
+          "required_keys": [
+            "event"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-cleanup.json",
+          "required_keys": [
+            "processes"
+          ]
+        },
+        {
+          "format": "pbseq",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "history-after-projection/temporal-history.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "pbseq",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "accepted-start-history-before-kill.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "accepted-start-observer.json",
+          "required_keys": [
+            "workflow_id",
+            "run_id",
+            "observed_started_monotonic",
+            "execution_count",
+            "started_event_count",
+            "started_input",
+            "event_ids",
+            "status",
+            "retention_seconds",
+            "raw_history_sha256",
+            "raw_history_bytes"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "workspace-initial-observation.json",
+          "required_keys": [
+            "job_id",
+            "tree",
+            "marker_bytes_hex"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "source-manifest.json",
+          "required_keys": [
+            "format",
+            "files"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "environment-manifest.json",
+          "required_keys": [
+            "format",
+            "files",
+            "interpreter_sha256",
+            "python_version"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal-server.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-cut-logs/dispatcher.stdout",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "dispatcher-cut-logs/dispatcher.stderr",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/worker-stdout.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/worker-stderr.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/dispatcher-recovery-stdout.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/dispatcher-recovery-stderr.log",
+          "required_keys": []
+        }
+      ],
+      "case_directory": "dispatcher-two-live-stale-ack",
+      "minimum_owner": 1,
+      "node_id": "tests/ifpmic_api/test_h2_dispatcher_crashes.py::test_two_live_dispatchers_stale_ack_cannot_change_recovered_run",
+      "phase": "dispatcher_crashes",
+      "profile": "dispatcher_crash",
+      "queries_max": {},
+      "queries_min": {
+        "temporal.list_workflows": 1
+      },
+      "source_locations": [
+        {
+          "line": 363,
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "sha256": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52",
+          "symbol": "test_two_live_dispatchers_stale_ack_cannot_change_recovered_run"
+        },
+        {
+          "line": 389,
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "sha256": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d",
+          "symbol": "_read_owner_snapshot / record_owner_snapshot"
+        },
+        {
+          "line": 50,
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "sha256": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c",
+          "symbol": "record_query_observation"
+        },
+        {
+          "line": 281,
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472",
+          "symbol": "_prepare_case_impl"
+        },
+        {
+          "line": 379,
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "sha256": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52",
+          "symbol": "transitive _observe_started_direct call with private evidence root"
+        },
+        {
+          "artifact": "workspace-recovered-observation.json",
+          "line": 195,
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "sha256": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "case-result.json",
+          "line": 207,
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "sha256": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "process-journal.jsonl",
+          "line": 296,
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "process-cleanup.json",
+          "line": 549,
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "history-after-projection/temporal-history.pbseq",
+          "line": 182,
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "sha256": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "accepted-start-history-before-kill.pbseq",
+          "line": 317,
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "sha256": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "accepted-start-observer.json",
+          "line": 326,
+          "path": "tests/ifpmic_api/test_accepted_start_response_loss.py",
+          "sha256": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8",
+          "symbol": "source artifact producer"
+        }
+      ],
+      "unresolved": []
+    },
+    {
+      "artifact_sources": {
+        "history-after-cli-restart/temporal-history.pbseq": {
+          "path": "tests/ifpmic_api/test_h2_runtime_restart_and_history.py",
+          "symbol": "normal._observe_temporal per restart stage"
+        },
+        "history-after-pg-restart/temporal-history.pbseq": {
+          "path": "tests/ifpmic_api/test_h2_runtime_restart_and_history.py",
+          "symbol": "normal._observe_temporal per restart stage"
+        },
+        "history-after-temporal-restart/temporal-history.pbseq": {
+          "path": "tests/ifpmic_api/test_h2_runtime_restart_and_history.py",
+          "symbol": "normal._observe_temporal per restart stage"
+        }
+      },
+      "artifacts": [
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "restart-oracle.json",
+          "required_keys": [
+            "case_id",
+            "status",
+            "run_id",
+            "pg_data_dev_inode",
+            "temporal_store_dev_inode",
+            "pg_restart_snapshot_sha256",
+            "temporal_restart_snapshot_sha256",
+            "same_history_sha256",
+            "execution_count",
+            "receipt_count"
+          ],
+          "sha256_links": {
+            "/same_history_sha256": "history-after-pg-restart/temporal-history.pbseq"
+          }
+        },
+        {
+          "format": "jsonl",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-journal.jsonl",
+          "required_keys": [
+            "event"
+          ]
+        },
+        {
+          "format": "pbseq",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "history-after-pg-restart/temporal-history.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "pbseq",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "history-after-temporal-restart/temporal-history.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "pbseq",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "history-after-cli-restart/temporal-history.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "pbseq",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "history-after-projection/temporal-history.pbseq",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "workspace-initial-observation.json",
+          "required_keys": [
+            "job_id",
+            "tree",
+            "marker_bytes_hex"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "source-manifest.json",
+          "required_keys": [
+            "format",
+            "files"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "environment-manifest.json",
+          "required_keys": [
+            "format",
+            "files",
+            "interpreter_sha256",
+            "python_version"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal-server.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "temporal-data/temporal-server-restart.log",
+          "required_keys": []
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-cleanup.json",
+          "required_keys": [
+            "processes"
+          ]
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "case-result.json",
+          "required_keys": [
+            "case_id",
+            "status",
+            "snapshot_sha256",
+            "expected_generation",
+            "proposal_sha256",
+            "temporal_history_sha256",
+            "temporal_run_id",
+            "worker_pid"
+          ],
+          "sha256_links": {
+            "/temporal_history_sha256": "history-after-projection/temporal-history.pbseq"
+          }
+        },
+        {
+          "format": "json",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "workspace-recovered-observation.json",
+          "required_keys": [
+            "before",
+            "after"
+          ]
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/dispatcher-initial-stdout.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/dispatcher-initial-stderr.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/worker-stdout.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/worker-stderr.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/dispatcher-after-restarts-stdout.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/dispatcher-after-restarts-stderr.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/worker-after-restarts-stdout.log",
+          "required_keys": []
+        },
+        {
+          "format": "bytes",
+          "maximum": 1,
+          "minimum": 1,
+          "path": "process-logs/worker-after-restarts-stderr.log",
+          "required_keys": []
+        }
+      ],
+      "case_directory": "runtime-independent-storage-restarts",
+      "minimum_owner": 1,
+      "node_id": "tests/ifpmic_api/test_h2_runtime_restart_and_history.py::test_postgres_and_temporal_restart_preserve_same_execution_and_receipt",
+      "phase": "dispatcher_crashes",
+      "profile": "restart",
+      "queries_max": {},
+      "queries_min": {
+        "temporal.list_workflows": 1
+      },
+      "source_locations": [
+        {
+          "line": 57,
+          "path": "tests/ifpmic_api/test_h2_runtime_restart_and_history.py",
+          "sha256": "606db627f5efd4ba6f9158da6ef538b95fe70d77444cb0775191265a10a2b546",
+          "symbol": "test_postgres_and_temporal_restart_preserve_same_execution_and_receipt"
+        },
+        {
+          "line": 389,
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "sha256": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d",
+          "symbol": "_read_owner_snapshot / record_owner_snapshot"
+        },
+        {
+          "line": 50,
+          "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+          "sha256": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c",
+          "symbol": "record_query_observation"
+        },
+        {
+          "line": 72,
+          "path": "tests/ifpmic_api/test_h2_runtime_restart_and_history.py",
+          "sha256": "606db627f5efd4ba6f9158da6ef538b95fe70d77444cb0775191265a10a2b546",
+          "symbol": "calls shared _assert_crash_final initial runtime capture"
+        },
+        {
+          "line": 178,
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "sha256": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52",
+          "symbol": "initial _assert_crash_final uses history-after-projection evidence directory"
+        },
+        {
+          "artifact": "restart-oracle.json",
+          "line": 200,
+          "path": "tests/ifpmic_api/test_h2_runtime_restart_and_history.py",
+          "sha256": "606db627f5efd4ba6f9158da6ef538b95fe70d77444cb0775191265a10a2b546",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "process-journal.jsonl",
+          "line": 296,
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "history-after-pg-restart/temporal-history.pbseq",
+          "line": 127,
+          "path": "tests/ifpmic_api/test_h2_runtime_restart_and_history.py",
+          "sha256": "606db627f5efd4ba6f9158da6ef538b95fe70d77444cb0775191265a10a2b546",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "history-after-temporal-restart/temporal-history.pbseq",
+          "line": 173,
+          "path": "tests/ifpmic_api/test_h2_runtime_restart_and_history.py",
+          "sha256": "606db627f5efd4ba6f9158da6ef538b95fe70d77444cb0775191265a10a2b546",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "history-after-cli-restart/temporal-history.pbseq",
+          "line": 196,
+          "path": "tests/ifpmic_api/test_h2_runtime_restart_and_history.py",
+          "sha256": "606db627f5efd4ba6f9158da6ef538b95fe70d77444cb0775191265a10a2b546",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "history-after-projection/temporal-history.pbseq",
+          "line": 182,
+          "path": "tests/ifpmic_api/test_h2_dispatcher_crashes.py",
+          "sha256": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52",
+          "symbol": "source artifact producer"
+        },
+        {
+          "artifact": "process-journal.jsonl",
+          "line": 296,
+          "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+          "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472",
+          "symbol": "private journal creation; restart lifecycle appenders are in source refs"
+        }
+      ],
+      "unresolved": []
+    }
+  ],
+  "remaining_limitations": [
+    "This projection maps source paths and top-level structures only; it does not establish artifact production, case pass status or accepted runtime behavior.",
+    "The generic artifact checker does not validate nested SQL, temporal, process, workspace, listener, proxy or restart semantics asserted by source tests.",
+    "PBSeq framing and Temporal event meaning require the separately pinned history decoder and runtime evidence.",
+    "The admitted-history-deleted row has no after-projection history file or case-result.json writer; the two-live-stale-ack row has no dispatcher-barrier.json writer.",
+    "The restart case PostgreSQL data/log live under fixture root outside case_directory; they are mapped as private auxiliaries and are not copied into per-case artifacts."
+  ],
+  "scope": {
+    "added_actual_success_artifacts": 79,
+    "case_count": 8,
+    "note": "Exact8 source-only rows include3 corrected inapplicable file requirements and complete actual common/branch success outputs. All62 original annotations remain preserved; proposedemptyarrays require independent approval.",
+    "original_artifact_count": 73,
+    "original_unresolved_count": 62,
+    "phase": "dispatcher_crashes",
+    "projected_unresolved_count": 0,
+    "proposed_artifact_count": 149,
+    "proposed_path_corrections": 3
+  },
+  "source_pins": {
+    "services/ifpmic_api/execution_manifest.py": "0f08e5c86992edc9ee9b62b19d50f981282d125e39810e0f0d6e75d39bfd07b6",
+    "tests/ifpmic_api/accepted_start_dispatcher_child.py": "87c6cf61d94188f5733e73fc02e8d3d2caeb78f4a802a6455a501317a6f859eb",
+    "tests/ifpmic_api/conftest.py": "dd3885f66ccc29fc987f4fa20dbdba0481a95c377f227c5ac17663f0f63c4b8f",
+    "tests/ifpmic_api/h2_dispatcher_crash_support.py": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472",
+    "tests/ifpmic_api/h2_snapshot_evidence.py": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c",
+    "tests/ifpmic_api/jobs_fixture.py": "b8fefc39f3005b3a662124ae3182cee4e7a293e18dd4e84d18facd09c0e0d539",
+    "tests/ifpmic_api/response_loss_proxy.py": "b6f8ca62f21724bf26aac6395528092257e7c48b729d19df02adf7281b9ed512",
+    "tests/ifpmic_api/test_accepted_start_response_loss.py": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8",
+    "tests/ifpmic_api/test_h2_dispatcher_crashes.py": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52",
+    "tests/ifpmic_api/test_h2_runtime_normal_flow.py": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d",
+    "tests/ifpmic_api/test_h2_runtime_restart_and_history.py": "606db627f5efd4ba6f9158da6ef538b95fe70d77444cb0775191265a10a2b546"
+  },
+  "status": "corrected_projection_pending_independent_review_no_execution",
+  "superseded_proposal": {
+    "path": "docs/ifpmic/evidence/b03/h2-machine-resolution-dispatcher-v2.json",
+    "preserved": "Keep original rejected proposal and independent request-changes review; no execution acceptance.",
+    "sha256": "ce44a7905308a17b67aeb0e201c43ad7886ac73dfc1d5cfe069bc3608bea5e65"
+  }
+}

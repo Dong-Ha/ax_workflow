@@ -1,0 +1,48 @@
+{
+  "kind": "ifpmic.b03.h2.workspace-source-projection-review.v2",
+  "review_date": "2026-10-21",
+  "reviewer": "/root/h2_evidence_amendment_review",
+  "decision": "approve_exact_11_row_source_projection_only",
+  "proposal": {
+    "path": "docs/ifpmic/evidence/b03/h2-machine-resolution-workspace-v2.json",
+    "sha256": "9d824ad65bda5a51d25868cabd9f38c7eb1c7c4b18c39f4103ce1b94e7fd2e18"
+  },
+  "input_machine": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules.json",
+    "sha256": "536c59f441312abb3e1b57a60b77e919f470032d610e6957ae05ab467d0a0e3c"
+  },
+  "separate_exact_source_repair_review": {
+    "path": "docs/ifpmic/evidence/b03/h2-workspace-stale-observation-source-review-v2.json",
+    "sha256": "cbc2dfa4cab79c06b2bf2969d34b6887204ed6c17e7c0847aa48b6080273639f",
+    "accepted_workspace_source_sha256": "ad48c0a6dd84d08e2839a9ba5a4b3d4f8b4cad82df99e0a090ae5d4387eb2f2f",
+    "scope": "The source repair and its hash/line repin are separately authorized there; this mapping review neither expands that repair nor authorizes execution."
+  },
+  "findings": [],
+  "evidence": {
+    "cases": 11,
+    "original_annotations_compared_verbatim": 37,
+    "old_artifacts": 29,
+    "proposed_artifacts": 109,
+    "parser_compatibility": "All109 rules use supported loader fields, have required_keys and minimum=maximum1, and contain no duplicate path within a case. Byte/PBSeq rules have empty required_keys. Case directories are distinct actual literal directories. All6 proposal source pins match current bytes.",
+    "common_actual_outputs": "Every case prepares the actual initial workspace observation, source/environment manifests, Temporal log and lifecycle journal. Every case starts the actual barrier dispatcher with both dispatcher-cut logs; successful cleanup writes process-cleanup.json with processes/status. Three admitted-worker cases additionally require both normal worker CLI logs and their actual PBSeq/wait-result files. The marker-symlink case alone requires the actual external marker target JSON.",
+    "schema_applicability": "Workspace result and cleanup required-key sets match literal writer dictionaries by whole-source AST comparison. Initial observation and manifest fields match their transitive writers. Applicable started/stopped lifecycle entries share event/pid/start_ticks. The external marker uses format/job_id/workspace_token. All original node IDs, phases, profiles, directories, owner minima and query minima/maxima remain unchanged.",
+    "barrier_annotation_resolution": "The11 source-declared barriers-and-cleanup annotations are resolved as concrete source path/applicability mappings. _start_barrier waits for the actual expected production phase and checks saved live process identity. These cases release the barrier. They never invoke kill_at_barrier, the sole dispatcher-barrier.json writer, so requiring that file would invent an inapplicable output. Existing phased raw filesystem/query snapshots, owner cuts, actual CLI bytes and cleanup files plus fresh JUnit assertions remain mandatory. No complete serialized barrier event sequence is claimed or substituted.",
+    "history_and_negative_branches": "The3 admitted-worker cases serialize actual fetched deterministic history frames and retain decoded read-wait results; the8 dispatcher-rejection cases retain their existing actual backend no-runs queries. Generic structural/history parsing does not itself validate all workflow/business semantics.",
+    "metadata": "Proposal source_resolution references the pinned common preparation, dispatcher, cleanup and case-specific facts. The single-field repair and mechanical later source-line corrections remain bound to the separate exact-source review."
+  },
+  "authorization": {
+    "replace_only_exact_11_proposed_rows_and_clear_their_37_source_annotations": true,
+    "add_exact_proposal_and_this_review_sha_source_resolution_pointers": true,
+    "change_other_rows_source_tests_or_checker": false,
+    "waive_barrier_business_cleanup_or_actual_raw_evidence_oracles": false,
+    "imports_collection_tests_sql_sdk_services_network_execution": false,
+    "full_mapping_contract_h2_iteration_or_goal_acceptance": false
+  },
+  "risks_and_remaining_uncertainty": [
+    "Source mapping establishes what is actually written and when it applies. It does not prove that a barrier was reached/released, that raw observations cover every invocation, or that SQL, filesystem, history and owned-resource invariants passed.",
+    "Released barrier events remain in memory rather than a separately serialized event log. This limitation is retained explicitly; full fresh JUnit and raw evidence review must assess actual cuts and outcomes. Clearing a path annotation must not be presented as new causal-completeness proof.",
+    "Applying only these11 rows to the pinned input leaves37 unresolved rows with239 annotations. Other independently proposed rows are outside this approval. Exact whole-source/versioned contract/ledger review and paired pre-gates remain required before mandatory fresh490/25+5."
+  ],
+  "recommendation": "Integrate only these11 rows and bound review pointers, retaining the separate exact source-repair repin and all remaining unresolved annotations and runtime gates.",
+  "review_method": "Read-only actual source/AST/JSON/SHA and pinned-input comparison. No repository imports, collection, tests, SQL, SDK, services or network."
+}

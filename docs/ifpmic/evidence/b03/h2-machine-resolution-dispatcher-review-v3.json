@@ -1,0 +1,54 @@
+{
+  "kind": "ifpmic.b03.h2.dispatcher-source-projection-review.v3",
+  "review_date": "2026-10-21",
+  "reviewer": "/root/h2_evidence_amendment_review",
+  "decision": "approve_exact_8_row_source_projection_only",
+  "proposal": {
+    "path": "docs/ifpmic/evidence/b03/h2-machine-resolution-dispatcher-v3.json",
+    "sha256": "61363b90b355352e49394166e642f063f2fb0e87b524f9133a03b61a7ef91211"
+  },
+  "input_machine": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules.json",
+    "commit": "911ee83",
+    "sha256": "c3142155333886eb7514c7361e437a15964dd13d2cc24893726302457ab3728e"
+  },
+  "compatible_current_machine": {
+    "sha256": "5c7540676dab772ad3bb1f45788506d4cfcbe40f168c22411944732b35fab07b",
+    "condition_verified": "All8 target rows are identical to the pinned input; the intervening approved workspace integration is disjoint."
+  },
+  "historical_request_changes": {
+    "proposal_sha256": "ce44a7905308a17b67aeb0e201c43ad7886ac73dfc1d5cfe069bc3608bea5e65",
+    "review_path": "docs/ifpmic/evidence/b03/h2-machine-resolution-dispatcher-review-v2.json",
+    "review_sha256": "51c679808f77e0ebfc0912f5a5d648aa7af4f8a3b9547e93d72251e5a236c439",
+    "disposition": "Both findings are addressed in this separate exact projection; the original rejected proposal/review remain historical."
+  },
+  "findings": [],
+  "evidence": {
+    "literal_rows": 8,
+    "original_annotations_compared_verbatim": 62,
+    "original_artifacts": 73,
+    "corrected_inapplicable_requirements": 3,
+    "added_actual_success_outputs": 79,
+    "proposed_artifacts": 149,
+    "source_pins": "All11 proposal source pins match actual current bytes. The added execution_manifest supporting pin already exists in the machine closure; no product/helper source is changed.",
+    "parser_and_invariants": "All149 artifact entries use supported fields, required_keys and min/max1. Byte/PBSeq constraints are compatible, per-case paths are unique, and every digest target is explicitly indexed. Original node/phase/profile/directory/query minima/maxima/owner minima are unchanged. Existing retained rules and digest links are unchanged from v2 except the inapplicable stale-ack owner file removal.",
+    "stale_ack": "The impossible owner-at-cut.json rule and its incorrect writer location are removed alongside the already corrected kill-only dispatcher-barrier.json requirement. The literal function releases the barrier normally; actual pre_ack, recovered and after-old-ack owner recorder observations and all original stale-generation/run assertions remain mandatory.",
+    "common_and_branch_outputs": "Seven crash.prepare_case paths now require initial workspace JSON, both manifests and the Temporal log. All6 dispatcher-cut cases require both cut CLI logs; the5 positive cases require worker logs, and the5 recovery cases require dispatcher-recovery logs with their correct differing applicability. Restart additionally requires actual initial/restarted CLI logs, restarted Temporal log, cleanup JSON and the initial shared final-result/workspace outputs. The separate accepted-start producer requires its actual Temporal/child/recovery/worker logs without inventing a workspace-initial file. All79 additions match the prior review's actual source-path enumeration.",
+    "new_json_keys": "Initial workspace/manifests/cleanup/shared case-result/workspace-recovered key sets match their actual writer dictionaries by source and AST. Restart case-result is the same _assert_crash_final output as ordinary positive cases, with all8 fields.",
+    "history_and_digest_links": "History-deleted retains pre-deletion raw Started, deletion NOT_FOUND confirmation, owner/workspace quarantine and actual empty backend list while omitting inapplicable after-projection/case-result files. All positive and restart history files remain mandatory. Accepted-start/raw owner/proxy/barrier/journal links use actual file-byte recipes. Restart's newly required case-result also links /temporal_history_sha256 to history-after-projection/temporal-history.pbseq; removing only this final added link reconstructs the preceding unintegrated a41b6922 draft hash exactly.",
+    "metadata": "All artifact-specific source locations and artifact_sources refer to indexed paths, with matching source hashes. PostgreSQL stores/logs outside case_directory remain explicitly mapped private fixture auxiliaries rather than fabricated copies."
+  },
+  "authorization": {
+    "replace_only_exact_8_proposed_rows_and_clear_their_62_source_annotations": true,
+    "add_exact_proposal_and_this_review_sha_source_resolution_pointers": true,
+    "change_other_rows_source_tests_checker_budgets_or_oracles": false,
+    "imports_collection_tests_sql_sdk_services_network_execution": false,
+    "full_mapping_contract_h2_iteration_or_goal_acceptance": false
+  },
+  "risks_and_remaining_uncertainty": [
+    "This approves source paths, applicability, top-level schema and declared digest links only. It does not establish produced artifacts, case passes, nested SQL/history/proxy/restart semantics, lifecycle success or complete causal ordering.",
+    "Against the compatible current machine, applying only these8 rows leaves29 unresolved rows with177 annotations. Other proposals are outside this approval. Whole-source/versioned ledger/contract reviews, paired pre-gates and fresh490/25+5 remain mandatory."
+  ],
+  "recommendation": "Integrate only the exact8 corrected rows and bound review pointers, retaining the original rejected proposal/review and all remaining unresolved items and runtime gates.",
+  "review_method": "Read-only source/AST/JSON/SHA and Git-input comparison, including exact old/new rule and digest-target checks; no repository imports, collection, tests, SQL, SDK, services or network."
+}

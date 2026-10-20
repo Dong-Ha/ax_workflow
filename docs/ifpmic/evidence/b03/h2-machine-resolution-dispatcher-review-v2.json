@@ -1,0 +1,114 @@
+{
+  "kind": "ifpmic.b03.h2.dispatcher-machine-resolution-review.v2",
+  "review_date": "2026-10-21",
+  "reviewer": "/root/h2_evidence_amendment_review",
+  "decision": "request_changes_no_canonical_integration_no_execution",
+  "proposal": {
+    "path": "docs/ifpmic/evidence/b03/h2-machine-resolution-dispatcher-v2.json",
+    "sha256": "ce44a7905308a17b67aeb0e201c43ad7886ac73dfc1d5cfe069bc3608bea5e65"
+  },
+  "input_machine": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules.json",
+    "commit": "911ee83",
+    "sha256": "c3142155333886eb7514c7361e437a15964dd13d2cc24893726302457ab3728e"
+  },
+  "findings": [
+    {
+      "severity": "blocker",
+      "location": "two-live-stale-ack proposed row; tests/ifpmic_api/test_h2_dispatcher_crashes.py:363",
+      "problem": "owner-at-cut.json remains mandatory, but the stale-ack function never invokes _kill_cut, the sole writer at line217. Its pre_ack read is retained by the generic owner recorder and never written to that literal file. Removing dispatcher-barrier.json alone leaves an impossible artifact requirement.",
+      "minimal_fix": "Remove the inapplicable owner-at-cut.json rule and its row-local writer location, correct the original annotation with the actual pre_ack/owner-recorder source path, and preserve the existing owner minimum and all stale-ack/recovered-run assertions. Do not fabricate a file or weaken the runtime oracle."
+    },
+    {
+      "severity": "blocker_for_complete_explicit_raw_index",
+      "location": "all8 proposed rows; transitive preparation/CLI/cleanup writers",
+      "problem": "The projection verifies existing selected markers but omits actual mandatory success-path workspace/manifests/CLI/Temporal-log/cleanup outputs. This is incomplete compared with the required explicit raw artifact closure used by the reviewed window/workspace projections.",
+      "minimal_fix": "Add the source-backed applicable outputs enumerated below, with actual JSON key sets or bytes+required_keys:[], mandatory min/max1 and current writer references. Keep PostgreSQL stores/logs outside case_directory explicitly mapped as fixture auxiliaries; do not invent copies or add an initial workspace file to the separate accepted-start producer."
+    }
+  ],
+  "required_applicable_outputs_for_corrected_projection": {
+    "seven_crash_prepare_cases": {
+      "applies_to": "All6 test_h2_dispatcher_crashes cases plus the restart case; accepted-start-loss has separate preparation.",
+      "paths": [
+        "workspace-initial-observation.json",
+        "source-manifest.json",
+        "environment-manifest.json",
+        "temporal-data/temporal-server.log"
+      ],
+      "source": "tests/ifpmic_api/h2_dispatcher_crash_support.py:282-331"
+    },
+    "six_dispatcher_cases": {
+      "paths": [
+        "dispatcher-cut-logs/dispatcher.stdout",
+        "dispatcher-cut-logs/dispatcher.stderr"
+      ],
+      "source": "tests/ifpmic_api/h2_dispatcher_crash_support.py:368-426"
+    },
+    "five_positive_dispatcher_cases": {
+      "applies_to": "claim-commit, response-before-admission, admitted-before-ack, ack-before-worker and two-live-stale-ack; excludes history-deleted.",
+      "paths": [
+        "process-logs/worker-stdout.log",
+        "process-logs/worker-stderr.log"
+      ],
+      "source": "test_h2_dispatcher_crashes.py:53-64 _assert_crash_final; normal._spawn_runtime_cli"
+    },
+    "five_dispatcher_recovery_cases": {
+      "applies_to": "claim-commit, response-before-admission, admitted-before-ack, two-live-stale-ack and history-deleted; excludes ack-before-worker.",
+      "paths": [
+        "process-logs/dispatcher-recovery-stdout.log",
+        "process-logs/dispatcher-recovery-stderr.log"
+      ],
+      "source": "tests/ifpmic_api/test_h2_dispatcher_crashes.py:222-227"
+    },
+    "restart_additional": {
+      "paths": [
+        "temporal-data/temporal-server-restart.log",
+        "process-logs/dispatcher-initial-stdout.log",
+        "process-logs/dispatcher-initial-stderr.log",
+        "process-logs/worker-stdout.log",
+        "process-logs/worker-stderr.log",
+        "process-logs/dispatcher-after-restarts-stdout.log",
+        "process-logs/dispatcher-after-restarts-stderr.log",
+        "process-logs/worker-after-restarts-stdout.log",
+        "process-logs/worker-after-restarts-stderr.log",
+        "process-cleanup.json",
+        "case-result.json",
+        "workspace-recovered-observation.json"
+      ],
+      "source": "test_h2_runtime_restart_and_history.py:57-214; initial _assert_crash_final and final crash.cleanup_case"
+    },
+    "accepted_start_loss_additional": {
+      "paths": [
+        "temporal-data/temporal-server.log",
+        "process-logs/start-loss-child-stdout.log",
+        "process-logs/start-loss-child-stderr.log",
+        "process-logs/dispatcher-stdout.log",
+        "process-logs/dispatcher-stderr.log",
+        "process-logs/worker-stdout.log",
+        "process-logs/worker-stderr.log"
+      ],
+      "source": "test_accepted_start_response_loss.py:196-237,435-445,666-684",
+      "exclusion": "Its manifests are already indexed; this separate producer does not write workspace-initial-observation.json. Cleanup processes are retained in response-loss-observation.json."
+    }
+  },
+  "supported_findings": {
+    "literal_rows": 8,
+    "original_annotations_compared_verbatim": 62,
+    "proposed_artifacts": 71,
+    "pins_and_parser": "All10 source pins match current bytes; supported artifact fields, required_keys, min/max1, unique per-case paths and indexed digest targets are valid. Original node IDs, phases, profiles, case directories, query minima/maxima and owner minima are unchanged.",
+    "valid_removals": "History-deleted never calls _assert_crash_final and writes no case-result.json or after-projection history; its actual pre-deletion Started history, exact NOT_FOUND deletion confirmation, quarantine owner/workspace observations and backend empty-list query remain. Stale-ack releases its barrier without kill_at_barrier and writes no dispatcher-barrier.json; removing that file is source-backed.",
+    "digest_links": "Existing accepted-start observer/result links match raw file byte hashing, including newline-bearing owner JSON files, proxy snapshots, barrier sequence and final journal. Positive crash result history links and restart same-history link match the actual PBSeq hash producers and retained equality assertions. No additional digest-recipe mismatch was found."
+  },
+  "authorization": {
+    "integrate_rows_or_clear_any_62_annotations": false,
+    "change_source_checker_tests_or_runtime_oracles": false,
+    "imports_collection_tests_sql_sdk_services_network_execution": false,
+    "whole_mapping_contract_h2_iteration_or_goal_acceptance": false
+  },
+  "risks_and_remaining_uncertainty": [
+    "This is source/applicability review only. Generic raw parsing and file presence cannot establish nested SQL/history/proxy/restart semantics, lifecycle success or complete causal ordering.",
+    "A corrected immutable projection needs a separate exact review before integration. Retain this proposal and request-changes record; no additional source change or synthetic-unit execution is needed merely to correct rules. Full fresh490 remains contingent on whole-source/ledger/contract and paired pre-gates."
+  ],
+  "recommendation": "Preserve this draft, author one corrected projection covering the impossible stale-ack file and all applicable actual outputs, then request exact re-review.",
+  "review_method": "Read-only source/JSON/AST/hash comparison against the pinned Git input; no repository imports, collection, tests, SQL, SDK, services or network."
+}

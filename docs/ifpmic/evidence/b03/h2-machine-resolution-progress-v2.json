@@ -3,14 +3,14 @@
   "status": "partial_source_mapping_only_runtime_blocked",
   "machine": {
     "path": "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules.json",
-    "sha256": "c3142155333886eb7514c7361e437a15964dd13d2cc24893726302457ab3728e"
+    "sha256": "7880e9cdaeb14b70134d12964e25b548a5ba8b9269ca642a7f9e32269a3b3aeb"
   },
   "cases": 87,
-  "artifacts": 505,
-  "source_resolved_cases": 39,
-  "remaining_cases": 48,
-  "resolved_original_annotations": 199,
-  "remaining_annotations": 276,
+  "artifacts": 661,
+  "source_resolved_cases": 58,
+  "remaining_cases": 29,
+  "resolved_original_annotations": 298,
+  "remaining_annotations": 177,
   "input_commit": "a303cc65480615946d9439d48e6127e7870a0a38",
   "input_sha256": "1ec018486a118cbe2474751fcb06b70c2923d8d0b04b53705385823ec5ba3f88",
   "addendum": {
@@ -27,8 +27,8 @@
     "only_one_new_watchdog_source_pin_in_latest_batch": true,
     "runtime_acceptance_unchanged": true
   },
-  "unit_scope": "119 cache-isolated synthetic checks remain accepted against unchanged source bytes; this JSON-only source resolution did not execute new tests or actual cases.",
-  "next_single_batch": "Apply only independently reviewed source repair pin; review dispatcher8/workspace11 proposals. Remaining phases still block full490 versioned closure, pre-gates and actual admission UI.",
+  "unit_scope": "Original119 cache-isolated units remain accepted against unchanged12-source closure. Current mapping and separate workspace source repair were statically checked; no new tests or actual H2 cases were executed.",
+  "next_single_batch": "Review worker prestarted duplicate-write repair plan, exact source repair, then transport3/worker4 projection. Activity12 and started10 still pending; full490 freeze/gates and actual admission UI remain incomplete.",
   "full_mapping_accepted": false,
   "h2_accepted": false,
   "iteration03_complete": false,
@@ -48,5 +48,44 @@
     "input_machine_sha256": "536c59f441312abb3e1b57a60b77e919f470032d610e6957ae05ab467d0a0e3c",
     "only11_row_local_pins_and_shifted_lines_changed": true,
     "actual_workspace_test_executed": false
+  },
+  "latest_workspace_integration": {
+    "input_commit": "911ee83",
+    "input_sha256": "c3142155333886eb7514c7361e437a15964dd13d2cc24893726302457ab3728e",
+    "proposal": {
+      "path": "docs/ifpmic/evidence/b03/h2-machine-resolution-workspace-v2.json",
+      "sha256": "9d824ad65bda5a51d25868cabd9f38c7eb1c7c4b18c39f4103ce1b94e7fd2e18"
+    },
+    "review": {
+      "path": "docs/ifpmic/evidence/b03/h2-machine-resolution-workspace-review-v2.json",
+      "sha256": "7e56a46d2a72712b4fde7ddd61c074f022c3e997d66b4446f332f6a47def361c"
+    },
+    "only11_reviewed_rows_changed": true,
+    "other76_rows_equal_input": true,
+    "source_pins_unchanged_and_match": true,
+    "case_artifacts": {
+      "before": 29,
+      "after": 109
+    },
+    "runtime_executed": false
+  },
+  "latest_dispatcher_integration": {
+    "input_scope_commit": "911ee83",
+    "input_scope_machine_sha256": "c3142155333886eb7514c7361e437a15964dd13d2cc24893726302457ab3728e",
+    "all8_input_rows_equal_current_before_edit": true,
+    "proposal": {
+      "path": "docs/ifpmic/evidence/b03/h2-machine-resolution-dispatcher-v3.json",
+      "sha256": "61363b90b355352e49394166e642f063f2fb0e87b524f9133a03b61a7ef91211"
+    },
+    "review": {
+      "path": "docs/ifpmic/evidence/b03/h2-machine-resolution-dispatcher-review-v3.json",
+      "sha256": "c8738de718812b61b1ab41178223b3224872876943335706e31c29d64681f096"
+    },
+    "only8_rows_changed": true,
+    "other79_rows_unchanged": true,
+    "original_annotations_resolved": 62,
+    "artifacts_before": 73,
+    "artifacts_after": 149,
+    "runtime_executed": false
   }
 }
