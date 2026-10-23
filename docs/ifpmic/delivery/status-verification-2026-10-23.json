@@ -1,0 +1,68 @@
+{
+  "kind": "ifpmic.delivery.static-status-verification.v1",
+  "status": "passed_pending_tc_result_review",
+  "verified_utc": "2026-10-23T02:58:35.883Z",
+  "scope": "Static status document only; no new workflow execution or H2 approval",
+  "url": "http://127.0.0.1:4173/ifpmic-progress/delivery/status.html",
+  "stage_count": {
+    "verified": 2,
+    "total": 16,
+    "percent": 12.5
+  },
+  "existing_synthetic_units": 152,
+  "tracked_input_repairs": 2,
+  "source_pins": {
+    "docs/ifpmic/delivery/status.html": "b1f209510dd330c0db6c63b1a8ffe084e89a64f32a96504fad5d6f32d8fed2f5",
+    "docs/ifpmic/delivery/iteration-01/workflow-desktop.png": "501fa50ef295afccd42252dd83922cb68ec04984a22077b4c631d615cb64ea7b",
+    "docs/ifpmic/delivery/iteration-01/README.md": "b5813e3e2eca2499d442b4d672940edeb016de1a0e2b37336973f5f756145ccd",
+    "docs/ifpmic/delivery/iteration-02/iteration-02-user-a-desktop.png": "369fc8ea0ab914b693243d390eab237a68d8c0aa74026297713a18da1b4d533a",
+    "docs/ifpmic/delivery/iteration-02/README.md": "44c85157f7d424951603ec75836874f5f2788c5e6a8b59c3dc31485a8dc5da9c",
+    "docs/ifpmic/evidence/b03/attempts/h2-runtime-full-runner-source-review-v3-attempt-01.json": "bdb36d75ba05d9ef54dca2be5149acf2e46d375c4a8d49e2c71f5e6346690d92",
+    "docs/ifpmic/delivery/iteration-03/node-closure-repair-result-review.json": "109d6721b1f3c60e14d7ae32f57d16edd5ea5f871c4b2e4da20e2700376ac929",
+    "docs/ifpmic/AGILE-DELIVERY.md": "333e64e550ebbaba35e97efb6054f994bc0b4bfb3de49921962e8c8a9264a87c",
+    "docs/ifpmic/progress.json": "b1b15b6f5c4a5abbb12f32a9da775d7f2c8a54e464004b382ce95c8939083937",
+    "docs/ifpmic/RESUME.md": "f98f1b9efa9776dc96d233db3bc18386932ec7706b52e42ef5ae051f98f39e8d",
+    "docs/ifpmic/delivery/STATUS-PLAN.md": "28434ae5fe23e548fd084e09ffcea6b2f62f3311abe2be4ecd6056e121ce9b0d",
+    "docs/ifpmic/delivery/status-plan-review.json": "63020abc27b6f38dabb7f9afbbb103cb3a101f30a0e504b019132be3cbaad779",
+    "docs/ifpmic/delivery/iteration-03/node-closure-repair-verification.json": "8381431fc04c942e71ed99e6256e6114d0130831321ac48d5d91f4b9749841e8"
+  },
+  "served_files_match_source": 10,
+  "existing_page_http_checks": [
+    {
+      "url": "http://127.0.0.1:4173/ifpmic.html",
+      "status": 200,
+      "scope": "GET availability only; API8769 intentionally stopped; no behavior or persistence rerun"
+    },
+    {
+      "url": "http://127.0.0.1:8769/",
+      "status": 0,
+      "scope": "GET availability only; API8769 intentionally stopped; no behavior or persistence rerun"
+    }
+  ],
+  "viewports": [
+    {
+      "name": "desktop",
+      "width": 1440,
+      "height": 1080,
+      "no_horizontal_overflow": true,
+      "images_loaded": 2,
+      "keyboard_details_toggle": true,
+      "screenshot": "docs/ifpmic/delivery/status-desktop-2026-10-23.png",
+      "sha256": "54c715d6730ac826d216544425a5283f5084b3c7cf61eb871bbb19f121933b4e"
+    },
+    {
+      "name": "mobile",
+      "width": 390,
+      "height": 844,
+      "no_horizontal_overflow": true,
+      "images_loaded": 2,
+      "keyboard_details_toggle": true,
+      "screenshot": "docs/ifpmic/delivery/status-mobile-2026-10-23.png",
+      "sha256": "dda90bc5ddc1444c2c4354a55c767f2d22c1583e0f3921384c81e9293abf43c7"
+    }
+  ],
+  "page_errors": 0,
+  "unexpected_external_requests": 0,
+  "actual_full490_executed": false,
+  "new_workflow_behavior": false
+}

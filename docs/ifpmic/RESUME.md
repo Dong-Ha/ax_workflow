@@ -12,13 +12,13 @@
 ## 다음 행동
 
 1. 현재 Git/source SHA와 위149 proof의40pins를 확인한다. 이전 코드/결과를 변경한 bytes에 재사용하지 않는다.
-2. v3 연결/149재검증은 완료했다. 실제 실행되는 snapshot_bridge.mjs pin 누락과 shutil.which에서 Node24를 찾지 못하는 PATH를 [새 계획](./delivery/iteration-03/NODE-CLOSURE-REPAIR.md)·[독립 검토](./delivery/iteration-03/node-closure-repair-plan-review.json)에 따라 수정한다. accepted407의 기존c438 bridge hash와 현재bytes를 비교하고110pins의v4/paired작성검토→연결/정확한source·합성검증→전체source/실행전검토를 진행한다. node_modules설치·새baseline·producer변경은 하지 않는다.
-3. 전체 runner source review와 independent/TC execution pre-gates가 정확한 새SHA를 승인한 뒤에만 main/SDK/pytest collection/SQL/services/fresh490을 실행한다. 아직 full490은 실행하지 않았다. 시작하면 실제session/handle을 기록하고 동일 handle을 관찰한다.
+2. 두 Node 누락은 [검토된 계획](./delivery/iteration-03/NODE-CLOSURE-REPAIR.md)에 따라 수정했다. v4 ledger110/계약의 독립·TC 작성 검토 후 연결했고 **152/152**(기존149본문유지+새3)를 [실행](./delivery/iteration-03/node-closure-repair-verification.json)·[독립 수용](./delivery/iteration-03/node-closure-repair-result-review.json)받았다. source59·review/cache·원본/환경 불변. 현재 runner SHA29be6f277fb624f82042a5f65a4c976298785e378cc42a61659397f129c00762. 최종 전체source와paired execution pre-gates를 완료한다. 새 baseline·설치·producer변경은 없다.
+3. v4 전체 runner source review와 independent/TC execution pre-gates가 정확한 새SHA를 승인한 뒤에만 main/SDK/pytest collection/SQL/services/fresh490을 실행한다. 아직 full490은 실행하지 않았다. 시작하면 실제session/handle을 기록하고 동일 handle을 관찰한다.
 4. 실패 raw/owned cleanup을 보존하고 원인을 수정·재검증한다. 실제490·raw·privacy·환경 독립 수용 뒤에 접수 UI와 브라우저 흐름을 완성한다.
 5. 화면 변화/검증/남은 한 가지와 커밋·push를 전달한다. 이 전체 목표는 진행 중이며 H3–H7/Code-dev·TC·SAM·TEM·SQE·사람/장비·배포·AT32도 남는다.
 
 ## 화면과 보존 경계
 
-기존 workflow29단계/6구간/41연결/74합성 시나리오와 실제 로컬API/DB 요청 저장은 과거 전달된 부분 결과다. [현황판](./delivery/status.html)은 이전 날짜의 정적 기록이며 새 업무 기능은 없다. 2026-10-23에는4173/8769 listener 부재를 확인한 뒤 npm run build 성공·정적4173 preview 재기동·ifpmic.html HTTP200을 확인했다. 실제8769 API는 아직 정지 상태다. 재실행은 [주기01](./delivery/iteration-01/README.md)·[주기02](./delivery/iteration-02/README.md)를 따른다. 접근할 수 없으면 [workflow 캡처](./delivery/iteration-01/workflow-desktop.png)·[요청 캡처](./delivery/iteration-02/iteration-02-user-a-desktop.png)를 본다.
+기존 workflow29단계/6구간/41연결/74합성 시나리오와 실제 로컬API/DB 요청 저장은 과거 전달된 부분 결과다. [현황판](./delivery/status.html)은152수용 기준의 정적 기록이며 새 업무 실행 기능은 없다. 2026-10-23에는4173/8769 listener 부재를 확인한 뒤 npm run build 성공·정적4173 preview 재기동·ifpmic.html HTTP200을 확인했다. 실제8769 API는 아직 정지 상태다. 재실행은 [주기01](./delivery/iteration-01/README.md)·[주기02](./delivery/iteration-02/README.md)를 따른다. 접근할 수 없으면 [workflow 캡처](./delivery/iteration-01/workflow-desktop.png)·[요청 캡처](./delivery/iteration-02/iteration-02-user-a-desktop.png)를 본다.
 
 브랜치 `experiment/paperclip-workflow`. 원본 ZIP/DOCX는 untracked 입력이며 커밋하지 않는다. SQL/history/log/인증/PID/source snapshot은 gitignored workflow-artifacts의0700/0600에만 보존한다. 원래32/qualified36 venv·원본AX/설계·승인 경계를 유지하고 설치/다운로드나 임의 baseline 교체를 하지 않는다. 과거 상세 [인계 기록](./RESUME-HISTORY-2026-10-21.md)은 현재 실행 지시가 아니다.

@@ -49,7 +49,7 @@
 <body>
 <main>
   <header>
-    <p class="eyebrow">IFPMIC AX / 진행 현황 · 2026-10-21 KST 기준 정적 기록</p>
+    <p class="eyebrow">IFPMIC AX / 진행 현황 · 2026-10-23 KST 기준 정적 기록</p>
     <h1>지금 볼 수 있는 결과, 다음에 볼 결과</h1>
     <p class="muted">기준: 기존 AX 자료와 IFPMIC 설계 · 오케스트레이션 참고: Paperclip</p>
   </header>
@@ -84,7 +84,7 @@
           <a href="iteration-02/iteration-02-user-a-desktop.png"><img src="iteration-02/iteration-02-user-a-desktop.png" alt="실제 로컬 데이터베이스에 저장된 요청의 상세 화면"></a>
           <figcaption>기존 전달 캡처 · 2026-10-20 KST · 합성 계정 / mock 프로파일, 실행 연동 전입니다.</figcaption>
         </figure>
-        <nav class="links" aria-label="요청 화면 링크"><a href="http://127.0.0.1:8769/">화면 열기 ↗</a><a href="iteration-02/README.md">검증·재실행 안내</a></nav>
+        <nav class="links" aria-label="요청 화면 링크"><a href="http://127.0.0.1:8769/">요청 화면 · 재시작 필요</a><a href="iteration-02/README.md">검증·재실행 안내</a></nav>
       </article>
     </div>
   </section>
@@ -93,23 +93,23 @@
     <h2 id="next">다음 데모 한 가지 · 주기 03 진행 중</h2>
     <p><strong>저장 요청 → 실제 실행 엔진 접수 → 같은 작업의 run / receipt / QUEUED 표시</strong></p>
     <p>완료 기준: 정상 접수 · 중복 방지 · 권한 오류 · 새로고침 유지. QUEUED는 접수 상태입니다.</p>
-    <p class="muted">현재: 140개 합성 단위 검사 수용. 실제 490개 통합 검증은 미실행이며 실행 연동 화면은 아직 없습니다.</p>
+    <p class="muted">현재: 152개 합성 단위 검사 수용. 실제 490개 통합 검증은 미실행이며 실행 연동 화면은 아직 없습니다.</p>
   </section>
 
   <details open>
-    <summary>다음 데모를 막는 장애 3건 · 전체 소스 검토에서 확인</summary>
+    <summary>입력 오류 3건 수정·합성 검증 완료 · 실제 실행 검토 대기</summary>
     <ol>
-      <li>프로세스 종료 기록의 경계 이름과 실제 역할 이름이 충돌합니다.</li>
-      <li>합성 정리 시험의 기록을 실제 프로세스 종료 증거로 잘못 분류합니다.</li>
-      <li>기존 도구 검증이 README의 과거 해시를 요구해 현재 문서와 일치하지 않습니다.</li>
+      <li>종료 기록의 경계 이름과 실제 역할을 구분해 검증하도록 수정했습니다.</li>
+      <li>합성 정리 기록을 같은 시험의 무동작 증거와 연결하며 실제 프로세스 수에는 넣지 않습니다.</li>
+      <li>과거 승인 README와 현재 README를 각각 고정하고, 허용된 안내 추가만 검증합니다.</li>
     </ol>
-    <p class="muted">다음 작업: 이 장애를 수정·재검증하고 실행 전 검토를 마친 뒤 실제 통합 검증과 화면 연결을 진행합니다. 사람·품질·장비·배포와 원래 AT32 인수는 이후에도 남습니다.</p>
-    <p><a href="../evidence/b03/attempts/h2-runtime-full-runner-source-review-v2-attempt-02.json">장애 검토 원문</a> · <a href="iteration-03/full-input-repair-result-review.json">140개 검사 수용 범위</a></p>
+    <p class="muted">추가로 고정 Node 경로와 실제 bridge 소스 누락도 수정해 152개 합성 검증을 수용받았습니다. 다음은 전체 소스·실행 전 검토 → 실제 490개 통합 검증 → 접수 화면 연결입니다. 사람·품질·장비·배포와 원래 AT32 인수도 남습니다.</p>
+    <p><a href="../evidence/b03/attempts/h2-runtime-full-runner-source-review-v3-attempt-01.json">수정 전 전체 검토 기록</a> · <a href="iteration-03/node-closure-repair-result-review.json">152개 검사 수용 범위</a></p>
   </details>
 
   <footer>
     <p>진행 방식: 사용자 흐름 하나씩 구현 → 정상·오류·경계·회귀 확인 → 화면·검증·커밋 전달 → 다음 피드백 반영.</p>
-    <p>실시간 관제 화면이 아닌 진행 기록입니다. 두 화면의 HTTP200 접속은 2026-10-21 KST 확인. localhost 링크는 이 개발 환경에서 열립니다.</p>
+    <p>실시간 관제 화면이 아닌 진행 기록입니다. 2026-10-23 KST workflow 서버를 다시 열었습니다. 요청 API8769는 정지 상태이며 재시작 안내를 따릅니다. localhost 링크는 이 개발 환경에서 열립니다.</p>
     <p><a href="../AGILE-DELIVERY.md">전체 애자일 계획</a> · <a href="../progress.json">진척 기준 데이터</a> · <a href="../RESUME.md">다음 작업 인계</a></p>
   </footer>
 </main>

@@ -22,13 +22,13 @@ from datetime import datetime, timezone
 
 ROOT = Path(__file__).resolve().parents[1]
 EVIDENCE = ROOT / 'docs/ifpmic/evidence/b03'
-CONTRACT_PATH = EVIDENCE / 'h2-runtime-full-execution-contract-v3.json'
-LEDGER_PATH = EVIDENCE / 'h2-runtime-full-integrated-ledger-v3.json'
-CONTRACT_SHA = '714411f1de4250b0d36c92902a3946e2a2bc3590dc79c508d71ac4a8a130e00d'
-LEDGER_SHA = '4727c955d072c863c972b26684e37234feba0dce39e329475e4318a9370b9e58'
+CONTRACT_PATH = EVIDENCE / 'h2-runtime-full-execution-contract-v4.json'
+LEDGER_PATH = EVIDENCE / 'h2-runtime-full-integrated-ledger-v4.json'
+CONTRACT_SHA = '526361f65c02b0c92a351a08e1cc68be2d8e9ee25a478cb549f0588ea6f0ec05'
+LEDGER_SHA = 'ca39766adb9a0fa3549b4ba8c5fecdea606efd05ac5ec593bb6f98a2abbce280'
 CONTRACT_REVIEW_SHAS = {
-    'h2-runtime-full-execution-contract-review-v3.json': '4493edd5c00d6f8f0fe23b2a83a744bd137449f41f2b7c79fc0a78d6de2b20a1',
-    'h2-runtime-full-execution-tc-review-v3.json': '0ad98d74f8825a9b3096ef49f605dc5b93846a86bb8dfd8ed4f7c251509c8202',
+    'h2-runtime-full-execution-contract-review-v4.json': '47a04dc1d82c991cd52ee435adfcc1c5cc093f6c63621796d1d472eaff9868e8',
+    'h2-runtime-full-execution-tc-review-v4.json': '00e78a4760e859df03b913f9e94e304724218a37b3d648496dacab227882a60c',
 }
 ORDER = (
     'dispatcher_crashes', 'worker_api_crashes', 'startup', 'window',
@@ -268,13 +268,13 @@ def verify_static_anchors(contract: dict, ledger: dict) -> None:
         if Path(path).is_absolute() or '..' in Path(path).parts:
             raise RuntimeError('Derivative ledger path escapes repository')
         require_file_hash(ROOT / path, expected, 'Historical derivative ledger')
-    suffixes = {'.py', '.sql', '.in', '.lock'}
+    suffixes = {'.py', '.sql', '.in', '.lock', '.mjs', '.js', '.cjs'}
     expected_closure = {path for path in ledger['source_pins']
                         if path.startswith(('services/ifpmic_api/', 'tests/ifpmic_api/'))
                         and Path(path).suffix in suffixes}
     actual_closure = {str(path.relative_to(ROOT)) for folder in ('services/ifpmic_api', 'tests/ifpmic_api')
-                      for path in (ROOT/folder).rglob('*') if path.is_file()
-                      and not path.is_symlink() and path.suffix in suffixes
+                      for path in (ROOT/folder).rglob('*') if path.is_file() or path.is_symlink()
+                      if path.suffix in suffixes
                       and '__pycache__' not in path.parts}
     if actual_closure != expected_closure:
         raise RuntimeError('Current service/test source closure differs from exact ledger inventory')
@@ -381,6 +381,7 @@ def safe_environment(base: Path, phase: dict, contract: dict, observations: Path
     if not node_path.is_file() or sha(node_path.read_bytes()) != node_pin['sha256']:
         raise RuntimeError('Explicit pinned Node executable is unavailable or changed')
     env['IFPMIC_NODE_EXECUTABLE'] = str(node_path)
+    env['PATH'] = os.pathsep.join((str(node_path.parent), str(py.parent), '/usr/bin', '/bin'))
     return env, [str(private_tmp)]
 
 

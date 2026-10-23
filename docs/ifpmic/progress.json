@@ -660,14 +660,14 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "Whole-source V3 attempt01 rejected missing executed snapshot_bridge.mjs attestation and pinned Node absent from fixture PATH. Implement reviewed NODE-CLOSURE-REPAIR, preserve149proof, prepare110pinV4 and paired authoring/source/unit/full execution gates before actual490/admission UI.",
+  "next_step": "V4 Node boundary repairs and152 synthetic units independently accepted. Final whole-source review and exact independent/TC execution pre-gates remain before fresh actual490. Then independently accept actual raw/cleanup/privacy evidence and connect persisted request admission/run/receipt UI.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",
     "Approved Bedrock/Claude runtime profile"
   ],
   "publication_policy": "Only authorized git repository documentation, source and synthetic verification summaries/screenshots; never runtime credentials or application logs.",
-  "updated_at": "2026-10-23T02:38:45.524262+00:00",
+  "updated_at": "2026-10-23T02:57:29.654067+00:00",
   "session_handoff": {
     "status": "resumed_by_user",
     "resume_document": "docs/ifpmic/RESUME.md",
@@ -688,7 +688,7 @@
       "commit_and_push"
     ],
     "existing_mandatory_gates_preserved": true,
-    "latest_user_visible_change": "Static workflow preview restored at4173 after successful build and HTTP200; no new workflow execution behavior. API8769 remains stopped.",
+    "latest_user_visible_change": "Static progress dashboard refreshed to accepted152 checkpoint; workflow4173 restored after build/HTTP200; request API8769 stopped. No new workflow execution behavior.",
     "reporting_rule": "Lead with visible behavior; explicitly report no new visible feature when only internal evidence advances. Keep stage completion, visible flows, and test counts separate.",
     "next_visible_acceptance": "One persisted request admitted by the actual execution engine; matching job/run/receipt and QUEUED displayed, with duplicate, authorization and reload checks. Mandatory execution gates preserved.",
     "current_stage_completion": {
@@ -710,17 +710,17 @@
       "scope": "Source path/schema/applicability only; no actual execution acceptance."
     },
     "current_candidate_static_verification": "delivery/iteration-03/full-candidate-v3-static-verification.json",
-    "next_foundation_scope": "Whole-source V3 attempt01 rejected missing executed snapshot_bridge.mjs attestation and pinned Node absent from fixture PATH. Implement reviewed NODE-CLOSURE-REPAIR, preserve149proof, prepare110pinV4 and paired authoring/source/unit/full execution gates before actual490/admission UI.",
+    "next_foundation_scope": "V4 Node boundary repairs and152 synthetic units independently accepted. Final whole-source review and exact independent/TC execution pre-gates remain before fresh actual490. Then independently accept actual raw/cleanup/privacy evidence and connect persisted request admission/run/receipt UI.",
     "candidate_authoring_reviews": {
-      "independent": "evidence/b03/h2-runtime-full-execution-contract-review-v3.json",
-      "tc": "evidence/b03/h2-runtime-full-execution-tc-review-v3.json"
+      "independent": "evidence/b03/h2-runtime-full-execution-contract-review-v4.json",
+      "tc": "evidence/b03/h2-runtime-full-execution-tc-review-v4.json"
     },
     "latest_unit_result": {
-      "passed": 149,
+      "passed": 152,
       "retained": 149,
-      "new": 0,
-      "verification": "delivery/iteration-03/v3-binding-verification.json",
-      "independent_acceptance": "delivery/iteration-03/v3-binding-result-review.json",
+      "new": 3,
+      "verification": "delivery/iteration-03/node-closure-repair-verification.json",
+      "independent_acceptance": "delivery/iteration-03/node-closure-repair-result-review.json",
       "actual_full490": false
     },
     "full_source_rejected_attempt": "evidence/b03/attempts/h2-runtime-full-runner-source-review-v3-attempt-01.json",
@@ -729,12 +729,12 @@
       {
         "id": "FULL-NODE-PATH-UNREACHABLE",
         "summary": "Fixture shutil.which cannot find pinned Node in safe PATH",
-        "status": "open"
+        "status": "repaired_in_accepted152_synthetic_scope_pending_full_source_review"
       },
       {
         "id": "FULL-NODE-BRIDGE-SOURCE-OMITTED",
         "summary": "Executed snapshot_bridge.mjs missing from source closure pins",
-        "status": "open"
+        "status": "repaired_in_accepted152_synthetic_scope_pending_full_source_review"
       }
     ]
   },
@@ -764,10 +764,10 @@
       "status": "in_progress",
       "title": "Connect persisted API job to real execution-engine admission and visible run/receipt",
       "path": "delivery/iteration-03/README.md",
-      "verification": "delivery/iteration-03/v3-binding-verification.json",
-      "foundation_status": "accepted149_rebound_synthetic_only; whole_source_v3_attempt01_requests_changes",
+      "verification": "delivery/iteration-03/node-closure-repair-verification.json",
+      "foundation_status": "accepted152_v4_synthetic_only; whole_source_and_execution_gates_pending",
       "actual_job_execution": false,
-      "scope": "149rebound units accepted;2 actual Node execution/closure blockers remain. Approved bounded repair plan, actual490/admission UI pending.",
+      "scope": "PinnedNodePATH/sourceclosure fixed;110 V4pins and152 units. Actual490 andadmission UI pending.",
       "mapping_resolution_progress": "evidence/b03/h2-machine-resolution-progress-v2.json",
       "candidate_static_verification": "delivery/iteration-03/full-candidate-v3-static-verification.json"
     }

@@ -1,5 +1,7 @@
 # 주기03 — 저장 요청의 실제 실행 접수
 
+**현재152:** v4에서 고정Node PATH와실제bridge source pin 누락을 수정했고 [152/152 합성](./node-closure-repair-verification.json)을 [독립 수용](./node-closure-repair-result-review.json)받았다. source59·cache·원본/환경이 유지됐다. v4의110pins·paired작성검토·연결이 완료됐으며 최종whole-source/실행 전 게이트가 남았다. 실제490·run/receipt/QUEUED UI는 미완료다. 아래149/v3/미수정 상태는 과거 기록이다.
+
 **2026-10-23 최신:** attempt02의3건을 수정하고 [149개 실제 합성 결과](./remaining-input-repair-verification.json)와 [독립 수용](./remaining-input-repair-result-review.json)을 남겼다. v3 [ledger](../../evidence/b03/h2-runtime-full-integrated-ledger-v3.json)/[계약](../../evidence/b03/h2-runtime-full-execution-contract-v3.json)의 독립·TC 작성 검토도 완료됐다. 현재 runner3dbf는 아직v2 연결이며, v3 연결→새 정확한 소스/합성 검증→전체 소스/paired execution gates가 남았다. 실제490·업무 실행·접수 화면은 미완료다. 아래140건/미수정3건 및 접속 상태는 과거 기록이다.
 
 **최신 상태:** [진행 현황판](../status.html).140개 합성 단위 수용 후 [전체 소스 검토 attempt02](../../evidence/b03/attempts/h2-runtime-full-runner-source-review-v2-attempt-02.json)가 추가 장애3건을 확인했다. stopped envelope 경계 label/실제 role 충돌, synthetic cleanup journal의 실제 CLI 오분류, retained H1 README 해시 불일치다. 이 세 건은 미수정이며 전체 source/실행 승인은 없다. 아래140건은 당시 정확한 소스의 합성 검증이다. 다음은 세 장애의 검토된 수정·재검증이고, 이후에 실행 전 검토·fresh490·화면 연결을 진행한다.

@@ -8,6 +8,8 @@
 
 ### 2026-10-23 체크포인트
 
+**최신152:** 두 Node 누락을 수정하고v4 작성 검토/연결 뒤 [152개 합성 검증](./delivery/iteration-03/node-closure-repair-verification.json)·[독립 수용](./delivery/iteration-03/node-closure-repair-result-review.json)을 완료했다. 기존149본문은 유지했다. 현재는 전체source·paired 실행 전 검토 단계이며 실제490과접수UI는 아직 미완료다. 현황판도 이 수용 범위로 갱신한다. 아래149 및미수정Node 기록은 과거 체크포인트다.
+
 **후속 최신:** v3 연결 후에도 같은149개 합성 단위를 [실행](./delivery/iteration-03/v3-binding-verification.json)·[독립 수용](./delivery/iteration-03/v3-binding-result-review.json)받았다. 전체 소스 검토는 실제Node PATH와 bridge.mjs source pin 누락2건으로 거절했다. [새 보완 계획](./delivery/iteration-03/NODE-CLOSURE-REPAIR.md)을 독립 승인받았으며 아직 실제490 실행은 없다. 정적 workflow는 빌드/4173 preview 재기동/HTTP200으로 다시 열었다. 요청 API8769는 정지 상태다.
 
 attempt02의 입력 오류3건을 수정하고 **149/149 합성 단위(기존140+새9)**를 독립 수용받았다. [실제 결과](./delivery/iteration-03/remaining-input-repair-verification.json)·[독립 수용](./delivery/iteration-03/remaining-input-repair-result-review.json). 종료 envelope의 실제 역할 결합, 합성 probe의0물리process 분류, 역사/현재 README 분리 검증을 포함한다. 새v3 후보의109 source/read pins·490 ID·모든 기존 예산을 대조했고 독립/TC 작성 검토가 완료됐다. 다음은 실행기의v3 연결과 정확한 소스/실행 전 검토다. **실제490·접수 UI는 미완료, 전체12.5% 유지, 새 업무 화면 기능 없음.** 아래140/미수정3건 문단과 현황판은 이전 체크포인트다. 현재 상태는 progress와 RESUME를 따른다. 현재4173/8769는 listening socket이 없음을 확인했으며 과거 HTTP200을 현재 접속 증명으로 사용하지 않는다.

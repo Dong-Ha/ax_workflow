@@ -10,7 +10,9 @@ import ast
 import hashlib
 import json
 import math
+import os
 from pathlib import Path
+import shutil
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -178,6 +180,7 @@ class ActualProducerSchemaTests(unittest.TestCase):
                     self.assertIn(budget, ((25, 5), (215, 25)))
                     self.assertNotIn(nodeid, all_nodes)
                     all_nodes.add(nodeid)
+
 
                 keys = source["writer_keys"]
                 self.assertNotIn("total_seconds", keys)
@@ -1223,6 +1226,196 @@ class ReadmeQualificationRepairTests(unittest.TestCase):
             link.symlink_to(root, target_is_directory=True)
             with self.assertRaisesRegex(RuntimeError, "not canonical"):
                 ifpmic_readme_qualification.verify_readme_qualification(link)
+
+
+class NodeClosureRepairTests(unittest.TestCase):
+    @staticmethod
+    def _safe_environment_fixture(root: Path, *, bad_hash: bool = False,
+                                  missing_node: bool = False):
+        home = root / "fake-home"
+        base = root / "qualified-python"
+        py = base / "bin/python"
+        py.parent.mkdir(parents=True)
+        py.write_bytes(b"synthetic interpreter placeholder")
+        py.chmod(0o700)
+        node = home / "node/bin/node"
+        node.parent.mkdir(parents=True)
+        node_bytes = b"synthetic pinned node placeholder"
+        if not missing_node:
+            node.write_bytes(node_bytes)
+            node.chmod(0o700)
+        ambient = root / "ambient-bin"
+        other_venv_node = py.parent / "node"
+        ambient.mkdir()
+        ambient_node_bytes = b"ambient node must not win"
+        (ambient / "node").write_bytes(ambient_node_bytes)
+        (other_venv_node).write_bytes(b"other venv node must not win")
+        other_venv_node.chmod(0o700)
+        (ambient / "node").chmod(0o700)
+        observations = root / "capture/case/observations.json"
+        observations.parent.mkdir(parents=True)
+        contract = {
+            "attestation_inputs": {
+                "qualified_private_installation": {"path": "private/toolchain/installation.json"}
+            },
+            "binary_inputs": {
+                "fixture_node": {
+                    "path": "~/node/bin/node",
+                    "sha256": "0" * 64 if bad_hash else hashlib.sha256(node_bytes).hexdigest(),
+                }
+            },
+        }
+        phase = {"pytest_plugins": []}
+        return home, base, node, ambient, observations, contract, phase
+
+    def _safe_environment(self, root: Path, *, bad_hash: bool = False,
+                          missing_node: bool = False):
+        home, base, node, ambient, observations, contract, phase = (
+            self._safe_environment_fixture(root, bad_hash=bad_hash, missing_node=missing_node))
+        created: list[str] = []
+        real_mkdtemp = runner.tempfile.mkdtemp
+
+        def tracked_mkdtemp(*args, **kwargs):
+            path = real_mkdtemp(*args, **kwargs)
+            created.append(path)
+            return path
+
+        try:
+            with (patch.object(runner.Path, "home", return_value=home),
+                  patch.object(runner.tempfile, "mkdtemp", side_effect=tracked_mkdtemp),
+                  patch.dict(os.environ, {"PATH": str(ambient), "DATABASE_URL": "ambient-secret"})):
+                result = runner.safe_environment(
+                    base, phase, contract, observations, root / "lifecycle.jsonl",
+                    root / "progress.jsonl", root / "timings.json")
+            return result, node, ambient, base, created
+        except BaseException:
+            for path in created:
+                shutil.rmtree(path, ignore_errors=True)
+            raise
+
+    @staticmethod
+    def _static_fixture(root: Path, *, bridge: str = "present",
+                        extra: tuple[str, str, str] | None = None):
+        service = root / "services/ifpmic_api"
+        tests = root / "tests/ifpmic_api"
+        service.mkdir(parents=True)
+        tests.mkdir(parents=True)
+        bridge_path = service / "snapshot_bridge.mjs"
+        if bridge != "missing":
+            bridge_path.write_text("// synthetic pinned bridge\n", encoding="utf-8")
+        bridge_sha = hashlib.sha256(bridge_path.read_bytes()).hexdigest() if bridge_path.exists() else "0" * 64
+        if bridge == "altered":
+            bridge_path.write_text("// altered pinned bridge\n", encoding="utf-8")
+        elif bridge == "symlink":
+            bridge_path.unlink()
+            target = root / "outside-bridge.mjs"
+            target.write_text("// symlink target\n", encoding="utf-8")
+            bridge_path.symlink_to(target)
+        if extra is not None:
+            folder, name, kind = extra
+            extra_path = root / folder / name
+            if kind == "broken-symlink":
+                extra_path.symlink_to(service / "absent-target.js")
+            elif kind == "symlink":
+                target = root / ("target" + extra_path.suffix)
+                target.write_text("// extra symlink target\n", encoding="utf-8")
+                extra_path.symlink_to(target)
+            else:
+                extra_path.write_text("// unpinned node source\n", encoding="utf-8")
+        contract = {
+            "attestation_inputs": {
+                f"unrelated_anchor_{index}": {"path": f"anchors/{index}", "sha256": "0" * 64}
+                for index in range(19)
+            },
+            "binary_inputs": {
+                f"unrelated_binary_{index}": {"path": f"binaries/{index}", "sha256": "0" * 64}
+                for index in range(7)
+            },
+            "attestation_policy": {"environment_roots": {"synthetic": "environment"}},
+        }
+        (root / "environment").mkdir()
+        ledger = {
+            "source_pins": {"services/ifpmic_api/snapshot_bridge.mjs": bridge_sha},
+            "derivative_ledgers": {},
+        }
+        return contract, ledger
+
+    def _verify_static_anchors(self, root: Path, contract: dict, ledger: dict) -> None:
+        def mocked_anchor_hash(path: Path, expected: str, what: str) -> bytes:
+            self.assertTrue(path.is_absolute())
+            self.assertEqual(expected, "0" * 64)
+            return b"synthetic unrelated anchor"
+
+        with (patch.object(runner, "ROOT", root),
+              patch.object(runner, "require_file_hash", side_effect=mocked_anchor_hash)):
+            runner.verify_static_anchors(contract, ledger)
+
+    def test_safe_environment_uses_only_hash_pinned_node_before_other_nodes(self) -> None:
+        for case, bad_hash, missing_node in (
+                ("valid", False, False), ("bad-hash", True, False), ("missing", False, True)):
+            with self.subTest(case=case), tempfile.TemporaryDirectory(prefix="h2-node-path-") as temp:
+                root = Path(temp)
+                if case != "valid":
+                    with self.assertRaisesRegex(RuntimeError, "pinned Node executable"):
+                        self._safe_environment(root, bad_hash=bad_hash, missing_node=missing_node)
+                    continue
+                (env, _), node, ambient, base, created = self._safe_environment(root)
+                try:
+                    self.assertEqual(shutil.which("node", path=env["PATH"]), str(node))
+                    self.assertEqual(env["PATH"].split(os.pathsep),
+                                     [str(node.parent), str(base / "bin"), "/usr/bin", "/bin"])
+                    self.assertNotEqual(shutil.which("node", path=str(ambient)), str(node))
+                    self.assertEqual(env["IFPMIC_NODE_EXECUTABLE"], str(node))
+                    self.assertEqual(env["PGPASSFILE"], str(root / "capture/case/empty-pgpass"))
+                    self.assertEqual(env["PGSERVICEFILE"],
+                                     str(root / "capture/case/empty-pg-service.conf"))
+                    self.assertEqual(env["PGSYSCONFDIR"], str(root / "capture/case/empty-pg-system"))
+                    self.assertEqual(env["PYTHONPATH"], str(runner.ROOT))
+                    self.assertEqual(env["PYTHONDONTWRITEBYTECODE"], "1")
+                    self.assertEqual(env["PYTEST_DISABLE_PLUGIN_AUTOLOAD"], "1")
+                    self.assertEqual(env["LANG"], "C.UTF-8")
+                    self.assertEqual(env["LC_ALL"], "C.UTF-8")
+                    self.assertTrue(Path(env["TMPDIR"]).is_dir())
+                    self.assertEqual(Path(env["TMPDIR"]).stat().st_mode & 0o777, 0o700)
+                    self.assertNotIn("DATABASE_URL", env)
+                    self.assertNotIn(str(ambient), env["PATH"])
+                finally:
+                    for path in created:
+                        shutil.rmtree(path, ignore_errors=True)
+
+    def test_static_source_closure_accepts_pinned_bridge_and_rejects_missing_or_changed(self) -> None:
+        for case in ("present", "missing", "altered", "symlink"):
+            with self.subTest(case=case), tempfile.TemporaryDirectory(prefix="h2-node-bridge-") as temp:
+                root = Path(temp)
+                contract, ledger = self._static_fixture(root, bridge=case)
+                if case == "present":
+                    self._verify_static_anchors(root, contract, ledger)
+                else:
+                    with self.assertRaises(RuntimeError):
+                        self._verify_static_anchors(root, contract, ledger)
+
+        with tempfile.TemporaryDirectory(prefix="h2-node-bridge-omitted-pin-") as temp:
+            root = Path(temp)
+            contract, ledger = self._static_fixture(root, bridge="present")
+            self.assertTrue((root / "services/ifpmic_api/snapshot_bridge.mjs").is_file())
+            ledger["source_pins"].clear()
+            with self.assertRaisesRegex(RuntimeError, "source closure"):
+                self._verify_static_anchors(root, contract, ledger)
+
+    def test_static_source_closure_rejects_unpinned_node_source_suffixes_and_symlinks(self) -> None:
+        folders = ("services/ifpmic_api", "tests/ifpmic_api")
+        cases = [(folder, f"extra{suffix}", "file")
+                 for folder in folders for suffix in (".mjs", ".js", ".cjs")]
+        cases.extend((folder, name, kind) for folder in folders for name, kind in (
+            ("extra.mjs", "symlink"), ("extra.js", "broken-symlink"),
+            ("extra.cjs", "symlink")))
+        for folder, name, kind in cases:
+            with self.subTest(folder=folder, name=name, kind=kind), tempfile.TemporaryDirectory(
+                    prefix="h2-node-extra-") as temp:
+                root = Path(temp)
+                contract, ledger = self._static_fixture(root, extra=(folder, name, kind))
+                with self.assertRaisesRegex(RuntimeError, "source closure"):
+                    self._verify_static_anchors(root, contract, ledger)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,102 @@
+{
+  "kind": "ifpmic.delivery.iteration03.node-closure-repair-result-independent-review.v1",
+  "reviewed_utc": "2026-10-23T02:53:44.892534+00:00",
+  "reviewer": {
+    "agent_id": "/root/v3_whole_source_review",
+    "independence": "Independent from runner/helper/test/capture authors and execution operator. Read existing evidence only;no rerun or product execution."
+  },
+  "decision": "accept_152_cache_isolated_synthetic_units_only",
+  "verification": {
+    "path": "docs/ifpmic/delivery/iteration-03/node-closure-repair-verification.json",
+    "sha256": "8381431fc04c942e71ed99e6256e6114d0130831321ac48d5d91f4b9749841e8",
+    "preserved_unchanged": true
+  },
+  "source_review": {
+    "path": "docs/ifpmic/delivery/iteration-03/node-closure-repair-source-review.json",
+    "sha256": "1b74d35c833bcccffc3125426d1dc862267dd78621d0dd568a26a61040748023"
+  },
+  "plan_review": {
+    "path": "docs/ifpmic/delivery/iteration-03/node-closure-repair-plan-review.json",
+    "sha256": "4b010d5755441bce4b0992c0e9b8c4f26ac509e4db7cc493682acd3c057edd35"
+  },
+  "private_capture": {
+    "path": "workflow-artifacts/verification/agile/iteration-03/node-closure-preparation/run_units.py",
+    "sha256": "dc873da01c68b28f02b442574a23a8ff75daf5f80c8b8932d10e5ba0ec7c536a"
+  },
+  "raw_evidence": {
+    "preservation-after.json": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/node-closure-unit-2026-10-23T02-50-06-588873Z/preservation-after.json",
+      "sha256": "30b1204426dfb183ce2571455a4f03d209ef0c97507daa1273a22b49bd544346"
+    },
+    "preservation-before.json": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/node-closure-unit-2026-10-23T02-50-06-588873Z/preservation-before.json",
+      "sha256": "30b1204426dfb183ce2571455a4f03d209ef0c97507daa1273a22b49bd544346"
+    },
+    "result.json": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/node-closure-unit-2026-10-23T02-50-06-588873Z/result.json",
+      "sha256": "dadebc4ae3c494e730b97a329de4784877fab0688be296c22c4739871dc5b2f1"
+    },
+    "source-after.json": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/node-closure-unit-2026-10-23T02-50-06-588873Z/source-after.json",
+      "sha256": "ca26ce863fdda029c70b10221d5bc1f91d907b0e4bfc7200e7146e88b6270e21"
+    },
+    "source-before.json": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/node-closure-unit-2026-10-23T02-50-06-588873Z/source-before.json",
+      "sha256": "ca26ce863fdda029c70b10221d5bc1f91d907b0e4bfc7200e7146e88b6270e21"
+    },
+    "stderr.log": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/node-closure-unit-2026-10-23T02-50-06-588873Z/stderr.log",
+      "sha256": "26b53033c39c71a1b8dbb33aa18658ed27701fa0f417bc669ef3de58cd53d9be"
+    },
+    "stdout.log": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/node-closure-unit-2026-10-23T02-50-06-588873Z/stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "findings": [],
+  "evidence": {
+    "actual_results": {
+      "exit_code": 0,
+      "timed_out": false,
+      "passed": 152,
+      "retained": 149,
+      "new": 3,
+      "failed": 0,
+      "skipped": 0,
+      "reported_unittest_seconds": 1.137,
+      "test_id_set_sha256": "a9b008d69602c45a087fe84a69a0584784aa271207f35ca1081b67040b1b93b6",
+      "id_digest_recipe": "SHA256 of UTF-8 sorted unique actual IDs joined by newline with a final newline.",
+      "comparison": "The raw stderr contains exactly152 unique...ok results and Ran152/OK;all IDs equal the approved source-review list,current AST,raw expected/actual lists and public test_ids. stdout is empty. All149 previous method bodies were independently statically compared to their pinned baseline before source approval;the approved capture rechecks them before execution."
+    },
+    "source_integrity": "All7 raw evidence hashes match public pointers. Both raw source maps equal all59 approved source pins,raw result/public pins and current files. Source review1b74d35c remains exact and equals the saved approval hash. Runner29be6f27,TC3699faa5 and wrapperdc873da0 remain unchanged.",
+    "private_capture_integrity": "All7 raw files are owned nonsymlink regular single-link0600. Leaf,cache and tmp are owned nonsymlink0700. Cache is empty now and the approved capture requires it empty before/after,exact7-module discovery,60-second timeout,complete actual IDs,unchanged sources and approval digest.",
+    "preservation": {
+      "before_after_maps_identical": true,
+      "protected_hashes": 96,
+      "protected_inventory": 89,
+      "design_imports": 17,
+      "uploads": 2,
+      "environment_entries": {
+        "original32": 1777,
+        "qualified36": 3072
+      },
+      "baseline_comparison": "Independently compared both saved preservation maps to exact pinned B01 archive/member protected96 selection and89 inventory,original design manifest17+2 and accepted407 complete environment file/symlink maps. Rehashed current protected/design/environment files and symlink targets;they still match all saved/accepted maps. These are byte-preservation facts,not service-health evidence."
+    },
+    "scope": "Accepted proof is only the exact source-approved152 stdlib synthetic methods,including3 Node PATH/source-closure methods plus149 unchanged regressions. New tests use temporary executable placeholders with shutil.which/stat and real temporary source file/hash/inventory checks;they do not execute Node,product fixtures,SDK,pytest collection,SQL,services or actual runner main. The existing two short synthetic Python cache probes retain their previously approved scope. Actual full490 was not run."
+  },
+  "acceptance": {
+    "approved_152_synthetic_result": true,
+    "exact_59_pin_and_preservation_proof": true,
+    "whole_runner_source_approval": false,
+    "execution_pre_gates": false,
+    "actual_full490_or_h2_acceptance": false,
+    "ui_at_iteration03_or_goal_acceptance": false
+  },
+  "risks_and_remaining_uncertainty": [
+    "This accepts the frozen152-unit result only. It cannot prove actual Node/service/SDK/native timing,SQL/history/authority causality,physical resource absence or full-gate privacy fidelity.",
+    "Separate exact final V4 whole-runner source approval and paired independent/TC execution pre-gates are still mandatory before fresh490. No V3 rejected or historical149 approval is promoted to current runtime permission.",
+    "Public verification and prior evidence remain unchanged;this separate result review grants no additional execution authority."
+  ],
+  "recommendation": "Accept this exact152 synthetic result and preservation proof. Continue separately to final whole-runner source review and both execution pre-gates before the actual full490 gate.",
+  "review_method": "Read-only raw log/ID/hash/file-mode/owner/cache and current/saved original-baseline comparisons. No test rerun,repository imports,collection,SDK,SQL,services,network or runner execution."
+}
