@@ -18,8 +18,8 @@ V4 실패 두 건을 [검토된 계획](./delivery/iteration-03/RUNTIME-ORACLE-R
 
 ## 다음 행동
 
-1. [V5 실행 상태](./delivery/iteration-03/runtime-v5-execution-status.json)를 먼저 확인한다. 독립·TC 실행 전 게이트가 exact V5 source/manifest를 승인했고 2026-10-23 03:52:41 UTC에 새490을 한 번 시작했다. actual handle/leaf는 위 기록의 private_resume_pointer에 저장했다. 기존 실행을 계속 관찰한다. 관찰 timeout을 종료로 해석하거나 중복 실행하지 않는다.
-2. terminal gate/JUnit·raw·정리·환경·개인정보를 독립 수용한다. 실패 시 해당 leaf를 보존하고 원래 계약 단계로 복귀한다. 통과 기록 없이 H2 완료나 공개 proposal로 집계하지 않는다.
+1. [V5 실행 상태](./delivery/iteration-03/runtime-v5-execution-status.json)를 먼저 확인한다. 독립·TC 실행 전 게이트가 exact V5 source/manifest를 승인했고 2026-10-23 03:52:41 UTC에 새490을 한 번 시작했다. actual handle/leaf는 위 기록의 private_resume_pointer에 저장했다. 해당 실행은 exit1로 종료했다. dispatcher8개와 그 raw 감사는 통과했고, worker API4개 중3개 실패(전체12개 중9통과·3실패·오류/skip0),478미실행이다. 기존 실패 leaf를 보존하며 재실행하지 않는다.
+2. [V5 독립 실패 검토](./delivery/iteration-03/runtime-v5-attempt-01-result-review.json)를 확인한다. 기록된 자원 정리와 현재 소스·환경 일치는 확인했지만 실행기 after manifest 및 전체 후속 감사는 완료되지 않았다. CRASH-10/11은 활동 종료 전 Started 이벤트의 history 기록 시점, CRASH-12는 복구 뒤 query timeout을 원래 계약·실제 관측과 대조한다. 실패 시 해당 leaf를 보존하고 원래 계약 단계로 복귀한다. 통과 기록 없이 H2 완료나 공개 proposal로 집계하지 않는다.
 3. 다음 공개 결과는 **저장 요청 한 건 → 실제 엔진 접수 → 같은 작업의 run/receipt·QUEUED**다. 정상·중복 접수·권한 오류·새로고침을 검증한다. 현재 I02 UI에는 실행 ID/receipt 조회 DTO가 없고 내부 dispatcher/worker 경로가 실제 접수를 맡는다. 필요한 조회 정보와 갱신은 별도 검토된 UI/API 계획으로 추가한다. QUEUED는 접수 상태다.
 4. 화면·URL·직접 해볼 순서·실제/모의 구분·남은 한 가지를 전달하고 검증된 변경을 커밋·push한다.
 

@@ -1,9 +1,9 @@
 {
   "kind": "ifpmic.agile.runtime-v5-execution-status.v1",
-  "updated_utc": "2026-10-23T03:56:49.853512+00:00",
-  "status": "running_not_accepted",
+  "updated_utc": "2026-10-23T04:03:29.603000+00:00",
+  "status": "failed_not_accepted",
   "started_utc": "2026-10-23T03:52:41.577761+00:00",
-  "terminal_verdict": null,
+  "terminal_verdict": "fail",
   "runner_sha256": "bad746ecdfcfc155e16b2f013810963734627dfd2ee5727c62612a5f25ae9239",
   "inventory": 490,
   "phase_count": 15,
@@ -21,5 +21,27 @@
   "scope": "152 retained stdlib units accepted at exact new source; changed SDK integration cases not rerun yet. No new user workflow behavior.",
   "next_visible_goal": "Saved request -> internal engine admission -> matching run/receipt QUEUED; normal/duplicate/auth/reload checks.",
   "candidate_commit": "a44306f",
-  "collections_observed_complete": 15
+  "collections_observed_complete": 15,
+  "executed_cases": 12,
+  "passed_cases": 9,
+  "failed_cases": 3,
+  "error_cases": 0,
+  "skipped_cases": 0,
+  "remaining_inventory_cases_not_executed": 478,
+  "completed_phase_test_runs": 2,
+  "elapsed_seconds": 482.9006490019992,
+  "dispatcher_phase": {
+    "cases": 8,
+    "passed": 8,
+    "failures": 0,
+    "raw_case_audit_satisfied": true,
+    "scope": "Includes both repaired V4 cases; not full490 acceptance"
+  },
+  "failure_category": "Three worker API crash cases failed: two cut-history Started assertions and one post-recovery query timeout; independent failure review pending.",
+  "next_action": "Preserve attempt and owned cleanup; reconcile Started history semantics against primary Temporal documentation and diagnose post-recovery query/proxy availability before narrow reviewed repair.",
+  "failed_attempt_independent_review": {
+    "path": "runtime-v5-attempt-01-result-review.json",
+    "sha256": "02a5040437f6c7f47d65b5e590e2ae38a668b723cf266ad9d366783bb5c49d4b",
+    "decision": "confirm_failed_attempt_not_accepted"
+  }
 }

@@ -1,0 +1,70 @@
+{
+  "kind": "ifpmic.delivery.iteration03.runtime-v5-attempt-01-independent-result-review.v1",
+  "reviewed_utc": "2026-10-23T04:05:00.999554+00:00",
+  "decision": "confirm_failed_attempt_not_accepted",
+  "reviewer": {
+    "agent_id": "/root/v3_whole_source_review",
+    "independence": "Independent from Code-dev/TC authors and execution operator. Read-only terminal/private-preservation review;no imports,rerun,signals,SDK/service calls or source edits."
+  },
+  "contract_sha256": "f9790500918ec8fdf17d839bf17201a844c3bbb7c094eb22aca253468c6f1843",
+  "ledger_sha256": "d974cf0088784e298f1a581cbd418a71ce1035dd3b07511bff74136d928d7f96",
+  "runner_sha256": "bad746ecdfcfc155e16b2f013810963734627dfd2ee5727c62612a5f25ae9239",
+  "raw_rules_sha256": "b8473f34edad3adcb62ecb1209845fb189d607f214227a667636dc76d7d7785d",
+  "private_attempt": "workflow-artifacts/verification/B03/H2/runtime-full/gates/2026-10-23T03-52-41-577761Z",
+  "private_evidence_pins": {
+    "workflow-artifacts/verification/B03/H2/runtime-full/gates/2026-10-23T03-52-41-577761Z/gate.json": "bbaa4fb7b67b0aff613261e8a582ffd9b93f122eeda41126f07a88279b4183d3",
+    "workflow-artifacts/verification/B03/H2/runtime-full/gates/2026-10-23T03-52-41-577761Z/dispatcher_crashes/pytest.xml": "046ab6b25c6e8f0caadc492fc29ade8a58fa731bfefcfa30d0d9aed2f9575716",
+    "workflow-artifacts/verification/B03/H2/runtime-full/gates/2026-10-23T03-52-41-577761Z/worker_api_crashes/pytest.xml": "4a32cabda8a1ce3481b8af026f8dfa095809cefb083a24907554c69976c71504",
+    "workflow-artifacts/verification/B03/H2/runtime-full/gates/2026-10-23T03-52-41-577761Z/dispatcher_crashes/raw-case-audit.json": "68e07cd5dd13506705f72a30b5977dd83affad7f62b5e2b4e7ace17865dcef7e"
+  },
+  "terminal_result": {"tool_exit_code_reported_by_operator": 1, "gate_verdict": "fail", "finding": "Phase exited unsuccessfully: worker_api_crashes", "elapsed_seconds": 482.9006490019992, "collections": {"phases": 15, "exact_ids": 490, "all_log_hashes_match": true}, "executed": {"cases": 12, "passed": 9, "failed": 3, "errors": 0, "skipped": 0}, "unexecuted_cases": 478},
+  "phases": [
+    {"id": "dispatcher_crashes", "cases": 8, "passed": 8, "failed": 0, "seconds": 317.2095699089996, "raw_audit_nodes": 8, "raw_audit_source_unchanged": true, "raw_audit_rules_satisfied": true, "decoder": "qualified-temporalio-HistoryEvent.FromString"},
+    {"id": "worker_api_crashes", "cases": 4, "passed": 1, "failed": 3, "seconds": 66.29308153300008, "raw_audit_completed": false}
+  ],
+  "failures": [
+    {"case": "test_h2_worker_projection_before_pg_commit_sigkill_rolls_back_then_retries", "source": "tests/ifpmic_api/test_h2_worker_api_crashes.py:641", "confirmed_cause": "At the reached SQL cut,the shared assertion requires at least1 project_activation ActivityTaskStarted event in persisted pre-kill history;actual count is0. JUnit traceback confirms the failed assertion."},
+    {"case": "test_h2_worker_projection_after_pg_commit_sigkill_replays_receipt", "source": "tests/ifpmic_api/test_h2_worker_api_crashes.py:641", "confirmed_cause": "Same shared pre-kill ActivityTaskStarted predicate fails with actual0 after reaching this SQL cut. This is not a per-case/outer watchdog expiration."},
+    {"case": "test_h2_activity_completed_before_workflow_decision_sigkill_replays_history", "source": "tests/ifpmic_api/test_h2_worker_api_crashes.py:420", "confirmed_cause": "Final runtime observation fails with temporalio.service.RPCError(timeout) through normal observer phase query at test_h2_runtime_normal_flow.py:507. Final expected state is unproven;deeper proxy/query/worker cause remains unresolved."}
+  ],
+  "diagnostic_boundary": {
+    "history_semantics": "Orchestrator supplied primary documentation research that ActivityTaskStarted is persisted with the terminal activity event,so absence from durable history during the still-running activity conflicts with the current pre-kill oracle rather than proving no activity execution. This reviewer verified the exact failed predicates/tracebacks;did not independently fetch network documentation.",
+    "primary_reference_supplied": "https://github.com/temporalio/documentation/blob/main/docs/references/events.mdx",
+    "decision": "Review the original crash-cut semantics and evidence method before proposing a bounded repair. No test weakening,producer change,timeout increase or retry is authorized by this result review."
+  },
+  "preservation": {
+    "saved_before_and_archive": "source-before equals110 V5 ledger pins;private candidate ZIP has exact110 paths/hashes. Copied review hashes and all15 collection-log hashes match.",
+    "independent_current_check": "All179 independent pre-gate source/read/invocation pins still match. Current1777 original32/3072 qualified36 file/symlink maps equal saved environment-before and accepted407.",
+    "manifest_limit": "source-after/environment-after are absent because execution exited before normal final post-audit. These independent current checks are after-failure observations,not fabricated runner manifests or full-gate pass proof."
+  },
+  "cleanup": {
+    "gate": {
+      "result": "stopped",
+      "signalled_count": 0,
+      "pid_alive": false
+    },
+    "recorded_dispatcher_phase": "32 saved CLI identities have explicit nonforced/absent terminals and none is currently live.",
+    "recorded_worker_phase": "14 saved owned metadata identities are currently absent;12 have explicit nonforced/absent terminal records in the inspected journal/cleanup contexts. No universal terminal-proof claim is made for the other2.",
+    "postgres": "Both phase lifecycle files report stopped/pid_alive=false and successful stop operations;both saved current PG identities are absent.",
+    "limit": "Recorded cleanup is supported;worker raw audit and final full resource/raw/proposal audits did not complete. This does not establish cleanup/acceptance for478 unexecuted cases."
+  },
+  "privacy": {
+    "leaf_mode": "0700",
+    "retained_files": "806 files0600,owned by current user",
+    "descendant_directories": "176 directories0700",
+    "symlinks": 0,
+    "parent_cache_empty": true,
+    "public_proposal_produced": false,
+    "publication": false,
+    "raw_policy": "Original logs,SQL/history/config/source ZIP/process identities remain private;this review publishes safe counts,categories,source references and hashes only."
+  },
+  "acceptance": {
+    "failed_attempt_evidence_reviewed": true,
+    "full490_pass": false,
+    "full_h2_or_ui_or_goal_acceptance": false,
+    "partial_pass_promoted_to_acceptance": false,
+    "retry_or_source_change_authorized": false
+  },
+  "recommendation": "Preserve V5 attempt01 as failed_not_accepted. Reconcile CRASH10/11 persisted-history semantics and diagnose CRASH12 final query before a separately reviewed bounded plan/source/successor candidate and renewed paired gates. The8 passing dispatcher cases/raw audit and152 synthetic proof do not replace full490 acceptance.",
+  "review_method": "Read-only gate/JUnit/raw-audit hash and safe traceback inspection,current179 pins/source archive/review/collection hashes,complete current-before-accepted environment maps,recorded process/PG identity absence and private modes. Luna causal findings were used only after matching terminal source locations;no broader source investigation or execution."
+}

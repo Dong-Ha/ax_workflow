@@ -21,7 +21,7 @@
 
 ## 남은 완료 조건
 
-1. 승인 뒤 시작된 V5 실행을 같은 actual handle로 관찰한다. 기존 V4 실패 증거를 보존하고 관찰 timeout만으로 중복 실행하지 않는다.
+1. V5 첫 시도는 dispatcher8개+raw 감사 통과 뒤 worker API4개 중3개 실패로 종료했다. 전체12건 중9통과·3실패,478미실행이다. CRASH-10/11의 Started history 기록 시점과 CRASH-12의 복구 query timeout을 원래 계약·실제 관측에 대조하고 좁은 수정 계획으로 복귀한다. 두 시도의 raw/owned cleanup을 보존한다.
 2. 실제 raw·정리·환경·개인정보와490 결과를 독립 수용한다. 실패하면 해당 경계로 돌아가 검토·수정·재검증한다.
 3. 요청 접수·run/receipt·QUEUED를 연결하고 정상·중복·권한·새로고침을 확인한다. 현재 UI의 조회 DTO에 실행 ID/receipt가 없고 실제 접수는 내부 dispatcher/worker가 수행한다. 검토된 UI/API 계획으로 필요한 조회 정보·갱신을 추가한다.
 4. URL·캡처·직접 해볼 순서·실제/모의 구분·커밋/push를 전달한다.
