@@ -665,14 +665,14 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "V7 exact candidate and152 unchanged synthetic units independently accepted; current whole-source approved413a64ce/221pins. Obtain exact invocation-bound paired execution gates, then one fresh actual490 attempt. PreviousV6 failed12/10pass2fail478unexecuted remains historical. No new admission UI; V3 plan draft needs independent review.",
+  "next_step": "One exact approved V7 actual490 attempt started2026-10-23T05:34:27Z; actualhandle andfreshleaf storedprivately. Poll samehandle, no auto-retry. No actualresult acceptance or new admissionUI yet.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",
     "Approved Bedrock/Claude runtime profile"
   ],
   "publication_policy": "Only authorized git repository documentation, source and synthetic verification summaries/screenshots; never runtime credentials or application logs.",
-  "updated_at": "2026-10-23T05:31:12.443962+00:00",
+  "updated_at": "2026-10-23T05:35:43.251472+00:00",
   "session_handoff": {
     "status": "resumed_by_user",
     "resume_document": "docs/ifpmic/RESUME.md",
@@ -704,7 +704,7 @@
     },
     "pending_source_proposal": "evidence/b03/h2-machine-resolution-progress-v2.json",
     "pending_source_proposal_review": "evidence/b03/h2-machine-resolution-activity-review-v5.json",
-    "pending_source_proposal_status": "v7_source_and152_accepted_pending_exact_execution_gates",
+    "pending_source_proposal_status": "v7_actual_running_not_accepted",
     "latest_source_mapping": {
       "resolved_cases": 87,
       "total_cases": 87,
@@ -715,7 +715,7 @@
       "scope": "Source path/schema/applicability only; no actual execution acceptance."
     },
     "current_candidate_static_verification": "evidence/b03/h2-runtime-full-runner-source-review-v7.json",
-    "next_foundation_scope": "V7 exact candidate and152 unchanged synthetic units independently accepted; current whole-source approved413a64ce/221pins. Obtain exact invocation-bound paired execution gates, then one fresh actual490 attempt. PreviousV6 failed12/10pass2fail478unexecuted remains historical. No new admission UI; V3 plan draft needs independent review.",
+    "next_foundation_scope": "One exact approved V7 actual490 attempt started2026-10-23T05:34:27Z; actualhandle andfreshleaf storedprivately. Poll samehandle, no auto-retry. No actualresult acceptance or new admissionUI yet.",
     "candidate_authoring_reviews": {
       "independent": "evidence/b03/h2-runtime-full-execution-contract-review-v7.json",
       "tc": "evidence/b03/h2-runtime-full-execution-tc-review-v7.json"
@@ -734,14 +734,14 @@
     "current_blockers": [
       {
         "id": "CRASH-11-REVOCATION-CARDINALITY",
-        "status": "exactset_TC_repair_implemented_pending_new_candidate_and_actual_verification"
+        "status": "under_actual_v7_verification"
       },
       {
         "id": "CRASH-12-ARMED-ONLY-COUNTER",
-        "status": "postrelease_event_TC_repair_implemented_pending_new_candidate_and_actual_verification"
+        "status": "under_actual_v7_verification"
       }
     ],
-    "runtime_execution_status": "delivery/iteration-03/runtime-v6-execution-status.json"
+    "runtime_execution_status": "delivery/iteration-03/runtime-v7-execution-status.json"
   },
   "visible_deliveries": [
     {
@@ -770,12 +770,12 @@
       "title": "Connect persisted API job to real execution-engine admission and visible run/receipt",
       "path": "delivery/iteration-03/README.md",
       "verification": "delivery/iteration-03/recovery-observation-unit-verification.json",
-      "foundation_status": "v7_source_and152_accepted_actual490_not_started",
+      "foundation_status": "v7_actual_running_not_accepted",
       "actual_job_execution": false,
       "scope": "V6 actual12/10pass2fail478unexecuted. CRASH10 recovered; CRASH11 revocation cardinality and CRASH12 armed-only metric expectations failed. Full H2 and visible admission UI remain incomplete.",
       "mapping_resolution_progress": "evidence/b03/h2-machine-resolution-progress-v2.json",
       "candidate_static_verification": "evidence/b03/h2-runtime-full-runner-source-review-v7.json",
-      "runtime_execution_status": "delivery/iteration-03/runtime-v6-execution-status.json"
+      "runtime_execution_status": "delivery/iteration-03/runtime-v7-execution-status.json"
     }
   ]
 }

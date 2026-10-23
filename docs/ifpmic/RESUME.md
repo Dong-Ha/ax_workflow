@@ -34,3 +34,7 @@ H3–H7, Code-dev·TC·SAM·TEM·SQE·사람, 실제 장비·배포·AT32 인수
 현재 V7 C/L/rules와 runner 바인딩을 작성했고, [새152 합성 결과](./delivery/iteration-03/recovery-observation-unit-verification.json)를 [독립 수용](./delivery/iteration-03/recovery-observation-unit-result-review.json)받았다. [전체 소스](./evidence/b03/h2-runtime-full-runner-source-review-v7.json)도 승인됐으며221개 핀이 현재 bytes와 일치한다. 위의 미바인딩/미실행 설명은 이전 체크포인트다. V7 실제490은 아직 시작하지 않았다.
 
 다음은 `workflow-artifacts/verification/B03/H2/runtime-full/preparations/v7-execution/invocation.json`의 정확한 명령·실제 HOME·clean environment를 독립/TC가 승인한 뒤, 즉시 소스·7target hashes를 재확인하고 실제490을 한 번 실행하는 것이다. 이전 V6 handle44336은 종료됐으며 다시 시작하지 않는다. V7 runner SHA: `b23bd4e8fe5e443c0d8de57016b0ad7085df3bdd1d16226e6a87ee2caa3528aa`. UI 후속 계획의 최신 초안은 [V3](./delivery/iteration-03/ADMISSION-UI-PLAN-v3.md)이며 독립 검토와 실제 H2 수용 전 구현하지 않는다.
+
+## 최신 실제 실행 · V7
+
+V7 소스와 paired 실행 전 검토가 승인됐고, 커밋 `88b31b7`의 후보를 **2026-10-23 05:34:27 UTC**에 한 번 시작했다. [V7 실행 상태](./delivery/iteration-03/runtime-v7-execution-status.json)의 private pointer에 actual handle/leaf가 있다. 위의 V7 미실행 설명은 이전 체크포인트다. 관찰 timeout은 종료가 아니며 같은 handle을 조회한다. source/환경은 실행 중 변경하지 않는다. 실제 전체 결과와 독립 수용, 새 UI는 아직 없다.

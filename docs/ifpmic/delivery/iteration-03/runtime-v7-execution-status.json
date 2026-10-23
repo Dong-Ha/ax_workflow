@@ -1,0 +1,21 @@
+{
+  "kind": "ifpmic.agile.runtime-v7-execution-status.v1",
+  "updated_utc": "2026-10-23T05:34:44.595626+00:00",
+  "status": "running_not_accepted",
+  "started_leaf_timestamp": "2026-10-23T05-34-27-574461Z",
+  "inventory": 490,
+  "phase_count": 15,
+  "actual_result_independently_accepted": false,
+  "runner_sha256": "b23bd4e8fe5e443c0d8de57016b0ad7085df3bdd1d16226e6a87ee2caa3528aa",
+  "source_review": "../../evidence/b03/h2-runtime-full-runner-source-review-v7.json",
+  "accepted_unit_result_review": "recovery-observation-unit-result-review.json",
+  "previous_failed_attempt": "runtime-v6-attempt-01-result-review.json",
+  "private_resume_pointer": "workflow-artifacts/verification/B03/H2/runtime-full/preparations/v7-execution/tool-session.json",
+  "candidate_commit": "88b31b7",
+  "scope": "One exact approved V7 attempt started; no actual result acceptance or new admission UI.",
+  "overall_stage_completion": {
+    "completed": 2,
+    "total": 16,
+    "percent": 12.5
+  }
+}

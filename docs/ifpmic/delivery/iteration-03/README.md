@@ -53,3 +53,5 @@ V6 전체 소스 및 독립·TC 실행 전 검토가 승인됐다(커밋 `d5e88e
 ## 최신 V7 준비
 
 [동일152 검사](./recovery-observation-unit-verification.json)·[결과 수용](./recovery-observation-unit-result-review.json)·[전체 소스 승인](../../evidence/b03/h2-runtime-full-runner-source-review-v7.json)이 완료됐다. 원래490/15묶음/956원시 규칙/예산은 유지한다. 정확한 실행 전 검토 뒤 새 실제490을 한 번 실행해야 한다. V7은 아직 실제 실행 전이며 [UI V3 초안](./ADMISSION-UI-PLAN-v3.md)은 독립 검토 전이다. 새 사용자 기능은 없다.
+
+V7 실제 실행을 **2026-10-23 05:34:27 UTC**에 한 번 시작했다(후보 커밋 `88b31b7`). [현재 실행 상태](./runtime-v7-execution-status.json)를 따른다. 위의 V7 실행 전 설명은 이전 기록이다. 같은 actual handle을 조회하며 종료 확인 전 새 시도를 만들지 않는다.
