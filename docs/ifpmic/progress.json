@@ -442,7 +442,7 @@
           "runtime_normal_progress_reconciliation": "evidence/b03/h2-runtime-normal-progress-reconciliation.json",
           "runtime_next_steps": "evidence/b03/h2-runtime-normal-next-steps.json",
           "runtime_full_preparation": {
-            "status": "v5_source_and152_accepted_pending_actual490",
+            "status": "v5_actual490_running_not_accepted",
             "authoring_checkpoint_commit": "ea5055a2b6fda99dd697d042deddc0d3245bf222",
             "verification_plan": "evidence/b03/h2-runtime-full-verification-plan.json",
             "plan_review_status": "independent_and_tc_approved_authoring_only",
@@ -451,9 +451,9 @@
             "tests_executed": false,
             "static_changes": "Authored all25 groups plus5 cleanup prerequisites; integrated490 literal IDs with exact budgets and preserved407 retained IDs. Independent source review repaired SDK/SQL/deadline/foreign-authority oracles, bounded new native calls and partial-start cleanup. No imports, collection, runtime tests or services executed.",
             "pending": [
-              "V5 exact paired execution pre-gates then one fresh490",
-              "Independent actual raw/cleanup/privacy/environment acceptance",
-              "Visible saved request admission/run/receipt UI"
+              "Observe existing V5 execution to terminal; preserve raw and owned cleanup",
+              "Independent actual raw/privacy/source/environment/cleanup acceptance",
+              "Visible admission/run/receipt flow"
             ],
             "acceptance_boundary": "407-case evidence remains historical only for its frozen candidate. No new crash/negative passes; fullH2, B03, originalAT and finalAX remain incomplete.",
             "plan_sha256": "c6964bccff0d4cec1ac00f18fbb267d5d1a4a5887e53844c604333b7c059486c",
@@ -665,14 +665,14 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "V5 original-contract oracle repairs authored; unchanged152 unit methods passed and independently accepted; whole source approved. Obtain exact paired execution pre-gates then one fresh490; preserve V4failed attempt. Actual integration retest and admission UI pending.",
+  "next_step": "V5 full490 started once after exact paired execution pre-gates; observe current private session without restarting on timeout. Require actual raw/cleanup/privacy/environment independent acceptance before admission UI.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",
     "Approved Bedrock/Claude runtime profile"
   ],
   "publication_policy": "Only authorized git repository documentation, source and synthetic verification summaries/screenshots; never runtime credentials or application logs.",
-  "updated_at": "2026-10-23T03:49:28.230596+00:00",
+  "updated_at": "2026-10-23T03:52:55.284692+00:00",
   "session_handoff": {
     "status": "resumed_by_user",
     "resume_document": "docs/ifpmic/RESUME.md",
@@ -704,7 +704,7 @@
     },
     "pending_source_proposal": "evidence/b03/h2-machine-resolution-progress-v2.json",
     "pending_source_proposal_review": "evidence/b03/h2-machine-resolution-activity-review-v5.json",
-    "pending_source_proposal_status": "v5_source_approved_pending_paired_execution_pre_gates",
+    "pending_source_proposal_status": "v5_actual490_running_not_accepted",
     "latest_source_mapping": {
       "resolved_cases": 87,
       "total_cases": 87,
@@ -715,7 +715,7 @@
       "scope": "Source path/schema/applicability only; no actual execution acceptance."
     },
     "current_candidate_static_verification": "evidence/b03/h2-runtime-full-runner-source-review-v5.json",
-    "next_foundation_scope": "V5 original-contract oracle repairs authored; unchanged152 unit methods passed and independently accepted; whole source approved. Obtain exact paired execution pre-gates then one fresh490; preserve V4failed attempt. Actual integration retest and admission UI pending.",
+    "next_foundation_scope": "V5 full490 started once after exact paired execution pre-gates; observe current private session without restarting on timeout. Require actual raw/cleanup/privacy/environment independent acceptance before admission UI.",
     "candidate_authoring_reviews": {
       "independent": "evidence/b03/h2-runtime-full-execution-contract-review-v5.json",
       "tc": "evidence/b03/h2-runtime-full-execution-tc-review-v5.json"
@@ -769,7 +769,7 @@
       "title": "Connect persisted API job to real execution-engine admission and visible run/receipt",
       "path": "delivery/iteration-03/README.md",
       "verification": "delivery/iteration-03/runtime-oracle-repair-verification.json",
-      "foundation_status": "v5_source_and152_accepted_pending_actual490",
+      "foundation_status": "v5_actual490_running_not_accepted",
       "actual_job_execution": false,
       "scope": "V4failed attempt preserved; two runtime oracles repaired in reviewed V5 source. Same152 units accepted; actual490 and visible run/receipt admission pending.",
       "mapping_resolution_progress": "evidence/b03/h2-machine-resolution-progress-v2.json",

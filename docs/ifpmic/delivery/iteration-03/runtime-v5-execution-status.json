@@ -1,8 +1,8 @@
 {
   "kind": "ifpmic.agile.runtime-v5-execution-status.v1",
-  "updated_utc": "2026-10-23T03:49:28.228904+00:00",
-  "status": "awaiting_paired_execution_pre_gates",
-  "started_utc": null,
+  "updated_utc": "2026-10-23T03:56:49.853512+00:00",
+  "status": "running_not_accepted",
+  "started_utc": "2026-10-23T03:52:41.577761+00:00",
   "terminal_verdict": null,
   "runner_sha256": "bad746ecdfcfc155e16b2f013810963734627dfd2ee5727c62612a5f25ae9239",
   "inventory": 490,
@@ -19,5 +19,7 @@
   "previous_failed_attempt": "runtime-v4-attempt-01-result-review.json",
   "private_resume_pointer": "workflow-artifacts/verification/B03/H2/runtime-full/preparations/v5-execution/tool-session.json",
   "scope": "152 retained stdlib units accepted at exact new source; changed SDK integration cases not rerun yet. No new user workflow behavior.",
-  "next_visible_goal": "Saved request -> internal engine admission -> matching run/receipt QUEUED; normal/duplicate/auth/reload checks."
+  "next_visible_goal": "Saved request -> internal engine admission -> matching run/receipt QUEUED; normal/duplicate/auth/reload checks.",
+  "candidate_commit": "a44306f",
+  "collections_observed_complete": 15
 }

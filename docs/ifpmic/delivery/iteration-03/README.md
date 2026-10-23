@@ -17,11 +17,11 @@
 
 [보완 계획](./RUNTIME-ORACLE-REPAIR.md)과 독립 검토 뒤 두 관측 오류를 수정했다. 선점 직후 exact generation1 미완료 시도 행을 검증하며, worker 중지 중에는 기존 서버 직접 관측기의 실제 이력을 byte/hash/0600 검사 후 원래 경로에 보존한다. 최종 실제 queued query와 동일 run/history/receipt·원래 시간 제한은 유지한다.
 
-[같은152 본문 합성 검증](./runtime-oracle-repair-verification.json)·[독립 수용](./runtime-oracle-repair-result-review.json)·[전체 소스 승인](../../evidence/b03/h2-runtime-full-runner-source-review-v5.json)을 완료했다. 실제490 재실행은 별도 paired execution pre-gates 뒤 진행하며 [현재 V5 실행 상태](./runtime-v5-execution-status.json)를 따른다. 새 업무 화면 기능은 없다.
+[같은152 본문 합성 검증](./runtime-oracle-repair-verification.json)·[독립 수용](./runtime-oracle-repair-result-review.json)·[전체 소스 승인](../../evidence/b03/h2-runtime-full-runner-source-review-v5.json)을 완료했다. paired execution pre-gates를 통과해2026-10-23 03:52:41 UTC에 실제490을 한 번 시작했으며 [현재 V5 실행 상태](./runtime-v5-execution-status.json)를 따른다. 새 업무 화면 기능은 없다.
 
 ## 남은 완료 조건
 
-1. exact V5 독립·TC 실행 전 게이트 뒤 새490을 한 번 실행한다. 기존 실패 증거는 보존하며 같은 actual handle을 관찰한다.
+1. 승인 뒤 시작된 V5 실행을 같은 actual handle로 관찰한다. 기존 V4 실패 증거를 보존하고 관찰 timeout만으로 중복 실행하지 않는다.
 2. 실제 raw·정리·환경·개인정보와490 결과를 독립 수용한다. 실패하면 해당 경계로 돌아가 검토·수정·재검증한다.
 3. 요청 접수·run/receipt·QUEUED를 연결하고 정상·중복·권한·새로고침을 확인한다. 현재 UI의 조회 DTO에 실행 ID/receipt가 없고 실제 접수는 내부 dispatcher/worker가 수행한다. 검토된 UI/API 계획으로 필요한 조회 정보·갱신을 추가한다.
 4. URL·캡처·직접 해볼 순서·실제/모의 구분·커밋/push를 전달한다.
