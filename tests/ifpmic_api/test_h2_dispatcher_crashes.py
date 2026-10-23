@@ -245,7 +245,8 @@ def test_claim_commit_crash_reclaims_only_after_expiry(
         claim = _claim(snapshot)
         assert claim["generation"] == 1
         assert snapshot["bindings"] == snapshot["scopes"] == snapshot["receipts"] == []
-        assert snapshot["attempts"] == [] and snapshot["noncreate_commands"] == 0
+        assert snapshot["attempts"] == [(1, None, None, None, False)]
+        assert snapshot["noncreate_commands"] == 0
         assert accepted_start._fresh_clock_claim_state(case["harness"], case["group"][18]) == (
             "leased", 1, claim["token"], False)
         # Independently verify that claiming alone did not create a workflow.

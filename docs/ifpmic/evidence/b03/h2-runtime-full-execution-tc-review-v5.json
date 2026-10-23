@@ -1,0 +1,151 @@
+{
+  "authorization": {
+    "full_goal_acceptance": false,
+    "h2_acceptance": false,
+    "pre_gate_authorized": false,
+    "pytest_collection_or_actual490_execution_authorized": false,
+    "runner_authoring_authorized_after_paired_exact_v5_contract_reviews": true,
+    "runner_authoring_authorized_by_this_review_alone": false,
+    "test_or_service_execution_authorized": false
+  },
+  "authorship_disclosure": {
+    "independence_boundary": "This is the TC half only. An exact independent V5 contract/ledger/raw-rules review remains required. This review does not approve whole-runner source, source-method execution, or execution pre-gates.",
+    "ledger_authorship": "The reviewer did not author the V5 contract or ledger. V5 was compared against the exact V4 candidate and preserved c10/cf4 and v2/v3 inputs.",
+    "tc_test_authorship": "The reviewer authored the bounded claim-attempt assertion correction in tests/ifpmic_api/test_h2_dispatcher_crashes.py and the local direct-observer/history-copy helper plus two downtime call replacements in tests/ifpmic_api/test_h2_runtime_restart_and_history.py. An independent source review remains required. No test was executed during this review."
+  },
+  "checks": {
+    "approved_runtime_oracle_repair": {
+      "evidence": "The exact RUNTIME-ORACLE-REPAIR.md plan (SHA 33b124245f2a863b87abf68babd718194f94c42cb93f3e1a9f92d50b31d73d6c), its independent plan review (SHA 1f8e6f5bee8fdada686e829ecf3124be81c0f12c6cde6b11cb5a38d6838dd24f), and the failed V4 attempt review (SHA 57c6d3442482c5fca3fb19854b9d8bffc007f9806b6854d8d53919e8a65d2f94) are current exact references. The claim cut now requires exactly one unfinished generation-1 attempt tuple while retaining the no-binding/scope/receipt, live-lease, no-Temporal, expiry and recovery checks. The restart helper uses the existing direct Started observer, binds the already admitted expected run/input/queue, checks one execution and Started event, RUNNING status and retention, validates the actual framed history bytes against length/SHA, and writes those same bytes with mode 0600 to the two existing downtime temporal-history.pbseq paths. The final existing live queued/history observation remains unchanged.",
+      "result": "pass_static"
+    },
+    "authorization_and_review_closure": {
+      "evidence": "The V5 contract names separate independent and TC V5 review paths, requires approve_runner_authoring_only and exact contract_sha256/ledger_sha256/raw_rules_sha256 targets, and explicitly requires the fixed raw-rules filename binding in verify_raw_policy_sources before runner authoring. The active contract, runner and review records are excluded from the source closure, so no self-review cycle is created. This TC review records only its own half; paired independent approval is required. Execution, collection, services and acceptance remain false.",
+      "result": "pass_static"
+    },
+    "current_source_and_raw_closure": {
+      "evidence": "All110 V5 ledger source/read pins match the current bytes; the source sets contain105 code paths, one rules JSON path and four read-only qualification inputs. All38 V5 raw-rule source pins match current bytes, and all six runtime-helper bindings agree with the ledger. The V5 raw rules contain87 unique node IDs, equal the contract's expected node set, and953 artifact predicates. Per-node artifact predicate arrays are unchanged from V4; only current changed-source bindings and source-location metadata for the two TC test files are updated. The raw auditor diff is its fixed RULES filename literal to the V5 rules file; its validation implementation remains otherwise unchanged.",
+      "result": "pass_static"
+    },
+    "inventory_budget_and_preservation": {
+      "evidence": "V5 preserves the exact V4 407 retained IDs plus83 additions for490 unique IDs;25 obligation groups, five fixture-failure prerequisites,49 extended215+25-second cases and34 default25+5-second cases remain. All15 ordered phases and their caps are unchanged; caps sum15,420 seconds and the outer limit remains16,220 seconds. The19 attestation inputs and seven binary identities are equal to V4. Immutable original c10/cf4 and v2/v3 candidates remain at their recorded hashes; V4 is retained unchanged as the exact predecessor. No new baseline, binary, service, or business source is introduced.",
+      "result": "pass_static"
+    },
+    "runner_policy_filename_fixture": {
+      "evidence": "The V5-bound tests/ifpmic_evidence/test_full_runner_guards.py source (SHA 5d9fb9d357bb14318d1a859a0ddf464e4d6d5d49eefc07650964ce8ca7c65572) now requires the V5 fixed rules filename in REQUIRED_FILES['rules']. The literal-only fixture update preserves all152 synthetic method bodies/IDs. Its updated hash is included in the current110-pin V5 ledger closure. No unit execution was performed.",
+      "result": "pass_static"
+    },
+    "v4_to_v5_scope": {
+      "evidence": "Compared the V5 contract and ledger recursively with V4. The only source closure transitions are the V5 machine-rules path replacing the predecessor rules path, the new fixed-name raw-auditor hash, and the two scoped test-source hashes. The V5 ledger adds the approved runtime-oracle-repair plan/review/failed-attempt references and exact test hashes; all490 IDs, obligations, phase definitions, order, limits, and inventory remain unchanged. The changed raw-rule producer paths point to the repaired claim test and direct downtime history helper. V5 remains pending exact review and does not inherit V4 execution evidence or authorization.",
+      "result": "pass_static"
+    }
+  },
+  "contract_sha256": "f9790500918ec8fdf17d839bf17201a844c3bbb7c094eb22aca253468c6f1843",
+  "kind": "ifpmic.b03.h2.runtime-full-execution-tc-review.v1",
+  "ledger_sha256": "d974cf0088784e298f1a581cbd418a71ce1035dd3b07511bff74136d928d7f96",
+  "limitations": [
+    "The TC review covers exact candidate data/closure and the bounded test changes authored by the reviewer; it is not the independent V5 contract review or final whole-runner source review.",
+    "No tests, imports, runner main, pytest collection, SDK, SQL, services, or actual490 cases were executed. V5 is candidate evidence, not runtime acceptance.",
+    "This decision permits runner authoring only after the exact independent V5 contract/ledger/raw-rules review is paired with this TC review. Any execution still requires a separately reviewed final runner and both exact execution pre-gates."
+  ],
+  "raw_rules_sha256": "b8473f34edad3adcb62ecb1209845fb189d607f214227a667636dc76d7d7785d",
+  "review_method": "Read-only SHA-256 and structured JSON comparison of V5/V4 and immutable inputs; checked all110 ledger source/read pins and all38 raw-rule pins against current bytes, raw87/953 IDs and predicates, six runtime helpers, 19 anchors/seven binaries, exact review paths/cycle exclusions and authoring-only authority. Reviewed only the bounded test delta, fixed raw-auditor filename diff, and dependent runner-guard filename literal change; no tests or project modules were executed/imported.",
+  "review_protocol": "approve_runner_authoring_only",
+  "review_scope": "Static exact-target review of the V5 contract, ledger, raw evidence rules, preservation of the 490-case inventory/budgets, 110 current source/read pins, raw87/953/38 closure, current TC-authored test changes, paired review paths and authority boundary. It does not approve runner source execution, imports, collection, services, or H2 acceptance.",
+  "reviewed_inputs": {
+    "contract": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-full-execution-contract-v5.json",
+      "sha256": "f9790500918ec8fdf17d839bf17201a844c3bbb7c094eb22aca253468c6f1843",
+      "status": "candidate_v5_runtime_oracle_repair_pending_exact_review_no_execution"
+    },
+    "integrated_ledger": {
+      "current_pin_mismatches": 0,
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger-v5.json",
+      "sha256": "d974cf0088784e298f1a581cbd418a71ce1035dd3b07511bff74136d928d7f96",
+      "source_pin_count": 110,
+      "status": "candidate_v5_runtime_oracle_repair_pending_exact_review_no_execution"
+    },
+    "runtime_oracle_repair_plan": {
+      "path": "docs/ifpmic/delivery/iteration-03/RUNTIME-ORACLE-REPAIR.md",
+      "sha256": "33b124245f2a863b87abf68babd718194f94c42cb93f3e1a9f92d50b31d73d6c"
+    },
+    "runtime_oracle_repair_plan_review": {
+      "path": "docs/ifpmic/delivery/iteration-03/runtime-oracle-repair-plan-review.json",
+      "sha256": "1f8e6f5bee8fdada686e829ecf3124be81c0f12c6cde6b11cb5a38d6838dd24f"
+    },
+    "failed_v4_attempt_review": {
+      "path": "docs/ifpmic/delivery/iteration-03/runtime-v4-attempt-01-result-review.json",
+      "sha256": "57c6d3442482c5fca3fb19854b9d8bffc007f9806b6854d8d53919e8a65d2f94"
+    },
+    "immutable_originals": {
+      "contract_c10": {
+        "path": "docs/ifpmic/evidence/b03/h2-runtime-full-execution-contract.json",
+        "sha256": "c10c7cb329ea82b758cfa7db34ac330e4b7ec472320b5904e8086f8067865a2d"
+      },
+      "ledger_cf4": {
+        "path": "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger.json",
+        "sha256": "cf4f3bfc023341c22e0c8fc7c072c54838d62f7adeb39d817a4ce3b6589f8d60"
+      },
+      "contract_v2": {
+        "path": "docs/ifpmic/evidence/b03/h2-runtime-full-execution-contract-v2.json",
+        "sha256": "d2f0ef941e62cf6a6597b39a9eda676161cd616d723403a34f16a2903a91bfe6"
+      },
+      "ledger_v2": {
+        "path": "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger-v2.json",
+        "sha256": "1512b767aa06961d8f80ed474a4bf44929d9db430a05317447eb49f4d71a0655"
+      },
+      "contract_v3": {
+        "path": "docs/ifpmic/evidence/b03/h2-runtime-full-execution-contract-v3.json",
+        "sha256": "714411f1de4250b0d36c92902a3946e2a2bc3590dc79c508d71ac4a8a130e00d"
+      },
+      "ledger_v3": {
+        "path": "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger-v3.json",
+        "sha256": "4727c955d072c863c972b26684e37234feba0dce39e329475e4318a9370b9e58"
+      },
+      "contract_v4": {
+        "path": "docs/ifpmic/evidence/b03/h2-runtime-full-execution-contract-v4.json",
+        "sha256": "526361f65c02b0c92a351a08e1cc68be2d8e9ee25a478cb549f0588ea6f0ec05"
+      },
+      "ledger_v4": {
+        "path": "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger-v4.json",
+        "sha256": "ca39766adb9a0fa3549b4ba8c5fecdea606efd05ac5ec593bb6f98a2abbce280"
+      }
+    },
+    "raw_rules": {
+      "artifact_rule_count": 953,
+      "case_count": 87,
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules-v5.json",
+      "sha256": "b8473f34edad3adcb62ecb1209845fb189d607f214227a667636dc76d7d7785d",
+      "source_pin_count": 38,
+      "current_pin_mismatches": 0
+    },
+    "tc_authored_test_sources": {
+      "tests/ifpmic_api/test_h2_dispatcher_crashes.py": "b51c9e424947e560a10362c2e43e7cbc2e5aa74b70c13b75e582a7ff388482be",
+      "tests/ifpmic_api/test_h2_runtime_restart_and_history.py": "c32740431102fab3c8aed4ecfcb6d02ddea45ddc2cc0991ffbe59013edd43d5e"
+    },
+    "runner_authoring_dependency": {
+      "path": "tests/ifpmic_evidence/test_full_runner_guards.py",
+      "sha256": "5d9fb9d357bb14318d1a859a0ddf464e4d6d5d49eefc07650964ce8ca7c65572",
+      "status": "V5 rules filename expectation refreshed with the authorized runner-binding repair"
+    }
+  },
+  "reviewed_utc": "2026-10-23T03:35:15Z",
+  "reviewer": "TC exact contract/inventory reviewer; own test authorship declared; independent review required separately.",
+  "source_pins": {
+    "docs/ifpmic/delivery/iteration-03/RUNTIME-ORACLE-REPAIR.md": "33b124245f2a863b87abf68babd718194f94c42cb93f3e1a9f92d50b31d73d6c",
+    "docs/ifpmic/delivery/iteration-03/runtime-oracle-repair-plan-review.json": "1f8e6f5bee8fdada686e829ecf3124be81c0f12c6cde6b11cb5a38d6838dd24f",
+    "docs/ifpmic/delivery/iteration-03/runtime-v4-attempt-01-result-review.json": "57c6d3442482c5fca3fb19854b9d8bffc007f9806b6854d8d53919e8a65d2f94",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-execution-contract-v4.json": "526361f65c02b0c92a351a08e1cc68be2d8e9ee25a478cb549f0588ea6f0ec05",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-execution-contract-v5.json": "f9790500918ec8fdf17d839bf17201a844c3bbb7c094eb22aca253468c6f1843",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger-v4.json": "ca39766adb9a0fa3549b4ba8c5fecdea606efd05ac5ec593bb6f98a2abbce280",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger-v5.json": "d974cf0088784e298f1a581cbd418a71ce1035dd3b07511bff74136d928d7f96",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules-v5.json": "b8473f34edad3adcb62ecb1209845fb189d607f214227a667636dc76d7d7785d",
+    "scripts/ifpmic_h2_raw_audit.py": "d8ec7b73501370cd4e1f3bc269c278b802bcd676eee255f4f9d79d2e77b3fcb6",
+    "tests/ifpmic_api/h2_dispatcher_crash_support.py": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472",
+    "tests/ifpmic_api/test_accepted_start_response_loss.py": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8",
+    "tests/ifpmic_api/test_h2_dispatcher_crashes.py": "b51c9e424947e560a10362c2e43e7cbc2e5aa74b70c13b75e582a7ff388482be",
+    "tests/ifpmic_api/test_h2_runtime_normal_flow.py": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d",
+    "tests/ifpmic_api/test_h2_runtime_restart_and_history.py": "c32740431102fab3c8aed4ecfcb6d02ddea45ddc2cc0991ffbe59013edd43d5e",
+    "tests/ifpmic_evidence/test_full_runner_guards.py": "5d9fb9d357bb14318d1a859a0ddf464e4d6d5d49eefc07650964ce8ca7c65572"
+  },
+  "verdict": "approve_runner_authoring_only"
+}

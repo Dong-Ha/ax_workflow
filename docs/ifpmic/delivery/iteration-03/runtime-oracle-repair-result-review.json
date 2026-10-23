@@ -1,0 +1,95 @@
+{
+  "kind": "ifpmic.delivery.iteration03.runtime-oracle-repair-result-independent-review.v1",
+  "reviewed_utc": "2026-10-23T03:44:38.567456+00:00",
+  "decision": "accept_152_cache_isolated_synthetic_units_only",
+  "reviewer": {
+    "agent_id": "/root/v3_whole_source_review",
+    "independence": "Independent from Code-dev/TC/capture authors and execution operator. Read existing raw evidence and current preservation inputs only;no rerun or product execution."
+  },
+  "verification": {
+    "path": "docs/ifpmic/delivery/iteration-03/runtime-oracle-repair-verification.json",
+    "sha256": "bc6003d1175bd5a2a3705f3e7be94d89d9a79b9055286ce6524fd81492a4c4de",
+    "preserved_unchanged": true
+  },
+  "source_review": {
+    "path": "docs/ifpmic/delivery/iteration-03/runtime-oracle-repair-source-review.json",
+    "sha256": "719b38ddc0760aadd3e8b5cd1cc9c1ebe584bd60c2e8a772befb471e396b24fd"
+  },
+  "private_capture": {
+    "path": "workflow-artifacts/verification/agile/iteration-03/runtime-oracle-preparation/run_units.py",
+    "sha256": "a430a29442931dbfbc8665cc440b934634f4572478f32b7c5eb279edb7cbf3be"
+  },
+  "raw_evidence": {
+    "preservation-after.json": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/runtime-oracle-unit-2026-10-23T03-41-44-852291Z/preservation-after.json",
+      "sha256": "30b1204426dfb183ce2571455a4f03d209ef0c97507daa1273a22b49bd544346"
+    },
+    "preservation-before.json": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/runtime-oracle-unit-2026-10-23T03-41-44-852291Z/preservation-before.json",
+      "sha256": "30b1204426dfb183ce2571455a4f03d209ef0c97507daa1273a22b49bd544346"
+    },
+    "result.json": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/runtime-oracle-unit-2026-10-23T03-41-44-852291Z/result.json",
+      "sha256": "5447334e0cb580a6273399498496abdc8fe4d3ace62b21ffadd0a79a928de8da"
+    },
+    "source-after.json": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/runtime-oracle-unit-2026-10-23T03-41-44-852291Z/source-after.json",
+      "sha256": "e2b812889a79135d36128325041ae6691b10838f1f43c2c9bd212759b420a316"
+    },
+    "source-before.json": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/runtime-oracle-unit-2026-10-23T03-41-44-852291Z/source-before.json",
+      "sha256": "e2b812889a79135d36128325041ae6691b10838f1f43c2c9bd212759b420a316"
+    },
+    "stderr.log": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/runtime-oracle-unit-2026-10-23T03-41-44-852291Z/stderr.log",
+      "sha256": "f138a9bcffc9dd23c46921bb22628e9ecdec7beb95814351f47aa345ab7a6dc8"
+    },
+    "stdout.log": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/runtime-oracle-unit-2026-10-23T03-41-44-852291Z/stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "findings": [],
+  "evidence": {
+    "actual_results": {
+      "exit_code": 0,
+      "timed_out": false,
+      "passed": 152,
+      "unchanged_methods": 152,
+      "new_methods": 0,
+      "failed": 0,
+      "skipped": 0,
+      "reported_unittest_seconds": 0.884,
+      "test_id_set_sha256": "a9b008d69602c45a087fe84a69a0584784aa271207f35ca1081b67040b1b93b6",
+      "comparison": "Raw stderr has exactly152 unique...ok results and Ran152/OK. IDs equal approved source-review,current frozen baseline,raw expected/actual and public lists. stdout is empty."
+    },
+    "integrity": "All7 public raw pointers match actual file hashes. Both raw source maps equal all75 approved pins,raw/public pins and current files. Source review719b38dd remains exact and equals saved approval digest;runnerbad746ec and capturea430a294 are unchanged. Raw result5447334e reports pass/no timeout,source/review/preservation unchanged,cache empty and full_runtime_executed=false.",
+    "private_capture": "Leaf is0700;the7 raw files are owned regular single-link nonsymlink0600. Fresh cache is empty. The approved wrapper enforces exact7 modules,152 method AST baseline,60-second timeout,private cache/tmp and source/review before-after checks.",
+    "preservation": {
+      "saved_before_after_equal": true,
+      "protected_hashes": 96,
+      "protected_inventory": 89,
+      "original_imports": 17,
+      "uploads": 2,
+      "environment_entries": {
+        "original32": 1777,
+        "qualified36": 3072
+      },
+      "comparison": "Saved maps match pinned B01 archive/member,original manifest and accepted407 environment maps. Independently rehashed current protected/design/environment files and symlink targets;they still match saved and authoritative maps."
+    },
+    "scope": "Only the existing152 cache-isolated stdlib synthetic methods ran. Fixed V5 rule bindings and preservation are covered;the two changed SDK test modules and actual downtime helper are not imported/executed by this run. Actual repaired CRASH-02/08 and full490 remain unexecuted. The prior V4 failed runtime attempt remains failed."
+  },
+  "acceptance": {
+    "exact_152_synthetic_result_and_75_pin_preservation": true,
+    "whole_runner_source_approval": false,
+    "execution_pre_gates": false,
+    "actual_full490_or_h2_acceptance": false,
+    "ui_at_iteration03_or_goal_acceptance": false
+  },
+  "limitations": [
+    "Synthetic regression success does not prove actual claim/restart SQL/history causality,native timing,physical resources or full proposal privacy.",
+    "A separate final V5 whole-source review and paired execution pre-gates remain required. No execution authority is granted by this result acceptance."
+  ],
+  "recommendation": "Accept this exact152 result and preservation proof only;continue separately to final whole-source and paired execution reviews.",
+  "review_method": "Read-only raw logs/IDs/hashes/modes/cache and current/saved original/protected/environment maps. No imports,tests,SDK,SQL,services,Node,network or runner execution."
+}

@@ -1,0 +1,64 @@
+{
+  "kind": "ifpmic.b03.h2.runtime-oracle-repair-plan-independent-review.v1",
+  "reviewed_utc": "2026-10-23T03:30:20.683145+00:00",
+  "decision": "approve_bounded_implementation_only",
+  "reviewer": {
+    "agent_id": "/root/v3_whole_source_review",
+    "independence": "Independent from Code-dev runner/contract/ledger/helper/capture authors and TC test authors. Authored only independent review records;no implementation or execution ownership."
+  },
+  "plan": {
+    "path": "docs/ifpmic/delivery/iteration-03/RUNTIME-ORACLE-REPAIR.md",
+    "sha256": "33b124245f2a863b87abf68babd718194f94c42cb93f3e1a9f92d50b31d73d6c"
+  },
+  "plan_sha256": "33b124245f2a863b87abf68babd718194f94c42cb93f3e1a9f92d50b31d73d6c",
+  "source_pins": {
+    "docs/ifpmic/delivery/iteration-03/RUNTIME-ORACLE-REPAIR.md": "33b124245f2a863b87abf68babd718194f94c42cb93f3e1a9f92d50b31d73d6c",
+    "tests/ifpmic_api/test_h2_dispatcher_crashes.py": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52",
+    "tests/ifpmic_api/test_h2_runtime_restart_and_history.py": "606db627f5efd4ba6f9158da6ef538b95fe70d77444cb0775191265a10a2b546",
+    "tests/ifpmic_api/test_h2_runtime_normal_flow.py": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d",
+    "tests/ifpmic_api/test_accepted_start_response_loss.py": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8",
+    "tests/ifpmic_api/test_h2_transport_boundaries.py": "6679eea681edd6f847e18aa75f1cee4d44f230d7ac9e7b88bc6253cbe5918372",
+    "scripts/ifpmic_h2_raw_audit.py": "3670a6889a76596caaf3de474e607631228f27f7824ee0dea201dfea262f2b8d",
+    "docs/ifpmic/evidence/b03/h2-implementation-contract.json": "f63173ac17ebebd34a15d5966d96b79dc1667a713c00b1b92868b137ba93ded3",
+    "docs/ifpmic/H2-RUNTIME-CRASH-MATRIX.md": "15fd7238adab625e95f94e0bae62421bb97235683cc96b491c7a9ce3222001c6",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-verification-plan.json": "c6964bccff0d4cec1ac00f18fbb267d5d1a4a5887e53844c604333b7c059486c",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules.json": "8c948efa993a1ba6837af28746af42ad532342eca5d5b299ac133f0377c0b74c",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-execution-contract-v4.json": "526361f65c02b0c92a351a08e1cc68be2d8e9ee25a478cb549f0588ea6f0ec05",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger-v4.json": "ca39766adb9a0fa3549b4ba8c5fecdea606efd05ac5ec593bb6f98a2abbce280",
+    "docs/ifpmic/delivery/iteration-03/runtime-v4-attempt-01-result-review.json": "57c6d3442482c5fca3fb19854b9d8bffc007f9806b6854d8d53919e8a65d2f94"
+  },
+  "findings": [],
+  "checks": {
+    "eight_fields": "Purpose,target,method,responsibility,pass criteria,expected result,evidence and failure recovery/reverification are explicit for both implementation and actual regression. The revised plan covers only the two V4 runtime-observed boundaries and necessary versioned raw-auditor filename binding.",
+    "original_claim_contract": "The original implementation contract delivery_protocol.claim at line104 explicitly requires generation+1,fresh token,DB-clock30-second lease and an attempts row committed before network I/O. CRASH matrix claim boundary and verification-plan CRASH-02 require exact real attempt generation/token and zero premature engine effect. Replacing the empty-array assertion with exactly[(1,None,None,None,False)] restores that contract;it does not grant a run,receipt or projection. Live-lease/Temporal-zero/expiry/gen1-expired+gen2-started/single-effect checks remain.",
+    "restart_obligation": "The original matrix independent-storage-restart row and verification-plan CRASH-08 require the same command/binding/run/history/receipt and original storage. They do not require a fabricated phase query while the worker is stopped. The proposed existing direct list/describe/history observer can establish actual server state without restarting the stopped CLIs;the final existing live queued query remains after real worker restart.",
+    "direct_observer_and_raw_compatibility": "Existing _observe_started_direct checks exact workflow identity,type,queue,input,RUNNING status,one logical execution and Started event,retention>3600 and actual framed protobuf bytes. The new caller must additionally bind its returned run to the already admitted expected run. Existing restart raw rules require temporal-history.pbseq at both downtime paths and final CLI path,with restart-oracle digest links. Verbatim copying the validated actual direct-history bytes to the two existing paths preserves these953 artifact rules without manufacturing a phase field or weakening the final queued oracle.",
+    "auditor_filename_dependency": "The current raw auditor hardcodes the historical machine-rules filename at line17 while the parent binds the successor contract rules path/hash. Updating only that fixed filename literal to the separately preserved V5 rules is necessary. Its function ASTs,input schema and source/path/hash/decoder checks must remain unchanged;all affected ledger/policy/source pins need the new auditor hash.",
+    "preservation_and_authority": "The plan preserves all490 IDs=407+83,25 obligations+5 prerequisites,15 phases,152 existing method bodies,case/RPC/cleanup/16220 budgets,raw87/953/38,roles/approvals and original/environment/privacy requirements. Two TC sources change only the named assertion and downtime helper/callers;production services/SQL,normal/direct observer implementations,SDK/environment and original design remain fixed. V4 failed evidence is not relabeled and no prior execution permission is inherited."
+  },
+  "implementation_constraints": [
+    "Claim assertion must compare the entire exact single unfinished generation1 tuple. Keep zero bindings/scopes/receipts/noncreate commands and direct Temporal-zero/live-lease/expiry/recovery assertions. Do not delete database rows,change claim SQL,or confuse delivery attempts with engine executions.",
+    "Downtime helper must use the existing direct observer without changing it or the normal observer. Explicitly require the previously admitted canonical expected run,one execution/Started,exact expected input/type/queue,RUNNING status and qualified retention. Existing observer assertions may provide these facts;do not replace them with summaries.",
+    "Retain all real direct-observer output. Read its actual framed history file,validate byte length/SHA against returned metadata,write exactly those bytes as0600 temporal-history.pbseq at the two original downtime paths,and verify the saved bytes/digest. No history reconstruction,phase fabrication,caught query failure,fallback default or comparison to a newly chosen baseline.",
+    "Keep worker/dispatcher stopped throughout the planned storage-downtime observations. Preserve same inode/storage,SQL snapshot,run/history digest and immutable receipt assertions. After the planned actual CLI restart,retain the existing normal observer,10-second RPC bound and queued/Started/receipt/history equality checks.",
+    "Successor V5 rules must retain87 cases/953 artifact rules/38 source pins,all recorder and artifact requirements,updating only changed producer hashes/symbol/line metadata. Keep original raw rules and V4 candidates/reviews/failed leaf immutable. Bind the changed raw auditor fixed filename and hash consistently in the new rules/ledger/contract/helper policy.",
+    "Raw auditor change is only the fixed RULES filename literal. Do not add dynamic path configuration or alter functions,schemas,decoder/source/hash/path checks. Runner behavioral functions remain unchanged;only separately approved successor candidate/review bindings may change.",
+    "Keep all152 existing synthetic method IDs and bodies. Their fresh run remains regression evidence only;new SDK downtime behavior still needs actual490 evidence. Obtain a separate exact implementation/TC/capture source review before the proposed cache-isolated152 run,then independent result review.",
+    "Obtain exact paired V5 authoring reviews,final whole-runner/source/read closure approval and both execution pre-gates before collection,SDK/SQL/services/main or any fresh490. This plan authorizes implementation only,not unit or runtime execution."
+  ],
+  "remaining_uncertainty": [
+    "Implementation and exact V5 artifacts are not yet reviewed. Source review must verify all copied raw bytes,run binding,unchanged final live query and consistent new raw-auditor filename/pins.",
+    "The direct observer uses actual Temporal state and can still fail within original bounds;the plan does not promise a runtime pass or prove persistence. Actual causal/time/resource/privacy results remain future obligations.",
+    "This review reused the precise failed-attempt analysis and inspected only relevant original contracts/matrix/plan/observers/raw rules;no broad architecture change or test execution was performed."
+  ],
+  "authorization": {
+    "bounded_implementation": true,
+    "synthetic_units": false,
+    "imports_or_collection": false,
+    "sdk_sql_services_or_runner": false,
+    "actual_full490_execution": false,
+    "h2_ui_or_goal_acceptance": false
+  },
+  "recommendation": "Implement only the reviewed assertion/downtime observation fixes and necessary versioned auditor filename/pin changes. Preserve failed V4 evidence and request exact source review before any execution.",
+  "review_method": "Read-only revised plan,original delivery_protocol.claim/matrix/CRASH-02+08 obligations,current TC and normal/direct observer source,scoped raw artifact rules,auditor literal and failed-attempt review hashes. No imports,tests,SDK,SQL,services,Node or runner execution."
+}

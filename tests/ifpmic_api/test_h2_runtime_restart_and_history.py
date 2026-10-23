@@ -1,16 +1,19 @@
 """Persistence checks across independent restarts of the owned PG/Temporal services."""
 from __future__ import annotations
 
+import asyncio
 import hashlib
 import os
 from pathlib import Path
+import stat
 import subprocess
 import time
 
 import pytest
 
 from tests.ifpmic_api import h2_dispatcher_crash_support as crash
-from tests.ifpmic_api.test_h2_dispatcher_crashes import _assert_crash_final
+from tests.ifpmic_api import test_accepted_start_response_loss as accepted_start
+from tests.ifpmic_api.test_h2_dispatcher_crashes import _assert_crash_final, _expected_start
 from tests.ifpmic_api import test_h2_runtime_normal_flow as normal
 
 pytest_plugins = (
@@ -52,6 +55,35 @@ def _stop_owned(case, process):
     })
     case["processes"].remove(process)
     return result
+
+
+def _observe_downtime_history(case, expected_run_id, snapshot, deadline, evidence_name):
+    evidence_root = normal._private_dir(case["root"] / evidence_name)
+    expected_input = _expected_start(case, snapshot)
+    observed = asyncio.run(accepted_start._observe_started_direct(
+        case["identity"]["server_endpoint"], case["identity"]["namespace"],
+        "ifpmic.job." + case["job_id"], expected_input,
+        "ifpmic.build." + case["identity"]["build_id"],
+        deadline, evidence_root,
+    ))
+    assert observed["workflow_id"] == "ifpmic.job." + case["job_id"]
+    assert observed["run_id"] == expected_run_id
+    assert observed["execution_count"] == observed["started_event_count"] == 1
+    assert observed["started_input"] == [expected_input]
+    assert observed["status"] == "RUNNING" and observed["retention_seconds"] > 3600
+    source = evidence_root / "accepted-start-history-before-kill.pbseq"
+    raw = source.read_bytes()
+    assert stat.S_IMODE(source.stat().st_mode) == 0o600
+    assert len(raw) == observed["raw_history_bytes"]
+    digest = hashlib.sha256(raw).hexdigest()
+    assert digest == observed["raw_history_sha256"]
+    destination = evidence_root / "temporal-history.pbseq"
+    normal._write_private(destination, raw)
+    saved = destination.read_bytes()
+    assert stat.S_IMODE(destination.stat().st_mode) == 0o600
+    assert saved == raw
+    assert hashlib.sha256(saved).hexdigest() == digest
+    return {**observed, "raw_history_sha256": digest, "raw_history_bytes": len(saved)}
 
 
 def test_postgres_and_temporal_restart_preserve_same_execution_and_receipt(
@@ -119,13 +151,9 @@ def test_postgres_and_temporal_restart_preserve_same_execution_and_receipt(
         assert (cluster.data_dir.stat().st_dev, cluster.data_dir.stat().st_ino) == pg_data_inode
         after_pg_restart = crash.read_owner_snapshot(case["harness"], case["job_id"])
         assert after_pg_restart == before_restart
-        pg_history = normal._observe_temporal(
-            case["identity"], case["job_id"], case["harness"]["project_id"], expected_run_id,
-            {"protocol_version": normal.PROTOCOL_VERSION, "job_id": case["job_id"],
-             "project_id": case["harness"]["project_id"],
-             "binding_sha256": before_restart["bindings"][0][18]},
-            deadline.body_deadline, normal._private_dir(case["root"] / "history-after-pg-restart"),
-        )
+        pg_history = _observe_downtime_history(
+            case, expected_run_id, before_restart, deadline.body_deadline,
+            "history-after-pg-restart")
         assert pg_history["run_id"] == expected_run_id
         assert pg_history["raw_history_sha256"] == temporal_hash_before
         assert normal.process_identity(temporal_pid) == temporal_ticks
@@ -165,13 +193,9 @@ def test_postgres_and_temporal_restart_preserve_same_execution_and_receipt(
                 case["temporal_store"].stat().st_ino) == temporal_inode
         after_temporal_restart = crash.read_owner_snapshot(case["harness"], case["job_id"])
         assert after_temporal_restart == before_restart
-        temporal_history = normal._observe_temporal(
-            case["identity"], case["job_id"], case["harness"]["project_id"], expected_run_id,
-            {"protocol_version": normal.PROTOCOL_VERSION, "job_id": case["job_id"],
-             "project_id": case["harness"]["project_id"],
-             "binding_sha256": before_restart["bindings"][0][18]},
-            deadline.body_deadline, normal._private_dir(case["root"] / "history-after-temporal-restart"),
-        )
+        temporal_history = _observe_downtime_history(
+            case, expected_run_id, before_restart, deadline.body_deadline,
+            "history-after-temporal-restart")
         assert temporal_history["run_id"] == expected_run_id
         assert temporal_history["raw_history_sha256"] == temporal_hash_before
 

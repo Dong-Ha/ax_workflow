@@ -442,7 +442,7 @@
           "runtime_normal_progress_reconciliation": "evidence/b03/h2-runtime-normal-progress-reconciliation.json",
           "runtime_next_steps": "evidence/b03/h2-runtime-normal-next-steps.json",
           "runtime_full_preparation": {
-            "status": "actual_attempt01_failed_not_accepted",
+            "status": "v5_source_and152_accepted_pending_actual490",
             "authoring_checkpoint_commit": "ea5055a2b6fda99dd697d042deddc0d3245bf222",
             "verification_plan": "evidence/b03/h2-runtime-full-verification-plan.json",
             "plan_review_status": "independent_and_tc_approved_authoring_only",
@@ -451,9 +451,9 @@
             "tests_executed": false,
             "static_changes": "Authored all25 groups plus5 cleanup prerequisites; integrated490 literal IDs with exact budgets and preserved407 retained IDs. Independent source review repaired SDK/SQL/deadline/foreign-authority oracles, bounded new native calls and partial-start cleanup. No imports, collection, runtime tests or services executed.",
             "pending": [
-              "Independent failed-attempt raw/cleanup review",
-              "Resolve claim-attempt expectation against original contract and bounded verification",
-              "Actual full490 independent acceptance then visible admission flow"
+              "V5 exact paired execution pre-gates then one fresh490",
+              "Independent actual raw/cleanup/privacy/environment acceptance",
+              "Visible saved request admission/run/receipt UI"
             ],
             "acceptance_boundary": "407-case evidence remains historical only for its frozen candidate. No new crash/negative passes; fullH2, B03, originalAT and finalAX remain incomplete.",
             "plan_sha256": "c6964bccff0d4cec1ac00f18fbb267d5d1a4a5887e53844c604333b7c059486c",
@@ -487,7 +487,7 @@
             "full_execution_contract": "evidence/b03/h2-runtime-full-execution-contract.json",
             "runner_authoring_acceptance": "evidence/b03/h2-runtime-full-runner-authoring-acceptance.json",
             "evidence_amendment": "evidence/b03/h2-runtime-full-evidence-amendment.json",
-            "execution_status": "delivery/iteration-03/runtime-v4-execution-status.json"
+            "execution_status": "delivery/iteration-03/runtime-v5-execution-status.json"
           }
         }
       ]
@@ -665,14 +665,14 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "Actual V4 attempt01 terminated fail: dispatcher phase8 cases,6 passed2 failed0errors0skip; remaining482 not executed. Preserve failed raw/owned cleanup, independent failure review, determine original claim-attempt semantics and worker-restart query ordering before bounded repair; admission UI pending.",
+  "next_step": "V5 original-contract oracle repairs authored; unchanged152 unit methods passed and independently accepted; whole source approved. Obtain exact paired execution pre-gates then one fresh490; preserve V4failed attempt. Actual integration retest and admission UI pending.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",
     "Approved Bedrock/Claude runtime profile"
   ],
   "publication_policy": "Only authorized git repository documentation, source and synthetic verification summaries/screenshots; never runtime credentials or application logs.",
-  "updated_at": "2026-10-23T03:17:21.871237+00:00",
+  "updated_at": "2026-10-23T03:49:28.230596+00:00",
   "session_handoff": {
     "status": "resumed_by_user",
     "resume_document": "docs/ifpmic/RESUME.md",
@@ -704,7 +704,7 @@
     },
     "pending_source_proposal": "evidence/b03/h2-machine-resolution-progress-v2.json",
     "pending_source_proposal_review": "evidence/b03/h2-machine-resolution-activity-review-v5.json",
-    "pending_source_proposal_status": "v4_actual_attempt01_failed_not_accepted",
+    "pending_source_proposal_status": "v5_source_approved_pending_paired_execution_pre_gates",
     "latest_source_mapping": {
       "resolved_cases": 87,
       "total_cases": 87,
@@ -714,35 +714,33 @@
       "machine_sha256": "8c948efa993a1ba6837af28746af42ad532342eca5d5b299ac133f0377c0b74c",
       "scope": "Source path/schema/applicability only; no actual execution acceptance."
     },
-    "current_candidate_static_verification": "evidence/b03/h2-runtime-full-runner-source-review-v4.json",
-    "next_foundation_scope": "Actual V4 attempt01 terminated fail: dispatcher phase8 cases,6 passed2 failed0errors0skip; remaining482 not executed. Preserve failed raw/owned cleanup, independent failure review, determine original claim-attempt semantics and worker-restart query ordering before bounded repair; admission UI pending.",
+    "current_candidate_static_verification": "evidence/b03/h2-runtime-full-runner-source-review-v5.json",
+    "next_foundation_scope": "V5 original-contract oracle repairs authored; unchanged152 unit methods passed and independently accepted; whole source approved. Obtain exact paired execution pre-gates then one fresh490; preserve V4failed attempt. Actual integration retest and admission UI pending.",
     "candidate_authoring_reviews": {
-      "independent": "evidence/b03/h2-runtime-full-execution-contract-review-v4.json",
-      "tc": "evidence/b03/h2-runtime-full-execution-tc-review-v4.json"
+      "independent": "evidence/b03/h2-runtime-full-execution-contract-review-v5.json",
+      "tc": "evidence/b03/h2-runtime-full-execution-tc-review-v5.json"
     },
     "latest_unit_result": {
       "passed": 152,
-      "retained": 149,
-      "new": 3,
-      "verification": "delivery/iteration-03/node-closure-repair-verification.json",
-      "independent_acceptance": "delivery/iteration-03/node-closure-repair-result-review.json",
+      "retained": 152,
+      "new": 0,
+      "verification": "delivery/iteration-03/runtime-oracle-repair-verification.json",
+      "independent_acceptance": "delivery/iteration-03/runtime-oracle-repair-result-review.json",
       "actual_full490": false
     },
     "full_source_rejected_attempt": "evidence/b03/attempts/h2-runtime-full-runner-source-review-v3-attempt-01.json",
     "status_dashboard": "delivery/status.html",
     "current_blockers": [
       {
-        "id": "FULL-NODE-PATH-UNREACHABLE",
-        "summary": "Fixture shutil.which cannot find pinned Node in safe PATH",
-        "status": "repaired_and_pre_gates_approved_prior_to_failed_actual_attempt01"
+        "id": "ATTEMPT-01-CLAIM-ATTEMPT-EXPECTATION",
+        "status": "repaired_in_v5_source_pending_actual_retest"
       },
       {
-        "id": "FULL-NODE-BRIDGE-SOURCE-OMITTED",
-        "summary": "Executed snapshot_bridge.mjs missing from source closure pins",
-        "status": "repaired_and_pre_gates_approved_prior_to_failed_actual_attempt01"
+        "id": "ATTEMPT-01-RESTART-QUERY-RPC",
+        "status": "repaired_in_v5_source_pending_actual_retest"
       }
     ],
-    "runtime_execution_status": "delivery/iteration-03/runtime-v4-execution-status.json"
+    "runtime_execution_status": "delivery/iteration-03/runtime-v5-execution-status.json"
   },
   "visible_deliveries": [
     {
@@ -770,13 +768,13 @@
       "status": "in_progress",
       "title": "Connect persisted API job to real execution-engine admission and visible run/receipt",
       "path": "delivery/iteration-03/README.md",
-      "verification": "delivery/iteration-03/node-closure-repair-verification.json",
-      "foundation_status": "actual_attempt01_failed_not_accepted",
+      "verification": "delivery/iteration-03/runtime-oracle-repair-verification.json",
+      "foundation_status": "v5_source_and152_accepted_pending_actual490",
       "actual_job_execution": false,
-      "scope": "Actual dispatcher phase8 cases:6pass2fail;482 not executed. Independent failure/cleanup review and bounded semantic repair pending; admission UI incomplete.",
+      "scope": "V4failed attempt preserved; two runtime oracles repaired in reviewed V5 source. Same152 units accepted; actual490 and visible run/receipt admission pending.",
       "mapping_resolution_progress": "evidence/b03/h2-machine-resolution-progress-v2.json",
-      "candidate_static_verification": "evidence/b03/h2-runtime-full-runner-source-review-v4.json",
-      "runtime_execution_status": "delivery/iteration-03/runtime-v4-execution-status.json"
+      "candidate_static_verification": "evidence/b03/h2-runtime-full-runner-source-review-v5.json",
+      "runtime_execution_status": "delivery/iteration-03/runtime-v5-execution-status.json"
     }
   ]
 }

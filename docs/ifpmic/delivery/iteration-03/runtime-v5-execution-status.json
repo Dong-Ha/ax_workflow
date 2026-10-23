@@ -1,0 +1,23 @@
+{
+  "kind": "ifpmic.agile.runtime-v5-execution-status.v1",
+  "updated_utc": "2026-10-23T03:49:28.228904+00:00",
+  "status": "awaiting_paired_execution_pre_gates",
+  "started_utc": null,
+  "terminal_verdict": null,
+  "runner_sha256": "bad746ecdfcfc155e16b2f013810963734627dfd2ee5727c62612a5f25ae9239",
+  "inventory": 490,
+  "phase_count": 15,
+  "actual_result_independently_accepted": false,
+  "overall_stage_completion": {
+    "completed": 2,
+    "total": 16,
+    "percent": 12.5,
+    "weighting": "equal stage counts, not effort or time"
+  },
+  "source_review": "../../evidence/b03/h2-runtime-full-runner-source-review-v5.json",
+  "accepted_unit_result_review": "runtime-oracle-repair-result-review.json",
+  "previous_failed_attempt": "runtime-v4-attempt-01-result-review.json",
+  "private_resume_pointer": "workflow-artifacts/verification/B03/H2/runtime-full/preparations/v5-execution/tool-session.json",
+  "scope": "152 retained stdlib units accepted at exact new source; changed SDK integration cases not rerun yet. No new user workflow behavior.",
+  "next_visible_goal": "Saved request -> internal engine admission -> matching run/receipt QUEUED; normal/duplicate/auth/reload checks."
+}

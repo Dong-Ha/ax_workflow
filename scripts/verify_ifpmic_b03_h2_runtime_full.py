@@ -22,14 +22,15 @@ from datetime import datetime, timezone
 
 ROOT = Path(__file__).resolve().parents[1]
 EVIDENCE = ROOT / 'docs/ifpmic/evidence/b03'
-CONTRACT_PATH = EVIDENCE / 'h2-runtime-full-execution-contract-v4.json'
-LEDGER_PATH = EVIDENCE / 'h2-runtime-full-integrated-ledger-v4.json'
-CONTRACT_SHA = '526361f65c02b0c92a351a08e1cc68be2d8e9ee25a478cb549f0588ea6f0ec05'
-LEDGER_SHA = 'ca39766adb9a0fa3549b4ba8c5fecdea606efd05ac5ec593bb6f98a2abbce280'
+CONTRACT_PATH = EVIDENCE / 'h2-runtime-full-execution-contract-v5.json'
+LEDGER_PATH = EVIDENCE / 'h2-runtime-full-integrated-ledger-v5.json'
+CONTRACT_SHA = 'f9790500918ec8fdf17d839bf17201a844c3bbb7c094eb22aca253468c6f1843'
+LEDGER_SHA = 'd974cf0088784e298f1a581cbd418a71ce1035dd3b07511bff74136d928d7f96'
 CONTRACT_REVIEW_SHAS = {
-    'h2-runtime-full-execution-contract-review-v4.json': '47a04dc1d82c991cd52ee435adfcc1c5cc093f6c63621796d1d472eaff9868e8',
-    'h2-runtime-full-execution-tc-review-v4.json': '00e78a4760e859df03b913f9e94e304724218a37b3d648496dacab227882a60c',
+    'h2-runtime-full-execution-contract-review-v5.json': '9cb7416749366050906e67ac99cb75b5e0f5a84968b65561400e06a305b3dd6d',
+    'h2-runtime-full-execution-tc-review-v5.json': 'fed819d7a5300a8705a8d96f8f16e916c53146362f47d9ebb751a498792df158',
 }
+
 ORDER = (
     'dispatcher_crashes', 'worker_api_crashes', 'startup', 'window',
     'activity_runtime', 'transport', 'workspace', 'started_deployment',
@@ -165,7 +166,7 @@ def verify_raw_policy_sources(contract: dict, ledger: dict) -> dict:
     if not isinstance(policy, dict):
         raise RuntimeError('Current execution contract lacks per-case raw evidence policy')
     required = {
-        'rules': 'docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules.json',
+        'rules': 'docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules-v5.json',
         'auditor': 'scripts/ifpmic_h2_raw_audit.py',
         'adapter': 'scripts/ifpmic_h2_full_raw_adapter.py',
         'artifact_checker': 'scripts/ifpmic_h2_artifacts.py',
