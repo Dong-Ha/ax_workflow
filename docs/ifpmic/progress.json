@@ -665,14 +665,14 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "V5 attempt01 terminated fail after dispatcher8 passed with raw audit, worker API4 had3fail; total12/9pass3fail0errors0skip,478 unexecuted. Preserve failed evidence/owned cleanup and independent review; reconcile pre-terminal ActivityTaskStarted history semantics and post-recovery query timeout before narrow reviewed repair.",
+  "next_step": "V6 worker-observation repair implemented; unchanged152 synthetic units passed once and independently accepted. Actual V6 full490 not started; exact whole-source and paired execution gates remain. Next visible outcome is same saved request run/receipt and QUEUED display.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",
     "Approved Bedrock/Claude runtime profile"
   ],
   "publication_policy": "Only authorized git repository documentation, source and synthetic verification summaries/screenshots; never runtime credentials or application logs.",
-  "updated_at": "2026-10-23T04:03:29.603784+00:00",
+  "updated_at": "2026-10-23T04:41:08.265748+00:00",
   "session_handoff": {
     "status": "resumed_by_user",
     "resume_document": "docs/ifpmic/RESUME.md",
@@ -704,28 +704,28 @@
     },
     "pending_source_proposal": "evidence/b03/h2-machine-resolution-progress-v2.json",
     "pending_source_proposal_review": "evidence/b03/h2-machine-resolution-activity-review-v5.json",
-    "pending_source_proposal_status": "v5_attempt01_failed_not_accepted",
+    "pending_source_proposal_status": "v6_synthetic_accepted_actual490_not_started",
     "latest_source_mapping": {
       "resolved_cases": 87,
       "total_cases": 87,
       "remaining_cases": 0,
       "remaining_annotations": 0,
-      "artifact_rules": 953,
-      "machine_sha256": "8c948efa993a1ba6837af28746af42ad532342eca5d5b299ac133f0377c0b74c",
+      "artifact_rules": 956,
+      "machine_sha256": "8f9ca9495b13e4452eaa42e9d2c2b5ed43c993dd28e246bccbbd5cfbc4f041d8",
       "scope": "Source path/schema/applicability only; no actual execution acceptance."
     },
-    "current_candidate_static_verification": "evidence/b03/h2-runtime-full-runner-source-review-v5.json",
-    "next_foundation_scope": "V5 attempt01 terminated fail after dispatcher8 passed with raw audit, worker API4 had3fail; total12/9pass3fail0errors0skip,478 unexecuted. Preserve failed evidence/owned cleanup and independent review; reconcile pre-terminal ActivityTaskStarted history semantics and post-recovery query timeout before narrow reviewed repair.",
+    "current_candidate_static_verification": null,
+    "next_foundation_scope": "V6 worker-observation repair implemented; unchanged152 synthetic units passed once and independently accepted. Actual V6 full490 not started; exact whole-source and paired execution gates remain. Next visible outcome is same saved request run/receipt and QUEUED display.",
     "candidate_authoring_reviews": {
-      "independent": "evidence/b03/h2-runtime-full-execution-contract-review-v5.json",
-      "tc": "evidence/b03/h2-runtime-full-execution-tc-review-v5.json"
+      "independent": "evidence/b03/h2-runtime-full-execution-contract-review-v6.json",
+      "tc": "evidence/b03/h2-runtime-full-execution-tc-review-v6.json"
     },
     "latest_unit_result": {
       "passed": 152,
       "retained": 152,
       "new": 0,
-      "verification": "delivery/iteration-03/runtime-oracle-repair-verification.json",
-      "independent_acceptance": "delivery/iteration-03/runtime-oracle-repair-result-review.json",
+      "verification": "delivery/iteration-03/worker-observation-repair-verification.json",
+      "independent_acceptance": "delivery/iteration-03/worker-observation-repair-result-review.json",
       "actual_full490": false
     },
     "full_source_rejected_attempt": "evidence/b03/attempts/h2-runtime-full-runner-source-review-v3-attempt-01.json",
@@ -733,11 +733,11 @@
     "current_blockers": [
       {
         "id": "CRASH-10-11-PRETERMINAL-STARTED-HISTORY",
-        "status": "confirmed_history_expectation_failure_pending_reviewed_repair"
+        "status": "v6_observation_repair_implemented_actual_execution_pending"
       },
       {
         "id": "CRASH-12-POSTRECOVERY-QUERY-TIMEOUT",
-        "status": "confirmed_timeout_cause_under_investigation"
+        "status": "v6_readiness_and_diagnostics_implemented_root_cause_unconfirmed_actual_execution_pending"
       }
     ],
     "runtime_execution_status": "delivery/iteration-03/runtime-v5-execution-status.json"
@@ -768,12 +768,12 @@
       "status": "in_progress",
       "title": "Connect persisted API job to real execution-engine admission and visible run/receipt",
       "path": "delivery/iteration-03/README.md",
-      "verification": "delivery/iteration-03/runtime-oracle-repair-verification.json",
-      "foundation_status": "v5_attempt01_failed_not_accepted",
+      "verification": "delivery/iteration-03/worker-observation-repair-verification.json",
+      "foundation_status": "v6_synthetic_accepted_actual490_not_started",
       "actual_job_execution": false,
-      "scope": "V4two failures passed in V5dispatcher8+raw audit. Worker API4 had3fail; total12/9pass3fail,478 unexecuted. Actual full490 acceptance/admission UI incomplete.",
+      "scope": "V5 failed12/9pass3fail/478unexecuted preserved. V6 unchanged152 synthetic pass; new worker helpers and actual full490 acceptance/admission UI incomplete.",
       "mapping_resolution_progress": "evidence/b03/h2-machine-resolution-progress-v2.json",
-      "candidate_static_verification": "evidence/b03/h2-runtime-full-runner-source-review-v5.json",
+      "candidate_static_verification": null,
       "runtime_execution_status": "delivery/iteration-03/runtime-v5-execution-status.json"
     }
   ]

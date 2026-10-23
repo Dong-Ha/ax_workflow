@@ -31,3 +31,11 @@
 현재 runner는 V4 ledger110 pins,490 ID(407+83),25업무 의무+5fixture,15phase, phase15420초+overhead800초=16220초를 유지한다. raw87개 규칙·953 artifact 규칙·38pins와 원본 설계·AX·실행 환경은 보존한다. 전체source/실행 승인과 실제 최종 인수는 각각 별도 증거다.
 
 과거 상세는 커밋 `18e3bf7`의 이 문서와 [재개 이력](../../RESUME-HISTORY-2026-10-21.md), 이 폴더의 개별 계획·검토·검증 파일에 보존했다. 과거의 미수정 상태나 실행 금지 지시를 현재 승인 상태로 해석하지 않는다. 재개 절차는 [RESUME](../../RESUME.md)를 따른다.
+
+## 최신 V6 체크포인트
+
+[V6 관측 보완 계획](./WORKER-OBSERVATION-REPAIR.md)을 구현했다. 기존152개 합성 검사 본문을 유지한 한 번의 실행이 통과했다([검증](./worker-observation-repair-verification.json)). 이는 새 worker 관측 helper의 실제 서버 검증을 포함하지 않는다. V6 실제490은 시작하지 않았으며 전체 소스·실행 전 승인과 실제 결과 수용이 남았다. 기존953 artifact 규칙은 그대로 두고3개를 추가했다(956개). 제품 화면 기능은 추가되지 않았다.
+
+다음 사용자 전달은 **같은 요청의 실제 run/receipt·QUEUED 화면**이다. 각 작업 회차에 URL 또는 저장된 캡처, 달라진 행동, 검증·제한, 다음 조치 하나와 커밋을 전달한다. 현재 전체 단계 완료율은 계속12.5%다.
+
+152개 합성 결과는 [독립 수용](./worker-observation-repair-result-review.json)됐다. 수용 범위는 해당 합성 실행뿐이며 실제490·새 helper·실행 접수 화면의 완료 승인이 아니다.

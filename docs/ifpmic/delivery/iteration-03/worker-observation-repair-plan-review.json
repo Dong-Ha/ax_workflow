@@ -1,0 +1,55 @@
+{
+  "kind": "ifpmic.b03.h2.worker-observation-repair.plan-review.v1",
+  "decision": "approve_bounded_implementation_only",
+  "plan_sha256": "63153c69d0ef762872045031db42f38b103db337f51562233a17df0f5f1b4c01",
+  "reviewer": {
+    "role": "independent plan/source reviewer",
+    "independent_of": [
+      "Code-dev implementation",
+      "TC test authoring"
+    ],
+    "method": "Static file/hash and pinned local SDK declaration inspection only; no imports, tests, SDK calls, services, collection or main execution."
+  },
+  "checks": [
+    "All eight planning fields are present. V5 stays failed: 12 executed, 9 pass, 3 fail, 478 unexecuted.",
+    "CRASH-10/11 substitute actual same-run pending STARTED plus Scheduled linkage for the invalid pre-terminal persisted Started assertion, preserving the original SQL/barrier cut and Completed0.",
+    "PendingActivityInfo exposes activity_id, activity_type, state, attempt and last_started_time, without scheduled_event_id. Matching uses actual Scheduled attrs.activity_id/type; its event_id is retained separately.",
+    "CRASH-12 moves the already-required same-run WorkflowTaskCompleted-after-cut observation before the original proxy-path queued query; it preserves the actual cut/kill/release and registered proxy runtime configuration.",
+    "Immediate release JSONL evidence survives later wait/query failure. held_response_bytes is cumulative and is not required to become zero. Proxy traffic alone is not worker replay proof.",
+    "Two pending JSONs and one proxy JSONL add three artifact predicates: 953 to 956, preserving all 953 existing predicates, 87 raw cases, 38 source pins and 10 audit phases.",
+    "490 IDs, 25+5 obligations/prerequisites, 15 phases, original case/phase/16220 outer budgets, 10-second RPC cap, environment, privacy, owned cleanup and approval roles are preserved.",
+    "Worker test only receives behavioral edits. V6 bindings/pins are consistently refreshed; auditor functions and all 152 existing unit method ASTs/IDs remain unchanged."
+  ],
+  "implementation_constraints": [
+    "Require exactly one matching pending STARTED entry for the exact namespace/workflow/run, positive actual attempt and present actual last_started_time. Preserve actual raw history, Completed0, named SQL cut and saved live worker/barrier evidence; missing or ambiguous observations fail.",
+    "Keep later actual Started>=1/Completed1, single immutable run/scope/receipt and QUEUED assertions. No synthetic values, extra run, production-state manipulation or weakened oracle.",
+    "The post-cut decision is a necessary readiness observation, not a guarantee of query success or a proven CRASH-12 repair. Keep the original proxy query and propagate its failures; no direct-query fallback, arbitrary sleep or increased limits.",
+    "Use absent saved old-worker identity, same-run later decision and actual queued query with existing process ownership evidence for recovery. New connections/bytes are diagnostic support only.",
+    "Persist the initial release snapshot privately before uncertain waits. Append only actual later/failure observations with existing private journal handling. Finally observations stay within existing budgets and preserve owned cleanup and the original failure.",
+    "Preserve V5 evidence. Refresh worker producer locations/source hashes and V6 rules/ledger/contract, including runner, auditor and unit-fixture fixed rules-file literals. Exact source review must confirm additive artifact predicates and all bindings.",
+    "Exact source approval precedes fresh cache-isolated 152 execution; actual unit result acceptance, whole-source approval and both independent/TC execution pre-gates precede any new full490 launch."
+  ],
+  "primary_document_research_scope": {
+    "url": "https://github.com/temporalio/documentation/blob/main/docs/references/events.mdx",
+    "attribution": "Orchestrator supplied the official-document finding that running ActivityTaskStarted is persisted with its terminal activity event.",
+    "limit": "No independent network retrieval during this bounded review; local SDK pending-field declarations and current cut/assertion/query ordering were independently inspected."
+  },
+  "source_evidence": {
+    "tests/ifpmic_api/test_h2_worker_api_crashes.py": "358-364 direct same-run history; 623-665 current prekill assertion/recovery; 775-839 actual cut and existing final later-decision requirement.",
+    "tests/ifpmic_api/response_loss_proxy.py": "82-100 snapshot semantics; 280-288 release disarms/drops held buffer, records released event and retains cumulative held count.",
+    "temporalio/api/workflow/v1/message_pb2.pyi": "PendingActivityInfo at 751; actual activity/state/time/attempt fields at 879-889.",
+    "temporalio/api/enums/v1/workflow_pb2.pyi": "PendingActivityState STARTED value 2 at 243-256."
+  },
+  "remaining_uncertainty": "CRASH-12 root cause and actual recovery remain unproven. Only a separately approved exact run can distinguish readiness, proxy-path and replay failures. No actual full-run result or execution is accepted here.",
+  "source_pins": {
+    "docs/ifpmic/delivery/iteration-03/WORKER-OBSERVATION-REPAIR.md": "63153c69d0ef762872045031db42f38b103db337f51562233a17df0f5f1b4c01",
+    "docs/ifpmic/delivery/iteration-03/runtime-v5-attempt-01-result-review.json": "02a5040437f6c7f47d65b5e590e2ae38a668b723cf266ad9d366783bb5c49d4b",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-verification-plan.json": "c6964bccff0d4cec1ac00f18fbb267d5d1a4a5887e53844c604333b7c059486c",
+    "docs/ifpmic/H2-RUNTIME-CRASH-MATRIX.md": "15fd7238adab625e95f94e0bae62421bb97235683cc96b491c7a9ce3222001c6",
+    "tests/ifpmic_api/test_h2_worker_api_crashes.py": "9ad3c1be60c3975cfe3a30fab972463361ac90c8e5f5b3a47461307d20ef35d3",
+    "tests/ifpmic_api/response_loss_proxy.py": "b6f8ca62f21724bf26aac6395528092257e7c48b729d19df02adf7281b9ed512",
+    "tests/ifpmic_api/test_h2_runtime_normal_flow.py": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d",
+    "workflow-artifacts/toolchains/B03/H1/2026-10-18T19-43-43-523587Z/venv/lib/python3.12/site-packages/temporalio/api/workflow/v1/message_pb2.pyi": "0bbb9261e694d756a904f71b615f8b7f3732e5bc9aff2d5a2af9aae5590e36a8",
+    "workflow-artifacts/toolchains/B03/H1/2026-10-18T19-43-43-523587Z/venv/lib/python3.12/site-packages/temporalio/api/enums/v1/workflow_pb2.pyi": "525a6c593cba9ac72839b08a96f9b6d4e625fc1105fbf6bc508dd8fa5f0dae8d"
+  }
+}

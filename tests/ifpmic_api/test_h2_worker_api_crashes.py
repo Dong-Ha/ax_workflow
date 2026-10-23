@@ -28,6 +28,7 @@ from tests.ifpmic_api.h2_native_bounds import bounded_connect, bounded_harness
 from tests.ifpmic_api.h2_private_values import private_json_values
 import pytest
 from temporalio.client import Client
+from temporalio.api.enums.v1 import PendingActivityState
 
 pytest_plugins = (
     "tests.ifpmic_api.jobs_fixture",
@@ -355,13 +356,120 @@ def _wait_for_snapshot(harness, job_id: str, predicate, deadline: float, process
     raise TimeoutError("independent owner SQL observation missed its deadline")
 
 
-def _activity_events(identity: dict[str, str], direct_endpoint: str, workflow_id: str, run_id: str):
+def _activity_events(identity: dict[str, str], direct_endpoint: str, workflow_id: str, run_id: str,
+                    *, deadline: float | None = None):
     async def read():
-        client = await asyncio.wait_for(Client.connect(direct_endpoint, namespace=identity["namespace"]), 10)
+        timeout = 10 if deadline is None else min(10.0, deadline - time.monotonic())
+        if timeout <= 0:
+            raise TimeoutError("Temporal history observation exceeded its case deadline")
+        client = await asyncio.wait_for(
+            Client.connect(direct_endpoint, namespace=identity["namespace"]), timeout,
+        )
+        if deadline is not None and time.monotonic() >= deadline:
+            raise TimeoutError("Temporal history connection exceeded its case deadline")
         handle = client.get_workflow_handle(workflow_id, run_id=run_id)
-        history = await handle.fetch_history(rpc_timeout=normal.timedelta(seconds=10))
+        timeout = 10 if deadline is None else min(10.0, deadline - time.monotonic())
+        if timeout <= 0:
+            raise TimeoutError("Temporal history fetch exceeded its case deadline")
+        history = await handle.fetch_history(rpc_timeout=normal.timedelta(seconds=timeout))
+        if deadline is not None and time.monotonic() >= deadline:
+            raise TimeoutError("Temporal history fetch exceeded its case deadline")
         return list(history.events)
     return asyncio.run(read())
+
+
+async def _describe_pending_activities(identity: dict[str, str], direct_endpoint: str,
+                                       workflow_id: str, run_id: str, deadline: float):
+    timeout = min(10.0, deadline - time.monotonic())
+    if timeout <= 0:
+        raise TimeoutError("Temporal pending-activity connection exceeded its case deadline")
+    client = await asyncio.wait_for(
+        Client.connect(direct_endpoint, namespace=identity["namespace"]), timeout,
+    )
+    if time.monotonic() >= deadline:
+        raise TimeoutError("Temporal pending-activity connection exceeded its case deadline")
+    handle = client.get_workflow_handle(workflow_id, run_id=run_id)
+    timeout = min(10.0, deadline - time.monotonic())
+    if timeout <= 0:
+        raise TimeoutError("Temporal pending-activity describe exceeded its case deadline")
+    description = await handle.describe(rpc_timeout=normal.timedelta(seconds=timeout))
+    if time.monotonic() >= deadline:
+        raise TimeoutError("Temporal pending-activity describe exceeded its case deadline")
+    return description
+
+
+def _assert_project_activity_pending_started(ctx, run_id: str, events,
+                                             deadline: float) -> dict[str, object]:
+    workflow_id = "ifpmic.job." + ctx["job_id"]
+    description = asyncio.run(_describe_pending_activities(
+        ctx["identity"], ctx["backend_endpoint"], workflow_id, run_id, deadline,
+    ))
+    assert description.id == workflow_id
+    assert description.run_id == run_id
+    assert description.namespace == ctx["identity"]["namespace"]
+    scheduled = [
+        event for event in events
+        if event.HasField("activity_task_scheduled_event_attributes")
+        and event.activity_task_scheduled_event_attributes.activity_type.name
+        == "ifpmic.h2.project_activation"
+    ]
+    assert len(scheduled) == 1
+    scheduled_event = scheduled[0]
+    scheduled_attrs = scheduled_event.activity_task_scheduled_event_attributes
+    pending = [
+        item for item in description.raw_description.pending_activities
+        if item.activity_id == scheduled_attrs.activity_id
+        and item.activity_type.name == scheduled_attrs.activity_type.name
+    ]
+    assert len(pending) == 1
+    activity = pending[0]
+    assert activity.state == PendingActivityState.PENDING_ACTIVITY_STATE_STARTED
+    assert activity.attempt >= 1
+    assert activity.HasField("last_started_time")
+    assert activity.last_started_time.seconds > 0
+    assert 0 <= activity.last_started_time.nanos < 1_000_000_000
+    observed = {
+        "kind": "ifpmic.b03.h2.pending-activity-at-worker-cut.v1",
+        "namespace": description.namespace,
+        "workflow_id": description.id,
+        "run_id": description.run_id,
+        "scheduled_event_id": int(scheduled_event.event_id),
+        "scheduled_activity_id": scheduled_attrs.activity_id,
+        "scheduled_activity_type": scheduled_attrs.activity_type.name,
+        "pending_activity_id": activity.activity_id,
+        "pending_activity_type": activity.activity_type.name,
+        "pending_state": int(activity.state),
+        "pending_state_name": "STARTED",
+        "attempt": int(activity.attempt),
+        "last_started_time": {
+            "seconds": int(activity.last_started_time.seconds),
+            "nanos": int(activity.last_started_time.nanos),
+        },
+        "matching_pending_activity_count": len(pending),
+    }
+    _record_private(ctx["root"], "pending-activity-at-worker-cut.json", observed)
+    return observed
+
+
+def _wait_for_followup_workflow_decision(ctx, run_id: str, completion_event_id: int,
+                                        deadline: float):
+    workflow_id = "ifpmic.job." + ctx["job_id"]
+    while time.monotonic() < deadline:
+        events = _activity_events(ctx["identity"], ctx["backend_endpoint"], workflow_id, run_id,
+                                  deadline=deadline)
+        if time.monotonic() >= deadline:
+            raise TimeoutError("same-run Temporal history observation exceeded its case deadline")
+        assert _count(events, "activity_task_completed_event_attributes",
+                       "ifpmic.h2.project_activation") == 1
+        decisions = [
+            event for event in events
+            if int(event.event_id) > completion_event_id
+            and event.HasField("workflow_task_completed_event_attributes")
+        ]
+        if decisions:
+            return events, int(decisions[0].event_id)
+        time.sleep(min(0.05, max(0.0, deadline - time.monotonic())))
+    raise TimeoutError("same-run follow-up WorkflowTaskCompleted missed its case deadline")
 
 
 def _wait_activity_completion(ctx, deadline: float):
@@ -638,8 +746,9 @@ def _post_crash_recovery(harness, ctx, deadline, *, expect_projection_committed:
     events_before = _activity_events(ctx["identity"], ctx["backend_endpoint"], workflow_id, run_id)
     before_history_sha = _record_history(ctx["root"], "history-at-worker-cut.pbseq", events_before)
     assert _count(events_before, "activity_task_completed_event_attributes", "ifpmic.h2.project_activation") == 0
-    assert _count(events_before, "activity_task_started_event_attributes",
-                  "ifpmic.h2.project_activation") >= 1
+    pending_observation = _assert_project_activity_pending_started(
+        ctx, run_id, events_before, deadline.deadline,
+    )
     ctx["owner_before_kill"] = before
     _record_private(ctx["root"], "owner-at-worker-cut.json", before)
     if revoke_authority:
@@ -652,6 +761,8 @@ def _post_crash_recovery(harness, ctx, deadline, *, expect_projection_committed:
         "event_count": len(events_before),
         "project_activity_started": _count(events_before, "activity_task_started_event_attributes",
                                             "ifpmic.h2.project_activation"),
+        "pending_activity_state": pending_observation["pending_state_name"],
+        "pending_activity_attempt": pending_observation["attempt"],
         "project_activity_completed": _count(events_before, "activity_task_completed_event_attributes",
                                               "ifpmic.h2.project_activation"),
     })
@@ -667,9 +778,10 @@ def _post_crash_recovery(harness, ctx, deadline, *, expect_projection_committed:
     assert final["attempts"] == before["attempts"]
     events_after = _activity_events(ctx["identity"], ctx["backend_endpoint"], workflow_id, run_id)
     after_history_sha = _record_history(ctx["root"], "history-after-worker-recovery.pbseq", events_after)
-    completed = _count(events_after, "activity_task_completed_event_attributes", "ifpmic.h2.project_activation")
-    assert completed == 1
     started = _count(events_after, "activity_task_started_event_attributes", "ifpmic.h2.project_activation")
+    completed = _count(events_after, "activity_task_completed_event_attributes", "ifpmic.h2.project_activation")
+    assert started >= 1
+    assert completed == 1
     _record_private(ctx["root"], "worker-crash-recovery.json", {
         "killed_process": kill, "before": before, "after": final,
         "temporal_before_event_count": len(events_before),
@@ -693,8 +805,6 @@ def test_h2_worker_projection_before_pg_commit_sigkill_rolls_back_then_retries(h
             harness, ctx, deadline, expect_projection_committed=False,
         )
         assert final["accepted"][12:15] == ("applied", 1, None)
-        assert _count(before_events, "activity_task_started_event_attributes",
-                      "ifpmic.h2.project_activation") >= 1
         assert _count(after_events, "activity_task_completed_event_attributes",
                       "ifpmic.h2.project_activation") == 1
     finally:
@@ -726,6 +836,9 @@ def test_h2_activity_completed_before_workflow_decision_sigkill_replays_history(
     harness, deadline = h2_crash_harness, h2_crash_deadline
     ctx = None
     proxy = None
+    proxy_journal = None
+    recovery_stage = "not-released"
+    recovery_worker = None
     try:
         # This independently implemented helper owns a byte-direction proxy.
         # The product dispatcher and worker both connect through it; the parent
@@ -815,8 +928,48 @@ def test_h2_activity_completed_before_workflow_decision_sigkill_replays_history(
             "activity_completed_event_id": completion_event_id,
             "proxy": proxy_state,
         })
-        _start_cli_worker(ctx)
+        proxy_journal = root / "proxy-recovery-observation.jsonl"
+        normal._create_private_journal(proxy_journal)
+        release_snapshot = proxy.snapshot()
+        assert release_snapshot["armed"] is False and release_snapshot["overflowed"] is False
+        assert any(event["direction"] == "control" and event["action"] == "released"
+                   for event in release_snapshot["events"])
+        normal._append_private_journal(proxy_journal, {
+            "kind": "ifpmic.b03.h2.proxy-recovery-observation.v1",
+            "stage": "immediately-after-release",
+            "proxy": release_snapshot,
+        })
+        recovery_stage = "released"
+        recovery_worker = _start_cli_worker(ctx)
+        recovery_stage = "recovery-worker-started"
+        recovered_history, followup_event_id = _wait_for_followup_workflow_decision(
+            ctx, run_id, completion_event_id, deadline.deadline,
+        )
+        recovery_stage = "same-run-followup-workflow-decision-observed"
+        normal._append_private_journal(proxy_journal, {
+            "kind": "ifpmic.b03.h2.proxy-recovery-observation.v1",
+            "stage": recovery_stage,
+            "followup_workflow_task_completed_event_id": followup_event_id,
+            "history_event_count": len(recovered_history),
+            "proxy": proxy.snapshot(),
+        })
         final, temporal = _await_final_runtime(harness, ctx, deadline.deadline)
+        recovery_stage = "original-proxy-queued-query-passed"
+        final_proxy_snapshot = proxy.snapshot()
+        assert final_proxy_snapshot["armed"] is False
+        assert final_proxy_snapshot["overflowed"] is False
+        assert (final_proxy_snapshot["server_response_bytes_forwarded_after_arm"]
+                > release_snapshot["server_response_bytes_forwarded_after_arm"])
+        assert (final_proxy_snapshot["request_forwarded_bytes_after_arm"]
+                > release_snapshot["request_forwarded_bytes_after_arm"])
+        assert len(final_proxy_snapshot["connection_records"]) > len(release_snapshot["connection_records"])
+        normal._append_private_journal(proxy_journal, {
+            "kind": "ifpmic.b03.h2.proxy-recovery-observation.v1",
+            "stage": recovery_stage,
+            "run_id": run_id,
+            "phase": temporal["phase"],
+            "proxy": final_proxy_snapshot,
+        })
         assert final == at_barrier
         assert temporal["phase"] == "queued"
         after_history = _activity_events(ctx["identity"], ctx["backend_endpoint"],
@@ -838,7 +991,30 @@ def test_h2_activity_completed_before_workflow_decision_sigkill_replays_history(
             "phase": temporal["phase"],
         })
     finally:
-        if ctx is not None:
-            _cleanup(ctx, deadline, extra_helpers=[proxy] if proxy is not None else [])
-        elif proxy is not None:
-            proxy.close()
+        active_exception = sys.exc_info()[1]
+        try:
+            if proxy_journal is not None and proxy is not None:
+                exception_type = None if active_exception is None else type(active_exception)
+                try:
+                    if active_exception is not None:
+                        deadline.cleanup_budget()
+                    normal._append_private_journal(proxy_journal, {
+                        "kind": "ifpmic.b03.h2.proxy-recovery-observation.v1",
+                        "stage": "before-case-cleanup",
+                        "last_recovery_stage": recovery_stage,
+                        "recovery_worker_alive": recovery_worker is not None and recovery_worker.poll() is None,
+                        "recovery_worker_returncode": None if recovery_worker is None else recovery_worker.poll(),
+                        "exception_type": None if exception_type is None else exception_type.__name__,
+                        "proxy": proxy.snapshot(),
+                    })
+                except BaseException as observation_error:
+                    if active_exception is None:
+                        raise
+                    active_exception.add_note(
+                        "Pre-cleanup proxy observation failed: " + type(observation_error).__name__,
+                    )
+        finally:
+            if ctx is not None:
+                _cleanup(ctx, deadline, extra_helpers=[proxy] if proxy is not None else [])
+            elif proxy is not None:
+                proxy.close()

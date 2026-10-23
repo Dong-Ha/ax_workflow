@@ -14,7 +14,7 @@ import re
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-RULES = ROOT / 'docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules-v5.json'
+RULES = ROOT / 'docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules-v6.json'
 
 
 def main():

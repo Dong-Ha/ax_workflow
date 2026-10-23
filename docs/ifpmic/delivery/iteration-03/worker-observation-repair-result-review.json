@@ -1,0 +1,103 @@
+{
+  "kind": "ifpmic.b03.h2.worker-observation-repair-result-independent-review.v1",
+  "decision": "accept_exact_152_synthetic_result_only",
+  "reviewer": {
+    "agent_id": "/root/v3_whole_source_review",
+    "independence": "Independent from Code-dev capture/implementation and TC test authors. Read-only raw/source/hash/AST/mode inspection; no tests, SDK calls, services or runner execution."
+  },
+  "reviewed_inputs": {
+    "public_verification": {
+      "path": "docs/ifpmic/delivery/iteration-03/worker-observation-repair-verification.json",
+      "sha256": "85ba2ec191e08f6bb7c1c91441fdb4b5aec4d3a2cd29ba1b8c8c754c3d33a7a2"
+    },
+    "raw_result": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/worker-observation-unit-2026-10-23T04-36-21-599207Z/result.json",
+      "sha256": "21ebec3a3725d9fecb4f81232e8f4f6b14fc66a379e6c424031c89d73cb5b455"
+    },
+    "exact_source_approval": {
+      "path": "docs/ifpmic/delivery/iteration-03/worker-observation-repair-source-review.json",
+      "sha256": "e2b4496b76939369c65a45c442f768d04f8ab2f0f4e6a5ab3c52bfc94678d819"
+    },
+    "source_review_request": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/worker-observation-preparation/source-review-request.json",
+      "sha256": "b3667659d5e6c1ca947aef0ce5170d9cfbdc63ff0071d66c9c1016e8c3aab509"
+    },
+    "capture": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/worker-observation-preparation/run_units.py",
+      "sha256": "3036d743cad31fc77f3aab891227355f64cc58f072ab3de0be83e9948e410cc7"
+    }
+  },
+  "actual_result": {
+    "exit_code": 0,
+    "timed_out": false,
+    "executed": 152,
+    "passed": 152,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "unittest_elapsed_seconds": 1.328,
+    "retained_method_bodies": 152,
+    "new_methods": 0,
+    "exact_unique_ids": true
+  },
+  "checks": [
+    "All seven retained raw file hashes match the public references; result stdout/stderr digests match actual raw bytes. stderr independently contains152 ok outcomes and terminal OK.",
+    "Actual/expected/public IDs match exactly152 unique methods across seven modules. Current full method AST map equals the original baseline152; no oracle body was changed for this capture.",
+    "Source approval, request, public summary, raw result and source-before/source-after contain the same89 pins; all89 current bytes match. The source approval hash is unchanged and matches the raw capture.",
+    "Before/after preservation records are byte-identical: protected96 hashes, inventory89, design/original19 and complete1777/3072 environment maps. Saved environment maps also equal the pinned accepted407 baseline.",
+    "Fresh cache and temporary directories are currently empty. All seven raw files are regular0600/current-owner/single-link; leaf plus cache/tmp are0700/current-owner, with no symlinks.",
+    "Public verification contains relative evidence references and safe IDs/counts/hashes, without raw log/history/process/credential contents or actual workspace absolute prefix. Its false actual_full490_executed, iteration03_accepted and new_workflow_behavior flags correctly limit the claim."
+  ],
+  "preservation": {
+    "source_pins": 89,
+    "protected_hashes": 96,
+    "protected_inventory": 89,
+    "design_and_original_inputs": 19,
+    "environment_files": {
+      "original32": 1777,
+      "qualified36": 3072
+    },
+    "before_after_equal": true,
+    "cache_empty": true,
+    "temporary_directory_empty": true,
+    "raw_files_0600": 7,
+    "directories_0700": 3
+  },
+  "raw_evidence": {
+    "preservation-after.json": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/worker-observation-unit-2026-10-23T04-36-21-599207Z/preservation-after.json",
+      "sha256": "30b1204426dfb183ce2571455a4f03d209ef0c97507daa1273a22b49bd544346"
+    },
+    "preservation-before.json": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/worker-observation-unit-2026-10-23T04-36-21-599207Z/preservation-before.json",
+      "sha256": "30b1204426dfb183ce2571455a4f03d209ef0c97507daa1273a22b49bd544346"
+    },
+    "result.json": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/worker-observation-unit-2026-10-23T04-36-21-599207Z/result.json",
+      "sha256": "21ebec3a3725d9fecb4f81232e8f4f6b14fc66a379e6c424031c89d73cb5b455"
+    },
+    "source-after.json": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/worker-observation-unit-2026-10-23T04-36-21-599207Z/source-after.json",
+      "sha256": "c85354ac2fdfc0d8d1d2567fb9b22445dac3c09930fe37d8a5713fc833f05e93"
+    },
+    "source-before.json": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/worker-observation-unit-2026-10-23T04-36-21-599207Z/source-before.json",
+      "sha256": "c85354ac2fdfc0d8d1d2567fb9b22445dac3c09930fe37d8a5713fc833f05e93"
+    },
+    "stderr.log": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/worker-observation-unit-2026-10-23T04-36-21-599207Z/stderr.log",
+      "sha256": "dadaa4d057b8212c11237ee25a264793646db53f37546a69b289e5a11ae5ddbf"
+    },
+    "stdout.log": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/worker-observation-unit-2026-10-23T04-36-21-599207Z/stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "runner_sha256": "c735c571cb9fb0d77f2907dae97a974f296822707482fb43eb40017a44616828",
+  "limitations": [
+    "Acceptance covers only the exact approved152 synthetic unit capture. New pending SDK and proxy-recovery helpers were not executed; actual CRASH10/11/12 behavior and CRASH12 root cause remain unverified.",
+    "No whole-runner source approval, execution pre-gates, collection, services, actual490 launch, H2 acceptance, UI behavior or iteration/goal completion is authorized or accepted here.",
+    "Preservation assessment uses actual before/after raw maps, their accepted-baseline equality and current89 pinned bytes; this review did not repeat a broad current environment scan or execute any verification.",
+    "Existing failed integration evidence and all original role/privacy/cleanup/approval requirements retain their scope. Any future full run requires separate exact source review and both independent/TC execution pre-gates."
+  ]
+}
