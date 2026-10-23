@@ -1,0 +1,30 @@
+{
+  "kind": "ifpmic.delivery.iteration03.full-candidate-v3-static-verification.v1",
+  "status": "passed_static_candidate_only_no_execution",
+  "ledger": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger-v3.json",
+    "sha256": "4727c955d072c863c972b26684e37234feba0dce39e329475e4318a9370b9e58"
+  },
+  "contract": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-full-execution-contract-v3.json",
+    "sha256": "714411f1de4250b0d36c92902a3946e2a2bc3590dc79c508d71ac4a8a130e00d"
+  },
+  "machine_rules_sha256": "8c948efa993a1ba6837af28746af42ad532342eca5d5b299ac133f0377c0b74c",
+  "matching_source_read_pins": 109,
+  "old_v2_pins_updated": 1,
+  "new_source_and_read_pins": 5,
+  "literal_case_ids": 490,
+  "retained": 407,
+  "added": 83,
+  "obligation_groups": 25,
+  "fixture_prerequisites": 5,
+  "phases": 15,
+  "phase_caps_total_seconds": 15420,
+  "original_limits_and_budgets_unchanged": true,
+  "attestation_anchors": 19,
+  "binary_identities": 7,
+  "v2_and_c10_cf4_unchanged": true,
+  "runner_binding": "Still v2; v3 authoring reviews must precede binding changes. Accepted149 proof targets unchanged3dbf runner, not a future rebind.",
+  "actual490_executed": false,
+  "full_h2_accepted": false
+}

@@ -6,6 +6,10 @@
 
 ## 2026-10-21: 결과와 진척을 먼저 확인하는 운영 규칙
 
+### 2026-10-23 체크포인트
+
+attempt02의 입력 오류3건을 수정하고 **149/149 합성 단위(기존140+새9)**를 독립 수용받았다. [실제 결과](./delivery/iteration-03/remaining-input-repair-verification.json)·[독립 수용](./delivery/iteration-03/remaining-input-repair-result-review.json). 종료 envelope의 실제 역할 결합, 합성 probe의0물리process 분류, 역사/현재 README 분리 검증을 포함한다. 새v3 후보의109 source/read pins·490 ID·모든 기존 예산을 대조했고 독립/TC 작성 검토가 완료됐다. 다음은 실행기의v3 연결과 정확한 소스/실행 전 검토다. **실제490·접수 UI는 미완료, 전체12.5% 유지, 새 업무 화면 기능 없음.** 아래140/미수정3건 문단과 현황판은 이전 체크포인트다. 현재 상태는 progress와 RESUME를 따른다. 현재4173/8769는 listening socket이 없음을 확인했으며 과거 HTTP200을 현재 접속 증명으로 사용하지 않는다.
+
 **[한눈에 보는 진행 현황판](./delivery/status.html)**에 두 전달 화면·과거 캡처·전체 완료율·현재 장애·다음 데모를 모았다. 이 화면은 정적 진행 기록이며 새 업무 실행 기능이 아니다. 현황판 전달의 검증은 [별도 계획](./delivery/STATUS-PLAN.md)에 한정한다.
 
 현재 [전체 소스 검토 두 번째 시도](./evidence/b03/attempts/h2-runtime-full-runner-source-review-v2-attempt-02.json)는 변경 요청이다. 종료 envelope의 경계 이름과 실제 role 충돌, 합성 정리 journal의 실제 CLI 오분류, retained H1의 README 해시 불일치가 남았다. 기존140개 합성 검사 수용은 정확한 당시 소스 범위로 유지한다. 다음은 세 장애 수정·관련 재검증·정확한 source/paired 실행 검토이며 실제490 실행은 아직 승인·수행하지 않았다. 아래의 과거 체크포인트를 현재 실행 승인으로 읽지 않는다.

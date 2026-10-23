@@ -1,0 +1,82 @@
+{
+  "kind": "ifpmic.b03.h2.remaining-input-repair-plan-review.v1",
+  "verdict": "approve_implementation_and_source_review_only",
+  "reviewed_utc": "2026-10-20T17:36:13.997393+00:00",
+  "reviewer": {
+    "agent_id": "/root/h2_evidence_amendment_review",
+    "independence": "Independent from plan, runner, helper and TC authors; authored rejected whole-source attempt02 and prior scoped result reviews."
+  },
+  "plan": {
+    "path": "docs/ifpmic/delivery/iteration-03/REMAINING-INPUT-REPAIR.md",
+    "sha256": "2cd9d116a4b538c4cfcc0c012a648fe3f6b7e822c6e2562b793439acd67e2cdd"
+  },
+  "rejected_whole_source_attempt": {
+    "path": "docs/ifpmic/evidence/b03/attempts/h2-runtime-full-runner-source-review-v2-attempt-02.json",
+    "sha256": "1185b7ce0c9668d83f19fa9b2a21f34d6bfee8d9e47c3a6a1280362178ed5dbf"
+  },
+  "retained_synthetic_result_review": {
+    "path": "docs/ifpmic/delivery/iteration-03/full-input-repair-result-review.json",
+    "sha256": "b5750b85148adc2c993e80f4fa492a00e923ad311aedcda532b00a828be8ac50"
+  },
+  "findings": [],
+  "evidence": {
+    "eight_verification_fields": "All7 stages provide purpose, target, method, agent, pass criteria, expected result, evidence and failure recovery. Expected result/evidence share a column. Implementation, exact unit-source authorization, actual result acceptance, v3 candidate authoring, whole-source review and paired execution gates remain separate.",
+    "bounded_three_repairs": "Only the stopped envelope classifier, exact synthetic cleanup observation and retained H1 README qualification change. Existing490 literal IDs,25+5 obligations,15 phases,16220 outer limit,case/phase timing,normal3 distinct identities and kill-to-authoritative-terminal proof remain required. No producer, service or business oracle is weakened.",
+    "stopped_envelope": "Actual worker _stop_saved writes outer role as a boundary label with pid/start_ticks and nested stop. The plan correctly excludes this envelope from role registration, validates matching outer/nested identity and requires the same case canonical owned registration. A started journal alone must not satisfy this owned-envelope requirement. Actual nested terminal keeps strict exit/forced/absent checks; orphan,cross-case,identity conflict and malformed terminal reject.",
+    "synthetic_probe": "Actual fixture source uses PID74991,ticks saved-test-identity and cleanup-fallback-probe-<sha256(nodeid)[:16]>. Common cleanup writes stop_requested and stopped, while its process-cleanup summary asserts returncode=None,forced=False,absent=False. The fixture records fixture.exhausted_cleanup only after asserting no lifecycle actions or identity lookups,>=2 exhausted checks and retained handle. Same phase,exact node/current-test/caller and actual query result must bind both raw files; this is an unknown synthetic observation with0 physical processes,not successful process absence. Ordinary orphan and real CLI rules remain strict.",
+    "readme_qualification": "Read-only git show verified 4fc25fb:README.md=0964d4dae840f9a433d88ee92132efedb7e17c77ac815d0e955c6fdbc65c7100 and09ebf40:README.md=1aa570dc948ffd83a15097535f3456eb24eea6a947c22a4aa49aa12f5b05605a. Current README=ee21e2fd36e6db1d4542d1ae8ee0403c44d3eaaf36958b58f1bab0a98f2371bf. The intermediate-to-current unified diff has exactly2 added lines: a blank line and the iteration02 guidance paragraph; no removed or changed lines. Original H1 contract7860ccc5e7527ef37f6e1f26d07b7b2df4bb2f55d721b14ae5e635492153b801 explicitly pins original0964 README. All3 bytestrings therefore have separate historical/current roles; intermediate1aa must not be represented as the original H1 README.",
+    "readme_implementation_boundary": "A stdlib-only helper may literal-pin the3 README digests and original H1 contract digest,validate the original contract README input and exact allowed intermediate-to-current byte insertion. Preserve EXPECTED_README_SHA256=1aa against the intermediate archive and require current README verification in the same retained test. Reject missing,altered,symlink/nonregular files or path components. No manifest,subprocess,network,current README edit,rollback,skip,cwd substitution or environment bypass is authorized.",
+    "new_candidate_closure": "Changing H1 test/read dependencies requires a separate v3 ledger/contract and paired authoring reviews; preserve v2,c10,cf4,I02 and historical H1 evidence. Pin actual helper,H1 test,root README,2 historical README files and historical H1 contract,plus all transitive reads/imports. Re-evaluate runtime-helper/source bindings and any affected machine metadata against current bytes; unchanged machine rules cannot justify retaining a stale source binding. Runner remains separately source-pinned to avoid a cycle.",
+    "normal_error_boundary_regression": "The plan covers valid envelope join/dedup and exact synthetic context; malformed/orphan/cross-case/identity-conflict/real-process substitution/missing-query/false-absence rejection; README tamper,missing,symlink/nonregular and exact2-line insertion boundary; all140 prior IDs and method bodies plus new focused TC. Exact source review must verify concrete tests before any unit execution.",
+    "isolation_and_omission": "New units require separate exact source approval,fresh private cache,60-second bound,private capture,source/review stability and96/89/17+2/1777/3072 before-after preservation. Product/H1 SDK test-module import,pytest collection,SQL,services and actual main remain forbidden in that scope. UI/build/browser omission is justified only for this unchanged-UI source/unit stage;fresh490,raw audit,UI scenarios,H3-H7 and originalAT32 remain pending."
+  },
+  "source_context": [
+    {
+      "path": "scripts/verify_ifpmic_b03_h2_runtime_full.py",
+      "sha256": "8494e13c40b82540d198a0762fb4b392e131860f8a9df5cb0e3a38087141f37c"
+    },
+    {
+      "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py",
+      "sha256": "9ad3c1be60c3975cfe3a30fab972463361ac90c8e5f5b3a47461307d20ef35d3"
+    },
+    {
+      "path": "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py",
+      "sha256": "c0dd1e2a3e732ceea482e286a0f97bbb270dfab4040d88eff0403efc846e8688"
+    },
+    {
+      "path": "tests/ifpmic_api/h2_dispatcher_crash_support.py",
+      "sha256": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472"
+    },
+    {
+      "path": "tests/ifpmic_api/h2_snapshot_evidence.py",
+      "sha256": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c"
+    },
+    {
+      "path": "tests/ifpmic_api/test_temporal_toolchain.py",
+      "sha256": "b17cd7b100938286ca7f68d3d4e24b9ba68547fd82ee2bd38a8d55abdccd2d6a"
+    },
+    {
+      "path": "docs/ifpmic/evidence/b03/h1-execution-contract.json",
+      "sha256": "7860ccc5e7527ef37f6e1f26d07b7b2df4bb2f55d721b14ae5e635492153b801"
+    },
+    {
+      "path": "README.md",
+      "sha256": "ee21e2fd36e6db1d4542d1ae8ee0403c44d3eaaf36958b58f1bab0a98f2371bf"
+    }
+  ],
+  "risks_and_remaining_uncertainty": [
+    "Implementation is not yet reviewed. Exact envelope path/schema,owned registration provenance,probe file/query matching and all rejecting branches must be independently source-reviewed.",
+    "The140 accepted synthetic cases remain historical proof and did not establish these complete actual input shapes. New scoped units and independent result review are required;they will not establish full runtime success.",
+    "README qualification changes an executed retained test dependency. A v3 candidate and new exact whole-source/paired pre-gates are mandatory;this review does not approve that future candidate or reuse v2 execution permission."
+  ],
+  "recommendation": "Implement only these3 bounded repairs and focused TC,then obtain exact cache-isolated synthetic unit-source approval. Preserve attempt02 and140 proof. Freeze and independently review a separate v3 candidate before whole-source and paired execution gates.",
+  "authorization": {
+    "bounded_implementation_and_source_review": true,
+    "synthetic_unit_execution": false,
+    "v3_candidate_approval": false,
+    "product_sdk_pytest_sql_services_or_main_execution": false,
+    "active_full_source_or_pregate_approval": false,
+    "h2_ui_at_or_goal_acceptance": false
+  },
+  "review_method": "Read-only exact plan,attempt02,actual producer/recorder source,historical Git README bytes,current README diff and original H1 contract JSON. No repository imports,tests,collection,SQL,SDK,services or network."
+}

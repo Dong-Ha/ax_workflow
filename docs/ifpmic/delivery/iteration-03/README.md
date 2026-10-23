@@ -1,5 +1,7 @@
 # 주기03 — 저장 요청의 실제 실행 접수
 
+**2026-10-23 최신:** attempt02의3건을 수정하고 [149개 실제 합성 결과](./remaining-input-repair-verification.json)와 [독립 수용](./remaining-input-repair-result-review.json)을 남겼다. v3 [ledger](../../evidence/b03/h2-runtime-full-integrated-ledger-v3.json)/[계약](../../evidence/b03/h2-runtime-full-execution-contract-v3.json)의 독립·TC 작성 검토도 완료됐다. 현재 runner3dbf는 아직v2 연결이며, v3 연결→새 정확한 소스/합성 검증→전체 소스/paired execution gates가 남았다. 실제490·업무 실행·접수 화면은 미완료다. 아래140건/미수정3건 및 접속 상태는 과거 기록이다.
+
 **최신 상태:** [진행 현황판](../status.html).140개 합성 단위 수용 후 [전체 소스 검토 attempt02](../../evidence/b03/attempts/h2-runtime-full-runner-source-review-v2-attempt-02.json)가 추가 장애3건을 확인했다. stopped envelope 경계 label/실제 role 충돌, synthetic cleanup journal의 실제 CLI 오분류, retained H1 README 해시 불일치다. 이 세 건은 미수정이며 전체 source/실행 승인은 없다. 아래140건은 당시 정확한 소스의 합성 검증이다. 다음은 세 장애의 검토된 수정·재검증이고, 이후에 실행 전 검토·fresh490·화면 연결을 진행한다.
 
 **다음에 보여줄 결과:** 저장한 요청 한 건을 실제 실행 엔진에 접수하고, 같은 작업의 실행 ID·receipt·QUEUED 상태를 화면에서 확인한다.

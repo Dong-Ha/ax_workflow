@@ -1,0 +1,89 @@
+{
+  "kind": "ifpmic.b03.h2.runtime-full-execution-tc-review.v3",
+  "review_protocol": "approve_runner_authoring_only",
+  "verdict": "approve_runner_authoring_only",
+  "contract_sha256": "714411f1de4250b0d36c92902a3946e2a2bc3590dc79c508d71ac4a8a130e00d",
+  "ledger_sha256": "4727c955d072c863c972b26684e37234feba0dce39e329475e4318a9370b9e58",
+  "raw_rules_sha256": "8c948efa993a1ba6837af28746af42ad532342eca5d5b299ac133f0377c0b74c",
+  "reviewer": "TC exact contract/inventory reviewer; prior TC test and V2 ledger authorship disclosed; not independent",
+  "authorship_disclosure": {
+    "tc_test_authorship": "The reviewer authored tests/ifpmic_evidence/test_runner_v2_repairs.py and earlier TC evidence tests. Their separately approved 149-unit result is not used as full490 runtime acceptance or as this review's evidence.",
+    "ledger_authorship": "The reviewer authored the V2 ledger; this V3 ledger candidate was authored by the orchestrator and was checked here against the exact V2 and V3 source bytes.",
+    "independence_boundary": "This is the TC half only. The exact independent V3 contract/inventory review remains required."
+  },
+  "review_scope": "Static exact-target review of the V3 contract and ledger, preserved 490-case scope, 87-case raw rules, 109 source/read pins, historical H1 README qualification and authorization boundaries. No runner, unit, pytest, product/SDK, SQL, service or full-gate execution was performed.",
+  "reviewed_inputs": {
+    "contract": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-full-execution-contract-v3.json",
+      "sha256": "714411f1de4250b0d36c92902a3946e2a2bc3590dc79c508d71ac4a8a130e00d",
+      "status": "candidate_pending_exact_independent_and_tc_contract_review"
+    },
+    "ledger": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger-v3.json",
+      "sha256": "4727c955d072c863c972b26684e37234feba0dce39e329475e4318a9370b9e58",
+      "source_pin_count": 109,
+      "current_pin_mismatches": 0,
+      "status": "candidate_v3_current_source_and_read_closure_pending_exact_review_no_execution"
+    },
+    "raw_rules": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules.json",
+      "sha256": "8c948efa993a1ba6837af28746af42ad532342eca5d5b299ac133f0377c0b74c",
+      "case_count": 87,
+      "artifact_rule_count": 953,
+      "source_pin_count": 38,
+      "unresolved": []
+    },
+    "immutable_originals": {
+      "contract_path": "docs/ifpmic/evidence/b03/h2-runtime-full-execution-contract.json",
+      "contract_sha256": "c10c7cb329ea82b758cfa7db34ac330e4b7ec472320b5904e8086f8067865a2d",
+      "ledger_path": "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger.json",
+      "ledger_sha256": "cf4f3bfc023341c22e0c8fc7c072c54838d62f7adeb39d817a4ce3b6589f8d60"
+    },
+    "superseded_v2_inputs": {
+      "contract_sha256": "d2f0ef941e62cf6a6597b39a9eda676161cd616d723403a34f16a2903a91bfe6",
+      "ledger_sha256": "1512b767aa06961d8f80ed474a4bf44929d9db430a05317447eb49f4d71a0655",
+      "effect": "V2 remains preserved history; neither its reviews nor its approvals satisfy these V3 exact targets."
+    }
+  },
+  "checks": {
+    "scope_and_inventory": {
+      "result": "pass_static",
+      "evidence": "V3 retains the V2 literal inventory: 407 retained plus 83 new equals 490 unique cases; all 25 obligation groups and five fixture prerequisites remain, with 49 extended 215+25 cases and 34 default 25+5 cases. The 15 phase order and caps are unchanged, sum to 15,420 seconds, and remain within the single 16,220-second outer cap. Seven historical derivative-ledger references and retained timing rules, including the two historical 240-second exceptions, are preserved."
+    },
+    "v2_preservation_and_v3_delta": {
+      "result": "pass_static",
+      "evidence": "The original c10/cf4 contract and ledger still hash to their pinned values. V2 files are unchanged. V3 ledger adds five source/read inputs and refreshes the existing test_temporal_toolchain.py pin; its case, phase, obligation, execution-order and limits data equal V2. V3 contract changes only its ledger authority, V3 review/source paths, runner binding status and revision history; the execution inventory and budgets remain equal to V2."
+    },
+    "source_closure_and_non_circularity": {
+      "result": "pass_static",
+      "evidence": "All 109 ledger paths exist as regular single-link non-symlink files and match their recorded SHA256 values. The five added paths are README.md, the historical H1 execution contract, the H1 and H2 qualification snapshots, and scripts/ifpmic_readme_qualification.py; tests/ifpmic_api/test_temporal_toolchain.py is the one refreshed existing pin. The active full runner, V3 contract and reviews are excluded to avoid hash cycles."
+    },
+    "readme_historical_and_current_roles": {
+      "result": "pass_static",
+      "evidence": "The ledger records the exact H1 README SHA 0964d4dae840f9a433d88ee92132efedb7e17c77ac815d0e955c6fdbc65c7100, intermediate H2 README SHA 1aa570dc948ffd83a15097535f3456eb24eea6a947c22a4aa49aa12f5b05605a, and current README SHA ee21e2fd36e6db1d4542d1ae8ee0403c44d3eaaf36958b58f1bab0a98f2371bf. It pins the H1 contract and read-only qualification helper, which binds the historical H1 input and accepts only the reviewed current addition. The retained H1 test ID and historical expected README constant remain, and its AST contains the helper call and result assertions. This establishes source mapping only; it does not promote historical execution acceptance."
+    },
+    "machine_raw_evidence_and_helpers": {
+      "result": "pass_static",
+      "evidence": "The exact machine rules remain 87 cases, 953 artifact rules, 38 source pins and zero unresolved entries. All six raw-rule source bindings and six fixed runtime-helper hashes match ledger pins and current bytes. The rules/checker path retains separate structural raw-proof requirements and does not stand in for business assertions or fresh runtime evidence."
+    },
+    "attestation_budget_and_authority": {
+      "result": "pass_static",
+      "evidence": "The contract retains 19 attestation inputs, seven binary identities, 15 phase caps and the 15,420-second phase sum; 450 seconds of the 800-second overhead is reserved for pre-case collection, with the 16,220-second outer cap unchanged. Required paired-review target fields are contract_sha256, ledger_sha256 and raw_rules_sha256. Execution remains gated on separate final runner-source review and exact independent/TC pre-gate hashes. All four authorization flags are false."
+    }
+  },
+  "limitations": [
+    "This is a TC authoring/inventory review only; the exact independent V3 contract review remains mandatory.",
+    "No unit test result, including the separately approved 149-unit run, is a fresh 490-case result or acceptance evidence.",
+    "The full runner's final reviewed source, initial/final self-hash consistency, producer-schema compatibility, exact pre-gates, raw result audit and privacy review remain separate requirements. This review approves none of them.",
+    "No actual H2 case, SQL operation, service lifecycle, full-gate result, H2 acceptance, B03/H3-H7 completion or original AT/full AX completion is claimed."
+  ],
+  "authorization": {
+    "tc_review_approves_runner_authoring_only": true,
+    "independent_exact_contract_review_still_required": true,
+    "effective_runner_authoring_authorized_by_this_review_alone": false,
+    "test_or_service_execution_authorized": false,
+    "pre_gate_authorized": false,
+    "h2_acceptance": false,
+    "full_goal_acceptance": false
+  }
+}

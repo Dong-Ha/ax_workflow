@@ -34,6 +34,7 @@ from scripts.ifpmic_temporal_toolchain import (
     stop_owned,
     verify_binary,
 )
+from scripts.ifpmic_readme_qualification import verify_readme_qualification
 
 
 EXPECTED_LOCK_SHA256 = "9c6141efe9ccb7cd9a94e3663c2faf9049eb10b883c93f492bb3e46c3a8883f7"
@@ -317,8 +318,9 @@ def test_installed_toolchain_pins(_case_watchdog: _Deadline) -> None:
     lock_path = _candidate_lock()
     assert lock_path.is_file()
     assert _hash(lock_path) == EXPECTED_LOCK_SHA256
-    readme = Path("README.md").resolve()
-    assert _hash(readme) == EXPECTED_README_SHA256
+    documentation = verify_readme_qualification(Path(__file__).resolve().parents[2])
+    assert documentation["historical_h2_sha256"] == EXPECTED_README_SHA256
+    assert documentation["current_change_verified"] is True
     normalized_lock = Path("services/ifpmic_api/requirements-temporal.lock").resolve()
     assert normalized_lock.is_file() and not normalized_lock.is_symlink()
     assert _hash(normalized_lock) == EXPECTED_NORMALIZED_LOCK_SHA256

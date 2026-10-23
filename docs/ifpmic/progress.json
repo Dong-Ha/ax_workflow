@@ -660,14 +660,14 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "Iteration03: whole-source attempt02 requests changes for stopped-envelope boundary-label role collision, synthetic fixture journal CLI misclassification, and retained H1 README anchor drift. Existing140 synthetic units remain accepted only for their exact source; actual490 and admission UI remain pending. Repair with reviewed plans, qualify changed source/inputs and renew exact source/paired execution gates before fresh490 and real saved-request admission.",
+  "next_step": "Bind runner to paired-reviewed v3 contract/ledger/review hashes; obtain exact whole-source and fresh synthetic approval/results, then independent/TC execution pre-gates before fresh490. Accepted149 repairs are exact3dbf source proof only; actual engine admission UI remains pending.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",
     "Approved Bedrock/Claude runtime profile"
   ],
   "publication_policy": "Only authorized git repository documentation, source and synthetic verification summaries/screenshots; never runtime credentials or application logs.",
-  "updated_at": "2026-10-20T17:28:17.772468+00:00",
+  "updated_at": "2026-10-23T02:23:34.904119+00:00",
   "session_handoff": {
     "status": "resumed_by_user",
     "resume_document": "docs/ifpmic/RESUME.md",
@@ -688,7 +688,7 @@
       "commit_and_push"
     ],
     "existing_mandatory_gates_preserved": true,
-    "latest_user_visible_change": "A separate static progress dashboard now brings together the two existing deliveries, their dated screenshots, 2/16 stage count, three current blockers and next demo. No new workflow execution behavior.",
+    "latest_user_visible_change": "No new workflow execution behavior. Prior static status page remains a dated checkpoint; local ports4173/8769 had no listening sockets on2026-10-23.",
     "reporting_rule": "Lead with visible behavior; explicitly report no new visible feature when only internal evidence advances. Keep stage completion, visible flows, and test counts separate.",
     "next_visible_acceptance": "One persisted request admitted by the actual execution engine; matching job/run/receipt and QUEUED displayed, with duplicate, authorization and reload checks. Mandatory execution gates preserved.",
     "current_stage_completion": {
@@ -709,18 +709,18 @@
       "machine_sha256": "8c948efa993a1ba6837af28746af42ad532342eca5d5b299ac133f0377c0b74c",
       "scope": "Source path/schema/applicability only; no actual execution acceptance."
     },
-    "current_candidate_static_verification": "delivery/iteration-03/full-candidate-v2-static-verification.json",
-    "next_foundation_scope": "Repair the three concrete attempt02 blockers with reviewed scope, then renew source/input and execution reviews. No execution approval exists.",
+    "current_candidate_static_verification": "delivery/iteration-03/full-candidate-v3-static-verification.json",
+    "next_foundation_scope": "Bind runner to paired-reviewed v3 contract/ledger/review hashes; obtain exact whole-source and fresh synthetic approval/results, then independent/TC execution pre-gates before fresh490. Accepted149 repairs are exact3dbf source proof only; actual engine admission UI remains pending.",
     "candidate_authoring_reviews": {
-      "independent": "evidence/b03/h2-runtime-full-execution-contract-review-v2.json",
-      "tc": "evidence/b03/h2-runtime-full-execution-tc-review-v2.json"
+      "independent": "evidence/b03/h2-runtime-full-execution-contract-review-v3.json",
+      "tc": "evidence/b03/h2-runtime-full-execution-tc-review-v3.json"
     },
     "latest_unit_result": {
-      "passed": 140,
-      "retained": 131,
+      "passed": 149,
+      "retained": 140,
       "new": 9,
-      "verification": "delivery/iteration-03/full-input-repair-verification.json",
-      "independent_acceptance": "delivery/iteration-03/full-input-repair-result-review.json",
+      "verification": "delivery/iteration-03/remaining-input-repair-verification.json",
+      "independent_acceptance": "delivery/iteration-03/remaining-input-repair-result-review.json",
       "actual_full490": false
     },
     "full_source_rejected_attempt": "evidence/b03/attempts/h2-runtime-full-runner-source-review-v2-attempt-02.json",
@@ -729,17 +729,17 @@
       {
         "id": "FULL-STOPPED-BOUNDARY-LABEL-IS-NOT-REGISTRY-ROLE",
         "summary": "Stopped envelope label conflicts with canonical process role",
-        "status": "open"
+        "status": "repaired_in_accepted149_synthetic_scope_pending_full_source_review"
       },
       {
         "id": "FULL-SYNTHETIC-CLEANUP-JOURNAL-IS-NOT-CLI",
         "summary": "Synthetic fixture journal is incorrectly interpreted as real CLI proof",
-        "status": "open"
+        "status": "repaired_in_accepted149_synthetic_scope_pending_full_source_review"
       },
       {
         "id": "FULL-RETAINED-H1-README-ANCHOR-DRIFT",
         "summary": "Retained H1 test README hash differs from current authorized documentation",
-        "status": "open"
+        "status": "repaired_in_accepted149_synthetic_scope_pending_full_source_review"
       }
     ]
   },
@@ -769,12 +769,12 @@
       "status": "in_progress",
       "title": "Connect persisted API job to real execution-engine admission and visible run/receipt",
       "path": "delivery/iteration-03/README.md",
-      "verification": "delivery/iteration-03/full-input-repair-verification.json",
-      "foundation_status": "140_synthetic_units_accepted_only; whole_source_attempt02_requests_changes",
+      "verification": "delivery/iteration-03/remaining-input-repair-verification.json",
+      "foundation_status": "accepted149_scoped_repairs; paired_v3_authoring_reviews_complete; runner_rebind_pending",
       "actual_job_execution": false,
-      "scope": "140 synthetic units independently accepted for exact reviewed source. Attempt02 found three remaining source/input blockers. Actual490, full execution approval and admission/run/receipt UI remain pending.",
+      "scope": "Three attempt02 input defects repaired;149 synthetic units independently accepted for exact3dbf runner. Paired v3 authoring reviews cover109pins; no whole-source/execution approval or actual490/admission UI.",
       "mapping_resolution_progress": "evidence/b03/h2-machine-resolution-progress-v2.json",
-      "candidate_static_verification": "delivery/iteration-03/full-candidate-v2-static-verification.json"
+      "candidate_static_verification": "delivery/iteration-03/full-candidate-v3-static-verification.json"
     }
   ]
 }

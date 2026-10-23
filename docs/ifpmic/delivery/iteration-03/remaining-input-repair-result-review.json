@@ -1,0 +1,103 @@
+{
+  "kind": "ifpmic.delivery.iteration03.remaining-input-repair-result-review.v1",
+  "reviewed_utc": "2026-10-20T17:45:19.158671+00:00",
+  "reviewer": {
+    "agent_id": "/root/h2_evidence_amendment_review",
+    "independence": "Independent from runner/helper/test/capture authors and execution operator;read existing evidence only."
+  },
+  "decision": "accept_149_cache_isolated_synthetic_units_only",
+  "verification": {
+    "path": "docs/ifpmic/delivery/iteration-03/remaining-input-repair-verification.json",
+    "sha256": "0fc17026ee74cb62355c21013abd0233cd01d5f4ba6e63dfa8e91fa3b7351327",
+    "preserved_unchanged": true
+  },
+  "source_review": {
+    "path": "docs/ifpmic/delivery/iteration-03/remaining-input-repair-source-review.json",
+    "sha256": "eddcfb25849ad9e6a0c7711ba2f1eaafbfad72121165962a04ed6ec79955899a"
+  },
+  "plan_review": {
+    "path": "docs/ifpmic/delivery/iteration-03/remaining-input-repair-plan-review.json",
+    "sha256": "8cc283f35ee861bc33f42734624dfaee9181882284779d6a738123871084cd5e"
+  },
+  "private_capture": {
+    "path": "workflow-artifacts/verification/agile/iteration-03/remaining-input-preparation/run_units.py",
+    "sha256": "62221fef39e5f95e998c4af2f136f9ac98440785371284bc4c0ff2a82dc5d6be"
+  },
+  "raw_evidence": {
+    "preservation-after.json": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/remaining-input-unit-2026-10-20T17-43-37-126416Z/preservation-after.json",
+      "sha256": "30b1204426dfb183ce2571455a4f03d209ef0c97507daa1273a22b49bd544346"
+    },
+    "preservation-before.json": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/remaining-input-unit-2026-10-20T17-43-37-126416Z/preservation-before.json",
+      "sha256": "30b1204426dfb183ce2571455a4f03d209ef0c97507daa1273a22b49bd544346"
+    },
+    "result.json": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/remaining-input-unit-2026-10-20T17-43-37-126416Z/result.json",
+      "sha256": "3838040d05a115153ac509c2584f2db41c8e022f961ecd6a846f81cafd0573e0"
+    },
+    "source-after.json": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/remaining-input-unit-2026-10-20T17-43-37-126416Z/source-after.json",
+      "sha256": "c22e5e32929f509c9cb6b10dbbe466f96c6fb880a5fcf2bfbd5f369472197c07"
+    },
+    "source-before.json": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/remaining-input-unit-2026-10-20T17-43-37-126416Z/source-before.json",
+      "sha256": "c22e5e32929f509c9cb6b10dbbe466f96c6fb880a5fcf2bfbd5f369472197c07"
+    },
+    "stderr.log": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/remaining-input-unit-2026-10-20T17-43-37-126416Z/stderr.log",
+      "sha256": "c54e4ab6f5241ee2a5f1fbd0a9b4ec7800e997c2137871a654bfa2992390a333"
+    },
+    "stdout.log": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/remaining-input-unit-2026-10-20T17-43-37-126416Z/stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "findings": [],
+  "evidence": {
+    "actual_results": {
+      "exit_code": 0,
+      "timed_out": false,
+      "passed": 149,
+      "retained": 140,
+      "new": 9,
+      "failed": 0,
+      "skipped": 0,
+      "reported_unittest_seconds": 1.138,
+      "test_id_set_sha256": "562a5da0433fd201fea5fd7510659116a30bf03ec847d75513a4f74170acabab",
+      "id_digest_recipe": "SHA256 of UTF-8 sorted unique actual IDs joined by newline with a final newline.",
+      "comparison": "The raw stderr contains149 unique ... ok results and Ran149/OK. IDs equal the approved source-review list,current AST,raw expected/actual lists and public test_ids. All140 previous IDs remain;their method ASTs equal the pinned baseline manifest. stdout is empty."
+    },
+    "source_integrity": "All7 raw file hashes match public pointers. source-before/source-after equal all40 approved pins,raw/public pins and current files. Source revieweddcfb25849ad9e6a0c7711ba2f1eaafbfad72121165962a04ed6ec79955899a remains exact. Runner3dbf610,README helperfc4769,H1 test8a60dc4,TCab92aa and capture62221f remain unchanged.",
+    "private_capture_integrity": "All7 raw files are owned nonsymlink regular single-link0600. Leaf,cache and tmp are owned nonsymlink0700. Cache is empty now;the approved capture checks empty before/after,exact7-module discovery,60-second timeout,complete actual IDs,source equality and unchanged initial approval digest.",
+    "preservation": {
+      "before_after_maps_identical": true,
+      "protected_hashes": 96,
+      "protected_inventory": 89,
+      "design_imports": 17,
+      "uploads": 2,
+      "environment_entries": {
+        "original32": 1777,
+        "qualified36": 3072
+      },
+      "baseline_comparison": "Both saved maps match the exact original B01 archive/member protected selection,the original design manifest and accepted407 complete environment file/symlink maps. Baseline archive/member,manifest and environment anchor hashes were independently checked. These byte-preservation records do not establish service health."
+    },
+    "scope": "Accepted proof is the source-approved149 synthetic units:stopped boundary-label envelope handling,exact nonphysical cleanup probe and historical/current README qualification plus the preserved140 regressions. Unit fixtures use tempfile data,AST/text inputs and mocked lifecycle/main operations,with the previously approved2 short synthetic cache probes. Product/H1 SDK test modules,pytest collection,SQL,services and actual full main are outside this path;full_runtime_executed=False."
+  },
+  "acceptance": {
+    "approved_149_synthetic_unit_proof": true,
+    "fresh_cache_and_40_pin_preservation_proof": true,
+    "v3_candidate_approval": false,
+    "whole_runner_source_approval": false,
+    "execution_pregates": false,
+    "actual_full490_or_h2_acceptance": false,
+    "ui_at_iteration03_or_goal_acceptance": false
+  },
+  "risks_and_remaining_uncertainty": [
+    "These exact source-shaped synthetic cases pass;actual collection,timing,SQL/history/authority/barrier causality,physical resource absence,invocation completeness and privacy fidelity remain subject to full integration evidence.",
+    "The repaired H1 source/read dependencies require a separate v3 candidate,paired authoring reviews,whole-source approval and paired exact execution pre-gates before fresh490. No v2 runtime permission is inferred.",
+    "The reviewed public pending-status bytes remain unchanged. This separate result acceptance does not broaden historical140/131/407 proof or accept UI,AT or the overall goal."
+  ],
+  "recommendation": "Accept this exact149-unit result and preservation proof only. Proceed separately with v3 candidate authoring/review;grant no additional execution authorization.",
+  "review_method": "Read-only raw log/ID/AST/hash/mode/owner/cache and saved original-baseline comparison. No rerun,repository imports,collection,SQL,SDK,services or network."
+}

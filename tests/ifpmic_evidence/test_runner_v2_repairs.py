@@ -15,6 +15,7 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
+from scripts import ifpmic_readme_qualification
 from scripts import verify_ifpmic_b03_h2_runtime_full as runner
 
 
@@ -663,6 +664,75 @@ class ProcessEvidenceJoinRepairTests(unittest.TestCase):
         h1, runtime = _write_temporal_baselines(root)
         return runner.collect_private_temporal_evidence([root / "observations"], h1, runtime)
 
+    @staticmethod
+    def _write_stopped_boundary_fixture(
+        root: Path, *, owned_case: str | None = "case-a",
+        started_case: str | None = None, envelope_case: str = "case-a",
+        outer_updates: dict | None = None, stop_updates: dict | None = None,
+        filename_label: str = "dispatcher-before-activity-result-cut",
+    ) -> None:
+        observations = root / "observations"
+        pid, ticks = 804, "8804"
+        if owned_case is not None:
+            _write_json(observations / owned_case / "owned-process-00.json", {
+                "role": "dispatcher", "pid": pid, "start_ticks": ticks,
+            })
+        if started_case is not None:
+            ProcessEvidenceJoinRepairTests._line(
+                observations / started_case / "process-journal.jsonl",
+                {"event": "started", "role": "dispatcher", "pid": pid,
+                 "start_ticks": ticks},
+            )
+        outer = {"role": "dispatcher-before-activity-result-cut", "pid": pid,
+                 "start_ticks": ticks}
+        if outer_updates:
+            outer.update(outer_updates)
+        stopped = {"pid": pid, "start_ticks": ticks, "returncode": 0,
+                   "forced": False, "absent": True}
+        if stop_updates:
+            stopped.update(stop_updates)
+        outer["stop"] = stopped
+        _write_json(observations / envelope_case / ("stopped-" + filename_label + ".json"), outer)
+
+    def test_stopped_boundary_label_joins_and_deduplicates_canonical_owned_role(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="h2-stopped-boundary-join-") as temp:
+            base = Path(temp)
+            self._write_stopped_boundary_fixture(base)
+            result = self._observe(base)
+            dispatcher = [row for row in result["owned_processes"]
+                          if row["role"] == "dispatcher" and row["expected_exit_code"] == 0]
+            self.assertEqual(dispatcher, [{
+                "role": "dispatcher", "count": 2, "expected_exit_code": 0,
+                "expected_signal": None, "forced_cleanup": False, "absent": True,
+            }])
+            self.assertNotIn("dispatcher-before-activity-result-cut",
+                             json.dumps(result["owned_processes"]))
+            self.assertNotIn("804", json.dumps(result["owned_processes"]))
+            self.assertNotIn("8804", json.dumps(result["owned_processes"]))
+
+    def test_stopped_boundary_rejects_unowned_cross_case_and_bad_nested_stop(self) -> None:
+        invalid = (
+            ("missing-owned", {"owned_case": None}),
+            ("started-only", {"owned_case": None, "started_case": "case-a"}),
+            ("cross-case", {"owned_case": "case-a", "envelope_case": "case-b"}),
+            ("outer-pid", {"outer_updates": {"pid": 805}}),
+            ("outer-ticks", {"outer_updates": {"start_ticks": "8805"}}),
+            ("nested-pid", {"stop_updates": {"pid": 805}}),
+            ("nested-ticks", {"stop_updates": {"start_ticks": "8805"}}),
+            ("forced", {"stop_updates": {"forced": True}}),
+            ("not-absent", {"stop_updates": {"absent": False}}),
+            ("unexpected-code", {"stop_updates": {"returncode": 2}}),
+            ("malformed-stop", {"stop_updates": {"absent": None}}),
+            ("filename-role-mismatch", {"filename_label": "dispatcher"}),
+        )
+        for name, options in invalid:
+            with self.subTest(case=name):
+                with tempfile.TemporaryDirectory(prefix="h2-stopped-boundary-invalid-") as temp:
+                    base = Path(temp)
+                    self._write_stopped_boundary_fixture(base, **options)
+                    with self.assertRaises(RuntimeError):
+                        self._observe(base)
+
     def test_roleless_terminal_journal_joins_only_to_same_case_started_identity(self) -> None:
         with tempfile.TemporaryDirectory(prefix="h2-process-join-") as temp:
             root = Path(temp) / "observations"
@@ -802,6 +872,162 @@ class ProcessEvidenceJoinRepairTests(unittest.TestCase):
             with self.assertRaises(RuntimeError):
                 self._observe(base)
 
+    @staticmethod
+    def _write_cleanup_fallback_probe(
+        root: Path, *, include_query: bool = True, probe_suffix: str | None = None,
+        pid: int = 74991, ticks: str = "saved-test-identity",
+        journal_rows: list[dict] | None = None, cleanup: dict | None = None,
+        query_updates: dict | None = None, result_updates: dict | None = None,
+        duplicate_query: bool = False,
+    ) -> None:
+        node_id = ("tests/ifpmic_api/test_h2_fixture_cleanup_failures.py::"
+                   "test_expired_cleanup_budget_performs_no_new_lifecycle_action")
+        observations = root / "observations"
+        node_hash = hashlib.sha256(node_id.encode("utf-8")).hexdigest()[:16]
+        probe_name = "cleanup-fallback-probe-" + (probe_suffix or node_hash)
+        probe = observations / probe_name
+        default_journal = [
+            {"event": "stop_requested", "pid": 74991,
+             "start_ticks": "saved-test-identity", "pre_stop_exit_code": None,
+             "mode": "graceful"},
+            {"event": "stopped", "pid": 74991, "start_ticks": "saved-test-identity",
+             "exit_code": None, "forced": False, "absent": False},
+        ]
+        if journal_rows is None:
+            journal_rows = default_journal
+        else:
+            # Copy caller-provided rows so each negative fixture is independent.
+            journal_rows = [dict(row) for row in journal_rows]
+        if pid != 74991 or ticks != "saved-test-identity":
+            for row in journal_rows:
+                if "pid" in row:
+                    row["pid"] = pid
+                if "start_ticks" in row:
+                    row["start_ticks"] = ticks
+        journal = probe / "process-journal.jsonl"
+        for row in journal_rows:
+            ProcessEvidenceJoinRepairTests._line(journal, row)
+        if cleanup is None:
+            cleanup = {"processes": [{"role": "injected-owned-handle", "pid": 74991,
+                                       "returncode": None, "forced": False,
+                                       "absent": False}]}
+        else:
+            cleanup = json.loads(json.dumps(cleanup))
+        if pid != 74991 or ticks != "saved-test-identity":
+            for row in cleanup.get("processes", []):
+                if "pid" in row:
+                    row["pid"] = pid
+                if "start_ticks" in row:
+                    row["start_ticks"] = ticks
+        _write_json(probe / "process-cleanup.json", cleanup)
+        if not include_query:
+            return
+
+        source_path = ROOT / "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py"
+        source_tree = ast.parse(source_path.read_text(encoding="utf-8"), filename=str(source_path))
+        function = next(node for node in source_tree.body
+                        if isinstance(node, ast.FunctionDef)
+                        and node.name == "test_expired_cleanup_budget_performs_no_new_lifecycle_action")
+        query_call = next(node for node in ast.walk(function)
+                          if isinstance(node, ast.Call)
+                          and isinstance(node.func, ast.Name)
+                          and node.func.id == "record_query_observation")
+        query = {
+            "kind": "ifpmic.b03.h2.query-observation.v1",
+            "operation": "fixture.exhausted_cleanup",
+            "subject": node_id,
+            "result": {
+                "synthetic_process_probe": True,
+                "actions": [],
+                "identity_lookups": [],
+                "remaining_checks": 2,
+                "retained_same_object": True,
+                "physical_process_absence_proven": False,
+            },
+            "pytest_current_test": node_id + " (call)",
+            "observed_monotonic_ns": 1700000000000000000,
+            "caller": {"file": source_path.name, "function": function.name,
+                       "line": query_call.lineno},
+        }
+        if result_updates:
+            query["result"].update(result_updates)
+        if query_updates:
+            query.update(query_updates)
+        query_dir = observations / "query-observations"
+        query_path = query_dir / (str(query["observed_monotonic_ns"]) + "-" + "a" * 32 + ".json")
+        _write_json(query_path, query)
+        if duplicate_query:
+            _write_json(query_dir / (str(query["observed_monotonic_ns"]) + "-" + "b" * 32 + ".json"), query)
+
+    def test_exact_cleanup_fallback_probe_is_two_unknown_records_and_zero_processes(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="h2-cleanup-fallback-exact-") as temp:
+            base = Path(temp)
+            self._write_cleanup_fallback_probe(base)
+            result = self._observe(base)
+            self.assertEqual(result["expected_fixture_unknown_records"], 2)
+            self.assertEqual(result["owned_processes"], [
+                {"role": role, "count": 1, "expected_exit_code": 0,
+                 "expected_signal": None, "forced_cleanup": False, "absent": True}
+                for role in ("dispatcher", "temporal", "worker")
+            ])
+            self.assertNotIn("74991", json.dumps(result["owned_processes"]))
+            self.assertNotIn("saved-test-identity", json.dumps(result["owned_processes"]))
+
+    def test_cleanup_fallback_requires_exact_probe_journal_summary_and_query(self) -> None:
+        invalid = [
+            ("missing-query", {"include_query": False}),
+            ("wrong-probe-context", {"probe_suffix": "0000000000000000"}),
+            ("wrong-phase", {"query_updates": {"pytest_current_test":
+                "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py::"
+                "test_expired_cleanup_budget_performs_no_new_lifecycle_action (setup)"}}),
+            ("wrong-node", {"query_updates": {"subject": "other-node"}}),
+            ("wrong-query-kind", {"query_updates": {"kind": "other-kind"}}),
+            ("wrong-operation", {"query_updates": {"operation": "fixture.other"}}),
+            ("wrong-caller-file", {"query_updates": {"caller": {
+                "file": "other.py", "function": "test_expired_cleanup_budget_performs_no_new_lifecycle_action",
+                "line": 130}}}),
+            ("invalid-caller-line", {"query_updates": {"caller": {
+                "file": "test_h2_fixture_cleanup_failures.py",
+                "function": "test_expired_cleanup_budget_performs_no_new_lifecycle_action",
+                "line": True}}}),
+            ("duplicate-query", {"duplicate_query": True}),
+            ("actions", {"result_updates": {"actions": ["signal"]}}),
+            ("identity-lookup", {"result_updates": {"identity_lookups": [74991]}}),
+            ("absence-claimed", {"result_updates": {"physical_process_absence_proven": True}}),
+            ("not-retained", {"result_updates": {"retained_same_object": False}}),
+            ("too-few-checks", {"result_updates": {"remaining_checks": 1}}),
+            ("nonphysical-ticks-changed", {"pid": 74991, "ticks": "870491"}),
+            ("real-identity-substitution", {"pid": 804, "ticks": "8804"}),
+            ("summary-success-claim", {"cleanup": {"processes": [{
+                "role": "injected-owned-handle", "pid": 74991,
+                "returncode": 0, "forced": False, "absent": True}]}}),
+            ("journal-missing-stop-request", {"journal_rows": [{
+                "event": "stopped", "pid": 74991, "start_ticks": "saved-test-identity",
+                "exit_code": None, "forced": False, "absent": False}]}),
+        ]
+        for name, options in invalid:
+            with self.subTest(case=name):
+                with tempfile.TemporaryDirectory(prefix="h2-cleanup-fallback-invalid-") as temp:
+                    base = Path(temp)
+                    self._write_cleanup_fallback_probe(base, **options)
+                    with self.assertRaises(RuntimeError):
+                        self._observe(base)
+
+        with tempfile.TemporaryDirectory(prefix="h2-cleanup-fallback-cross-phase-") as temp:
+            base = Path(temp)
+            self._write_cleanup_fallback_probe(base)
+            source_query_dir = base / "observations" / "query-observations"
+            query_path = next(source_query_dir.glob("*.json"))
+            other_phase = base / "other-phase-observations"
+            destination_query_dir = other_phase / "query-observations"
+            _private_mkdir(destination_query_dir)
+            query_path.rename(destination_query_dir / query_path.name)
+            h1, runtime = _write_temporal_baselines(base)
+            with self.assertRaises(RuntimeError):
+                runner.collect_private_temporal_evidence(
+                    [base / "observations", other_phase], h1, runtime)
+
+
     def test_postgres_server_and_backend_identities_are_not_owned_cli_processes(self) -> None:
         with tempfile.TemporaryDirectory(prefix="h2-process-pg-separation-") as temp:
             base = Path(temp)
@@ -854,6 +1080,149 @@ class ProcessEvidenceJoinRepairTests(unittest.TestCase):
                         _write_json(case / filename, value)
                     with self.assertRaises(RuntimeError):
                         self._observe(base)
+
+class ReadmeQualificationRepairTests(unittest.TestCase):
+    INPUTS = {
+        "docs/ifpmic/evidence/b03/qualification/h1-readme.md":
+            ifpmic_readme_qualification.H1_README_SHA256,
+        "docs/ifpmic/evidence/b03/qualification/h2-readme.md":
+            ifpmic_readme_qualification.H2_README_SHA256,
+        "README.md": ifpmic_readme_qualification.CURRENT_README_SHA256,
+        "docs/ifpmic/evidence/b03/h1-execution-contract.json":
+            ifpmic_readme_qualification.H1_CONTRACT_SHA256,
+    }
+
+    @classmethod
+    def _fixture(cls, root: Path) -> dict[str, Path]:
+        paths: dict[str, Path] = {}
+        for relative, expected in cls.INPUTS.items():
+            source = ROOT / relative
+            raw = source.read_bytes()
+            if hashlib.sha256(raw).hexdigest() != expected:
+                raise AssertionError(f"test fixture source pin changed: {relative}")
+            target = root / relative
+            _private_mkdir(target.parent)
+            target.write_bytes(raw)
+            target.chmod(0o600)
+            paths[relative] = target
+        return paths
+
+    def test_exact_historical_and_current_readmes_are_qualified_separately(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="h2-readme-qualification-") as temp:
+            root = Path(temp)
+            paths = self._fixture(root)
+            result = ifpmic_readme_qualification.verify_readme_qualification(root)
+            self.assertEqual(result, {
+                "historical_h1_sha256": self.INPUTS[
+                    "docs/ifpmic/evidence/b03/qualification/h1-readme.md"],
+                "historical_h2_sha256": self.INPUTS[
+                    "docs/ifpmic/evidence/b03/qualification/h2-readme.md"],
+                "current_sha256": self.INPUTS["README.md"],
+                "current_change_verified": True,
+            })
+
+            source = (ROOT / "tests/ifpmic_api/test_temporal_toolchain.py").read_text(
+                encoding="utf-8")
+            tree = ast.parse(source)
+            function = next(node for node in tree.body
+                            if isinstance(node, ast.FunctionDef)
+                            and node.name == "test_installed_toolchain_pins")
+            self.assertTrue(any(isinstance(node, ast.Call)
+                                and isinstance(node.func, ast.Name)
+                                and node.func.id == "verify_readme_qualification"
+                                for node in ast.walk(function)))
+            self.assertTrue(any(isinstance(node, ast.Compare)
+                                and isinstance(node.left, ast.Subscript)
+                                and isinstance(node.left.slice, ast.Constant)
+                                and node.left.slice.value == "historical_h2_sha256"
+                                and any(isinstance(item, ast.Name)
+                                        and item.id == "EXPECTED_README_SHA256"
+                                        for item in node.comparators)
+                                for node in ast.walk(function)))
+            self.assertTrue(any(isinstance(node, ast.Compare)
+                                and isinstance(node.left, ast.Subscript)
+                                and isinstance(node.left.slice, ast.Constant)
+                                and node.left.slice.value == "current_change_verified"
+                                and any(isinstance(item, ast.Constant) and item.value is True
+                                        for item in node.comparators)
+                                for node in ast.walk(function)))
+            expected_sha = next(node.value for node in tree.body
+                                if isinstance(node, ast.Assign)
+                                and any(isinstance(target, ast.Name)
+                                        and target.id == "EXPECTED_README_SHA256"
+                                        for target in node.targets))
+            self.assertEqual(ast.literal_eval(expected_sha),
+                             ifpmic_readme_qualification.H2_README_SHA256)
+            self.assertTrue(paths["README.md"].is_file())
+
+    def test_each_qualification_input_rejects_tampering_missing_symlink_and_nonfile(self) -> None:
+        for relative, expected in self.INPUTS.items():
+            with self.subTest(input=relative):
+                for mode in ("tamper", "missing", "symlink", "nonfile"):
+                    with self.subTest(mode=mode), tempfile.TemporaryDirectory(
+                            prefix="h2-readme-input-invalid-") as temp:
+                        root = Path(temp)
+                        paths = self._fixture(root)
+                        target = paths[relative]
+                        if mode == "tamper":
+                            target.write_bytes(target.read_bytes() + b"extra\n")
+                            target.chmod(0o600)
+                        elif mode == "missing":
+                            target.unlink()
+                        elif mode == "symlink":
+                            replacement = root / "replacement-input"
+                            replacement.write_bytes((ROOT / relative).read_bytes())
+                            replacement.chmod(0o600)
+                            target.unlink()
+                            target.symlink_to(replacement)
+                        else:
+                            target.unlink()
+                            target.mkdir(mode=0o700)
+                        with self.assertRaises(RuntimeError):
+                            ifpmic_readme_qualification.verify_readme_qualification(root)
+
+    def test_readme_semantics_reject_hash_pinned_unreviewed_additions(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="h2-readme-semantic-extra-") as temp:
+            root = Path(temp)
+            paths = self._fixture(root)
+            current = paths["README.md"]
+            raw = current.read_bytes() + b"Unreviewed text.\n"
+            current.write_bytes(raw)
+            current.chmod(0o600)
+            with patch.object(ifpmic_readme_qualification, "CURRENT_README_SHA256",
+                              hashlib.sha256(raw).hexdigest()):
+                with self.assertRaisesRegex(RuntimeError, "reviewed delivery addition"):
+                    ifpmic_readme_qualification.verify_readme_qualification(root)
+
+    def test_h1_contract_semantics_reject_hash_pinned_readme_substitution(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="h2-readme-contract-semantic-") as temp:
+            root = Path(temp)
+            paths = self._fixture(root)
+            contract_path = paths["docs/ifpmic/evidence/b03/h1-execution-contract.json"]
+            contract = json.loads(contract_path.read_text(encoding="utf-8"))
+            next(row for row in contract["inputs"] if row.get("path") == "README.md")[
+                "sha256"] = ifpmic_readme_qualification.H2_README_SHA256
+            raw = (json.dumps(contract, sort_keys=True, indent=2) + "\n").encode("utf-8")
+            contract_path.write_bytes(raw)
+            contract_path.chmod(0o600)
+            with patch.object(ifpmic_readme_qualification, "H1_CONTRACT_SHA256",
+                              hashlib.sha256(raw).hexdigest()):
+                with self.assertRaisesRegex(RuntimeError, "Historical H1 README attestation"):
+                    ifpmic_readme_qualification.verify_readme_qualification(root)
+
+    def test_noncanonical_or_symlink_root_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="h2-readme-root-") as temp:
+            parent = Path(temp)
+            root = parent / "root"
+            root.mkdir(mode=0o700)
+            self._fixture(root)
+            with self.assertRaisesRegex(RuntimeError, "not canonical"):
+                ifpmic_readme_qualification.verify_readme_qualification(
+                    root / "unneeded-component" / "..")
+            link = parent / "root-link"
+            link.symlink_to(root, target_is_directory=True)
+            with self.assertRaisesRegex(RuntimeError, "not canonical"):
+                ifpmic_readme_qualification.verify_readme_qualification(link)
 
 
 if __name__ == "__main__":

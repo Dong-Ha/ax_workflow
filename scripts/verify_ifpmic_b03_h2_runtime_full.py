@@ -762,6 +762,7 @@ def collect_private_temporal_evidence(observation_roots: list[Path],
             return None
 
     registrations = {}
+    owned_registrations = set()
     terminal_proofs = {}
     killed_events = []
 
@@ -814,6 +815,21 @@ def collect_private_temporal_evidence(observation_roots: list[Path],
         if isinstance(value, dict):
             event = value.get('event')
             journal = path.name == 'process-journal.jsonl'
+            if not context and path.suffix == '.json' and path.name.startswith('stopped-'):
+                # _stop_saved's outer role is a boundary label, not a process
+                # role. Only canonical owned metadata in this case can supply it.
+                identity = identity_of(value)
+                label, stopped = value.get('role'), value.get('stop')
+                if (set(value) != {'role', 'pid', 'start_ticks', 'stop'}
+                        or not isinstance(label, str) or not label
+                        or path.name != 'stopped-' + label + '.json'
+                        or identity is None or not isinstance(stopped, dict)
+                        or set(stopped) != {'pid', 'start_ticks', 'returncode', 'forced', 'absent'}
+                        or identity_of(stopped) != identity
+                        or (path.parent, identity) not in owned_registrations):
+                    raise RuntimeError('Malformed or unregistered stopped boundary envelope')
+                terminal(stopped, path, declared=True)
+                return
             # These exact source-shaped database observations are not CLI
             # lifecycle proofs. Their actual PG checks remain separate.
             if journal and event == 'service_stopped':
@@ -882,9 +898,73 @@ def collect_private_temporal_evidence(observation_roots: list[Path],
 
     paths = [path for root in observation_roots if root.exists()
              for path in sorted(root.rglob('*')) if path.is_file() and not path.is_symlink()]
+    synthetic_paths = set()
+    probe_node = ('tests/ifpmic_api/test_h2_fixture_cleanup_failures.py::'
+                  'test_expired_cleanup_budget_performs_no_new_lifecycle_action')
+    probe_name = 'cleanup-fallback-probe-' + sha(probe_node.encode())[:16]
+    for root in observation_roots:
+        if not root.exists():
+            continue
+        for probe in root.glob('cleanup-fallback-probe-*'):
+            journal, cleanup = probe / 'process-journal.jsonl', probe / 'process-cleanup.json'
+            if (probe.name != probe_name or probe.is_symlink() or not probe.is_dir()
+                    or set(probe.iterdir()) != {journal, cleanup}
+                    or any(p.is_symlink() or not p.is_file() for p in (journal, cleanup))):
+                raise RuntimeError('Malformed synthetic cleanup probe context')
+            expected_journal = [
+                {'event': 'stop_requested', 'pid': 74991, 'start_ticks': 'saved-test-identity',
+                 'pre_stop_exit_code': None, 'mode': 'graceful'},
+                {'event': 'stopped', 'pid': 74991, 'start_ticks': 'saved-test-identity',
+                 'exit_code': None, 'forced': False, 'absent': False},
+            ]
+            expected_cleanup = {'processes': [{'role': 'injected-owned-handle', 'pid': 74991,
+                                             'returncode': None, 'forced': False, 'absent': False}]}
+            rows = [json.loads(line) for line in journal.read_text().splitlines() if line.strip()]
+            # Canonical JSON comparison also distinguishes bool from int.
+            if (json.dumps(rows, sort_keys=True, allow_nan=False)
+                    != json.dumps(expected_journal, sort_keys=True)
+                    or json.dumps(read_json(cleanup), sort_keys=True, allow_nan=False)
+                    != json.dumps(expected_cleanup, sort_keys=True)):
+                raise RuntimeError('Malformed synthetic cleanup probe observations')
+            proofs = []
+            for query in paths:
+                if query.parent == root / 'query-observations' and query.suffix == '.json':
+                    value = read_json(query)
+                    if isinstance(value, dict) and value.get('operation') == 'fixture.exhausted_cleanup':
+                        proofs.append((query, value))
+            if len(proofs) != 1:
+                raise RuntimeError('Synthetic cleanup probe lacks unique same-phase query proof')
+            query, proof = proofs[0]
+            result, caller = proof.get('result'), proof.get('caller')
+            observed = proof.get('observed_monotonic_ns')
+            if (set(proof) != {'kind', 'operation', 'subject', 'result', 'pytest_current_test',
+                              'observed_monotonic_ns', 'caller'}
+                    or proof['kind'] != 'ifpmic.b03.h2.query-observation.v1'
+                    or proof['subject'] != probe_node
+                    or proof['pytest_current_test'] != probe_node + ' (call)'
+                    or type(observed) is not int or observed <= 0
+                    or re.fullmatch(str(observed) + r'-[0-9a-f]{32}\.json', query.name) is None
+                    or not isinstance(caller, dict) or set(caller) != {'file', 'function', 'line'}
+                    or caller['file'] != 'test_h2_fixture_cleanup_failures.py'
+                    or caller['function'] != probe_node.split('::')[1]
+                    or type(caller['line']) is not int or caller['line'] <= 0
+                    or not isinstance(result, dict)
+                    or set(result) != {'synthetic_process_probe', 'actions', 'identity_lookups',
+                                      'remaining_checks', 'retained_same_object',
+                                      'physical_process_absence_proven'}
+                    or result['synthetic_process_probe'] is not True
+                    or result['actions'] != [] or result['identity_lookups'] != []
+                    or type(result['remaining_checks']) is not int or result['remaining_checks'] < 2
+                    or result['retained_same_object'] is not True
+                    or result['physical_process_absence_proven'] is not False):
+                raise RuntimeError('Malformed synthetic cleanup probe no-action query proof')
+            synthetic_paths.update((journal, cleanup))
+            fixture_unknown += 2  # Two unknown observation records, zero physical processes.
     # Only declared source contexts register roles, never arbitrary JSON fields.
     # Read these small registries first so filesystem ordering cannot affect joins.
     for path in paths:
+        if path in synthetic_paths:
+            continue
         if path.name == 'process-journal.jsonl':
             for line in path.read_text().splitlines():
                 if line.strip():
@@ -892,7 +972,7 @@ def collect_private_temporal_evidence(observation_roots: list[Path],
                     if value.get('event') == 'started':
                         register(value, path)
         elif (path.suffix == '.json' and
-              (path.name.startswith(('owned-', 'stopped-')) or path.name == 'processes.json')):
+              (path.name.startswith('owned-') or path.name == 'processes.json')):
             value = read_json(path)
             if path.name == 'processes.json':
                 if isinstance(value, dict) and value.get('kind') == 'ifpmic.b03.h1.processes.v1':
@@ -900,8 +980,11 @@ def collect_private_temporal_evidence(observation_roots: list[Path],
                         register(row, path)
             elif isinstance(value, dict) and 'role' in value and 'pid' in value:
                 register(value, path)
+                owned_registrations.add((path.parent, identity_of(value)))
     for path in paths:
         evidence_files += 1
+        if path in synthetic_paths:
+            continue
         if path.suffix == '.pbseq' or 'history' in path.name.lower() and path.suffix not in ('.json', '.jsonl'):
             hashes['history'].add(sha(path.read_bytes()))
         elif path.suffix == '.json':
