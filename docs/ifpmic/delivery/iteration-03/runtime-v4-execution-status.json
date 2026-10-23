@@ -1,0 +1,28 @@
+{
+  "kind": "ifpmic.agile.runtime-v4-execution-status.v1",
+  "updated_utc": "2026-10-23T03:11:03.340868+00:00",
+  "status": "running_not_accepted",
+  "started_utc": "2026-10-23T03:07:59.037167+00:00",
+  "candidate_commit": "18e3bf7",
+  "runner_sha256": "29be6f277fb624f82042a5f65a4c976298785e378cc42a61659397f129c00762",
+  "inventory": 490,
+  "phase_count": 15,
+  "collections_observed_complete": 15,
+  "terminal_verdict": null,
+  "actual_result_independently_accepted": false,
+  "overall_stage_completion": {
+    "completed": 2,
+    "total": 16,
+    "percent": 12.5,
+    "weighting": "equal stage counts, not effort or time"
+  },
+  "reviews": {
+    "source": "../../evidence/b03/h2-runtime-full-runner-source-review-v4.json",
+    "independent_pre_gate": "../../evidence/b03/h2-runtime-full-pre-gate-review-v4.json",
+    "tc_pre_gate": "../../evidence/b03/h2-runtime-full-pre-gate-tc-review-v4.json"
+  },
+  "private_resume_pointer": "workflow-artifacts/verification/B03/H2/runtime-full/preparations/v4-execution/tool-session.json",
+  "monitoring": "Continue observing the same actual tool session. Observation timeout is not execution failure or authorization to restart. Preserve raw evidence and owned cleanup on failure.",
+  "next_visible_goal": "Persisted request -> actual admission -> matching run/receipt and QUEUED; normal, duplicate, authorization and reload checks.",
+  "scope": "152 accepted synthetic units are separate. Runtime execution does not prove business workflow, device, release or AT32 completion."
+}

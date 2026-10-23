@@ -442,7 +442,7 @@
           "runtime_normal_progress_reconciliation": "evidence/b03/h2-runtime-normal-progress-reconciliation.json",
           "runtime_next_steps": "evidence/b03/h2-runtime-normal-next-steps.json",
           "runtime_full_preparation": {
-            "status": "evidence_source_amendment_pending_exact_reviews_execution_not_started",
+            "status": "actual490_running_not_accepted",
             "authoring_checkpoint_commit": "ea5055a2b6fda99dd697d042deddc0d3245bf222",
             "verification_plan": "evidence/b03/h2-runtime-full-verification-plan.json",
             "plan_review_status": "independent_and_tc_approved_authoring_only",
@@ -450,7 +450,11 @@
             "authored_draft_crash_case_functions": 12,
             "tests_executed": false,
             "static_changes": "Authored all25 groups plus5 cleanup prerequisites; integrated490 literal IDs with exact budgets and preserved407 retained IDs. Independent source review repaired SDK/SQL/deadline/foreign-authority oracles, bounded new native calls and partial-start cleanup. No imports, collection, runtime tests or services executed.",
-            "pending": "Resolve private raw proof gaps, rebind amended source inventory and paired reviews, complete/review runner, obtain pre-gate, then fresh full490 execution.",
+            "pending": [
+              "Observe existing single execution to terminal; preserve raw and owned cleanup",
+              "Independent actual result/raw/privacy/environment acceptance",
+              "Connect and verify persisted request admission/run/receipt UI"
+            ],
             "acceptance_boundary": "407-case evidence remains historical only for its frozen candidate. No new crash/negative passes; fullH2, B03, originalAT and finalAX remain incomplete.",
             "plan_sha256": "c6964bccff0d4cec1ac00f18fbb267d5d1a4a5887e53844c604333b7c059486c",
             "plan_acceptance": "evidence/b03/h2-runtime-full-plan-acceptance.json",
@@ -482,7 +486,8 @@
             "full_inventory_tc_review": "evidence/b03/h2-runtime-full-inventory-tc-review.json",
             "full_execution_contract": "evidence/b03/h2-runtime-full-execution-contract.json",
             "runner_authoring_acceptance": "evidence/b03/h2-runtime-full-runner-authoring-acceptance.json",
-            "evidence_amendment": "evidence/b03/h2-runtime-full-evidence-amendment.json"
+            "evidence_amendment": "evidence/b03/h2-runtime-full-evidence-amendment.json",
+            "execution_status": "delivery/iteration-03/runtime-v4-execution-status.json"
           }
         }
       ]
@@ -660,20 +665,20 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "V4 Node boundary repairs and152 synthetic units independently accepted. Final whole-source review and exact independent/TC execution pre-gates remain before fresh actual490. Then independently accept actual raw/cleanup/privacy evidence and connect persisted request admission/run/receipt UI.",
+  "next_step": "Actual V4 full490 started once at2026-10-23T03:07:59Z after exact whole-source and paired execution approvals; monitor existing private session, preserve raw and cleanup, require independent actual result acceptance before admission UI.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",
     "Approved Bedrock/Claude runtime profile"
   ],
   "publication_policy": "Only authorized git repository documentation, source and synthetic verification summaries/screenshots; never runtime credentials or application logs.",
-  "updated_at": "2026-10-23T02:57:29.654067+00:00",
+  "updated_at": "2026-10-23T03:11:03.341748+00:00",
   "session_handoff": {
     "status": "resumed_by_user",
     "resume_document": "docs/ifpmic/RESUME.md",
     "resumed_checkpoint": "0de641d",
     "goal_complete": false,
-    "execution_started": false
+    "execution_started": true
   },
   "delivery_mode": {
     "plan": "AGILE-DELIVERY.md",
@@ -699,7 +704,7 @@
     },
     "pending_source_proposal": "evidence/b03/h2-machine-resolution-progress-v2.json",
     "pending_source_proposal_review": "evidence/b03/h2-machine-resolution-activity-review-v5.json",
-    "pending_source_proposal_status": "all87_source_rows_integrated; versioned_full_candidate_reviews_and_execution_pending",
+    "pending_source_proposal_status": "v4_source_and_execution_pre_gates_approved_actual490_running_not_accepted",
     "latest_source_mapping": {
       "resolved_cases": 87,
       "total_cases": 87,
@@ -709,8 +714,8 @@
       "machine_sha256": "8c948efa993a1ba6837af28746af42ad532342eca5d5b299ac133f0377c0b74c",
       "scope": "Source path/schema/applicability only; no actual execution acceptance."
     },
-    "current_candidate_static_verification": "delivery/iteration-03/full-candidate-v3-static-verification.json",
-    "next_foundation_scope": "V4 Node boundary repairs and152 synthetic units independently accepted. Final whole-source review and exact independent/TC execution pre-gates remain before fresh actual490. Then independently accept actual raw/cleanup/privacy evidence and connect persisted request admission/run/receipt UI.",
+    "current_candidate_static_verification": "evidence/b03/h2-runtime-full-runner-source-review-v4.json",
+    "next_foundation_scope": "Actual V4 full490 started once at2026-10-23T03:07:59Z after exact whole-source and paired execution approvals; monitor existing private session, preserve raw and cleanup, require independent actual result acceptance before admission UI.",
     "candidate_authoring_reviews": {
       "independent": "evidence/b03/h2-runtime-full-execution-contract-review-v4.json",
       "tc": "evidence/b03/h2-runtime-full-execution-tc-review-v4.json"
@@ -729,14 +734,15 @@
       {
         "id": "FULL-NODE-PATH-UNREACHABLE",
         "summary": "Fixture shutil.which cannot find pinned Node in safe PATH",
-        "status": "repaired_in_accepted152_synthetic_scope_pending_full_source_review"
+        "status": "repaired_source_and_pre_gates_approved_actual490_running"
       },
       {
         "id": "FULL-NODE-BRIDGE-SOURCE-OMITTED",
         "summary": "Executed snapshot_bridge.mjs missing from source closure pins",
-        "status": "repaired_in_accepted152_synthetic_scope_pending_full_source_review"
+        "status": "repaired_source_and_pre_gates_approved_actual490_running"
       }
-    ]
+    ],
+    "runtime_execution_status": "delivery/iteration-03/runtime-v4-execution-status.json"
   },
   "visible_deliveries": [
     {
@@ -765,11 +771,12 @@
       "title": "Connect persisted API job to real execution-engine admission and visible run/receipt",
       "path": "delivery/iteration-03/README.md",
       "verification": "delivery/iteration-03/node-closure-repair-verification.json",
-      "foundation_status": "accepted152_v4_synthetic_only; whole_source_and_execution_gates_pending",
+      "foundation_status": "actual490_running_not_accepted",
       "actual_job_execution": false,
-      "scope": "PinnedNodePATH/sourceclosure fixed;110 V4pins and152 units. Actual490 andadmission UI pending.",
+      "scope": "V4 whole-source and paired execution gates approved; actual490 started once, no terminal result or independent acceptance yet; admission UI pending.",
       "mapping_resolution_progress": "evidence/b03/h2-machine-resolution-progress-v2.json",
-      "candidate_static_verification": "delivery/iteration-03/full-candidate-v3-static-verification.json"
+      "candidate_static_verification": "evidence/b03/h2-runtime-full-runner-source-review-v4.json",
+      "runtime_execution_status": "delivery/iteration-03/runtime-v4-execution-status.json"
     }
   ]
 }
