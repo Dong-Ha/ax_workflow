@@ -43,3 +43,9 @@
 ## 실행 중인 최신 상태 · V6
 
 V6 전체 소스 및 독립·TC 실행 전 검토가 승인됐다(커밋 `d5e88ed`). 실제490 한 번을 **2026-10-23 04:49:23 UTC**에 시작했다. [실행 상태](./runtime-v6-execution-status.json)의 private pointer에 실제 handle/leaf를 저장했다. 앞 절의 V6 미실행 설명은 이전 체크포인트다. 관찰 timeout은 종료가 아니므로 같은 handle을 조회하며 재실행하지 않는다. 실제 결과·독립 수용·새 접수 UI는 아직 없다.
+
+## 최신 실제 결과 · V6 종료
+
+[실행 상태](./runtime-v6-execution-status.json):15묶음 목록 수집 후12건 중10통과·2실패·오류/skip0,478미실행으로 종료했다. CRASH10 복구는 통과했다. CRASH11 철회 cardinality 및 CRASH12 armed-only counter 기대를 [새 계획](./RECOVERY-OBSERVATION-REPAIR.md)에서 수정 검토한다. 위의 실행 중/미실행 설명은 과거 체크포인트다. 새 화면은 없으며 실제 전체 H2 수용과 [UI V2 초안](./ADMISSION-UI-PLAN-v2.md)의 독립 검토·구현이 남았다.
+
+두 관측 수정은 독립 계획 승인 뒤 TC 파일에 구현했다. [정적 확인](./recovery-observation-repair-verification.json)은 AST와 변경 범위 확인뿐이다. 새 후보 바인딩·소스 검토·실행 승인·실제 검증은 아직 없으며 V6 승인을 현재 변경에 재사용하지 않는다.

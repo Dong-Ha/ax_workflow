@@ -693,6 +693,13 @@ def _run_projection_crash(harness, deadline, *, phase: str, label: str, ctx):
 def _revoke_authority_after_projection(harness, ctx) -> None:
     """Revoke mutable authorization only after the durable projection receipt exists."""
     with bounded_connect(operator_dsn(harness["database"])) as operator:
+        eligibility_before = operator.execute(
+            "SELECT eligibility_id FROM ifpmic.profile_eligibility "
+            "WHERE project_id=%s AND snapshot_id=%s ORDER BY eligibility_id",
+            (harness["project_id"], harness["record"].snapshot_id),
+        ).fetchall()
+        expected_eligibility_ids = {row[0] for row in eligibility_before}
+        assert expected_eligibility_ids
         operator.execute(
             "UPDATE ifpmic.memberships SET active=false WHERE user_id=%s AND project_id=%s",
             (harness["user_id"], harness["project_id"]),
@@ -704,17 +711,24 @@ def _revoke_authority_after_projection(harness, ctx) -> None:
             (harness["project_id"], harness["record"].snapshot_id),
         )
         state = operator.execute(
-            "SELECT m.active, count(r.eligibility_id) "
+            "SELECT m.active, e.eligibility_id, r.eligibility_id "
             "FROM ifpmic.memberships m JOIN ifpmic.profile_eligibility e "
             "ON e.project_id=m.project_id LEFT JOIN ifpmic.profile_revocations r "
             "ON r.project_id=e.project_id AND r.eligibility_id=e.eligibility_id "
-            "WHERE m.user_id=%s AND m.project_id=%s AND e.snapshot_id=%s GROUP BY m.active",
+            "WHERE m.user_id=%s AND m.project_id=%s AND e.snapshot_id=%s "
+            "ORDER BY e.eligibility_id",
             (harness["user_id"], harness["project_id"], harness["record"].snapshot_id),
-        ).fetchone()
-    assert state == (False, 1)
+        ).fetchall()
+        actual_eligibility_ids = {row[1] for row in state}
+        revoked_eligibility_ids = {row[2] for row in state if row[2] is not None}
+        assert state and all(row[0] is False for row in state)
+        assert actual_eligibility_ids == expected_eligibility_ids
+        assert revoked_eligibility_ids == expected_eligibility_ids
     ctx["authority_revoked"] = True
     _record_private(ctx["root"], "authority-revoked-before-replay.json", {
-        "membership_active": state[0], "matching_profile_revocations": state[1],
+        "membership_active": state[0][0], "matching_profile_revocations": len(revoked_eligibility_ids),
+        "eligibility_ids": sorted(str(value) for value in expected_eligibility_ids),
+        "revoked_eligibility_ids": sorted(str(value) for value in revoked_eligibility_ids),
     })
 
 
@@ -960,8 +974,24 @@ def test_h2_activity_completed_before_workflow_decision_sigkill_replays_history(
         assert final_proxy_snapshot["overflowed"] is False
         assert (final_proxy_snapshot["server_response_bytes_forwarded_after_arm"]
                 > release_snapshot["server_response_bytes_forwarded_after_arm"])
-        assert (final_proxy_snapshot["request_forwarded_bytes_after_arm"]
-                > release_snapshot["request_forwarded_bytes_after_arm"])
+        release_event_sequence = max(
+            (int(event["sequence"]) for event in release_snapshot["events"]), default=0,
+        )
+        post_release_forwarded = [
+            event for event in final_proxy_snapshot["events"]
+            if int(event["sequence"]) > release_event_sequence
+            and event["action"] == "forwarded"
+        ]
+        client_to_server = [event for event in post_release_forwarded
+                            if event["direction"] == "client_to_server"]
+        server_to_client = [event for event in post_release_forwarded
+                            if event["direction"] == "server_to_client"]
+        assert client_to_server and server_to_client
+        assert all(int(event["bytes"]) > 0 for event in client_to_server + server_to_client)
+        connection_ids = {str(record["connection_id"])
+                          for record in final_proxy_snapshot["connection_records"]}
+        assert all(str(event["connection_id"]) in connection_ids
+                   for event in client_to_server + server_to_client)
         assert len(final_proxy_snapshot["connection_records"]) > len(release_snapshot["connection_records"])
         normal._append_private_journal(proxy_journal, {
             "kind": "ifpmic.b03.h2.proxy-recovery-observation.v1",

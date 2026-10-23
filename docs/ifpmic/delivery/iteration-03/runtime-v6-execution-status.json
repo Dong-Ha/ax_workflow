@@ -1,7 +1,7 @@
 {
   "kind": "ifpmic.agile.runtime-v6-execution-status.v1",
-  "updated_utc": "2026-10-23T04:49:34.639729+00:00",
-  "status": "running_not_accepted",
+  "updated_utc": "2026-10-23T05:00:50.274298+00:00",
+  "status": "failed_not_accepted",
   "started_leaf_timestamp": "2026-10-23T04-49-23-095074Z",
   "inventory": 490,
   "phase_count": 15,
@@ -12,11 +12,32 @@
   "previous_failed_attempt": "runtime-v5-attempt-01-result-review.json",
   "private_resume_pointer": "workflow-artifacts/verification/B03/H2/runtime-full/preparations/v6-execution/tool-session.json",
   "candidate_commit": "d5e88ed",
-  "scope": "One exact approved V6 attempt started; no result accepted and no new workflow UI behavior.",
+  "scope": "CRASH10 actual pending/recovery passed; CRASH11/12 still failed. No actual full490 acceptance or new UI.",
   "next_visible_goal": "Saved request -> actual engine admission -> matching run/receipt QUEUED",
   "overall_stage_completion": {
     "completed": 2,
     "total": 16,
     "percent": 12.5
+  },
+  "terminal_verdict": "fail",
+  "collections_observed_complete": 15,
+  "executed_cases": 12,
+  "passed_cases": 10,
+  "failed_cases": 2,
+  "error_cases": 0,
+  "skipped_cases": 0,
+  "remaining_inventory_cases_not_executed": 478,
+  "elapsed_seconds": 548.8874374039988,
+  "dispatcher_phase": {
+    "cases": 8,
+    "passed": 8,
+    "raw_case_audit_satisfied": true
+  },
+  "failure_category": "CRASH11 hardcoded revocation count1 observed2; CRASH12 post-release request counter unchanged by its armed-only semantics. Original proxy queued query reached success before new counter assertion.",
+  "next_action": "Preserve exact failed attempt and independent review; repair two evidence expectations against fixture/proxy semantics under separately reviewed plan.",
+  "failed_attempt_independent_review": {
+    "path": "runtime-v6-attempt-01-result-review.json",
+    "sha256": "b275721985e8f6ec05844407edf1136c09fd6b51d155e68c3d2411bd34a33b22",
+    "decision": "confirm_failed_attempt_not_accepted"
   }
 }

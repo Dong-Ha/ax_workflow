@@ -1,0 +1,59 @@
+{
+  "kind": "ifpmic.b03.h2.recovery-observation-repair.tc-source-independent-review.v1",
+  "reviewed_utc": "2026-10-23T05:09:14.975270+00:00",
+  "verdict": "approve_bounded_tc_source_only",
+  "decision": "approve_bounded_implementation_source_only",
+  "worker_sha256": "7cab7aebbfe7a6ec35a9e623cc03bd8ca749612bd99799c1330355527715ccdf",
+  "plan_sha256": "c85b8c983fb9d76a1802eb652f7c371f2d0a0d682fcb615886c7fcd374a7f2bb",
+  "plan_review_sha256": "1de53e77f91bdf8348f86cd7b23b86576c45f7dc2f3927e2c0ebacd6f39d3fa1",
+  "reviewer": {
+    "agent_id": "/root/v3_whole_source_review",
+    "independence": "Independent from Code-dev and TC implementation authors. Owns only this review. Read-only exact diff/AST/source/hash inspection; no imports,tests,SDK calls,SQL/services or runner execution."
+  },
+  "findings": [],
+  "checks": [
+    "Committed V6 worker baseline hashes to3147f934; current7cab7aeb changes only _revoke_authority_after_projection and the CRASH12 test. Function inventory is unchanged and every finally AST is identical. All other inputs frozen by the approved recovery plan still match; only the intentionally changed worker pin differs.",
+    "CRASH11 reads the nonempty actual eligibility ID set for the exact project/snapshot before the unchanged membership deactivation and all-matching revocation INSERT. Actual post-state requires every membership row false,exact eligibility set preservation and exact revocation-ID set equality. Neither count1,count2 nor >=1 is used as the authority oracle.",
+    "The existing private artifact retains membership_active and matching_profile_revocations with actual observed membership and actual distinct revoked count; added UUID sets remain in the same private artifact. No new public raw-ID exposure or fabricated revocation is introduced.",
+    "CRASH12 derives release boundary from actual persisted release-snapshot event sequences,selects only later actual forwarded events,requires each direction and positive bytes,and links each event connection_id to actual snapshot connection records. The source proxy really emits connection_id;its client counter is armed-only and its forwarded events continue after release.",
+    "Existing disarmed/no-overflow checks,actual server-forwarded-byte growth,new connection,original proxy queued query,same-run follow-up decision and final SQL/history/receipt assertions are preserved. Event traffic is diagnostic support and does not substitute for old-worker absence or actual replay/product oracles.",
+    "Actual crash cuts,kill/restart/injection,product SQL/API/runtime/proxy implementation,case/RPC/phase/outer deadlines and protected cleanup remain unchanged. The extra bounded DB reads and local event checks remain within the original case epoch.",
+    "The implementation follows the approved exact-set/event observation plan and preserves existing artifact filenames/required keys. No raw953+3 predicates,490 IDs,15phases or existing152 unit methods are modified by this bounded worker diff."
+  ],
+  "source_evidence": {
+    "tests/ifpmic_api/test_h2_worker_api_crashes.py:693": "Actual eligibility/revocation set observation and unchanged revocation action; private writer ends732.",
+    "tests/ifpmic_api/test_h2_worker_api_crashes.py:976": "Post-release sequence/direction/positive-byte/connection linkage replacing the armed-only counter assertion.",
+    "tests/ifpmic_api/response_loss_proxy.py:155": "Actual connection_records connection_id producer; _pump196-212 client counter/forwarded-event distinction.",
+    "services/ifpmic_api/migrations/003_workflow_execution.sql:634": "Committed matching receipt result is returned before mutable membership/profile revalidation; untouched product replay contract."
+  },
+  "historical_gate_limit": "V6 ledger/raw/whole-source/execution approvals bind worker3147f934 and are intentionally stale for current7cab7aeb. Their immutable bytes and failed V6 attempt remain historical. This review does not update or revive them; no V7 candidate or execution authority is established.",
+  "authorization": {
+    "bounded_tc_source_approval_only": true,
+    "imports_or_synthetic_tests": false,
+    "sdk_sql_services_or_runner": false,
+    "whole_runner_source_approval": false,
+    "execution_pre_gates": false,
+    "actual490_or_retry": false,
+    "h2_ui_at_or_goal_acceptance": false
+  },
+  "next_required": "Before any execution,author and independently review the successor exact C/L/rules and dependent fixed filename/fixture bindings,then obtain exact synthetic capture source approval,result acceptance,whole-source and both new invocation-bound execution pre-gates. Actual revoked-authority replay/proxy recovery/full490 remain unproven.",
+  "source_pins": {
+    "tests/ifpmic_api/test_h2_worker_api_crashes.py": "7cab7aebbfe7a6ec35a9e623cc03bd8ca749612bd99799c1330355527715ccdf",
+    "docs/ifpmic/delivery/iteration-03/RECOVERY-OBSERVATION-REPAIR.md": "c85b8c983fb9d76a1802eb652f7c371f2d0a0d682fcb615886c7fcd374a7f2bb",
+    "docs/ifpmic/delivery/iteration-03/recovery-observation-repair-plan-review.json": "1de53e77f91bdf8348f86cd7b23b86576c45f7dc2f3927e2c0ebacd6f39d3fa1",
+    "docs/ifpmic/delivery/iteration-03/runtime-v6-attempt-01-result-review.json": "b275721985e8f6ec05844407edf1136c09fd6b51d155e68c3d2411bd34a33b22",
+    "tests/ifpmic_api/response_loss_proxy.py": "b6f8ca62f21724bf26aac6395528092257e7c48b729d19df02adf7281b9ed512",
+    "tests/ifpmic_api/jobs_fixture.py": "b8fefc39f3005b3a662124ae3182cee4e7a293e18dd4e84d18facd09c0e0d539",
+    "tests/ifpmic_api/test_h2_runtime_normal_flow.py": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d",
+    "tests/ifpmic_api/h2_native_bounds.py": "deaae9cfc75ac6021bde78f66122ddfaca02283f8f29a49a2d1bff9d2fe7a3fb",
+    "tests/ifpmic_api/h2_worker_api_case_budget.py": "afce78ccbb4988dcb9028ba75ddb852f71a74cdfb1a4868d6601dd8823635f35",
+    "services/ifpmic_api/migrations/001_initial.sql": "cf0437a5f32e1589e4ea821afbb2ef2480d780a276667880aa9a08a0f4c77f12",
+    "services/ifpmic_api/migrations/003_workflow_execution.sql": "5ef29521944e18551728dd285ce3ae21fa03c2b06f77c25430da6acb0ce1f102",
+    "docs/ifpmic/evidence/b03/h2-implementation-contract.json": "f63173ac17ebebd34a15d5966d96b79dc1667a713c00b1b92868b137ba93ded3",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-verification-plan.json": "c6964bccff0d4cec1ac00f18fbb267d5d1a4a5887e53844c604333b7c059486c",
+    "docs/ifpmic/H2-RUNTIME-CRASH-MATRIX.md": "15fd7238adab625e95f94e0bae62421bb97235683cc96b491c7a9ce3222001c6",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-runner-source-review-v6.json": "f0b39bc599cbd3d4fd3b3d4c1cfb8b35cbacbf1a332a182d813566ceba9a9a77",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger-v6.json": "d64072db82b6ac3a88b7a8742d28c11406c38122072b86508c229d3172dfcf8d",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules-v6.json": "8f9ca9495b13e4452eaa42e9d2c2b5ed43c993dd28e246bccbbd5cfbc4f041d8"
+  }
+}

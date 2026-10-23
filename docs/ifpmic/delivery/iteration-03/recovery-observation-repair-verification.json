@@ -1,0 +1,28 @@
+{
+  "kind": "ifpmic.agile.recovery-observation-static-candidate.v1",
+  "updated_utc": "2026-10-23T05:07:41.254287+00:00",
+  "status": "implemented_static_checks_only_not_runtime_verified",
+  "source": {
+    "path": "tests/ifpmic_api/test_h2_worker_api_crashes.py",
+    "baseline_sha256": "3147f934ea996638f17a8487c42505738e2343e76cfb8e152348e7a548340b5f",
+    "sha256": "7cab7aebbfe7a6ec35a9e623cc03bd8ca749612bd99799c1330355527715ccdf"
+  },
+  "checks": {
+    "syntax_ast_parse": true,
+    "top_level_function_names_unchanged": true,
+    "changed_functions": [
+      "_revoke_authority_after_projection",
+      "test_h2_activity_completed_before_workflow_decision_sigkill_replays_history"
+    ],
+    "git_diff_check": true
+  },
+  "tests_executed": false,
+  "actual_sdk_sql_proxy_execution": false,
+  "new_candidate_bindings_prepared": false,
+  "actual_full490_accepted": false,
+  "limitations": [
+    "Static checks do not establish runtime behavior.",
+    "V6 ledger/rules/source review pins refer to earlier worker bytes and must not authorize current source.",
+    "Prepare new exact candidate and affected reviews before any imports/SDK/tests/full490."
+  ]
+}

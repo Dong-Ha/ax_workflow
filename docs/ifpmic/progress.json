@@ -665,14 +665,14 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "V6 source and paired execution gates approved; one exact full490 attempt started2026-10-23T04:49:23Z, actual handle retained privately. Poll same handle; no restart on observation timeout. No result acceptance or new execution UI yet.",
+  "next_step": "V6 actual attempt independently confirmed failed12/10pass2fail478unexecuted. Two exact observation fixes implemented under independent plan approval; AST/diff checked only, no tests/SDK execution on changed source. Next prepare new exact candidate bindings and affected reviews before synthetic/actual490 execution. UI V2 draft still needs independent review and actual H2 acceptance.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",
     "Approved Bedrock/Claude runtime profile"
   ],
   "publication_policy": "Only authorized git repository documentation, source and synthetic verification summaries/screenshots; never runtime credentials or application logs.",
-  "updated_at": "2026-10-23T04:49:59.291646+00:00",
+  "updated_at": "2026-10-23T05:03:17.549987+00:00",
   "session_handoff": {
     "status": "resumed_by_user",
     "resume_document": "docs/ifpmic/RESUME.md",
@@ -704,7 +704,7 @@
     },
     "pending_source_proposal": "evidence/b03/h2-machine-resolution-progress-v2.json",
     "pending_source_proposal_review": "evidence/b03/h2-machine-resolution-activity-review-v5.json",
-    "pending_source_proposal_status": "v6_actual_running_not_accepted",
+    "pending_source_proposal_status": "recovery_observation_candidate_implemented_not_tested_not_bound",
     "latest_source_mapping": {
       "resolved_cases": 87,
       "total_cases": 87,
@@ -714,30 +714,28 @@
       "machine_sha256": "8f9ca9495b13e4452eaa42e9d2c2b5ed43c993dd28e246bccbbd5cfbc4f041d8",
       "scope": "Source path/schema/applicability only; no actual execution acceptance."
     },
-    "current_candidate_static_verification": "evidence/b03/h2-runtime-full-runner-source-review-v6.json",
-    "next_foundation_scope": "V6 source and paired execution gates approved; one exact full490 attempt started2026-10-23T04:49:23Z, actual handle retained privately. Poll same handle; no restart on observation timeout. No result acceptance or new execution UI yet.",
-    "candidate_authoring_reviews": {
-      "independent": "evidence/b03/h2-runtime-full-execution-contract-review-v6.json",
-      "tc": "evidence/b03/h2-runtime-full-execution-tc-review-v6.json"
-    },
+    "current_candidate_static_verification": null,
+    "next_foundation_scope": "V6 actual attempt independently confirmed failed12/10pass2fail478unexecuted. Two exact observation fixes implemented under independent plan approval; AST/diff checked only, no tests/SDK execution on changed source. Next prepare new exact candidate bindings and affected reviews before synthetic/actual490 execution. UI V2 draft still needs independent review and actual H2 acceptance.",
+    "candidate_authoring_reviews": null,
     "latest_unit_result": {
       "passed": 152,
       "retained": 152,
       "new": 0,
       "verification": "delivery/iteration-03/worker-observation-repair-verification.json",
       "independent_acceptance": "delivery/iteration-03/worker-observation-repair-result-review.json",
-      "actual_full490": false
+      "actual_full490": false,
+      "scope": "Accepted V6 source only; current recovery edits not executed by152 or SDK integration."
     },
     "full_source_rejected_attempt": "evidence/b03/attempts/h2-runtime-full-runner-source-review-v3-attempt-01.json",
     "status_dashboard": "delivery/status.html",
     "current_blockers": [
       {
-        "id": "CRASH-10-11-PRETERMINAL-STARTED-HISTORY",
-        "status": "v6_observation_repair_implemented_actual_execution_pending"
+        "id": "CRASH-11-REVOCATION-CARDINALITY",
+        "status": "exactset_TC_repair_implemented_pending_new_candidate_and_actual_verification"
       },
       {
-        "id": "CRASH-12-POSTRECOVERY-QUERY-TIMEOUT",
-        "status": "v6_readiness_and_diagnostics_implemented_root_cause_unconfirmed_actual_execution_pending"
+        "id": "CRASH-12-ARMED-ONLY-COUNTER",
+        "status": "postrelease_event_TC_repair_implemented_pending_new_candidate_and_actual_verification"
       }
     ],
     "runtime_execution_status": "delivery/iteration-03/runtime-v6-execution-status.json"
@@ -769,11 +767,11 @@
       "title": "Connect persisted API job to real execution-engine admission and visible run/receipt",
       "path": "delivery/iteration-03/README.md",
       "verification": "delivery/iteration-03/worker-observation-repair-verification.json",
-      "foundation_status": "v6_actual_running_not_accepted",
+      "foundation_status": "v6_failed_recovery_candidate_implemented_not_tested",
       "actual_job_execution": false,
-      "scope": "V5 failed12/9pass3fail/478unexecuted preserved. V6 unchanged152 synthetic pass; new worker helpers and actual full490 acceptance/admission UI incomplete.",
+      "scope": "V6 actual12/10pass2fail478unexecuted. CRASH10 recovered; CRASH11 revocation cardinality and CRASH12 armed-only metric expectations failed. Full H2 and visible admission UI remain incomplete.",
       "mapping_resolution_progress": "evidence/b03/h2-machine-resolution-progress-v2.json",
-      "candidate_static_verification": "evidence/b03/h2-runtime-full-runner-source-review-v6.json",
+      "candidate_static_verification": null,
       "runtime_execution_status": "delivery/iteration-03/runtime-v6-execution-status.json"
     }
   ]
