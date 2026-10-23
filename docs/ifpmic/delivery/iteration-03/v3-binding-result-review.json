@@ -1,0 +1,95 @@
+{
+  "acceptance": {
+    "actual490_or_full_h2_acceptance": false,
+    "exact_v3_binding_149_synthetic_unit_result": true,
+    "execution_pre_gate": false,
+    "full_goal_acceptance": false,
+    "full_runner_source_approval": false,
+    "historical_149_proof_reused_as_current_result": false,
+    "iteration03_acceptance": false
+  },
+  "candidate": {
+    "contract_sha256": "714411f1de4250b0d36c92902a3946e2a2bc3590dc79c508d71ac4a8a130e00d",
+    "ledger_sha256": "4727c955d072c863c972b26684e37234feba0dce39e329475e4318a9370b9e58",
+    "paired_contract_reviews": [
+      "4493edd5c00d6f8f0fe23b2a83a744bd137449f41f2b7c79fc0a78d6de2b20a1",
+      "0ad98d74f8825a9b3096ef49f605dc5b93846a86bb8dfd8ed4f7c251509c8202"
+    ],
+    "runner_path": "scripts/verify_ifpmic_b03_h2_runtime_full.py",
+    "runner_sha256": "7e7c7eb445cb8621b48455382703e12cf93ab3aca16a41d641ee6daa46e4bb59"
+  },
+  "decision": "accept_149_rebound_cache_isolated_synthetic_units_only",
+  "evidence": {
+    "exact_units": "Private expected and actual ID lists each contain149 unique IDs, are identical, and exactly match the previous accepted149 result. The stderr log contains149 ok lines, zero skips, zero failures/errors, and ends with OK.",
+    "historical_proof_preserved": "The original accepted149 verification and result-review files remain at their previously reviewed hashes; this V3-binding result is separately captured and reviewed.",
+    "preservation": "Before and after preservation hashes match. The manifests retain96 protected hashes, exact89-file inventory,19 design/original inputs, and environment maps of1,777 original32 and3,072 qualified36 entries.",
+    "public_private_binding": "All seven private raw evidence files match the exact paths and SHA-256 values recorded by the public verification. The public verification SHA-256 matches the reviewed target.",
+    "scope": "The public record says no actual490, full runtime, SDK, collection, SQL, services, or iteration03/H2 acceptance occurred. This result qualifies only the rebound synthetic149 units.",
+    "source_and_capture_integrity": "The private result embeds the exact47 source pins from the approved source review. Source-before equals source-after and equals those pins; the runner SHA equals the approved V3-bound runner. The source-review hash is unchanged."
+  },
+  "findings": [],
+  "kind": "ifpmic.delivery.iteration03.v3-binding-result-review.v1",
+  "limitations": [
+    "This review accepts only the exact cache-isolated rebound149 synthetic-unit result.",
+    "It does not establish full runner source approval, actual490 execution, SDK or service behavior, H2 acceptance, UI acceptance, or full-goal acceptance."
+  ],
+  "private_capture": {
+    "path": "workflow-artifacts/verification/agile/iteration-03/v3-binding-preparation/run_units.py",
+    "sha256": "c5dd1422213127a4b41bfd48941038048be214e162b096ed7d1f7abd10639aa0"
+  },
+  "private_capture_result": {
+    "cache_empty": true,
+    "exit_code": 0,
+    "expected": 149,
+    "full_runtime_executed": false,
+    "passed": 149,
+    "path": "workflow-artifacts/verification/agile/iteration-03/v3-binding-unit-2026-10-23T02-28-04-997672Z/result.json",
+    "preservation_unchanged": true,
+    "sha256": "4f32733e0343b94af56696a25343e142a2eba0781cb9a9337f774d867cf02e26",
+    "source_review_unchanged": true,
+    "source_unchanged": true,
+    "status": "pass",
+    "timed_out": false
+  },
+  "raw_evidence": {
+    "preservation-after.json": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/v3-binding-unit-2026-10-23T02-28-04-997672Z/preservation-after.json",
+      "sha256": "30b1204426dfb183ce2571455a4f03d209ef0c97507daa1273a22b49bd544346"
+    },
+    "preservation-before.json": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/v3-binding-unit-2026-10-23T02-28-04-997672Z/preservation-before.json",
+      "sha256": "30b1204426dfb183ce2571455a4f03d209ef0c97507daa1273a22b49bd544346"
+    },
+    "source-after.json": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/v3-binding-unit-2026-10-23T02-28-04-997672Z/source-after.json",
+      "sha256": "057bde0293249b658f70a3b221f8f2bca88fdd81480d5ef8819318a204ce76e6"
+    },
+    "source-before.json": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/v3-binding-unit-2026-10-23T02-28-04-997672Z/source-before.json",
+      "sha256": "057bde0293249b658f70a3b221f8f2bca88fdd81480d5ef8819318a204ce76e6"
+    },
+    "stderr.log": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/v3-binding-unit-2026-10-23T02-28-04-997672Z/stderr.log",
+      "sha256": "05382b4043ebb618bee6251c71bc5c95e267f9708d04cbc10a44f9fc6c9ccfaf"
+    },
+    "stdout.log": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/v3-binding-unit-2026-10-23T02-28-04-997672Z/stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "review_method": "Read-only exact SHA-256 verification of public and private result records and all seven raw evidence files; compared source/review pins, before/after manifests, exact149 ID sets and stderr pass/skip/failure counts. No tests or runner were rerun.",
+  "reviewed_utc": "2026-10-23T02:27:34+00:00",
+  "reviewer": {
+    "agent_id": "/root/v3_checkpoint_audit",
+    "independence": "Independent from runner, test and capture authors; authored the exact V3 binding source review but not the tests or capture implementation. Read-only result/evidence review."
+  },
+  "source_review": {
+    "decision": "approve_exact_cache_isolated_synthetic_units_only",
+    "path": "docs/ifpmic/delivery/iteration-03/v3-binding-source-review.json",
+    "sha256": "fd678919d506bdc2a0324d0a9bd5aef25e47b5b9b6b0c4d97e5bf488284ec0fe"
+  },
+  "verification": {
+    "path": "docs/ifpmic/delivery/iteration-03/v3-binding-verification.json",
+    "sha256": "e5be96feda13720eed27b9da90dab312f22015d229ed0baeb2e96fa97ed814f3"
+  }
+}

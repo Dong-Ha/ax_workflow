@@ -22,13 +22,13 @@ from datetime import datetime, timezone
 
 ROOT = Path(__file__).resolve().parents[1]
 EVIDENCE = ROOT / 'docs/ifpmic/evidence/b03'
-CONTRACT_PATH = EVIDENCE / 'h2-runtime-full-execution-contract-v2.json'
-LEDGER_PATH = EVIDENCE / 'h2-runtime-full-integrated-ledger-v2.json'
-CONTRACT_SHA = 'd2f0ef941e62cf6a6597b39a9eda676161cd616d723403a34f16a2903a91bfe6'
-LEDGER_SHA = '1512b767aa06961d8f80ed474a4bf44929d9db430a05317447eb49f4d71a0655'
+CONTRACT_PATH = EVIDENCE / 'h2-runtime-full-execution-contract-v3.json'
+LEDGER_PATH = EVIDENCE / 'h2-runtime-full-integrated-ledger-v3.json'
+CONTRACT_SHA = '714411f1de4250b0d36c92902a3946e2a2bc3590dc79c508d71ac4a8a130e00d'
+LEDGER_SHA = '4727c955d072c863c972b26684e37234feba0dce39e329475e4318a9370b9e58'
 CONTRACT_REVIEW_SHAS = {
-    'h2-runtime-full-execution-contract-review-v2.json': '072951dc1d617d6be165ad10d2d922c2a8e63c4f2b53f377b46982eb4047cb0e',
-    'h2-runtime-full-execution-tc-review-v2.json': 'b30bf91a3a233c511d5acf259a599b17a153724e0fd18e285424c126006f337e',
+    'h2-runtime-full-execution-contract-review-v3.json': '4493edd5c00d6f8f0fe23b2a83a744bd137449f41f2b7c79fc0a78d6de2b20a1',
+    'h2-runtime-full-execution-tc-review-v3.json': '0ad98d74f8825a9b3096ef49f605dc5b93846a86bb8dfd8ed4f7c251509c8202',
 }
 ORDER = (
     'dispatcher_crashes', 'worker_api_crashes', 'startup', 'window',

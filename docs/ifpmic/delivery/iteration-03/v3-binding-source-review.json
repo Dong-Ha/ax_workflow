@@ -1,0 +1,160 @@
+{
+  "authorization": {
+    "exact_cache_isolated_synthetic_149_unit_execution": true,
+    "full490_or_h2_acceptance": false,
+    "full_runner_source_approval": false,
+    "full_source_approval": false,
+    "pre_gate_or_full_goal_acceptance": false,
+    "product_or_sdk_execution": false,
+    "pytest_collection_or_490_case_execution": false,
+    "sql_or_service_execution": false
+  },
+  "candidate": {
+    "base_commit": "dfe6563",
+    "contract": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-full-execution-contract-v3.json",
+      "sha256": "714411f1de4250b0d36c92902a3946e2a2bc3590dc79c508d71ac4a8a130e00d"
+    },
+    "independent_contract_review": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-full-execution-contract-review-v3.json",
+      "sha256": "4493edd5c00d6f8f0fe23b2a83a744bd137449f41f2b7c79fc0a78d6de2b20a1"
+    },
+    "ledger": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger-v3.json",
+      "sha256": "4727c955d072c863c972b26684e37234feba0dce39e329475e4318a9370b9e58"
+    },
+    "prior_accepted_149_result": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/remaining-input-unit-2026-10-20T17-43-37-126416Z/result.json",
+      "sha256": "3838040d05a115153ac509c2584f2db41c8e022f961ecd6a846f81cafd0573e0"
+    },
+    "runner": {
+      "path": "scripts/verify_ifpmic_b03_h2_runtime_full.py",
+      "sha256": "7e7c7eb445cb8621b48455382703e12cf93ab3aca16a41d641ee6daa46e4bb59"
+    },
+    "tc_contract_review": {
+      "path": "docs/ifpmic/evidence/b03/h2-runtime-full-execution-tc-review-v3.json",
+      "sha256": "0ad98d74f8825a9b3096ef49f605dc5b93846a86bb8dfd8ed4f7c251509c8202"
+    }
+  },
+  "capture_review": {
+    "baseline_capture_path": "workflow-artifacts/verification/agile/iteration-03/remaining-input-preparation/run_units.py",
+    "baseline_capture_sha256": "62221fef39e5f95e998c4af2f136f9ac98440785371284bc4c0ff2a82dc5d6be",
+    "evidence": "Compared with the accepted149 capture: the preserved-environment reader now uses the approved V3 contract; review evidence names this V3 source review; output uses a v3-binding-unit leaf; exact149 baseline/current method AST assertions were added; the six runner literals are checked by AST before runner import. The wrapper remains a bounded private cache-isolated capture with source/preservation rehash, 60-second unit command and exact-ID result recording.",
+    "path": "workflow-artifacts/verification/agile/iteration-03/v3-binding-preparation/run_units.py",
+    "result": "approve_exact_cache_isolated_synthetic_units_only",
+    "sha256": "c5dd1422213127a4b41bfd48941038048be214e162b096ed7d1f7abd10639aa0"
+  },
+  "decision": "approve_exact_cache_isolated_synthetic_units_only",
+  "execution_scope": {
+    "capture_timeout_seconds": 60,
+    "exact_id_set_required": true,
+    "fresh_private_cache_required": true,
+    "private_capture_required": true,
+    "target": "The exact149 approved synthetic evidence-unit tests under the pinned cache-isolated capture wrapper, with exact V3 literal-binding validation before runner import."
+  },
+  "kind": "ifpmic.delivery.iteration03.v3-binding-source-review.v1",
+  "limitations": [
+    "This review covers the six literal runner bindings, the bounded capture wrapper, the47 pinned inputs, and preservation of the same149 method ASTs only.",
+    "It is not whole-runner source review, full source closure approval, execution pre-gate, or actual V3 runner approval.",
+    "No imports or tests were executed during this review."
+  ],
+  "prior_result_context": {
+    "cache_empty": true,
+    "expected": 149,
+    "full_runtime_executed": false,
+    "note": "The prior accepted149 proof remains immutable and targets the prior runner source. It is preservation evidence only and does not substitute for the separately approved V3-binding capture.",
+    "passed": 149,
+    "path": "workflow-artifacts/verification/agile/iteration-03/remaining-input-unit-2026-10-20T17-43-37-126416Z/result.json",
+    "preservation_unchanged": true,
+    "sha256": "3838040d05a115153ac509c2584f2db41c8e022f961ecd6a846f81cafd0573e0",
+    "source_review_unchanged": true,
+    "source_unchanged": true
+  },
+  "retained_method_preservation": {
+    "baseline_methods": 149,
+    "baseline_path": "workflow-artifacts/verification/agile/iteration-03/v3-binding-preparation/baseline-149.json",
+    "body_ast_mismatches": 0,
+    "current_methods": 149,
+    "evidence": "Parsed current pinned test sources and compared AST dumps for all149 methods against the accepted baseline-149 manifest. The method key sets exactly match the149 verification test IDs and every AST is identical.",
+    "expected_methods": 149,
+    "method_key_mismatches": 0,
+    "result": "pass_static",
+    "verification_path": "docs/ifpmic/delivery/iteration-03/remaining-input-repair-verification.json"
+  },
+  "review_method": "Read-only SHA-256 checks for all47 requested pins; exact six-literal runner diff; AST comparison of all39 runner functions; AST comparison of all149 current test methods to baseline-149; static capture-wrapper diff and ordering inspection. No project imports, tests, SDK, SQL, services, collection or runner execution.",
+  "reviewed_utc": "2026-10-23T02:27:34+00:00",
+  "reviewer": {
+    "agent_id": "/root/v3_checkpoint_audit",
+    "independence": "Independent from runner and test authors; no source or test authorship. Read-only source/AST/hash review."
+  },
+  "runner_binding_review": {
+    "changed_literals": [
+      "CONTRACT_PATH -> h2-runtime-full-execution-contract-v3.json",
+      "LEDGER_PATH -> h2-runtime-full-integrated-ledger-v3.json",
+      "CONTRACT_SHA -> exact V3 contract SHA-256",
+      "LEDGER_SHA -> exact V3 ledger SHA-256",
+      "CONTRACT_REVIEW_SHAS independent V3 review filename and exact SHA-256",
+      "CONTRACT_REVIEW_SHAS TC V3 review filename and exact SHA-256"
+    ],
+    "evidence": "Compared the current runner with dfe6563 using exact diff and Python AST. The diff contains only these six top-level binding literals. All39 function ASTs, including every method body, are unchanged. The V3 contract and ledger hashes and both review hashes match current bytes.",
+    "result": "pass_static"
+  },
+  "source_closure": {
+    "current_pin_mismatches": 0,
+    "explanation": "All47 request paths were individually checked as regular non-symlink files and match their exact SHA-256 pins. The request includes the current V3 runner, contract/ledger and paired reviews, accepted149 baseline, all exact synthetic unit sources and transitive helpers, and the capture wrapper.",
+    "pin_count": 47
+  },
+  "source_pins": {
+    "README.md": "ee21e2fd36e6db1d4542d1ae8ee0403c44d3eaaf36958b58f1bab0a98f2371bf",
+    "docs/ifpmic/delivery/iteration-03/REMAINING-INPUT-REPAIR.md": "2cd9d116a4b538c4cfcc0c012a648fe3f6b7e822c6e2562b793439acd67e2cdd",
+    "docs/ifpmic/delivery/iteration-03/full-input-repair-verification.json": "28ac35d573eed65cfba9a0481dceafabf178961371e0e92a360968a7ce838de0",
+    "docs/ifpmic/delivery/iteration-03/full-runner-repair-verification.json": "69fc584a0bbebec8504a4b1e5d33295a32130abba4c3af2dd22cda0968d7c3e1",
+    "docs/ifpmic/delivery/iteration-03/remaining-input-repair-plan-review.json": "8cc283f35ee861bc33f42734624dfaee9181882284779d6a738123871084cd5e",
+    "docs/ifpmic/delivery/iteration-03/remaining-input-repair-result-review.json": "04ac60f99bf3a4ed310294d05810a41965ac5b862fa4625776053f551d730dab",
+    "docs/ifpmic/delivery/iteration-03/remaining-input-repair-verification.json": "0fc17026ee74cb62355c21013abd0233cd01d5f4ba6e63dfa8e91fa3b7351327",
+    "docs/ifpmic/delivery/iteration-03/runner-v2-repair-verification.json": "cf9ef3f6a239c47e4cf9abc9ae4580dd2f48f4793052db4a96683acc25223c1c",
+    "docs/ifpmic/evidence/b03/h1-execution-contract.json": "7860ccc5e7527ef37f6e1f26d07b7b2df4bb2f55d721b14ae5e635492153b801",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-execution-contract-review-v3.json": "4493edd5c00d6f8f0fe23b2a83a744bd137449f41f2b7c79fc0a78d6de2b20a1",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-execution-contract-v2.json": "d2f0ef941e62cf6a6597b39a9eda676161cd616d723403a34f16a2903a91bfe6",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-execution-contract-v3.json": "714411f1de4250b0d36c92902a3946e2a2bc3590dc79c508d71ac4a8a130e00d",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-execution-tc-review-v3.json": "0ad98d74f8825a9b3096ef49f605dc5b93846a86bb8dfd8ed4f7c251509c8202",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger-v2.json": "1512b767aa06961d8f80ed474a4bf44929d9db430a05317447eb49f4d71a0655",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger-v3.json": "4727c955d072c863c972b26684e37234feba0dce39e329475e4318a9370b9e58",
+    "docs/ifpmic/evidence/b03/h2-runtime-normal-execution-contract.json": "7e730a5936a39d364821df4b1e92afabc36813211f97cbd920aad7db2018260b",
+    "docs/ifpmic/evidence/b03/qualification/README.md": "d911a99a1f6a852e2193436885600943bb42887615c448e56dc71de5b647be8c",
+    "docs/ifpmic/evidence/b03/qualification/h1-readme.md": "0964d4dae840f9a433d88ee92132efedb7e17c77ac815d0e955c6fdbc65c7100",
+    "docs/ifpmic/evidence/b03/qualification/h2-readme.md": "1aa570dc948ffd83a15097535f3456eb24eea6a947c22a4aa49aa12f5b05605a",
+    "scripts/ifpmic_h2_artifacts.py": "712d5800835cd8f5e8f3ac513e2dd44b8f0fb2d035e83775ff989f4f24940b47",
+    "scripts/ifpmic_h2_fences.py": "53836724368ab3dac9e7ccaeb6e603a3a2124926e73db452448bfd608d746a9f",
+    "scripts/ifpmic_h2_gate_budget.py": "5bb8fe646c499a371d160e057d3a049ecc845123efe01a7aba411c7521929f77",
+    "scripts/ifpmic_h2_raw_evidence.py": "7b02c3b6a5713d6abe0e589d75835f5f6519e2aa5daee690e811497f20b7b4fe",
+    "scripts/ifpmic_readme_qualification.py": "fc4769b99a926ee595b662991ef3beb0284acbf6794fc183031cf9991cf11c6f",
+    "scripts/ifpmic_temporal_toolchain.py": "8cadab76ccfa1f93392cf759991d6906415c75ed5a116093c53aee9f4a445564",
+    "scripts/verify_ifpmic_b03_h2_runtime_full.py": "7e7c7eb445cb8621b48455382703e12cf93ab3aca16a41d641ee6daa46e4bb59",
+    "tests/ifpmic_api/h2_activity_runtime_case_budget.py": "34df11020b89f884207fd8ebdb8aef3e0d1acf452c1429bb9ec2d4735af3da4c",
+    "tests/ifpmic_api/h2_dispatcher_crash_support.py": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472",
+    "tests/ifpmic_api/h2_fixture_failure_case_budget.py": "503a1fc22d2ddece87fa83336fc5c26b003c094a7cf793339d3dbe0d61a06791",
+    "tests/ifpmic_api/h2_private_values.py": "ea2e828b0956f5e5bf9dd7f3c35441b948e1d0d17a49367b1d6ddd0c039cf86e",
+    "tests/ifpmic_api/h2_snapshot_evidence.py": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c",
+    "tests/ifpmic_api/h2_transport_case_budget.py": "a507a9e5a00b0bfbd061ca1bf59693315ad09dcf95d5b9c84bc5a987ad8af19a",
+    "tests/ifpmic_api/h2_window_case_budget.py": "da04f059de0e1b487b40a50f997797874e7373947f5dc251fc88a138a5231f19",
+    "tests/ifpmic_api/h2_workspace_activation_case_budget.py": "3ac6604aa1921b011bd6b7016129e94c918776f5b97eefa4a1e1bb1eee8c9ff8",
+    "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py": "c0dd1e2a3e732ceea482e286a0f97bbb270dfab4040d88eff0403efc846e8688",
+    "tests/ifpmic_api/test_h2_worker_api_crashes.py": "9ad3c1be60c3975cfe3a30fab972463361ac90c8e5f5b3a47461307d20ef35d3",
+    "tests/ifpmic_api/test_temporal_toolchain.py": "8a60dc4a5b504bdfcba3f390d4838f0abc265e7034ae0e0f94e7a37c0b0721be",
+    "tests/ifpmic_evidence/test_full_runner_guards.py": "ac2219a1854783233a45bc870e0ba9e1a1233b65d9fd82af3ebe690e8a93601b",
+    "tests/ifpmic_evidence/test_gate_budget.py": "286036ac2dd8b67d0f76bc3eb86ab016c140a06c79ecd8e2504b0aa45e9097ee",
+    "tests/ifpmic_evidence/test_private_values.py": "fa675b2f32ec7fd68a38c2cdf84873af94ea312a1007aed532b6ed395c8ab811",
+    "tests/ifpmic_evidence/test_raw_artifacts.py": "765a054ba6e98d4bd3f61f29f4b64e4e5bba03aa96209c411ddb20aae32a7d8d",
+    "tests/ifpmic_evidence/test_raw_observations.py": "684ee4f7c85b8347b7b76cf988eab3f3aaafcc93c2262882a8781fdd87e63fb7",
+    "tests/ifpmic_evidence/test_retained_fences.py": "d23b1fe244071654b1c23bfccd84499eff5407ad243a806686aee4e81916d54f",
+    "tests/ifpmic_evidence/test_runner_v2_repairs.py": "ab92aa06b2b41a113aa29902ca0778a615c33d61116e864ccf94b68746e87c06",
+    "workflow-artifacts/verification/agile/iteration-03/remaining-input-preparation/baseline-140.json": "3d9d0ba9a94898d338dd3fef6d9e7d752b0d773d21d4b9e6e9f2d3b78fd28d62",
+    "workflow-artifacts/verification/agile/iteration-03/v3-binding-preparation/baseline-149.json": "101852c1281357470d8607b36a9a275e4ff44bb5611ae8a607fa2ee706321f54",
+    "workflow-artifacts/verification/agile/iteration-03/v3-binding-preparation/run_units.py": "c5dd1422213127a4b41bfd48941038048be214e162b096ed7d1f7abd10639aa0"
+  },
+  "source_review_request": {
+    "path": "workflow-artifacts/verification/agile/iteration-03/v3-binding-preparation/source-review-request.json",
+    "sha256": "88e1716877f7a82202930dd52ee3ab45f45fd34c79f694931935352c474da55a"
+  }
+}

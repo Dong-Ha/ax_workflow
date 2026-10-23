@@ -1,0 +1,286 @@
+{
+  "kind": "ifpmic.b03.h2.runtime-full-runner-source-review.v3.attempt-01",
+  "verdict": "request_changes",
+  "reviewed_utc": "2026-10-23T02:34:21.500700+00:00",
+  "reviewer": {
+    "agent_id": "/root/v3_whole_source_review",
+    "independence": "Independent from Code-dev runner/contract/ledger authors and TC test authors. Authored only this static review record; no implementation or test changes."
+  },
+  "contract_sha256": "714411f1de4250b0d36c92902a3946e2a2bc3590dc79c508d71ac4a8a130e00d",
+  "ledger_sha256": "4727c955d072c863c972b26684e37234feba0dce39e329475e4318a9370b9e58",
+  "runner_sha256": "7e7c7eb445cb8621b48455382703e12cf93ab3aca16a41d641ee6daa46e4bb59",
+  "raw_rules_sha256": "8c948efa993a1ba6837af28746af42ad532342eca5d5b299ac133f0377c0b74c",
+  "review_scope": "Entire current runner main and helper integration, actual producer/read schemas, review gates, collection/import order, source/environment/design attestation, timing/recovery, process normalization and private public-proposal construction. SOURCE only.",
+  "source_pins": {
+    "README.md": "ee21e2fd36e6db1d4542d1ae8ee0403c44d3eaaf36958b58f1bab0a98f2371bf",
+    "docs/ifpmic/delivery/iteration-03/remaining-input-repair-plan-review.json": "8cc283f35ee861bc33f42734624dfaee9181882284779d6a738123871084cd5e",
+    "docs/ifpmic/delivery/iteration-03/remaining-input-repair-result-review.json": "04ac60f99bf3a4ed310294d05810a41965ac5b862fa4625776053f551d730dab",
+    "docs/ifpmic/delivery/iteration-03/remaining-input-repair-source-review.json": "eddcfb25849ad9e6a0c7711ba2f1eaafbfad72121165962a04ed6ec79955899a",
+    "docs/ifpmic/evidence/b03/attempts/h2-runtime-full-runner-source-review-v2-attempt-02.json": "1185b7ce0c9668d83f19fa9b2a21f34d6bfee8d9e47c3a6a1280362178ed5dbf",
+    "docs/ifpmic/evidence/b03/h1-execution-contract.json": "7860ccc5e7527ef37f6e1f26d07b7b2df4bb2f55d721b14ae5e635492153b801",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-execution-contract-review-v3.json": "4493edd5c00d6f8f0fe23b2a83a744bd137449f41f2b7c79fc0a78d6de2b20a1",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-execution-contract-v3.json": "714411f1de4250b0d36c92902a3946e2a2bc3590dc79c508d71ac4a8a130e00d",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-execution-tc-review-v3.json": "0ad98d74f8825a9b3096ef49f605dc5b93846a86bb8dfd8ed4f7c251509c8202",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger-v3.json": "4727c955d072c863c972b26684e37234feba0dce39e329475e4318a9370b9e58",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules.json": "8c948efa993a1ba6837af28746af42ad532342eca5d5b299ac133f0377c0b74c",
+    "docs/ifpmic/evidence/b03/h2-runtime-normal-gate.zip": "ad9b085e1cfa25b7d6109354a57f9f6e07c660281f9255fef5669fe160f13c16",
+    "docs/ifpmic/evidence/b03/qualification/h1-readme.md": "0964d4dae840f9a433d88ee92132efedb7e17c77ac815d0e955c6fdbc65c7100",
+    "docs/ifpmic/evidence/b03/qualification/h2-readme.md": "1aa570dc948ffd83a15097535f3456eb24eea6a947c22a4aa49aa12f5b05605a",
+    "docs/ifpmic/source-manifest.json": "8afba9c1fc16ef3a6565f45576792cad51a1aaab59857d3a28666c71ec43007c",
+    "runtime/ifpmic/profile.mjs": "2277163d940aed1b8c0c16a2da09f412e777800a2cb907cde5919799481028dd",
+    "runtime/ifpmic/snapshot.mjs": "9bbfdcaf483167c931f0b6e0a453697cd8ea92f3b12f33ab30ffa0b2dd52b789",
+    "runtime/ifpmic/store.mjs": "0f532d26504b1975b61b8e67c87225c29d4d576115ed81d2314ecb6ae359477e",
+    "scripts/ifpmic_h2_artifacts.py": "712d5800835cd8f5e8f3ac513e2dd44b8f0fb2d035e83775ff989f4f24940b47",
+    "scripts/ifpmic_h2_fences.py": "53836724368ab3dac9e7ccaeb6e603a3a2124926e73db452448bfd608d746a9f",
+    "scripts/ifpmic_h2_full_raw_adapter.py": "04efd3a7851e756a275df58efc83828df5cf7cf30ce51240b8f7721c918d8c46",
+    "scripts/ifpmic_h2_gate_budget.py": "5bb8fe646c499a371d160e057d3a049ecc845123efe01a7aba411c7521929f77",
+    "scripts/ifpmic_h2_raw_audit.py": "3670a6889a76596caaf3de474e607631228f27f7824ee0dea201dfea262f2b8d",
+    "scripts/ifpmic_h2_raw_evidence.py": "7b02c3b6a5713d6abe0e589d75835f5f6519e2aa5daee690e811497f20b7b4fe",
+    "scripts/ifpmic_readme_qualification.py": "fc4769b99a926ee595b662991ef3beb0284acbf6794fc183031cf9991cf11c6f",
+    "scripts/ifpmic_temporal_toolchain.py": "8cadab76ccfa1f93392cf759991d6906415c75ed5a116093c53aee9f4a445564",
+    "scripts/verify_ifpmic_b03_h1.py": "9c20131082af1467f682d31fabb47daf359867aa5939ad818d97b7ac4c0d5573",
+    "scripts/verify_ifpmic_b03_h2_runtime_full.py": "7e7c7eb445cb8621b48455382703e12cf93ab3aca16a41d641ee6daa46e4bb59",
+    "scripts/verify_ifpmic_b03_h2_runtime_normal.py": "e38d62b8c64c2c8ce5e52df04ceac37e90ce802fe3d8c710a69d2b08f23c8728",
+    "scripts/verify_ifpmic_g1.py": "0f6603de4b0de546ccf2c23bc663c0568c2a178c8c19e31812c68b10a61e6d9b",
+    "scripts/verify_ifpmic_g4.py": "ad9b66b7463b84f22227d8ba924b42628f8abb463d0873ac9a90ab013708c13a",
+    "services/ifpmic_api/__init__.py": "19e632c5a93ee339f45313d5f6678de2a187286b159c258d1f70f1cf2cede9b5",
+    "services/ifpmic_api/app.py": "a65c3d44a14ecae7b819e5042d4f490ce68c8b9b5f5962d1b5f2bbfe52fef192",
+    "services/ifpmic_api/auth.py": "9fef8084e8b11a7e1d0929a1842ab4fdddb0361adcbaa70700529a5e9999a887",
+    "services/ifpmic_api/authority.py": "c1f8c91985f119b6435fc175cf21cc350c54ef2ba47959c4526bb22e6afa6734",
+    "services/ifpmic_api/catalog.py": "65cfaae738728a957ba73587bdc3caaa582a90650624bb1c31bd11f66fb2db1f",
+    "services/ifpmic_api/errors.py": "374b49dc97c616d8e4c9432d997d5c9bd9b4a542f236f451a3e43ae92d16e967",
+    "services/ifpmic_api/execution_activities.py": "ac81ad4ba4f5fad22bb2880f65cf0a833b78e4c8f8e90729833b60d14cdf9c2c",
+    "services/ifpmic_api/execution_dispatcher.py": "7baf91290938b3159b2e200e6fde8f81db5ec2d7b117351e03f689bbc75db209",
+    "services/ifpmic_api/execution_identity.py": "65927a0278db1ba9af218a777d692d87e1a4d847cdce1546a45c7ead8ef564f4",
+    "services/ifpmic_api/execution_manifest.py": "0f08e5c86992edc9ee9b62b19d50f981282d125e39810e0f0d6e75d39bfd07b6",
+    "services/ifpmic_api/execution_protocol.py": "543c801e902e28b1ada451aa98196275ccb271246c2772837386b7e7aca2c965",
+    "services/ifpmic_api/execution_runtime.py": "49c0c6208e62b26e808ecffadf278dd9c7cff45134a47b905d3a4f60987c4b08",
+    "services/ifpmic_api/execution_store.py": "2bdbc8b457a2da1f78d73c8e3ddda5059962a5931b154423a681a7cbb88d71bd",
+    "services/ifpmic_api/execution_temporal.py": "886d40d4dcb0e6e916f5cb76e5d514ce5890d2cd5a7f7069acafe84cfed1cea2",
+    "services/ifpmic_api/execution_workflow.py": "78f1a408ac6e80d56294c488e8bde434b03bddb1d17ed19278bfb87d5e85b3d7",
+    "services/ifpmic_api/execution_workspace.py": "d2794d8a8f20b78c6fe71ea36d2563c876a7372a14acd2e0a1944e2aff5fab05",
+    "services/ifpmic_api/jobs.py": "0538e460a6be42e3129d2e8d5e9f262bba357e621e0b5e800f4495ebdf99ecf9",
+    "services/ifpmic_api/migrate.py": "36518fdd4d296455947df76fd72bf11d68aa44317549bd527037499b98a9eb86",
+    "services/ifpmic_api/migrations/001_initial.sql": "cf0437a5f32e1589e4ea821afbb2ef2480d780a276667880aa9a08a0f4c77f12",
+    "services/ifpmic_api/migrations/002_auth_retention.sql": "95c01f06eb586e0c1067f04672edfed8e0a11215752ad859ac9e4744da5a504e",
+    "services/ifpmic_api/migrations/003_workflow_execution.sql": "5ef29521944e18551728dd285ce3ae21fa03c2b06f77c25430da6acb0ce1f102",
+    "services/ifpmic_api/migrations/004_prebinding_incident.sql": "9a7651ab063901e69a77f4b825dd21544dc018ed01941dc3a1bc76f8a65b541f",
+    "services/ifpmic_api/oidc.py": "78bc0d3194a987fe2232595e21719dc5dee2f79bbe41faeb9fcb8597a1f24478",
+    "services/ifpmic_api/request_contract.py": "ad88f756ce4bf526bb3c2d89dab64765bcfc42ab7f8b2832dcb012b271e07fe0",
+    "services/ifpmic_api/requirements-temporal.lock": "ccbbf7a8aab39cd80861f607afd4994bf461d07cbf592f6acfcc492e63ff85c6",
+    "services/ifpmic_api/requirements-test.in": "738049ca9fcfa198dc9919ebc10d0b877c77c910414f620b68780d0b7195c52e",
+    "services/ifpmic_api/requirements.in": "9d1622218da6e1cfe55b1f22db7bd771f421e54176653e00168e726d73272a00",
+    "services/ifpmic_api/requirements.lock": "6c8c950820a8c3ae9dea250e4080bc9dab09db17663e3d50118c5ac29211357e",
+    "services/ifpmic_api/serve.py": "2e45b6385ad15068f6d203e11caa7d447d4223aaefc9dce718aa57d55da3fe7e",
+    "services/ifpmic_api/settings.py": "2974a462c9a60e05faf8ae7c1b684090d33adfddc1f2d24e1b7638074d36eb02",
+    "services/ifpmic_api/snapshot_bridge.mjs": "c43822624bb68b7b75a4c13860c78408a80a3de56f10022c0f2591170200fd88",
+    "services/ifpmic_api/snapshot_bridge.py": "743f357fed62a37770d4bfef2a3321fab649b25a3a1b040f64d61bec628443e8",
+    "services/ifpmic_api/workspace.py": "ad3e29f27ee20bc82eff9afcf51d9bb5ef6374d50b69bcf8fa508d81ecb60f67",
+    "services/ifpmic_api/workspace_fs.py": "77e22fe789229841b4883fd2d1606964d468760a25d3cac4ea83d557ce3c5893",
+    "tests/helpers/ifpmic-profile-fixtures.mjs": "a3b3aa11d0647557a270173e06191be4c2f7e017cc4360753f68d637948b2d22",
+    "tests/ifpmic_api/accepted_start_dispatcher_child.py": "87c6cf61d94188f5733e73fc02e8d3d2caeb78f4a802a6455a501317a6f859eb",
+    "tests/ifpmic_api/conftest.py": "dd3885f66ccc29fc987f4fa20dbdba0481a95c377f227c5ac17663f0f63c4b8f",
+    "tests/ifpmic_api/gate_progress.py": "2f902b38ff0436f3f85d3a9a1341f8b530c8b0d3f5211dfdd56dba37ae8a07e4",
+    "tests/ifpmic_api/h2_activity_runtime_boundary_child.py": "c140c731869ce13a4e3a13306a7e9bfa48ff1233ac1ea50fdef016020449f281",
+    "tests/ifpmic_api/h2_activity_runtime_case_budget.py": "34df11020b89f884207fd8ebdb8aef3e0d1acf452c1429bb9ec2d4735af3da4c",
+    "tests/ifpmic_api/h2_api_crash_child.py": "29100b07e82334a2fc3193fbc55c784e7ede69cb4f0aa6dc60a4152e2d0cd4db",
+    "tests/ifpmic_api/h2_crash_case_budget.py": "b382b7096b4f3abb73357f851804a8f2427ab36971a0641e49e25ce045b457b5",
+    "tests/ifpmic_api/h2_dispatcher_crash_support.py": "93eff7fb57913482d6ac67f911795fbfecd9d8d4dd42ee28b8382a696a138472",
+    "tests/ifpmic_api/h2_fixture_cleanup.py": "99b277b7532ebc0e12d80dacd40d7b3e6a2af7f7aebfc46c93b35c3a04c50500",
+    "tests/ifpmic_api/h2_fixture_failure_case_budget.py": "503a1fc22d2ddece87fa83336fc5c26b003c094a7cf793339d3dbe0d61a06791",
+    "tests/ifpmic_api/h2_foreign_dispatcher_child.py": "4a3bcf89bc86892f259f47f868e734885e3ed26a4c7cfe30274aa90bdf5bb913",
+    "tests/ifpmic_api/h2_native_bounds.py": "deaae9cfc75ac6021bde78f66122ddfaca02283f8f29a49a2d1bff9d2fe7a3fb",
+    "tests/ifpmic_api/h2_private_values.py": "ea2e828b0956f5e5bf9dd7f3c35441b948e1d0d17a49367b1d6ddd0c039cf86e",
+    "tests/ifpmic_api/h2_runtime_case_budget.py": "d33f8de5ad0e9b85435642c1d974b3c055f47f627d8db45092231d9132dd2ed1",
+    "tests/ifpmic_api/h2_snapshot_evidence.py": "5e4d6c3750febef13d3c5b867915ea99c775e6d274fac65993aec5ea307bc85c",
+    "tests/ifpmic_api/h2_started_deployment_case_budget.py": "305e2991d642804cf23f223ec875783a1df3517ba58f88e805cdbf121d7f1f35",
+    "tests/ifpmic_api/h2_startup_case_budget.py": "35e8b7431c0f54e269392f5a958628f39cce1ae1039e1ea37bee318a2ae7a0a7",
+    "tests/ifpmic_api/h2_transport_boundary_child.py": "ddac239eb8244b08671922c5cee255e608ad2c4589099499c1f3dd7ccc796300",
+    "tests/ifpmic_api/h2_transport_case_budget.py": "a507a9e5a00b0bfbd061ca1bf59693315ad09dcf95d5b9c84bc5a987ad8af19a",
+    "tests/ifpmic_api/h2_window_case_budget.py": "da04f059de0e1b487b40a50f997797874e7373947f5dc251fc88a138a5231f19",
+    "tests/ifpmic_api/h2_worker_api_case_budget.py": "afce78ccbb4988dcb9028ba75ddb852f71a74cdfb1a4868d6601dd8823635f35",
+    "tests/ifpmic_api/h2_worker_crash_child.py": "003ba93a06fb3d5a81c0661e7c68ae4cfc56b95fb70c9bbf8afdd2c45b83b4cd",
+    "tests/ifpmic_api/h2_workspace_activation_case_budget.py": "3ac6604aa1921b011bd6b7016129e94c918776f5b97eefa4a1e1bb1eee8c9ff8",
+    "tests/ifpmic_api/jobs_fixture.py": "b8fefc39f3005b3a662124ae3182cee4e7a293e18dd4e84d18facd09c0e0d539",
+    "tests/ifpmic_api/oidc_provider.py": "38c4e014c16cf43bc28ff384999dcc8468d0e6ac0cbcc92c1a69b2d4cccd84e0",
+    "tests/ifpmic_api/response_loss_proxy.py": "b6f8ca62f21724bf26aac6395528092257e7c48b729d19df02adf7281b9ed512",
+    "tests/ifpmic_api/temporal_toolchain_fixture.py": "495278f52a5b6c539cd2b846d59e65c2a9b6cacf87f6e5bdfb36fab1d6ab3906",
+    "tests/ifpmic_api/test_accepted_start_response_loss.py": "f8a36315afc8e01389ea6dbf5b7126844ae001eedf7d66353143f0534eaf79b8",
+    "tests/ifpmic_api/test_auth.py": "a5da4f11401b0da6d43323a28a3fb82708680b2a611d56f62b1b77321d3e190a",
+    "tests/ifpmic_api/test_environment.py": "52f9c4eb67faef6022b926a543ad0a38b8d792e1966055a367cfdfff00d6ea69",
+    "tests/ifpmic_api/test_execution_manifest.py": "7124433d0642afaa7b44a1a7f18b2548aa3adf2497e367843463ddeea8e84c80",
+    "tests/ifpmic_api/test_execution_protocol.py": "e7e80577f40275529957cae9ef352a006c052ab5a27aa4310a65ca137b86535a",
+    "tests/ifpmic_api/test_execution_workspace.py": "666d8d4f233022b233c928ec6048a1ea7a91c6449331afc2b1d51e0551623bb0",
+    "tests/ifpmic_api/test_h2_activity_runtime_boundaries.py": "3c5bff7d8f858cad04665b850124f04bdab3684b7732592aad69dc2f8fda58f7",
+    "tests/ifpmic_api/test_h2_dispatcher_crashes.py": "84ebfde5375ec125075652af8da8caa6c2c7757c37aa2bd275bfd4f32d712b52",
+    "tests/ifpmic_api/test_h2_fixture_cleanup_failures.py": "c0dd1e2a3e732ceea482e286a0f97bbb270dfab4040d88eff0403efc846e8688",
+    "tests/ifpmic_api/test_h2_reconciliation_window.py": "7fe6f3856b408d8d1f1e9fefc58ae47db00cfe1f8f5b45b41836523c63881a01",
+    "tests/ifpmic_api/test_h2_runtime_normal_flow.py": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d",
+    "tests/ifpmic_api/test_h2_runtime_restart_and_history.py": "606db627f5efd4ba6f9158da6ef538b95fe70d77444cb0775191265a10a2b546",
+    "tests/ifpmic_api/test_h2_runtime_startup_rejections.py": "80376fad5e864c4ac07cc0fc1cf75fce205d06da64f22e74a67b542ca60fb1b1",
+    "tests/ifpmic_api/test_h2_started_deployment_boundaries.py": "034ae6eb4399d8e4b906ffc27401d2b1d4d3799e44159b7a711d6e174c25bbdf",
+    "tests/ifpmic_api/test_h2_transport_boundaries.py": "6679eea681edd6f847e18aa75f1cee4d44f230d7ac9e7b88bc6253cbe5918372",
+    "tests/ifpmic_api/test_h2_worker_api_crashes.py": "9ad3c1be60c3975cfe3a30fab972463361ac90c8e5f5b3a47461307d20ef35d3",
+    "tests/ifpmic_api/test_h2_workspace_activation_boundaries.py": "ad48c0a6dd84d08e2839a9ba5a4b3d4f8b4cad82df99e0a090ae5d4387eb2f2f",
+    "tests/ifpmic_api/test_jobs.py": "dc96141956bb93ff1d3b06214bf4d176265cea654c3f2235f4e281b071287a28",
+    "tests/ifpmic_api/test_migrations.py": "c5e9a8419fd6658af961a189f7764baedfd1e3cafce9393efe3d373d7151d2a9",
+    "tests/ifpmic_api/test_prebinding_incident.py": "789ea964c02a52cf9f311225a8d05b2fff0abeb195dedd8da63fccc1ab9f823e",
+    "tests/ifpmic_api/test_snapshot_bridge.py": "1f93fe8b5bf02545f1e04c0c2c555bdf9582d2da477a44a3abac6b51ad26d705",
+    "tests/ifpmic_api/test_temporal_toolchain.py": "8a60dc4a5b504bdfcba3f390d4838f0abc265e7034ae0e0f94e7a37c0b0721be",
+    "tests/ifpmic_api/test_workflow_schema.py": "b76ebd44dc6e98323501fea1c03e3f5c1838484b3f7b359693a2e5ef52159224",
+    "tests/ifpmic_api/test_workspace.py": "46502aef6e69b3525f44b74e8fac6b9fa6d2ce199285365d7a013e85c30f2552",
+    "tests/ifpmic_api/workflow_schema_fixture.py": "dd1eba1754a8985dd704f0ed63271cc73beca8b03c72aaa2f14acdd41e5e3681",
+    "tests/ifpmic_api/workspace_fixture.py": "66b0d11faaa343542fe27e1254e0ed28a968d73518a7a1ac2aab106e4ef126b6",
+    "tests/ifpmic_evidence/test_full_runner_guards.py": "ac2219a1854783233a45bc870e0ba9e1a1233b65d9fd82af3ebe690e8a93601b",
+    "tests/ifpmic_evidence/test_gate_budget.py": "286036ac2dd8b67d0f76bc3eb86ab016c140a06c79ecd8e2504b0aa45e9097ee",
+    "tests/ifpmic_evidence/test_private_values.py": "fa675b2f32ec7fd68a38c2cdf84873af94ea312a1007aed532b6ed395c8ab811",
+    "tests/ifpmic_evidence/test_raw_artifacts.py": "765a054ba6e98d4bd3f61f29f4b64e4e5bba03aa96209c411ddb20aae32a7d8d",
+    "tests/ifpmic_evidence/test_raw_observations.py": "684ee4f7c85b8347b7b76cf988eab3f3aaafcc93c2262882a8781fdd87e63fb7",
+    "tests/ifpmic_evidence/test_retained_fences.py": "d23b1fe244071654b1c23bfccd84499eff5407ad243a806686aee4e81916d54f"
+  },
+  "findings": [
+    {
+      "id": "FULL-PINNED-NODE-NOT-REACHABLE-BY-ACTUAL-FIXTURES",
+      "severity": "blocking_execution",
+      "runner_locations": [
+        "scripts/verify_ifpmic_b03_h2_runtime_full.py:332",
+        "scripts/verify_ifpmic_b03_h2_runtime_full.py:383"
+      ],
+      "actual_source_evidence": [
+        {
+          "path": "tests/ifpmic_api/jobs_fixture.py",
+          "line": 30,
+          "fact": "Module-level NODE is shutil.which(\"node\"); it does not consume IFPMIC_NODE_EXECUTABLE."
+        },
+        {
+          "path": "tests/ifpmic_api/jobs_fixture.py",
+          "line": 140,
+          "fact": "seed_profile_store fails if NODE is None and otherwise launches this PATH-resolved NODE; build_settings and bridge_for reuse it."
+        },
+        {
+          "path": "tests/ifpmic_api/test_snapshot_bridge.py",
+          "line": 42,
+          "fact": "The retained real-child tests independently set NODE=shutil.which(\"node\")."
+        },
+        {
+          "path": "tests/ifpmic_api/test_snapshot_bridge.py",
+          "line": 91,
+          "fact": "_seed_store fails when NODE is None; direct bridge launches at lines249/274 also use this NODE."
+        }
+      ],
+      "filesystem_evidence": {
+        "method": "Path existence checks only; no Node/interpreter/test execution.",
+        "node_absent_in_original32_and_qualified36_bin": true,
+        "node_absent_at_usr_bin_and_bin": true,
+        "available_exact_contract_node": "~/.nvm/versions/node/v24.17.0/bin/node",
+        "available_node_sha256": "62d66443847de1f527f74afe715900b12884ace52136dc9cd8e91e61acc2f527"
+      },
+      "impact": "safe_environment gives each phase only its interpreter bin,/usr/bin,/bin in PATH. Setting IFPMIC_NODE_EXECUTABLE separately does not affect shutil.which. The actual fixture callers therefore resolve no Node and fail required runtime setup; the separately executed explicit Node preflight cannot prove fixture compatibility.",
+      "minimal_repair": "After validating the existing contract-pinned Node path/hash, include its parent in the phase PATH so both actual shutil.which callers resolve that exact binary. Preserve a scrubbed explicit PATH, pinned environments, no installation/download and original budgets. Do not add ambient PATH fallback or replace tests with mocks.",
+      "required_regression": "Source-backed synthetic validation of safe_environment for both phase interpreters: exact pinned Node parent reaches PATH, actual shutil.which resolution under that PATH selects the pinned node, missing/hash-changed node rejects, and ambient Node/PATH cannot be selected. No product/collection/service execution is required for that bounded repair proof."
+    },
+    {
+      "id": "FULL-EXECUTED-NODE-BRIDGE-OUTSIDE-SOURCE-ATTESTATION",
+      "severity": "blocking_execution",
+      "runner_locations": [
+        "scripts/verify_ifpmic_b03_h2_runtime_full.py:271",
+        "scripts/verify_ifpmic_b03_h2_runtime_full.py:1318",
+        "scripts/verify_ifpmic_b03_h2_runtime_full.py:1513"
+      ],
+      "actual_source_evidence": [
+        {
+          "path": "services/ifpmic_api/snapshot_bridge.py",
+          "line": 18,
+          "fact": "SCRIPT_PATH resolves the adjacent snapshot_bridge.mjs production file."
+        },
+        {
+          "path": "services/ifpmic_api/snapshot_bridge.py",
+          "line": 190,
+          "fact": "SnapshotBridge launches self.script_path through asyncio.create_subprocess_exec."
+        },
+        {
+          "path": "tests/ifpmic_api/test_snapshot_bridge.py",
+          "line": 249,
+          "fact": "A required retained real-child test directly invokes NODE with SCRIPT_PATH; other required cases use the same source."
+        },
+        {
+          "path": "scripts/verify_ifpmic_g1.py",
+          "line": 68,
+          "fact": "The protected B01 selection covers src/server/plugins/runtime and tests/*.mjs plus fixed root files; services/ifpmic_api/snapshot_bridge.mjs is outside that selection."
+        }
+      ],
+      "observed_input": {
+        "path": "services/ifpmic_api/snapshot_bridge.mjs",
+        "sha256": "c43822624bb68b7b75a4c13860c78408a80a3de56f10022c0f2591170200fd88",
+        "in_current_109_ledger_pins": false,
+        "in_machine_38_pins": false,
+        "existing_trusted_anchor": {
+          "archive": "docs/ifpmic/evidence/b03/h2-runtime-normal-gate.zip",
+          "archive_sha256": "ad9b085e1cfa25b7d6109354a57f9f6e07c660281f9255fef5669fe160f13c16",
+          "member": "gate/source-manifest.json",
+          "member_key": "services/ifpmic_api/snapshot_bridge.mjs",
+          "recorded_sha256": "c43822624bb68b7b75a4c13860c78408a80a3de56f10022c0f2591170200fd88"
+        }
+      },
+      "impact": "The suffix closure expressly excludes .mjs and both before/after source maps use ledger pins only. This actually executed bridge can differ or be replaced without any ledger/protected-source check noticing, while source_unchanged and candidate-source/public source manifests omit it. All109 declared pins matching is insufficient to establish actual repository execution-source closure.",
+      "minimal_repair": "Add the bridge with the existing accepted407 digest to a separately reviewed successor source ledger/contract; include .mjs in exact service/test source-inventory checks and before/after capture. Recheck its actual direct/transitive repository imports and read inputs against existing protected/original anchors. Preserve immutable V3 and prior reviews; obtain affected exact authoring/source/pre-gate reviews. Do not choose a new baseline from current bytes alone.",
+      "required_regression": "Synthetic exact closure checks must reject added/removed/changed/symlinked .mjs and prove bridge membership in pre/post source manifests and candidate capture. Keep all490 IDs and case/phase budgets unchanged."
+    }
+  ],
+  "node_bridge_repository_closure": {
+    "direct_imports": [
+      "runtime/ifpmic/snapshot.mjs",
+      "runtime/ifpmic/store.mjs",
+      "runtime/ifpmic/profile.mjs"
+    ],
+    "transitive_imports": "store imports profile/snapshot; snapshot imports profile. All three are already fixed by the B01 runtime/ifpmic protected prefix.",
+    "test_seed_dynamic_imports": {
+      "call_sites": [
+        "tests/ifpmic_api/jobs_fixture.py:44",
+        "tests/ifpmic_api/test_snapshot_bridge.py:58"
+      ],
+      "paths": [
+        "tests/helpers/ifpmic-profile-fixtures.mjs",
+        "runtime/ifpmic/snapshot.mjs",
+        "runtime/ifpmic/store.mjs"
+      ],
+      "protection": "The helper is already protected by tests/**/*.mjs; runtime modules are protected by runtime/ifpmic/."
+    },
+    "fixed_read_inputs": {
+      "call_site": "runtime/ifpmic/snapshot.mjs:26",
+      "paths": [
+        "docs/ifpmic/design-v1/qa/package-manifest.json",
+        "docs/ifpmic/design-v1/specs/workflow.v1.json",
+        "docs/ifpmic/design-v1/specs/state-contract.json",
+        "docs/ifpmic/design-v1/specs/agent-contract.json"
+      ],
+      "protection": "Existing original17 design manifest and pinned check_unchanged_sources; getWorkflow separately checks the three contract digests."
+    },
+    "private_runtime_inputs": "The snapshot store path/data are freshly created private test fixtures, not fixed source baseline inputs.",
+    "external_library_boundary": "profile.mjs imports ajv/dist/2020.js. Existing package.json/package-lock.json are B01 protected; this source review does not claim an installed npm byte-tree attestation from the two declared Python environment maps."
+  },
+  "supported_static_evidence": {
+    "exact_targets": "Current contract714411f1,ledger4727c955,runner7e7c7eb4,raw-rules8c948efa and paired authoring-review4493edd5/0ad98d74 bytes match. All109 declared source/read pins,38 machine pins,19 attestation anchors and7 binary hashes match current files. The declared86 service/test suffix closure matches; the executed .mjs omission is finding2.",
+    "delta_from_accepted149_source": "All function/class ASTs equal HEAD dfe6563 accepted repair source. Only top-level V3 contract/ledger paths,hashes and paired-review hash map changed (five assignment nodes;six leaf binding values). Accepted149 remains bounded synthetic repair evidence, not whole-source or full490 acceptance.",
+    "inventory_and_gates": "Main binds exact V3 contract/ledger and raw policy, then source review and paired approve_execution pre-gates before local helper imports. It verifies490 unique IDs=83+407,25 obligations and5 prerequisites,49 extended215+25 and34 default25+5 cases,15 fixed caps summing15420,30-second collections/450 pool and16220 outer epoch. All15 exact-ID collections precede any cases.",
+    "actual_producer_repairs": "Actual stopped boundary envelopes now require canonical same-case owned metadata and outer/nested identity agreement. The exact nonphysical expired-cleanup probe requires its2 actual journal/summary files and unique same-phase no-action query,contributing0 physical processes. H1 now checks the separately pinned historical0964/intermediate1aa/currentee21 README qualification without changing the required retained test or historical input.",
+    "timing_lifecycle_and_evidence": "Progress validates ordered start/setup/call/teardown/finish,all exact IDs and preserved body/cleanup budgets; actual watchdog records and retained H1/H2 schema fixtures remain independent. Source-backed2 non-PG/13-PG applicability is explicit. Per-case CLI journal registrations/terminal outcomes and kill joins remain case-local; physical process counts use distinct saved PID/start-ticks,with no invented identity for summaries or synthetic probes.",
+    "raw_and_toolchain_integration": "The raw adapter binds87 unique nodes across10 phases,953 artifact rules and38 producer/checker pins; the child uses the qualified real HistoryEvent.FromString decoder when PBSeq is applicable,checks source before/after,and the parent rehashes indexed raw files before proposal. Original32/qualified36 interpreter prefix/inventory/binary checks and complete before/after environment maps remain; original17/uploads2 and protected96/89 checks are unchanged.",
+    "deadline_recovery": "Bootstrap starts the single original monotonic epoch before hash/review reads; GateBudget receives that same start+16220 deadline,final15 reserve and command recovery reserve. Recovery uses only current kernel-owned descendants plus pidfd/start-tick identity and one cumulative3/5/10-second epoch; failure recovery cannot become case success.",
+    "privacy_and_publication": "Logs,raw SQL/history/configs/process identities/source ZIP/environment data remain under private0700/0600 artifacts. The only proposal is a private pending-review ZIP with six fixed allowlisted normalized members,sanitized exact490 JUnit and PID/path/credential scans. Runner self-hash is checked initially and immediately before proposal. No final publication or H2/full-goal acceptance is inferred."
+  },
+  "risks_and_remaining_uncertainty": [
+    "Both concrete findings block approve_source for these exact bytes. The active source-review and both V3 execution pre-gate files remain absent; this rejected attempt grants no runtime permission.",
+    "No imports,tests,pytest collection,SDK/SQL calls,services,network,runner main or full490 execution occurred in this review. Static checks cannot establish actual native timing,SQL/history/authority causality,resource absence or privacy fidelity.",
+    "The scoped accepted149 result remains valid only for its exact approved source and synthetic methods. Its mocked/source-shaped fixtures do not cover these actual Node resolver and executed-source-closure contradictions.",
+    "After a bounded reviewed repair and exact successor repins,renew whole-source review and paired execution pre-gates before any fresh490 run; preserve current rejected V3 attempt and immutable prior evidence."
+  ],
+  "recommendation": "Preserve this rejected attempt. Repair only the actual pinned-Node resolver path and missing production .mjs source attestation through a narrow reviewed plan. Keep existing roles,approvals,all490 IDs and all timing/raw-evidence requirements unchanged.",
+  "authorization": {
+    "approve_source": false,
+    "imports_or_collection": false,
+    "execution": false,
+    "h2_or_goal_acceptance": false
+  },
+  "review_method": "Read-only source/AST/text,Git source comparison,JSON/ZIP member/hash and filesystem path checks. No repository module import or test/service execution."
+}

@@ -1,0 +1,58 @@
+{
+  "kind": "ifpmic.b03.h2.node-closure-repair-plan-independent-review.v1",
+  "reviewed_utc": "2026-10-23T02:36:56.485772+00:00",
+  "reviewer": {
+    "agent_id": "/root/v3_whole_source_review",
+    "independence": "Independent from Code-dev runner/contract/ledger authors and TC test authors. Authored only independent review records; no implementation, test or execution ownership."
+  },
+  "decision": "approve_bounded_implementation_only",
+  "plan": {
+    "path": "docs/ifpmic/delivery/iteration-03/NODE-CLOSURE-REPAIR.md",
+    "sha256": "c57885b9c688559298efadeb028d1672d8ab54e84175558d36405143f6fad675"
+  },
+  "plan_sha256": "c57885b9c688559298efadeb028d1672d8ab54e84175558d36405143f6fad675",
+  "source_pins": {
+    "docs/ifpmic/delivery/iteration-03/NODE-CLOSURE-REPAIR.md": "c57885b9c688559298efadeb028d1672d8ab54e84175558d36405143f6fad675",
+    "scripts/verify_ifpmic_b03_h2_runtime_full.py": "7e7c7eb445cb8621b48455382703e12cf93ab3aca16a41d641ee6daa46e4bb59",
+    "docs/ifpmic/evidence/b03/attempts/h2-runtime-full-runner-source-review-v3-attempt-01.json": "bdb36d75ba05d9ef54dca2be5149acf2e46d375c4a8d49e2c71f5e6346690d92",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-execution-contract-v3.json": "714411f1de4250b0d36c92902a3946e2a2bc3590dc79c508d71ac4a8a130e00d",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger-v3.json": "4727c955d072c863c972b26684e37234feba0dce39e329475e4318a9370b9e58",
+    "services/ifpmic_api/snapshot_bridge.mjs": "c43822624bb68b7b75a4c13860c78408a80a3de56f10022c0f2591170200fd88",
+    "tests/ifpmic_api/jobs_fixture.py": "b8fefc39f3005b3a662124ae3182cee4e7a293e18dd4e84d18facd09c0e0d539",
+    "tests/ifpmic_api/test_snapshot_bridge.py": "1f93fe8b5bf02545f1e04c0c2c555bdf9582d2da477a44a3abac6b51ad26d705",
+    "docs/ifpmic/evidence/b03/h2-runtime-normal-gate.zip": "ad9b085e1cfa25b7d6109354a57f9f6e07c660281f9255fef5669fe160f13c16"
+  },
+  "findings": [],
+  "checks": {
+    "eight_fields": "Purpose,target,method,responsibility,pass criteria,expected result,evidence and failure recovery/reverification are explicit. The plan maps only the two concrete V3 whole-source blockers.",
+    "node_resolver": "Putting the already hash-validated fixture_node parent first in the scrubbed phase PATH directly reaches both actual shutil.which callers without fixture changes or ambient PATH fallback. Keeping the phase interpreter bin,/usr/bin,/bin preserves existing explicit tools.",
+    "source_attestation": "The one currently missing production bridge uses the already accepted407 source-manifest digest c43822624bb68b7b75a4c13860c78408a80a3de56f10022c0f2591170200fd88. Adding it to110 successor ledger pins and including Node .mjs/.js/.cjs in exact service/test inventory closes the identified repository-source gap; no new baseline is needed.",
+    "existing_closure": "The plan reuses the prior review evidence for bridge imports into runtime/ifpmic,same modules plus tests/helpers/ifpmic-profile-fixtures.mjs in seed scripts,and original design reads. These already belong to B01 protected96/89 and original17 anchors; they must be rechecked without broad source changes.",
+    "verification_boundary": "The proposed temporary-file/stdlib synthetic regressions can check both environment constructions,PATH precedence,pin rejection and closure failures without Node/product/SDK/SQL execution. Fresh source and result reviews are separate prerequisites for that later bounded run.",
+    "preservation": "The plan retains149 IDs and method bodies,490/25+5/15 phases,all case and16220 outer budgets,raw87/953/38,19 anchors/7 binaries,roles/approvals and original evidence. V3 remains immutable history;V4 needs exact paired authoring,runner source and execution pre-gates."
+  },
+  "scope_constraints": [
+    "Implementation is limited to safe_environment pinned-Node PATH precedence,verify_static_anchors Node source suffix inventory,the separately named V4 candidate pins/reviews,and additive TC methods. No actual producer,service,business,device,role or approval logic may change.",
+    "Validate the existing literal fixture_node path/hash before publishing it through PATH. The pinned Node directory must precede any alternate node in the venv or ambient directories;do not copy inherited PATH,install/download tools,or use a system-node fallback.",
+    "The successor ledger must retain all109 current source/read pins and add only the existing bridge to110,apart from exact refreshed pins for authorized runner-independent TC changes where the ledger already pins them. Preserve V3 and all previous review/result bytes under their current names.",
+    "Node inventory must detect additions/removals/changes across .mjs/.js/.cjs. A pinned source replaced with a symlink must reject;an unexpected symlink with a Node source suffix under the checked service/test roots must not be silently omitted as though it were absent. Source captures and before/after checks must include the bridge.",
+    "Compare the bridge to the existing accepted407 archive source-manifest digest,not a newly captured baseline. Check its direct/transitive repository imports,seed dynamic imports and fixed design reads against the existing protected/original anchors;this plan does not authorize reworking the npm dependency system.",
+    "Keep all149 existing method ASTs/IDs unchanged;new TC cases must cover both phase interpreter environments,pinned Node precedence,missing/changed binary and added/removed/changed/symlink Node sources. Preserve original timings and exact source/review/cache/preservation checks.",
+    "Before the proposed synthetic run,obtain a separate exact implementation/TC/capture source review naming the complete expected methods and pins. This plan does not itself authorize even the bounded unit run.",
+    "Actual runner main,pytest collection,SDK,SQL,services and490 cases remain prohibited until the successor whole-source approval and both exact independent/TC execution pre-gates. Synthetic success cannot establish H2/UI/full-goal acceptance."
+  ],
+  "remaining_uncertainty": [
+    "No implementation exists for this plan yet;final ordering,inventory behavior,TC coverage and exact successor pins require source review.",
+    "No tests,imports,collection,Node binary,SDK,SQL,services or runner were executed for this review. The plan resolves two source-backed blockers only;actual timing,causality and resource absence still need the later approved full gate."
+  ],
+  "authorization": {
+    "bounded_implementation": true,
+    "synthetic_units": false,
+    "imports_or_collection": false,
+    "sdk_sql_services_or_runner_main": false,
+    "full490_execution": false,
+    "h2_ui_or_goal_acceptance": false
+  },
+  "recommendation": "Proceed with the bounded implementation and additive TC authoring under these constraints,then obtain exact source review. Keep V3 rejected attempt and accepted149 evidence immutable.",
+  "review_method": "Read exact plan and prior whole-source evidence;checked current plan/runner hashes only. Reused existing source reasoning without repeated broad exploration or execution."
+}
