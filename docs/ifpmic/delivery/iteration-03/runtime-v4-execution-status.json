@@ -1,14 +1,14 @@
 {
   "kind": "ifpmic.agile.runtime-v4-execution-status.v1",
-  "updated_utc": "2026-10-23T03:11:03.340868+00:00",
-  "status": "running_not_accepted",
+  "updated_utc": "2026-10-23T03:17:21.869415+00:00",
+  "status": "failed_not_accepted",
   "started_utc": "2026-10-23T03:07:59.037167+00:00",
   "candidate_commit": "18e3bf7",
   "runner_sha256": "29be6f277fb624f82042a5f65a4c976298785e378cc42a61659397f129c00762",
   "inventory": 490,
   "phase_count": 15,
   "collections_observed_complete": 15,
-  "terminal_verdict": null,
+  "terminal_verdict": "fail",
   "actual_result_independently_accepted": false,
   "overall_stage_completion": {
     "completed": 2,
@@ -24,5 +24,15 @@
   "private_resume_pointer": "workflow-artifacts/verification/B03/H2/runtime-full/preparations/v4-execution/tool-session.json",
   "monitoring": "Continue observing the same actual tool session. Observation timeout is not execution failure or authorization to restart. Preserve raw evidence and owned cleanup on failure.",
   "next_visible_goal": "Persisted request -> actual admission -> matching run/receipt and QUEUED; normal, duplicate, authorization and reload checks.",
-  "scope": "152 accepted synthetic units are separate. Runtime execution does not prove business workflow, device, release or AT32 completion."
+  "scope": "152 accepted synthetic units are separate. Runtime execution does not prove business workflow, device, release or AT32 completion.",
+  "executed_cases": 8,
+  "passed_cases": 6,
+  "failed_cases": 2,
+  "error_cases": 0,
+  "skipped_cases": 0,
+  "completed_phase_test_runs": 1,
+  "remaining_inventory_cases_not_executed": 482,
+  "elapsed_seconds": 484.18970640099997,
+  "failure_category": "Two dispatcher failures: claim-cut attempt-record assertion mismatch, and workflow query RPC timeout after worker shutdown before restart. Correct intended semantics/order require bounded review.",
+  "next_action": "Preserve failed attempt and independent raw/cleanup review; compare claim-attempt assertion and restart-query order with original contract before bounded repair. No rerun or acceptance granted."
 }

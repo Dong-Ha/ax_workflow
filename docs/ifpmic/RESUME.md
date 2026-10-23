@@ -8,12 +8,12 @@
 - [진척 현황판](./delivery/status.html): [캡처](./delivery/status-desktop-2026-10-23.png)와 [검증·수용](./delivery/status-result-review-2026-10-23.json)은 커밋 `18e3bf7`의 **실행 직전 기록**이다. 4173 preview는 재기동했고 요청 API8769는 정지 상태다.
 - 로컬 API/DB 요청 저장 흐름은 주기02에서 검증했지만, 실제 실행 접수 화면은 아직 미완료다.
 - Node 경로와 bridge 소스 누락을 수정한 현재 runner의 **152개 합성 검사**를 [독립 수용](./delivery/iteration-03/node-closure-repair-result-review.json)했다. 이는 실제490의 결과가 아니다.
-- V4 전체 소스와 독립·TC 실행 전 검토를 승인받고, **2026-10-23 03:07:59 UTC에 실제490을 한 번 시작했다.** [현재 실행 기록](./delivery/iteration-03/runtime-v4-execution-status.json)을 먼저 확인한다. 시작 기록만으로 통과·최종 수용을 주장하지 않는다.
+- V4 전체 소스와 독립·TC 실행 전 검토를 승인받고, **2026-10-23 03:07:59 UTC에 실제490을 한 번 시작했고, 첫 묶음8건 중2건 실패로 종료했다(6통과·오류/skip0).** [현재 실행 기록](./delivery/iteration-03/runtime-v4-execution-status.json)을 먼저 확인한다. 나머지482건은 실행하지 않았다. 전체 통과나 최종 수용이 아니다.
 
 ## 다음 행동
 
-1. 기존 실행을 먼저 관찰한다. 실제 handle과 private leaf는 `workflow-artifacts/verification/B03/H2/runtime-full/preparations/v4-execution/tool-session.json`에 있다. 관찰 timeout을 실행 종료로 해석하거나 새 실행을 시작하지 않는다. 원래16220초 예산·owned cleanup을 유지한다.
-2. 실제 terminal gate/JUnit과490 inventory, raw·정리·환경·개인정보 증빙을 확인한다. 실패하면 해당 leaf를 보존하고 원인을 수정한다. 성공해도 독립 결과 수용 전에는 H2 완료나 공개 proposal로 집계하지 않는다.
+1. 종료된 실행의 실패 증거를 확인한다. 실제 handle과 private leaf는 `workflow-artifacts/verification/B03/H2/runtime-full/preparations/v4-execution/tool-session.json`에 있다. 실행은 exit1로 종료했다. 실패 증거를 보존하며 무조건 재실행하지 않는다.
+2. 실제 terminal gate/JUnit·정리·환경·개인정보의 독립 실패 검토를 확인한다. claim 시도 기록의 기대값과 worker 정지 중 query 순서를 원래 계약에 대조하고, 검토된 범위만 수정·재검증한다. 이후 성공해도 독립 수용 전에는 H2 완료나 공개 proposal로 집계하지 않는다.
 3. 다음 공개 결과는 **저장 요청 한 건 → 실제 엔진 접수 → 같은 작업의 run/receipt·QUEUED**다. 정상·중복 접수·권한 오류·새로고침 유지를 검증한다. QUEUED는 접수 상태다.
 4. 화면·URL·직접 해볼 순서·실제/모의 구분·남은 한 가지를 전달하고 검증된 변경을 커밋·push한다.
 
