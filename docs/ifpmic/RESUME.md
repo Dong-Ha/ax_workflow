@@ -36,3 +36,7 @@ V8에서 protocolstatus를 복원하고 현재metadata 연결 검사2개를 추�
 V8 실패 source/metadata는 커밋 `cce0e33`으로 보존했다. V9에서 새2개를 기존 확장 모듈의 새 클래스로 옮겼고, 원래152 AST/ID와 strict119를 유지했다. [154 실제 stdlib 검사](./delivery/iteration-03/raw-policy-inventory-unit-verification.json)가 모두 통과해 [독립 수용](./delivery/iteration-03/raw-policy-inventory-unit-result-review.json)됐다. 새2개 현재metadata 검사는 SDK/SQL/서비스/실제490을 대신하지 않는다.
 
 [전체 sourceV9](./evidence/b03/h2-runtime-full-runner-source-review-v9.json)·[독립 실행 전](./evidence/b03/h2-runtime-full-pre-gate-review-v9.json)·[TC 실행 전](./evidence/b03/h2-runtime-full-pre-gate-tc-review-v9.json) 검토가 승인됐고,253개 핀·7target hashes·실제 HOME/cleanenv/원래 실행 명령을 다시 확인했다. 다음은 `workflow-artifacts/verification/B03/H2/runtime-full/preparations/v9-execution/invocation.json`의 정확한 명령으로 새490을 한 번 실행하는 것이다. V9은 아직 실제490 시작 전이다. runner SHA `c528080e66b5dcd727acbb06fd6334da70401c3e54b02ce11c676541b06608c2`. 위의 V8 배치 보완 대기 설명은 이전 체크포인트다. 실제 V9 handle은 시작 뒤 새 private pointer에 기록한다. 이전 handle57758/6642(단위),70202/44336(실제)는 모두 종료됐다.
+
+## 최신 실제 V9 실행
+
+승인된 후보 커밋 `e33298c`의 V9 실제490을 **2026-10-23 06:26:25 UTC**에 한 번 시작했다. [현재 상태](./delivery/iteration-03/runtime-v9-execution-status.json)의 private pointer를 확인한다. actual handle57638을 같은 핸들로 조회하며 source/환경을 변경하거나 관찰 timeout만으로 재시작하지 않는다. 위의 V9 실행 전 설명은 과거 체크포인트다. 최종 실제 결과·독립 수용·새 실행 접수 UI는 아직 없다.

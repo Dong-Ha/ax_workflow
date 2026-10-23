@@ -665,14 +665,14 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "V9 stdlib154 passed and independentlyaccepted: original152+relocated2 realmetadata checks, strict119 intact. Whole source2faf/251pins and paired invocation-bound pre-gates approved; immediate253pin/7targets checkpassed. Next onefresh actual490. PriorV7 precollectionfail andV8unit153/154fail preserved, no new admissionUI.",
+  "next_step": "One exact approved V9 actual490 attempt started2026-10-23T06:26:25Z at candidatee33298c; actualhandle57638/freshleaf retainedprivately. Poll samehandle,noauto retry. Source251/env frozen; no actualresult acceptance or new admissionUI.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",
     "Approved Bedrock/Claude runtime profile"
   ],
   "publication_policy": "Only authorized git repository documentation, source and synthetic verification summaries/screenshots; never runtime credentials or application logs.",
-  "updated_at": "2026-10-23T06:23:53.847366+00:00",
+  "updated_at": "2026-10-23T06:30:48.851576+00:00",
   "session_handoff": {
     "status": "resumed_by_user",
     "resume_document": "docs/ifpmic/RESUME.md",
@@ -704,7 +704,7 @@
     },
     "pending_source_proposal": "evidence/b03/h2-machine-resolution-progress-v2.json",
     "pending_source_proposal_review": "evidence/b03/h2-machine-resolution-activity-review-v5.json",
-    "pending_source_proposal_status": "v9_154_source_and_execution_gates_approved_actual490_not_started",
+    "pending_source_proposal_status": "v9_actual_running_not_accepted",
     "latest_source_mapping": {
       "resolved_cases": 87,
       "total_cases": 87,
@@ -715,7 +715,7 @@
       "scope": "Source path/schema/applicability only; no actual execution acceptance."
     },
     "current_candidate_static_verification": "evidence/b03/h2-runtime-full-runner-source-review-v9.json",
-    "next_foundation_scope": "V9 stdlib154 passed and independentlyaccepted: original152+relocated2 realmetadata checks, strict119 intact. Whole source2faf/251pins and paired invocation-bound pre-gates approved; immediate253pin/7targets checkpassed. Next onefresh actual490. PriorV7 precollectionfail andV8unit153/154fail preserved, no new admissionUI.",
+    "next_foundation_scope": "One exact approved V9 actual490 attempt started2026-10-23T06:26:25Z at candidatee33298c; actualhandle57638/freshleaf retainedprivately. Poll samehandle,noauto retry. Source251/env frozen; no actualresult acceptance or new admissionUI.",
     "candidate_authoring_reviews": {
       "independent": "evidence/b03/h2-runtime-full-execution-contract-review-v9.json",
       "tc": "evidence/b03/h2-runtime-full-execution-tc-review-v9.json"
@@ -735,10 +735,10 @@
     "current_blockers": [
       {
         "id": "ACTUAL-H2-FULL490",
-        "status": "pending_one_fresh_approved_v9_actual_attempt"
+        "status": "under_one_exact_v9_actual_attempt"
       }
     ],
-    "runtime_execution_status": "delivery/iteration-03/runtime-v7-execution-status.json"
+    "runtime_execution_status": "delivery/iteration-03/runtime-v9-execution-status.json"
   },
   "visible_deliveries": [
     {
@@ -767,12 +767,12 @@
       "title": "Connect persisted API job to real execution-engine admission and visible run/receipt",
       "path": "delivery/iteration-03/README.md",
       "verification": "delivery/iteration-03/raw-policy-inventory-unit-verification.json",
-      "foundation_status": "v9_154_source_and_execution_gates_approved_actual490_not_started",
+      "foundation_status": "v9_actual_running_not_accepted",
       "actual_job_execution": false,
       "scope": "V7 executed0cases; source/152 approval did not establish currentpolicy integration compatibility. Rawstatus protocol repair and2 new regressiontests planned. Full490/UI admission remain incomplete.",
       "mapping_resolution_progress": "evidence/b03/h2-machine-resolution-progress-v2.json",
       "candidate_static_verification": "evidence/b03/h2-runtime-full-runner-source-review-v9.json",
-      "runtime_execution_status": "delivery/iteration-03/runtime-v7-execution-status.json"
+      "runtime_execution_status": "delivery/iteration-03/runtime-v9-execution-status.json"
     }
   ]
 }

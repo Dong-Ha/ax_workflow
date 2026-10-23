@@ -65,3 +65,5 @@ V7 실제 실행을 **2026-10-23 05:34:27 UTC**에 한 번 시작했다(후보 �
 ## 최신 V9 준비
 
 [154 검사](./raw-policy-inventory-unit-verification.json)·[독립 수용](./raw-policy-inventory-unit-result-review.json)·전체 source/paired 실행 전 검토까지 완료했다. strict119와 기존152를 유지했고 실제metadata2개도 통과했다. 이제 새 실제490 한 번의 결과와 최종 독립 수용이 남았다. SDK/실제 업무·새 UI 수용은 아직 없다.
+
+승인된 V9 실제490을2026-10-23 06:26:25 UTC에 한 번 시작했다(후보 `e33298c`). [실행 상태](./runtime-v9-execution-status.json)의 actualhandle을 계속 조회한다. source/환경은 고정하며 실제 수용 전 완료하지 않는다.

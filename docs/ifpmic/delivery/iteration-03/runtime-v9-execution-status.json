@@ -1,0 +1,21 @@
+{
+  "kind": "ifpmic.agile.runtime-v9-execution-status.v1",
+  "updated_utc": "2026-10-23T06:29:17.050739+00:00",
+  "status": "running_not_accepted",
+  "started_leaf_timestamp": "2026-10-23T06-26-25-387466Z",
+  "inventory": 490,
+  "phase_count": 15,
+  "actual_result_independently_accepted": false,
+  "runner_sha256": "c528080e66b5dcd727acbb06fd6334da70401c3e54b02ce11c676541b06608c2",
+  "source_review": "../../evidence/b03/h2-runtime-full-runner-source-review-v9.json",
+  "accepted_unit_result_review": "raw-policy-inventory-unit-result-review.json",
+  "previous_failed_attempt": "runtime-v7-attempt-01-result-review.json",
+  "private_resume_pointer": "workflow-artifacts/verification/B03/H2/runtime-full/preparations/v9-execution/tool-session.json",
+  "candidate_commit": "e33298c",
+  "scope": "One exact approved V9 attempt started. Accepted stdlib154 does not establish actual490. No new admissionUI.",
+  "overall_stage_completion": {
+    "completed": 2,
+    "total": 16,
+    "percent": 12.5
+  }
+}
