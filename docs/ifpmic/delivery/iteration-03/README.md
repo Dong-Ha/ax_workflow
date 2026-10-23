@@ -67,3 +67,7 @@ V7 실제 실행을 **2026-10-23 05:34:27 UTC**에 한 번 시작했다(후보 �
 [154 검사](./raw-policy-inventory-unit-verification.json)·[독립 수용](./raw-policy-inventory-unit-result-review.json)·전체 source/paired 실행 전 검토까지 완료했다. strict119와 기존152를 유지했고 실제metadata2개도 통과했다. 이제 새 실제490 한 번의 결과와 최종 독립 수용이 남았다. SDK/실제 업무·새 UI 수용은 아직 없다.
 
 승인된 V9 실제490을2026-10-23 06:26:25 UTC에 한 번 시작했다(후보 `e33298c`). [실행 상태](./runtime-v9-execution-status.json)의 actualhandle을 계속 조회한다. source/환경은 고정하며 실제 수용 전 완료하지 않는다.
+
+## 사용자 종료 요청
+
+V9 실제490은8건7통과·1실패/482미실행으로 종료했다. [실패 검토](./runtime-v9-attempt-01-result-review.json)·[재개 안내](../../RESUME.md)를 따른다. 원인은 미확정이며 새 수정/재시도를 시작하지 않았다. 기존 I02복원 smoke/캡처를 보존했고 데모를 정상 종료했다([확인](./shutdown-2026-10-23.json)). stdlib154 수용은 전체H2/새 UI 완료가 아니다.

@@ -1,5 +1,5 @@
 {
-  "goal_status": "active",
+  "goal_status": "paused",
   "scope": "Full IFPMIC workflow visualization and orchestration plan; V-stage proof does not complete B stages or real acceptance.",
   "verification_plan": "VERIFICATION.md",
   "independent_plan_review": "evidence/plan-review.json",
@@ -665,20 +665,24 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "One exact approved V9 actual490 attempt started2026-10-23T06:26:25Z at candidatee33298c; actualhandle57638/freshleaf retainedprivately. Poll samehandle,noauto retry. Source251/env frozen; no actualresult acceptance or new admissionUI.",
+  "next_step": "Paused by user for shutdown. Stdlib154 independently accepted; V9 actual8/7pass1fail/482unexecuted. Diagnose DB-clock lease-expiry observation timeout before reviewed fix/newcandidate. I02 onePOST202/read/reload smoke passed; services stopped and nameddata preserved. No fullH2 or admissionUI acceptance.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",
     "Approved Bedrock/Claude runtime profile"
   ],
   "publication_policy": "Only authorized git repository documentation, source and synthetic verification summaries/screenshots; never runtime credentials or application logs.",
-  "updated_at": "2026-10-23T06:30:48.851576+00:00",
+  "updated_at": "2026-10-23T06:53:18.253122+00:00",
   "session_handoff": {
-    "status": "resumed_by_user",
+    "status": "paused_by_user_shutdown",
     "resume_document": "docs/ifpmic/RESUME.md",
     "resumed_checkpoint": "0de641d",
     "goal_complete": false,
-    "execution_started": true
+    "execution_started": true,
+    "shutdown_record": "delivery/iteration-03/shutdown-2026-10-23.json",
+    "execution_running": false,
+    "paused_candidate_commit": "e33298c",
+    "last_terminal_execution": "delivery/iteration-03/runtime-v9-execution-status.json"
   },
   "delivery_mode": {
     "plan": "AGILE-DELIVERY.md",
@@ -693,7 +697,7 @@
       "commit_and_push"
     ],
     "existing_mandatory_gates_preserved": true,
-    "latest_user_visible_change": "Static progress dashboard refreshed to accepted152 checkpoint; workflow4173 restored after build/HTTP200; request API8769 stopped. No new workflow execution behavior.",
+    "latest_user_visible_change": "Existing I02 request-save UI restoration smoke passed; masked desktop/mobile screenshots saved. Services now stopped, nameddata preserved. No engine admission UI.",
     "reporting_rule": "Lead with visible behavior; explicitly report no new visible feature when only internal evidence advances. Keep stage completion, visible flows, and test counts separate.",
     "next_visible_acceptance": "One persisted request admitted by the actual execution engine; matching job/run/receipt and QUEUED displayed, with duplicate, authorization and reload checks. Mandatory execution gates preserved.",
     "current_stage_completion": {
@@ -704,7 +708,7 @@
     },
     "pending_source_proposal": "evidence/b03/h2-machine-resolution-progress-v2.json",
     "pending_source_proposal_review": "evidence/b03/h2-machine-resolution-activity-review-v5.json",
-    "pending_source_proposal_status": "v9_actual_running_not_accepted",
+    "pending_source_proposal_status": "v9_actual_failed_not_accepted_paused",
     "latest_source_mapping": {
       "resolved_cases": 87,
       "total_cases": 87,
@@ -715,7 +719,7 @@
       "scope": "Source path/schema/applicability only; no actual execution acceptance."
     },
     "current_candidate_static_verification": "evidence/b03/h2-runtime-full-runner-source-review-v9.json",
-    "next_foundation_scope": "One exact approved V9 actual490 attempt started2026-10-23T06:26:25Z at candidatee33298c; actualhandle57638/freshleaf retainedprivately. Poll samehandle,noauto retry. Source251/env frozen; no actualresult acceptance or new admissionUI.",
+    "next_foundation_scope": "Paused by user for shutdown. Stdlib154 independently accepted; V9 actual8/7pass1fail/482unexecuted. Diagnose DB-clock lease-expiry observation timeout before reviewed fix/newcandidate. I02 onePOST202/read/reload smoke passed; services stopped and nameddata preserved. No fullH2 or admissionUI acceptance.",
     "candidate_authoring_reviews": {
       "independent": "evidence/b03/h2-runtime-full-execution-contract-review-v9.json",
       "tc": "evidence/b03/h2-runtime-full-execution-tc-review-v9.json"
@@ -734,8 +738,8 @@
     "status_dashboard": "delivery/status.html",
     "current_blockers": [
       {
-        "id": "ACTUAL-H2-FULL490",
-        "status": "under_one_exact_v9_actual_attempt"
+        "id": "CLAIM-EXPIRY-DB-CLOCK-TIMEOUT",
+        "status": "actual_failure_cause_unconfirmed_diagnosis_pending_resume"
       }
     ],
     "runtime_execution_status": "delivery/iteration-03/runtime-v9-execution-status.json"
@@ -767,9 +771,9 @@
       "title": "Connect persisted API job to real execution-engine admission and visible run/receipt",
       "path": "delivery/iteration-03/README.md",
       "verification": "delivery/iteration-03/raw-policy-inventory-unit-verification.json",
-      "foundation_status": "v9_actual_running_not_accepted",
+      "foundation_status": "v9_actual_failed_not_accepted_paused",
       "actual_job_execution": false,
-      "scope": "V7 executed0cases; source/152 approval did not establish currentpolicy integration compatibility. Rawstatus protocol repair and2 new regressiontests planned. Full490/UI admission remain incomplete.",
+      "scope": "Stdlib154passed. Actual8/7pass1fail/482unexecuted; no fullH2/admissionUI; user requested pause.",
       "mapping_resolution_progress": "evidence/b03/h2-machine-resolution-progress-v2.json",
       "candidate_static_verification": "evidence/b03/h2-runtime-full-runner-source-review-v9.json",
       "runtime_execution_status": "delivery/iteration-03/runtime-v9-execution-status.json"

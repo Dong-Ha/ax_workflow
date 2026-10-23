@@ -29,3 +29,7 @@ PYTHONDONTWRITEBYTECODE=1 .ifpmic-venv/bin/python -B experiments/ifpmic-live/lau
 ## 다음 하나
 
 필수 H2 검증을 통과한 실제 실행 한 구간의 run/결과를 이 화면에 연결한다. 이번 저장 지속성은 AT16 outbox 재배달 검증을 대체하지 않는다. AT21 전체·AT32·H2 전체·최종 workflow 완료는 미수용이다. 전체16단계 중 완료2개(12.5%) 집계는 유지하며, 이 주기는 사용자에게 전달한 부분 기능으로 별도 추적한다.
+
+## 2026-10-23 복원 및 종료
+
+동일 소스 새 named demo에서 실제POST202 한 번·목록/작업/명령GET200·같은 작업 reload를 확인했다([검증](./restore-2026-10-23-verification.json), [데스크톱](./restore-desktop-2026-10-23.png), [모바일](./restore-mobile-2026-10-23.png)). DRAFT/accepted이며 실행 연결은false다. 컴퓨터 종료 요청으로 launcher/issuer/PG를 정상 종료하고 nameddata를 보존했다. 같은 이름의 재시작 명령은 [RESUME](../../RESUME.md)에 있다. 전체17-case 회귀나H2/실행 접수 수용은 아니다.

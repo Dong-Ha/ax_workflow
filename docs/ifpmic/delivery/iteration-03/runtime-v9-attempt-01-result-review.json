@@ -1,0 +1,99 @@
+{
+  "kind": "ifpmic.delivery.iteration03.runtime-v9-attempt-01-independent-result-review.v1",
+  "reviewed_utc": "2026-10-23T06:45:53.383373+00:00",
+  "decision": "confirm_failed_attempt_not_accepted",
+  "reviewer": {
+    "agent_id": "/root/v7_whole_source",
+    "independence": "Independent from Code-dev/TC implementation authors and execution operator. Read-only bounded terminal/JUnit/source/pin/cleanup/privacy checkpoint review;no imports,tests,rerun,signals,SDK/SQL/services or source edits."
+  },
+  "contract_sha256": "4d4098f52832595c5b9c43b79ed5309cbc70a5b878a390779f88bc449202b19e",
+  "ledger_sha256": "84e8867c633fe9fdf712bb2f259f5e50148860eb05b5c8e3ca0a13432aa8bf6f",
+  "runner_sha256": "c528080e66b5dcd727acbb06fd6334da70401c3e54b02ce11c676541b06608c2",
+  "raw_rules_sha256": "1dacfc8ebd9342017b9d0d39d12a8301c1473bbf2a995eb4840d1cc2e5667d9c",
+  "private_attempt": "workflow-artifacts/verification/B03/H2/runtime-full/gates/2026-10-23T06-26-25-387466Z",
+  "private_evidence_pins": {
+    "workflow-artifacts/verification/B03/H2/runtime-full/gates/2026-10-23T06-26-25-387466Z/gate.json": "5f170d5f72d4bed511344ab1c0f04db745397b1c284641dfcf5333a1da75a77a",
+    "workflow-artifacts/verification/B03/H2/runtime-full/gates/2026-10-23T06-26-25-387466Z/dispatcher_crashes/pytest.xml": "4b5ad9772d55a945b21f913ef6b680c36e2a0a257263c3569a63243ac431f6e5",
+    "workflow-artifacts/verification/B03/H2/runtime-full/gates/2026-10-23T06-26-25-387466Z/dispatcher_crashes/postgres-lifecycle.json": "d3ae9dc11aaa7c6df4b181afeaf5dcbb938c616df1827c11092621f35427bfe4",
+    "workflow-artifacts/verification/B03/H2/runtime-full/gates/2026-10-23T06-26-25-387466Z/source-before.json": "d2e14d7a3a7eb81877c0fd93799ea8e168a1424c90a4e89d91af9548003087f2",
+    "workflow-artifacts/verification/B03/H2/runtime-full/gates/2026-10-23T06-26-25-387466Z/environment-before.json": "f735bde31750495a60192604ae249fd13b18d55fb4e7073f5b9891f04347e036",
+    "workflow-artifacts/verification/B03/H2/runtime-full/gates/2026-10-23T06-26-25-387466Z/candidate-source.zip": "f23792b0e22d6eac1a88b6fd209731f98bae19ddb3cad69a72c8e765d7a11b3b",
+    "workflow-artifacts/verification/B03/H2/runtime-full/gates/2026-10-23T06-26-25-387466Z/dispatcher_crashes/observations/dispatcher-claim-commit/process-journal.jsonl": "b405c0880ed96d85191a4043ff07ac205b17eab302afd792feccb9e01e1de81f",
+    "workflow-artifacts/verification/B03/H2/runtime-full/gates/2026-10-23T06-26-25-387466Z/dispatcher_crashes/observations/dispatcher-claim-commit/process-cleanup.json": "398f1a68f60a4054de7170789dbfbd0b0a93486a9cb63b69e7437382d50ba8fd",
+    "workflow-artifacts/verification/B03/H2/runtime-full/gates/2026-10-23T06-26-25-387466Z/dispatcher_crashes/observations/dispatcher-claim-commit/owner-at-cut.json": "74399fde3a8a62263a3c0e1b03a88976dd52515036f4b64587fbe67824fb224e"
+  },
+  "terminal_result": {
+    "tool_exit_code_recorded_by_operator": 1,
+    "operator_pointer": "workflow-artifacts/verification/B03/H2/runtime-full/preparations/v9-execution/tool-session.json",
+    "gate_verdict": "fail",
+    "finding": "Phase exited unsuccessfully: dispatcher_crashes",
+    "elapsed_seconds": 585.0157614540003,
+    "collections": {
+      "phases": 15,
+      "exact_unique_ids": 490,
+      "independent_ids_and_log_digests_match": true
+    },
+    "executed": {
+      "cases": 8,
+      "passed": 7,
+      "failed": 1,
+      "errors": 0,
+      "skipped": 0
+    },
+    "unexecuted_cases": 482
+  },
+  "failure": {
+    "case": "test_claim_commit_crash_reclaims_only_after_expiry",
+    "source": "tests/ifpmic_api/test_h2_dispatcher_crashes.py:257",
+    "observer": "tests/ifpmic_api/h2_dispatcher_crash_support.py:454",
+    "actual_evidence": "JUnit records TimeoutError: original delivery claim did not expire by database clock. The test had checked the original leased generation/token and no workflow,then called wait_claim_expired with min(30,deadline.remaining(30));planned reclaim/recovery/final proof did not complete.",
+    "source_facts": "The observer polls claim_expires_at<=clock_timestamp() until its monotonic stop,with0.1s sleep;production003 lease is clock_timestamp()+30seconds. These source facts identify the bounded expiry-observation failure,not a proven production cause.",
+    "unconfirmed_hypothesis": "An observer/lease polling-boundary race is a resumable diagnosis hypothesis only. No individual poll/DB-clock timing proof is retained here,and no root cause is confirmed. No attribution to the separately owned I02 demo or concurrent activity is supported."
+  },
+  "preservation": {
+    "current_source_pins_verified": 251,
+    "source_review_sha256": "2faf205a7efa5d101b31d5b7ce9a83a05c6437bea258535b4bb6d8aedf032d47",
+    "saved_core_sources": 110,
+    "source_archive_exact": true,
+    "copied_reviews_and_all_collection_digests_match": true,
+    "saved_environment_before_equals_accepted407": true,
+    "environment_entries": {
+      "original32": 1777,
+      "qualified36": 3072
+    },
+    "limit": "source-after/environment-after and completed phase raw audit are absent after failure. Current251-pin checks and saved before/archive equality are bounded after-failure observations;no final manifests or full acceptance are fabricated. No broad current environment rescan."
+  },
+  "cleanup": {
+    "gate": {
+      "pid_alive": false,
+      "result": "stopped",
+      "signalled_count": 0
+    },
+    "cli": "All30 journaled started identities join exact nonforced stopped/absent terminal rows and are currently absent by saved PID/start-ticks.",
+    "postgres": "Both saved initial/restarted PostgreSQL identities are currently absent;phase lifecycle reports stopped,pid_alive=false and successful pg_ctl_stop.",
+    "limit": "Owned process absence is confirmed for recorded attempt resources;full phase/raw/proposal audits did not complete. Private filesystem evidence is retained. The separate I02 shutdown/data-preservation action is operator-owned and outside this review."
+  },
+  "privacy": {
+    "files_0600_current_owner": 785,
+    "directories_0700_current_owner_including_attempt_root": 135,
+    "symlinks": 0,
+    "parent_cache_empty": true,
+    "public_proposal_produced": false,
+    "publication": false,
+    "raw_policy": "SQL,history,config,credentials,source ZIP,process identities and invocation stay private;this record exposes safe counts,categories,relative source/evidence references and hashes only."
+  },
+  "acceptance": {
+    "failed_attempt_evidence_reviewed": true,
+    "full490_pass": false,
+    "full_h2_or_ui_or_goal_acceptance": false,
+    "partial_pass_promoted_to_acceptance": false,
+    "retry_repair_or_new_plan_authorized": false
+  },
+  "handoff": {
+    "status": "stopped_for_user_requested_shutdown",
+    "next_resume_scope": "Read this failed checkpoint and private evidence;diagnose exact claim-expiry observation/timing before proposing any bounded repair. No fix,new plan,timeout change or automatic retry is approved.",
+    "remaining": "482 runtime cases,complete raw/resource/privacy/final acceptance and admission UI implementation remain unaccepted."
+  },
+  "recommendation": "Preserve V9 attempt01 as failed_not_accepted and stop development for handoff. On explicit resume,investigate the recorded expiry observation without weakening lease/reclaim or original timing/cleanup oracles;obtain new reviews before changes or execution.",
+  "review_method": "Verified exact gate/JUnit hashes,all15 collection IDs/log digests,current251 source pins,copied review hashes/core110 source archive,saved-before accepted environment equality,30 saved CLI terminal joins/current absence,2 saved PG identities/lifecycle and all private leaf modes/cache. No runtime/import/test or new development."
+}

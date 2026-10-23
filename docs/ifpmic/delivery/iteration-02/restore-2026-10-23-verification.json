@@ -1,0 +1,99 @@
+{
+  "kind": "ifpmic.delivery.iteration02.local-ui-restoration-smoke.v1",
+  "reviewed_utc": "2026-10-23T06:41:33.365Z",
+  "status": "passed_restoration_smoke_only",
+  "scope": "One real local synthetic OIDC demo-A request-save flow, actual API reads and same-job reload. No full I02 matrix rerun, no execution workflow or H2 acceptance.",
+  "demo": {
+    "name": "iteration-02-restored-20261023",
+    "api_origin": "http://127.0.0.1:8769",
+    "issuer_origin": "http://127.0.0.1:8770",
+    "execution_connected": false
+  },
+  "source_authority": {
+    "source_review": {
+      "path": "docs/ifpmic/delivery/iteration-02/source-review.json",
+      "sha256": "2c6ca7f1309bc4e6ec5408a5bb32750b0a02772a2fdcbe9d3a5646e4af921b52"
+    },
+    "accepted_result_review": {
+      "path": "docs/ifpmic/delivery/iteration-02/result-review.json",
+      "sha256": "a2e9c7d8ca38911de769579efc8e49aee5ee2ee6893ae10c8f605a8b864deecf"
+    },
+    "current_pinned_files": 26,
+    "all_current_pins_match_before_and_after": true
+  },
+  "checks": [
+    {
+      "name": "local_oidc_session",
+      "verdict": "pass",
+      "http_status": 200,
+      "synthetic_mode": "mock"
+    },
+    {
+      "name": "demo_context",
+      "verdict": "pass",
+      "http_status": 200,
+      "storage": "postgresql",
+      "execution_connected": false
+    },
+    {
+      "name": "single_actual_create",
+      "verdict": "pass",
+      "post_count": 1,
+      "http_status": 202,
+      "command_state": "accepted"
+    },
+    {
+      "name": "actual_list_read",
+      "verdict": "pass",
+      "http_status": 200,
+      "matching_job_count": 1
+    },
+    {
+      "name": "actual_job_read",
+      "verdict": "pass",
+      "http_status": 200,
+      "state": "DRAFT",
+      "current_step_count": 0
+    },
+    {
+      "name": "actual_command_read",
+      "verdict": "pass",
+      "http_status": 200,
+      "state": "accepted"
+    },
+    {
+      "name": "reload_same_job",
+      "verdict": "pass",
+      "job_read_http_status": 200,
+      "same_job": true,
+      "state": "DRAFT",
+      "command_state": "accepted"
+    },
+    {
+      "name": "network_scope",
+      "verdict": "pass",
+      "external_origin_requests": 0,
+      "api_origin": "http://127.0.0.1:8769",
+      "issuer_origin": "http://127.0.0.1:8770"
+    }
+  ],
+  "screenshot_redaction": "After the original successful one-request flow, a read-only OIDC-A recapture reopened the existing job. Visible account label was normalized to “Demo user A”; UUID text, actual user/job identifiers, ID attributes and the list ID label were normalized to [identifier hidden]. Screenshot masks additionally cover account name, detail ID, command ID and list ID label. No IDs or authentication values are in this report.",
+  "screenshots": [
+    {
+      "path": "docs/ifpmic/delivery/iteration-02/restore-desktop-2026-10-23.png",
+      "sha256": "d6a4ef3b05aa07b2243672cc811e41b5601589656392de8af79175caa8f49a04",
+      "bytes": 138770
+    },
+    {
+      "path": "docs/ifpmic/delivery/iteration-02/restore-mobile-2026-10-23.png",
+      "sha256": "b44b989849d3f6806196a437b12ed91d193bb1622b8df46cb6ded437eaf27b26",
+      "bytes": 131211
+    }
+  ],
+  "evidence_scope": "Raw response bodies, identifiers, cookies, session/CSRF values, request text, logs and process identities were not serialized. Private proof: workflow-artifacts/verification/agile/iteration-03/i02-restore-2023/private-proof.json.",
+  "limitations": [
+    "This is a single restoration smoke, not the accepted 17-case I02 browser matrix or full regression rerun.",
+    "The demo uses synthetic identity/profile and local PostgreSQL; it does not connect agents, devices, publishers, production SSO or external deployment.",
+    "Request remains DRAFT with accepted command; execution_connected is false. No run, attempt, scope or receipt was created."
+  ]
+}

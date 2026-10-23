@@ -1,0 +1,30 @@
+{
+  "kind": "ifpmic.user-shutdown-checkpoint.v1",
+  "recorded_utc": "2026-10-23T06:53:18.253122+00:00",
+  "status": "paused_at_user_request",
+  "goal_complete": false,
+  "stage_completion": {
+    "verified": 2,
+    "total": 16,
+    "percent": 12.5
+  },
+  "stdlib_passed": 154,
+  "actual_v9": {
+    "executed": 8,
+    "passed": 7,
+    "failed": 1,
+    "errors": 0,
+    "skipped": 0,
+    "unexecuted": 482,
+    "accepted": false
+  },
+  "services": {
+    "demo_launcher_exit": 0,
+    "issuer_threads_stopped": true,
+    "owned_demo_postgres_absent": true,
+    "ports_4173_8769_8770_closed": true
+  },
+  "data_preserved": "workflow-artifacts/live-demo/iteration-02-restored-20261023",
+  "resume_document": "../../RESUME.md",
+  "next_action": "Diagnose saved DB-clock claim-expiry observation timeout; root cause unconfirmed; no new fix or retry started."
+}

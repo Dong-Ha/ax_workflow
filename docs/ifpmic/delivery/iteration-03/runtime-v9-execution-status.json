@@ -1,7 +1,7 @@
 {
   "kind": "ifpmic.agile.runtime-v9-execution-status.v1",
-  "updated_utc": "2026-10-23T06:29:17.050739+00:00",
-  "status": "running_not_accepted",
+  "updated_utc": "2026-10-23T06:53:18.253122+00:00",
+  "status": "failed_not_accepted",
   "started_leaf_timestamp": "2026-10-23T06-26-25-387466Z",
   "inventory": 490,
   "phase_count": 15,
@@ -17,5 +17,21 @@
     "completed": 2,
     "total": 16,
     "percent": 12.5
-  }
+  },
+  "terminal_verdict": "fail",
+  "collections_observed_complete": 15,
+  "executed_cases": 8,
+  "passed_cases": 7,
+  "failed_cases": 1,
+  "error_cases": 0,
+  "skipped_cases": 0,
+  "remaining_inventory_cases_not_executed": 482,
+  "elapsed_seconds": 585.0157614540003,
+  "raw_phase_audit_completed": false,
+  "failure_category": "DB-clock claim-expiry observer timeout; root cause unconfirmed. Polling-boundary explanation is a hypothesis.",
+  "failed_attempt_independent_review": {
+    "path": "runtime-v9-attempt-01-result-review.json",
+    "sha256": "d23c1caa8d82bf60df698e19903380aac17e5078740fe8519f91ab36b4256788"
+  },
+  "next_action": "Resume evidence diagnosis after user resumes; no auto retry."
 }
