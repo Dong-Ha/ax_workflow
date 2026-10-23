@@ -40,3 +40,7 @@ V6 runner SHA: `c735c571cb9fb0d77f2907dae97a974f296822707482fb43eb40017a44616828
 전체 목표는 진행 중이다. H3–H7, Code-dev·TC·SAM·TEM·SQE·사람, 실제 장비·배포·AT32 인수는 남았다. 현재 계획은 [AGILE-DELIVERY](./AGILE-DELIVERY.md), 과거 상세는 [인계 기록](./RESUME-HISTORY-2026-10-21.md)과 커밋 `18e3bf7`의 문서에 있다.
 
 152개 합성 결과는 [독립 수용](./delivery/iteration-03/worker-observation-repair-result-review.json)됐다. 수용 범위는 해당 합성 실행뿐이며 실제490·새 helper·실행 접수 화면의 완료 승인이 아니다.
+
+## 실행 중인 최신 상태 · V6
+
+V6 전체 소스 및 독립·TC 실행 전 검토가 승인됐다(커밋 `d5e88ed`). 실제490 한 번을 **2026-10-23 04:49:23 UTC**에 시작했다. [실행 상태](./delivery/iteration-03/runtime-v6-execution-status.json)의 private pointer에 실제 handle/leaf를 저장했다. 앞 절의 V6 미실행 설명은 이전 체크포인트다. 관찰 timeout은 종료가 아니므로 같은 handle을 조회하며 재실행하지 않는다. 실제 결과·독립 수용·새 접수 UI는 아직 없다.

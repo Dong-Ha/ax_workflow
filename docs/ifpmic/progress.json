@@ -665,14 +665,14 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "V6 worker-observation repair implemented; unchanged152 synthetic units passed once and independently accepted. Actual V6 full490 not started; exact whole-source and paired execution gates remain. Next visible outcome is same saved request run/receipt and QUEUED display.",
+  "next_step": "V6 source and paired execution gates approved; one exact full490 attempt started2026-10-23T04:49:23Z, actual handle retained privately. Poll same handle; no restart on observation timeout. No result acceptance or new execution UI yet.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",
     "Approved Bedrock/Claude runtime profile"
   ],
   "publication_policy": "Only authorized git repository documentation, source and synthetic verification summaries/screenshots; never runtime credentials or application logs.",
-  "updated_at": "2026-10-23T04:41:08.265748+00:00",
+  "updated_at": "2026-10-23T04:49:59.291646+00:00",
   "session_handoff": {
     "status": "resumed_by_user",
     "resume_document": "docs/ifpmic/RESUME.md",
@@ -704,7 +704,7 @@
     },
     "pending_source_proposal": "evidence/b03/h2-machine-resolution-progress-v2.json",
     "pending_source_proposal_review": "evidence/b03/h2-machine-resolution-activity-review-v5.json",
-    "pending_source_proposal_status": "v6_synthetic_accepted_actual490_not_started",
+    "pending_source_proposal_status": "v6_actual_running_not_accepted",
     "latest_source_mapping": {
       "resolved_cases": 87,
       "total_cases": 87,
@@ -714,8 +714,8 @@
       "machine_sha256": "8f9ca9495b13e4452eaa42e9d2c2b5ed43c993dd28e246bccbbd5cfbc4f041d8",
       "scope": "Source path/schema/applicability only; no actual execution acceptance."
     },
-    "current_candidate_static_verification": null,
-    "next_foundation_scope": "V6 worker-observation repair implemented; unchanged152 synthetic units passed once and independently accepted. Actual V6 full490 not started; exact whole-source and paired execution gates remain. Next visible outcome is same saved request run/receipt and QUEUED display.",
+    "current_candidate_static_verification": "evidence/b03/h2-runtime-full-runner-source-review-v6.json",
+    "next_foundation_scope": "V6 source and paired execution gates approved; one exact full490 attempt started2026-10-23T04:49:23Z, actual handle retained privately. Poll same handle; no restart on observation timeout. No result acceptance or new execution UI yet.",
     "candidate_authoring_reviews": {
       "independent": "evidence/b03/h2-runtime-full-execution-contract-review-v6.json",
       "tc": "evidence/b03/h2-runtime-full-execution-tc-review-v6.json"
@@ -740,7 +740,7 @@
         "status": "v6_readiness_and_diagnostics_implemented_root_cause_unconfirmed_actual_execution_pending"
       }
     ],
-    "runtime_execution_status": "delivery/iteration-03/runtime-v5-execution-status.json"
+    "runtime_execution_status": "delivery/iteration-03/runtime-v6-execution-status.json"
   },
   "visible_deliveries": [
     {
@@ -769,12 +769,12 @@
       "title": "Connect persisted API job to real execution-engine admission and visible run/receipt",
       "path": "delivery/iteration-03/README.md",
       "verification": "delivery/iteration-03/worker-observation-repair-verification.json",
-      "foundation_status": "v6_synthetic_accepted_actual490_not_started",
+      "foundation_status": "v6_actual_running_not_accepted",
       "actual_job_execution": false,
       "scope": "V5 failed12/9pass3fail/478unexecuted preserved. V6 unchanged152 synthetic pass; new worker helpers and actual full490 acceptance/admission UI incomplete.",
       "mapping_resolution_progress": "evidence/b03/h2-machine-resolution-progress-v2.json",
-      "candidate_static_verification": null,
-      "runtime_execution_status": "delivery/iteration-03/runtime-v5-execution-status.json"
+      "candidate_static_verification": "evidence/b03/h2-runtime-full-runner-source-review-v6.json",
+      "runtime_execution_status": "delivery/iteration-03/runtime-v6-execution-status.json"
     }
   ]
 }
