@@ -1,0 +1,72 @@
+{
+  "kind": "ifpmic.b03.h2.raw-policy-status-repair.plan-independent-review.v1",
+  "reviewed_utc": "2026-10-23T05:43:52.755776+00:00",
+  "decision": "approve_bounded_implementation_only",
+  "plan_sha256": "bfb311569132164f470936dd6e50f4affb25ec0c3cab1656fba791e035540d87",
+  "plan": {
+    "path": "docs/ifpmic/delivery/iteration-03/RAW-POLICY-STATUS-REPAIR.md",
+    "sha256": "bfb311569132164f470936dd6e50f4affb25ec0c3cab1656fba791e035540d87"
+  },
+  "reviewer": {
+    "agent_id": "/root/v7_whole_source",
+    "independence": "Independent from Code-dev plan/product/candidate authors and TC regression authors. Owns independent review artifacts only. Earlier independent V7 source/pre-gate review missed this status mismatch;that review gap is explicitly preserved in the failed-result review. Static exact plan/consumer/failure/coverage inspection,no repository imports,tests,SDK/SQL/services or runner execution."
+  },
+  "findings": [],
+  "checks": [
+    "All eight purpose/target/method/owner/pass/expected/evidence/failure-recovery fields are present. Exact V7 attempt remains failed precollection:0 collected/executed tests,490 unexecuted,generic EvidenceError,2.1563029659992026 seconds and zero-signalled/no-owned-child cleanup. No actual case or H2 acceptance is inherited.",
+    "Current validate_policy requires exact candidate_pending_exact_review and unresolved=[] after actual node,timing,hash and JSON checks;V7 version-description status violates that protocol. Unchanged prepare_phase_rules independently requires the same status. Restoring only successor V8 metadata status preserves both actual consumers without widening their allowlists,changing checker judgment or falsifying V7 history.",
+    "The positive regression explicitly connects current runner-selected actual C/L,verify_contract_ledger phases and actual rules to unmocked validate_policy. This covers the previously missed producer/consumer boundary rather than another synthetic source-pin fixture. Its current implementation path and transitive project helpers use stdlib and static artifact schema parsing;no history decode,SDK,SQL,subprocess,main or service is needed.",
+    "The negative regression changes only actual rules.status to the precise failed V7 string in private temporary metadata,updates the contract rules digest to those actual mutated bytes,and requires exact EvidenceError RAW_RULES_NOT_FROZEN. Thus a stale digest cannot satisfy the intended status regression and the original real consumer remains the oracle.",
+    "Existing152 method IDs/full ASTs remain untouched;exact154 must be baseline152 plus exactly2 new methods. Old152 result/capture cannot establish154. Future capture needs a separately reviewed wrapper,target pins,current metadata,cache isolation,before/after preservation and independent actual-result acceptance.",
+    "V7 87 raw cases,956 ordered artifact predicates,38 raw pin paths,490 IDs/407+83,25+5 groups,15 phases,all case/RPC/shared cleanup/phase/original16220 epoch and original design/environment/role/privacy boundaries remain. Production API/SQL/worker/dispatcher/proxy and all checker logic remain unchanged.",
+    "V8 candidate,dependent fixed filename/hash bindings,exact authoring/source/capture approvals,accepted154,whole-source and both new invocation-bound execution pre-gates remain separate gates before a fresh actual490. No old V7 approval authorizes V8 and no test or run is authorized by this implementation-only review."
+  ],
+  "implementation_constraints": [
+    "TC owns only two new test methods in tests/ifpmic_evidence/test_full_runner_guards.py. Preserve all152 original method IDs and full AST bodies. A successor fixed rules filename may change the existing class-level binding only as part of independently reviewed V8 metadata binding;no existing method assertion or helper behavior is relaxed.",
+    "Use the actual current runner-selected contract/ledger paths and verify_contract_ledger output;call the real unmodified validate_policy and its real schema consumers. Do not mock status checks,_require,_decode,prepare_phase_rules or turn any exception into success. Positive evidence must demonstrate the actual current candidate is accepted.",
+    "For negative evidence,deep-copy actual metadata and change rules.status alone;write its actual JSON bytes in a private temporary root and repoint/update the copy of contract rules metadata with the exact path/digest. Assert exact EvidenceError and RAW_RULES_NOT_FROZEN,not any failure. Keep actual other node,timing,artifact and phase conditions valid so hash/inventory/JSON errors cannot substitute.",
+    "Create immutable V8 successor metadata with exactly candidate_pending_exact_review and unresolved=[];put version/repair explanation in separate provenance. Preserve all956 ordered artifact predicates and490 inventory/budgets. Update only required successor filenames,source hashes/current line locations and C/L/review bindings;leave V7 candidates/approvals/failed leaf and all checker/product logic immutable.",
+    "New exact154 capture must prove baseline152 AST/ID inclusion and exactly2 new IDs,not replace or relabel the baseline. Pin newly exercised scripts/ifpmic_h2_full_raw_adapter.py and every transitive project helper as well as actual C/L/rules/runner/current tests. The former94-pin capture omitted the adapter;its approval cannot cover this new import/call boundary. Inspect source/capture before any imports/tests and independently accept fresh actual154 output/preservation afterward.",
+    "Keep fresh private caches/tmp and original source/protected/design/environment before/after comparisons,no SDK/SQL/services/subprocesses/main from these two methods. No installations,downloads,new baseline,role change,timeout expansion,skipped case or test-target oracle weakening.",
+    "Obtain exact paired V8 candidate authoring approvals before binding the runner,and separately reviewed source/capture/result/whole-source and both new invocation-bound pre-gates before one fresh actual490 attempt. Preserve the original execution/cleanup/raw/privacy/final acceptance process;plan approval alone authorizes neither154 nor490 execution."
+  ],
+  "source_evidence": {
+    "scripts/ifpmic_h2_full_raw_adapter.py:47": "Actual current-metadata inventory/timing/hash/strict decode then exact freeze-status predicate65-68;prepare_phase_rules called later.",
+    "scripts/ifpmic_h2_artifacts.py:290": "Real phase schema consumer separately enforces candidate_pending_exact_review/unresolved=[] and exact raw artifacts without executing histories or services.",
+    "scripts/verify_ifpmic_b03_h2_runtime_full.py:1241": "Actual C/L/phases and exact review/import gates precede validate_policy;policy failure occurs before capture/preflight/collection.",
+    "tests/ifpmic_evidence/test_full_runner_guards.py:201": "Existing policy tests synthesize source bytes and exercise source-binding logic;they do not call actual validate_policy with current candidate metadata.",
+    "workflow-artifacts/verification/agile/iteration-03/recovery-observation-preparation/run_units.py:111": "Prior capture requires exact current_methods==baseline152 and expected count152;new capture needs explicit retained152+new2 handling and adapter pin."
+  },
+  "source_pins": {
+    "docs/ifpmic/delivery/iteration-03/RAW-POLICY-STATUS-REPAIR.md": "bfb311569132164f470936dd6e50f4affb25ec0c3cab1656fba791e035540d87",
+    "docs/ifpmic/delivery/iteration-03/recovery-observation-unit-result-review.json": "c5ea6818254b3cf0c8bec59f80d935d68172966ffa334a988bf7b24ec8bd20df",
+    "docs/ifpmic/delivery/iteration-03/recovery-observation-unit-verification.json": "9dd1a8d43f53d7fe4ef829271014c265d5f915893f0d422f0f82451976ba9e71",
+    "docs/ifpmic/delivery/iteration-03/runtime-v7-attempt-01-result-review.json": "17f3b091f7c3abfbdd8d1ac49d6edaf8de9543debb4c182bced5b310d2b1f47f",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-execution-contract-v7.json": "f554b232b7c21a77cbe16c23dc86624f4afb9c7de747067e00c79c5309070a3b",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger-v7.json": "f686e468afe5cb410d31fe194d4e17ee00f08c201509f3e2201215e2f08993d1",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules-v6.json": "8f9ca9495b13e4452eaa42e9d2c2b5ed43c993dd28e246bccbbd5cfbc4f041d8",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules-v7.json": "89a490dde31345d21c997d6b0a6d423a48134c12cee53fae33de9c80972a334e",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-runner-source-review-v7.json": "413a64cef7cef3bcac54c8ee71b457e7f09130afd331849399d1b7cbff287835",
+    "scripts/ifpmic_h2_artifacts.py": "712d5800835cd8f5e8f3ac513e2dd44b8f0fb2d035e83775ff989f4f24940b47",
+    "scripts/ifpmic_h2_fences.py": "53836724368ab3dac9e7ccaeb6e603a3a2124926e73db452448bfd608d746a9f",
+    "scripts/ifpmic_h2_full_raw_adapter.py": "04efd3a7851e756a275df58efc83828df5cf7cf30ce51240b8f7721c918d8c46",
+    "scripts/ifpmic_h2_raw_audit.py": "8ae86c9ec01c9fe323ca67817fc19cda0d1a65406168a3f2f9fb12c1fdf0425f",
+    "scripts/ifpmic_h2_raw_evidence.py": "7b02c3b6a5713d6abe0e589d75835f5f6519e2aa5daee690e811497f20b7b4fe",
+    "scripts/verify_ifpmic_b03_h2_runtime_full.py": "b23bd4e8fe5e443c0d8de57016b0ad7085df3bdd1d16226e6a87ee2caa3528aa",
+    "tests/ifpmic_evidence/test_full_runner_guards.py": "0172a658b1dfe5b9ed985d26bf70fb34aa308f751c79e2e16bd568d360ad91e9",
+    "workflow-artifacts/verification/agile/iteration-03/recovery-observation-preparation/run_units.py": "468612e76a6e82da37d41c60cb2b1c2173397b069cd8bf051b89970c1704a035",
+    "workflow-artifacts/verification/agile/iteration-03/runtime-oracle-preparation/baseline-152.json": "a4dcaa2a26b38518fc57c3d9a6cc5db773c96f0a35996008016d9067accd1776"
+  },
+  "source_pin_count": 18,
+  "authorization": {
+    "bounded_tc_regression_and_v8_metadata_implementation_only": true,
+    "runner_binding_requires_paired_exact_v8_authoring_reviews": true,
+    "imports_or_tests": false,
+    "sdk_sql_services_or_runner": false,
+    "fresh154_or490_or_retry": false,
+    "h2_ui_at_or_goal_acceptance": false
+  },
+  "remaining_uncertainty": "No V8 candidate or two new tests are implemented/validated by this review. Fixing the first freeze-status failure does not prove later metadata consumers or actual runtime cases pass;fresh154 and the unchanged actual490/causal/raw/cleanup/preservation/privacy evidence remain independent obligations.",
+  "recommendation": "Approve this exact bounded status-protocol/regression plan for implementation only. Keep V7 failed evidence and source-review gap immutable;require fresh exact downstream source/capture/result and invocation-bound execution reviews before running anything.",
+  "review_method": "Exact plan and failed-result hashes;static actual validate_policy/prepare_phase_rules and runner control flow,former test/capture coverage and dependency-pin inspection. No imports,tests,SDK/SQL/services,subprocess or runner execution;no environment rescan or implementation edits."
+}

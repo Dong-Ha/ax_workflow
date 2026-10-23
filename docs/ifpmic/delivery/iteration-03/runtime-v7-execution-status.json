@@ -1,7 +1,7 @@
 {
   "kind": "ifpmic.agile.runtime-v7-execution-status.v1",
-  "updated_utc": "2026-10-23T05:34:44.595626+00:00",
-  "status": "running_not_accepted",
+  "updated_utc": "2026-10-23T05:40:25.193144+00:00",
+  "status": "failed_precollection_not_accepted",
   "started_leaf_timestamp": "2026-10-23T05-34-27-574461Z",
   "inventory": 490,
   "phase_count": 15,
@@ -17,5 +17,21 @@
     "completed": 2,
     "total": 16,
     "percent": 12.5
+  },
+  "terminal_verdict": "fail",
+  "collections_observed_complete": 0,
+  "executed_cases": 0,
+  "passed_cases": 0,
+  "failed_cases": 0,
+  "error_cases": 0,
+  "skipped_cases": 0,
+  "remaining_inventory_cases_not_executed": 490,
+  "elapsed_seconds": 2.1563029659992026,
+  "failure_category": "EvidenceError before collection. Static producer/consumer analysis identifies versioned raw rules.status incompatible with validate_policy fixed protocol literal.",
+  "next_action": "Preserve failed attempt and independently review raw-policy status repair plan; restore protocol status in successor and add actual metadata/validator regression tests. No retry underV7approval.",
+  "failed_attempt_independent_review": {
+    "path": "runtime-v7-attempt-01-result-review.json",
+    "sha256": "17f3b091f7c3abfbdd8d1ac49d6edaf8de9543debb4c182bced5b310d2b1f47f",
+    "decision": "confirm_failed_precollection_attempt_not_accepted"
   }
 }

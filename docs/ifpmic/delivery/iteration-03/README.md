@@ -55,3 +55,9 @@ V6 전체 소스 및 독립·TC 실행 전 검토가 승인됐다(커밋 `d5e88e
 [동일152 검사](./recovery-observation-unit-verification.json)·[결과 수용](./recovery-observation-unit-result-review.json)·[전체 소스 승인](../../evidence/b03/h2-runtime-full-runner-source-review-v7.json)이 완료됐다. 원래490/15묶음/956원시 규칙/예산은 유지한다. 정확한 실행 전 검토 뒤 새 실제490을 한 번 실행해야 한다. V7은 아직 실제 실행 전이며 [UI V3 초안](./ADMISSION-UI-PLAN-v3.md)은 독립 검토 전이다. 새 사용자 기능은 없다.
 
 V7 실제 실행을 **2026-10-23 05:34:27 UTC**에 한 번 시작했다(후보 커밋 `88b31b7`). [현재 실행 상태](./runtime-v7-execution-status.json)를 따른다. 위의 V7 실행 전 설명은 이전 기록이다. 같은 actual handle을 조회하며 종료 확인 전 새 시도를 만들지 않는다.
+
+## 최신 실제 상태 · V7 종료
+
+[V7 실행](./runtime-v7-execution-status.json)은 목록 수집 전EvidenceError로 종료했다(0테스트/490미실행). [독립 실패 검토](./runtime-v7-attempt-01-result-review.json)와 [프로토콜 보완 계획](./RAW-POLICY-STATUS-REPAIR.md)을 따른다. 고정 rawstatus 복원과 현재metadata/검사기 연결 회귀2개로154검사를 준비한다. [UI V3 계획 승인](./admission-ui-plan-review-v3.json)은 실제 fullH2 수용 뒤의 조건부 구현 계약이며 새 기능 완료가 아니다.
+
+최신 V8 단위154 실행은153통과·1실패다([증거](./raw-policy-status-unit-verification.json)). 새 실제metadata 연결2개는 통과했고 기존 strict119 목록 보존이121에서 실패했다. [V2 계획](./RAW-POLICY-STATUS-REPAIR-v2.md)은 새2개를 기존 확장 모듈로만 옮겨 원래152/strict119를 유지한다. SDK/서비스/490 및 새 UI는 미실행이다.

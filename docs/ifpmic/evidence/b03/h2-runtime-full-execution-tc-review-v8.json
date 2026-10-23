@@ -1,0 +1,155 @@
+{
+  "kind": "ifpmic.b03.h2.runtime-full-execution-tc-review.v1",
+  "reviewed_utc": "2026-10-23T05:47:56.471922+00:00",
+  "verdict": "approve_runner_authoring_only",
+  "contract_sha256": "4b89b3a96299d3e81fbbf5751d486a6ed3bbf35b31a6cd9454f9871ad7820d29",
+  "ledger_sha256": "6ecf9faef4ed026334fa50357c127f246b097a77b72877dfd7e5f94e5ef43206",
+  "raw_rules_sha256": "4cb9eed4a585dcededb6e893578ae71232e6f0a28a9437d46934f4d972ab0df3",
+  "reviewer": "TC V8 raw-policy metadata/test-surface reviewer. Authored the two bounded TC regression methods only; root authored the V8 candidate contract, ledger and rules. Independent counterpart review is mandatory.",
+  "authorship_disclosure": {
+    "tc_test_authorship": "Reviewer authored exactly two new stdlib-only methods in tests/ifpmic_evidence/test_full_runner_guards.py. This TC review is not independent of these methods; a separate independent V8 contract review is required. No test was executed.",
+    "candidate_metadata_authorship": "Root authored the V8 successor contract, ledger and rules. This TC review independently checks the requested exact status protocol and inventory/source bindings; paired independent V8 metadata review remains required.",
+    "review_independence": "This TC half is not independent of the two new TC methods. It covers the specified candidate metadata/test surface only, does not authorize execution or approve runner binding."
+  },
+  "checks": {
+    "approved_raw_policy_status_repair": {
+      "result": "pass_static_exact_scope",
+      "plan_path": "docs/ifpmic/delivery/iteration-03/RAW-POLICY-STATUS-REPAIR.md",
+      "plan_sha256": "bfb311569132164f470936dd6e50f4affb25ec0c3cab1656fba791e035540d87",
+      "plan_review_path": "docs/ifpmic/delivery/iteration-03/raw-policy-status-repair-plan-review.json",
+      "plan_review_sha256": "ebdb5895c7e9f884e5beae477be73513cee6e046cfab32258f66472e8e23f097",
+      "failed_v7_attempt_review_path": "docs/ifpmic/delivery/iteration-03/runtime-v7-attempt-01-result-review.json",
+      "failed_v7_attempt_review_sha256": "17f3b091f7c3abfbdd8d1ac49d6edaf8de9543debb4c182bced5b310d2b1f47f",
+      "changed_test_sha256": "cb3e190c80c4262bbfc8dba37ce69eb98fdb2a0a016f14b13a23ba9b8eac27f7",
+      "scope": "Restore the existing raw-policy status protocol in successor V8 metadata and add two real-validator connection checks. No checker/product logic relaxation, SDK/service execution or runtime acceptance."
+    },
+    "exact_v8_target_and_review_paths": {
+      "result": "pass_exact",
+      "contract_sha256": "4b89b3a96299d3e81fbbf5751d486a6ed3bbf35b31a6cd9454f9871ad7820d29",
+      "ledger_sha256": "6ecf9faef4ed026334fa50357c127f246b097a77b72877dfd7e5f94e5ef43206",
+      "raw_rules_sha256": "4cb9eed4a585dcededb6e893578ae71232e6f0a28a9437d46934f4d972ab0df3",
+      "required_target_fields": [
+        "contract_sha256",
+        "ledger_sha256",
+        "raw_rules_sha256"
+      ],
+      "tc_review_authorship_declared": true,
+      "paired_independent_contract_review_required": true,
+      "execution_authorized": false,
+      "full_goal_acceptance": false
+    },
+    "raw_policy_protocol": {
+      "result": "pass_static_exact_protocol",
+      "adapter_path": "scripts/ifpmic_h2_full_raw_adapter.py",
+      "adapter_sha256": "04efd3a7851e756a275df58efc83828df5cf7cf30ce51240b8f7721c918d8c46",
+      "prepare_phase_rules_path": "scripts/ifpmic_h2_artifacts.py",
+      "prepare_phase_rules_sha256": "712d5800835cd8f5e8f3ac513e2dd44b8f0fb2d035e83775ff989f4f24940b47",
+      "required_status": "candidate_pending_exact_review",
+      "required_unresolved": [],
+      "v8_status": "candidate_pending_exact_review",
+      "v8_unresolved": [],
+      "v7_failed_status": "candidate_v7_recovery_observation_repair_pending_exact_review_no_execution",
+      "status_consumers_unchanged": true,
+      "checker_logic_unchanged": true
+    },
+    "actual_metadata_connection_tests": {
+      "result": "pass_static_source_review",
+      "positive_id": "test_full_runner_guards.RawPolicySourceBindingTests.test_current_contract_ledger_and_rules_are_accepted_by_real_policy_validator",
+      "positive_scope": "Reads current runner-selected contract and ledger with runner.read_json, verifies exact current C/L hashes, calls verify_contract_ledger and the real unmocked validate_policy on current V8 rules; checks returned 87 cases and expected nodes.",
+      "negative_id": "test_full_runner_guards.RawPolicySourceBindingTests.test_real_policy_validator_rejects_v7_status_with_correct_private_digest",
+      "negative_scope": "Deep-copies current actual V8 rules, changes status only to the exact failed V7 string, writes private rules bytes, updates copied contract path and SHA to those bytes, calls real validate_policy and requires EvidenceError RAW_RULES_NOT_FROZEN.",
+      "new_test_count": 2,
+      "planned_total_units": 154,
+      "original_152_methods_unchanged_per_ast_review": true,
+      "test_execution_authorized_by_this_review": false
+    },
+    "current_source_and_raw_closure": {
+      "result": "pass_static_hashes",
+      "current_ledger_source_pins": 110,
+      "all_110_current": true,
+      "raw_rule_source_pins": 38,
+      "all_38_current": true,
+      "current_guard_test_sha256": "cb3e190c80c4262bbfc8dba37ce69eb98fdb2a0a016f14b13a23ba9b8eac27f7",
+      "current_adapter_sha256": "04efd3a7851e756a275df58efc83828df5cf7cf30ce51240b8f7721c918d8c46",
+      "current_artifact_checker_sha256": "712d5800835cd8f5e8f3ac513e2dd44b8f0fb2d035e83775ff989f4f24940b47",
+      "current_recorder_checker_sha256": "7b02c3b6a5713d6abe0e589d75835f5f6519e2aa5daee690e811497f20b7b4fe",
+      "source_pin_transitions_from_v7": [
+        "rules path v7→v8",
+        "V8 contract/ledger/rules candidate paths and hashes",
+        "raw-policy status repair provenance",
+        "runner guard test source with two added methods"
+      ]
+    },
+    "raw_artifact_predicates": {
+      "result": "pass_preserved_exact",
+      "raw_case_count": 87,
+      "raw_source_pin_count": 38,
+      "v7_predicate_count": 956,
+      "v8_predicate_count": 956,
+      "case_rows_preserved_exactly": true,
+      "new_predicate_count": 0,
+      "candidate_delta": "All87 V7/V8 rules case rows compare exactly; V8 changes protocol status/provenance and source bindings, without changing ordered artifact predicates."
+    },
+    "inventory_budgets_anchors": {
+      "result": "pass_contract_static",
+      "retained_ids": 407,
+      "new_ids": 83,
+      "expected_union": 490,
+      "obligation_groups": 25,
+      "fixture_prerequisites": 5,
+      "phase_count": 15,
+      "phase_cap_sum_seconds": 15420,
+      "outer_epoch_seconds": 16220,
+      "default_setup_body_cleanup_seconds": [
+        25,
+        5
+      ],
+      "extended_setup_body_cleanup_seconds": [
+        215,
+        25
+      ],
+      "candidate_dimensions_match_v7": true
+    },
+    "preserved_candidates": {
+      "result": "pass_hashes",
+      "v7_candidate_and_failed_attempt_unchanged": true,
+      "v8_status_restores_existing_protocol_without_changing_v7_history": true,
+      "v8_supersedes_v7_without_inheriting_runtime_acceptance": true
+    },
+    "runner_binding_boundary": {
+      "result": "not_yet_bound",
+      "current_runner_remains_v7_candidate_binding": true,
+      "current_runner_sha256": "b23bd4e8fe5e443c0d8de57016b0ad7085df3bdd1d16226e6a87ee2caa3528aa",
+      "runner_binding_approval_by_this_review": false,
+      "runner_currently_excluded_from_ledger_source_cycle": true,
+      "future_runner_authoring_requires_both_exact_v8_contract_reviews": true
+    }
+  },
+  "limitations": [
+    "This TC review covers V8 candidate metadata and the two static TC source changes only; no tests or capture were run. Fresh exact154 capture and independent result acceptance remain required.",
+    "The runner still points to V7 C/L and does not bind V8. This review approves neither runner authoring nor source binding; exact paired V8 contract reviews must precede any such change.",
+    "No whole-runner source approval, execution pre-gates, import/test/service execution, actual490 run, H2 acceptance, UI behavior or goal completion is granted.",
+    "Existing failed V7 actual attempt and all prior role/privacy/cleanup/approval boundaries remain unchanged."
+  ],
+  "authorization": {
+    "runner_authoring_authorized_by_this_review_alone": false,
+    "runner_authoring_permitted_after_paired_exact_v8_contract_reviews": true,
+    "test_or_service_execution_authorized": false,
+    "pre_gate_authorized": false,
+    "h2_acceptance": false,
+    "full_goal_acceptance": false
+  },
+  "source_pins": {
+    "docs/ifpmic/delivery/iteration-03/RAW-POLICY-STATUS-REPAIR.md": "bfb311569132164f470936dd6e50f4affb25ec0c3cab1656fba791e035540d87",
+    "docs/ifpmic/delivery/iteration-03/raw-policy-status-repair-plan-review.json": "ebdb5895c7e9f884e5beae477be73513cee6e046cfab32258f66472e8e23f097",
+    "docs/ifpmic/delivery/iteration-03/runtime-v7-attempt-01-result-review.json": "17f3b091f7c3abfbdd8d1ac49d6edaf8de9543debb4c182bced5b310d2b1f47f",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-execution-contract-v8.json": "4b89b3a96299d3e81fbbf5751d486a6ed3bbf35b31a6cd9454f9871ad7820d29",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger-v8.json": "6ecf9faef4ed026334fa50357c127f246b097a77b72877dfd7e5f94e5ef43206",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules-v8.json": "4cb9eed4a585dcededb6e893578ae71232e6f0a28a9437d46934f4d972ab0df3",
+    "scripts/ifpmic_h2_full_raw_adapter.py": "04efd3a7851e756a275df58efc83828df5cf7cf30ce51240b8f7721c918d8c46",
+    "scripts/ifpmic_h2_artifacts.py": "712d5800835cd8f5e8f3ac513e2dd44b8f0fb2d035e83775ff989f4f24940b47",
+    "scripts/ifpmic_h2_raw_evidence.py": "7b02c3b6a5713d6abe0e589d75835f5f6519e2aa5daee690e811497f20b7b4fe",
+    "scripts/verify_ifpmic_b03_h2_runtime_full.py": "b23bd4e8fe5e443c0d8de57016b0ad7085df3bdd1d16226e6a87ee2caa3528aa",
+    "tests/ifpmic_evidence/test_full_runner_guards.py": "cb3e190c80c4262bbfc8dba37ce69eb98fdb2a0a016f14b13a23ba9b8eac27f7"
+  }
+}

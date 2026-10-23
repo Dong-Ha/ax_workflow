@@ -1,0 +1,66 @@
+{
+  "kind": "ifpmic.b03.h2.raw-policy-status-repair.plan-independent-review.v2",
+  "reviewed_utc": "2026-10-23T06:01:18.156993+00:00",
+  "decision": "approve_bounded_relocation_implementation_only",
+  "plan_sha256": "47a131382a450019a7eeb483ae9179bed9825a949d3de62608ea9e9d98f626e1",
+  "plan": {
+    "path": "docs/ifpmic/delivery/iteration-03/RAW-POLICY-STATUS-REPAIR-v2.md",
+    "sha256": "47a131382a450019a7eeb483ae9179bed9825a949d3de62608ea9e9d98f626e1"
+  },
+  "reviewer": {
+    "agent_id": "/root/v7_whole_source",
+    "independence": "Independent from Code-dev plan/candidate/capture authors and TC relocation implementation. Owns independent reviews only. Earlier V8 placement/source review gap is preserved in the failed-result review. Static exact plan/source/raw-failure/AST inventory review,no imports,tests,SDK/SQL/services or runtime execution."
+  },
+  "findings": [],
+  "checks": [
+    "Exact V2 amendment plan47a13138 and independent failed-capture reviewf3db4454 match current bytes. V8 remains failed153/154:both new real-metadata methods passed,but original strict119 guard failed121!=119. Original152 includes151 passes and1 failure;no partial suite/H2 acceptance.",
+    "Current unchanged PRIOR_UNIT_FILES lists six modules including test_full_runner_guards.py and excluding test_runner_v2_repairs.py. Independent source/AST count is exact historical119 plus only the2 added methods. Moving only those2 to a new CurrentCandidatePolicyTests class in that existing excluded extension module restores the intended exact119 cohort without weakening its assertion.",
+    "Both new methods use only unittest self assertions,current imported runner and local stdlib/project policy imports;they do not depend on RawPolicySourceBindingTests class fields/helper methods. Their full method ASTs can remain identical under relocation while module/class IDs change. Baseline152 existing method bodies/IDs,including the strict119 guard and extension methods,remain exact.",
+    "Plan explicitly preserves154=152+2,current metadata positive/negative semantics,correct mutated digest/exact status code and actual protocol status. It prohibits119→121/152 or subset weakening. Original956 raw predicates,87 raw cases,38 raw pin paths,490/407+83 IDs,15 phases,budgets,original design/environment/roles and all checker/product behavior remain unchanged.",
+    "Extension module is intentionally outside core110 ledger but already part of complete unit capture/independent whole-source pins. Keeping core runtime ledger scope fixed is consistent if the changed extension hash is explicitly pinned in successor repair/source references,complete unit capture and whole-source import closure. No unpinned unit module may execute.",
+    "V8 failed source is to be checkpointed before relocation. V1/V8 candidates,approvals,private capture and raw logs remain immutable. The final V2 section explicitly selects V9 successor metadata;earlier V8 text describes the preserved status repair and must not authorize overwriting/reusing V8.",
+    "All eight validation fields remain present and original capture/result/source/paired invocation-bound execution gates remain. Fresh154 must reflect the two new module/class IDs and retain exact old119/nonextension set and baseline152 ASTs. No execution authority is granted by this implementation review."
+  ],
+  "implementation_constraints": [
+    "Before editing TC source,retain the exact V8 failed source checkpoint and private evidence. Record the checkpoint hash and corresponding old source hashes in successor provenance;never rewrite V8 candidates,reviews,capture or failed result.",
+    "TC changes only placement of the2 new methods:remove them from RawPolicySourceBindingTests in test_full_runner_guards.py and add a new unittest.TestCase CurrentCandidatePolicyTests class in existing test_runner_v2_repairs.py. Preserve each moved method AST/logic,including real current C/L hash checks,unmocked validate_policy,private correct-digest status mutation and exact EvidenceError args. No new production/checker/helper behavior or product subprocess.",
+    "Preserve all baseline152 original full method ASTs/IDs. In particular leave PRIOR_UNIT_FILES,PRIOR_UNIT_RESULT and every assertion of test_previous_119_unittest_ids_are_preserved_exactly unchanged:expected119,actual119 and exact set equality. No count121/152,exclusion of arbitrary IDs,skip or subset downgrade.",
+    "New154 capture must restore the nonextension cohort check to exactly old119:all discovered IDs outside test_runner_v2_repairs must equal historical119,without unioning the relocated ADDED_TEST_IDS there. Independently require total current_methods==baseline152 union exactly the2 new extension module/class IDs and expected count154. Retain original140/149 bodies and all older preservation checks. This changes candidate membership bookkeeping,not the legacy119 oracle.",
+    "Create V9 successor C/L/rules and required fixed filename/hash/review bindings. Preserve candidate_pending_exact_review/unresolved=[],all956 ordered artifacts/87 raw cases/38 raw pin paths,core110 runtime ledger scope,490 IDs and every original budget/cleanup/privacy/role/environment boundary. Update class fixture filename only outside retained method bodies. V8 references in the inherited plan section are historical;future authoring/capture/run names must consistently select V9.",
+    "Although outside core110,tests/ifpmic_evidence/test_runner_v2_repairs.py must be included with its current changed hash in explicit repair/source references,complete unit-capture source_pins and final whole-source/import closure. Pin both changed unit modules and actual adapter/artifact/raw/fence transitives. Do not execute it through a stale V8 source-pin map.",
+    "Obtain exact paired V9 authoring approvals before runner binding,then separately reviewed capture source before imports/tests,fresh actual154 result acceptance,final whole-source and both new invocation-bound pre-gates before one actual490 attempt. Preserve failed evidence and renew affected reviews after any failure;no automatic retry or prior approval reuse."
+  ],
+  "authorization": {
+    "bounded_two_method_relocation_and_v9_metadata_authoring_only": true,
+    "runner_binding_requires_paired_exact_v9_authoring_reviews": true,
+    "imports_or_tests": false,
+    "sdk_sql_services_or_runner": false,
+    "fresh154_or490_or_retry": false,
+    "h2_ui_at_or_goal_acceptance": false
+  },
+  "source_pins": {
+    "docs/ifpmic/delivery/iteration-03/RAW-POLICY-STATUS-REPAIR-v2.md": "47a131382a450019a7eeb483ae9179bed9825a949d3de62608ea9e9d98f626e1",
+    "docs/ifpmic/delivery/iteration-03/RAW-POLICY-STATUS-REPAIR.md": "bfb311569132164f470936dd6e50f4affb25ec0c3cab1656fba791e035540d87",
+    "docs/ifpmic/delivery/iteration-03/full-runner-repair-verification.json": "69fc584a0bbebec8504a4b1e5d33295a32130abba4c3af2dd22cda0968d7c3e1",
+    "docs/ifpmic/delivery/iteration-03/raw-policy-status-repair-capture-source-review.json": "48da0926b30bf87c0381ff787df7d2a0e9ed77626523dc4bec78f5996686bfe1",
+    "docs/ifpmic/delivery/iteration-03/raw-policy-status-repair-plan-review.json": "ebdb5895c7e9f884e5beae477be73513cee6e046cfab32258f66472e8e23f097",
+    "docs/ifpmic/delivery/iteration-03/raw-policy-status-unit-result-review.json": "f3db4454980c3f10d31cc846fad03dcb96c576c9871a9b4c08a8d1b270350c77",
+    "docs/ifpmic/delivery/iteration-03/raw-policy-status-unit-verification.json": "601f19fcc88b9c797dc50d50a7361e7bed4702f04e187eac3032bfec5ccc8b0e",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-execution-contract-v8.json": "4b89b3a96299d3e81fbbf5751d486a6ed3bbf35b31a6cd9454f9871ad7820d29",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger-v8.json": "6ecf9faef4ed026334fa50357c127f246b097a77b72877dfd7e5f94e5ef43206",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules-v8.json": "4cb9eed4a585dcededb6e893578ae71232e6f0a28a9437d46934f4d972ab0df3",
+    "scripts/ifpmic_h2_artifacts.py": "712d5800835cd8f5e8f3ac513e2dd44b8f0fb2d035e83775ff989f4f24940b47",
+    "scripts/ifpmic_h2_fences.py": "53836724368ab3dac9e7ccaeb6e603a3a2124926e73db452448bfd608d746a9f",
+    "scripts/ifpmic_h2_full_raw_adapter.py": "04efd3a7851e756a275df58efc83828df5cf7cf30ce51240b8f7721c918d8c46",
+    "scripts/ifpmic_h2_raw_evidence.py": "7b02c3b6a5713d6abe0e589d75835f5f6519e2aa5daee690e811497f20b7b4fe",
+    "scripts/verify_ifpmic_b03_h2_runtime_full.py": "c68cb4da2596cf990da40007f6c4a0f72bc3ee85692bd575264bc6f60b822fc1",
+    "tests/ifpmic_evidence/test_full_runner_guards.py": "cb3e190c80c4262bbfc8dba37ce69eb98fdb2a0a016f14b13a23ba9b8eac27f7",
+    "tests/ifpmic_evidence/test_runner_v2_repairs.py": "3699faa5a6647023e64b29ba8e49886b85767f64862fad0a92e80ded666d2244",
+    "workflow-artifacts/verification/agile/iteration-03/raw-policy-status-preparation/run_units.py": "72eb29f894335ddd49b94489087dbf5dc1966711a0dbea242f318095d28521a7",
+    "workflow-artifacts/verification/agile/iteration-03/runtime-oracle-preparation/baseline-152.json": "a4dcaa2a26b38518fc57c3d9a6cc5db773c96f0a35996008016d9067accd1776"
+  },
+  "source_pin_count": 19,
+  "remaining_uncertainty": "No relocated V9 source or fresh154 has been executed/reviewed here. Relocation is statically compatible with the strict119 mechanism,but fresh154 must establish suite compatibility and actual490 must separately establish runtime/causal/raw/cleanup/preservation/privacy results.",
+  "recommendation": "Approve only the bounded relocation/V9 authoring amendment after preserving the exact failed V8 checkpoint. Keep original119 and152 oracles intact;obtain new exact downstream source/capture/result and execution approvals.",
+  "review_method": "Delta-focused exact amendment/failed-result hashes,current six-file cohort vs extension inventory,new method dependency inspection,original119 guard and152 AST preservation requirements,core110 membership and wrapper cohort/total bookkeeping. No broad environment audit,source edit,import,test or execution."
+}

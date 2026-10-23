@@ -1,0 +1,107 @@
+{
+  "kind": "ifpmic.delivery.iteration03.runtime-v7-attempt-01-independent-result-review.v1",
+  "reviewed_utc": "2026-10-23T05:42:41.686240+00:00",
+  "decision": "confirm_failed_precollection_attempt_not_accepted",
+  "reviewer": {
+    "agent_id": "/root/v7_whole_source",
+    "independence": "Independent from Code-dev/TC implementation authors and execution operator. Authored the earlier independent whole-source/pre-gate review;discloses its missed status-consumer check below. Owns only independent reviews;read-only terminal/source/privacy/pin review,no repository imports,tests,rerun,signals,SDK/SQL/services or source edits."
+  },
+  "contract_sha256": "f554b232b7c21a77cbe16c23dc86624f4afb9c7de747067e00c79c5309070a3b",
+  "ledger_sha256": "f686e468afe5cb410d31fe194d4e17ee00f08c201509f3e2201215e2f08993d1",
+  "runner_sha256": "b23bd4e8fe5e443c0d8de57016b0ad7085df3bdd1d16226e6a87ee2caa3528aa",
+  "raw_rules_sha256": "89a490dde31345d21c997d6b0a6d423a48134c12cee53fae33de9c80972a334e",
+  "private_attempt": "workflow-artifacts/verification/B03/H2/runtime-full/gates/2026-10-23T05-34-27-574461Z",
+  "private_evidence_pins": {
+    "workflow-artifacts/verification/B03/H2/runtime-full/gates/2026-10-23T05-34-27-574461Z/gate.json": "37db0842608c2ca82e551511fa73094c1a0149b27d935308d874c651597e9172",
+    "workflow-artifacts/verification/B03/H2/runtime-full/preparations/v7-execution/tool-session.json": "58664fb2782cde0b593d51eecc760e63e1404ce864ad3b7f8d7157a306633d73"
+  },
+  "source_pins": {
+    "docs/ifpmic/delivery/iteration-03/recovery-observation-unit-result-review.json": "c5ea6818254b3cf0c8bec59f80d935d68172966ffa334a988bf7b24ec8bd20df",
+    "docs/ifpmic/delivery/iteration-03/recovery-observation-unit-verification.json": "9dd1a8d43f53d7fe4ef829271014c265d5f915893f0d422f0f82451976ba9e71",
+    "docs/ifpmic/delivery/iteration-03/runtime-v6-attempt-01-result-review.json": "b275721985e8f6ec05844407edf1136c09fd6b51d155e68c3d2411bd34a33b22",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-execution-contract-review-v7.json": "e702c77b609524b35e3a343c5afdea278fccd347b61fb55e73f203ef966f25db",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-execution-contract-v7.json": "f554b232b7c21a77cbe16c23dc86624f4afb9c7de747067e00c79c5309070a3b",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-execution-tc-review-v7.json": "043261a09d0e1659c4bb77534f2a3608ee5d1ecd1f6ae280d9432dba51995b03",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger-v7.json": "f686e468afe5cb410d31fe194d4e17ee00f08c201509f3e2201215e2f08993d1",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules-v7.json": "89a490dde31345d21c997d6b0a6d423a48134c12cee53fae33de9c80972a334e",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-pre-gate-review-v7.json": "3e2a7e374e255ad6b64fe64fa843d9378c60a15b35ef7a0d1574024d52ebca49",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-pre-gate-tc-review-v7.json": "4b64df569662d1c678a86a9b89e772a5898b74e295c661a7812e6d5ababfa87b",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-runner-source-review-v7.json": "413a64cef7cef3bcac54c8ee71b457e7f09130afd331849399d1b7cbff287835",
+    "scripts/ifpmic_h2_artifacts.py": "712d5800835cd8f5e8f3ac513e2dd44b8f0fb2d035e83775ff989f4f24940b47",
+    "scripts/ifpmic_h2_full_raw_adapter.py": "04efd3a7851e756a275df58efc83828df5cf7cf30ce51240b8f7721c918d8c46",
+    "scripts/ifpmic_h2_gate_budget.py": "5bb8fe646c499a371d160e057d3a049ecc845123efe01a7aba411c7521929f77",
+    "scripts/ifpmic_h2_raw_evidence.py": "7b02c3b6a5713d6abe0e589d75835f5f6519e2aa5daee690e811497f20b7b4fe",
+    "scripts/verify_ifpmic_b03_h2_runtime_full.py": "b23bd4e8fe5e443c0d8de57016b0ad7085df3bdd1d16226e6a87ee2caa3528aa",
+    "scripts/verify_ifpmic_g4.py": "ad9b66b7463b84f22227d8ba924b42628f8abb463d0873ac9a90ab013708c13a",
+    "tests/ifpmic_evidence/test_full_runner_guards.py": "0172a658b1dfe5b9ed985d26bf70fb34aa308f751c79e2e16bd568d360ad91e9",
+    "workflow-artifacts/verification/B03/H2/runtime-full/preparations/v7-execution/invocation.json": "98130537be343963a8ad4ec1b57f0d931bceb5d4f5fa9e1108d6c55128baeccd",
+    "workflow-artifacts/verification/B03/H2/runtime-full/preparations/v7-execution/tool-session.json": "58664fb2782cde0b593d51eecc760e63e1404ce864ad3b7f8d7157a306633d73"
+  },
+  "terminal_result": {
+    "tool_exit_code_recorded_by_operator": 1,
+    "operator_terminal_pointer_matches_gate": true,
+    "gate_verdict": "fail",
+    "finding": "EvidenceError",
+    "elapsed_seconds": 2.1563029659992026,
+    "collections": {
+      "phases": 0,
+      "ids": 0
+    },
+    "executed": {
+      "cases": 0,
+      "passed": 0,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "unexecuted_cases": 490
+  },
+  "failure": {
+    "stage": "validate_policy before review-record copies,protected/environment/source captures,subprocess preflights,collection or cases",
+    "direct_runtime_evidence": "gate.json records only generic EvidenceError,checks=[],private_temporary_roots=[] and fail;the runner maps non-RuntimeError exceptions to their class name. No exact EvidenceError code or traceback was retained in the gate.",
+    "static_source_diagnosis": {
+      "source": "scripts/ifpmic_h2_full_raw_adapter.py:47-68",
+      "actual_rules_status": "candidate_v7_recovery_observation_repair_pending_exact_review_no_execution",
+      "required_protocol_status": "candidate_pending_exact_review",
+      "inferred_first_error_code": "RAW_RULES_NOT_FROZEN",
+      "evidence": "Without invoking project code,independently inspected the actual source and evaluated preceding metadata facts:83 new/declared IDs,87 raw node set,10/10/200 timing,16220 epoch,exact rules hash,unique-key finite valid JSON all match. Actual rules is a dict with unresolved=[];its status equality fails. V6 retained the required protocol literal. This is the first failing predicate on the static current path;the runtime gate itself retains only EvidenceError."
+    },
+    "review_and_coverage_gap": "Earlier exact V7 candidate/whole-source/pre-gate reviews missed the rules.status producer/validate_policy consumer mismatch despite approving the source bytes. The accepted152 unit set used synthetic source-binding fixtures and did not connect actual candidate C/L/rules to validate_policy. That source-review/coverage gap is acknowledged;no historical approval is rewritten or reinterpreted as runtime success. Restoring status is a bounded candidate repair,not proof that downstream runtime cases pass."
+  },
+  "preservation": {
+    "current_independent_check": "All221 V7 whole-source pins remain current after failure;all five gate review hashes and four C/L/runner/raw targets match current files. V7 inputs and approvals remain immutable historical evidence.",
+    "manifest_limit": "No source-before/after,environment-before/after,candidate-source ZIP,collection/JUnit,phase raw audit or proposal exists in this early-failure leaf. Their absence is consistent with the statically identified position before those operations;no manifests are fabricated. No broad current environment rescan or new baseline was performed by this result review."
+  },
+  "cleanup": {
+    "gate": {
+      "pid_alive": false,
+      "result": "stopped",
+      "signalled_count": 0
+    },
+    "source_path": "validate_policy is called before any run_owned_command/subprocess preflight,enable_subreaper,phase/service launch or private temporary-root creation. Local stdlib-only helper modules had been imported;no actual SDK/SQL/Node/product service or pytest child reached this path.",
+    "observed_scope": "Recovery reports zero signalled identities and no owned descendant alive. The leaf contains no phase/service/PID ledger. This supports cleanup of this precollection attempt;it is not a universal external-process absence audit or full resource acceptance."
+  },
+  "privacy": {
+    "leaf_mode": "0700",
+    "files_0600_current_owner_single_link": 1,
+    "directories_0700_current_owner_including_attempt_root": 2,
+    "symlinks": 0,
+    "parent_cache_empty": true,
+    "leaf_inventory": [
+      "gate.json",
+      "parent-pycache/"
+    ],
+    "public_proposal_produced": false,
+    "publication": false,
+    "raw_policy": "Exact invocation and operator pointer remain private;public review contains safe counts,categories,relative references and hashes only."
+  },
+  "acceptance": {
+    "failed_attempt_evidence_reviewed": true,
+    "full490_pass": false,
+    "full_h2_or_ui_or_goal_acceptance": false,
+    "partial_pass_promoted_to_acceptance": false,
+    "retry_or_source_change_authorized": false
+  },
+  "recommendation": "Preserve exact V7 attempt01 as failed_precollection_not_accepted. Independently review a bounded successor plan restoring the raw-policy protocol status and adding actual current-metadata/validator positive and negative regressions. Require separately reviewed successor bytes,capture/result,whole-source and both new invocation-bound pre-gates;this result review authorizes no repair execution or retry.",
+  "review_method": "Read-only exact gate/operator pointer,source consumer/control-flow and actual metadata facts,current221 frozen pins and gate-target hashes,complete two-entry leaf inventory/private modes/cache. No adapter/runner imports or execution,tests,SDK/SQL/services,signals,environment mutation or broader implementation."
+}

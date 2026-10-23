@@ -201,7 +201,7 @@ class WatchdogEvidenceTests(unittest.TestCase):
 
 class RawPolicySourceBindingTests(unittest.TestCase):
     REQUIRED_FILES = {
-        "rules": "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules-v7.json",
+        "rules": "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules-v8.json",
         "auditor": "scripts/ifpmic_h2_raw_audit.py",
         "adapter": "scripts/ifpmic_h2_full_raw_adapter.py",
         "artifact_checker": "scripts/ifpmic_h2_artifacts.py",
@@ -271,6 +271,53 @@ class RawPolicySourceBindingTests(unittest.TestCase):
                         RuntimeError,
                         "Raw-evidence policy/source binding differs: fence_checker"):
                     runner.verify_raw_policy_sources(contract, ledger)
+
+    def test_current_contract_ledger_and_rules_are_accepted_by_real_policy_validator(self) -> None:
+        from scripts.ifpmic_h2_full_raw_adapter import validate_policy
+
+        contract_raw = runner.CONTRACT_PATH.read_bytes()
+        ledger_raw = runner.LEDGER_PATH.read_bytes()
+        self.assertEqual(hashlib.sha256(contract_raw).hexdigest(), runner.CONTRACT_SHA)
+        self.assertEqual(hashlib.sha256(ledger_raw).hexdigest(), runner.LEDGER_SHA)
+        contract = runner.read_json(runner.CONTRACT_PATH)
+        ledger = runner.read_json(runner.LEDGER_PATH)
+        phases = runner.verify_contract_ledger(contract, ledger)
+
+        result = validate_policy(runner.ROOT, contract, ledger, phases)
+
+        self.assertEqual(result["rules_sha256"], contract["per_case_raw_evidence"]["rules"]["sha256"])
+        self.assertEqual(len(result["cases"]), 87)
+        self.assertEqual(len(result["expected_nodes"]), 87)
+
+    def test_real_policy_validator_rejects_v7_status_with_correct_private_digest(self) -> None:
+        from copy import deepcopy
+
+        from scripts.ifpmic_h2_full_raw_adapter import validate_policy
+        from scripts.ifpmic_h2_raw_evidence import EvidenceError
+
+        contract = runner.read_json(runner.CONTRACT_PATH)
+        ledger = runner.read_json(runner.LEDGER_PATH)
+        phases = runner.verify_contract_ledger(contract, ledger)
+        rules_path = runner.ROOT / contract["per_case_raw_evidence"]["rules"]["path"]
+        rules = deepcopy(runner.read_json(rules_path))
+        rules["status"] = "candidate_v7_recovery_observation_repair_pending_exact_review_no_execution"
+        rules_raw = (json.dumps(rules, sort_keys=True, ensure_ascii=True) + "\n").encode("ascii")
+        negative_contract = deepcopy(contract)
+        negative_contract["per_case_raw_evidence"]["rules"] = {
+            "path": "rules.json",
+            "sha256": hashlib.sha256(rules_raw).hexdigest(),
+        }
+
+        with tempfile.TemporaryDirectory(prefix="h2-policy-v7-status-") as temp:
+            root = Path(temp)
+            root.chmod(0o700)
+            private_rules = root / "rules.json"
+            private_rules.write_bytes(rules_raw)
+            private_rules.chmod(0o600)
+            with self.assertRaises(EvidenceError) as raised:
+                validate_policy(root, negative_contract, ledger, phases)
+
+        self.assertEqual(raised.exception.args, ("RAW_RULES_NOT_FROZEN",))
 
 
 class BootstrapDeadlineHandoffTests(unittest.TestCase):

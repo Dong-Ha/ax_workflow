@@ -1,0 +1,124 @@
+{
+  "kind": "ifpmic.delivery.iteration03.admission-ui-plan-independent-review.v3",
+  "reviewed_utc": "2026-10-23T05:36:52.270638+00:00",
+  "verdict": "approve_plan",
+  "decision": "approve_bounded_future_implementation_contract_only",
+  "plan": {
+    "path": "docs/ifpmic/delivery/iteration-03/ADMISSION-UI-PLAN-v3.md",
+    "sha256": "956dc88be1d84edd242ec9dfe88ed9554e6d879a27182952e9ae132b3c434d4e"
+  },
+  "previous_review": {
+    "path": "docs/ifpmic/delivery/iteration-03/admission-ui-plan-review-v2.json",
+    "sha256": "e5433262ef7e168a3af485c3daae64259a852a1a763a2f860355da7f129b80ad",
+    "verdict": "request_changes",
+    "scope": "All five exact V2 contract corrections reviewed here;historical V1/V2 bytes and reviews remain unchanged."
+  },
+  "reviewer": {
+    "agent_id": "/root/v7_whole_source",
+    "independence": "Independent from Code-dev plan/product/launcher/migration authors and TC authors. Owns only this independent plan review. Static bounded delta/current API/SQL/launcher/design reads and hashes;no implementation edits,repository imports,tests,SDK calls,services or runtime execution."
+  },
+  "scope": "Exact future admission UI/API/launcher plan contract only. No current frozen H2 source/execution approval,result acceptance,or implementation/runtime permission is changed. Approval is conditional on the plan prerequisite: actual full490 H2 terminal result independently accepted before UI implementation.",
+  "source_pins": {
+    "docs/ifpmic/delivery/iteration-02/README.md": "44c85157f7d424951603ec75836874f5f2788c5e6a8b59c3dc31485a8dc5da9c",
+    "docs/ifpmic/delivery/iteration-03/ADMISSION-UI-PLAN-v2.md": "e1590de00cd5290e678c8980ca49253894bb3d61871d550259193a2b77495e6e",
+    "docs/ifpmic/delivery/iteration-03/ADMISSION-UI-PLAN-v3.md": "956dc88be1d84edd242ec9dfe88ed9554e6d879a27182952e9ae132b3c434d4e",
+    "docs/ifpmic/delivery/iteration-03/ADMISSION-UI-PLAN.md": "865be8584501760c9c067fcf9181306dd090cad256fcaead8cfac0f386f7de7d",
+    "docs/ifpmic/delivery/iteration-03/admission-ui-plan-review-v2.json": "e5433262ef7e168a3af485c3daae64259a852a1a763a2f860355da7f129b80ad",
+    "docs/ifpmic/delivery/iteration-03/admission-ui-plan-review.json": "5315dc46cc00f1988d687e130b59aa7abd93004deb9b2939ea3f53086fdf52dc",
+    "docs/ifpmic/delivery/iteration-03/runtime-v6-attempt-01-result-review.json": "b275721985e8f6ec05844407edf1136c09fd6b51d155e68c3d2411bd34a33b22",
+    "docs/ifpmic/design-v1/README.txt": "33ff9f07a74c3e276ac63746340a56e4bbdeca18d2531de24cc978d533283122",
+    "docs/ifpmic/design-v1/qa/design-validation.json": "499d203d19980fac95cb9f9974ace988b54392a0ce968544d220b1a421b49fd4",
+    "docs/ifpmic/design-v1/qa/package-manifest.json": "46fe63988e7cd9312c379761c6023fc5e28e1259770274463ea848eb92960386",
+    "docs/ifpmic/design-v1/qa/visual-review.json": "e4dc7b7e91dd514158dc48688e7e79074c6686298d9395cbf9139158821b8755",
+    "docs/ifpmic/design-v1/specs/acceptance-cases.json": "f7163553edc9e8e753965cb8748ab04aac8f68c1a453f567f62284a01b38b0d5",
+    "docs/ifpmic/design-v1/specs/agent-contract.json": "ca6d4bea7abf0fffe7354c482af0d521c3a2e367217a69923a4bfe43fa27ab64",
+    "docs/ifpmic/design-v1/specs/bridge-contract.json": "d9a0deaa745d4078a779a153aad6a889a49b7675dc8ad3688f8b4c641233047d",
+    "docs/ifpmic/design-v1/specs/data-model.json": "00c84f8a39b1b8959daa8d94b1d67e860d83ad9bdb809065a5cd3b18af07071b",
+    "docs/ifpmic/design-v1/specs/implementation-backlog.json": "115e48568e0464b8e67ef17274dba97b3046a8de902e1cf426d9b70e1528e5d0",
+    "docs/ifpmic/design-v1/specs/openapi.v1.json": "2ed780cfa06349b18f5025937e050fd98a5cefa34b552eb836cfaccad416dd7a",
+    "docs/ifpmic/design-v1/specs/project-profile.example.json": "37301c6ff5c9cae237b6037a3106368cfd07e4582462d52a35dfee39de7839f2",
+    "docs/ifpmic/design-v1/specs/requirements.json": "6e1dc87cdbcaa66ed690ffd13d2d70242dff43410c9f822447bd520719ce249b",
+    "docs/ifpmic/design-v1/specs/sources.json": "c0c6f96c54ba4fd1c7a1bd70b954a7316bebdba86ff681e5a07141c682eeb7ef",
+    "docs/ifpmic/design-v1/specs/state-contract.json": "0248e130017043539319c56af854f5388a95d33e7e687902a3438fdff414244a",
+    "docs/ifpmic/design-v1/specs/workflow.v1.json": "bab40a7abb3929896add1ef2cd074893dd2a7de14d200a5d6cea4b7a77eb0e89",
+    "docs/ifpmic/design-v1/validation-requirements.txt": "756cc9e506ae4ee1a6f6c0507088b5cfc0dc8ba350fb2d2d46f1ffa72033adb6",
+    "docs/ifpmic/design-v1/verify_design.py": "05abad3464f815144bd313257a691194fd0ac96b84a542485260d128c681cedb",
+    "docs/ifpmic/source-manifest.json": "8afba9c1fc16ef3a6565f45576792cad51a1aaab59857d3a28666c71ec43007c",
+    "experiments/ifpmic-live/launcher.py": "770d88370af416ec2bf582401fa64474d4ab930e9ec376a75051d6f8975c67f0",
+    "experiments/ifpmic-live/web/app.js": "9fd53069eb08584ebaac617339a0b666a696b7166c2f76a2a79b58f81809a28c",
+    "experiments/ifpmic-live/web/index.html": "a96a84fed49cb88b3269a8f6b8bd14c9b91368093f0d95361163dddb186b635f",
+    "services/ifpmic_api/app.py": "a65c3d44a14ecae7b819e5042d4f490ce68c8b9b5f5962d1b5f2bbfe52fef192",
+    "services/ifpmic_api/auth.py": "9fef8084e8b11a7e1d0929a1842ab4fdddb0361adcbaa70700529a5e9999a887",
+    "services/ifpmic_api/errors.py": "374b49dc97c616d8e4c9432d997d5c9bd9b4a542f236f451a3e43ae92d16e967",
+    "services/ifpmic_api/execution_runtime.py": "49c0c6208e62b26e808ecffadf278dd9c7cff45134a47b905d3a4f60987c4b08",
+    "services/ifpmic_api/jobs.py": "0538e460a6be42e3129d2e8d5e9f262bba357e621e0b5e800f4495ebdf99ecf9",
+    "services/ifpmic_api/migrate.py": "36518fdd4d296455947df76fd72bf11d68aa44317549bd527037499b98a9eb86",
+    "services/ifpmic_api/migrations/001_initial.sql": "cf0437a5f32e1589e4ea821afbb2ef2480d780a276667880aa9a08a0f4c77f12",
+    "services/ifpmic_api/migrations/003_workflow_execution.sql": "5ef29521944e18551728dd285ce3ae21fa03c2b06f77c25430da6acb0ce1f102",
+    "services/ifpmic_api/migrations/004_prebinding_incident.sql": "9a7651ab063901e69a77f4b825dd21544dc018ed01941dc3a1bc76f8a65b541f",
+    "services/ifpmic_api/workspace.py": "ad3e29f27ee20bc82eff9afcf51d9bb5ef6374d50b69bcf8fa508d81ecb60f67",
+    "tests/ifpmic_api/test_h2_runtime_normal_flow.py": "c38ac5d1dc22856d2be0b119b9a5e7c0ae88fd1407c59c1d796c3d4ca0dcb79d"
+  },
+  "source_pin_count": 39,
+  "resolved_v2_findings": [
+    {
+      "id": "ADMISSION-V2-01",
+      "result": "resolved",
+      "evidence": "V3 uses existing schema/migration owner and current four pre-existing service-role inputs for additive005. One fixed read-only LANGUAGE sql STABLE SECURITY DEFINER read_job_admission(uuid),fully-qualified static body and fixed pg_catalog,ifpmic,pg_temp search_path replace the unsupported extra-reader bootstrap. API runtime-only EXECUTE,explicit PUBLIC/operator/dispatcher/projector denial,no direct execution-table SELECT,no owner DSN/credentials/SET ROLE are retained. It explicitly acknowledges privileged owner authority and the trusted shared API boundary. Current migrate.py role/owner checks and launcher owner/four-role invocation support this plan."
+    },
+    {
+      "id": "ADMISSION-V2-02",
+      "result": "resolved",
+      "evidence": "WORKSPACE_IDENTITY_CONFLICT appears in both exact bound and pre-binding allowlists,matching003 h2_quarantine and004 branch behavior. Binding/outbox/receipt tuple distinguishes paths;unknown codes remain503. Immutable valid sequence1 receipt retains priority over later quarantine."
+    },
+    {
+      "id": "ADMISSION-V2-03",
+      "result": "resolved",
+      "evidence": "Exact immutable result_json keys are status,command_id,applied_revision,error_code,job_id,job_status,revision,matching both actual project_activation producer branches. Run linkage is explicitly projection_receipts.admitted_run_id against same project/job/create-command execution_binding,without a fabricated JSON run key or producer mutation. The admitted_pending_projection branch has no receipt and correctly takes run only from its admitted binding."
+    },
+    {
+      "id": "ADMISSION-V2-04",
+      "result": "resolved",
+      "evidence": "No-run pending permits only normal pending/leased/uncertain outbox states;dispatched without an admitted run is explicitly503. Current record_delivery permits dispatched only for a matching nonnull admitted run. Admitted pending/valid receipt cases preserve legitimate delivery combinations without inventing receipt-after-ACK ordering."
+    },
+    {
+      "id": "ADMISSION-V2-05",
+      "result": "resolved",
+      "evidence": "Readiness/context failure is separated from durable job/command/binding/receipt state. Applied/rejected results and current job state are never reset/erased as accepted/pending by component outage. Failed state read returns503,keeps last confirmed state and displays a separate error. The verification matrix explicitly requires outage-after-projection cases."
+    }
+  ],
+  "findings": [],
+  "checks": {
+    "visibility_auth_and_snapshot": "Exact existing VISIBLE remains active membership AND(owner OR same project/job active unexpired job.read delegation),with current session-derived user_id and auth.now(). Shared PostgreSQL session_user is explicitly not browser identity. One READ COMMITTED SQL statement over jobs,exact CreateJob command LEFT JOIN and STABLE LATERAL getter evaluates visibility and state against one statement snapshot. Invisible/missing/malformed UUID403;visible missing/contradictory/cardinality state503. No actor/GUC/SET ROLE trust,owner-only bypass,existence precheck or second receipt snapshot is introduced.",
+    "api_null_state_and_conflicts": "The additive GET preserves POST202/idempotent replay409 and existing job/command DTOs. Success200 covers pending and admitted-without-receipt,with explicit nulls;receipt lookup is sequence1 only. Current job state is distinguished from immutable initial QUEUED projection. Cross project/job/command/run,wrong route,result keys/revisions,quarantine mismatch,no-run dispatched,missing/multiple row are503 rather than fabricated pending/rejection. Returned DTO contains bounded identifiers/status/receipt projection,fixed errors and no raw result JSON/config/credentials/SQL.",
+    "current_source_compatibility": "All22 source pins from V2 review remain exact,including current API/jobs/auth/errors/migrator/003/004/workspace/runtime/launcher/UI and unchanged V1/V2 lineage. Existing launcher only starts PG/API/OIDC and context/validateContext require execution_connected=false;V3 correctly requires a new reviewed context version plus actual workspace reconciler,Temporal,dispatcher/projector process path. A readiness flag cannot prove admission or QUEUED.",
+    "launcher_persistence_and_authority": "Bounded plan retains actual WorkspaceService generation/token/marker READY,no SQL-fabricated readiness,original32 launcher/API/workspace and exact qualified SDK runtime,persistent same-name PG/Temporal/workspace/config/build/role identity,no fallback/install/ambient credentials. Dispatcher/projector runtime identities remain distinct from API and schema owner. Private owned-child PID/start-ticks/shared-deadline shutdown and failure evidence are required. API GET never starts a workflow or mutates state.",
+    "ui_account_storage_and_privacy": "Current account/list/detail/command epochs and session-scoped pending key/body/receipt/lastJob remain,with one admission request,bounded polling,stop on terminal/error/epoch and no stale account updates. Storage loss cannot invent a key,auto-match title/body or auto-submit;authenticated list/detail/manual job selection is required. Authenticated current-account authorized IDs are distinguished from redacted public evidence;session/CSRF tokens do not enter browser storage.",
+    "original_design_and_human_roles": "Original source-manifest and all17 imported design documents remain exact,including original OpenAPI,requirements,acceptance,agent/state/workflow contracts. V3 retains REQ05/AT05 P07/P21 human-submission boundary and SAM/TEM/SQE original responsibilities. Initial QUEUED is not workflow completion,release or AT05/16/21/29/32 acceptance. REQ12/AT03 SSE remains separate B04 work;REQ13/AT21 and B02/B03 links retain their partial scope.",
+    "verification_and_h2_boundary": "Purpose,target,method,owner,pass criteria,expected result,evidence and failure recovery are present. Concrete HTTP/ACL/SQL/idempotency/workspace/runtime/restart/browser/regression evidence covers five corrections. Actual H2 full490 terminal pass and independent acceptance remain prerequisites,not152 units,pre-gates,partial cases or screenshots. Frozen source cannot change during live run. Additive schema/function/source,test/result reviews and successor closure/full-H2 reacceptance remain required when affected source changes."
+  },
+  "implementation_conditions": [
+    "Complete and independently accept the exact actual H2 full490 result before any implementation belonging to this UI/API plan. A failed or partial attempt must follow its own separately reviewed repair path;this plan neither repairs nor accepts it.",
+    "Before implementation/browser connection,freeze and independently review the additive admission-status schema,static SQL function body/ownership/grants/context contract/poll-error semantics and successor source-pin delta. Apply existing schema-owner/four-role migrator;no new reader bootstrap or owner credential in API.",
+    "Implement every DTO tuple,exact seven-key producer result check,receipt/binding run join,admitted-without-receipt binding-only branch,cardinality/error/privacy and visibility rule. Keep historical receipt outcome/current job status/component readiness distinct.",
+    "Preserve all eight verification fields and concrete normal/error/boundary/regression cases. Independent TC and source/result review remain required;the plan is not evidence that proposed behavior exists or passed.",
+    "Keep originals,human roles,immutable H2 evidence and current live source bytes unchanged. A relevant source delta needs successor exact closure/source/pre-gates and required full-H2/runtime regression before new acceptance."
+  ],
+  "authorization": {
+    "bounded_future_implementation_contract_approved": true,
+    "implementation_prerequisite_actual_h2_full490_independent_acceptance": true,
+    "source_or_tests_or_migrations_authorized_by_this_review_alone": false,
+    "sdk_services_or_runtime_execution": false,
+    "current_h2_recovery_or_execution_approval_changed": false,
+    "ui_h2_at_or_goal_acceptance": false
+  },
+  "informational_notes": [
+    "The plan status paragraph records V7 pre-execution draft context. At review,the operator reports the separately approved V7 actual attempt is in progress;no terminal/accepted H2 result is asserted here. The implementation prohibition until actual full490 acceptance remains operative."
+  ],
+  "limitations": [
+    "No additive schema/function/handler/UI/launcher implementation is approved or tested by this review. Detailed SQL/result/grant/source and actual browser/runtime proofs remain future review gates.",
+    "No repeated environment audit or actual execution was performed. Active H2 run monitoring and actual-result acceptance remain with their separately authorized operator/review workflow."
+  ],
+  "recommendation": "Accept this exact corrected V3 bounded plan. Keep implementation blocked until independently accepted actual H2 full490;then complete the separately specified additive contract/source/test/runtime review and regression gates.",
+  "review_method": "Delta-focused V2→V3 text review,all five blocker dispositions against unchanged current migrator/launcher/API/003/004 producers,existing UI/context/storage guards,and exact V2/original-design source hashes. No new architecture,environment rescan or source modification."
+}
