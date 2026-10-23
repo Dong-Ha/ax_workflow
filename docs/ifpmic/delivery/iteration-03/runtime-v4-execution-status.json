@@ -34,5 +34,10 @@
   "remaining_inventory_cases_not_executed": 482,
   "elapsed_seconds": 484.18970640099997,
   "failure_category": "Two dispatcher failures: claim-cut attempt-record assertion mismatch, and workflow query RPC timeout after worker shutdown before restart. Correct intended semantics/order require bounded review.",
-  "next_action": "Preserve failed attempt and independent raw/cleanup review; compare claim-attempt assertion and restart-query order with original contract before bounded repair. No rerun or acceptance granted."
+  "next_action": "Preserve failed attempt and independent raw/cleanup review; compare claim-attempt assertion and restart-query order with original contract before bounded repair. No rerun or acceptance granted.",
+  "failed_attempt_independent_review": {
+    "path": "runtime-v4-attempt-01-result-review.json",
+    "sha256": "57c6d3442482c5fca3fb19854b9d8bffc007f9806b6854d8d53919e8a65d2f94",
+    "decision": "confirm_failed_attempt_not_accepted"
+  }
 }

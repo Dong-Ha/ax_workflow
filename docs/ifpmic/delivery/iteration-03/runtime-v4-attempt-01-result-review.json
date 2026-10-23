@@ -1,0 +1,127 @@
+{
+  "kind": "ifpmic.delivery.iteration03.runtime-v4-attempt-01-independent-result-review.v1",
+  "reviewed_utc": "2026-10-23T03:21:32.187472+00:00",
+  "decision": "confirm_failed_attempt_not_accepted",
+  "reviewer": {
+    "agent_id": "/root/v3_whole_source_review",
+    "independence": "Independent from Code-dev/TC authors and execution operator. Read-only failed-attempt review;no rerun,imports,signals or source edits."
+  },
+  "contract_sha256": "526361f65c02b0c92a351a08e1cc68be2d8e9ee25a478cb549f0588ea6f0ec05",
+  "ledger_sha256": "ca39766adb9a0fa3549b4ba8c5fecdea606efd05ac5ec593bb6f98a2abbce280",
+  "runner_sha256": "29be6f277fb624f82042a5f65a4c976298785e378cc42a61659397f129c00762",
+  "raw_rules_sha256": "8c948efa993a1ba6837af28746af42ad532342eca5d5b299ac133f0377c0b74c",
+  "source_review": {
+    "path": "docs/ifpmic/evidence/b03/h2-runtime-full-runner-source-review-v4.json",
+    "sha256": "c9eb25c99e3ba9f56d97230f895d27a4001834ba41cce7a99531b0343af72b0c"
+  },
+  "pre_gate_reviews": {
+    "docs/ifpmic/evidence/b03/h2-runtime-full-pre-gate-review-v4.json": "b13f0066539a85a367901fe8a0feb9f98cd9002e44880d0daec5738f2597a6b4",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-pre-gate-tc-review-v4.json": "f82541071b310e7e04f3d99b1aa6b93833085c4b073e32e1334a1745f3ac5317"
+  },
+  "private_attempt": {
+    "path": "workflow-artifacts/verification/B03/H2/runtime-full/gates/2026-10-23T03-07-59-037167Z",
+    "gate_sha256": "392189fd1ff6d70530b1b30c2a2c2f40e80c08378dc1f8ef35bd85c4b18b58f8",
+    "privacy": "Original gate/log/JUnit/SQL/history/config/process identities and source archive remain private. Only safe counts,categories,source paths and hashes are recorded here."
+  },
+  "private_evidence_pins": {
+    "workflow-artifacts/verification/B03/H2/runtime-full/gates/2026-10-23T03-07-59-037167Z/gate.json": "392189fd1ff6d70530b1b30c2a2c2f40e80c08378dc1f8ef35bd85c4b18b58f8",
+    "workflow-artifacts/verification/B03/H2/runtime-full/gates/2026-10-23T03-07-59-037167Z/dispatcher_crashes/pytest.xml": "bb1283fbf6c9f312beb85eeaa8a334915b3ad8fb562a7c833fcd3250c424070f",
+    "workflow-artifacts/verification/B03/H2/runtime-full/gates/2026-10-23T03-07-59-037167Z/dispatcher_crashes/case-progress.jsonl": "7c0d365b769556d8334894abd81e092bd787ff4d09e003b33c315e7cb7ae8ff9",
+    "workflow-artifacts/verification/B03/H2/runtime-full/gates/2026-10-23T03-07-59-037167Z/dispatcher_crashes/postgres-lifecycle.json": "7ed3bc46b8472999c8177ff539fec297b6f7fbba6d09094a102976bcc633dc18",
+    "workflow-artifacts/verification/B03/H2/runtime-full/gates/2026-10-23T03-07-59-037167Z/dispatcher_crashes/observations/dispatcher-claim-commit/owner-at-cut.json": "42ae8b175efdcf242174795b68b031b51dd9f22667bdd68c88cf1f990f280cd9"
+  },
+  "terminal_result": {
+    "tool_exit_code_reported_by_operator": 1,
+    "gate_verdict": "fail",
+    "finding": "Phase exited unsuccessfully: dispatcher_crashes",
+    "elapsed_seconds": 484.18970640099997,
+    "collections": {
+      "phases": 15,
+      "exact_ids_collected": 490,
+      "seconds": 82.94677188099968,
+      "all_recorded_collection_log_hashes_match": true
+    },
+    "executed": {
+      "phases": 1,
+      "cases": 8,
+      "passed": 6,
+      "failed": 2,
+      "errors": 0,
+      "skipped": 0,
+      "exact_dispatcher_phase_ids": true,
+      "phase_seconds": 380.21102918199995
+    },
+    "not_executed": {
+      "cases": 482,
+      "phases": 14
+    },
+    "case_timing": "All8 progress lifecycles finished;8 passing setups/teardowns,6 passing calls,2 failed calls. All8 watchdogs finished without timeout flags and within215+25/240 limits;maximum88.859s. Phase380.211s<1980 and gate484.190s<16220:neither failure was a case/outer-budget expiration.",
+    "no_pass_or_proposal": "No proposal or final normalized/raw-audit evidence was produced. The first phase failed before its raw audit and normal full post-audit. Later phases were collected only."
+  },
+  "failures": [
+    {
+      "id": "ATTEMPT-01-CLAIM-ATTEMPT-EXPECTATION",
+      "test_id": "tests/ifpmic_api/test_h2_dispatcher_crashes.py::test_claim_commit_crash_reclaims_only_after_expiry",
+      "confirmed_terminal_cause": "JUnit confirms AssertionError at test_h2_dispatcher_crashes.py:248,which expects attempts==[]. Saved cut has one unfinished generation1 attempt(1,null,null,null,false),DRAFT/zero revision,zero bindings/scopes/receipts and zero noncreate commands. A delivery-attempt row is not an engine execution or receipt.",
+      "source_evidence": [
+        {
+          "path": "services/ifpmic_api/migrations/003_workflow_execution.sql",
+          "line": 380,
+          "fact": "Claim inserts the delivery_attempts row after updating lease generation."
+        },
+        {
+          "path": "services/ifpmic_api/execution_dispatcher.py",
+          "line": 35,
+          "fact": "after_claim_commit fires after the claim call returns and before deliver."
+        }
+      ],
+      "decision_boundary": "Actual test/producer expectation mismatch is proven. Reconcile original approved claim-attempt semantics before changing either assertion or producer;the failed run does not decide contract intent."
+    },
+    {
+      "id": "ATTEMPT-01-RESTART-QUERY-RPC",
+      "test_id": "tests/ifpmic_api/test_h2_runtime_restart_and_history.py::test_postgres_and_temporal_restart_preserve_same_execution_and_receipt",
+      "confirmed_terminal_cause": "JUnit confirms temporalio.service.RPCError(timeout category) in the post-PG-restart phase query at normal helper:507,called by restart test:122. Later Temporal/CLI restart assertions were not reached.",
+      "source_evidence": [
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_restart_and_history.py",
+          "line": 86,
+          "fact": "Worker and dispatcher are stopped at86-87;live observer is called at122 and CLIs restart only at180-183."
+        },
+        {
+          "path": "tests/ifpmic_api/test_h2_runtime_normal_flow.py",
+          "line": 507,
+          "fact": "Observer invokes handle.query(\"phase\") with the original10-second RPC bound."
+        }
+      ],
+      "causal_inference_not_new_acceptance": "The stopped-worker/query ordering strongly supports an observer-availability mismatch. Exact evidence proves RPC failure,not every internal transport cause or failed persistence. Review intended restart observation semantics;do not silently increase timeouts or change worker/history oracles."
+    }
+  ],
+  "preservation_and_cleanup": {
+    "before_and_archive": "Saved source-before equals all110 V4 pins;private candidate ZIP has those exact files/hashes. Saved environment-before equals accepted1777/3072 maps;copied review hashes match.",
+    "independent_current_comparison": "Current110 ledger sources,all150 independent pre-gate source/read/invocation pins and runner29be remain exact. Current1777/3072 environment file/symlink maps still equal saved before and accepted maps.",
+    "after_manifest_limit": "Runner source-after/environment-after manifests are absent because failure preceded normal post-audit. Independent current comparisons are after-failure review observations,not fabricated runner manifests or full-gate pass evidence.",
+    "gate_owned_cleanup": {
+      "result": "stopped",
+      "signalled_count": 0,
+      "pid_alive": false
+    },
+    "recorded_resources": "All27 saved CLI identities have stopped terminals,absent=true,forced=false,and no matching live PID/start-tick now. PG lifecycle reports stopped/pid_alive=false,successful recorded operations,and absent saved current/initial identities. IDs/ticks stay private.",
+    "cleanup_limit": "Recorded phase cleanup is supported. Later full raw/resource/proposal audits were not completed and482 cases never ran;this is not full490 cleanup/acceptance proof.",
+    "privacy_modes": "Leaf0700;798 retained files0600;130 descendant directories0700;zero symlinks;parent cache empty. No proposal/publication."
+  },
+  "acceptance": {
+    "failed_attempt_evidence_preserved_and_reviewed": true,
+    "actual_full490_pass": false,
+    "full_h2_acceptance": false,
+    "public_proposal_or_publication": false,
+    "original_at_ui_iteration03_or_goal_acceptance": false,
+    "retry_authorized_by_this_review": false
+  },
+  "next_bounded_decision": {
+    "claim_boundary": "Check original approved semantics for one unfinished delivery-attempt row at claim commit while engine runs/bindings/scopes/receipts remain zero;define any TC/contract repair from that decision.",
+    "restart_observer": "Reconcile persistence evidence during deliberate worker downtime with the live-query helper and restart order,within unchanged case/RPC/cleanup limits.",
+    "required_process": "Preserve this failure and approvals. Any change needs a narrow reviewed plan,exact source/TC verification,affected successor pins and renewed whole-source/paired execution reviews before a fresh490. No retry or blind test change approved."
+  },
+  "recommendation": "Keep V4 attempt01 failed_not_accepted. Hand off the two precise runtime-observed boundaries for a bounded semantic/TC decision;retain the8-case evidence without promoting its6 passes or490 collected IDs to acceptance.",
+  "review_method": "Read-only terminal gate/JUnit/progress/watchdogs,selected private observations/source tracebacks,source archive/review hashes,current source/environment and saved process-identity checks. No tests/imports/SDK/SQL/Node/service calls,signals,runs or source edits."
+}

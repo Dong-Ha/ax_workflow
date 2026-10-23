@@ -13,7 +13,7 @@
 ## 다음 행동
 
 1. 종료된 실행의 실패 증거를 확인한다. 실제 handle과 private leaf는 `workflow-artifacts/verification/B03/H2/runtime-full/preparations/v4-execution/tool-session.json`에 있다. 실행은 exit1로 종료했다. 실패 증거를 보존하며 무조건 재실행하지 않는다.
-2. 실제 terminal gate/JUnit·정리·환경·개인정보의 독립 실패 검토를 확인한다. claim 시도 기록의 기대값과 worker 정지 중 query 순서를 원래 계약에 대조하고, 검토된 범위만 수정·재검증한다. 이후 성공해도 독립 수용 전에는 H2 완료나 공개 proposal로 집계하지 않는다.
+2. [독립 실패 검토](./delivery/iteration-03/runtime-v4-attempt-01-result-review.json)를 확인한다. 기록된 자원 정리와 현재 소스·환경 일치는 확인됐지만 실행기 자체의 after manifest와 후속 전체 raw 감사는 완료되지 않았다. claim 시도 기록의 기대값과 worker 정지 중 query 순서를 원래 계약에 대조하고, 검토된 범위만 수정·재검증한다. 이후 성공해도 독립 수용 전에는 H2 완료나 공개 proposal로 집계하지 않는다.
 3. 다음 공개 결과는 **저장 요청 한 건 → 실제 엔진 접수 → 같은 작업의 run/receipt·QUEUED**다. 정상·중복 접수·권한 오류·새로고침 유지를 검증한다. QUEUED는 접수 상태다.
 4. 화면·URL·직접 해볼 순서·실제/모의 구분·남은 한 가지를 전달하고 검증된 변경을 커밋·push한다.
 
