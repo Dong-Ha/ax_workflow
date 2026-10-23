@@ -30,3 +30,9 @@ H3–H7, Code-dev·TC·SAM·TEM·SQE·사람, 실제 장비·배포·AT32 인수
 V8에서 protocolstatus를 복원하고 현재metadata 연결 검사2개를 추가했다. [정확한154 실행](./delivery/iteration-03/raw-policy-status-unit-verification.json)은 **153통과·1실패**로 종료했다. 새 정상/거부2개는 모두 통과했고 원래152 중151통과·1실패다. 실패는 기존 strict119 목록 보존 검사가 새2개를 포함해121을 센 것이다. actual SDK/SQL/서비스/main/490은 실행하지 않았다. unit handle57758은 종료됐다. 원시 leaf는 `workflow-artifacts/verification/agile/iteration-03/raw-policy-status-unit-2026-10-23T05-53-15-987082Z`다.
 
 다음은 [V2 보완 계획](./delivery/iteration-03/RAW-POLICY-STATUS-REPAIR-v2.md)을 독립 검토한 뒤 새2개만 기존 확장 모듈의 새 CurrentCandidatePolicyTests 클래스로 옮기는 것이다. 원래152 AST/ID와119 완전 일치 assertion은 바꾸지 않는다. 후속V9 capture도 비확장 모듈 집합==원래119를 그대로 확인하고, 전체 baseline152+확장2==154를 확인해야 한다. 신규adapter와 transitive helpers/확장 unit source를 모두 pin한다. V8 모든후보·검토·실패 bytes를 git체크포인트로 먼저 보존하고, V9 exact approvals/새154 실제 통과/whole source/paired pre-gates 후 원래490을 실행한다. 단위 실행 실패를 통과로 집계하지 않는다.
+
+## 최신 V9 준비 · 154 수용 및 실행 승인
+
+V8 실패 source/metadata는 커밋 `cce0e33`으로 보존했다. V9에서 새2개를 기존 확장 모듈의 새 클래스로 옮겼고, 원래152 AST/ID와 strict119를 유지했다. [154 실제 stdlib 검사](./delivery/iteration-03/raw-policy-inventory-unit-verification.json)가 모두 통과해 [독립 수용](./delivery/iteration-03/raw-policy-inventory-unit-result-review.json)됐다. 새2개 현재metadata 검사는 SDK/SQL/서비스/실제490을 대신하지 않는다.
+
+[전체 sourceV9](./evidence/b03/h2-runtime-full-runner-source-review-v9.json)·[독립 실행 전](./evidence/b03/h2-runtime-full-pre-gate-review-v9.json)·[TC 실행 전](./evidence/b03/h2-runtime-full-pre-gate-tc-review-v9.json) 검토가 승인됐고,253개 핀·7target hashes·실제 HOME/cleanenv/원래 실행 명령을 다시 확인했다. 다음은 `workflow-artifacts/verification/B03/H2/runtime-full/preparations/v9-execution/invocation.json`의 정확한 명령으로 새490을 한 번 실행하는 것이다. V9은 아직 실제490 시작 전이다. runner SHA `c528080e66b5dcd727acbb06fd6334da70401c3e54b02ce11c676541b06608c2`. 위의 V8 배치 보완 대기 설명은 이전 체크포인트다. 실제 V9 handle은 시작 뒤 새 private pointer에 기록한다. 이전 handle57758/6642(단위),70202/44336(실제)는 모두 종료됐다.

@@ -61,3 +61,7 @@ V7 실제 실행을 **2026-10-23 05:34:27 UTC**에 한 번 시작했다(후보 �
 [V7 실행](./runtime-v7-execution-status.json)은 목록 수집 전EvidenceError로 종료했다(0테스트/490미실행). [독립 실패 검토](./runtime-v7-attempt-01-result-review.json)와 [프로토콜 보완 계획](./RAW-POLICY-STATUS-REPAIR.md)을 따른다. 고정 rawstatus 복원과 현재metadata/검사기 연결 회귀2개로154검사를 준비한다. [UI V3 계획 승인](./admission-ui-plan-review-v3.json)은 실제 fullH2 수용 뒤의 조건부 구현 계약이며 새 기능 완료가 아니다.
 
 최신 V8 단위154 실행은153통과·1실패다([증거](./raw-policy-status-unit-verification.json)). 새 실제metadata 연결2개는 통과했고 기존 strict119 목록 보존이121에서 실패했다. [V2 계획](./RAW-POLICY-STATUS-REPAIR-v2.md)은 새2개를 기존 확장 모듈로만 옮겨 원래152/strict119를 유지한다. SDK/서비스/490 및 새 UI는 미실행이다.
+
+## 최신 V9 준비
+
+[154 검사](./raw-policy-inventory-unit-verification.json)·[독립 수용](./raw-policy-inventory-unit-result-review.json)·전체 source/paired 실행 전 검토까지 완료했다. strict119와 기존152를 유지했고 실제metadata2개도 통과했다. 이제 새 실제490 한 번의 결과와 최종 독립 수용이 남았다. SDK/실제 업무·새 UI 수용은 아직 없다.

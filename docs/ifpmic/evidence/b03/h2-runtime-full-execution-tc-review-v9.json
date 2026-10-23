@@ -1,0 +1,161 @@
+{
+  "kind": "ifpmic.b03.h2.runtime-full-execution-tc-review.v1",
+  "reviewed_utc": "2026-10-23T06:07:58.580123+00:00",
+  "verdict": "approve_runner_authoring_only",
+  "contract_sha256": "4d4098f52832595c5b9c43b79ed5309cbc70a5b878a390779f88bc449202b19e",
+  "ledger_sha256": "84e8867c633fe9fdf712bb2f259f5e50148860eb05b5c8e3ca0a13432aa8bf6f",
+  "raw_rules_sha256": "1dacfc8ebd9342017b9d0d39d12a8301c1473bbf2a995eb4840d1cc2e5667d9c",
+  "reviewer": "TC V9 raw-policy regression relocation and metadata reviewer. Authored the two TC methods and their relocation; root authored V9 metadata. Independent counterpart review is mandatory.",
+  "authorship_disclosure": {
+    "tc_test_authorship": "Reviewer authored the two metadata-validator regression methods and relocated them into CurrentCandidatePolicyTests in tests/ifpmic_evidence/test_runner_v2_repairs.py. The TC half is not independent of those methods; separate independent V9 contract review is required. No tests were executed.",
+    "candidate_metadata_authorship": "Root authored the V9 contract, ledger and rules candidate metadata. This review checks the exact targets, preserved raw-policy protocol, bounded source pins and requested metadata/test surface.",
+    "review_independence": "This TC half is not independent of the two TC methods or their relocation; it does not authorize runner binding, source approval or execution."
+  },
+  "checks": {
+    "approved_relocation_plan": {
+      "result": "pass_static_exact_scope",
+      "plan_path": "docs/ifpmic/delivery/iteration-03/RAW-POLICY-STATUS-REPAIR-v2.md",
+      "plan_sha256": "47a131382a450019a7eeb483ae9179bed9825a949d3de62608ea9e9d98f626e1",
+      "plan_review_path": "docs/ifpmic/delivery/iteration-03/raw-policy-status-repair-plan-review-v2.json",
+      "plan_review_sha256": "8c1d2641f1bec50d78bdbfab4f7b42cad2c24698347474a4d99a9b8c90cf5464",
+      "failed_v8_capture_review_path": "docs/ifpmic/delivery/iteration-03/raw-policy-status-unit-result-review.json",
+      "failed_v8_capture_review_sha256": "f3db4454980c3f10d31cc846fad03dcb96c576c9871a9b4c08a8d1b270350c77",
+      "failed_v8_capture_path": "docs/ifpmic/delivery/iteration-03/raw-policy-status-unit-verification.json",
+      "failed_v8_capture_sha256": "601f19fcc88b9c797dc50d50a7361e7bed4702f04e187eac3032bfec5ccc8b0e",
+      "preserved_v8_checkpoint": "cce0e33",
+      "scope": "Relocate only the two existing real metadata-validator methods into the extension module; preserve exact historical152 ASTs/IDs and strict119 cohort. No checker/service/product changes."
+    },
+    "exact_v9_target": {
+      "result": "pass_exact",
+      "contract_sha256": "4d4098f52832595c5b9c43b79ed5309cbc70a5b878a390779f88bc449202b19e",
+      "ledger_sha256": "84e8867c633fe9fdf712bb2f259f5e50148860eb05b5c8e3ca0a13432aa8bf6f",
+      "raw_rules_sha256": "1dacfc8ebd9342017b9d0d39d12a8301c1473bbf2a995eb4840d1cc2e5667d9c",
+      "required_target_fields": [
+        "contract_sha256",
+        "ledger_sha256",
+        "raw_rules_sha256"
+      ],
+      "tc_test_authorship_declared": true,
+      "paired_independent_contract_review_required": true,
+      "execution_authorized": false,
+      "full_goal_acceptance": false
+    },
+    "raw_policy_status_protocol": {
+      "result": "pass_static_exact_protocol",
+      "adapter_path": "scripts/ifpmic_h2_full_raw_adapter.py",
+      "adapter_sha256": "04efd3a7851e756a275df58efc83828df5cf7cf30ce51240b8f7721c918d8c46",
+      "phase_rules_consumer_path": "scripts/ifpmic_h2_artifacts.py",
+      "phase_rules_consumer_sha256": "712d5800835cd8f5e8f3ac513e2dd44b8f0fb2d035e83775ff989f4f24940b47",
+      "required_status": "candidate_pending_exact_review",
+      "required_unresolved": [],
+      "v9_status": "candidate_pending_exact_review",
+      "v9_unresolved": [],
+      "v8_failed_status": "candidate_v7_recovery_observation_repair_pending_exact_review_no_execution",
+      "consumers_unchanged": true,
+      "checker_logic_unchanged": true
+    },
+    "method_inventory_and_ast": {
+      "result": "pass_static_ast",
+      "baseline_method_count": 152,
+      "current_method_count": 154,
+      "baseline_ids_missing": 0,
+      "baseline_method_asts_changed": 0,
+      "strict119_cohort_count": 119,
+      "strict119_cohort_unique_ids": 119,
+      "strict119_guard_ast_unchanged": true,
+      "new_method_count": 2,
+      "new_test_ids": [
+        "test_runner_v2_repairs.CurrentCandidatePolicyTests.test_current_contract_ledger_and_rules_are_accepted_by_real_policy_validator",
+        "test_runner_v2_repairs.CurrentCandidatePolicyTests.test_real_policy_validator_rejects_v7_status_with_correct_private_digest"
+      ],
+      "moved_method_bodies_ast_unchanged": true,
+      "new_test_execution_authorized_by_this_review": false
+    },
+    "metadata_and_source_closure": {
+      "result": "pass_static_hashes",
+      "ledger_core_source_pins": 110,
+      "raw_rules_source_pins": 38,
+      "all_38_current": true,
+      "all_110_current": true,
+      "new_extension_outside_core110_by_design": true,
+      "extension_pin_in_repair_and_source_closure_v9": "817df48f19db71310e364d58af587724bff1af8ee7fe86b032e7cd0a49755756",
+      "fixture_pin_in_ledger": "826127dde450f127ebe06935a2bb9fdb4780ff2e87d7a485302478ebb0c1c3ad",
+      "current_extension_sha256": "817df48f19db71310e364d58af587724bff1af8ee7fe86b032e7cd0a49755756",
+      "current_fixture_sha256": "826127dde450f127ebe06935a2bb9fdb4780ff2e87d7a485302478ebb0c1c3ad",
+      "ledger_core_source_pin_scope_preserved": true,
+      "expected_v8_to_v9_core_pin_transitions": [
+        "machine rules path v8→v9",
+        "raw auditor V9 source hash",
+        "test_full_runner_guards.py V9 rules binding hash"
+      ]
+    },
+    "raw_artifact_predicates": {
+      "result": "pass_preserved_exact",
+      "raw_case_count": 87,
+      "raw_source_pin_count": 38,
+      "v8_predicate_count": 956,
+      "v9_predicate_count": 956,
+      "v8_case_rows_equal_v9": true,
+      "new_predicate_count": 0
+    },
+    "inventory_budgets": {
+      "result": "pass_contract_static",
+      "retained_ids": 407,
+      "new_ids": 83,
+      "expected_union": 490,
+      "obligation_groups": 25,
+      "fixture_prerequisites": 5,
+      "phase_count": 15,
+      "phase_cap_sum_seconds": 15420,
+      "outer_epoch_seconds": 16220,
+      "default_setup_body_cleanup_seconds": [
+        25,
+        5
+      ],
+      "extended_setup_body_cleanup_seconds": [
+        215,
+        25
+      ],
+      "candidate_dimensions_match_v8": true
+    },
+    "runner_binding_boundary": {
+      "result": "not_yet_bound",
+      "current_runner_remains_v8_candidate_binding": true,
+      "current_runner_sha256": "c68cb4da2596cf990da40007f6c4a0f72bc3ee85692bd575264bc6f60b822fc1",
+      "runner_v9_binding_authorized_by_this_review": false,
+      "runner_currently_excluded_from_core_ledger_source_cycle": true,
+      "future_runner_authoring_requires_both_exact_v9_contract_reviews": true
+    }
+  },
+  "limitations": [
+    "This review covers V9 candidate metadata, the relocated two TC methods and current relevant source pins only; no tests, project imports or captures were executed. Fresh exact154 capture and independent result review remain required.",
+    "The core110 ledger source set is unchanged. The extension module remains outside that core set by design and is explicitly pinned through the V9 repair/source_closure_v9 references; future unit capture and whole-source closure must include it.",
+    "The current runner remains V8-bound. This review approves neither V9 runner authoring/binding nor whole-runner source approval, invocation pre-gates, actual490 execution, H2/UI acceptance or goal completion.",
+    "V8 failed checkpoint cce0e33 and its failed capture/review remain immutable; no acceptance or retry authority is inherited."
+  ],
+  "authorization": {
+    "runner_authoring_authorized_by_this_review_alone": false,
+    "runner_authoring_permitted_after_paired_exact_v9_contract_reviews": true,
+    "test_or_service_execution_authorized": false,
+    "pre_gate_authorized": false,
+    "h2_acceptance": false,
+    "full_goal_acceptance": false
+  },
+  "source_pins": {
+    "docs/ifpmic/delivery/iteration-03/RAW-POLICY-STATUS-REPAIR-v2.md": "47a131382a450019a7eeb483ae9179bed9825a949d3de62608ea9e9d98f626e1",
+    "docs/ifpmic/delivery/iteration-03/raw-policy-status-repair-plan-review-v2.json": "8c1d2641f1bec50d78bdbfab4f7b42cad2c24698347474a4d99a9b8c90cf5464",
+    "docs/ifpmic/delivery/iteration-03/raw-policy-status-unit-result-review.json": "f3db4454980c3f10d31cc846fad03dcb96c576c9871a9b4c08a8d1b270350c77",
+    "docs/ifpmic/delivery/iteration-03/raw-policy-status-unit-verification.json": "601f19fcc88b9c797dc50d50a7361e7bed4702f04e187eac3032bfec5ccc8b0e",
+    "workflow-artifacts/verification/agile/iteration-03/runtime-oracle-preparation/baseline-152.json": "a4dcaa2a26b38518fc57c3d9a6cc5db773c96f0a35996008016d9067accd1776",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-execution-tc-review-v8.json": "9393a926db667ac8cfd47c61ccc78ee6e94fb5147a2797f01fc146628beea24c",
+    "scripts/ifpmic_h2_full_raw_adapter.py": "04efd3a7851e756a275df58efc83828df5cf7cf30ce51240b8f7721c918d8c46",
+    "scripts/ifpmic_h2_artifacts.py": "712d5800835cd8f5e8f3ac513e2dd44b8f0fb2d035e83775ff989f4f24940b47",
+    "scripts/ifpmic_h2_raw_evidence.py": "7b02c3b6a5713d6abe0e589d75835f5f6519e2aa5daee690e811497f20b7b4fe",
+    "scripts/verify_ifpmic_b03_h2_runtime_full.py": "c68cb4da2596cf990da40007f6c4a0f72bc3ee85692bd575264bc6f60b822fc1",
+    "tests/ifpmic_evidence/test_full_runner_guards.py": "826127dde450f127ebe06935a2bb9fdb4780ff2e87d7a485302478ebb0c1c3ad",
+    "tests/ifpmic_evidence/test_runner_v2_repairs.py": "817df48f19db71310e364d58af587724bff1af8ee7fe86b032e7cd0a49755756",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-execution-contract-v9.json": "4d4098f52832595c5b9c43b79ed5309cbc70a5b878a390779f88bc449202b19e",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-integrated-ledger-v9.json": "84e8867c633fe9fdf712bb2f259f5e50148860eb05b5c8e3ca0a13432aa8bf6f",
+    "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules-v9.json": "1dacfc8ebd9342017b9d0d39d12a8301c1473bbf2a995eb4840d1cc2e5667d9c"
+  }
+}

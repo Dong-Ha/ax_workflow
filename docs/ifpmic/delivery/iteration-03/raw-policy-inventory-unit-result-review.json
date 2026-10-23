@@ -1,0 +1,105 @@
+{
+  "kind": "ifpmic.b03.h2.raw-policy-inventory-unit-result-independent-review.v1",
+  "reviewed_utc": "2026-10-23T06:16:13+00:00",
+  "decision": "accept_exact_154_stdlib_result_only",
+  "reviewer": {
+    "agent_id": "/root/v9_unit_result",
+    "independence": "Independent read-only review of the already-executed exact V9 stdlib154 capture. No tests, repository imports, SDK calls, SQL/services or runner execution."
+  },
+  "reviewed_inputs": {
+    "public_verification": {
+      "path": "docs/ifpmic/delivery/iteration-03/raw-policy-inventory-unit-verification.json",
+      "sha256": "f07f0b9e6063d1228c50d18e03de967abbe634ed31ef89b74e80b86f6f306cb2"
+    },
+    "raw_result": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/raw-policy-inventory-unit-2026-10-23T06-13-56-523695Z/result.json",
+      "sha256": "eaab73c92437a7e4671e6a779de409caffe20f61ed5077733addef03b339b269"
+    },
+    "exact_source_approval": {
+      "path": "docs/ifpmic/delivery/iteration-03/raw-policy-inventory-repair-capture-source-review.json",
+      "sha256": "4075c83c7221c79762804c989f9b4aab7ae3d9e57312eab50560124ba0d3f5e8"
+    },
+    "source_review_request": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/raw-policy-inventory-preparation/source-review-request.json",
+      "sha256": "88fd93d8824f543acd777f4462673ade67b2a68a615b3dd8d7ab4f81a75f9d56"
+    },
+    "capture": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/raw-policy-inventory-preparation/run_units.py",
+      "sha256": "4bfdb537e22279441752eee6f0f64d8e15d2907b30c5753020349cc12fc4c360"
+    }
+  },
+  "actual_result": {
+    "exit_code": 0,
+    "timed_out": false,
+    "executed": 154,
+    "passed": 154,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "retained_method_bodies": 152,
+    "new_methods": 2,
+    "exact_unique_ids": true
+  },
+  "checks": [
+    "All seven public raw-evidence references match current files and SHA-256 digests. stdout is empty; stderr ends with Ran 154 tests in 1.982s and OK.",
+    "Raw actual_ids, expected_ids and public test_ids are identical: 154 unique method IDs. Raw execution reports154 expected and154 passed with exit0, no timeout, failure, error or skip.",
+    "The exact source approval hash matches current bytes and the public/raw binding. The 102-pin request and capture wrapper hashes match their supplied references; every current pinned source path is a regular nonsymlink file with matching bytes.",
+    "Saved preservation-before and preservation-after files are byte-identical: protected96 hashes, inventory89, design/original19, and complete environment maps of1777 original32 and3072 qualified36 files. All102 current source pins match. No broad present-environment rescan was performed.",
+    "All seven raw evidence files are current-owner, regular, single-link files with mode0600. Capture leaf, pycache and tmp directories are current-owner nonsymlink directories with mode0700; current pycache and tmp are empty.",
+    "Public verification records actual_full490_executed=false, iteration03_accepted=false and new_workflow_behavior=false. This is limited to the approved synthetic stdlib-unit capture."
+  ],
+  "preservation": {
+    "source_pins": 102,
+    "source_unchanged": true,
+    "source_review_unchanged": true,
+    "protected_hashes": 96,
+    "protected_inventory": 89,
+    "design_and_original_inputs": 19,
+    "environment_files": {
+      "original32": 1777,
+      "qualified36": 3072
+    },
+    "before_after_equal": true,
+    "current_cache_empty": true,
+    "current_temporary_directory_empty": true,
+    "raw_files_0600": 7,
+    "directories_0700": 3,
+    "symlinks": 0
+  },
+  "raw_evidence": {
+    "preservation-after.json": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/raw-policy-inventory-unit-2026-10-23T06-13-56-523695Z/preservation-after.json",
+      "sha256": "30b1204426dfb183ce2571455a4f03d209ef0c97507daa1273a22b49bd544346"
+    },
+    "preservation-before.json": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/raw-policy-inventory-unit-2026-10-23T06-13-56-523695Z/preservation-before.json",
+      "sha256": "30b1204426dfb183ce2571455a4f03d209ef0c97507daa1273a22b49bd544346"
+    },
+    "result.json": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/raw-policy-inventory-unit-2026-10-23T06-13-56-523695Z/result.json",
+      "sha256": "eaab73c92437a7e4671e6a779de409caffe20f61ed5077733addef03b339b269"
+    },
+    "source-after.json": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/raw-policy-inventory-unit-2026-10-23T06-13-56-523695Z/source-after.json",
+      "sha256": "eb2f9e22b6574b2b10db0d551f66fe317b444650810c02d14a531e35f197e432"
+    },
+    "source-before.json": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/raw-policy-inventory-unit-2026-10-23T06-13-56-523695Z/source-before.json",
+      "sha256": "eb2f9e22b6574b2b10db0d551f66fe317b444650810c02d14a531e35f197e432"
+    },
+    "stderr.log": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/raw-policy-inventory-unit-2026-10-23T06-13-56-523695Z/stderr.log",
+      "sha256": "5828599e143538283d7fe2933be744c8296808944bc884f6ae33e2222ce4eace"
+    },
+    "stdout.log": {
+      "path": "workflow-artifacts/verification/agile/iteration-03/raw-policy-inventory-unit-2026-10-23T06-13-56-523695Z/stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "limitations": [
+    "Acceptance covers only the exact approved154 synthetic stdlib-unit result, including two real current-metadata/validator protocol methods. It does not establish actual SDK revocation/replay or proxy helpers, SDK/SQL/history behavior, services, or full490 execution.",
+    "No whole-source or whole-runner execution approval, execution pre-gates, collection, actual490 launch, H2/UI acceptance, iteration acceptance or goal completion is established.",
+    "Preservation review uses saved before/after maps and current102 pinned bytes; no broad present-environment rescan was performed. Cache and temporary-directory emptiness were independently inspected at review time.",
+    "The preceding failed V8 154 capture and its strict119 placement failure remain historical evidence; this acceptance applies only to the exact approved V9 capture and does not rewrite that record."
+  ]
+}

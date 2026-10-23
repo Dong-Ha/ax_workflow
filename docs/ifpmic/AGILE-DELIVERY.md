@@ -65,3 +65,5 @@ V7 후보에서는 원래152 본문 검사·독립 결과 수용·전체 소스 
 최신 V7 실제 실행은 rawstatus 프로토콜 오류로 수집 전 종료했다(0테스트/490미실행). [현재 상태](./delivery/iteration-03/runtime-v7-execution-status.json)와 [보완 계획](./delivery/iteration-03/RAW-POLICY-STATUS-REPAIR.md)을 따른다. UI V3 계획은 독립 승인됐지만 실제 fullH2 수용과 구현/시연이 남아 있다. 전체 완료율은12.5%, 새 사용자 기능은 없다.
 
 V8의 현재metadata 수용/잘못된status 거부2개는 실제 stdlib 실행에서 통과했다. 전체154는 기존119 목록 보존과의 배치 충돌로153통과·1실패다. 새2개만 확장 모듈로 옮기는 [V2 보완 계획](./delivery/iteration-03/RAW-POLICY-STATUS-REPAIR-v2.md)을 따르며 원래 검사를 완화하지 않는다. 실제490과 새 사용자 기능은 아직 없다.
+
+최신 V9은 새2개를 확장 모듈로 옮겨 strict119/기존152를 유지했고,154검사·독립 수용·전체 source/paired 실행 전 승인을 완료했다. 다음은 원래490 실제 검증이다. 새 화면 기능이나 전체 완료율 변화는 없다.

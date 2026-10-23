@@ -665,14 +665,14 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "V8 stdlib154 capture failed153pass1fail: both new realmetadata policy regressions passed, original strict119-ID guard alone failed because2 newmethods were placed inits frozen cohort. Preserve V8 snapshot; independently approve relocation into existing extensionmodule without changing original152 ASTs/strict119 assertion. V9fresh154/full490 qualification stillrequired. ActualSDKcases not rerun; no newUI.",
+  "next_step": "V9 stdlib154 passed and independentlyaccepted: original152+relocated2 realmetadata checks, strict119 intact. Whole source2faf/251pins and paired invocation-bound pre-gates approved; immediate253pin/7targets checkpassed. Next onefresh actual490. PriorV7 precollectionfail andV8unit153/154fail preserved, no new admissionUI.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",
     "Approved Bedrock/Claude runtime profile"
   ],
   "publication_policy": "Only authorized git repository documentation, source and synthetic verification summaries/screenshots; never runtime credentials or application logs.",
-  "updated_at": "2026-10-23T06:00:39.623006+00:00",
+  "updated_at": "2026-10-23T06:23:53.847366+00:00",
   "session_handoff": {
     "status": "resumed_by_user",
     "resume_document": "docs/ifpmic/RESUME.md",
@@ -704,38 +704,38 @@
     },
     "pending_source_proposal": "evidence/b03/h2-machine-resolution-progress-v2.json",
     "pending_source_proposal_review": "evidence/b03/h2-machine-resolution-activity-review-v5.json",
-    "pending_source_proposal_status": "v8_stdlib_153_of154_failed_not_accepted",
+    "pending_source_proposal_status": "v9_154_source_and_execution_gates_approved_actual490_not_started",
     "latest_source_mapping": {
       "resolved_cases": 87,
       "total_cases": 87,
       "remaining_cases": 0,
       "remaining_annotations": 0,
       "artifact_rules": 956,
-      "machine_sha256": "4cb9eed4a585dcededb6e893578ae71232e6f0a28a9437d46934f4d972ab0df3",
+      "machine_sha256": "1dacfc8ebd9342017b9d0d39d12a8301c1473bbf2a995eb4840d1cc2e5667d9c",
       "scope": "Source path/schema/applicability only; no actual execution acceptance."
     },
-    "current_candidate_static_verification": null,
-    "next_foundation_scope": "V8 stdlib154 capture failed153pass1fail: both new realmetadata policy regressions passed, original strict119-ID guard alone failed because2 newmethods were placed inits frozen cohort. Preserve V8 snapshot; independently approve relocation into existing extensionmodule without changing original152 ASTs/strict119 assertion. V9fresh154/full490 qualification stillrequired. ActualSDKcases not rerun; no newUI.",
+    "current_candidate_static_verification": "evidence/b03/h2-runtime-full-runner-source-review-v9.json",
+    "next_foundation_scope": "V9 stdlib154 passed and independentlyaccepted: original152+relocated2 realmetadata checks, strict119 intact. Whole source2faf/251pins and paired invocation-bound pre-gates approved; immediate253pin/7targets checkpassed. Next onefresh actual490. PriorV7 precollectionfail andV8unit153/154fail preserved, no new admissionUI.",
     "candidate_authoring_reviews": {
-      "independent": "evidence/b03/h2-runtime-full-execution-contract-review-v8.json",
-      "tc": "evidence/b03/h2-runtime-full-execution-tc-review-v8.json"
+      "independent": "evidence/b03/h2-runtime-full-execution-contract-review-v9.json",
+      "tc": "evidence/b03/h2-runtime-full-execution-tc-review-v9.json"
     },
     "latest_unit_result": {
-      "passed": 153,
+      "passed": 154,
       "retained": 152,
       "new": 2,
-      "verification": "delivery/iteration-03/raw-policy-status-unit-verification.json",
-      "independent_acceptance": null,
+      "verification": "delivery/iteration-03/raw-policy-inventory-unit-verification.json",
+      "independent_acceptance": "delivery/iteration-03/raw-policy-inventory-unit-result-review.json",
       "actual_full490": false,
-      "scope": "V8:153/154, new2passed; original151/152passed, one strict119 inventoryfailure. NoSDK/SQL/main/productexecution.",
-      "independent_failure_review": "delivery/iteration-03/raw-policy-status-unit-result-review.json"
+      "scope": "V9stdlib154 including strict119 and2 actualmetadata protocol checks passed; no SDK/SQL/services/main/full490 acceptance.",
+      "previous_failed_unit_review": "delivery/iteration-03/raw-policy-status-unit-result-review.json"
     },
     "full_source_rejected_attempt": "evidence/b03/attempts/h2-runtime-full-runner-source-review-v3-attempt-01.json",
     "status_dashboard": "delivery/status.html",
     "current_blockers": [
       {
-        "id": "UNIT-LEGACY119-COHORT",
-        "status": "new2mustrelocate_toexistingextension_notweaken_originalguard"
+        "id": "ACTUAL-H2-FULL490",
+        "status": "pending_one_fresh_approved_v9_actual_attempt"
       }
     ],
     "runtime_execution_status": "delivery/iteration-03/runtime-v7-execution-status.json"
@@ -766,12 +766,12 @@
       "status": "in_progress",
       "title": "Connect persisted API job to real execution-engine admission and visible run/receipt",
       "path": "delivery/iteration-03/README.md",
-      "verification": "delivery/iteration-03/raw-policy-status-unit-verification.json",
-      "foundation_status": "v8_stdlib_153_of154_failed_not_accepted",
+      "verification": "delivery/iteration-03/raw-policy-inventory-unit-verification.json",
+      "foundation_status": "v9_154_source_and_execution_gates_approved_actual490_not_started",
       "actual_job_execution": false,
       "scope": "V7 executed0cases; source/152 approval did not establish currentpolicy integration compatibility. Rawstatus protocol repair and2 new regressiontests planned. Full490/UI admission remain incomplete.",
       "mapping_resolution_progress": "evidence/b03/h2-machine-resolution-progress-v2.json",
-      "candidate_static_verification": null,
+      "candidate_static_verification": "evidence/b03/h2-runtime-full-runner-source-review-v9.json",
       "runtime_execution_status": "delivery/iteration-03/runtime-v7-execution-status.json"
     }
   ]
