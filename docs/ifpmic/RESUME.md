@@ -28,3 +28,9 @@ V6 실행 후보 커밋은d5e88ed, 실행 기록 커밋은a103719다. runner SHA
 H3–H7, Code-dev·TC·SAM·TEM·SQE·사람, 실제 장비·배포·AT32 인수는 남았다. [AGILE-DELIVERY](./AGILE-DELIVERY.md), [이전 인계](./RESUME-HISTORY-2026-10-21.md), [주기03 기록](./delivery/iteration-03/README.md) 및 git 이력으로 추적한다.
 
 두 TC 관측 수정은 [제한된 소스 검토](./delivery/iteration-03/recovery-observation-repair-source-review.json)를 승인받았다. 이 기록은 worker 소스만 검토한 것이며 합성 capture나 실제 실행 승인이 아니다. 다음 capture 승인은 기존 기록을 덮어쓰지 않고 별도 파일로 작성한다. UI V2는 여전히 독립 검토 전 초안이다.
+
+## 최신 V7 준비 상태
+
+현재 V7 C/L/rules와 runner 바인딩을 작성했고, [새152 합성 결과](./delivery/iteration-03/recovery-observation-unit-verification.json)를 [독립 수용](./delivery/iteration-03/recovery-observation-unit-result-review.json)받았다. [전체 소스](./evidence/b03/h2-runtime-full-runner-source-review-v7.json)도 승인됐으며221개 핀이 현재 bytes와 일치한다. 위의 미바인딩/미실행 설명은 이전 체크포인트다. V7 실제490은 아직 시작하지 않았다.
+
+다음은 `workflow-artifacts/verification/B03/H2/runtime-full/preparations/v7-execution/invocation.json`의 정확한 명령·실제 HOME·clean environment를 독립/TC가 승인한 뒤, 즉시 소스·7target hashes를 재확인하고 실제490을 한 번 실행하는 것이다. 이전 V6 handle44336은 종료됐으며 다시 시작하지 않는다. V7 runner SHA: `b23bd4e8fe5e443c0d8de57016b0ad7085df3bdd1d16226e6a87ee2caa3528aa`. UI 후속 계획의 최신 초안은 [V3](./delivery/iteration-03/ADMISSION-UI-PLAN-v3.md)이며 독립 검토와 실제 H2 수용 전 구현하지 않는다.

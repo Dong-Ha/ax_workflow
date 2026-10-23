@@ -49,3 +49,7 @@ V6 전체 소스 및 독립·TC 실행 전 검토가 승인됐다(커밋 `d5e88e
 [실행 상태](./runtime-v6-execution-status.json):15묶음 목록 수집 후12건 중10통과·2실패·오류/skip0,478미실행으로 종료했다. CRASH10 복구는 통과했다. CRASH11 철회 cardinality 및 CRASH12 armed-only counter 기대를 [새 계획](./RECOVERY-OBSERVATION-REPAIR.md)에서 수정 검토한다. 위의 실행 중/미실행 설명은 과거 체크포인트다. 새 화면은 없으며 실제 전체 H2 수용과 [UI V2 초안](./ADMISSION-UI-PLAN-v2.md)의 독립 검토·구현이 남았다.
 
 두 관측 수정은 독립 계획 승인 뒤 TC 파일에 구현했다. [정적 확인](./recovery-observation-repair-verification.json)은 AST와 변경 범위 확인뿐이다. 새 후보 바인딩·소스 검토·실행 승인·실제 검증은 아직 없으며 V6 승인을 현재 변경에 재사용하지 않는다.
+
+## 최신 V7 준비
+
+[동일152 검사](./recovery-observation-unit-verification.json)·[결과 수용](./recovery-observation-unit-result-review.json)·[전체 소스 승인](../../evidence/b03/h2-runtime-full-runner-source-review-v7.json)이 완료됐다. 원래490/15묶음/956원시 규칙/예산은 유지한다. 정확한 실행 전 검토 뒤 새 실제490을 한 번 실행해야 한다. V7은 아직 실제 실행 전이며 [UI V3 초안](./ADMISSION-UI-PLAN-v3.md)은 독립 검토 전이다. 새 사용자 기능은 없다.

@@ -201,7 +201,7 @@ class WatchdogEvidenceTests(unittest.TestCase):
 
 class RawPolicySourceBindingTests(unittest.TestCase):
     REQUIRED_FILES = {
-        "rules": "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules-v6.json",
+        "rules": "docs/ifpmic/evidence/b03/h2-runtime-full-machine-evidence-rules-v7.json",
         "auditor": "scripts/ifpmic_h2_raw_audit.py",
         "adapter": "scripts/ifpmic_h2_full_raw_adapter.py",
         "artifact_checker": "scripts/ifpmic_h2_artifacts.py",

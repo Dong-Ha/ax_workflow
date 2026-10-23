@@ -59,3 +59,5 @@ V6는 활동 진행 상태 관측과 복구 준비 확인을 보완한 후보다
 V6 실제 시도는 종료했다. 15묶음 목록 수집,12건 중10통과·2실패·오류/skip0,478미실행이다. 새 pending 관측과 CRASH10 복구는 통과했다. CRASH11은 실제 eligibility2개 철회 뒤 count1 기대에서, CRASH12는 원래 QUEUED 조회 성공 뒤 armed 전용 카운터 증가 기대에서 실패했다. [실행 상태](./delivery/iteration-03/runtime-v6-execution-status.json)와 [두 관측 보완 계획](./delivery/iteration-03/RECOVERY-OBSERVATION-REPAIR.md)을 따른다. [화면 연결 V2 초안](./delivery/iteration-03/ADMISSION-UI-PLAN-v2.md)은 구현 전 독립 검토 및 실제 H2 수용이 남았다. 새 사용자 화면 기능과 전체 단계 완료율 변화는 없다.
 
 후속 두 관측 수정은 독립 계획 승인 뒤 TC에 구현했고 AST·차이만 확인했다. 수정 후 테스트/SDK/실제490은 미실행이다. 다음 행동은 새 후보 바인딩·영향받는 검토를 준비한 뒤 실제 검증으로 보완 효과를 확인하는 것이다. 기존 V6 승인은 변경된 소스에 적용되지 않는다.
+
+V7 후보에서는 원래152 본문 검사·독립 결과 수용·전체 소스 승인까지 완료했다. 원래490/956규칙/예산은 유지했다. 다음은 정확한 실행 전 검토와 새 실제490 한 번 실행이다. [UI 연결 최신 초안은 V3](./delivery/iteration-03/ADMISSION-UI-PLAN-v3.md)이며, 실제 접수 화면은 아직 구현하지 않았다.

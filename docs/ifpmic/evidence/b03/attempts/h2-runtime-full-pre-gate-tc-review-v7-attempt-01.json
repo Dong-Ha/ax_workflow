@@ -1,0 +1,150 @@
+{
+  "kind": "ifpmic.b03.h2.runtime-full-execution-pre-gate-tc-review.v7",
+  "reviewed_utc": "2026-10-23T00:00:00Z",
+  "verdict": "approve_execution",
+  "contract_sha256": "f554b232b7c21a77cbe16c23dc86624f4afb9c7de747067e00c79c5309070a3b",
+  "ledger_sha256": "f686e468afe5cb410d31fe194d4e17ee00f08c201509f3e2201215e2f08993d1",
+  "runner_sha256": "b23bd4e8fe5e443c0d8de57016b0ad7085df3bdd1d16226e6a87ee2caa3528aa",
+  "independent_contract_review_sha256": "e702c77b609524b35e3a343c5afdea278fccd347b61fb55e73f203ef966f25db",
+  "tc_contract_review_sha256": "043261a09d0e1659c4bb77534f2a3608ee5d1ecd1f6ae280d9432dba51995b03",
+  "runner_source_review_sha256": "413a64cef7cef3bcac54c8ee71b457e7f09130afd331849399d1b7cbff287835",
+  "raw_rules_sha256": "89a490dde31345d21c997d6b0a6d423a48134c12cee53fae33de9c80972a334e",
+  "execution_invocation": {
+    "path": "workflow-artifacts/verification/B03/H2/runtime-full/preparations/v7-execution/invocation.json",
+    "sha256": "98130537be343963a8ad4ec1b57f0d931bceb5d4f5fa9e1108d6c55128baeccd",
+    "private_values_not_reproduced": true
+  },
+  "reviewer": {
+    "agent_id": "/root/v7_unit_result",
+    "role": "TC execution pre-gate reviewer",
+    "independence": "Independent from Code-dev and TC implementation authors. This reviewer authored only the separate V7 synthetic-result review; no V7 runner, contract, ledger, rule or test implementation. A separate independent execution pre-gate is required."
+  },
+  "authorship_disclosure": {
+    "authored_test_files": [],
+    "authored_reviews": [
+      "docs/ifpmic/delivery/iteration-03/recovery-observation-unit-result-review.json"
+    ],
+    "independent_counterpart_required": true
+  },
+  "checks": {
+    "exact_target_chain": {
+      "result": "pass_exact",
+      "contract_sha256": "f554b232b7c21a77cbe16c23dc86624f4afb9c7de747067e00c79c5309070a3b",
+      "ledger_sha256": "f686e468afe5cb410d31fe194d4e17ee00f08c201509f3e2201215e2f08993d1",
+      "runner_sha256": "b23bd4e8fe5e443c0d8de57016b0ad7085df3bdd1d16226e6a87ee2caa3528aa",
+      "independent_contract_review_sha256": "e702c77b609524b35e3a343c5afdea278fccd347b61fb55e73f203ef966f25db",
+      "tc_contract_review_sha256": "043261a09d0e1659c4bb77534f2a3608ee5d1ecd1f6ae280d9432dba51995b03",
+      "runner_source_review_sha256": "413a64cef7cef3bcac54c8ee71b457e7f09130afd331849399d1b7cbff287835",
+      "raw_rules_sha256": "89a490dde31345d21c997d6b0a6d423a48134c12cee53fae33de9c80972a334e"
+    },
+    "source_closure": {
+      "result": "pass_static_hashes",
+      "current_ledger_pin_count": 110,
+      "current_source_review_pin_count": 221,
+      "all_current_pins_match": true,
+      "frozen_source_pins_including_source_review_and_invocation": 223,
+      "symlink_and_hash_check": "The final independent V7 whole-runner source review records 221 pins. Rehashed all 221 current regular nonsymlink pinned paths here; all match. Exact target chain and private invocation are checked separately below."
+    },
+    "authoring_reviews": {
+      "result": "pass_exact_authoring_only",
+      "independent_contract_review_verdict": "approve_runner_authoring_only",
+      "tc_contract_review_verdict": "approve_runner_authoring_only",
+      "same_exact_contract_ledger_raw_rules": true,
+      "reviewer_authorship_disclosed": true,
+      "execution_pre_gate_required": true
+    },
+    "budgets_and_scope": {
+      "result": "pass_contract_static",
+      "IDs": 490,
+      "retained_ids": 407,
+      "new_ids": 83,
+      "obligation_groups": 25,
+      "fixture_prerequisites": 5,
+      "ordered_phases": 15,
+      "phase_cap_sum_seconds": 15420,
+      "outer_epoch_seconds": 16220,
+      "default_setup_body_cleanup_seconds": [
+        25,
+        5
+      ],
+      "extended_setup_body_cleanup_seconds": [
+        215,
+        25
+      ],
+      "raw_cases": 87,
+      "raw_artifact_predicates": 956,
+      "raw_source_pins": 38,
+      "ledger_source_pins": 110
+    },
+    "accepted_synthetic_checkpoint": {
+      "result": "accepted_exact_152_synthetic_only",
+      "path": "docs/ifpmic/delivery/iteration-03/recovery-observation-unit-result-review.json",
+      "sha256": "c5ea6818254b3cf0c8bec59f80d935d68172966ffa334a988bf7b24ec8bd20df",
+      "verification_path": "docs/ifpmic/delivery/iteration-03/recovery-observation-unit-verification.json",
+      "verification_sha256": "9dd1a8d43f53d7fe4ef829271014c265d5f915893f0d422f0f82451976ba9e71",
+      "raw_result_path": "workflow-artifacts/verification/agile/iteration-03/recovery-observation-unit-2026-10-23T05-23-41-745891Z/result.json",
+      "raw_result_sha256": "98c9f32b2a555e4080de1426e7fb6999f879db232a6dbf4fa61e456c9dcc95bc",
+      "passed": 152,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "actual490_executed": false,
+      "acceptance_scope": "Synthetic regression only. The changed SDK/SQL revocation and postrelease proxy helpers remain unexecuted; this does not establish repaired runtime behavior or H2 acceptance."
+    },
+    "invocation": {
+      "result": "pass_exact_private_pin",
+      "path": "workflow-artifacts/verification/B03/H2/runtime-full/preparations/v7-execution/invocation.json",
+      "sha256": "98130537be343963a8ad4ec1b57f0d931bceb5d4f5fa9e1108d6c55128baeccd",
+      "argv": [
+        ".ifpmic-venv/bin/python",
+        "-B",
+        "-S",
+        "scripts/verify_ifpmic_b03_h2_runtime_full.py"
+      ],
+      "cwd": "Repository root; exact current working directory matched the invocation.",
+      "environment_keys": [
+        "HOME",
+        "LANG",
+        "LC_ALL",
+        "PATH",
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "HOME_value_reproduced_publicly": false,
+      "clean_environment": {
+        "PATH": "/usr/bin:/bin",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "actual_HOME_preserved_and_matches": true,
+      "external_forced_timeout": false,
+      "epoch_seconds": 16220,
+      "monitor": "Retain actual tool session; poll same handle without restarting on observation timeout; leaf and raw files stay private."
+    },
+    "execution_boundary": {
+      "this_is_TC_counterpart_only": true,
+      "independent_pre_gate_required": true,
+      "reviewer_performed_no_execution": true,
+      "full490_H2_UI_or_goal_acceptance": false
+    }
+  },
+  "review_scope": "Exact V7 TC execution pre-gate after paired V7 authoring reviews, final independent whole-runner source approval, accepted exact152 synthetic checkpoint, current221-pin source closure and exact private invocation. Approves only one fresh exact V7 full490 runner attempt if and only if the matching independent execution pre-gate and immediate integrity checks also pass.",
+  "review_method": "Read-only JSON/hash/mode/pin checks and static comparison of exact V7 target fields, scope, budgets, invocation and accepted synthetic checkpoint. No tests, imports, SDK, SQL, services, Node, network or runner execution.",
+  "limitations": [
+    "The accepted152-unit result is synthetic-only and does not prove the changed SDK revocation/replay or postrelease proxy/SQL behavior.",
+    "This reviewer did not author implementation or TC tests, but this is only the TC counterpart; a paired independent execution pre-gate must approve the same seven target hashes and exact invocation before launch.",
+    "Actual490 has not been run or accepted. The whole-source review records current source and environment closure; runtime must still validate interpreter/package inventory and all actual evidence.",
+    "The prior V6 full-run attempt remains failed and is not inherited as V7 pass evidence."
+  ],
+  "authorization": {
+    "exact_runner_execution_approved_by_this_tc_review": true,
+    "paired_independent_execution_pre_gate_required": true,
+    "runner_execution_gate_requires_both_exact_pre_gate_reviews": true,
+    "permitted_after_both_exact_pre_gates": "One fresh exact V7 full490 attempt through the pinned private invocation and original 16220-second epoch.",
+    "actual_full490_execution_performed_by_reviewer": false,
+    "automatic_retry_or_duplicate_attempt": false,
+    "h2_acceptance": false,
+    "ui_or_sqe_or_sam_or_tem_acceptance": false,
+    "full_goal_acceptance": false
+  }
+}

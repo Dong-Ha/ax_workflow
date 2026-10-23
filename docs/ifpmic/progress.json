@@ -665,14 +665,14 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "V6 actual attempt independently confirmed failed12/10pass2fail478unexecuted. Two exact observation fixes implemented under independent plan approval; AST/diff checked only, no tests/SDK execution on changed source. Next prepare new exact candidate bindings and affected reviews before synthetic/actual490 execution. UI V2 draft still needs independent review and actual H2 acceptance.",
+  "next_step": "V7 exact candidate and152 unchanged synthetic units independently accepted; current whole-source approved413a64ce/221pins. Obtain exact invocation-bound paired execution gates, then one fresh actual490 attempt. PreviousV6 failed12/10pass2fail478unexecuted remains historical. No new admission UI; V3 plan draft needs independent review.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",
     "Approved Bedrock/Claude runtime profile"
   ],
   "publication_policy": "Only authorized git repository documentation, source and synthetic verification summaries/screenshots; never runtime credentials or application logs.",
-  "updated_at": "2026-10-23T05:03:17.549987+00:00",
+  "updated_at": "2026-10-23T05:31:12.443962+00:00",
   "session_handoff": {
     "status": "resumed_by_user",
     "resume_document": "docs/ifpmic/RESUME.md",
@@ -704,27 +704,30 @@
     },
     "pending_source_proposal": "evidence/b03/h2-machine-resolution-progress-v2.json",
     "pending_source_proposal_review": "evidence/b03/h2-machine-resolution-activity-review-v5.json",
-    "pending_source_proposal_status": "recovery_observation_candidate_implemented_not_tested_not_bound",
+    "pending_source_proposal_status": "v7_source_and152_accepted_pending_exact_execution_gates",
     "latest_source_mapping": {
       "resolved_cases": 87,
       "total_cases": 87,
       "remaining_cases": 0,
       "remaining_annotations": 0,
       "artifact_rules": 956,
-      "machine_sha256": "8f9ca9495b13e4452eaa42e9d2c2b5ed43c993dd28e246bccbbd5cfbc4f041d8",
+      "machine_sha256": "89a490dde31345d21c997d6b0a6d423a48134c12cee53fae33de9c80972a334e",
       "scope": "Source path/schema/applicability only; no actual execution acceptance."
     },
-    "current_candidate_static_verification": null,
-    "next_foundation_scope": "V6 actual attempt independently confirmed failed12/10pass2fail478unexecuted. Two exact observation fixes implemented under independent plan approval; AST/diff checked only, no tests/SDK execution on changed source. Next prepare new exact candidate bindings and affected reviews before synthetic/actual490 execution. UI V2 draft still needs independent review and actual H2 acceptance.",
-    "candidate_authoring_reviews": null,
+    "current_candidate_static_verification": "evidence/b03/h2-runtime-full-runner-source-review-v7.json",
+    "next_foundation_scope": "V7 exact candidate and152 unchanged synthetic units independently accepted; current whole-source approved413a64ce/221pins. Obtain exact invocation-bound paired execution gates, then one fresh actual490 attempt. PreviousV6 failed12/10pass2fail478unexecuted remains historical. No new admission UI; V3 plan draft needs independent review.",
+    "candidate_authoring_reviews": {
+      "independent": "evidence/b03/h2-runtime-full-execution-contract-review-v7.json",
+      "tc": "evidence/b03/h2-runtime-full-execution-tc-review-v7.json"
+    },
     "latest_unit_result": {
       "passed": 152,
       "retained": 152,
       "new": 0,
-      "verification": "delivery/iteration-03/worker-observation-repair-verification.json",
-      "independent_acceptance": "delivery/iteration-03/worker-observation-repair-result-review.json",
+      "verification": "delivery/iteration-03/recovery-observation-unit-verification.json",
+      "independent_acceptance": "delivery/iteration-03/recovery-observation-unit-result-review.json",
       "actual_full490": false,
-      "scope": "Accepted V6 source only; current recovery edits not executed by152 or SDK integration."
+      "scope": "Exact V7 runner/rule bindings only; original152 method ASTs unchanged. Modified SDK/SQL/proxy helpers still needactual490."
     },
     "full_source_rejected_attempt": "evidence/b03/attempts/h2-runtime-full-runner-source-review-v3-attempt-01.json",
     "status_dashboard": "delivery/status.html",
@@ -766,12 +769,12 @@
       "status": "in_progress",
       "title": "Connect persisted API job to real execution-engine admission and visible run/receipt",
       "path": "delivery/iteration-03/README.md",
-      "verification": "delivery/iteration-03/worker-observation-repair-verification.json",
-      "foundation_status": "v6_failed_recovery_candidate_implemented_not_tested",
+      "verification": "delivery/iteration-03/recovery-observation-unit-verification.json",
+      "foundation_status": "v7_source_and152_accepted_actual490_not_started",
       "actual_job_execution": false,
       "scope": "V6 actual12/10pass2fail478unexecuted. CRASH10 recovered; CRASH11 revocation cardinality and CRASH12 armed-only metric expectations failed. Full H2 and visible admission UI remain incomplete.",
       "mapping_resolution_progress": "evidence/b03/h2-machine-resolution-progress-v2.json",
-      "candidate_static_verification": null,
+      "candidate_static_verification": "evidence/b03/h2-runtime-full-runner-source-review-v7.json",
       "runtime_execution_status": "delivery/iteration-03/runtime-v6-execution-status.json"
     }
   ]
