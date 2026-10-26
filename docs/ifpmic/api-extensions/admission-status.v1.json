@@ -1,0 +1,346 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ifpmic:admission-status:v1",
+  "title": "IFPMIC admission read status",
+  "description": "Additive read-only DTO under V3 tuple/ACL contract and V4 staged delivery. Identifiers are authorized resource references, not bearer credentials. Shared API authentication is the user boundary; schema/function owner remains privileged.",
+  "x-http": {
+    "method": "GET",
+    "path": "/api/v1/jobs/{job_id}/admission",
+    "status_codes": {
+      "200": "consistent visible admission DTO",
+      "401": "AUTH_REQUIRED",
+      "403": "FORBIDDEN for malformed, absent or invisible job",
+      "503": "DEPENDENCY_UNAVAILABLE for dependency or tuple/cardinality inconsistency"
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "job_id",
+    "command_id",
+    "admission_status",
+    "job_status",
+    "job_revision",
+    "command_status",
+    "applied_revision",
+    "admitted_run_id",
+    "receipt",
+    "error_code"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "ifpmic.admission-status.v1"
+    },
+    "job_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "command_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "admission_status": {
+      "enum": [
+        "pending",
+        "admitted_pending_projection",
+        "applied",
+        "rejected",
+        "quarantined"
+      ]
+    },
+    "job_status": {
+      "enum": [
+        "DRAFT",
+        "QUEUED",
+        "RUNNING",
+        "WAITING_HUMAN",
+        "WAITING_DEVICE",
+        "PAUSED",
+        "RECONCILING",
+        "FAILED",
+        "CANCELED",
+        "NO_CHANGE",
+        "RELEASED_PENDING_NOTES",
+        "COMPLETED"
+      ]
+    },
+    "job_revision": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "command_status": {
+      "enum": [
+        "accepted",
+        "applied",
+        "rejected"
+      ]
+    },
+    "applied_revision": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "admitted_run_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "uuid"
+    },
+    "receipt": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "transition_sequence": {
+              "const": 1
+            },
+            "outcome": {
+              "enum": [
+                "applied",
+                "rejected"
+              ]
+            },
+            "expected_revision": {
+              "const": 0
+            },
+            "applied_revision": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "enum": [
+                1,
+                null
+              ]
+            },
+            "projected_job_status": {
+              "enum": [
+                "QUEUED",
+                "DRAFT"
+              ]
+            },
+            "projected_revision": {
+              "enum": [
+                0,
+                1
+              ]
+            }
+          },
+          "required": [
+            "transition_sequence",
+            "outcome",
+            "expected_revision",
+            "applied_revision",
+            "projected_job_status",
+            "projected_revision"
+          ]
+        }
+      ]
+    },
+    "error_code": {
+      "enum": [
+        null,
+        "FORBIDDEN",
+        "PROFILE_INELIGIBLE",
+        "BINDING_CONFLICT",
+        "BUILD_UNAVAILABLE",
+        "RUN_CONFLICT",
+        "HISTORY_MISSING",
+        "START_WINDOW_EXPIRED",
+        "RETENTION_UNVERIFIED",
+        "WORKSPACE_IDENTITY_CONFLICT",
+        "CATALOG_IDENTITY_CONFLICT",
+        "PROPOSAL_COLLISION",
+        "PREDECESSOR_CONFLICT",
+        "COMMAND_IDENTITY_CONFLICT"
+      ]
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "admission_status": {
+          "const": "pending"
+        },
+        "job_status": {
+          "const": "DRAFT"
+        },
+        "job_revision": {
+          "const": 0
+        },
+        "command_status": {
+          "const": "accepted"
+        },
+        "applied_revision": {
+          "type": "null"
+        },
+        "receipt": {
+          "type": "null"
+        },
+        "error_code": {
+          "type": "null"
+        },
+        "admitted_run_id": {
+          "type": "null"
+        }
+      }
+    },
+    {
+      "properties": {
+        "admission_status": {
+          "const": "admitted_pending_projection"
+        },
+        "job_status": {
+          "const": "DRAFT"
+        },
+        "job_revision": {
+          "const": 0
+        },
+        "command_status": {
+          "const": "accepted"
+        },
+        "applied_revision": {
+          "type": "null"
+        },
+        "receipt": {
+          "type": "null"
+        },
+        "error_code": {
+          "type": "null"
+        },
+        "admitted_run_id": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "properties": {
+        "admission_status": {
+          "const": "applied"
+        },
+        "command_status": {
+          "const": "applied"
+        },
+        "applied_revision": {
+          "const": 1
+        },
+        "admitted_run_id": {
+          "type": "string"
+        },
+        "job_revision": {
+          "minimum": 1
+        },
+        "error_code": {
+          "type": "null"
+        },
+        "receipt": {
+          "properties": {
+            "outcome": {
+              "const": "applied"
+            },
+            "applied_revision": {
+              "const": 1
+            },
+            "projected_job_status": {
+              "const": "QUEUED"
+            },
+            "projected_revision": {
+              "const": 1
+            }
+          },
+          "type": "object"
+        }
+      }
+    },
+    {
+      "properties": {
+        "admission_status": {
+          "const": "rejected"
+        },
+        "job_status": {
+          "const": "DRAFT"
+        },
+        "job_revision": {
+          "const": 0
+        },
+        "command_status": {
+          "const": "rejected"
+        },
+        "applied_revision": {
+          "type": "null"
+        },
+        "admitted_run_id": {
+          "type": "string"
+        },
+        "error_code": {
+          "enum": [
+            "FORBIDDEN",
+            "PROFILE_INELIGIBLE"
+          ]
+        },
+        "receipt": {
+          "type": "object",
+          "properties": {
+            "outcome": {
+              "const": "rejected"
+            },
+            "applied_revision": {
+              "type": "null"
+            },
+            "projected_job_status": {
+              "const": "DRAFT"
+            },
+            "projected_revision": {
+              "const": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "properties": {
+        "admission_status": {
+          "const": "quarantined"
+        },
+        "job_status": {
+          "const": "DRAFT"
+        },
+        "job_revision": {
+          "const": 0
+        },
+        "command_status": {
+          "const": "accepted"
+        },
+        "applied_revision": {
+          "type": "null"
+        },
+        "receipt": {
+          "type": "null"
+        },
+        "error_code": {
+          "enum": [
+            "BINDING_CONFLICT",
+            "BUILD_UNAVAILABLE",
+            "RUN_CONFLICT",
+            "HISTORY_MISSING",
+            "START_WINDOW_EXPIRED",
+            "RETENTION_UNVERIFIED",
+            "WORKSPACE_IDENTITY_CONFLICT",
+            "CATALOG_IDENTITY_CONFLICT",
+            "PROPOSAL_COLLISION",
+            "PREDECESSOR_CONFLICT",
+            "COMMAND_IDENTITY_CONFLICT"
+          ]
+        }
+      }
+    }
+  ]
+}

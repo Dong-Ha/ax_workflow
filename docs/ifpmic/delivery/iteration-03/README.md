@@ -10,7 +10,7 @@
 - 주기02에서 합성 OIDC/mock 프로파일로 실제 로컬 API/PostgreSQL 요청 등록·조회·새로고침을 확인했다. 실행 엔진 접수는 연결되지 않았다.
 - 전체 필수 단계는 **2/16 = 12.5%**다. 실제 V9 H2는 490건 중 8건을 실행해 7통과·1실패했고, 482건은 미실행이다. 전체 H2는 수용되지 않았다.
 - 실패는 dispatcher crash 검사에서 DB clock 기준 claim 만료를 관측하지 못한 timeout이다. 원인은 미확정이며, 저장된 실행을 자동 재시도하지 않는다. [실행 상태](./runtime-v9-execution-status.json) · [독립 검토](./runtime-v9-attempt-01-result-review.json)
-- 새 우선순위는 [애자일 전달 계획](../../AGILE-DELIVERY.md)과 [재개 안내](../../RESUME.md)를 따른다. `admission-mock` 상태 표시를 전달했고 다음은 `admission-read`의 실제 조회 API/SQL이다. 실패 원인 분석은 관련 실제 실행만 차단하는 지원 작업이다.
+- 새 우선순위는 [애자일 전달 계획](../../AGILE-DELIVERY.md)과 [재개 안내](../../RESUME.md)를 따른다. `admission-mock`과 `admission-read`의 상태 조회를 전달했다. 실제 API/PostgreSQL에 한 건을 저장해 접수 대기·재조회·reload를 확인했고, 다음은 claim-expiry의 작은 진단과 `admission-live` 준비다. 실패 원인 분석은 관련 실제 실행만 차단하는 지원 작업이다.
 
 ## 회차 합격 기준
 
@@ -20,7 +20,7 @@
 
 ## 진행 도구
 
-`/delivery.html`과 `docs/ifpmic/delivery-plan.json`에서 현재 흐름 및 완료 조건을 확인한다. `npm run ifpmic:delivery`는 목표와 검사 범위를 출력하고, `npm run ifpmic:delivery:check`는 현재 slice의 선택 검사만 실행한다. `admission-mock`은 전달 도구와 상태 controller 검사에 연결되어 있고, 별도 `npm run ifpmic:admission:browser`로 오프라인 I02 UI를 확인한다. 후속 `admission-read`/`admission-live`에는 protocol/workspace 검사도 연결되어 있다. 이 검사는 DB/Temporal을 시작하지 않는다. `--level integration|acceptance`는 남은 조건을 표시하며, 이 수준의 `--run`은 미구현이다. 제한된 실제 DB/Temporal 통합은 별도 V4 준비·검토 절차로 허용되며, full490은 전체 수용 단계에 남는다.
+`/delivery.html`과 `docs/ifpmic/delivery-plan.json`에서 현재 흐름 및 완료 조건을 확인한다. `npm run ifpmic:delivery`는 목표와 검사 범위를 출력하고, `npm run ifpmic:delivery:check`는 현재 slice의 선택 검사만 실행한다. `admission-mock`은 전달 도구와 상태 controller 검사에 연결되어 있고, 별도 `npm run ifpmic:admission:browser`로 오프라인 I02 UI를 확인한다. `admission-read`에는 순수 DTO·브라우저 상태 검사, `admission-live`에는 protocol/workspace 검사가 연결되어 있다. 이 검사는 DB/Temporal을 시작하지 않는다. `--level integration|acceptance`는 남은 조건을 표시하며, 이 수준의 `--run`은 미구현이다. 제한된 실제 DB/Temporal 통합은 별도 V4 준비·검토 절차로 허용되며, full490은 전체 수용 단계에 남는다.
 
 ## 실패 처리와 증거
 

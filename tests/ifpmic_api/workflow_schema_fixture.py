@@ -17,7 +17,7 @@ import pytest
 from services.ifpmic_api.migrate import MigrationError, apply_migrations
 
 
-CURRENT_VERSIONS = ["001_initial", "002_auth_retention", "003_workflow_execution", "004_prebinding_incident"]
+CURRENT_VERSIONS = ["001_initial", "002_auth_retention", "003_workflow_execution", "004_prebinding_incident", "005_admission_read"]
 _H2_DEADLINES: dict[str, dict[str, object]] = {}
 
 

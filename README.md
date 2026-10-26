@@ -9,7 +9,7 @@ IFPMIC workflow 시각화로 확장하는 방향은 [기준 자료와 이관 계
 현재 개발 우선순위는 [애자일 전달 계획](./docs/ifpmic/AGILE-DELIVERY.md)과 [전달 기준 데이터](./docs/ifpmic/delivery-plan.json)를 따릅니다. 한 번에 전달 단위 하나를 진행하며, 접수 흐름을 mock 화면 → 실제 조회 API → 실제 엔진 접수로 나눕니다. UI/API 구현과 관련 검사는 전체 490건 수용을 기다리지 않고 진행하며, 실제 엔진 활성화·전체 H2·원본 AT 인수 기준은 유지합니다.
 
 - `npm run ifpmic:delivery`: 현재 목표와 선택 검사 목록을 출력합니다. 실행하지 않습니다.
-- `npm run ifpmic:delivery:check`: 현재 전달 단위의 고정 검사만 실행합니다. 기본 mock 단위는 전달 도구와 접수 상태 controller를 검사하고, `admission-local` 선택 시에만 `.ifpmic-venv`의 고정 Python 의존성이 필요합니다. DB/Temporal을 시작하지 않습니다. 로그와 요약은 ignored `workflow-artifacts/delivery/`에 보존합니다.
+- `npm run ifpmic:delivery:check`: 현재 전달 단위의 고정 검사만 실행합니다. 기본 mock 단위는 전달 도구와 접수 상태 controller를 검사하고, Python profile(`admission-dto`, `admission-local`)에는 `.ifpmic-venv`의 고정 의존성이 필요합니다. DB/Temporal을 시작하지 않습니다. 로그와 요약은 ignored `workflow-artifacts/delivery/`에 보존합니다.
 - `npm run ifpmic:delivery:browser`: 빌드 산출물만 사용하는 offline Chromium 화면 검사이며 API 서버를 시작하지 않습니다.
 - `npm run ifpmic:delivery -- --level integration` 또는 `--level acceptance`: 남은 조건을 출력합니다. 이 두 수준에 `--run`을 추가하면 자동 실행 미연결로 실패하며, 통과로 기록하지 않습니다.
 - `npm run test:ifpmic:delivery:browser`: 빌드된 현황판의 데스크톱·모바일 표시와 API/외부 요청 없음을 offline Chromium으로 확인합니다.
@@ -164,7 +164,7 @@ npm run test:browser
 ### IFPMIC의 작은 전달 단위와 선택 검사
 
 `docs/ifpmic/delivery-plan.json`의 `current_slice`가 이번 범위를 정합니다. 접수 흐름은
-`admission-mock`(다음 구현), `admission-read`, `admission-live` 순으로 나누며, 각 완료는
+`admission-mock`, `admission-read`, `admission-live` 순으로 나누며, 각 완료는
 전체 admission이나 H2/AT 인수와 별도로 기록합니다. V9 원인 조사는 관련 실제 실행만 차단합니다.
 
 ```sh
@@ -195,3 +195,29 @@ Python protocol/workspace 검사는 `admission-local`이며 실제 DB/Temporal�
 브라우저에는 모의 상황 선택만 보관하며 실제 접수 결과나 실행 영수증을 저장하지 않습니다.
 실제 저장 상태(`DRAFT`)는 바뀌지 않으며 PostgreSQL/Temporal 실행 접수는 후속 구현입니다.
 이 화면의 모의 상태는 프런트엔드 로컬 제공자가 반환하며 새로운 실제 API를 호출하지 않습니다.
+
+
+### I02 저장된 접수 상태 조회
+
+작업 상세의 **실행 접수** 영역은 `GET /api/v1/jobs/{job_id}/admission`으로 실제 PostgreSQL의 상태를 읽습니다.
+모의 체험 영역과 별도로 표시하며, 대기·상태 반영 대기에서는 1/2/4/5초 간격으로 최대 60초 확인합니다.
+거절·보류·영수증 확인·401/403/503에는 자동 확인을 멈추고, 조회 실패 시 같은 작업의 마지막 확인 상태를 보존합니다.
+계정/작업 변경은 진행 중 조회를 취소하고 이전 응답을 폐기합니다. 실제 `QUEUED`는 일치하는 최초 접수 영수증을 확인한 경우에만 표시합니다.
+
+Additive [조회 계약](docs/ifpmic/api-extensions/admission-status.v1.json)과 `005_admission_read.sql`은 기존 migration owner/four-role 절차를 따릅니다.
+API runtime에는 읽기 함수 EXECUTE만 추가하며 실행 테이블 직접 SELECT나 다른 역할 권한을 추가하지 않습니다.
+기존 I02 launcher는 재시작 시 새 migration을 적용합니다. 실제 Temporal 실행은 연결하지 않습니다.
+기본 `admission-read` 검사는 `delivery-tool`, `admission-dto`, `admission-read-state`의 순수 검사만 실행합니다.
+실제 DB 통합은 별도 검토된 격리 fixture로 실행하며 기본 개발 명령에서 자동 시작하지 않습니다.
+
+```sh
+npm run ifpmic:delivery
+npm run ifpmic:delivery:check -- --profile admission-dto
+npm run ifpmic:admission:browser
+```
+
+`npm run ifpmic:admission:pg -- --origin http://127.0.0.1:<API포트> --issuer-origin http://127.0.0.1:<OIDC포트> --evidence <새로운-private-하위경로>`는
+별도 준비·검토된 격리 I02 launcher를 대상으로 합성 요청 한 건을 저장하고 실제 API/DB의 대기 상태·재조회·reload를 확인합니다.
+`--read-existing`은 로그인한 계정의 기존 목록에서 작업을 선택해 POST 없이 조회만 확인합니다.
+두 origin은 명시적 loopback HTTP여야 하며 evidence는 `workflow-artifacts/` 아래 owner-only 디렉터리의 새로운 하위 경로여야 합니다.
+이 smoke가 PostgreSQL·OIDC·API를 시작하지는 않습니다. 실행 엔진·장비·배포 또는 전체 H2 수용 검사도 아닙니다.

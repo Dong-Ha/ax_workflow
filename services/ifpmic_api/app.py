@@ -232,6 +232,10 @@ def create_app(settings, *, db_factory=None, oidc_transport=None, bridge_runner=
     async def job_snapshot(job_id: str, request: Request):
         return json_response(jobs.snapshot(request, job_id))
 
+    @app.get('/api/v1/jobs/{job_id}/admission')
+    async def job_admission(job_id: str, request: Request):
+        return json_response(jobs.admission(request, job_id))
+
     @app.get('/api/v1/commands/{command_id}')
     async def command_status(command_id: str, request: Request):
         return json_response(jobs.command(request, command_id))

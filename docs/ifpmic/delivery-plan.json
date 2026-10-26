@@ -17,7 +17,7 @@
       "title": "저장한 요청의 실행 접수",
       "status": "in_progress",
       "outcome": "저장한 요청 한 건의 실제 엔진 접수와 같은 job/run/receipt·QUEUED를 화면에서 확인한다.",
-      "next_action": "admission-read: V3 계약에 맞는 실제 접수 상태 조회 API·SQL과 관련 ACL/tuple 검사를 구현한다. 실제 DB 연결 전 변경 경계의 독립 검토를 수행한다.",
+      "next_action": "admission-live: V9 claim-expiry 관측 실패를 작은 재현으로 진단하고, 변경 범위·관련 복구 검사·실제 접수 한 건의 실행 준비를 정한다. full490은 자동 반복하지 않는다.",
       "blocker": "실제 runtime 경로에는 V9 claim-expiry 원인 조사가 남아 있다. 독립적인 mock UI/API 구현은 차단하지 않는다.",
       "acceptance": [
         "정상 요청의 workspace READY → 실제 Temporal 접수 → 같은 job/command/run/sequence 1 receipt 확인",
@@ -67,7 +67,7 @@
         {
           "id": "admission-read",
           "title": "권한을 확인한 실제 접수 상태 조회",
-          "status": "not_started",
+          "status": "delivered",
           "mode": "real-read",
           "outcome": "현재 사용자가 볼 수 있는 저장 작업의 실제 DB admission tuple을 API와 화면에서 조회한다.",
           "acceptance": [
@@ -77,14 +77,29 @@
           ],
           "feedback_profiles": [
             "delivery-tool",
-            "admission-local"
+            "admission-dto",
+            "admission-read-state"
           ],
-          "checks_to_add": [
-            "admission API/DTO·SQL ACL·오류·개인정보 경계 검사"
-          ],
-          "blockers": [
-            "변경 SQL·권한 경계의 독립 검토 및 격리 DB 준비"
-          ]
+          "checks_to_add": [],
+          "blockers": [],
+          "validation_scope": {
+            "feedback": "순수 DTO와 브라우저 상태 controller 검사만 실행하며 DB를 시작하지 않음",
+            "integration": "독립 검토된 005/API/격리 g4 fixture의 tests/ifpmic_api/test_admission_read.py만 선택; Temporal/실제 엔진 미실행",
+            "browser": "오프라인 I02 API fixture 상태·오류·계정/작업 전환·reload 검사"
+          },
+          "evidence": {
+            "dto": "17 pure V3 DTO cases passed",
+            "database": "isolated admission API/ACL/security cases and synthetic SQL classification passed; workflow-artifacts/delivery/admission-read/20261026T000100Z/read-junit.xml and 20261026T000300Z/read-junit.xml",
+            "browser_fixture": "workflow-artifacts/delivery/admission-mock/2026-10-26T14-36-14-576Z/report.json",
+            "actual_api_pg_browser": "workflow-artifacts/delivery/admission-read/ui-20261026-01/browser/result.json",
+            "cleanup": "workflow-artifacts/delivery/admission-read/ui-20261026-01/cleanup-summary.json",
+            "scope": "actual local API/PostgreSQL saved-request pending read, refresh and reload; applied/rejected/quarantine are synthetic SQL fixtures; no Temporal/engine/full H2 acceptance",
+            "captures": [
+              "workflow-artifacts/delivery/admission-read/ui-20261026-01/recapture/browser/desktop.png",
+              "workflow-artifacts/delivery/admission-read/ui-20261026-01/recapture/browser/mobile-375.png"
+            ],
+            "read_only_recapture": "workflow-artifacts/delivery/admission-read/ui-20261026-01/recapture/browser/result.json"
+          }
         },
         {
           "id": "admission-live",
@@ -167,5 +182,5 @@
     "다음 행동 하나",
     "커밋과 push"
   ],
-  "current_slice": "admission-mock"
+  "current_slice": "admission-read"
 }

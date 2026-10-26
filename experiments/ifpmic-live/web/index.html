@@ -133,6 +133,14 @@
                     <div><span class="receipt-mark" aria-hidden="true">✓</span><span><small>저장된 접수 명령</small><strong data-testid="command-status">확인 중</strong></span></div>
                     <code data-testid="command-id"></code>
                   </div>
+                  <section class="stored-admission" id="stored-admission" data-testid="stored-admission" aria-labelledby="stored-admission-title" hidden>
+                    <div class="admission-heading"><h3 id="stored-admission-title">실행 접수</h3><button class="button button-quiet button-small" id="stored-admission-refresh" data-testid="stored-admission-refresh" type="button">다시 확인</button></div>
+                    <div role="status" aria-live="polite" aria-atomic="true">
+                      <strong id="stored-admission-status" data-testid="stored-admission-status"></strong>
+                      <p id="stored-admission-description"></p><p id="stored-admission-confirmed" hidden></p>
+                    </div>
+                    <p id="stored-admission-run" hidden>실행 ID <code id="stored-admission-run-id" data-testid="stored-admission-run-id"></code></p>
+                  </section>
                   <section class="admission-panel" id="admission-panel" data-testid="admission-panel" aria-labelledby="admission-title" hidden>
                     <div class="admission-heading"><h3 id="admission-title">모의 접수 상태</h3><span class="admission-mode">화면 체험</span></div>
                     <p class="admission-boundary">실제 엔진과 연결되지 않은 예시입니다. 위의 저장 상태는 바뀌지 않습니다.</p>

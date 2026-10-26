@@ -30,6 +30,28 @@ let holdA1Detail = false;
 let releaseHeldA1;
 let heldA1Seen;
 let jobDetailReads = 0;
+const admissionModes = new Map();
+const admissionReads = new Map();
+
+function admission(jobId) {
+  const mode = admissionModes.get(jobId) || 'pending';
+  if (mode === 'unavailable') return { status: 503, body: { code: 'DEPENDENCY_UNAVAILABLE' } };
+  const applied = mode === 'applied';
+  const value = {
+    schema_version: 'ifpmic.admission-status.v1', job_id: jobId,
+    command_id: jobId === ids.a1 ? '10000000-0000-4000-8000-000000000011'
+      : jobId === ids.a2 ? '10000000-0000-4000-8000-000000000012' : '20000000-0000-4000-8000-000000000011',
+    admission_status: applied ? 'applied' : 'pending', job_status: applied ? 'QUEUED' : 'DRAFT',
+    job_revision: applied ? 1 : 0, command_status: applied ? 'applied' : 'accepted',
+    applied_revision: applied ? 1 : null,
+    admitted_run_id: applied ? '10000000-0000-4000-8000-000000000021' : null,
+    receipt: applied ? { transition_sequence: 1, outcome: 'applied', expected_revision: 0,
+      applied_revision: 1, projected_job_status: 'QUEUED', projected_revision: 1 } : null,
+    error_code: null,
+  };
+  if (mode === 'malformed') value.receipt = { ...value.receipt, transition_sequence: 2 };
+  return { status: 200, body: value };
+}
 
 function record(name) { report.checks.push({ name, verdict: 'pass' }); }
 
@@ -68,6 +90,7 @@ async function routeRequest(route) {
   }
   const staticFiles = new Map([
     ['/app.js', ['../experiments/ifpmic-live/web/app.js', 'text/javascript; charset=utf-8']],
+    ['/admission-read.js', ['../experiments/ifpmic-live/web/admission-read.js', 'text/javascript; charset=utf-8']],
     ['/style.css', ['../experiments/ifpmic-live/web/style.css', 'text/css; charset=utf-8']],
     ['/admission.js', ['../experiments/ifpmic-live/web/admission.js', 'text/javascript; charset=utf-8']],
     ['/admission.css', ['../experiments/ifpmic-live/web/admission.css', 'text/css; charset=utf-8']],
@@ -94,6 +117,15 @@ async function routeRequest(route) {
         : json(route, 401, { code: 'AUTH_REQUIRED' });
     }
     if (pathname === '/demo/context') return json(route, 200, contextDto);
+    const admissionMatch = pathname.match(/^\/api\/v1\/jobs\/([^/]+)\/admission$/);
+    if (admissionMatch) {
+      const jobId = decodeURIComponent(admissionMatch[1]);
+      admissionReads.set(jobId, (admissionReads.get(jobId) || 0) + 1);
+      const own = account === accountA ? [ids.a1, ids.a2] : account === accountB ? [ids.b] : [];
+      if (!own.includes(jobId)) return json(route, 403, { code: 'FORBIDDEN' });
+      const result = admission(jobId);
+      return json(route, result.status, result.body);
+    }
     if (pathname === '/api/v1/jobs') {
       const items = account === accountA ? [job(ids.a1), job(ids.a2)] : account === accountB ? [job(ids.b)] : [];
       return json(route, 200, { items, next_cursor: null });
@@ -150,6 +182,28 @@ try {
     await panel.waitFor({ state: 'visible' });
     assert.equal(await page.getByRole('heading', { name: '모의 접수 상태' }).innerText(), '모의 접수 상태');
     await waitAdmissionStatus('접수 대기 · 모의');
+    await page.getByTestId('stored-admission').waitFor({ state: 'visible' });
+    assert.equal(await page.getByTestId('stored-admission-status').innerText(), '실행 접수 대기');
+  });
+
+  await check('canonical applied admission tuple alone updates the current job to QUEUED and exposes its run ID', async () => {
+    admissionModes.set(ids.a1, 'applied');
+    await page.getByTestId('stored-admission-refresh').click();
+    await page.waitForFunction(() => document.querySelector('[data-testid="stored-admission-status"]')?.textContent === '접수 상태 확인됨');
+    assert.equal(await page.getByTestId('detail-status').innerText(), 'QUEUED');
+    assert.equal(await page.getByTestId('stored-admission-run-id').innerText(), '10000000-0000-4000-8000-000000000021');
+  });
+
+  await check('later 503 keeps the confirmed admission and run ID without inventing a new success', async () => {
+    admissionModes.set(ids.a1, 'unavailable');
+    await page.getByTestId('stored-admission-refresh').click();
+    await page.waitForFunction(() => document.querySelector('[data-testid="stored-admission-status"]')?.textContent === '접수 상태 조회 실패');
+    assert.equal(await page.getByTestId('detail-status').innerText(), 'QUEUED');
+    assert.equal(await page.locator('#stored-admission-confirmed').innerText(), '마지막 확인: 접수 상태 확인됨');
+    assert.equal(await page.getByTestId('stored-admission-run-id').innerText(), '10000000-0000-4000-8000-000000000021');
+    admissionModes.set(ids.a1, 'pending');
+    await page.getByTestId('stored-admission-refresh').click();
+    await page.waitForFunction(() => document.querySelector('[data-testid="stored-admission-status"]')?.textContent === '실행 접수 대기');
   });
 
   await check('pending, admitted, error, refresh and recovery remain mock-only and preserve DRAFT', async () => {
@@ -178,6 +232,16 @@ try {
     await panel.waitFor({ state: 'visible' });
     await waitAdmissionStatus('접수 대기 · 모의');
     assert.equal(await page.getByTestId('detail-status').innerText(), 'DRAFT');
+    assert.equal(await page.getByTestId('stored-admission-status').innerText(), '실행 접수 대기');
+  });
+
+  await check('malformed receipt tuple fails closed and cannot render QUEUED', async () => {
+    admissionModes.set(ids.a2, 'malformed');
+    await page.getByTestId('stored-admission-refresh').click();
+    await page.waitForFunction(() => document.querySelector('[data-testid="stored-admission-status"]')?.textContent === '접수 상태 조회 실패');
+    assert.equal(await page.getByTestId('detail-status').innerText(), 'DRAFT');
+    assert.equal(await page.getByTestId('stored-admission-run-id').count(), 1);
+    assert.equal(await page.locator('#stored-admission-run').isVisible(), false);
   });
 
   await check('late detail response for the previous selection is discarded', async () => {

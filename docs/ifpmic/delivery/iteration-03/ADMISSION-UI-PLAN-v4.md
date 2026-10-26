@@ -35,7 +35,7 @@
 - `admission-mock` 화면은 네이비 `#0b111b` 배경과 `#111b29` 표면, `#e7eef9` 본문, `#9aacc5` 보조 텍스트를 사용하고 파랑 `#8ab8ff` 및 민트 `#63d4b4`로 상태 조회 경로를 구분한다. 로컬 한국어 글꼴을 우선하고, mock 배지와 경로 표기를 실제 상태와 시각적으로 구분한다.
 - mock 상태는 모듈 내부의 시뮬레이션에 한정하며 `pending`/`admitted`/`error`만 제공한다. 이는 queue·실행·receipt나 실제 `QUEUED`가 아니다. 계정별 시나리오 선택 선호만 `sessionStorage`에 보관하고, 새로고침 시 상태 제공자를 다시 조회한다. 원본 저장 요청, 실제 계정 상태, DB, Temporal을 수정하지 않는다.
 - 기본 CLI `npm run ifpmic:delivery`는 목표/조건을 출력하고, `npm run ifpmic:delivery:check`는 DB나 Temporal을 시작하지 않는 선택 검사를 수행한다. `--level integration|acceptance`는 남은 조건을 표시한다. 이 수준의 `--run` runner는 미구현이며 종료 코드 2를 반환한다. 실제 제한 통합은 별도 검토된 좁은 runner/절차로 수행한다.
-- CLI는 `--slice` 미지정 시 `delivery-plan.json`의 `plan.current_slice`를 선택한다. `--profile`은 선택 사항으로, 현재 slice가 허용한 profile의 부분집합을 지정한다. `admission-mock` 기본은 `delivery-tool`과 `admission-state` Node controller regression을 실행한다. 오프라인 API fixture를 쓰는 UI browser 검사는 `npm run ifpmic:admission:browser`로 별도 명시 실행하며 DB/Temporal을 사용하지 않는다. `admission-read/live` 기본은 `delivery-tool`과 `admission-local`을 실행한다. `delivery:check`는 선택된 profile만 실행하며 매번 Node와 Python을 함께 실행하지 않는다. Browser와 build는 별도로 명시 선택한다. 명령 시간이 목표를 넘더라도 전체 suite를 자동 확장하지 않는다.
+- CLI는 `--slice` 미지정 시 `delivery-plan.json`의 `plan.current_slice`를 선택한다. `--profile`은 선택 사항으로, 현재 slice가 허용한 profile의 부분집합을 지정한다. `admission-mock` 기본은 `delivery-tool`과 `admission-state` Node controller regression을 실행한다. 오프라인 API fixture를 쓰는 UI browser 검사는 `npm run ifpmic:admission:browser`로 별도 명시 실행하며 DB/Temporal을 사용하지 않는다. slice별 기본 profile은 `delivery-plan.json`의 `feedback_profiles`를 따르며 실제 DB는 자동 시작하지 않는다. `delivery:check`는 선택된 profile만 실행하며 매번 Node와 Python을 함께 실행하지 않는다. Browser와 build는 별도로 명시 선택한다. 명령 시간이 목표를 넘더라도 전체 suite를 자동 확장하지 않는다.
 
 ## 보고와 복구
 

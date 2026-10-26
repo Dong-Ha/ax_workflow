@@ -665,7 +665,7 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "Admission-mock UI delivered with synthetic provider/browser coverage. Next implement admission-read API/SQL and affected ACL/tuple tests; review changed trust boundaries before actual DB connection. Timeboxed V9 diagnosis blocks related actual runtime only; full H2/AT remains separate.",
+  "next_step": "Admission-read API/SQL/UI delivered: actual isolated API/PostgreSQL pending/refresh/reload verified; other SQL states use synthetic fixtures. Next diagnose V9 claim-expiry in a bounded reproduction and prepare admission-live. Actual Temporal/full H2/AT remain unaccepted.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",
@@ -697,7 +697,7 @@
       "commit_and_push"
     ],
     "existing_mandatory_gates_preserved": true,
-    "latest_user_visible_change": "I02 now shows mock pending/admitted/error with account/job stale-response isolation and reload recovery. Actual engine admission and full H2 remain unaccepted.",
+    "latest_user_visible_change": "I02 now reads authorized admission state through a read-only API/function; actual local API/PG pending, refresh and reload verified. Mock simulation remains separate. Temporal receipt/full H2 remain unaccepted.",
     "reporting_rule": "Lead with visible behavior; explicitly report no new visible feature when only internal evidence advances. Keep stage completion, visible flows, and test counts separate.",
     "next_visible_acceptance": "One persisted request admitted by the actual execution engine; matching job/run/receipt and QUEUED displayed, with duplicate, authorization and reload checks. Mandatory execution gates preserved.",
     "current_stage_completion": {
@@ -719,7 +719,7 @@
       "scope": "Source path/schema/applicability only; no actual execution acceptance."
     },
     "current_candidate_static_verification": "evidence/b03/h2-runtime-full-runner-source-review-v9.json",
-    "next_foundation_scope": "Admission-mock UI delivered with synthetic provider/browser coverage. Next implement admission-read API/SQL and affected ACL/tuple tests; review changed trust boundaries before actual DB connection. Timeboxed V9 diagnosis blocks related actual runtime only; full H2/AT remains separate.",
+    "next_foundation_scope": "Admission-read API/SQL/UI delivered: actual isolated API/PostgreSQL pending/refresh/reload verified; other SQL states use synthetic fixtures. Next diagnose V9 claim-expiry in a bounded reproduction and prepare admission-live. Actual Temporal/full H2/AT remain unaccepted.",
     "candidate_authoring_reviews": {
       "independent": "evidence/b03/h2-runtime-full-execution-contract-review-v9.json",
       "tc": "evidence/b03/h2-runtime-full-execution-tc-review-v9.json"

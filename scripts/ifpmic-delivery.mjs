@@ -20,6 +20,9 @@ export function selectSlice(flow, id) {
 
 // Executables and paths belong to code, never plan data or CLI input.
 const profiles = {
+  'admission-read-state': { executable: process.execPath, args: ['--test', 'tests/ifpmic-admission-read.test.mjs'] },
+  'admission-dto': { executable: resolve(root, '.ifpmic-venv/bin/python'),
+    args: ['-B', '-m', 'pytest', '-p', 'no:cacheprovider', '-q', 'tests/ifpmic_api/test_admission_dto.py'] },
   'admission-state': { executable: process.execPath, args: ['--test', 'tests/ifpmic-admission.test.mjs'] },
   'delivery-tool': { executable: process.execPath, args: ['--test', 'tests/ifpmic-delivery.test.mjs'] },
   'admission-local': { executable: resolve(root, '.ifpmic-venv/bin/python'),

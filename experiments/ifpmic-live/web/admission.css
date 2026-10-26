@@ -20,3 +20,12 @@
 .admission-controls select { width: 100%; min-height: 42px; padding: 8px 10px; background: #0e1724; border: 1px solid #537caa; border-radius: 6px; color: #e7eef9; }
 .admission-controls .button { flex: 0 0 auto; }
 @media (max-width: 480px) { .admission-controls { align-items: stretch; flex-direction: column; } }
+
+/* Stored admission uses the console's existing mint signal; the dashed blue
+   mock section below remains a separate simulation. */
+.stored-admission { margin-top: 20px; padding-top: 16px; border-top: 1px solid #344a64; }
+.stored-admission h3 { font-size: 14px; }
+.stored-admission strong { display: block; margin-top: 14px; color: #b3e5d4; font-size: 20px; line-height: 1.4; }
+.stored-admission p { margin: 8px 0 0; color: #a4b8d0; font-size: 12px; line-height: 1.6; }
+.stored-admission code { color: #d5dfec; overflow-wrap: anywhere; }
+.stored-admission[data-phase="error"] strong { color: #f1b8be; }

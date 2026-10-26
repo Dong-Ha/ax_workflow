@@ -15,8 +15,8 @@ test('only one active flow; later work cannot silently replace current delivery'
 
 test('slice selection isolates mock development from runtime diagnostics', () => {
   const flow = selectFlow(plan);
-  const slice = selectSlice(flow, plan.current_slice);
-  assert.equal(slice.id, 'admission-mock');
+  const slice = selectSlice(flow, 'admission-mock');
+  assert.ok(selectSlice(flow, plan.current_slice));
   assert.deepEqual(slice.blockers, []);
   assert.deepEqual(flow.diagnostic.blocks_slices, ['admission-live']);
   assert.throws(() => selectSlice(flow, 'missing'));
@@ -56,7 +56,7 @@ test('default CLI prints a plan without running test processes', () => {
   assert.equal(result.status, 0);
   assert.match(result.stdout, /개발 검사 통과는.*수용을 뜻하지 않습니다/);
   assert.doesNotMatch(result.stdout, /검사 기록:/);
-  assert.match(result.stdout, /접수 상태 mock 조회·표시/);
+  assert.ok(result.stdout.includes(selectSlice(selectFlow(plan), plan.current_slice).title));
   assert.doesNotMatch(result.stdout, /admission-local:/);
 });
 

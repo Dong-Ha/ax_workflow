@@ -1,4 +1,5 @@
 import { createAdmissionPanel } from './admission.js';
+import { createStoredAdmissionPanel } from './admission-read.js';
 
 const API = '';
 const DEMO_CONTEXT = Object.freeze({
@@ -27,6 +28,28 @@ const state = {
   commandEpoch: 0,
 };
 
+const storedAdmission = createStoredAdmissionPanel(document, {
+  read: async (jobId, signal) => {
+    const { data } = await request(`/api/v1/jobs/${encodeURIComponent(jobId)}/admission`, { signal });
+    const receipt = findReceiptForJob(jobId);
+    if (receipt && data?.command_id !== receipt.command_id) throw new Error('접수 명령이 일치하지 않습니다.');
+    return data;
+  },
+  onConfirmed: value => {
+    setDetailText('detail-status', value.job_status);
+    setDetailText('detail-revision', String(value.job_revision));
+    document.querySelector('[data-testid="detail-status"]').classList.toggle('is-draft', value.job_status === 'DRAFT');
+    document.querySelector('.status-explainer').textContent = humanStatus(value.job_status);
+  },
+  onDenied: status => {
+    if (status === 401) resetAccountView();
+    else {
+      clearDetail();
+      el('detail-error').textContent = '이 작업을 확인할 권한이 없습니다.';
+      el('detail-error').hidden = false;
+    }
+  },
+});
 const admissionPanel = createAdmissionPanel(document, { saveScenario: value => writeUserStorage('admission-demo', value) });
 
 const storageKey = (kind, userId = state.userId) => `ifpmic-live:${encodeURIComponent(userId)}:${kind}`;
@@ -69,6 +92,9 @@ async function request(path, options = {}) {
     headers.set('X-CSRF-Token', state.csrf);
   }
   const controller = new AbortController();
+  const abort = () => controller.abort();
+  if (options.signal?.aborted) abort();
+  else options.signal?.addEventListener('abort', abort, { once: true });
   const deadline = setTimeout(() => controller.abort(), 30_000);
   let response;
   let data = null;
@@ -92,6 +118,7 @@ async function request(path, options = {}) {
     throw error;
   } finally {
     clearTimeout(deadline);
+    options.signal?.removeEventListener('abort', abort);
   }
   if (!response.ok) {
     const error = new Error(apiErrorMessage(data, `요청 실패 (${response.status})`));
@@ -159,6 +186,7 @@ function resetAccountView() {
 
 function clearDetail() {
   admissionPanel.clear();
+  storedAdmission.clear();
   el('job-detail').hidden = true;
   el('empty-detail').hidden = false;
   el('command-receipt').hidden = true;
@@ -435,6 +463,7 @@ async function selectJob(jobId, { updateHash = false, refreshList = false } = {}
   const current = () => state.userId === owner && state.accountEpoch === accountEpoch &&
     state.detailEpoch === detailEpoch && state.selectedJobId === jobId;
   admissionPanel.clear();
+  storedAdmission.clear();
   state.selectedJobId = jobId;
   el('empty-detail').hidden = true;
   el('job-detail').hidden = true;
@@ -448,9 +477,9 @@ async function selectJob(jobId, { updateHash = false, refreshList = false } = {}
     const job = data && data.job;
     if (!job || job.job_id !== jobId) throw new Error('작업 상세 응답을 확인할 수 없습니다.');
     setDetailText('detail-job-id', job.job_id);
-    setDetailText('detail-status', job.status || '상태 미제공');
+    setDetailText('detail-status', job.status === 'QUEUED' ? '접수 확인 중' : job.status || '상태 미제공');
     document.querySelector('[data-testid="detail-status"]').classList.toggle('is-draft', job.status === 'DRAFT');
-    document.querySelector('.status-explainer').textContent = humanStatus(job.status);
+    document.querySelector('.status-explainer').textContent = job.status === 'QUEUED' ? '첫 접수 영수증 확인 필요' : humanStatus(job.status);
     const steps = Array.isArray(job.current_step_ids) ? job.current_step_ids : [];
     setDetailText('detail-current-steps', steps.length ? steps.join(', ') : '아직 시작된 단계 없음');
     setDetailText('detail-cycle', Number.isInteger(job.cycle) ? String(job.cycle) : '—');
@@ -460,6 +489,7 @@ async function selectJob(jobId, { updateHash = false, refreshList = false } = {}
     const mockPreference = readUserStorage('admission-demo');
     el('job-detail').hidden = false;
     admissionPanel.show({ userId: owner, jobId, scenario: mockPreference?.job_id === jobId ? mockPreference.scenario : 'pending' });
+    storedAdmission.select(jobId);
     await refreshCommand(findReceiptForJob(jobId), { owner, accountEpoch, detailEpoch });
     if (!current()) return;
     if (refreshList) await loadJobs();
@@ -473,6 +503,7 @@ async function selectJob(jobId, { updateHash = false, refreshList = false } = {}
       el('detail-error').hidden = false;
       el('job-detail').hidden = true;
       admissionPanel.clear();
+      storedAdmission.clear();
     }
     setStatus(error.message, 'error');
   }

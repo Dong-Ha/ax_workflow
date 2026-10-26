@@ -6,10 +6,10 @@
 
 - 필수 단계 완료: **2/16 = 12.5%**(동일 가중치 단계 수, 작업량 추정이 아님).
 - 전달된 사용자 흐름: 29단계·6구간의 설계 탐색 및 74개 합성 시나리오, 합성 계정/mock으로 요청을 저장·재조회하는 로컬 흐름.
-- 최근 전달: `admission-mock`의 I02 상태 조회·전환·복구 화면. 다음 구현은 `admission-read`의 실제 조회 API/SQL이다. 격리된 실제 PostgreSQL/Temporal 접수는 `admission-live` 후속 slice다. [V4 구현·검증 계획](./delivery/iteration-03/ADMISSION-UI-PLAN-v4.md)
+- 최근 전달: `admission-read`의 실제 조회 API/SQL과 I02 화면 연결. 실제 API/PostgreSQL 요청 한 건의 접수 대기·재조회·reload를 확인했다. 다음은 `admission-live` 준비다. 격리된 실제 PostgreSQL/Temporal 접수는 `admission-live` 후속 slice다. [V4 구현·검증 계획](./delivery/iteration-03/ADMISSION-UI-PLAN-v4.md)
 - 최신 실제 H2 시도 V9: 490건 중 8건 실행, 7통과·1실패, 482건 미실행. 실패 원인은 DB 시간 기준 claim 만료 관측 timeout이며 아직 확정되지 않았다. [결과](./delivery/iteration-03/runtime-v9-execution-status.json) · [독립 실패 검토](./delivery/iteration-03/runtime-v9-attempt-01-result-review.json)
 - V9 실제 엔진 실행은 자동 재시도하지 않는다. timeout 진단은 30분 checkpoint가 있는 지원 작업이며 관련 실제 runtime 실행만 차단한다. 원인 미확정이어도 독립 UI/API/mock 개발은 진행한다. 진단 시간이 넘으면 범위·소요시간과 다음 조치 한 가지를 보고하고 전체 검증을 자동 반복하지 않는다.
-- 최근 완료한 전달은 I02 저장 요청의 접수 상태를 조회하는 `admission-mock`이다. 다음 작업은 `admission-read`이며 제품 WIP는 하나로 유지한다. 모듈 내부의 mock 상태는 `pending`/`admitted`/`error`이며 실제 queue·실행·receipt·`QUEUED`를 뜻하지 않는다. 계정별 시나리오 선택만 `sessionStorage`에 보관하고 reload 시 상태 제공자를 다시 조회한다. 원본 요청이나 실제 상태는 수정하지 않는다. 후속 slice는 `admission-read`(실제 read-only API와 SQL ACL tuple), `admission-live`(격리된 실제 엔진 receipt)다. 진단은 제품 WIP와 별도 지원 작업이다.
+- 최근 완료한 전달과 다음 작업은 `delivery-plan.json`을 따르며 제품 WIP는 하나로 유지한다. 모듈 내부의 mock 상태는 `pending`/`admitted`/`error`이며 실제 queue·실행·receipt·`QUEUED`를 뜻하지 않는다. 계정별 시나리오 선택만 `sessionStorage`에 보관하고 reload 시 상태 제공자를 다시 조회한다. 원본 요청이나 실제 상태는 수정하지 않는다. 전달 단위는 `admission-read`(실제 read-only API와 SQL ACL tuple), `admission-live`(격리된 실제 엔진 receipt)까지 이어진다. 진단은 제품 WIP와 별도 지원 작업이다.
 
 ## 다음 사용자 흐름 순서
 
@@ -28,8 +28,8 @@
 
 현재 흐름·완료 조건·상태는 저장소의 단일 기준 파일 `docs/ifpmic/delivery-plan.json`에 기록하고, 루트 `/delivery.html`에서 같은 데이터를 보여준다. 흐름이나 상태를 바꾸면 JSON을 함께 갱신한다. 대시보드에 표시된 단계 완료 수는 원본 필수 단계의 수용 상태를 대체하지 않는다.
 
-- `npm run ifpmic:delivery`: 기본 목표 행동과 검사 범위를 출력한다. `--slice` 생략 시 `delivery-plan.json`의 `plan.current_slice`를 사용한다. `--profile`은 선택 사항이며 slice allowlist의 부분집합을 지정한다. 현재 `admission-mock`은 기본 `delivery-tool`과 `admission-state` Node controller regression을, `admission-read/live`는 기본 `delivery-tool`과 `admission-local`을 선택한다. 오프라인 fixture 기반 UI browser 검사는 `npm run ifpmic:admission:browser`로 별도 명시한다.
-- `npm run ifpmic:delivery:check`: 현재 slice/profile에서 선택된 검사만 실행하며 DB/Temporal/서비스를 시작하지 않는다. `admission-mock` 기본 실행은 Node 전달 도구 및 `admission-state` controller 회귀 검사를 수행하고 Python protocol/workspace 검사를 항상 함께 실행하지 않는다. `admission-read/live` 기본 실행은 두 profile을 수행한다.
+- `npm run ifpmic:delivery`: 기본 목표 행동과 검사 범위를 출력한다. `--slice` 생략 시 `delivery-plan.json`의 `plan.current_slice`를 사용한다. `--profile`은 선택 사항이며 slice allowlist의 부분집합을 지정한다. 현재 `admission-mock`은 기본 `delivery-tool`과 `admission-state` Node controller regression을, `admission-read`는 `delivery-tool`·`admission-dto`·`admission-read-state`, `admission-live`는 `delivery-tool`·`admission-local`을 선택한다. 모두 기본 실행에서는 DB를 시작하지 않는다. 오프라인 fixture 기반 UI browser 검사는 `npm run ifpmic:admission:browser`로 별도 명시한다.
+- `npm run ifpmic:delivery:check`: 현재 slice/profile에서 선택된 검사만 실행하며 DB/Temporal/서비스를 시작하지 않는다. `admission-mock` 기본 실행은 Node 전달 도구 및 `admission-state` controller 회귀 검사를 수행하고 Python protocol/workspace 검사를 항상 함께 실행하지 않는다. slice별 기본 실행 목록은 JSON의 `feedback_profiles`를 따른다.
 - `--level integration` 또는 `--level acceptance`: 해당 단계의 남은 필수 조건을 출력한다. `--level integration|acceptance --run` 실행기는 미구현이며 종료 코드 2로 실패한다. 이 CLI 제한은 V4 절차에 맞게 준비·검토된 별도 실제 DB/Temporal 통합 실행을 막지 않는다.
 - slice별 필수 검사는 작업 전에 고정한다. 추가·반복은 변경 코드, 실패 재현 또는 미해결 우려에만 한정하고 통과하면 멈춘다. 각 명령의 피드백 목표는 60초 이내다. browser 및 build 검사는 별도 명시 선택이며 기본 묶음에 포함된 것으로 간주하지 않는다. 검토는 변경된 코드·trust boundary와 그 영향 경로에 한정하고 손대지 않은 전체 source의 반복 검토를 요구하지 않는다. 실제 DB/Temporal 연결 전 변경된 SQL/ACL/권한·개인정보 경계는 독립 검토한다.
 
@@ -51,8 +51,19 @@
 
 새 사용자 기능이 없으면 **새 기능 없음**이라고 밝힌다. 테스트 건수·문서 수·커밋 수를 제품 진척률로 환산하지 않는다. 기존 증거와 역사적 세부는 [주기03 기록](./delivery/iteration-03/README.md), [재개 안내](./RESUME.md), 커밋 이력에서 확인한다.
 
-## 이번 전달 · admission-mock
+## 이전 전달 · admission-mock
 
 I02 작업 상세에서 모의 접수 대기·접수됨·조회 실패를 선택하고 다시 조회할 수 있다. 작업/계정 변경은 이전 응답을 폐기하고 같은 탭 reload는 해당 계정의 선택 작업·모의 상황을 복원한다. 실제 저장 상태와 엔진은 변경하지 않는다.
 
 관련 Node 검사 13건과 오프라인 I02 browser 8개 확인 항목을 통과했다. 합성 데스크톱·375px 캡처와 report는 `workflow-artifacts/delivery/admission-mock/2026-10-26T14-22-59-553Z/`에 있다. 초기 browser harness의 context route·selector 오류 기록은 별도 보존했고 해당 harness 수정 후 재확인했다. 실제 DB/Temporal 및 full490은 실행하지 않았다. 사용자 흐름 전달만 추가하며 필수 16단계 수용 수는 2/16으로 유지한다. 다음 행동은 `admission-read`의 실제 read API/SQL과 관련 ACL·tuple 검사 구현이다.
+
+
+## 이번 전달 · admission-read
+
+사용자는 I02 작업 상세에서 실제 저장된 접수 상태를 조회하고, 같은 작업을 다시 확인하거나 reload로 복원할 수 있다. API는 기존 `VISIBLE`과 CREATE command·read function을 한 statement snapshot에서 확인한다. 새 SQL 함수는 정적 STABLE SECURITY DEFINER이고 API runtime에만 EXECUTE를 추가한다. 실제 SQL/권한·격리 launcher·브라우저 정리 경계를 구현자와 별도로 검토한 뒤 실행했다.
+
+순수 DTO 17건과 브라우저 상태 controller 6건, 격리 PostgreSQL의 API/ACL/함수 권한·조회 전용 검사 및 합성 SQL 다섯 상태 분류가 통과했다. 최초 DB 검사 준비 실패는 새 API 검사를 H2 watchdog에 잘못 연결한 fixture 문제였으며, 해당 새 경로만 분리해 원래 H2 시간 기준을 유지했다. 별도 실제 I02 browser는 합성 계정의 요청 한 건을 저장하고 실제 API/DB의 pending·재조회·reload를 확인했다. source 41개 before/after 일치, owned API/OIDC/PG 정리와 브라우저 종료를 확인했다. 증거는 `workflow-artifacts/delivery/admission-read/ui-20261026-01/`에 보존한다. 실제 Temporal 접수나 full490/AT는 실행·수용하지 않았으며 단계 수는 2/16으로 유지한다.
+
+다음 행동은 V9 claim-expiry 관측 실패의 작은 진단과 `admission-live` 실행 준비다. 실패 원인이 확정되기 전 전체 장시간 실행을 반복하지 않는다.
+
+실제 browser 최초 캡처의 짧은 계정/작업 식별자 표시를 보완해, 같은 격리 작업을 POST 없이 재조회하는 `--read-existing` 모드로 공개용 alias 캡처를 다시 만들었다. `ui-20261026-01/recapture/browser/`의 캡처와 정리 기록이 최종 화면 증거다. 제품 source는 그대로였으며 요청을 추가 저장하지 않았다.
