@@ -4,6 +4,19 @@
 
 IFPMIC workflow 시각화로 확장하는 방향은 [기준 자료와 이관 계획](./docs/ifpmic/README.md)에 정리했습니다. 현재 AX 자료를 기반으로 Paperclip을 활용하며, 제공된 IFPMIC 설계서와 JSON 계약을 최종 업무 기준으로 사용합니다. 해당 문서에는 Paperclip 조사, 시각화 우선순위와 B01–B13 구현 순서가 포함되어 있습니다.
 
+## 사용자 흐름 단위로 개발하기
+
+현재 개발 우선순위는 [애자일 전달 계획](./docs/ifpmic/AGILE-DELIVERY.md)과 [전달 기준 데이터](./docs/ifpmic/delivery-plan.json)를 따릅니다. 한 번에 저장 요청의 실제 엔진 접수라는 흐름 하나를 진행합니다. UI/API 구현과 관련 검사는 전체 490건 수용을 기다리지 않고 진행하며, 실제 엔진 활성화·전체 H2·원본 AT 인수 기준은 유지합니다.
+
+- `npm run ifpmic:delivery`: 현재 목표와 선택 검사 목록을 출력합니다. 실행하지 않습니다.
+- `npm run ifpmic:delivery:check`: 전달 도구와 admission protocol/workspace의 로컬 검사만 실행합니다. `.ifpmic-venv`의 고정 Python 의존성이 필요하며 DB/Temporal을 시작하지 않습니다. 로그와 요약은 ignored `workflow-artifacts/delivery/`에 보존합니다.
+- `npm run ifpmic:delivery:browser`: 빌드 산출물만 사용하는 offline Chromium 화면 검사이며 API 서버를 시작하지 않습니다.
+- `npm run ifpmic:delivery -- --level integration` 또는 `--level acceptance`: 남은 조건을 출력합니다. 이 두 수준에 `--run`을 추가하면 자동 실행 미연결로 실패하며, 통과로 기록하지 않습니다.
+- `npm run test:ifpmic:delivery:browser`: 빌드된 현황판의 데스크톱·모바일 표시와 API/외부 요청 없음을 offline Chromium으로 확인합니다.
+- `npm run build` 후 `npm exec vite preview -- --host 127.0.0.1 --port 4173`의 `/delivery.html`: 같은 계획 데이터와 실제 보존 결과를 보여주는 현황판입니다. 실시간 서비스 상태가 아닙니다.
+
+선택 검사 통과가 사용자 흐름 전달이나 전체 인수 상태를 자동 변경하지 않습니다. 최신 실제 V9은 490건 중 7통과·1실패·482미실행이며 엔진 접수 화면은 미완료입니다. 기존 `delivery/status.html`은 과거 기록으로 보존합니다.
+
 ## IFPMIC 흐름 보기
 
 실제 요청 등록·저장·상세 화면은 [주기02 실행 안내](./docs/ifpmic/delivery/iteration-02/README.md)를 따른다. 로컬 주소는 **http://127.0.0.1:8769/**이며 데모 계정으로 로그인한다. 실제 API/PostgreSQL 저장을 사용하고, 합성 계정/mock 프로파일과 실행 전 상태를 화면에 표시한다. 기존 AX 기록 API는 계속 읽기 전용이다.

@@ -2,6 +2,11 @@
 
 상태: **V0/V1/V2 구현 착수 계획 독립 검토 승인**. [검토 기록](./evidence/plan-review.json)을 따른다. 이 문서는 `PLAN.md`와 `design-v1/specs/`의 구현 순서 및 계약을 시험 가능한 검증 게이트로 구체화한다. 독립 검토자인 `/root/paperclip_ui_extension`의 worker_luna가 이 문서를 검토하고 단계별 진입 조건을 승인하기 전에는 구현을 시작하지 않는다. 검증계획 작성자(`/root/verification_plan`), 구현 총괄(code-dev인 main), TC 작성 담당은 계획의 독립 검토자가 될 수 없다. 구현도 아래 증빙을 확보하고 담당 검증자가 판정하기 전에는 완료 처리하지 않는다.
 
+
+## 현재 애자일 전달 범위 적용
+
+이 문서의 기존 독립 검토·격리·실행 전·최종 판정 절차는 원본 B 단계, 실제 runtime/장비/배포, 전체 H2 및 AT 수용에 계속 적용한다. 사용자가 승인한 [V4 주기03 계획](./delivery/iteration-03/ADMISSION-UI-PLAN-v4.md)에 따라 국소 코드·mock UI/API 개선은 전체 490건 통과를 기다리지 않고 선택 검사로 진행할 수 있다. 좁은 실제 DB/Temporal 통합 검사는 변경된 source·환경·계약·권한·격리·cleanup 준비와 해당 독립 검토 후 full490 전에 허용되며, 그 결과는 전체 H2나 운영/AT 수용으로 승격하지 않는다. 이 적용 설명은 원본 요구사항·gate나 아래 B 단계 검증 의무를 낮추지 않는다.
+
 Paperclip은 조직·작업·실행 이력의 상위 오케스트레이션/감독 계층이다. IFPMIC workflow, 상태 전이, 담당 경계, 품질 판정 및 승인 계약은 `workflow.v1.json`, `state-contract.json`, `agent-contract.json`, `acceptance-cases.json`이 권위 기준이다. Paperclip 상태 변경만으로 IFPMIC gate를 통과시킬 수 없다.
 
 ## 1. 검증 운영 규칙

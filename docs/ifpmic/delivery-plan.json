@@ -1,0 +1,67 @@
+{
+  "schema_version": "ifpmic.delivery-plan.v1",
+  "updated_on": "2026-10-26",
+  "current_flow": "admission",
+  "policy": {
+    "work_in_progress_limit": 1,
+    "feedback_is_acceptance": false,
+    "implementation_requires_full490": false,
+    "final_acceptance_requires_original_gates": true
+  },
+  "flows": [
+    {
+      "id": "admission",
+      "title": "저장한 요청의 실행 접수",
+      "status": "in_progress",
+      "outcome": "저장한 요청 한 건의 실제 엔진 접수와 같은 job/run/receipt·QUEUED를 화면에서 확인한다.",
+      "next_action": "V9 claim-expiry timeout의 저장 증거를 비교해 원인을 확정하고 관련 검사로 수정 효과를 확인한다.",
+      "blocker": "DB-clock claim-expiry 관측 timeout. 원인은 미확정이며 실제 재실행은 하지 않았다.",
+      "acceptance": [
+        "정상 요청의 workspace READY → 실제 Temporal 접수 → 같은 job/command/run/sequence 1 receipt 확인",
+        "같은 key 재요청 시 실행 효과 중복 없음",
+        "다른 사용자의 작업 조회 차단 및 원시 자료·인증 정보 제외",
+        "새로고침 후 동일 작업의 현재 상태 유지",
+        "QUEUED를 업무 완료로 표시하지 않음"
+      ],
+      "feedback": {
+        "node_tests": ["tests/ifpmic-delivery.test.mjs"],
+        "python_tests": [
+          "tests/ifpmic_api/test_execution_protocol.py",
+          "tests/ifpmic_api/test_execution_workspace.py"
+        ]
+      },
+      "integration": [
+        "claim-expiry 실패의 좁은 실제 재현 및 관련 복구 회귀",
+        "로컬 mock API/DB/Temporal와 브라우저의 정상·중복·권한·새로고침 검사",
+        "고정된 후보의 증거·정리·환경 확인"
+      ],
+      "final_acceptance": ["전체 H2 490건과 독립 결과 수용", "원본 B단계 및 AT32 인수 조건 유지"],
+      "evidence": "delivery/iteration-03/README.md"
+    },
+    {
+      "id": "minimal-mock",
+      "title": "최소 모의 경로 완주",
+      "status": "not_started",
+      "outcome": "실제 서비스에서 요청 → 제한된 모의 작업 실행 → 결과 저장 → 화면 조회를 연결한다.",
+      "acceptance": ["전체 29단계 완주와 구분", "모의 결과 표시", "같은 작업의 실행·결과 연결"],
+      "evidence": null
+    },
+    {
+      "id": "human-resume",
+      "title": "사람 대기와 재개",
+      "status": "not_started",
+      "outcome": "질문에 답하면 같은 작업을 재개하고 서비스 재시작 후에도 대기를 보존한다.",
+      "acceptance": ["사람 응답 없이 자동 통과 금지", "중복 응답 및 재시작 복구 확인"],
+      "evidence": null
+    },
+    {
+      "id": "i2c-kunit",
+      "title": "실제 I2C·KUnit 사례",
+      "status": "not_started",
+      "outcome": "승인된 IFPMIC 소스와 실행 환경에서 오류 처리와 KUnit 보완 결과를 확인한다.",
+      "acceptance": ["소스·기준 ref·도구 설정 준비", "실제 코드 및 시험 결과 연결", "품질·장비·배포 인수 별도 유지"],
+      "evidence": null
+    }
+  ],
+  "report_fields": ["바뀐 사용자 행동", "화면 또는 캡처", "실제 검증 범위", "제한과 실패", "다음 행동 하나", "커밋과 push"]
+}

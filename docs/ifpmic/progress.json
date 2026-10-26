@@ -1,5 +1,5 @@
 {
-  "goal_status": "paused",
+  "goal_status": "active",
   "scope": "Full IFPMIC workflow visualization and orchestration plan; V-stage proof does not complete B stages or real acceptance.",
   "verification_plan": "VERIFICATION.md",
   "independent_plan_review": "evidence/plan-review.json",
@@ -665,16 +665,16 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "Paused by user for shutdown. Stdlib154 independently accepted; V9 actual8/7pass1fail/482unexecuted. Diagnose DB-clock lease-expiry observation timeout before reviewed fix/newcandidate. I02 onePOST202/read/reload smoke passed; services stopped and nameddata preserved. No fullH2 or admissionUI acceptance.",
+  "next_step": "Diagnose V9 claim-expiry timeout using a bounded reproduction. Develop admission UI/API with focused feedback before full490; actual receipt, ACL/idempotency/reload integration and full H2/AT acceptance remain required.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",
     "Approved Bedrock/Claude runtime profile"
   ],
   "publication_policy": "Only authorized git repository documentation, source and synthetic verification summaries/screenshots; never runtime credentials or application logs.",
-  "updated_at": "2026-10-23T06:53:18.253122+00:00",
+  "updated_at": "2026-10-26T13:48:59.221500+00:00",
   "session_handoff": {
-    "status": "paused_by_user_shutdown",
+    "status": "development_resumed_by_user_agile_change",
     "resume_document": "docs/ifpmic/RESUME.md",
     "resumed_checkpoint": "0de641d",
     "goal_complete": false,
@@ -697,7 +697,7 @@
       "commit_and_push"
     ],
     "existing_mandatory_gates_preserved": true,
-    "latest_user_visible_change": "Existing I02 request-save UI restoration smoke passed; masked desktop/mobile screenshots saved. Services now stopped, nameddata preserved. No engine admission UI.",
+    "latest_user_visible_change": "Delivery dashboard now separates the current user flow, stage acceptance and last actual V9 failure. Engine admission UI remains unimplemented.",
     "reporting_rule": "Lead with visible behavior; explicitly report no new visible feature when only internal evidence advances. Keep stage completion, visible flows, and test counts separate.",
     "next_visible_acceptance": "One persisted request admitted by the actual execution engine; matching job/run/receipt and QUEUED displayed, with duplicate, authorization and reload checks. Mandatory execution gates preserved.",
     "current_stage_completion": {
@@ -719,7 +719,7 @@
       "scope": "Source path/schema/applicability only; no actual execution acceptance."
     },
     "current_candidate_static_verification": "evidence/b03/h2-runtime-full-runner-source-review-v9.json",
-    "next_foundation_scope": "Paused by user for shutdown. Stdlib154 independently accepted; V9 actual8/7pass1fail/482unexecuted. Diagnose DB-clock lease-expiry observation timeout before reviewed fix/newcandidate. I02 onePOST202/read/reload smoke passed; services stopped and nameddata preserved. No fullH2 or admissionUI acceptance.",
+    "next_foundation_scope": "Diagnose V9 claim-expiry timeout using a bounded reproduction. Develop admission UI/API with focused feedback before full490; actual receipt, ACL/idempotency/reload integration and full H2/AT acceptance remain required.",
     "candidate_authoring_reviews": {
       "independent": "evidence/b03/h2-runtime-full-execution-contract-review-v9.json",
       "tc": "evidence/b03/h2-runtime-full-execution-tc-review-v9.json"
@@ -735,14 +735,16 @@
       "previous_failed_unit_review": "delivery/iteration-03/raw-policy-status-unit-result-review.json"
     },
     "full_source_rejected_attempt": "evidence/b03/attempts/h2-runtime-full-runner-source-review-v3-attempt-01.json",
-    "status_dashboard": "delivery/status.html",
+    "status_dashboard": "/delivery.html",
     "current_blockers": [
       {
         "id": "CLAIM-EXPIRY-DB-CLOCK-TIMEOUT",
-        "status": "actual_failure_cause_unconfirmed_diagnosis_pending_resume"
+        "status": "root_cause_unconfirmed_diagnosis_next"
       }
     ],
-    "runtime_execution_status": "delivery/iteration-03/runtime-v9-execution-status.json"
+    "runtime_execution_status": "delivery/iteration-03/runtime-v9-execution-status.json",
+    "plan_data": "delivery-plan.json",
+    "implementation_requires_full490": false
   },
   "visible_deliveries": [
     {
@@ -771,9 +773,9 @@
       "title": "Connect persisted API job to real execution-engine admission and visible run/receipt",
       "path": "delivery/iteration-03/README.md",
       "verification": "delivery/iteration-03/raw-policy-inventory-unit-verification.json",
-      "foundation_status": "v9_actual_failed_not_accepted_paused",
+      "foundation_status": "v9_actual_failed_diagnosis_pending",
       "actual_job_execution": false,
-      "scope": "Stdlib154passed. Actual8/7pass1fail/482unexecuted; no fullH2/admissionUI; user requested pause.",
+      "scope": "Actual V9 8/7pass1fail/482unexecuted retained; admissionUI incomplete. Focused development and isolated integration precede full490 acceptance under V4.",
       "mapping_resolution_progress": "evidence/b03/h2-machine-resolution-progress-v2.json",
       "candidate_static_verification": "evidence/b03/h2-runtime-full-runner-source-review-v9.json",
       "runtime_execution_status": "delivery/iteration-03/runtime-v9-execution-status.json"

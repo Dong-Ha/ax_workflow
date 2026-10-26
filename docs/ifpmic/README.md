@@ -2,6 +2,8 @@
 
 현재 폴더의 AX 구현과 실행 기록을 기반 자료로 사용하고, Paperclip을 업무 관제 플랫폼으로 활용하여 IFPMIC 설계서의 workflow를 시각화한다. 최종 업무 규칙은 제공된 IFPMIC 설계 패키지를 따른다.
 
+현재 개발 순서는 [애자일 전달 계획](./AGILE-DELIVERY.md), [전달 기준 데이터](./delivery-plan.json), [접수 연결 V4](./delivery/iteration-03/ADMISSION-UI-PLAN-v4.md)를 따른다. 과거 후보의 구현·실행 금지 체크포인트는 당시 이력이며, 현재의 좁은 개발/격리 통합과 전체 수용을 구분한다. 원본 계약과 최종 인수 기준은 유지한다. 최신 진행 화면은 `/delivery.html`이다.
+
 | 구분 | 기준 | 사용 방법 |
 |---|---|---|
 | 기반 자료 | 현재 AX 소스, README, `experiments/paperclip/` 및 실행 증거 | 기록 읽기, 상태 표현, 격리, 복구와 검증 경험 재사용 |

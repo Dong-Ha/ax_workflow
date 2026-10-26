@@ -30,7 +30,11 @@
     "ifpmic:catalog:evidence": "node scripts/ifpmic-catalog-evidence.mjs",
     "ifpmic:verify:ui": "node scripts/verify-ifpmic-ui.mjs",
     "ifpmic:profile": "node scripts/ifpmic-profile.mjs",
-    "ifpmic:verify:profiles": "node scripts/verify-ifpmic-profiles.mjs"
+    "ifpmic:verify:profiles": "node scripts/verify-ifpmic-profiles.mjs",
+    "ifpmic:delivery": "node scripts/ifpmic-delivery.mjs",
+    "ifpmic:delivery:check": "node scripts/ifpmic-delivery.mjs --run",
+    "ifpmic:delivery:browser": "node tests/ifpmic-delivery.browser.mjs",
+    "test:ifpmic:delivery:browser": "node tests/ifpmic-delivery.browser.mjs"
   },
   "dependencies": {
     "ajv": "8.20.0",
