@@ -6,11 +6,11 @@ IFPMIC workflow 시각화로 확장하는 방향은 [기준 자료와 이관 계
 
 ## 사용자 흐름 단위로 개발하기
 
-현재 개발 우선순위는 [애자일 전달 계획](./docs/ifpmic/AGILE-DELIVERY.md)과 [전달 기준 데이터](./docs/ifpmic/delivery-plan.json)를 따릅니다. 한 번에 전달 단위 하나를 진행하며, 접수 흐름을 mock 화면 → 실제 조회 API → 실제 엔진 접수로 나눕니다. UI/API 구현과 관련 검사는 전체 490건 수용을 기다리지 않고 진행하며, 실제 엔진 활성화·전체 H2·원본 AT 인수 기준은 유지합니다.
+현재 개발 우선순위는 [애자일 전달 계획](./docs/ifpmic/AGILE-DELIVERY.md)과 [전달 기준 데이터](./docs/ifpmic/delivery-plan.json)를 따릅니다. 한 번에 전달 단위 하나를 진행합니다. 접수 흐름을 전달했고, 현재 최소 모의 흐름을 합성 결과 화면 → 실제 결과 조회 → 제한된 실행으로 연결합니다. UI/API 구현과 관련 검사는 전체 490건 수용을 기다리지 않고 진행하며, 실제 엔진 활성화·전체 H2·원본 AT 인수 기준은 유지합니다.
 
 - `npm run ifpmic:delivery`: 현재 목표와 선택 검사 목록을 출력합니다. 실행하지 않습니다.
 - `npm run ifpmic:delivery:check`: 현재 전달 단위의 고정 검사만 실행합니다. 기본 mock 단위는 접수 상태 controller만 검사하고, Python profile(`admission-dto`, `admission-local`)에는 `.ifpmic-venv`의 고정 의존성이 필요합니다. DB/Temporal을 시작하지 않습니다. 로그와 요약은 ignored `workflow-artifacts/delivery/`에 보존합니다.
-- `npm run ifpmic:delivery -- --flow minimal-mock`: 다음 흐름의 기본 slice와 아직 추가할 기능 검사를 출력합니다. 새 흐름마다 CLI를 수정할 필요가 없습니다. 기본 `feedback_profiles`와 선택 가능한 `allowed_feedback_profiles`를 구분하며 `--profile`로 검사 하나만 선택할 수 있습니다.
+- `npm run ifpmic:delivery -- --flow minimal-mock`: 현재 모의 결과 화면 slice와 선택 검사를 출력합니다. 새 흐름마다 CLI를 수정할 필요가 없습니다. 기본 `feedback_profiles`와 선택 가능한 `allowed_feedback_profiles`를 구분하며 `--profile`로 검사 하나만 선택할 수 있습니다.
 - `npm run ifpmic:delivery:check -- --profile delivery-tool`: 전달 계획/도구 변경 시 도구 검사만 실행합니다. 각 profile과 전체 소요시간을 출력합니다.
 - `npm run ifpmic:delivery:browser`: 빌드 산출물만 사용하는 offline Chromium 화면 검사이며 API 서버를 시작하지 않습니다.
 - `npm run ifpmic:delivery -- --level integration` 또는 `--level acceptance`: 남은 조건을 출력합니다. 이 두 수준에 `--run`을 추가하면 자동 실행 미연결로 실패하며, 통과로 기록하지 않습니다.
@@ -18,6 +18,14 @@ IFPMIC workflow 시각화로 확장하는 방향은 [기준 자료와 이관 계
 - `npm run build` 후 `npm exec vite preview -- --host 127.0.0.1 --port 4173`의 `/delivery.html`: 같은 계획 데이터와 실제 보존 결과를 보여주는 현황판입니다. 실시간 서비스 상태가 아닙니다.
 
 선택 검사 통과가 사용자 흐름 전달이나 전체 인수 상태를 자동 변경하지 않습니다. V9 실제 H2는 490건 중 7통과·1실패·482미실행으로 끝났고 claim-expiry 원인은 미확정입니다. 별도 candidate3의 normal-path 실제 접수 결과는 [주기03 기록](./docs/ifpmic/delivery/iteration-03/README.md)에 있으며 V9 재시도·crash/reclaim 수용·전체 H2/AT 인수로 승격하지 않습니다. 기존 `delivery/status.html`은 과거 기록으로 보존합니다.
+
+## 모의 작업 결과 화면
+
+요청 상세의 ‘모의 작업 결과’에서 결과 대기·확인 완료·조회 실패를 선택하고 다시 확인할 수 있습니다. 앰버 표시의 합성 예시이며 실제 job 상태·접수 영수증·실행 결과는 바뀌지 않습니다. 계정/작업 변경은 이전 응답을 폐기하고, 새로고침은 선택 작업과 예시 상황을 복원해 다시 읽습니다. 결과·실행 ID는 sessionStorage에 저장하지 않습니다.
+
+- `npm run ifpmic:delivery:check`: 순수 결과 계약/상태 검사만 실행합니다. DB/Temporal을 시작하지 않습니다.
+- `npm run ifpmic:mock-task:browser`: 오프라인 I02 fixture에서 결과·오류·계정/작업 전환·reload·키보드·모바일 표시를 확인하고 캡처합니다.
+- [결과 DTO](./docs/ifpmic/api-extensions/mock-task.v1.json)는 fixture-first 계약이며 실제 조회 API와 결과 실행/저장은 후속 slice입니다.
 
 ## IFPMIC 흐름 보기
 
@@ -178,8 +186,8 @@ npm run test:browser
 ```sh
 npm run ifpmic:delivery
 npm run ifpmic:delivery:check
-npm run ifpmic:delivery -- --slice admission-live --profile admission-local
-npm run ifpmic:delivery:check -- --slice admission-live --profile admission-local
+npm run ifpmic:delivery -- --flow admission --slice admission-live --profile admission-local
+npm run ifpmic:delivery:check -- --flow admission --slice admission-live --profile admission-local
 ```
 
 기본 검사는 현재 slice의 고정 allowlist만 실행합니다. `--slice`와 `--profile`은 feedback 수준에서만 사용합니다. `--profile`은 허용된 검사 묶음을
@@ -222,7 +230,7 @@ API runtime에는 읽기 함수 EXECUTE만 추가하며 실행 테이블 직접 
 
 ```sh
 npm run ifpmic:delivery
-npm run ifpmic:delivery:check -- --slice admission-read --profile admission-dto
+npm run ifpmic:delivery:check -- --flow admission --slice admission-read --profile admission-dto
 npm run ifpmic:admission:browser
 ```
 

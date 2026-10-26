@@ -1,6 +1,7 @@
 import { validateDemoContext } from './context.js';
 import { createAdmissionPanel } from './admission.js';
 import { createStoredAdmissionPanel } from './admission-read.js';
+import { createMockTaskPanel } from './mock-task-panel.js';
 
 const API = '';
 
@@ -56,6 +57,7 @@ const storedAdmission = createStoredAdmissionPanel(document, {
   },
 });
 const admissionPanel = createAdmissionPanel(document, { saveScenario: value => writeUserStorage('admission-demo', value) });
+const mockTaskPanel = createMockTaskPanel(document, { saveScenario: value => writeUserStorage('mock-task-demo', value) });
 
 const storageKey = (kind, userId = state.userId) => `ifpmic-live:${encodeURIComponent(userId)}:${kind}`;
 const statusMessages = {
@@ -191,6 +193,7 @@ function resetAccountView() {
 
 function clearDetail() {
   admissionPanel.clear();
+  mockTaskPanel.clear();
   storedAdmission.clear();
   el('job-detail').hidden = true;
   el('empty-detail').hidden = false;
@@ -464,6 +467,7 @@ async function selectJob(jobId, { updateHash = false, refreshList = false } = {}
   const current = () => state.userId === owner && state.accountEpoch === accountEpoch &&
     state.detailEpoch === detailEpoch && state.selectedJobId === jobId;
   admissionPanel.clear();
+  mockTaskPanel.clear();
   storedAdmission.clear();
   state.selectedJobId = jobId;
   el('empty-detail').hidden = true;
@@ -490,6 +494,8 @@ async function selectJob(jobId, { updateHash = false, refreshList = false } = {}
     const mockPreference = readUserStorage('admission-demo');
     el('job-detail').hidden = false;
     admissionPanel.show({ userId: owner, jobId, scenario: mockPreference?.job_id === jobId ? mockPreference.scenario : 'pending' });
+    const taskPreference = readUserStorage('mock-task-demo');
+    mockTaskPanel.show({ userId: owner, jobId, scenario: taskPreference?.job_id === jobId ? taskPreference.scenario : 'pending' });
     storedAdmission.select(jobId);
     await refreshCommand(findReceiptForJob(jobId), { owner, accountEpoch, detailEpoch });
     if (!current()) return;
@@ -504,6 +510,7 @@ async function selectJob(jobId, { updateHash = false, refreshList = false } = {}
       el('detail-error').hidden = false;
       el('job-detail').hidden = true;
       admissionPanel.clear();
+      mockTaskPanel.clear();
       storedAdmission.clear();
     }
     setStatus(error.message, 'error');

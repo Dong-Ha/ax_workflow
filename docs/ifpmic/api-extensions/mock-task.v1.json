@@ -1,0 +1,194 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ifpmic:mock-task:v1",
+  "title": "Bounded mock task result",
+  "description": "Fixture-first result contract. This slice does not implement a server route or execute a task. A completed mock task never implies whole-job completion or original P/human gate acceptance. Synthetic fixture command/run/digest values are examples only. Future authorized API readers must additionally verify visible job/command/run identities.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "job_id",
+    "command_id",
+    "admitted_run_id",
+    "status",
+    "result",
+    "completed_at"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "ifpmic.mock-task.v1"
+    },
+    "job_id": {
+      "$ref": "#/$defs/uuid"
+    },
+    "command_id": {
+      "$ref": "#/$defs/uuid"
+    },
+    "admitted_run_id": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/uuid"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "status": {
+      "enum": [
+        "pending",
+        "completed"
+      ]
+    },
+    "result": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/result"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "completed_at": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/completed_at"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "pending"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "admitted_run_id": {
+            "type": "null"
+          },
+          "result": {
+            "type": "null"
+          },
+          "completed_at": {
+            "type": "null"
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "admitted_run_id": {
+            "$ref": "#/$defs/uuid"
+          },
+          "result": {
+            "$ref": "#/$defs/result"
+          },
+          "completed_at": {
+            "$ref": "#/$defs/completed_at"
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "uuid": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+    },
+    "result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "task_kind",
+        "mode",
+        "outcome",
+        "checks",
+        "result_sha256"
+      ],
+      "properties": {
+        "task_kind": {
+          "const": "request-preflight-v1"
+        },
+        "mode": {
+          "const": "mock"
+        },
+        "outcome": {
+          "const": "passed"
+        },
+        "checks": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "name",
+                "status"
+              ],
+              "properties": {
+                "name": {
+                  "const": "request_saved"
+                },
+                "status": {
+                  "const": "passed"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "name",
+                "status"
+              ],
+              "properties": {
+                "name": {
+                  "const": "workspace_ready"
+                },
+                "status": {
+                  "const": "passed"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "name",
+                "status"
+              ],
+              "properties": {
+                "name": {
+                  "const": "engine_admitted"
+                },
+                "status": {
+                  "const": "passed"
+                }
+              }
+            }
+          ],
+          "items": false,
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "result_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,9})?Z$"
+    }
+  }
+}

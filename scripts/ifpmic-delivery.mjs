@@ -20,6 +20,7 @@ export function selectSlice(flow, id) {
 
 // Executables and paths belong to code, never plan data or CLI input.
 const profiles = {
+  'mock-task-state': { executable: process.execPath, args: ['--test', 'tests/ifpmic-mock-task.test.mjs'] },
   'execution-owner': { executable: resolve(root, '.ifpmic-venv/bin/python'),
     args: ['-B', '-m', 'pytest', '-p', 'no:cacheprovider', '-q',
       'tests/ifpmic_api/test_local_execution.py', 'tests/ifpmic_api/test_claim_expiry_observer.py'] },

@@ -8,6 +8,7 @@
     <title>IFPMIC · 요청 관제</title>
     <link rel="stylesheet" href="/style.css" />
     <link rel="stylesheet" href="/admission.css" />
+    <link rel="stylesheet" href="/mock-task.css" />
     <script type="module" src="/app.js"></script>
   </head>
   <body>
@@ -140,6 +141,26 @@
                       <p id="stored-admission-description"></p><p id="stored-admission-confirmed" hidden></p>
                     </div>
                     <p id="stored-admission-run" hidden>실행 ID <code id="stored-admission-run-id" data-testid="stored-admission-run-id"></code></p>
+                  </section>
+                  <section class="mock-task" id="mock-task-panel" data-testid="mock-task-panel" aria-labelledby="mock-task-title" hidden>
+                    <div class="mock-task-heading"><h3 id="mock-task-title">모의 작업 결과</h3><span class="mock-task-mode">화면 체험</span></div>
+                    <p class="mock-task-boundary">합성 데이터로 결과 조회를 체험합니다. 실제 작업 상태는 바뀌지 않습니다.</p>
+                    <div role="status" aria-live="polite" aria-atomic="true">
+                      <strong class="mock-task-status" id="mock-task-status" data-testid="mock-task-status"></strong>
+                      <p class="mock-task-description" id="mock-task-description"></p>
+                      <p class="mock-task-confirmed" id="mock-task-confirmed" hidden></p>
+                    </div>
+                    <ul class="mock-task-checks" id="mock-task-checks" aria-label="모의 확인 결과" hidden></ul>
+                    <p class="mock-task-run" id="mock-task-run" hidden>예시 실행 ID <code id="mock-task-run-id"></code></p>
+                    <p class="mock-task-time" id="mock-task-completed-at" hidden></p>
+                    <div class="mock-task-controls">
+                      <label for="mock-task-scenario">확인할 결과 상황
+                        <select id="mock-task-scenario" data-testid="mock-task-scenario">
+                          <option value="pending">결과 대기</option><option value="completed">확인 완료</option><option value="error">조회 실패</option>
+                        </select>
+                      </label>
+                      <button class="button button-quiet" id="mock-task-refresh" data-testid="mock-task-refresh" type="button">예시 결과 다시 확인</button>
+                    </div>
                   </section>
                   <section class="admission-panel" id="admission-panel" data-testid="admission-panel" aria-labelledby="admission-title" hidden>
                     <div class="admission-heading"><h3 id="admission-title">모의 접수 상태</h3><span class="admission-mode">화면 체험</span></div>

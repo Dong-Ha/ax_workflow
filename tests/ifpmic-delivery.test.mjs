@@ -27,8 +27,11 @@ test('every flow has a selectable default slice and scoped default profiles', ()
     assert.deepEqual(feedbackCommands(flow, slice, allowed).map(command => command.name), allowed);
     assert.ok(slice.checks_to_add.every(item => typeof item === 'string' && item.length > 0));
   }
-  const mockSlice = selectSlice(selectFlow(plan, 'minimal-mock'), 'mock-result-contract');
-  assert.ok(mockSlice.checks_to_add.length > 0, 'pending feature checks remain explicit');
+  for (const flow of plan.flows) {
+    for (const slice of flow.slices ?? []) {
+      if (slice.status === 'not_started') assert.ok(slice.checks_to_add.length > 0, 'pending feature checks remain explicit');
+    }
+  }
 });
 
 test('slice selection isolates mock development from runtime diagnostics', () => {
@@ -91,22 +94,24 @@ test('default CLI prints a plan without running test processes', () => {
 });
 
 test('a non-current flow uses its declared default slice without starting checks', () => {
-  const result = spawnSync(process.execPath, [cli.pathname, '--flow', 'minimal-mock'], { encoding: 'utf8', timeout: 5000 });
+  const flow = plan.flows.find(item => item.id !== plan.current_flow);
+  const slice = selectSlice(flow, flow.default_slice);
+  const result = spawnSync(process.execPath, [cli.pathname, '--flow', flow.id], { encoding: 'utf8', timeout: 5000 });
   assert.equal(result.status, 0);
-  assert.ok(result.stdout.includes(selectSlice(selectFlow(plan, 'minimal-mock'), 'mock-result-contract').title));
-  assert.match(result.stdout, /delivery-tool:/);
+  assert.ok(result.stdout.includes(slice.title));
+  for (const profile of slice.feedback_profiles) assert.ok(result.stdout.includes(`${profile}:`));
   assert.doesNotMatch(result.stdout, /검사 기록:/);
 });
 
 test('explicit profile selection prints only that profile without starting it', () => {
   const result = spawnSync(process.execPath,
-    [cli.pathname, '--slice', 'admission-live', '--profile', 'admission-local'],
+    [cli.pathname, '--flow', 'admission', '--slice', 'admission-live', '--profile', 'admission-local'],
     { encoding: 'utf8', timeout: 5000 });
   assert.equal(result.status, 0);
   assert.match(result.stdout, /admission-local:/);
   assert.doesNotMatch(result.stdout, /delivery-tool:|검사 기록:/);
   const invalid = spawnSync(process.execPath,
-    [cli.pathname, '--slice', 'admission-mock', '--profile', 'admission-local', '--run'],
+    [cli.pathname, '--flow', 'admission', '--slice', 'admission-mock', '--profile', 'admission-local', '--run'],
     { encoding: 'utf8', timeout: 5000 });
   assert.equal(invalid.status, 2);
   assert.doesNotMatch(invalid.stdout, /검사 기록:/);

@@ -30,12 +30,12 @@ function DeliveryPage() {
       <ul>{slice.acceptance.map(item => <li key={item}>{item}</li>)}</ul>
       <p><strong>다음 행동: </strong>{current.next_action}</p>
       <p className="blocker"><strong>이번 전달의 차단 조건: </strong>{slice.blockers.join('; ') || '없음'}</p>
-      <p><strong>실제 엔진의 남은 문제: </strong>{current.blocker}</p>
+      {current.blocker && <p><strong>실제 엔진의 남은 문제: </strong>{current.blocker}</p>}
       <h3>작게 전달하는 순서</h3>
       <ol>{slices.map(item => <li key={item.id} aria-current={item.id === slice.id ? 'step' : undefined}>
         {item.title} · {item.mode} · {labels[item.status]}
       </li>)}</ol>
-      <p>{current.status === 'delivered' ? '로컬 접수 흐름을 확인했습니다. 실제 업무 완주와 전체 H2·AT 인수는 남아 있습니다.' : '실제 엔진 접수 화면은 아직 미완료입니다.'} 이 현황판은 실시간 서비스 가동을 뜻하지 않습니다.</p>
+      <p>{current.status === 'delivered' ? '이 사용자 흐름을 전달했습니다.' : '이 사용자 흐름을 작은 단위로 개발하고 있습니다.'} 실제 업무 완주와 전체 H2·AT 인수는 남아 있습니다. 이 현황판은 실시간 서비스 가동을 뜻하지 않습니다.</p>
     </section>
     <section aria-labelledby="evidence">
       <h2 id="evidence">제품 진척과 검사 결과</h2>

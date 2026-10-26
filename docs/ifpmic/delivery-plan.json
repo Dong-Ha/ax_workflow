@@ -1,7 +1,7 @@
 {
   "schema_version": "ifpmic.delivery-plan.v1",
   "updated_on": "2026-10-27",
-  "current_flow": "admission",
+  "current_flow": "minimal-mock",
   "policy": {
     "work_in_progress_limit": 1,
     "feedback_is_acceptance": false,
@@ -168,7 +168,7 @@
     {
       "id": "minimal-mock",
       "title": "최소 모의 경로 완주",
-      "status": "not_started",
+      "status": "in_progress",
       "outcome": "실제 서비스에서 요청 → 제한된 모의 작업 실행 → 결과 저장 → 화면 조회를 연결한다.",
       "acceptance": [
         "전체 29단계 완주와 구분",
@@ -181,7 +181,7 @@
         {
           "id": "mock-result-contract",
           "title": "모의 결과 조회 계약과 화면",
-          "status": "not_started",
+          "status": "delivered",
           "mode": "mock",
           "outcome": "같은 작업의 모의 결과 대기·완료·오류를 합성 데이터로 조회한다.",
           "acceptance": [
@@ -190,18 +190,23 @@
             "결과 DTO에 원시 입력·로그·인증 자료 없음"
           ],
           "feedback_profiles": [
-            "delivery-tool"
+            "mock-task-state"
           ],
           "allowed_feedback_profiles": [
+            "mock-task-state",
             "delivery-tool"
           ],
-          "checks_to_add": [
-            "순수 result DTO 검증: 정상·잘못된 identity·민감 필드 거부",
-            "오프라인 controller: 대기·완료·오류·계정 전환",
-            "화면 변경 시 해당 흐름 browser 캡처"
-          ],
+          "checks_to_add": [],
           "blockers": [],
-          "evidence": null
+          "evidence": {
+            "state": "workflow-artifacts/delivery/2026-10-26T16-07-16.169Z-34287/result.json",
+            "browser": "workflow-artifacts/delivery/mock-result-contract/2026-10-26T16-05-16-613Z/report.json",
+            "captures": [
+              "workflow-artifacts/delivery/mock-result-contract/2026-10-26T16-05-16-613Z/desktop.png",
+              "workflow-artifacts/delivery/mock-result-contract/2026-10-26T16-05-16-613Z/mobile-375.png"
+            ],
+            "scope": "Local synthetic provider and offline I02 fixture only; no mock task execution/result persistence/actual API/Temporal acceptance. Job status is unchanged."
+          }
         },
         {
           "id": "mock-result-read",
@@ -261,7 +266,8 @@
       "final_acceptance": [
         "원본 전체 H2/B단계/AT 및 사람 승인 게이트 보존",
         "이 흐름은 실제 IFPMIC 업무·장비·배포 인수가 아님"
-      ]
+      ],
+      "next_action": "mock-result-read: 권한이 확인된 실제 API에서 저장 결과를 조회한다."
     },
     {
       "id": "human-resume",
@@ -383,6 +389,6 @@
     "다음 행동 하나",
     "커밋과 push"
   ],
-  "current_slice": "admission-live",
-  "next_flow": "minimal-mock"
+  "current_slice": "mock-result-contract",
+  "next_flow": "human-resume"
 }

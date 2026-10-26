@@ -4,7 +4,8 @@ import path from 'node:path';
 import { chromium } from 'playwright';
 
 const origin = 'http://ifpmic-admission.invalid';
-const outputRoot = path.resolve('workflow-artifacts/delivery/admission-mock');
+const taskMode = process.argv.includes('--mock-task');
+const outputRoot = path.resolve(`workflow-artifacts/delivery/${taskMode ? 'mock-result-contract' : 'admission-mock'}`);
 const runId = new Date().toISOString().replaceAll(':', '-').replaceAll('.', '-');
 const runDir = path.join(outputRoot, runId);
 const timeoutMs = 8_000;
@@ -21,7 +22,7 @@ const contextDto = {
   storage: 'postgresql', identity: 'local-demo-oidc',
 };
 
-const report = { kind: 'ifpmic.admission-mock.browser.v1', verdict: 'fail', checks: [], failures: [], unexpectedRequests: [], writes: [], screenshots: [] };
+const report = { kind: taskMode ? 'ifpmic.mock-result.browser.v1' : 'ifpmic.admission-mock.browser.v1', verdict: 'fail', checks: [], failures: [], unexpectedRequests: [], writes: [], screenshots: [] };
 let browser;
 let browserContext;
 let page;
@@ -94,6 +95,9 @@ async function routeRequest(route) {
     ['/admission-read.js', ['../experiments/ifpmic-live/web/admission-read.js', 'text/javascript; charset=utf-8']],
     ['/style.css', ['../experiments/ifpmic-live/web/style.css', 'text/css; charset=utf-8']],
     ['/admission.js', ['../experiments/ifpmic-live/web/admission.js', 'text/javascript; charset=utf-8']],
+    ['/mock-task.js', ['../experiments/ifpmic-live/web/mock-task.js', 'text/javascript; charset=utf-8']],
+    ['/mock-task-panel.js', ['../experiments/ifpmic-live/web/mock-task-panel.js', 'text/javascript; charset=utf-8']],
+    ['/mock-task.css', ['../experiments/ifpmic-live/web/mock-task.css', 'text/css; charset=utf-8']],
     ['/admission.css', ['../experiments/ifpmic-live/web/admission.css', 'text/css; charset=utf-8']],
   ]);
   if (method === 'GET' && staticFiles.has(pathname)) {
@@ -160,7 +164,7 @@ async function check(name, action) {
 }
 
 try {
-  await mkdir(runDir, { recursive: true });
+  await mkdir(runDir, { recursive: true, mode: 0o700 });
   browser = await chromium.launch({ headless: true });
   browserContext = await browser.newContext({ viewport: { width: 1440, height: 1000 }, serviceWorkers: 'block' });
   browserContext.setDefaultTimeout(timeoutMs);
@@ -176,6 +180,7 @@ try {
   const scenario = page.getByTestId('admission-scenario');
   const waitAdmissionStatus = value => page.waitForFunction(expected => document.querySelector('[data-testid="admission-status"]')?.textContent === expected, value);
 
+  if (!taskMode) {
   await check('admission panel starts hidden until selecting a persisted job detail', async () => {
     await panel.waitFor({ state: 'hidden' });
     await page.locator(`[data-testid="job-row"][data-job-id="${ids.a1}"]`).click();
@@ -295,6 +300,89 @@ try {
     await waitAdmissionStatus('접수 대기 · 모의');
   });
 
+  } else {
+    const taskPanel = page.getByTestId('mock-task-panel');
+    const taskScenario = page.getByTestId('mock-task-scenario');
+    const taskStatus = page.getByTestId('mock-task-status');
+    const waitTask = value => page.waitForFunction(expected => document.getElementById('mock-task-status')?.textContent === expected, value);
+    const selectJob = async jobId => {
+      await page.locator(`[data-testid="job-row"][data-job-id="${jobId}"]`).click();
+      await page.waitForFunction(expected => document.getElementById('mock-task-panel')?.dataset.jobId === expected && document.getElementById('mock-task-panel')?.dataset.phase === 'pending', jobId);
+    };
+    await check('task result is hidden until a visible job is selected; pending is explicitly synthetic', async () => {
+      await taskPanel.waitFor({ state: 'hidden' });
+      await selectJob(ids.a1);
+      await waitTask('모의 결과 대기');
+      assert.match(await taskPanel.innerText(), /합성 데이터/);
+      assert.equal(await page.locator('#mock-task-checks').isVisible(), false);
+    });
+    await check('completed example shows three bounded results without changing persisted job or admission', async () => {
+      await taskScenario.selectOption('completed');
+      await waitTask('모의 확인 완료');
+      assert.equal(await page.locator('#mock-task-checks li').count(), 3);
+      assert.match(await taskPanel.innerText(), /전체 업무 완료와는 별개/);
+      assert.equal(await page.getByTestId('detail-status').innerText(), 'DRAFT');
+      assert.equal(await page.getByTestId('stored-admission-status').innerText(), '실행 접수 대기');
+      assert.match(await page.locator('#mock-task-run').innerText(), /예시 실행 ID/);
+      assert.notEqual(await page.locator('#mock-task-run-id').innerText(), '');
+      assert.equal(await page.locator('#stored-admission-run').isVisible(), false);
+    });
+    await check('result failure retains last confirmation and refresh performs no API request', async () => {
+      const readsBefore = jobDetailReads;
+      await taskScenario.selectOption('error');
+      await waitTask('모의 결과 조회 실패');
+      assert.equal(await page.locator('#mock-task-confirmed').innerText(), '마지막 확인: 모의 확인 완료');
+      assert.equal(await page.locator('#mock-task-checks li').count(), 3);
+      await page.getByTestId('mock-task-refresh').click();
+      await waitTask('모의 결과 조회 실패');
+      assert.equal(jobDetailReads, readsBefore);
+      await taskScenario.selectOption('completed');
+      await waitTask('모의 확인 완료');
+    });
+    await check('reload restores scenario by account and job, without storing results or synthetic run IDs', async () => {
+      const values = await page.evaluate(() => Object.keys(sessionStorage).filter(key => key.endsWith(':mock-task-demo')).map(key => JSON.parse(sessionStorage.getItem(key))));
+      assert.deepEqual(values, [{ job_id: ids.a1, scenario: 'completed' }]);
+      const before = jobDetailReads;
+      await page.reload({ waitUntil: 'domcontentloaded' });
+      await waitTask('모의 확인 완료');
+      assert.equal(await taskPanel.getAttribute('data-job-id'), ids.a1);
+      assert.ok(jobDetailReads > before);
+    });
+    await check('changing jobs discards the old completion and returns to pending', async () => {
+      await taskScenario.selectOption('completed');
+      await selectJob(ids.a2);
+      await waitTask('모의 결과 대기');
+      assert.equal(await page.locator('#mock-task-checks').isVisible(), false);
+      assert.equal(await page.locator('#mock-task-run-id').innerText(), '');
+      assert.equal(await page.locator('#mock-task-confirmed').isVisible(), false);
+    });
+    await check('logout clears old results and another account sees its own pending example', async () => {
+      await taskScenario.selectOption('completed');
+      await waitTask('모의 확인 완료');
+      await page.getByTestId('logout-button').click();
+      await page.locator('#auth-gate').waitFor({ state: 'visible' });
+      await taskPanel.waitFor({ state: 'hidden' });
+      assert.equal(await page.locator('#mock-task-run-id').innerText(), '');
+      account = accountB;
+      await page.reload({ waitUntil: 'domcontentloaded' });
+      await page.locator('#signed-in').waitFor({ state: 'visible' });
+      await selectJob(ids.b);
+      await waitTask('모의 결과 대기');
+      assert.equal(await taskScenario.inputValue(), 'pending');
+      assert.equal(await page.locator(`[data-testid="job-row"][data-job-id="${ids.a1}"]`).count(), 0);
+      await taskScenario.selectOption('completed');
+      await waitTask('모의 확인 완료');
+    });
+    await check('keyboard users can focus and operate result controls', async () => {
+      await taskScenario.focus();
+      assert.equal(await taskScenario.evaluate(node => node === document.activeElement), true);
+      await page.keyboard.press('Tab');
+      assert.equal(await page.getByTestId('mock-task-refresh').evaluate(node => node === document.activeElement), true);
+      await page.keyboard.press('Enter');
+      await waitTask('모의 확인 완료');
+    });
+  }
+
   await check('desktop and mobile synthetic views have no horizontal overflow', async () => {
     await page.setViewportSize({ width: 1440, height: 1000 });
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
@@ -319,7 +407,7 @@ try {
   if (browserContext) await browserContext.close().catch(() => {});
   if (browser) await browser.close().catch(() => {});
   report.verdict = report.failures.length === 0 && report.checks.length > 0 ? 'pass' : 'fail';
-  await mkdir(runDir, { recursive: true });
+  await mkdir(runDir, { recursive: true, mode: 0o700 });
   const outputFile = path.join(runDir, 'report.json');
   await writeFile(outputFile, `${JSON.stringify(report, null, 2)}\n`, { mode: 0o600 });
   process.stdout.write(`${JSON.stringify({ verdict: report.verdict, report: path.relative(process.cwd(), outputFile), checks: report.checks.length, failures: report.failures.length, screenshots: report.screenshots.length })}\n`);

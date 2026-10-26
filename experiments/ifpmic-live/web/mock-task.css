@@ -1,0 +1,19 @@
+/* The amber edge marks synthetic result data; actual admission stays mint. */
+.mock-task { --task-accent: #e5b66c; margin-top: 22px; padding: 18px 0 0 16px; border-top: 1px solid #344a64; border-left: 3px solid var(--task-accent); }
+.mock-task-heading { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.mock-task-heading h3 { margin: 0; font-size: 16px; line-height: 1.4; color: #e7eef9; }
+.mock-task-mode { flex-shrink: 0; padding: 3px 8px; border: 1px solid #876c40; border-radius: 4px; color: var(--task-accent); font-size: 11px; }
+.mock-task-boundary, .mock-task-description, .mock-task-confirmed { max-width: 65ch; margin: 9px 0 16px; font-size: 12px; color: #9aacc5; line-height: 1.7; }
+.mock-task-status { display: block; font-size: 21px; line-height: 1.4; letter-spacing: -.4px; font-weight: 650; color: #efd6af; }
+.mock-task[data-phase="error"] .mock-task-status { color: #f1b8be; }
+.mock-task-confirmed { color: #efd6af; }
+.mock-task-checks { list-style: none; padding: 0; margin: 0 0 14px; border-top: 1px solid #344a64; }
+.mock-task-checks li { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 9px 0; border-bottom: 1px solid #26354a; font-size: 12px; }
+.mock-task-checks strong { color: #efd6af; font-size: 11px; font-weight: 600; white-space: nowrap; }
+.mock-task-run, .mock-task-time { margin: 6px 0; color: #9aacc5; font-size: 11px; line-height: 1.6; }
+.mock-task-run code { display: block; color: #c6d2e2; overflow-wrap: anywhere; font-size: 11px; }
+.mock-task-controls { display: flex; align-items: end; gap: 10px; margin-top: 18px; }
+.mock-task-controls label { display: grid; flex: 1; min-width: 0; gap: 6px; color: #9aacc5; font-size: 11px; }
+.mock-task-controls select { width: 100%; min-height: 42px; padding: 8px 10px; border: 1px solid #876c40; border-radius: 6px; background: #0e1724; color: #e7eef9; }
+.mock-task-controls .button { flex: 0 0 auto; }
+@media (max-width: 480px) { .mock-task-controls { align-items: stretch; flex-direction: column; } }

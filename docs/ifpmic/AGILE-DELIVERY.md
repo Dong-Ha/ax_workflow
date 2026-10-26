@@ -5,12 +5,13 @@
 ## 현재 체크포인트 · 2026-10-27
 
 - 필수 단계 완료: **2/16 = 12.5%**(동일 가중치 단계 수, 작업량 추정이 아님).
+- 현재 제품 흐름: minimal-mock. 첫 `mock-result-contract`의 합성 결과 조회 화면을 전달했다. 다음은 실제 저장 결과 조회이며 상위 흐름은 진행 중이다.
 - 전달된 사용자 흐름: 29단계·6구간의 설계 탐색 및 74개 합성 시나리오, 합성 계정/mock으로 요청을 저장·재조회하는 로컬 흐름.
 - 최근 전달: `admission-live` normal-path candidate3에서 격리 PostgreSQL/Temporal의 실제 접수와 I02 browser 확인을 마쳤다. 저장 요청 한 건이 동일 job/command/run/sequence-1 receipt로 `QUEUED`가 되었고, browser 8개 확인, 두 번의 정확한 idempotency-key POST에도 효과는 한 번이었다. 사용자 A/B 권한 거부와 reload 확인도 통과했다. 실제 clean restart는 POST 0건으로 기존 job/command/run과 identity/count를 보존했다. [V4 범위·절차](./delivery/iteration-03/ADMISSION-UI-PLAN-v4.md)
 - 최신 실제 H2 시도 V9: 490건 중 8건 실행, 7통과·1실패, 482건 미실행. 실패 원인은 DB 시간 기준 claim 만료 관측 timeout이며 아직 확정되지 않았다. [결과](./delivery/iteration-03/runtime-v9-execution-status.json) · [독립 실패 검토](./delivery/iteration-03/runtime-v9-attempt-01-result-review.json)
 - V9 실제 엔진 실행은 자동 재시도하지 않는다. timeout 진단은 30분 checkpoint가 있는 지원 작업이며 관련 실제 runtime 실행만 차단한다. 원인 미확정이어도 독립 UI/API/mock 개발은 진행한다. 진단 시간이 넘으면 범위·소요시간과 다음 조치 한 가지를 보고하고 전체 검증을 자동 반복하지 않는다.
 - 실행 증거 `workflow-artifacts/delivery/admission-live/normal-20261027-03/`은 실제 SDK run 1건/start 1건/phase `queued`, SQL job/command/binding/receipt 각 1건, A/B deny, clean restart에서 같은 단일 run을 확인한다. 다섯 자식(각 2회 실행 포함)과 API/issuer/PostgreSQL은 force 없이 종료됐다. API/runtime 45개 source는 실제 run 전후 동일했다. context v2 `execution_connected` boolean은 상태 관찰이며 receipt 증거가 아니므로 화면의 `QUEUED` 판정과 분리한다. 최신 V9의 crash/reclaim claim-expiry 원인은 여전히 inconclusive이며 이 candidate는 V9 retry, 전체 H2/full490, 원본 AT, 운영 준비 수용이 아니다. 기존 실패 `normal-01/-02`는 보존됐다.
-- 제품 WIP는 하나로 유지한다. 다음 사용자 흐름은 실제 서비스가 통제하는 최소 mock 실행→결과 저장→화면 조회다. mock 결과는 실제 IFPMIC 작업이나 전체 29단계 실행으로 표시하지 않는다. V9 진단은 별도 지원 작업으로 계속할 수 있으며 관련 crash/reclaim과 전체 수용만 막는다.
+- 제품 WIP는 하나로 유지한다. 현재 사용자 흐름은 실제 서비스가 통제하는 최소 mock 실행→결과 저장→화면 조회다. 첫 합성 결과 화면 이후 실제 조회·실행을 연결한다. mock 결과는 실제 IFPMIC 작업이나 전체 29단계 실행으로 표시하지 않는다. V9 진단은 별도 지원 작업으로 계속할 수 있으며 관련 crash/reclaim과 전체 수용만 막는다.
 
 ## 다음 사용자 흐름 순서
 
@@ -31,7 +32,7 @@
 
 기존 규칙은 좁은 개발 검증을 허용하지만 도구는 `admission` 이름에 고정되어 있었다. 다음 흐름에는 slice가 없어 같은 실행 도구로 착수할 수 없었고, 제품 코드만 바뀌어도 전달 도구 자체의 검사와 supervisor 검사가 기본 묶음에 따라붙었다. 이 결합을 제거한다. 과거 모델 사용량의 정확한 비중은 이 자료만으로 산정할 수 없으며, 실행 시간은 검증 비용을 관찰하는 지표로 사용한다.
 
-`delivery-plan.json`의 `feedback_profiles`는 기본 실행 목록이고 `allowed_feedback_profiles`는 필요할 때 명시 선택할 수 있는 목록이다. 새 흐름도 같은 CLI를 쓰며 `--flow`만 선택하면 해당 흐름의 `default_slice`를 출력한다. 현재 선택은 마지막 전달인 admission-live로 유지한다. 다음 구현을 시작할 때만 현재 flow/slice와 WIP 상태를 변경한다.
+`delivery-plan.json`의 `feedback_profiles`는 기본 실행 목록이고 `allowed_feedback_profiles`는 필요할 때 명시 선택할 수 있는 목록이다. 새 흐름도 같은 CLI를 쓰며 `--flow`만 선택하면 해당 흐름의 `default_slice`를 출력한다. 현재 선택과 기본 검사는 JSON을 따른다. minimal-mock의 첫 결과 화면 slice를 전달했고 상위 흐름은 진행 중이다.
 
 다음 minimal-mock은 **합성 결과 조회 화면 → 저장 결과의 실제 조회 → 실제 서비스의 제한된 모의 실행**으로 나눈다. 각 slice는 이전 slice의 통과 증거를 보존하고 바뀐 경계만 다시 검사한다. 후속 사람 대기/재개와 I2C 사례도 JSON에 착수 가능한 slice로 나눴다. 아직 구현되지 않은 slice의 기본 `delivery-tool`은 계획/선택 도구만 검사한다. `checks_to_add`의 기능 검사를 구현하고 코드에 고정 profile로 등록하기 전에는 기능 검증 완료로 보고하지 않는다.
 
@@ -56,7 +57,7 @@
 현재 흐름·완료 조건·상태는 저장소의 단일 기준 파일 `docs/ifpmic/delivery-plan.json`에 기록하고, 루트 `/delivery.html`에서 같은 데이터를 보여준다. 흐름이나 상태를 바꾸면 JSON을 함께 갱신한다. 대시보드에 표시된 단계 완료 수는 원본 필수 단계의 수용 상태를 대체하지 않는다.
 
 - `npm run ifpmic:delivery`: 기본 목표 행동과 검사 범위를 출력한다. 현재 흐름은 `plan.current_slice`, 다른 `--flow`는 해당 흐름의 `default_slice`를 사용하고 `--slice`로 덮어쓸 수 있다. `--profile`은 해당 slice의 허용 목록에서 선택한다. `admission-mock` 기본은 `admission-state`, `admission-read`는 `admission-dto`·`admission-read-state`, `admission-live`는 `admission-context`·`admission-local`이다. 오프라인 UI browser는 `npm run ifpmic:admission:browser`로 별도 명시한다.
-- `npm run ifpmic:delivery:check`: 선택된 검사만 실행하며 DB/Temporal/서비스를 시작하지 않는다. 기본 실행은 JSON의 `feedback_profiles`를 따른다. 전달 도구 변경 시 `--profile delivery-tool`, supervisor 변경 시 live slice에서 `--profile execution-owner`를 명시한다. profile별/전체 실행 시간을 출력하고 private 결과에 남긴다.
+- `npm run ifpmic:delivery:check`: 선택된 검사만 실행하며 DB/Temporal/서비스를 시작하지 않는다. 기본 실행은 JSON의 `feedback_profiles`를 따른다. 전달 도구 변경 시 `--profile delivery-tool`, supervisor 변경 시 `--flow admission --slice admission-live --profile execution-owner`를 명시한다. profile별/전체 실행 시간을 출력하고 private 결과에 남긴다.
 - `--level integration` 또는 `--level acceptance`: 해당 단계의 남은 필수 조건을 출력한다. `--level integration|acceptance --run` 실행기는 미구현이며 종료 코드 2로 실패한다. 이 CLI 제한은 V4 절차에 맞게 준비·검토된 별도 실제 DB/Temporal 통합 실행을 막지 않는다.
 - slice별 필수 검사는 작업 전에 고정한다. 추가·반복은 변경 코드, 실패 재현 또는 미해결 우려에만 한정하고 통과하면 멈춘다. 각 명령의 피드백 목표는 60초 이내다. browser 및 build 검사는 별도 명시 선택이며 기본 묶음에 포함된 것으로 간주하지 않는다. 검토는 변경된 코드·trust boundary와 그 영향 경로에 한정하고 손대지 않은 전체 source의 반복 검토를 요구하지 않는다. 실제 DB/Temporal 연결 전 변경된 SQL/ACL/권한·개인정보 경계는 독립 검토한다.
 
@@ -96,3 +97,12 @@ I02 작업 상세에서 모의 접수 대기·접수됨·조회 실패를 선택
 실제 browser 최초 캡처의 짧은 계정/작업 식별자 표시를 보완해, 같은 격리 작업을 POST 없이 재조회하는 `--read-existing` 모드로 공개용 alias 캡처를 다시 만들었다. `ui-20261026-01/recapture/browser/`의 캡처와 정리 기록이 최종 화면 증거다. 제품 source는 그대로였으며 요청을 추가 저장하지 않았다.
 
 후속 full H2 후보는 새 claim observer module과 private `claim-expiry-observation.json`을 source/raw inventory에 포함해 검토해야 한다. 기존 V9 source pin·raw 정책을 새 코드의 승인으로 재사용하거나 기존 full runner를 자동 재실행하지 않는다. 이는 정상 접수 전달과 별도의 전체 수용 준비다.
+
+
+## 이번 전달 · mock-result-contract
+
+I02에서 저장 요청을 선택하면 ‘모의 작업 결과’의 대기·완료·조회 실패를 합성 데이터로 체험할 수 있다. 순수 DTO/provider/controller와 DOM panel을 분리했고, 데이터는 정해진 결과 세 항목만 허용한다. 전체 job 상태나 실제 접수 영수증을 수정하지 않는다. 계정/작업 전환은 응답을 취소·폐기하고, 오류에서는 마지막 확인 결과를 표시한다. reload 때 계정별 job/scenario만 복원하며 결과·실행 ID·인증 자료를 저장하지 않는다.
+
+frontend-design 스킬에 따라 기존 네이비/민트 관제 화면을 유지하고 합성 결과는 앰버 테두리와 ‘화면 체험’, ‘예시’ 문구로 구분했다. 데스크톱/375px 캡처를 검토했으며 가로 넘침 없이 표시된다. 결과 계약/상태 검사 6건, 전달 도구 검사 10건, 해당 I02 browser 9개 확인이 통과했다. schema 검사 추가 후 기본 피드백은 `mock-task-state`만 333ms에 통과했다. `npm run build`는 계획 현황판 및 TypeScript/번들 영향을 확인한다.
+
+상태 증거: `workflow-artifacts/delivery/2026-10-26T16-07-16.169Z-34287/result.json`. Browser/capture: `workflow-artifacts/delivery/mock-result-contract/2026-10-26T16-05-16-613Z/`. 최종 계획 반영 뒤 build와 현황판 offline browser 3개 확인도 통과했다. 현황판 증거는 `workflow-artifacts/delivery/browser/2026-10-26T16-09-07-282Z-34400/result.json`에 둔다. 실제 결과 API/DB 저장·Temporal 모의 실행·full490/AT는 이번 slice에서 검증하지 않았다. 상위 minimal-mock은 미완료, 원본 필수 단계는 2/16이다. 다음 행동은 mock-result-read의 visibility·job/command/run 경계를 보존한 실제 조회 API 구현이다.
