@@ -1,3 +1,5 @@
+import { createAdmissionPanel } from './admission.js';
+
 const API = '';
 const DEMO_CONTEXT = Object.freeze({
   project_id: 'ifpmic-local-demo',
@@ -24,6 +26,8 @@ const state = {
   detailEpoch: 0,
   commandEpoch: 0,
 };
+
+const admissionPanel = createAdmissionPanel(document, { saveScenario: value => writeUserStorage('admission-demo', value) });
 
 const storageKey = (kind, userId = state.userId) => `ifpmic-live:${encodeURIComponent(userId)}:${kind}`;
 const statusMessages = {
@@ -154,6 +158,7 @@ function resetAccountView() {
 }
 
 function clearDetail() {
+  admissionPanel.clear();
   el('job-detail').hidden = true;
   el('empty-detail').hidden = false;
   el('command-receipt').hidden = true;
@@ -429,6 +434,7 @@ async function selectJob(jobId, { updateHash = false, refreshList = false } = {}
   const detailEpoch = ++state.detailEpoch;
   const current = () => state.userId === owner && state.accountEpoch === accountEpoch &&
     state.detailEpoch === detailEpoch && state.selectedJobId === jobId;
+  admissionPanel.clear();
   state.selectedJobId = jobId;
   el('empty-detail').hidden = true;
   el('job-detail').hidden = true;
@@ -451,7 +457,9 @@ async function selectJob(jobId, { updateHash = false, refreshList = false } = {}
     setDetailText('detail-revision', Number.isInteger(job.revision) ? String(job.revision) : '—');
     setDetailText('detail-workflow', typeof job.workflow_version === 'string' ? job.workflow_version : '—');
     setDetailText('detail-profile', typeof job.profile_version === 'string' ? job.profile_version : '—');
+    const mockPreference = readUserStorage('admission-demo');
     el('job-detail').hidden = false;
+    admissionPanel.show({ userId: owner, jobId, scenario: mockPreference?.job_id === jobId ? mockPreference.scenario : 'pending' });
     await refreshCommand(findReceiptForJob(jobId), { owner, accountEpoch, detailEpoch });
     if (!current()) return;
     if (refreshList) await loadJobs();
@@ -464,6 +472,7 @@ async function selectJob(jobId, { updateHash = false, refreshList = false } = {}
       el('detail-error').textContent = error.message;
       el('detail-error').hidden = false;
       el('job-detail').hidden = true;
+      admissionPanel.clear();
     }
     setStatus(error.message, 'error');
   }

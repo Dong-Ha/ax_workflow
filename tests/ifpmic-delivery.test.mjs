@@ -26,7 +26,7 @@ test('slice selection isolates mock development from runtime diagnostics', () =>
 test('profiles run only allowed local checks and reject injected or stale names', () => {
   const flow = selectFlow(plan);
   const mock = selectSlice(flow, 'admission-mock');
-  assert.deepEqual(feedbackCommands(flow, mock).map(item => item.name), ['delivery-tool']);
+  assert.deepEqual(feedbackCommands(flow, mock).map(item => item.name), ['delivery-tool', 'admission-state']);
   assert.throws(() => feedbackCommands(flow, mock, ['admission-local']));
   const live = selectSlice(flow, 'admission-live');
   assert.equal(feedbackCommands(flow, live).length, 2);

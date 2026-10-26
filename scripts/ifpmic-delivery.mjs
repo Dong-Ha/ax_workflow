@@ -20,6 +20,7 @@ export function selectSlice(flow, id) {
 
 // Executables and paths belong to code, never plan data or CLI input.
 const profiles = {
+  'admission-state': { executable: process.execPath, args: ['--test', 'tests/ifpmic-admission.test.mjs'] },
   'delivery-tool': { executable: process.execPath, args: ['--test', 'tests/ifpmic-delivery.test.mjs'] },
   'admission-local': { executable: resolve(root, '.ifpmic-venv/bin/python'),
     args: ['-B', '-m', 'pytest', '-p', 'no:cacheprovider', '-q',
@@ -113,7 +114,7 @@ export async function main(args = process.argv.slice(2)) {
   console.log(`이번 전달: ${slice.title} (${slice.mode})\n행동: ${slice.outcome}`);
   console.log(slice.acceptance.map(item => `- ${item}`).join('\n'));
   console.log(`차단 조건: ${slice.blockers.join('; ') || '없음'}`);
-  console.log(`아직 연결할 기능 검사: ${slice.checks_to_add.join('; ')}`);
+  console.log(`아직 연결할 기능 검사: ${slice.checks_to_add.join('; ') || '없음'}`);
   console.log('선택 검사 통과 뒤 종료합니다. 재검사는 새 변경·실패·미해결 위험이 있을 때만 추가합니다.');
   const commands = feedbackCommands(flow, slice, options.profiles);
   console.log(commands.map(command => `${command.name}: ${command.args.join(' ')}`).join('\n'));

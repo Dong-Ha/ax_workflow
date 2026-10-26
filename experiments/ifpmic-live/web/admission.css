@@ -1,0 +1,22 @@
+/* A separate blue signal path marks simulated admission inside the existing
+   navy/mint request console. No animation implies live engine activity. */
+.admission-panel { margin-top: 22px; padding-top: 20px; border-top: 2px dashed #537caa; }
+.admission-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.admission-heading h3 { margin: 0; color: #e7eef9; font-size: 16px; line-height: 1.4; letter-spacing: -.3px; }
+.admission-mode { padding: 3px 8px; border: 1px solid #537caa; border-radius: 4px; color: #a9cdff; font-size: 11px; }
+.admission-boundary { max-width: 65ch; margin: 8px 0 18px; color: #a4b8d0; font-size: 12px; }
+.admission-path { display: flex; padding: 0; margin: 0 0 18px; list-style: none; gap: 0; }
+.admission-path li { flex: 1; position: relative; padding: 10px 0 10px 16px; border-left: 2px solid #344a64; color: #9aacc5; font-size: 12px; }
+.admission-path li::before { content: ''; position: absolute; left: -5px; top: 16px; width: 8px; height: 8px; background: #344a64; border-radius: 50%; }
+.admission-path li[aria-current="step"] { border-color: #8ab8ff; color: #c5dcff; background: #172b44; }
+.admission-path li[aria-current="step"]::before { background: #8ab8ff; }
+.admission-result { padding: 0 0 18px; min-height: 90px; }
+.admission-result strong { display: block; color: #c5dcff; font-size: 21px; font-weight: 650; letter-spacing: -.5px; }
+.admission-result p { margin: 7px 0 0; color: #a4b8d0; font-size: 12px; line-height: 1.65; }
+.admission-panel[data-phase="error"] .admission-result strong { color: #f1b8be; }
+.admission-result #admission-last-confirmed { color: #c5dcff; }
+.admission-controls { display: flex; align-items: end; gap: 12px; }
+.admission-controls label { display: grid; flex: 1; gap: 6px; color: #a4b8d0; font-size: 11px; }
+.admission-controls select { width: 100%; min-height: 42px; padding: 8px 10px; background: #0e1724; border: 1px solid #537caa; border-radius: 6px; color: #e7eef9; }
+.admission-controls .button { flex: 0 0 auto; }
+@media (max-width: 480px) { .admission-controls { align-items: stretch; flex-direction: column; } }

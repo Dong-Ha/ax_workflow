@@ -7,6 +7,7 @@
     <meta name="description" content="IFPMIC 로컬 데모 요청 등록과 저장 상태 확인" />
     <title>IFPMIC · 요청 관제</title>
     <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="/admission.css" />
     <script type="module" src="/app.js"></script>
   </head>
   <body>
@@ -132,7 +133,27 @@
                     <div><span class="receipt-mark" aria-hidden="true">✓</span><span><small>저장된 접수 명령</small><strong data-testid="command-status">확인 중</strong></span></div>
                     <code data-testid="command-id"></code>
                   </div>
-                  <p class="detail-note"><span aria-hidden="true">i</span> 이 화면은 실제 저장된 API DTO만 표시합니다. 실행 단계와 대기 이유는 아직 제공되지 않습니다.</p>
+                  <section class="admission-panel" id="admission-panel" data-testid="admission-panel" aria-labelledby="admission-title" hidden>
+                    <div class="admission-heading"><h3 id="admission-title">모의 접수 상태</h3><span class="admission-mode">화면 체험</span></div>
+                    <p class="admission-boundary">실제 엔진과 연결되지 않은 예시입니다. 위의 저장 상태는 바뀌지 않습니다.</p>
+                    <ol class="admission-path" aria-label="모의 접수 흐름">
+                      <li data-admission-step="1">요청 저장</li><li data-admission-step="2">실행 접수</li>
+                    </ol>
+                    <div class="admission-result" role="status" aria-live="polite" aria-atomic="true">
+                      <strong id="admission-status" data-testid="admission-status"></strong>
+                      <p id="admission-description" data-testid="admission-description"></p>
+                      <p id="admission-last-confirmed" hidden></p>
+                    </div>
+                    <div class="admission-controls">
+                      <label for="admission-scenario">확인할 모의 상황
+                        <select id="admission-scenario" data-testid="admission-scenario">
+                          <option value="pending">접수 대기</option><option value="admitted">접수됨</option><option value="error">조회 실패</option>
+                        </select>
+                      </label>
+                      <button class="button button-quiet" id="admission-refresh" data-testid="admission-refresh" type="button">모의 상태 다시 확인</button>
+                    </div>
+                  </section>
+                  <p class="detail-note"><span aria-hidden="true">i</span> 저장 상태는 API에서 조회합니다. 별도 모의 접수 영역은 실제 실행 증거가 아닙니다.</p>
                 </div>
                 <p class="detail-error" id="detail-error" role="status" data-testid="detail-error" hidden></p>
               </section>

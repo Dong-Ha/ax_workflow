@@ -8,7 +8,7 @@ const current = plan.flows.find(flow => flow.id === plan.current_flow)!;
 const slices = current.slices ?? [];
 const slice = slices.find(item => item.id === plan.current_slice)!;
 const completed = progress.stages.filter(stage => stage.status === 'verified').length;
-const labels: Record<string, string> = { in_progress: '진행 중', not_started: '대기' };
+const labels: Record<string, string> = { in_progress: '진행 중', not_started: '대기', delivered: '전달됨' };
 
 function DeliveryPage() {
   return <main>

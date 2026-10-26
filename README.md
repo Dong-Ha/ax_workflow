@@ -9,7 +9,7 @@ IFPMIC workflow 시각화로 확장하는 방향은 [기준 자료와 이관 계
 현재 개발 우선순위는 [애자일 전달 계획](./docs/ifpmic/AGILE-DELIVERY.md)과 [전달 기준 데이터](./docs/ifpmic/delivery-plan.json)를 따릅니다. 한 번에 전달 단위 하나를 진행하며, 접수 흐름을 mock 화면 → 실제 조회 API → 실제 엔진 접수로 나눕니다. UI/API 구현과 관련 검사는 전체 490건 수용을 기다리지 않고 진행하며, 실제 엔진 활성화·전체 H2·원본 AT 인수 기준은 유지합니다.
 
 - `npm run ifpmic:delivery`: 현재 목표와 선택 검사 목록을 출력합니다. 실행하지 않습니다.
-- `npm run ifpmic:delivery:check`: 현재 전달 단위의 고정 검사만 실행합니다. 기본 mock 단위는 전달 도구만 검사하고, `admission-local` 선택 시에만 `.ifpmic-venv`의 고정 Python 의존성이 필요합니다. DB/Temporal을 시작하지 않습니다. 로그와 요약은 ignored `workflow-artifacts/delivery/`에 보존합니다.
+- `npm run ifpmic:delivery:check`: 현재 전달 단위의 고정 검사만 실행합니다. 기본 mock 단위는 전달 도구와 접수 상태 controller를 검사하고, `admission-local` 선택 시에만 `.ifpmic-venv`의 고정 Python 의존성이 필요합니다. DB/Temporal을 시작하지 않습니다. 로그와 요약은 ignored `workflow-artifacts/delivery/`에 보존합니다.
 - `npm run ifpmic:delivery:browser`: 빌드 산출물만 사용하는 offline Chromium 화면 검사이며 API 서버를 시작하지 않습니다.
 - `npm run ifpmic:delivery -- --level integration` 또는 `--level acceptance`: 남은 조건을 출력합니다. 이 두 수준에 `--run`을 추가하면 자동 실행 미연결로 실패하며, 통과로 기록하지 않습니다.
 - `npm run test:ifpmic:delivery:browser`: 빌드된 현황판의 데스크톱·모바일 표시와 API/외부 요청 없음을 offline Chromium으로 확인합니다.
@@ -175,11 +175,23 @@ npm run ifpmic:delivery:check -- --slice admission-live --profile admission-loca
 ```
 
 기본 검사는 현재 slice의 고정 allowlist만 실행합니다. `--slice`와 `--profile`은 feedback 수준에서만 사용합니다. `--profile`은 허용된 검사 묶음을
-선택하며 여러 번 지정할 수 있습니다. 현재 mock slice에는 전달 도구 검사만 연결되어 있습니다.
-CLI는 아직 추가할 기능 검사도 출력합니다. 도구 검사 통과가 mock UI의 구현·검증을 뜻하지 않습니다.
+선택하며 여러 번 지정할 수 있습니다. 현재 mock slice에는 전달 도구와 접수 상태 controller 검사(`admission-state`)가 연결되어 있습니다.
+`npm run ifpmic:admission:browser`는 실제 I02 정적 파일에 합성 API 응답을 연결해 상태 전환·작업/계정 전환·reload와 모바일 화면을 검증합니다. 실제 DB/Temporal은 사용하지 않습니다.
+CLI는 아직 추가할 기능 검사도 출력합니다. 도구 검사 통과만으로 사용자 기능의 구현·검증을 뜻하지 않습니다.
 API/화면 구현 시 해당 경계의 검사를 코드의 allowlist와 함께 추가합니다.
 Python protocol/workspace 검사는 `admission-local`이며 실제 DB/Temporal을 시작하지 않습니다.
 각 명령은 최대 60초이고 실패 시 중단하며 자동 재시도하지 않습니다. 결과에는 slice·선택 검사·소요 시간·
 미연결 기능 검사를 기록합니다. 통과 후 새 변경·실패·미해결 위험 없이 검사를 반복하지 않습니다.
 브라우저·build는 변경에 필요할 때 별도로 선택합니다. 실제 통합/전체 인수의 `--run`은 여전히
 미구현으로 종료 코드 2를 반환하며, 실제 실행은 V4의 준비·독립 검토 절차를 따릅니다.
+
+
+### I02 모의 접수 상태
+
+기존 I02 요청 화면(`http://127.0.0.1:8769/`, [시작 안내](docs/ifpmic/delivery/iteration-02/README.md))에서
+저장된 작업을 선택하면 **모의 접수 상태**를 확인할 수 있습니다. 상황 선택으로 접수 대기·접수됨·조회 실패를
+전환하고 다시 확인할 수 있습니다. 작업을 바꾸거나 로그아웃하면 이전 모의 상태를 지우며,
+같은 탭을 새로고침하면 해당 계정의 선택 작업과 모의 상황을 복원하고 응답을 다시 읽습니다.
+브라우저에는 모의 상황 선택만 보관하며 실제 접수 결과나 실행 영수증을 저장하지 않습니다.
+실제 저장 상태(`DRAFT`)는 바뀌지 않으며 PostgreSQL/Temporal 실행 접수는 후속 구현입니다.
+이 화면의 모의 상태는 프런트엔드 로컬 제공자가 반환하며 새로운 실제 API를 호출하지 않습니다.

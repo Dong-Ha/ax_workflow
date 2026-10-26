@@ -14,7 +14,7 @@
 
 | slice | 사용자 결과 | 범위와 경계 |
 |---|---|---|
-| `admission-mock` | I02 admission UI에서 저장된 요청 상태 조회 | 다음 활성 slice이며 미구현. mock 상태 조회만 제공하고 실제 접수나 `QUEUED`로 표기하지 않는다. |
+| `admission-mock` | I02 admission UI에서 저장된 요청 상태 조회 | 독립 전달 단위. 모듈의 로컬 시뮬레이션 상태 `pending`/`admitted`/`error`를 mock으로 표시하며 실제 접수나 `QUEUED`로 표기하지 않는다. |
 | `admission-read` | 실제 read-only API와 SQL ACL tuple로 상태 조회 | V3 DTO/tuple/ACL 계약을 구현·확인한다. 실제 엔진 receipt 생성은 포함하지 않는다. |
 | `admission-live` | 격리된 실제 엔진에서 receipt tuple 확인 | DB/Temporal 실제 통합 slice. 자체 준비·독립 검토 뒤 좁은 실행을 수행한다. |
 
@@ -32,8 +32,10 @@
 - TC는 바뀐 경계별 선택 검사를 추가·수행하고, 좁은 DB/Temporal 실제 통합 smoke의 기대값·격리·cleanup을 제품 코드와 분리해 검토한다. 최종 threshold와 원본 계약은 바꾸지 않는다.
 - 독립 검토는 실제 DB/Temporal 연결에 영향을 주는 SQL, role/grant, ACL, private config, process lifecycle과 개인정보 경계를 구현자와 분리해 검토한다. V3 리뷰 및 단위 검사 통과만으로 이 gate를 대신하지 않는다.
 - 사용자 화면 인수는 같은 저장 요청의 job/command/run/receipt, 중복 방지, 사용자 A/B 권한, 계정 전환 중 stale response 차단, reload 이후 표시를 확인한다. mock 결과와 실제 결과를 분명히 나눈다.
+- `admission-mock` 화면은 네이비 `#0b111b` 배경과 `#111b29` 표면, `#e7eef9` 본문, `#9aacc5` 보조 텍스트를 사용하고 파랑 `#8ab8ff` 및 민트 `#63d4b4`로 상태 조회 경로를 구분한다. 로컬 한국어 글꼴을 우선하고, mock 배지와 경로 표기를 실제 상태와 시각적으로 구분한다.
+- mock 상태는 모듈 내부의 시뮬레이션에 한정하며 `pending`/`admitted`/`error`만 제공한다. 이는 queue·실행·receipt나 실제 `QUEUED`가 아니다. 계정별 시나리오 선택 선호만 `sessionStorage`에 보관하고, 새로고침 시 상태 제공자를 다시 조회한다. 원본 저장 요청, 실제 계정 상태, DB, Temporal을 수정하지 않는다.
 - 기본 CLI `npm run ifpmic:delivery`는 목표/조건을 출력하고, `npm run ifpmic:delivery:check`는 DB나 Temporal을 시작하지 않는 선택 검사를 수행한다. `--level integration|acceptance`는 남은 조건을 표시한다. 이 수준의 `--run` runner는 미구현이며 종료 코드 2를 반환한다. 실제 제한 통합은 별도 검토된 좁은 runner/절차로 수행한다.
-- CLI는 `--slice` 미지정 시 `delivery-plan.json`의 `plan.current_slice`를 선택한다. `--profile`은 선택 사항으로, 현재 slice가 허용한 profile의 부분집합을 지정한다. `admission-mock` 기본은 `delivery-tool`만 실행하고 미구현 UI browser 검사는 `checks_to_add`로 표시한다. `admission-read/live` 기본은 `delivery-tool`과 `admission-local`을 실행한다. `delivery:check`는 선택된 profile만 실행하며 매번 Node와 Python을 함께 실행하지 않는다. Browser와 build는 별도로 명시 선택한다. 명령 시간이 목표를 넘더라도 전체 suite를 자동 확장하지 않는다.
+- CLI는 `--slice` 미지정 시 `delivery-plan.json`의 `plan.current_slice`를 선택한다. `--profile`은 선택 사항으로, 현재 slice가 허용한 profile의 부분집합을 지정한다. `admission-mock` 기본은 `delivery-tool`과 `admission-state` Node controller regression을 실행한다. 오프라인 API fixture를 쓰는 UI browser 검사는 `npm run ifpmic:admission:browser`로 별도 명시 실행하며 DB/Temporal을 사용하지 않는다. `admission-read/live` 기본은 `delivery-tool`과 `admission-local`을 실행한다. `delivery:check`는 선택된 profile만 실행하며 매번 Node와 Python을 함께 실행하지 않는다. Browser와 build는 별도로 명시 선택한다. 명령 시간이 목표를 넘더라도 전체 suite를 자동 확장하지 않는다.
 
 ## 보고와 복구
 
