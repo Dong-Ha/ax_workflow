@@ -46,7 +46,7 @@ try {
 
   const body = await page.locator('body').innerText();
   for (const required of [
-    '저장한 요청의 실행 접수', '접수 상태 mock 조회·표시', '이번 전달의 차단 조건: 없음', '작게 전달하는 순서', '완료 조건', '마지막 실제 엔진 검증 · V9',
+    '저장한 요청의 실행 접수', '접수 상태 mock 조회·표시', '이번 전달의 차단 조건: 없음', '작게 전달하는 순서', '완료 조건', '보존된 전체 H2 시도 · V9',
     '7 통과 · 1 실패', '482건 미실행', '2 / 16',
   ]) assert.ok(body.includes(required), `current plan shows ${required}`);
   report.results.push({ name: 'current outcome, original acceptance progress, and latest V9 evidence are visible', verdict: 'pass' });

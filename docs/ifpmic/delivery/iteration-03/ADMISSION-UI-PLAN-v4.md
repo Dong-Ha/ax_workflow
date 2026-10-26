@@ -4,9 +4,17 @@
 
 ## 현재 결과와 목표
 
-최신 실제 V9 H2는 490건 중 8건을 실행해 7통과·1실패, 482건 미실행으로 종료했다. claim 만료의 DB-clock 관측 timeout 원인은 미확정이며 자동 재시도하지 않는다. 진단은 30분 checkpoint를 둔 지원 작업이며 관련 실제 runtime 실행만 차단한다. 독립 UI/API/mock 개발은 계속한다. checkpoint 초과는 범위 재설정 보고 기준이지 검사·승인 기준 완화가 아니다.
+V9 H2는 490건 중 8건 실행, 7통과·1실패·482미실행으로 종료했다. claim 만료의 DB-clock 관측 timeout 원인은 미확정이며 자동 재시도하지 않는다. 별도 normal-path candidate3는 아래 결과대로 격리 경로의 저장 요청 한 건을 실제 접수했지만 V9 재시도나 crash/reclaim 검증이 아니다. 진단은 30분 checkpoint의 지원 작업이며 관련 crash/reclaim 및 전체 수용만 차단한다. checkpoint 초과는 범위 재설정 보고 기준이지 검사·승인 기준 완화가 아니다.
 
 목표는 기존 저장 요청 한 건을 격리된 로컬 PostgreSQL/Temporal에 실제 접수하고, 같은 job·command·run·sequence-1 receipt를 I02 화면에서 확인하는 것이다. `QUEUED`는 실제 엔진 receipt tuple이 확인된 경우에만 표시한다. mock 화면 상태는 mock으로 표시하며 실제 접수로 취급하지 않는다.
+
+### Normal-path candidate3 결과
+
+`workflow-artifacts/delivery/admission-live/normal-20261027-03/`에서 실제 SDK run 1건, workflow start 1건, phase `queued`, SQL job/command/binding/receipt 각각 1건을 관측했다. Browser의 8개 확인 항목과 두 번의 정확한 idempotency-key POST가 통과했고 실행 효과는 1회였다. 사용자 A/B 조회 거부 및 reload를 확인했다. Clean restart는 POST 0건으로 같은 job/command/run/identity/count와 실제 SDK의 같은 단일 run을 보존했다. 다섯 자식(각 2회 실행 포함)과 API/issuer/PostgreSQL은 force 없이 종료됐고 API/runtime 45개 source는 actual run 전후 같았다. 이전 failed normal-01/-02 증거도 보존했다.
+
+Candidate3는 검토된 격리 launcher와 기존 runtime entry point를 연결했다. 기본 API/PostgreSQL-only 경로는 유지되며 actual runtime을 선택할 때만 original32 parent에 `--execution --execution-toolchain <absolute-private-H1-installation.json>`을 준다. Parent가 owner registry를 준비하고 qualified36 H1 Python/고정 CLI가 source/environment manifest와 dispatcher/worker를 검증·실행한다. 이름별 DB/Temporal SQLite/workspace/identity를 분리하며 owner DSN을 worker config에 전달하지 않는다. Browser 재현 명령은 `npm run ifpmic:admission:pg -- --origin http://127.0.0.1:<api-port> --issuer-origin http://127.0.0.1:<issuer-port> --evidence <fresh-owner-only-0700-child> --expect-queued`이고 clean restart 재조회는 `--read-existing` 모드로 POST 없이 수행한다. 설치/다운로드는 자동 수행하지 않는다.
+
+API context v2의 `execution_connected` boolean은 runtime 연결 상태 관찰일 뿐 receipt 근거가 아니다. 실제 화면의 `QUEUED` 판정에는 동일 job/command/run/sequence-1 receipt GET 결과가 필요하다. Candidate3는 정상 접수만 독립적으로 확인했다. V9 claim-expiry/crash/reclaim, 전체 H2/full490, 원본 AT/AT32, 운영 준비, V3의 전체 복구 시나리오와 원본 인수는 미수용이다. 다음 제품 흐름은 최소 mock 서비스 실행→결과 저장→화면 조회다.
 
 ## 제품 slice와 게이트
 

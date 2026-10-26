@@ -10,7 +10,7 @@
 - 주기02에서 합성 OIDC/mock 프로파일로 실제 로컬 API/PostgreSQL 요청 등록·조회·새로고침을 확인했다. 실행 엔진 접수는 연결되지 않았다.
 - 전체 필수 단계는 **2/16 = 12.5%**다. 실제 V9 H2는 490건 중 8건을 실행해 7통과·1실패했고, 482건은 미실행이다. 전체 H2는 수용되지 않았다.
 - 실패는 dispatcher crash 검사에서 DB clock 기준 claim 만료를 관측하지 못한 timeout이다. 원인은 미확정이며, 저장된 실행을 자동 재시도하지 않는다. [실행 상태](./runtime-v9-execution-status.json) · [독립 검토](./runtime-v9-attempt-01-result-review.json)
-- 새 우선순위는 [애자일 전달 계획](../../AGILE-DELIVERY.md)과 [재개 안내](../../RESUME.md)를 따른다. `admission-mock`과 `admission-read`의 상태 조회를 전달했다. 실제 API/PostgreSQL에 한 건을 저장해 접수 대기·재조회·reload를 확인했고, 다음은 claim-expiry의 작은 진단과 `admission-live` 준비다. 실패 원인 분석은 관련 실제 실행만 차단하는 지원 작업이다.
+- 새 우선순위는 [애자일 전달 계획](../../AGILE-DELIVERY.md)과 [재개 안내](../../RESUME.md)를 따른다. 접수 흐름을 전달했다. 실제 로컬 Temporal/PG의 동일 job/command/run/sequence-1 receipt, 같은 키 재요청의 단일 효과, A/B 조회 격리, reload와 정상 재시작 복원을 확인했다. 다음은 제한된 모의 작업 한 건의 실행·결과 저장·조회다. V9 crash/reclaim 및 전체 수용은 미완료다. 실패 원인 분석은 관련 실제 실행만 차단하는 지원 작업이다.
 
 ## 회차 합격 기준
 
@@ -27,3 +27,5 @@
 실패 시 해당 조건만 재현하는 빠른 검증으로 원인을 확인하고, 소스 변경 전 계획·영향 범위·독립 검토를 기록한다. 기존 전체 H2 runner의 범위·개인정보·자원 정리 기준을 느슨하게 하지 않는다. 전체 H2 재실행은 관련 수정과 실행 전 검토가 갖춰지고 통합 수용 단계가 된 뒤 수행한다.
 
 과거 V4–V9 시도, 후보별 변경, 검증과 독립 리뷰는 이 폴더의 개별 증거 및 Git 이력에 보존한다. 과거 문서의 체크포인트는 당시 결과이며 최신 상태로 해석하지 않는다. V9 raw/private 자료는 `workflow-artifacts/`에 보존하고 삭제하거나 공개하지 않는다.
+
+최신 정상 접수 및 정상 재시작의 제한 증거는 `workflow-artifacts/delivery/admission-live/normal-20261027-03/`에 보존한다. 실제 실행 시도/검토와 소스 고정은 새 normal-path 후보의 자체 범위이며 V9 결과나 승인을 승계하지 않는다. 원시 DB/Temporal·프로세스·계정 자료는 private로 유지하고 공개 캡처는 합성 alias를 사용한다.

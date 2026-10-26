@@ -90,6 +90,7 @@ async function routeRequest(route) {
   }
   const staticFiles = new Map([
     ['/app.js', ['../experiments/ifpmic-live/web/app.js', 'text/javascript; charset=utf-8']],
+    ['/context.js', ['../experiments/ifpmic-live/web/context.js', 'text/javascript; charset=utf-8']],
     ['/admission-read.js', ['../experiments/ifpmic-live/web/admission-read.js', 'text/javascript; charset=utf-8']],
     ['/style.css', ['../experiments/ifpmic-live/web/style.css', 'text/css; charset=utf-8']],
     ['/admission.js', ['../experiments/ifpmic-live/web/admission.js', 'text/javascript; charset=utf-8']],
@@ -191,6 +192,7 @@ try {
     await page.getByTestId('stored-admission-refresh').click();
     await page.waitForFunction(() => document.querySelector('[data-testid="stored-admission-status"]')?.textContent === '접수 상태 확인됨');
     assert.equal(await page.getByTestId('detail-status').innerText(), 'QUEUED');
+    assert.equal(await page.locator(`[data-testid="job-row"][data-job-id="${ids.a1}"] .row-status`).innerText(), 'QUEUED');
     assert.equal(await page.getByTestId('stored-admission-run-id').innerText(), '10000000-0000-4000-8000-000000000021');
   });
 

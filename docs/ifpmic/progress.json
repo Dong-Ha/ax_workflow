@@ -665,7 +665,7 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "Admission-read API/SQL/UI delivered: actual isolated API/PostgreSQL pending/refresh/reload verified; other SQL states use synthetic fixtures. Next diagnose V9 claim-expiry in a bounded reproduction and prepare admission-live. Actual Temporal/full H2/AT remain unaccepted.",
+  "next_step": "Normal actual local Temporal admission delivered with same-key single effect, A/B isolation, API/PG/run/sequence-1 receipt agreement and clean same-name restart. Next connect one controlled mock task to stored result/readback. V9 expiry attribution and crash/reclaim/full H2/AT/operations remain unaccepted.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",
@@ -682,7 +682,8 @@
     "shutdown_record": "delivery/iteration-03/shutdown-2026-10-23.json",
     "execution_running": false,
     "paused_candidate_commit": "e33298c",
-    "last_terminal_execution": "delivery/iteration-03/runtime-v9-execution-status.json"
+    "last_terminal_execution": "delivery/iteration-03/runtime-v9-execution-status.json",
+    "last_narrow_execution": "workflow-artifacts/delivery/admission-live/normal-20261027-03/browser/result.json"
   },
   "delivery_mode": {
     "plan": "AGILE-DELIVERY.md",
@@ -697,7 +698,7 @@
       "commit_and_push"
     ],
     "existing_mandatory_gates_preserved": true,
-    "latest_user_visible_change": "I02 now reads authorized admission state through a read-only API/function; actual local API/PG pending, refresh and reload verified. Mock simulation remains separate. Temporal receipt/full H2 remain unaccepted.",
+    "latest_user_visible_change": "I02 now shows actual QUEUED from matching local Temporal run and sequence-1 receipt. Same-key replay, A/B denial, reload and clean restart preserve the same run. Mock simulation is separate; full H2/AT remains unaccepted.",
     "reporting_rule": "Lead with visible behavior; explicitly report no new visible feature when only internal evidence advances. Keep stage completion, visible flows, and test counts separate.",
     "next_visible_acceptance": "One persisted request admitted by the actual execution engine; matching job/run/receipt and QUEUED displayed, with duplicate, authorization and reload checks. Mandatory execution gates preserved.",
     "current_stage_completion": {
@@ -719,7 +720,7 @@
       "scope": "Source path/schema/applicability only; no actual execution acceptance."
     },
     "current_candidate_static_verification": "evidence/b03/h2-runtime-full-runner-source-review-v9.json",
-    "next_foundation_scope": "Admission-read API/SQL/UI delivered: actual isolated API/PostgreSQL pending/refresh/reload verified; other SQL states use synthetic fixtures. Next diagnose V9 claim-expiry in a bounded reproduction and prepare admission-live. Actual Temporal/full H2/AT remain unaccepted.",
+    "next_foundation_scope": "Normal actual local Temporal admission delivered with same-key single effect, A/B isolation, API/PG/run/sequence-1 receipt agreement and clean same-name restart. Next connect one controlled mock task to stored result/readback. V9 expiry attribution and crash/reclaim/full H2/AT/operations remain unaccepted.",
     "candidate_authoring_reviews": {
       "independent": "evidence/b03/h2-runtime-full-execution-contract-review-v9.json",
       "tc": "evidence/b03/h2-runtime-full-execution-tc-review-v9.json"
@@ -744,7 +745,8 @@
     ],
     "runtime_execution_status": "delivery/iteration-03/runtime-v9-execution-status.json",
     "plan_data": "delivery-plan.json",
-    "implementation_requires_full490": false
+    "implementation_requires_full490": false,
+    "narrow_execution_scope": "One normal local Temporal/PG admission and planned clean restart only; original full H2/AT stage acceptance unchanged."
   },
   "visible_deliveries": [
     {

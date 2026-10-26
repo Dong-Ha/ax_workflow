@@ -1,6 +1,6 @@
 {
   "schema_version": "ifpmic.delivery-plan.v1",
-  "updated_on": "2026-10-26",
+  "updated_on": "2026-10-27",
   "current_flow": "admission",
   "policy": {
     "work_in_progress_limit": 1,
@@ -15,10 +15,10 @@
     {
       "id": "admission",
       "title": "저장한 요청의 실행 접수",
-      "status": "in_progress",
+      "status": "delivered",
       "outcome": "저장한 요청 한 건의 실제 엔진 접수와 같은 job/run/receipt·QUEUED를 화면에서 확인한다.",
-      "next_action": "admission-live: V9 claim-expiry 관측 실패를 작은 재현으로 진단하고, 변경 범위·관련 복구 검사·실제 접수 한 건의 실행 준비를 정한다. full490은 자동 반복하지 않는다.",
-      "blocker": "실제 runtime 경로에는 V9 claim-expiry 원인 조사가 남아 있다. 독립적인 mock UI/API 구현은 차단하지 않는다.",
+      "next_action": "minimal-mock: 실제 서비스에서 제한된 모의 작업 한 건을 실행하고 결과 저장·조회까지 같은 작업으로 연결한다.",
+      "blocker": "V9 crash/reclaim 관측 실패는 미해결이며 해당 복구·전체 수용을 차단한다. 새 격리 normal-path 후보는 자체 검토와 실제 run/receipt 증거로 별도 확인한다.",
       "acceptance": [
         "정상 요청의 workspace READY → 실제 Temporal 접수 → 같은 job/command/run/sequence 1 receipt 확인",
         "같은 key 재요청 시 실행 효과 중복 없음",
@@ -104,7 +104,7 @@
         {
           "id": "admission-live",
           "title": "한 요청의 실제 엔진 접수 확인",
-          "status": "not_started",
+          "status": "delivered",
           "mode": "real-engine",
           "outcome": "격리된 로컬 서비스에서 같은 job/command/run/sequence-1 receipt를 화면에서 확인한다.",
           "acceptance": [
@@ -116,26 +116,41 @@
           ],
           "feedback_profiles": [
             "delivery-tool",
+            "execution-owner",
+            "admission-context",
             "admission-local"
           ],
-          "checks_to_add": [
-            "좁은 DB/Temporal·browser 정상/중복/권한/reload 통합 및 owned-resource 정리"
-          ],
-          "blockers": [
-            "V9 관련 실패의 원인·수정 범위 확인과 좁은 복구 검증",
-            "변경 source·환경·격리·권한·cleanup의 준비와 독립 검토"
-          ]
+          "checks_to_add": [],
+          "blockers": [],
+          "evidence": {
+            "normal": "workflow-artifacts/delivery/admission-live/normal-20261027-03/browser/result.json",
+            "database": "workflow-artifacts/delivery/admission-live/normal-20261027-03/db-readback.json",
+            "temporal": "workflow-artifacts/delivery/admission-live/normal-20261027-03/temporal-readback.json",
+            "restart": "workflow-artifacts/delivery/admission-live/normal-20261027-03/restart/browser/result.json",
+            "cleanup": "workflow-artifacts/delivery/admission-live/normal-20261027-03/restart/cleanup-summary.json",
+            "captures": [
+              "workflow-artifacts/delivery/admission-live/normal-20261027-03/restart/browser/desktop.png",
+              "workflow-artifacts/delivery/admission-live/normal-20261027-03/restart/browser/mobile-375.png"
+            ],
+            "review": "independent bounded result review by admission_read_review confirmed matching API/DB/Temporal tuple and single effect",
+            "scope": "actual normal admission + exact-key replay + A/B denial + reload + planned clean restart. No crash/reclaim/full H2/AT/device/release acceptance. Runtime/API source unchanged; later recent-list UI sync delta separately verified by offline browser11checks.",
+            "frontend_followup": "workflow-artifacts/delivery/admission-live/normal-20261027-03/frontend-followup.json"
+          }
         }
       ],
       "diagnostic": {
         "id": "claim-expiry",
-        "status": "unresolved",
-        "blocks_slices": [
-          "admission-live"
-        ],
+        "status": "inconclusive",
+        "blocks_slices": [],
         "checkpoint_minutes": 30,
         "next_action": "저장 증거와 최소 관측을 비교하고 원인 또는 부족한 증거·다음 실험 하나를 기록한다.",
-        "limit": "조사 시간 한도는 재계획 시점이며 기존 timeout·합격 기준·승인을 완화하지 않는다."
+        "limit": "조사 시간 한도는 재계획 시점이며 기존 timeout·합격 기준·승인을 완화하지 않는다.",
+        "blocks_acceptance": [
+          "claim-expiry crash/reclaim 복구 수용",
+          "전체 H2/운영 수용"
+        ],
+        "finding": "V9 owner snapshot에는 만료 시각이 없고 poll/관측 deadline 기록도 없어 당시 원인은 확정할 수 없다. 새 helper는 동일 timeout·sleep·claim 조건을 보존하며 첫/마지막 관측 증거만 추가한다.",
+        "scope": "별도 준비·검토된 새 normal-path 접수 후보는 V9 재시도가 아니다. crash/reclaim 복구를 증명하거나 전체 H2 수용으로 승격하지 않는다."
       }
     },
     {
@@ -182,5 +197,6 @@
     "다음 행동 하나",
     "커밋과 push"
   ],
-  "current_slice": "admission-read"
+  "current_slice": "admission-live",
+  "next_flow": "minimal-mock"
 }

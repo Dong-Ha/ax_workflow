@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ifpmic:local-context:v2",
+  "title": "Local admission capability context",
+  "description": "Owned local child/listener health only. This never proves a job/run/receipt or authorizes QUEUED. Legacy unversioned context remains false-only.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "project_id",
+    "profile_version",
+    "release_modes",
+    "execution_connected",
+    "storage",
+    "identity"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "ifpmic.local-context.v2"
+    },
+    "project_id": {
+      "const": "ifpmic-local-demo"
+    },
+    "profile_version": {
+      "const": "local-demo-v1"
+    },
+    "release_modes": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1,
+      "items": {
+        "const": "team_github_tag"
+      }
+    },
+    "execution_connected": {
+      "type": "boolean"
+    },
+    "storage": {
+      "const": "postgresql"
+    },
+    "identity": {
+      "const": "local-demo-oidc"
+    }
+  }
+}

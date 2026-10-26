@@ -15,7 +15,7 @@ IFPMIC workflow 시각화로 확장하는 방향은 [기준 자료와 이관 계
 - `npm run test:ifpmic:delivery:browser`: 빌드된 현황판의 데스크톱·모바일 표시와 API/외부 요청 없음을 offline Chromium으로 확인합니다.
 - `npm run build` 후 `npm exec vite preview -- --host 127.0.0.1 --port 4173`의 `/delivery.html`: 같은 계획 데이터와 실제 보존 결과를 보여주는 현황판입니다. 실시간 서비스 상태가 아닙니다.
 
-선택 검사 통과가 사용자 흐름 전달이나 전체 인수 상태를 자동 변경하지 않습니다. 최신 실제 V9은 490건 중 7통과·1실패·482미실행이며 엔진 접수 화면은 미완료입니다. 기존 `delivery/status.html`은 과거 기록으로 보존합니다.
+선택 검사 통과가 사용자 흐름 전달이나 전체 인수 상태를 자동 변경하지 않습니다. V9 실제 H2는 490건 중 7통과·1실패·482미실행으로 끝났고 claim-expiry 원인은 미확정입니다. 별도 candidate3의 normal-path 실제 접수 결과는 [주기03 기록](./docs/ifpmic/delivery/iteration-03/README.md)에 있으며 V9 재시도·crash/reclaim 수용·전체 H2/AT 인수로 승격하지 않습니다. 기존 `delivery/status.html`은 과거 기록으로 보존합니다.
 
 ## IFPMIC 흐름 보기
 
@@ -43,7 +43,13 @@ G5 작업 공간은 [구현 전 검토한 복구 계약](./docs/ifpmic/evidence/
 
 API와 H2 schema 테스트는 별도 임시 PostgreSQL 클러스터를 사용합니다. 테스트 바이너리는 격리 Paperclip runtime의 pinned PostgreSQL18.1 도구를 사용하고 Paperclip DB·설정을 읽거나 재사용하지 않습니다. `scripts/verify_ifpmic_b03_h2_schema.py`는 커밋 `d8249ec`의 고정 소스·TC 목록을 검증한 과거 runner입니다. 이후 추가된 migration004와 runtime 초안은 그 361건의 통과 범위에 포함되지 않으며, 변경된 작업 트리에서는 새로운 실행 목록·runner 검토가 필요합니다. 과거 private 증거는 `workflow-artifacts/verification/B03/H2/schema/gates/`에 보존합니다. SQL 검사 통과는 실제 Temporal 전달·업무 실행·H2 전체 또는 원본 AT 수용을 뜻하지 않습니다. 과거 G1/G5 runner도 당시 고정 후보의 재현 자료입니다.
 
-H2 runtime은 [작성·검증 상태](./docs/ifpmic/H2-RUNTIME-CHECKPOINT.md)를 기록하며 개발 중입니다. 초안 entry point는 `services.ifpmic_api.execution_runtime`이고 dispatcher와 worker를 별도 프로세스로 실행하도록 설계했습니다. 실제 실행 검증 전에는 운영 실행 대상으로 취급하지 않습니다. 설정은 `IFPMIC_EXECUTION_CONFIG`가 가리키는 소유자 전용 mode0600 파일이며, 부모 디렉토리는 mode0700입니다. 형식 `ifpmic.h2.runtime.v1`은 `mode`(`dispatcher` 또는 `worker`), `identity`, 해당 역할의 명시적 Unix-socket `dsn`, `workspace_root`, `source_manifest_path`, `environment_manifest_path`를 요구합니다. 각 manifest도 같은 private 파일 규칙을 적용합니다. DSN은 `host`, `port`, `dbname`, `user`, `password`를 모두 명시하고 ambient `PG*` 설정은 허용하지 않습니다. Temporal endpoint는 `127.0.0.1:포트`로 제한합니다. 검증할 실행은 고정된 H1 환경의 Python에 `-B`와 비어 있는 private `-X pycache_prefix=절대경로`를 적용합니다. owner가 등록한 deployment/build 및 실제 소스·환경 manifest를 확인한 뒤에만 Temporal에 연결하며, 서비스가 스스로 역할이나 build를 등록하지 않습니다. 승인된 원본 업무 단계와 Agent·사람의 책임은 그대로 유지합니다.
+H2 runtime 구현과 전체 수용 상태는 [checkpoint](./docs/ifpmic/H2-RUNTIME-CHECKPOINT.md)에 기록합니다. 격리된 normal-path 한 건은 candidate3에서 실제 접수·receipt 및 clean restart까지 확인했지만 crash/reclaim, full H2, AT 또는 운영 인수는 아닙니다. 기존 실행 실험은 기본적으로 API/PostgreSQL만 시작하고 dispatcher·worker·Temporal을 연결하지 않습니다. 실제 runtime은 별도 이름의 격리 상태를 명시해 다음처럼 선택합니다.
+
+```sh
+.ifpmic-venv/bin/python experiments/ifpmic-live/launcher.py --name admission-live-01 --execution --execution-toolchain /absolute/path/to/private-H1-installation.json
+```
+
+`--execution-toolchain`은 기존 qualified H1 설치 기록을 지정하며 설치·다운로드를 하지 않습니다. API/owner 준비는 original32 `.ifpmic-venv`에서, dispatcher/worker CLI와 환경 manifest 검증은 qualified36 H1 Python에서 실행됩니다. 새 이름마다 PostgreSQL·Temporal SQLite·workspace·deployment/build identity와 role별 private config를 분리합니다. dispatcher와 worker config는 각 전용 DB role만 사용하며 owner DSN을 worker에 넘기지 않습니다. Temporal listener는 loopback으로 제한하고 서버·API·issuer·DB·runtime 자식은 시작 identity를 확인해 소유한 프로세스만 종료합니다. 실행 context의 versioned `execution_connected` boolean은 연결 상태 관찰일 뿐 receipt 증거가 아니며, 화면의 실제 `QUEUED`는 같은 job/command/run/sequence-1 receipt 조회로 확인해야 합니다. 구체적인 범위와 미수용 항목은 [주기03 기록](./docs/ifpmic/delivery/iteration-03/README.md)을 참고하세요.
 
 B03 H1의 Temporal 도구 검증은 위 API 회귀와 별도로 실행합니다. [승인된 계획](./docs/ifpmic/B03-WORKFLOW.md)과 [H1 실행 계약](./docs/ifpmic/evidence/b03/h1-execution-contract.json)에 따라 격리한 36개 패키지 환경의 Python으로 `scripts/verify_ifpmic_b03_h1.py --toolchain-manifest <private installation.json>`을 실행합니다. 이 명령은 고정 CLI의 loopback 개발 서버와 합성 workflow만 검증하며 실제 job·장비·배포를 실행하지 않습니다. private 설치 기록과 고정 binary가 없으면 실패하고 자동 다운로드하지 않습니다. H1 5건은 별도 필수 검증이며 위 API 명령의 제외 옵션이 H1 생략이나 H6 전체 회귀 면제를 뜻하지 않습니다. H1 환경의 [별도 hash lock](./services/ifpmic_api/requirements-temporal.lock)은 기존 32개 버전을 유지하고 Temporal 관련 4개만 더하며, 기존 API 환경과 lock은 유지합니다.
 
@@ -197,6 +203,8 @@ Python protocol/workspace 검사는 `admission-local`이며 실제 DB/Temporal�
 이 화면의 모의 상태는 프런트엔드 로컬 제공자가 반환하며 새로운 실제 API를 호출하지 않습니다.
 
 
+설정은 `IFPMIC_EXECUTION_CONFIG`가 가리키는 소유자 전용 mode0600 파일이며, 부모 디렉토리는 mode0700입니다. 형식 `ifpmic.h2.runtime.v1`은 `mode`(`dispatcher` 또는 `worker`), `identity`, 해당 역할의 명시적 Unix-socket `dsn`, `workspace_root`, `source_manifest_path`, `environment_manifest_path`를 요구합니다. 각 manifest도 같은 private 파일 규칙을 적용합니다. DSN은 `host`, `port`, `dbname`, `user`, `password`를 모두 명시하고 ambient `PG*` 설정은 허용하지 않습니다. Temporal endpoint는 `127.0.0.1:포트`로 제한합니다. 검증할 실행은 고정된 H1 환경의 Python에 `-B`와 비어 있는 private `-X pycache_prefix=절대경로`를 적용합니다. owner가 등록한 deployment/build 및 실제 소스·환경 manifest를 확인한 뒤에만 Temporal에 연결하며, 서비스가 스스로 역할이나 build를 등록하지 않습니다. 승인된 원본 업무 단계와 Agent·사람의 책임은 그대로 유지합니다.
+
 ### I02 저장된 접수 상태 조회
 
 작업 상세의 **실행 접수** 영역은 `GET /api/v1/jobs/{job_id}/admission`으로 실제 PostgreSQL의 상태를 읽습니다.
@@ -206,7 +214,7 @@ Python protocol/workspace 검사는 `admission-local`이며 실제 DB/Temporal�
 
 Additive [조회 계약](docs/ifpmic/api-extensions/admission-status.v1.json)과 `005_admission_read.sql`은 기존 migration owner/four-role 절차를 따릅니다.
 API runtime에는 읽기 함수 EXECUTE만 추가하며 실행 테이블 직접 SELECT나 다른 역할 권한을 추가하지 않습니다.
-기존 I02 launcher는 재시작 시 새 migration을 적용합니다. 실제 Temporal 실행은 연결하지 않습니다.
+기존 I02 launcher는 재시작 시 새 migration을 적용합니다. 기본 모드는 Temporal을 연결하지 않으며, 위의 명시적 `--execution` 모드만 실제 로컬 접수를 연결합니다.
 기본 `admission-read` 검사는 `delivery-tool`, `admission-dto`, `admission-read-state`의 순수 검사만 실행합니다.
 실제 DB 통합은 별도 검토된 격리 fixture로 실행하며 기본 개발 명령에서 자동 시작하지 않습니다.
 

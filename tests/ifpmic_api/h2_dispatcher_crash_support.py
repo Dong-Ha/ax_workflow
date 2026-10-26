@@ -20,6 +20,10 @@ from uuid import uuid4
 
 import psycopg
 from tests.ifpmic_api.h2_native_bounds import bounded_connect, bounded_harness
+from tests.ifpmic_api.claim_expiry_observer import (
+    BoundedPollSamples,
+    wait_claim_expired as poll_claim_expired,
+)
 
 from tests.ifpmic_api import test_accepted_start_response_loss as accepted_start
 from tests.ifpmic_api import test_h2_runtime_normal_flow as normal
@@ -453,18 +457,68 @@ def kill_at_barrier(case, process, record, barrier, timeout):
 
 def wait_claim_expired(case, claim, timeout):
     command_id = case["group"][18]
-    stop = time.monotonic() + timeout
-    while time.monotonic() < stop:
+    started = time.monotonic()
+    stop = started + timeout
+    samples = BoundedPollSamples(limit=64)
+    poll_count = 0
+    observer_timing = {}
+
+    def read():
+        nonlocal poll_count
+        poll_count += 1
+        query_started = time.monotonic()
         with bounded_connect(normal.owner_dsn(case["harness"]["database"])) as conn:
             row = conn.execute(
-                "SELECT state,generation,claim_token::text,claim_expires_at<=clock_timestamp() "
-                "FROM ifpmic.commands_outbox WHERE command_id=%s", (command_id,),
+                "WITH sampled_clock AS MATERIALIZED "
+                "(SELECT clock_timestamp() AS db_now) "
+                "SELECT o.state,o.generation,o.claim_token::text,"
+                "o.claim_expires_at<=sampled_clock.db_now,o.claim_expires_at,"
+                "sampled_clock.db_now,o.claim_expires_at-sampled_clock.db_now "
+                "FROM ifpmic.commands_outbox AS o CROSS JOIN sampled_clock "
+                "WHERE o.command_id=%s", (command_id,),
             ).fetchone()
-        assert row is not None and row[:3] == ("leased", claim["generation"], claim["token"])
-        if row[3]:
-            return row
-        time.sleep(0.1)
-    raise TimeoutError("original delivery claim did not expire by database clock")
+        query_finished = time.monotonic()
+        samples.append({"poll": poll_count,
+                        "query_seconds": query_finished - query_started,
+                        "db_now": None if row is None else str(row[5]),
+                        "claim_expires_at": None if row is None else str(row[4]),
+                        "db_remaining_ms": (None if row is None or row[6] is None else
+                                            row[6].total_seconds() * 1000.0),
+                        "monotonic_remaining_ms": max(0.0, stop - query_finished) * 1000.0})
+        return row
+
+    def record(event):
+        if event.get("result") == "poll":
+            samples.update_poll(int(event["poll"]), event)
+        elif event.get("result") in ("timeout", "expired"):
+            observer_timing.update(event)
+
+    result = "error"
+    try:
+        row = poll_claim_expired(
+            read=read,
+            is_same_claim=lambda value: value is not None and value[:3] == (
+                "leased", claim["generation"], claim["token"]),
+            is_expired=lambda value: bool(value[3]), timeout=timeout,
+            clock=time.monotonic, sleep=time.sleep, record=record,
+        )
+        result = "expired"
+        return row[:4]
+    except BaseException as error:
+        result = type(error).__name__
+        raise
+    finally:
+        payload = {"kind": "ifpmic.claim-expiry-observation.v1",
+                   "timeout_seconds": timeout, "monotonic_started": started,
+                   "monotonic_stopped": time.monotonic(), "result": result,
+                   "polls": poll_count, "observer_timing": observer_timing,
+                   "first_sample": samples.first, "recent_samples": samples.recent}
+        try:
+            normal._write_private(case["root"] / "claim-expiry-observation.json",
+                                  normal._canonical(payload) + b"\n")
+        except BaseException:
+            # Preserve the original polling outcome if private evidence cannot be written.
+            pass
 
 
 def cleanup_case(case: dict[str, object], expected_killed=(), expected_exit_codes=None):

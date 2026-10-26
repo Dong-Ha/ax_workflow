@@ -35,7 +35,7 @@ function DeliveryPage() {
       <ol>{slices.map(item => <li key={item.id} aria-current={item.id === slice.id ? 'step' : undefined}>
         {item.title} · {item.mode} · {labels[item.status]}
       </li>)}</ol>
-      <p>실제 엔진 접수 화면은 아직 미완료입니다. 이 현황판은 업무 실행 서비스의 가동을 뜻하지 않습니다.</p>
+      <p>{current.status === 'delivered' ? '로컬 접수 흐름을 확인했습니다. 실제 업무 완주와 전체 H2·AT 인수는 남아 있습니다.' : '실제 엔진 접수 화면은 아직 미완료입니다.'} 이 현황판은 실시간 서비스 가동을 뜻하지 않습니다.</p>
     </section>
     <section aria-labelledby="evidence">
       <h2 id="evidence">제품 진척과 검사 결과</h2>
@@ -43,7 +43,7 @@ function DeliveryPage() {
         <article><h3>전체 인수 단계</h3><p className="number">{completed} / {progress.stages.length}</p>
           <p>동일 가중치 단계 수입니다. 작업량이나 남은 시간의 추정치가 아닙니다.</p>
           <p>설계·합성 재생과 로컬 요청 저장이 전달됐습니다. 실제 업무·장비·배포 인수는 남아 있습니다.</p></article>
-        <article><h3>마지막 실제 엔진 검증 · V9</h3>
+        <article><h3>보존된 전체 H2 시도 · V9</h3>
           <p className="number">{runtime.passed_cases} 통과 · {runtime.failed_cases} 실패</p>
           <p>예정 {runtime.inventory}건 중 {runtime.executed_cases}건 실행, {runtime.remaining_inventory_cases_not_executed}건 미실행.</p>
           <p>2026-10-23의 실패 기록입니다. 전체 H2는 미수용이며 재실행하지 않았습니다.</p></article>

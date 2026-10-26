@@ -1,15 +1,8 @@
+import { validateDemoContext } from './context.js';
 import { createAdmissionPanel } from './admission.js';
 import { createStoredAdmissionPanel } from './admission-read.js';
 
 const API = '';
-const DEMO_CONTEXT = Object.freeze({
-  project_id: 'ifpmic-local-demo',
-  profile_version: 'local-demo-v1',
-  release_modes: ['team_github_tag'],
-  execution_connected: false,
-  storage: 'postgresql',
-  identity: 'local-demo-oidc',
-});
 
 const el = (id) => document.getElementById(id);
 const state = {
@@ -36,6 +29,18 @@ const storedAdmission = createStoredAdmissionPanel(document, {
     return data;
   },
   onConfirmed: value => {
+    state.commandEpoch += 1;
+    el('command-receipt').hidden = false;
+    setDetailText('command-id', value.command_id);
+    setDetailText('command-status', value.command_status);
+    let listChanged = false;
+    state.items = state.items.map(job => {
+      if (job.job_id !== value.job_id || (Number.isInteger(job.revision) && job.revision > value.job_revision)
+          || (job.status === value.job_status && job.revision === value.job_revision)) return job;
+      listChanged = true;
+      return { ...job, status: value.job_status, revision: value.job_revision };
+    });
+    if (listChanged) renderList();
     setDetailText('detail-status', value.job_status);
     setDetailText('detail-revision', String(value.job_revision));
     document.querySelector('[data-testid="detail-status"]').classList.toggle('is-draft', value.job_status === 'DRAFT');
@@ -196,11 +201,7 @@ function clearDetail() {
 }
 
 function validateContext(context) {
-  return context && context.project_id === DEMO_CONTEXT.project_id &&
-    context.profile_version === DEMO_CONTEXT.profile_version &&
-    Array.isArray(context.release_modes) && context.release_modes.length === 1 &&
-    context.release_modes[0] === 'team_github_tag' && context.execution_connected === false &&
-    context.storage === 'postgresql' && context.identity === 'local-demo-oidc';
+  return validateDemoContext(context);
 }
 
 function updatePendingUI() {
@@ -528,6 +529,13 @@ async function initializeSession() {
     if (state.userId !== owner || state.accountEpoch !== accountEpoch) return;
     if (!validateContext(context)) throw new Error('데모 프로젝트 설정이 예상한 값과 일치하지 않습니다.');
     state.context = context;
+    if (context.schema_version === 'ifpmic.local-context.v2') {
+      const notice = document.querySelector('[data-testid="scope-notice"] p');
+      notice.textContent = context.execution_connected
+        ? '합성 계정과 mock 프로파일을 사용하는 실제 로컬 접수 모드입니다. 접수 상태는 아래의 실제 영수증 조회로 확인합니다. 장비·사내 SSO·업무 실행 완료와는 별도입니다.'
+        : '로컬 실행 서비스의 연결 상태를 확인해야 합니다. 저장된 접수 상태 조회는 계속할 수 있습니다. 새 요청을 만들기 전에 기존 작업을 확인하세요.';
+      setDetailText('demo-mode', context.execution_connected ? 'MOCK 프로파일 · 로컬 실행 접수' : 'MOCK 프로파일 · 실행 연결 확인 필요');
+    }
     el('context-project').textContent = context.project_id;
     el('context-storage').textContent = 'PostgreSQL 저장';
     el('context-identity').textContent = '로컬 데모 OIDC';

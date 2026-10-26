@@ -1,11 +1,14 @@
 """Isolated live-request demo: production API/PG, local synthetic OIDC/profile.
 
-No dispatcher, worker, Temporal, equipment, publisher or company SSO is started.
+By default no dispatcher, worker or Temporal is started. --execution explicitly
+adds isolated local admission only; no equipment, publisher or company SSO.
 Run with the already qualified .ifpmic-venv and pinned Node; no installation.
 """
 from __future__ import annotations
 
 import argparse
+import base64
+from dataclasses import asdict
 import asyncio
 import fcntl
 import hashlib
@@ -293,6 +296,7 @@ def run(args):
 
     origin = f"http://127.0.0.1:{args.port}"
     issuer = None
+    execution = None
     # Cover startup as well as Uvicorn's restoration/re-raise of TERM.
     def terminate(_signum, _frame):
         raise KeyboardInterrupt()
@@ -302,34 +306,54 @@ def run(args):
         issuer = LocalIssuer(args.issuer_port, origin, secret["oidc_secret"])
         cluster.start()
         store = provision(cluster, secret, node, issuer)
+        if args.execution:
+            from execution import LocalExecution
+            execution = LocalExecution(state=state, toolchain_manifest=Path(args.execution_toolchain),
+                cluster=cluster, secrets_doc=secret, roles=ROLES, database=DATABASE,
+                api_config_path=state / "api-config.json")
+            private_dir(execution.root)
+            private_dir(execution.workspace_root)
         settings = Settings(mode="mock", api_origin=origin, issuer=issuer.issuer,
             client_id=issuer.client_id, client_secret=secret["oidc_secret"],
             authorization_endpoint=issuer.origin + "/authorize", token_endpoint=issuer.origin + "/token",
             jwks_uri=issuer.origin + "/keys", redirect_uri=origin + "/auth/callback",
             post_login_url=origin + "/", allowed_ui_origins=(origin,), csrf_key=bytes.fromhex(secret["csrf_key"]),
             database_dsn=cluster.dsn(ROLES["runtime"], DATABASE, secret["passwords"]["runtime"]),
-            node_executable=str(node), profile_store=str(store))
+            node_executable=str(node), profile_store=str(store),
+            workspace_root=None if execution is None else str(execution.workspace_root))
         app = create_app(settings)
+        if execution is not None:
+            serialized = asdict(settings)
+            serialized["csrf_key"] = base64.urlsafe_b64encode(settings.csrf_key).rstrip(b"=").decode("ascii")
+            private_write(execution.api_config_path, serialized)
+            execution.prepare()
+            if args.port in execution.ports or args.issuer_port in execution.ports:
+                raise RuntimeError("execution ports overlap API or issuer")
+            execution.start()
 
         async def demo_context(request):
             app.state.jobs.pre_authenticate(request)
-            return json_response({"project_id": PROJECT, "profile_version": PROFILE,
+            value = {"project_id": PROJECT, "profile_version": PROFILE,
                 "release_modes": ["team_github_tag"], "execution_connected": False,
-                "storage": "postgresql", "identity": "local-demo-oidc"})
+                "storage": "postgresql", "identity": "local-demo-oidc"}
+            if execution is not None:
+                value.update(schema_version="ifpmic.local-context.v2",
+                             execution_connected=execution.connected())
+            return json_response(value)
 
         app.add_route("/demo/context", demo_context, methods=["GET"])
         app.mount("/", StaticFiles(directory=Path(__file__).with_name("web"), html=True))
         issuer.start()
         private_write(state / "lifecycle.json", {"api_pid": os.getpid(), "api_start_ticks": identity(os.getpid()),
-                      "port": args.port, "issuer_port": args.issuer_port, "storage": "postgresql", "execution_connected": False})
-        print(f"LOCAL_DEMO_STARTING {origin} (PostgreSQL API; synthetic identity/profile; no workflow execution)", flush=True)
+                      "port": args.port, "issuer_port": args.issuer_port, "storage": "postgresql", "execution_connected": execution is not None})
+        print(f"LOCAL_DEMO_STARTING {origin} (PostgreSQL API; synthetic identity/profile; execution={execution is not None})", flush=True)
         uvicorn.run(app, host="127.0.0.1", port=args.port, access_log=False,
                     log_level="warning", proxy_headers=False, server_header=False, timeout_graceful_shutdown=10)
     finally:
         signal.signal(signal.SIGTERM, signal.SIG_IGN)  # Repeated TERM must not interrupt cleanup.
         primary = sys.exc_info()[1]
         cleanup_errors = []
-        for closer in ([issuer.close] if issuer is not None else []) + [cluster.stop]:
+        for closer in ([execution.close] if execution is not None else []) + ([issuer.close] if issuer is not None else []) + [cluster.stop]:
             try:
                 closer()
             except Exception as error:
@@ -347,10 +371,14 @@ def main():
     parser.add_argument("--name", default="iteration-02")
     parser.add_argument("--port", type=int, default=8769)
     parser.add_argument("--issuer-port", type=int, default=8770)
+    parser.add_argument("--execution", action="store_true", help="enable isolated local Temporal admission")
+    parser.add_argument("--execution-toolchain", help="absolute private qualified H1 toolchain manifest")
     args = parser.parse_args()
     if (not args.name or len(args.name) > 40 or not args.name.replace("-", "").isalnum()
             or not args.name.isascii() or not 1024 <= args.port <= 65535
-            or not 1024 <= args.issuer_port <= 65535 or args.port == args.issuer_port):
+            or not 1024 <= args.issuer_port <= 65535 or args.port == args.issuer_port
+            or args.execution != bool(args.execution_toolchain)
+            or (args.execution_toolchain and not Path(args.execution_toolchain).is_absolute())):
         parser.error("invalid isolated demo arguments")
     try:
         run(args)

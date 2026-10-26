@@ -2,14 +2,15 @@
 
 최종 제품 목표와 원본 요구사항·역할·승인·AT 인수 기준은 [PLAN](./PLAN.md) 및 설계 계약에 둔다. 이 문서는 사용자에게 결과를 전달하는 순서와 회차 운영만 정한다. 개발 중간 결과와 원본 업무의 최종 인수를 별도로 기록한다.
 
-## 현재 체크포인트 · 2026-10-26
+## 현재 체크포인트 · 2026-10-27
 
 - 필수 단계 완료: **2/16 = 12.5%**(동일 가중치 단계 수, 작업량 추정이 아님).
 - 전달된 사용자 흐름: 29단계·6구간의 설계 탐색 및 74개 합성 시나리오, 합성 계정/mock으로 요청을 저장·재조회하는 로컬 흐름.
-- 최근 전달: `admission-read`의 실제 조회 API/SQL과 I02 화면 연결. 실제 API/PostgreSQL 요청 한 건의 접수 대기·재조회·reload를 확인했다. 다음은 `admission-live` 준비다. 격리된 실제 PostgreSQL/Temporal 접수는 `admission-live` 후속 slice다. [V4 구현·검증 계획](./delivery/iteration-03/ADMISSION-UI-PLAN-v4.md)
+- 최근 전달: `admission-live` normal-path candidate3에서 격리 PostgreSQL/Temporal의 실제 접수와 I02 browser 확인을 마쳤다. 저장 요청 한 건이 동일 job/command/run/sequence-1 receipt로 `QUEUED`가 되었고, browser 8개 확인, 두 번의 정확한 idempotency-key POST에도 효과는 한 번이었다. 사용자 A/B 권한 거부와 reload 확인도 통과했다. 실제 clean restart는 POST 0건으로 기존 job/command/run과 identity/count를 보존했다. [V4 범위·절차](./delivery/iteration-03/ADMISSION-UI-PLAN-v4.md)
 - 최신 실제 H2 시도 V9: 490건 중 8건 실행, 7통과·1실패, 482건 미실행. 실패 원인은 DB 시간 기준 claim 만료 관측 timeout이며 아직 확정되지 않았다. [결과](./delivery/iteration-03/runtime-v9-execution-status.json) · [독립 실패 검토](./delivery/iteration-03/runtime-v9-attempt-01-result-review.json)
 - V9 실제 엔진 실행은 자동 재시도하지 않는다. timeout 진단은 30분 checkpoint가 있는 지원 작업이며 관련 실제 runtime 실행만 차단한다. 원인 미확정이어도 독립 UI/API/mock 개발은 진행한다. 진단 시간이 넘으면 범위·소요시간과 다음 조치 한 가지를 보고하고 전체 검증을 자동 반복하지 않는다.
-- 최근 완료한 전달과 다음 작업은 `delivery-plan.json`을 따르며 제품 WIP는 하나로 유지한다. 모듈 내부의 mock 상태는 `pending`/`admitted`/`error`이며 실제 queue·실행·receipt·`QUEUED`를 뜻하지 않는다. 계정별 시나리오 선택만 `sessionStorage`에 보관하고 reload 시 상태 제공자를 다시 조회한다. 원본 요청이나 실제 상태는 수정하지 않는다. 전달 단위는 `admission-read`(실제 read-only API와 SQL ACL tuple), `admission-live`(격리된 실제 엔진 receipt)까지 이어진다. 진단은 제품 WIP와 별도 지원 작업이다.
+- 실행 증거 `workflow-artifacts/delivery/admission-live/normal-20261027-03/`은 실제 SDK run 1건/start 1건/phase `queued`, SQL job/command/binding/receipt 각 1건, A/B deny, clean restart에서 같은 단일 run을 확인한다. 다섯 자식(각 2회 실행 포함)과 API/issuer/PostgreSQL은 force 없이 종료됐다. API/runtime 45개 source는 실제 run 전후 동일했다. context v2 `execution_connected` boolean은 상태 관찰이며 receipt 증거가 아니므로 화면의 `QUEUED` 판정과 분리한다. 최신 V9의 crash/reclaim claim-expiry 원인은 여전히 inconclusive이며 이 candidate는 V9 retry, 전체 H2/full490, 원본 AT, 운영 준비 수용이 아니다. 기존 실패 `normal-01/-02`는 보존됐다.
+- 제품 WIP는 하나로 유지한다. 다음 사용자 흐름은 실제 서비스가 통제하는 최소 mock 실행→결과 저장→화면 조회다. mock 결과는 실제 IFPMIC 작업이나 전체 29단계 실행으로 표시하지 않는다. V9 진단은 별도 지원 작업으로 계속할 수 있으며 관련 crash/reclaim과 전체 수용만 막는다.
 
 ## 다음 사용자 흐름 순서
 
@@ -17,7 +18,7 @@
 |---|---|---|
 | 1. 요청 상태 표시 (`admission-mock`) | mock 상태 제공자로 저장된 I02 요청 상태를 UI에서 조회 | 독립 전달 단위. mock 표기를 유지하고 실제 접수로 표시하지 않는다. |
 | 2. 실제 read API (`admission-read`) | read-only API와 SQL ACL tuple로 같은 요청 상태 확인 | V3 tuple 의미를 보존하고 변경된 DB/API/ACL 경계를 검토한다. 실제 엔진 receipt를 만들거나 `QUEUED`로 승격하지 않는다. |
-| 3. 실제 접수 (`admission-live`) | 저장 요청 하나를 격리된 PostgreSQL/Temporal에 접수하고 같은 job/run/receipt를 I02 화면에서 확인 | 변경된 source·환경·계약·ACL과 격리·cleanup 절차를 고정하고 독립 검토한 뒤 좁은 통합 검사. full490은 이 통합의 선행조건이 아니며 전체 H2/AT/운영 수용은 별도다. |
+| 3. 실제 접수 (`admission-live`) | 저장 요청 하나를 격리된 PostgreSQL/Temporal에 접수하고 같은 job/run/receipt를 I02 화면에서 확인 | candidate3 normal path는 별도 후보로 확인했다. crash/reclaim, 전체 H2/AT/운영 수용은 미완료이며 기존 acceptance 게이트와 별도로 남는다. |
 | 4. 모의 작업 완주 | 실제 로컬 서비스에서 제한된 모의 작업 한 건의 실행·결과 저장·조회 연결 | 실제 작업과 분리된 mock 모드임을 표시하고 상태 이력·재시작 경계를 확인한다. |
 | 5. 사람 대기와 재개 | 질문/사람 제출 후 같은 작업이 이어지고 새로고침·재시작 뒤에도 상태를 복구 | 사람 역할과 원래 gate를 보존하며 응답 없는 자동 통과를 금지한다. |
 | 6. 첫 실제 사례 | I2C 읽기 오류 처리와 정상·실패 KUnit 사례 확인 | 승인된 저장소·toolchain·품질 환경을 사용하고 소스, TC, 실제 실행 증거를 함께 수용한다. 장비·배포는 별도 승인이다. |
@@ -64,6 +65,8 @@ I02 작업 상세에서 모의 접수 대기·접수됨·조회 실패를 선택
 
 순수 DTO 17건과 브라우저 상태 controller 6건, 격리 PostgreSQL의 API/ACL/함수 권한·조회 전용 검사 및 합성 SQL 다섯 상태 분류가 통과했다. 최초 DB 검사 준비 실패는 새 API 검사를 H2 watchdog에 잘못 연결한 fixture 문제였으며, 해당 새 경로만 분리해 원래 H2 시간 기준을 유지했다. 별도 실제 I02 browser는 합성 계정의 요청 한 건을 저장하고 실제 API/DB의 pending·재조회·reload를 확인했다. source 41개 before/after 일치, owned API/OIDC/PG 정리와 브라우저 종료를 확인했다. 증거는 `workflow-artifacts/delivery/admission-read/ui-20261026-01/`에 보존한다. 실제 Temporal 접수나 full490/AT는 실행·수용하지 않았으며 단계 수는 2/16으로 유지한다.
 
-다음 행동은 V9 claim-expiry 관측 실패의 작은 진단과 `admission-live` 실행 준비다. 실패 원인이 확정되기 전 전체 장시간 실행을 반복하지 않는다.
+후속 actual normal-path candidate3는 별도 격리 후보로 실행했으며 그 결과와 한계는 위 current checkpoint 및 V4 기록에 둔다. 다음 제품 흐름은 실제 서비스가 통제하는 최소 mock 실행과 결과 조회다. V9 claim-expiry 진단은 별도 지원 작업으로 유지하고 원인 확정 전 full490이나 장시간 runtime suite를 반복하지 않는다.
 
 실제 browser 최초 캡처의 짧은 계정/작업 식별자 표시를 보완해, 같은 격리 작업을 POST 없이 재조회하는 `--read-existing` 모드로 공개용 alias 캡처를 다시 만들었다. `ui-20261026-01/recapture/browser/`의 캡처와 정리 기록이 최종 화면 증거다. 제품 source는 그대로였으며 요청을 추가 저장하지 않았다.
+
+후속 full H2 후보는 새 claim observer module과 private `claim-expiry-observation.json`을 source/raw inventory에 포함해 검토해야 한다. 기존 V9 source pin·raw 정책을 새 코드의 승인으로 재사용하거나 기존 full runner를 자동 재실행하지 않는다. 이는 정상 접수 전달과 별도의 전체 수용 준비다.

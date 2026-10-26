@@ -7,8 +7,11 @@ import { feedbackCommands, parseArgs, planPath, selectFlow, selectSlice } from '
 const plan = JSON.parse(readFileSync(planPath, 'utf8'));
 const cli = new URL('../scripts/ifpmic-delivery.mjs', import.meta.url);
 
-test('only one active flow; later work cannot silently replace current delivery', () => {
-  assert.deepEqual(plan.flows.filter(flow => flow.status === 'in_progress').map(flow => flow.id), [plan.current_flow]);
+test('at most one active flow; latest completed delivery stays selected until next work starts', () => {
+  const active = plan.flows.filter(flow => flow.status === 'in_progress');
+  assert.ok(active.length <= 1);
+  if (active.length) assert.equal(active[0].id, plan.current_flow);
+  else assert.equal(selectFlow(plan).status, 'delivered');
   assert.equal(selectFlow(plan).id, 'admission');
   assert.throws(() => selectFlow(plan, 'nonexistent'));
 });
@@ -18,7 +21,8 @@ test('slice selection isolates mock development from runtime diagnostics', () =>
   const slice = selectSlice(flow, 'admission-mock');
   assert.ok(selectSlice(flow, plan.current_slice));
   assert.deepEqual(slice.blockers, []);
-  assert.deepEqual(flow.diagnostic.blocks_slices, ['admission-live']);
+  assert.deepEqual(flow.diagnostic.blocks_slices, []);
+  assert.ok(flow.diagnostic.blocks_acceptance.some(item => item.includes('crash/reclaim')));
   assert.throws(() => selectSlice(flow, 'missing'));
   assert.throws(() => selectSlice(selectFlow(plan, 'minimal-mock'), slice.id));
 });
@@ -29,7 +33,7 @@ test('profiles run only allowed local checks and reject injected or stale names'
   assert.deepEqual(feedbackCommands(flow, mock).map(item => item.name), ['delivery-tool', 'admission-state']);
   assert.throws(() => feedbackCommands(flow, mock, ['admission-local']));
   const live = selectSlice(flow, 'admission-live');
-  assert.equal(feedbackCommands(flow, live).length, 2);
+  assert.equal(feedbackCommands(flow, live).length, 4);
   assert.deepEqual(feedbackCommands(flow, live, ['admission-local'])[0].args.slice(-2), [
     'tests/ifpmic_api/test_execution_protocol.py', 'tests/ifpmic_api/test_execution_workspace.py',
   ]);
@@ -57,7 +61,7 @@ test('default CLI prints a plan without running test processes', () => {
   assert.match(result.stdout, /개발 검사 통과는.*수용을 뜻하지 않습니다/);
   assert.doesNotMatch(result.stdout, /검사 기록:/);
   assert.ok(result.stdout.includes(selectSlice(selectFlow(plan), plan.current_slice).title));
-  assert.doesNotMatch(result.stdout, /admission-local:/);
+
 });
 
 test('explicit profile selection prints only that profile without starting it', () => {
