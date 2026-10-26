@@ -2,7 +2,9 @@
 
 > 현재 사용자 흐름별 전달 순서와 빠른 개발 검증은 [애자일 전달 계획](./AGILE-DELIVERY.md)을 따른다. 아래 원본 범위와 최종 AT·보안·승인 게이트는 그대로 유지한다. 중간 mock/부분 결과를 최종 인수로 계산하지 않는다.
 
-현재 admission 제품 slice는 `admission-mock`(I02 UI mock 상태 조회), `admission-read`(실제 read-only API와 SQL ACL tuple), `admission-live`(격리된 실제 엔진 receipt) 순이다. Mock 모듈 상태는 `pending`/`admitted`/`error`로 한정되고 실제 queue·실행·receipt·`QUEUED`를 뜻하지 않는다. 계정별 시나리오 선택만 sessionStorage에 저장하고 reload 때 상태 제공자를 다시 조회하며, 실제 저장 상태는 수정하지 않는다. V9 timeout 진단은 30분 checkpoint의 별도 지원 작업이며 관련 runtime 실행만 막는다. Mock/read slice는 각각 사용자 결과로 전달할 수 있지만 전체 admission 또는 AT 인수 상태를 뜻하지 않는다. 검토 범위는 바뀐 코드/trust boundary와 영향 경로이며 untouched source 전체를 반복 검토하지 않는다. 이 전달 순서는 design-v1 원본 계약이나 V3/V9 역사 증거·승인을 수정하거나 후속 후보에 승계하지 않는다.
+현재 접수 흐름은 mock 상태 조회 → 실제 read API → 실제 엔진 접수로 나눠 전달했다. 다음 최소 모의 흐름도 합성 결과 조회 → 저장 결과의 실제 조회 → 제한된 실제 서비스 실행으로 나눈다. 사람 대기/재개와 첫 I2C 사례의 slice도 `delivery-plan.json`에 둔다. 설계와 구현은 사용자 행동 하나에 필요한 변경만 먼저 연결하며, 순수 계산/계약·저장/권한·실행 activity·화면 controller를 분리해 각 경계를 작은 검사로 개발한다.
+
+기본 검사는 변경 경계에 맞게 선택하고 전달 도구·supervisor·browser·build를 모든 변경에 묶지 않는다. 원본 전체 H2/AT는 최종 수용에 남긴다. V9 timeout 진단은 30분 checkpoint의 별도 지원 작업이며 관련 crash/reclaim 및 전체 수용만 차단한다. 검토는 바뀐 경계와 영향 경로에 한정하고, 실제 DB/Temporal 연결 전 변경된 보안 경계는 독립 검토한다. 과거 후보의 승인과 증거는 후속 후보에 승계하지 않는다.
 
 현재 AX의 기록 관제와 Paperclip 실험을 기반으로, IFPMIC 설계서의 업무 흐름을 Paperclip 기반 화면에서 확인하고 조작할 수 있게 한다. 최종 기준은 제공된 DOCX와 ZIP의 계약이다. 첫 산출물은 계약에 맞는 흐름 시각화이며, 다음 완료 단위는 B01–B05의 지속 실행 가능한 모의 완주다.
 

@@ -27,10 +27,36 @@
 
 ## 진행 현황과 검사 도구
 
+### 이번 리팩토링의 판단과 실행 순서
+
+기존 규칙은 좁은 개발 검증을 허용하지만 도구는 `admission` 이름에 고정되어 있었다. 다음 흐름에는 slice가 없어 같은 실행 도구로 착수할 수 없었고, 제품 코드만 바뀌어도 전달 도구 자체의 검사와 supervisor 검사가 기본 묶음에 따라붙었다. 이 결합을 제거한다. 과거 모델 사용량의 정확한 비중은 이 자료만으로 산정할 수 없으며, 실행 시간은 검증 비용을 관찰하는 지표로 사용한다.
+
+`delivery-plan.json`의 `feedback_profiles`는 기본 실행 목록이고 `allowed_feedback_profiles`는 필요할 때 명시 선택할 수 있는 목록이다. 새 흐름도 같은 CLI를 쓰며 `--flow`만 선택하면 해당 흐름의 `default_slice`를 출력한다. 현재 선택은 마지막 전달인 admission-live로 유지한다. 다음 구현을 시작할 때만 현재 flow/slice와 WIP 상태를 변경한다.
+
+다음 minimal-mock은 **합성 결과 조회 화면 → 저장 결과의 실제 조회 → 실제 서비스의 제한된 모의 실행**으로 나눈다. 각 slice는 이전 slice의 통과 증거를 보존하고 바뀐 경계만 다시 검사한다. 후속 사람 대기/재개와 I2C 사례도 JSON에 착수 가능한 slice로 나눴다. 아직 구현되지 않은 slice의 기본 `delivery-tool`은 계획/선택 도구만 검사한다. `checks_to_add`의 기능 검사를 구현하고 코드에 고정 profile로 등록하기 전에는 기능 검증 완료로 보고하지 않는다.
+
+| 변경 경계 | 개발 피드백 | 통합 시 확인 |
+|---|---|---|
+| 결과 DTO·순수 계산 | 정상/오류 identity·금지 필드 등 변경 계약만 검사 | 해당 API 소비 경로 |
+| 화면 상태 controller | 대기·완료·오류·계정/작업 전환 | 바뀐 사용자 흐름의 browser/캡처 |
+| SQL·권한·API | 순수 DTO와 쿼리 경계 검토 | 변경된 ACL·멱등성·visibility의 격리 DB 검사 |
+| Temporal activity·supervisor | 활동 재시도·identity·정리의 관련 검사 | 준비된 단일 실제 경로와 필요한 복구 사례 |
+| 전달 계획·검사 도구 | `delivery-tool` | 제품 DB/Temporal 실행 불필요 |
+
+개발 반복마다 browser·build·전체 runtime을 묶지 않는다. TypeScript/번들 영향이 있으면 해당 검사 또는 build를 선택하고, 계약 변경이 소비자에 영향을 주면 그 소비 경로까지 넓힌다. 실제 DB/Temporal 연결 전 변경된 보안 경계의 독립 검토와 최종 전체 수용은 유지한다. 같은 source·환경·검사 범위에서 통과한 검사를 마무리 보고용으로 다시 실행하지 않는다. 실패 시 해당 profile에서 멈추고 기록의 로그와 소요시간으로 작은 재현을 선택한다.
+
+### 다음 실행 계층의 설계 경계
+
+제한된 모의 작업은 순수 evaluator, 저장/권한 repository, Temporal activity, 화면 controller로 분리한다. evaluator는 정제된 입력만 받고 DB·네트워크·장비 없이 검사할 수 있게 한다. 저장 계층은 job/command/run identity와 같은 결과의 재시도 멱등성을 책임지고, activity는 기존 실제 접수 이후에만 이를 호출한다. 실행 모드는 workflow replay에서 재현 가능하도록 기록된 입력/활동 결과로 전달한다.
+
+작업 결과의 pending/completed와 전체 job 상태는 별도 계약으로 둔다. 모의 작업 성공만으로 `QUEUED`를 전체 업무 완료로 바꾸거나 P01·사람 승인 단계를 통과시키지 않는다. API는 기존 visibility 경계를 사용하고 화면은 원시 자료 없이 정제된 모의 결과만 표시한다. 이 구조를 차례로 구현하며 전체 29단계 엔진을 먼저 완성할 필요가 없도록 한다.
+
+리팩토링 확인: 전달 CLI/계획 집중 검사 10건 통과, 실제 `--profile delivery-tool` wrapper 569ms, TypeScript 검사 통과. 결과는 `workflow-artifacts/delivery/2026-10-26T16-00-12.091Z-33518/result.json`에 보존한다. 최초 검사에서 새 slice의 id와 화면 제목을 혼동한 assertion 하나를 수정한 뒤 해당 검사만 재확인했다. 새 제품 기능 없음. DB/Temporal/browser/full490은 이번 변경의 검증에 실행하지 않았고 필수 단계 완료는 2/16을 유지한다.
+
 현재 흐름·완료 조건·상태는 저장소의 단일 기준 파일 `docs/ifpmic/delivery-plan.json`에 기록하고, 루트 `/delivery.html`에서 같은 데이터를 보여준다. 흐름이나 상태를 바꾸면 JSON을 함께 갱신한다. 대시보드에 표시된 단계 완료 수는 원본 필수 단계의 수용 상태를 대체하지 않는다.
 
-- `npm run ifpmic:delivery`: 기본 목표 행동과 검사 범위를 출력한다. `--slice` 생략 시 `delivery-plan.json`의 `plan.current_slice`를 사용한다. `--profile`은 선택 사항이며 slice allowlist의 부분집합을 지정한다. 현재 `admission-mock`은 기본 `delivery-tool`과 `admission-state` Node controller regression을, `admission-read`는 `delivery-tool`·`admission-dto`·`admission-read-state`, `admission-live`는 `delivery-tool`·`admission-local`을 선택한다. 모두 기본 실행에서는 DB를 시작하지 않는다. 오프라인 fixture 기반 UI browser 검사는 `npm run ifpmic:admission:browser`로 별도 명시한다.
-- `npm run ifpmic:delivery:check`: 현재 slice/profile에서 선택된 검사만 실행하며 DB/Temporal/서비스를 시작하지 않는다. `admission-mock` 기본 실행은 Node 전달 도구 및 `admission-state` controller 회귀 검사를 수행하고 Python protocol/workspace 검사를 항상 함께 실행하지 않는다. slice별 기본 실행 목록은 JSON의 `feedback_profiles`를 따른다.
+- `npm run ifpmic:delivery`: 기본 목표 행동과 검사 범위를 출력한다. 현재 흐름은 `plan.current_slice`, 다른 `--flow`는 해당 흐름의 `default_slice`를 사용하고 `--slice`로 덮어쓸 수 있다. `--profile`은 해당 slice의 허용 목록에서 선택한다. `admission-mock` 기본은 `admission-state`, `admission-read`는 `admission-dto`·`admission-read-state`, `admission-live`는 `admission-context`·`admission-local`이다. 오프라인 UI browser는 `npm run ifpmic:admission:browser`로 별도 명시한다.
+- `npm run ifpmic:delivery:check`: 선택된 검사만 실행하며 DB/Temporal/서비스를 시작하지 않는다. 기본 실행은 JSON의 `feedback_profiles`를 따른다. 전달 도구 변경 시 `--profile delivery-tool`, supervisor 변경 시 live slice에서 `--profile execution-owner`를 명시한다. profile별/전체 실행 시간을 출력하고 private 결과에 남긴다.
 - `--level integration` 또는 `--level acceptance`: 해당 단계의 남은 필수 조건을 출력한다. `--level integration|acceptance --run` 실행기는 미구현이며 종료 코드 2로 실패한다. 이 CLI 제한은 V4 절차에 맞게 준비·검토된 별도 실제 DB/Temporal 통합 실행을 막지 않는다.
 - slice별 필수 검사는 작업 전에 고정한다. 추가·반복은 변경 코드, 실패 재현 또는 미해결 우려에만 한정하고 통과하면 멈춘다. 각 명령의 피드백 목표는 60초 이내다. browser 및 build 검사는 별도 명시 선택이며 기본 묶음에 포함된 것으로 간주하지 않는다. 검토는 변경된 코드·trust boundary와 그 영향 경로에 한정하고 손대지 않은 전체 source의 반복 검토를 요구하지 않는다. 실제 DB/Temporal 연결 전 변경된 SQL/ACL/권한·개인정보 경계는 독립 검토한다.
 

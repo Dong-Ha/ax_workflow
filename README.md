@@ -9,7 +9,9 @@ IFPMIC workflow 시각화로 확장하는 방향은 [기준 자료와 이관 계
 현재 개발 우선순위는 [애자일 전달 계획](./docs/ifpmic/AGILE-DELIVERY.md)과 [전달 기준 데이터](./docs/ifpmic/delivery-plan.json)를 따릅니다. 한 번에 전달 단위 하나를 진행하며, 접수 흐름을 mock 화면 → 실제 조회 API → 실제 엔진 접수로 나눕니다. UI/API 구현과 관련 검사는 전체 490건 수용을 기다리지 않고 진행하며, 실제 엔진 활성화·전체 H2·원본 AT 인수 기준은 유지합니다.
 
 - `npm run ifpmic:delivery`: 현재 목표와 선택 검사 목록을 출력합니다. 실행하지 않습니다.
-- `npm run ifpmic:delivery:check`: 현재 전달 단위의 고정 검사만 실행합니다. 기본 mock 단위는 전달 도구와 접수 상태 controller를 검사하고, Python profile(`admission-dto`, `admission-local`)에는 `.ifpmic-venv`의 고정 의존성이 필요합니다. DB/Temporal을 시작하지 않습니다. 로그와 요약은 ignored `workflow-artifacts/delivery/`에 보존합니다.
+- `npm run ifpmic:delivery:check`: 현재 전달 단위의 고정 검사만 실행합니다. 기본 mock 단위는 접수 상태 controller만 검사하고, Python profile(`admission-dto`, `admission-local`)에는 `.ifpmic-venv`의 고정 의존성이 필요합니다. DB/Temporal을 시작하지 않습니다. 로그와 요약은 ignored `workflow-artifacts/delivery/`에 보존합니다.
+- `npm run ifpmic:delivery -- --flow minimal-mock`: 다음 흐름의 기본 slice와 아직 추가할 기능 검사를 출력합니다. 새 흐름마다 CLI를 수정할 필요가 없습니다. 기본 `feedback_profiles`와 선택 가능한 `allowed_feedback_profiles`를 구분하며 `--profile`로 검사 하나만 선택할 수 있습니다.
+- `npm run ifpmic:delivery:check -- --profile delivery-tool`: 전달 계획/도구 변경 시 도구 검사만 실행합니다. 각 profile과 전체 소요시간을 출력합니다.
 - `npm run ifpmic:delivery:browser`: 빌드 산출물만 사용하는 offline Chromium 화면 검사이며 API 서버를 시작하지 않습니다.
 - `npm run ifpmic:delivery -- --level integration` 또는 `--level acceptance`: 남은 조건을 출력합니다. 이 두 수준에 `--run`을 추가하면 자동 실행 미연결로 실패하며, 통과로 기록하지 않습니다.
 - `npm run test:ifpmic:delivery:browser`: 빌드된 현황판의 데스크톱·모바일 표시와 API/외부 요청 없음을 offline Chromium으로 확인합니다.
@@ -215,12 +217,12 @@ Python protocol/workspace 검사는 `admission-local`이며 실제 DB/Temporal�
 Additive [조회 계약](docs/ifpmic/api-extensions/admission-status.v1.json)과 `005_admission_read.sql`은 기존 migration owner/four-role 절차를 따릅니다.
 API runtime에는 읽기 함수 EXECUTE만 추가하며 실행 테이블 직접 SELECT나 다른 역할 권한을 추가하지 않습니다.
 기존 I02 launcher는 재시작 시 새 migration을 적용합니다. 기본 모드는 Temporal을 연결하지 않으며, 위의 명시적 `--execution` 모드만 실제 로컬 접수를 연결합니다.
-기본 `admission-read` 검사는 `delivery-tool`, `admission-dto`, `admission-read-state`의 순수 검사만 실행합니다.
+기본 `admission-read` 검사는 `admission-dto`, `admission-read-state`의 순수 검사만 실행합니다. 전달 도구 자체의 검사는 도구/계획을 변경할 때 명시 선택합니다.
 실제 DB 통합은 별도 검토된 격리 fixture로 실행하며 기본 개발 명령에서 자동 시작하지 않습니다.
 
 ```sh
 npm run ifpmic:delivery
-npm run ifpmic:delivery:check -- --profile admission-dto
+npm run ifpmic:delivery:check -- --slice admission-read --profile admission-dto
 npm run ifpmic:admission:browser
 ```
 

@@ -49,7 +49,6 @@
             "새로고침 후 선택 작업 상태 재조회"
           ],
           "feedback_profiles": [
-            "delivery-tool",
             "admission-state"
           ],
           "checks_to_add": [],
@@ -62,7 +61,11 @@
               "workflow-artifacts/delivery/admission-mock/2026-10-26T14-22-59-553Z/mobile-375.png"
             ],
             "scope": "offline synthetic API fixtures; no DB/Temporal/real admission acceptance"
-          }
+          },
+          "allowed_feedback_profiles": [
+            "delivery-tool",
+            "admission-state"
+          ]
         },
         {
           "id": "admission-read",
@@ -76,7 +79,6 @@
             "GET이 실행이나 receipt를 생성하지 않음"
           ],
           "feedback_profiles": [
-            "delivery-tool",
             "admission-dto",
             "admission-read-state"
           ],
@@ -99,7 +101,12 @@
               "workflow-artifacts/delivery/admission-read/ui-20261026-01/recapture/browser/mobile-375.png"
             ],
             "read_only_recapture": "workflow-artifacts/delivery/admission-read/ui-20261026-01/recapture/browser/result.json"
-          }
+          },
+          "allowed_feedback_profiles": [
+            "delivery-tool",
+            "admission-dto",
+            "admission-read-state"
+          ]
         },
         {
           "id": "admission-live",
@@ -115,8 +122,6 @@
             "QUEUED를 업무 완료로 표시하지 않음"
           ],
           "feedback_profiles": [
-            "delivery-tool",
-            "execution-owner",
             "admission-context",
             "admission-local"
           ],
@@ -135,7 +140,13 @@
             "review": "independent bounded result review by admission_read_review confirmed matching API/DB/Temporal tuple and single effect",
             "scope": "actual normal admission + exact-key replay + A/B denial + reload + planned clean restart. No crash/reclaim/full H2/AT/device/release acceptance. Runtime/API source unchanged; later recent-list UI sync delta separately verified by offline browser11checks.",
             "frontend_followup": "workflow-artifacts/delivery/admission-live/normal-20261027-03/frontend-followup.json"
-          }
+          },
+          "allowed_feedback_profiles": [
+            "delivery-tool",
+            "execution-owner",
+            "admission-context",
+            "admission-local"
+          ]
         }
       ],
       "diagnostic": {
@@ -151,7 +162,8 @@
         ],
         "finding": "V9 owner snapshot에는 만료 시각이 없고 poll/관측 deadline 기록도 없어 당시 원인은 확정할 수 없다. 새 helper는 동일 timeout·sleep·claim 조건을 보존하며 첫/마지막 관측 증거만 추가한다.",
         "scope": "별도 준비·검토된 새 normal-path 접수 후보는 V9 재시도가 아니다. crash/reclaim 복구를 증명하거나 전체 H2 수용으로 승격하지 않는다."
-      }
+      },
+      "default_slice": "admission-live"
     },
     {
       "id": "minimal-mock",
@@ -163,7 +175,93 @@
         "모의 결과 표시",
         "같은 작업의 실행·결과 연결"
       ],
-      "evidence": null
+      "evidence": null,
+      "default_slice": "mock-result-contract",
+      "slices": [
+        {
+          "id": "mock-result-contract",
+          "title": "모의 결과 조회 계약과 화면",
+          "status": "not_started",
+          "mode": "mock",
+          "outcome": "같은 작업의 모의 결과 대기·완료·오류를 합성 데이터로 조회한다.",
+          "acceptance": [
+            "모의 작업 완료와 전체 job 완료를 별도로 표시",
+            "계정/작업 변경 후 늦은 응답 폐기",
+            "결과 DTO에 원시 입력·로그·인증 자료 없음"
+          ],
+          "feedback_profiles": [
+            "delivery-tool"
+          ],
+          "allowed_feedback_profiles": [
+            "delivery-tool"
+          ],
+          "checks_to_add": [
+            "순수 result DTO 검증: 정상·잘못된 identity·민감 필드 거부",
+            "오프라인 controller: 대기·완료·오류·계정 전환",
+            "화면 변경 시 해당 흐름 browser 캡처"
+          ],
+          "blockers": [],
+          "evidence": null
+        },
+        {
+          "id": "mock-result-read",
+          "title": "저장된 모의 결과의 실제 조회",
+          "status": "not_started",
+          "mode": "real-read",
+          "outcome": "볼 수 있는 작업의 저장된 모의 결과를 실제 API에서 조회한다.",
+          "acceptance": [
+            "동일 statement의 사용자 visibility와 job/command/run 검증",
+            "다른 사용자 거부와 모순 결과 503",
+            "GET은 실행·결과를 생성하지 않음"
+          ],
+          "feedback_profiles": [
+            "delivery-tool"
+          ],
+          "allowed_feedback_profiles": [
+            "delivery-tool"
+          ],
+          "checks_to_add": [
+            "변경 SQL/ACL/DTO 경계의 격리 DB/API 검사",
+            "동일 작업 재조회와 reload"
+          ],
+          "blockers": [],
+          "evidence": null
+        },
+        {
+          "id": "mock-task-live",
+          "title": "제한된 모의 작업 실행과 결과 연결",
+          "status": "not_started",
+          "mode": "real-engine-mock-task",
+          "outcome": "실제 로컬 서비스가 모의 작업 한 건을 실행하고 같은 job/run의 저장 결과를 화면에 표시한다.",
+          "acceptance": [
+            "명시적 opt-in이며 기존 접수 경로는 보존",
+            "활동 재시도에도 같은 결과만 저장하며 중복 효과 없음",
+            "모의 작업 완료로 원본 P단계·사람 gate·job 완료를 자동 승격하지 않음",
+            "격리 서비스 정리 및 동일 작업 재시작 조회"
+          ],
+          "feedback_profiles": [
+            "delivery-tool"
+          ],
+          "allowed_feedback_profiles": [
+            "delivery-tool"
+          ],
+          "checks_to_add": [
+            "순수 evaluator와 activity의 실패·재시도 검사",
+            "검토된 격리 PG/Temporal 단일 normal path + 중복 + 권한 + reload",
+            "경계가 바뀐 supervisor의 정리 검사"
+          ],
+          "blockers": [],
+          "evidence": null
+        }
+      ],
+      "integration": [
+        "mock-result-read: 변경 SQL/ACL/API를 검토한 격리 DB 검사",
+        "mock-task-live: 단일 실제 로컬 모의 실행·동일 결과·권한·reload·정리 확인"
+      ],
+      "final_acceptance": [
+        "원본 전체 H2/B단계/AT 및 사람 승인 게이트 보존",
+        "이 흐름은 실제 IFPMIC 업무·장비·배포 인수가 아님"
+      ]
     },
     {
       "id": "human-resume",
@@ -174,7 +272,62 @@
         "사람 응답 없이 자동 통과 금지",
         "중복 응답 및 재시작 복구 확인"
       ],
-      "evidence": null
+      "evidence": null,
+      "default_slice": "human-wait",
+      "slices": [
+        {
+          "id": "human-wait",
+          "title": "사람 대기 조회",
+          "status": "not_started",
+          "mode": "planned",
+          "outcome": "질문과 필요한 응답을 같은 작업에서 확인한다.",
+          "acceptance": [
+            "사람 응답 전 자동 통과 없음",
+            "계정별 접근과 대기 상태 조회"
+          ],
+          "feedback_profiles": [
+            "delivery-tool"
+          ],
+          "allowed_feedback_profiles": [
+            "delivery-tool"
+          ],
+          "checks_to_add": [
+            "질문 DTO/controller 순수 검사",
+            "변경 API/ACL 격리 검사"
+          ],
+          "blockers": [],
+          "evidence": null
+        },
+        {
+          "id": "human-resume-live",
+          "title": "사람 응답 후 같은 작업 재개",
+          "status": "not_started",
+          "mode": "planned",
+          "outcome": "허용된 응답으로 같은 작업을 한 번 재개한다.",
+          "acceptance": [
+            "중복 응답 재개 효과 1회",
+            "재시작 뒤 대기/응답 보존"
+          ],
+          "feedback_profiles": [
+            "delivery-tool"
+          ],
+          "allowed_feedback_profiles": [
+            "delivery-tool"
+          ],
+          "checks_to_add": [
+            "응답 검증·중복·오래된 응답 검사",
+            "검토된 격리 재개·재시작 흐름"
+          ],
+          "blockers": [],
+          "evidence": null
+        }
+      ],
+      "integration": [
+        "구현 시 변경된 권한·저장·실행 경계의 검사와 복구 조건을 고정한다."
+      ],
+      "final_acceptance": [
+        "원본 H2/AT·품질·사람 승인 기준을 유지하며 해당 단계에서 수용한다."
+      ]
     },
     {
       "id": "i2c-kunit",
@@ -186,7 +339,40 @@
         "실제 코드 및 시험 결과 연결",
         "품질·장비·배포 인수 별도 유지"
       ],
-      "evidence": null
+      "evidence": null,
+      "default_slice": "i2c-case",
+      "slices": [
+        {
+          "id": "i2c-case",
+          "title": "첫 I2C 사례의 변경과 결과",
+          "status": "not_started",
+          "mode": "planned",
+          "outcome": "승인된 한 사례의 I2C 수정과 KUnit 결과를 같은 작업에서 확인한다.",
+          "acceptance": [
+            "정상·읽기 오류 동작과 회귀 확인",
+            "소스/ref/toolchain 및 실제 결과 출처 연결",
+            "장비·배포는 별도 인수"
+          ],
+          "feedback_profiles": [
+            "delivery-tool"
+          ],
+          "allowed_feedback_profiles": [
+            "delivery-tool"
+          ],
+          "checks_to_add": [
+            "변경 함수와 관련 KUnit 사례만 우선 실행",
+            "필요한 빌드·통합 및 원본 품질 게이트"
+          ],
+          "blockers": [],
+          "evidence": null
+        }
+      ],
+      "integration": [
+        "구현 시 변경된 권한·저장·실행 경계의 검사와 복구 조건을 고정한다."
+      ],
+      "final_acceptance": [
+        "원본 H2/AT·품질·사람 승인 기준을 유지하며 해당 단계에서 수용한다."
+      ]
     }
   ],
   "report_fields": [

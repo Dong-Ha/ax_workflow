@@ -35,18 +35,23 @@ const profiles = {
 };
 
 export function feedbackCommands(flow, slice, requestedProfiles) {
-  if (flow.id !== 'admission') throw new Error('이 흐름의 개발 검사가 아직 정의되지 않았습니다.');
-  const allowed = slice.feedback_profiles;
-  if (!Array.isArray(allowed) || !allowed.length || new Set(allowed).size !== allowed.length
-      || allowed.some(name => !Object.hasOwn(profiles, name))) throw new Error('Unknown feedback profile in plan');
-  const selected = requestedProfiles ?? allowed;
-  if (!selected.length || new Set(selected).size !== selected.length
-      || selected.some(name => !allowed.includes(name))) throw new Error('Unknown or duplicate feedback profile for slice');
+  const defaults = slice.feedback_profiles;
+  const allowed = slice.allowed_feedback_profiles ?? defaults;
+  const validNames = names => Array.isArray(names) && names.length > 0
+    && new Set(names).size === names.length
+    && names.every(name => Object.hasOwn(profiles, name));
+  if (!validNames(defaults) || !validNames(allowed)
+      || defaults.some(name => !allowed.includes(name))) throw new Error('Invalid feedback profile configuration in plan');
+  const selected = requestedProfiles ?? defaults;
+  if (!validNames(selected) || selected.some(name => !allowed.includes(name))) {
+    throw new Error('Unknown or duplicate feedback profile for slice');
+  }
   return selected.map(name => ({ name, ...profiles[name] }));
 }
 
 export function parseArgs(args) {
   const options = { level: 'feedback', run: false };
+  const seen = new Set();
   for (let i = 0; i < args.length; i++) {
     if (args[i] === '--run') options.run = true;
     else if (['--flow', '--slice', '--level', '--profile'].includes(args[i])) {
@@ -54,7 +59,11 @@ export function parseArgs(args) {
       if (!args[i + 1] || args[i + 1].startsWith('--')) throw new Error(`Missing ${args[i]}`);
       const value = args[++i];
       if (key === 'profile') (options.profiles ??= []).push(value);
-      else options[key] = value;
+      else {
+        if (seen.has(key)) throw new Error(`Duplicate ${args[i - 1]}`);
+        seen.add(key);
+        options[key] = value;
+      }
     } else throw new Error(`Unknown argument: ${args[i]}`);
   }
   if (!['feedback', 'integration', 'acceptance'].includes(options.level)) throw new Error('Unknown validation level');
@@ -117,7 +126,8 @@ export async function main(args = process.argv.slice(2)) {
     }
     return 0;
   }
-  const slice = selectSlice(flow, options.slice ?? (flow.id === plan.current_flow ? plan.current_slice : undefined));
+  const defaultSlice = flow.id === plan.current_flow ? plan.current_slice : flow.default_slice;
+  const slice = selectSlice(flow, options.slice ?? defaultSlice);
   console.log(`이번 전달: ${slice.title} (${slice.mode})\n행동: ${slice.outcome}`);
   console.log(slice.acceptance.map(item => `- ${item}`).join('\n'));
   console.log(`차단 조건: ${slice.blockers.join('; ') || '없음'}`);
@@ -133,9 +143,10 @@ export async function main(args = process.argv.slice(2)) {
   for (const command of commands) {
     const result = await runCheck(command, directory);
     checks.push(result);
-    console.log(`${result.name}: ${result.status}`);
+    console.log(`${result.name}: ${result.status} (${result.elapsed_ms} ms)`);
     if (result.status !== 'passed') break;
   }
+  console.log(`총 검사 시간: ${Date.now() - started} ms`);
   const passed = checks.length === commands.length && checks.every(item => item.status === 'passed');
   await writeFile(resolve(directory, 'result.json'), JSON.stringify({
     schema_version: 'ifpmic.delivery-feedback.v2', flow: flow.id, slice: slice.id, level: 'feedback',
