@@ -7,6 +7,8 @@
 
 이 문서의 기존 독립 검토·격리·실행 전·최종 판정 절차는 원본 B 단계, 실제 runtime/장비/배포, 전체 H2 및 AT 수용에 계속 적용한다. 사용자가 승인한 [V4 주기03 계획](./delivery/iteration-03/ADMISSION-UI-PLAN-v4.md)에 따라 국소 코드·mock UI/API 개선은 전체 490건 통과를 기다리지 않고 선택 검사로 진행할 수 있다. 좁은 실제 DB/Temporal 통합 검사는 변경된 source·환경·계약·권한·격리·cleanup 준비와 해당 독립 검토 후 full490 전에 허용되며, 그 결과는 전체 H2나 운영/AT 수용으로 승격하지 않는다. 이 적용 설명은 원본 요구사항·gate나 아래 B 단계 검증 의무를 낮추지 않는다.
 
+2026-10-26부터 한 회차에 사용자 흐름 하나를 목표로 한다. 개발 우선순위와 다음 목표는 [애자일 전달 계획](./AGILE-DELIVERY.md)을 따르며, 좁은 개발 검사나 통합 결과는 최종 수용을 대신하지 않는다. 전체 H2, B 단계 및 AT는 최종 수용 시 원본 기준에 따라 별도로 검증한다. 이전 실패와 수용 증거는 역사 자료로 보존하며, 과거 승인이나 증거를 새 후보의 승인으로 승계하지 않는다.
+
 Paperclip은 조직·작업·실행 이력의 상위 오케스트레이션/감독 계층이다. IFPMIC workflow, 상태 전이, 담당 경계, 품질 판정 및 승인 계약은 `workflow.v1.json`, `state-contract.json`, `agent-contract.json`, `acceptance-cases.json`이 권위 기준이다. Paperclip 상태 변경만으로 IFPMIC gate를 통과시킬 수 없다.
 
 ## 1. 검증 운영 규칙
