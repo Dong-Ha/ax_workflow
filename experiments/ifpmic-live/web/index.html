@@ -142,6 +142,16 @@
                     </div>
                     <p id="stored-admission-run" hidden>실행 ID <code id="stored-admission-run-id" data-testid="stored-admission-run-id"></code></p>
                   </section>
+                  <section class="stored-mock-task" id="stored-mock-task" data-testid="stored-mock-task" aria-labelledby="stored-mock-task-title" hidden>
+                    <div class="mock-task-heading"><h3 id="stored-mock-task-title">저장된 모의 결과</h3><button class="button button-quiet button-small" id="stored-mock-task-refresh" data-testid="stored-mock-task-refresh" type="button">다시 확인</button></div>
+                    <div role="status" aria-live="polite" aria-atomic="true">
+                      <strong class="stored-mock-task-status" id="stored-mock-task-status" data-testid="stored-mock-task-status"></strong>
+                      <p id="stored-mock-task-description"></p><p id="stored-mock-task-confirmed" hidden></p>
+                    </div>
+                    <ul class="mock-task-checks" id="stored-mock-task-checks" aria-label="저장된 모의 확인 결과" hidden></ul>
+                    <p class="mock-task-run" id="stored-mock-task-run" hidden>실행 ID <code id="stored-mock-task-run-id" data-testid="stored-mock-task-run-id"></code></p>
+                    <p class="mock-task-time" id="stored-mock-task-time" hidden></p>
+                  </section>
                   <section class="mock-task" id="mock-task-panel" data-testid="mock-task-panel" aria-labelledby="mock-task-title" hidden>
                     <div class="mock-task-heading"><h3 id="mock-task-title">모의 작업 결과</h3><span class="mock-task-mode">화면 체험</span></div>
                     <p class="mock-task-boundary">합성 데이터로 결과 조회를 체험합니다. 실제 작업 상태는 바뀌지 않습니다.</p>

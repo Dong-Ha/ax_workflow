@@ -7,6 +7,7 @@ import psycopg
 
 from .errors import ApiError
 from .admission import validate_admission
+from .mock_task import validate_mock_task
 from .request_contract import canonical_uuid, make_cursor, payload_identity, read_cursor
 from .snapshot_bridge import BridgeError, SnapshotBridge, SnapshotRecord
 
@@ -290,6 +291,31 @@ class JobService:
                     or tuple(row[6:10]) != tuple(row[:4])):
                 raise ApiError('DEPENDENCY_UNAVAILABLE')
             return validate_admission(row[10], job_id=row[0], command_id=row[2], job_statuses=JOB_STATUSES)
+
+    def mock_task(self, request, job_id):
+        with self.transaction() as db:
+            current = self.auth.authenticate(db, request)
+            if not canonical_uuid(job_id):
+                raise ApiError('FORBIDDEN')
+            # Visibility, exact create-command identity and the privileged read
+            # capability share one READ COMMITTED statement snapshot.
+            rows = db.execute('''SELECT j.job_id,j.project_id,j.create_command_id,j.owner_id,
+                    c.command_id,c.actor_id,m.job_id,m.project_id,m.create_command_id,m.owner_id,m.mock_task
+                FROM ifpmic.jobs j
+                LEFT JOIN ifpmic.commands c ON c.command_id=j.create_command_id AND c.job_id=j.job_id
+                    AND c.project_id=j.project_id AND c.route='POST /api/v1/jobs'
+                LEFT JOIN LATERAL ifpmic.read_job_mock_task(j.job_id) m ON true
+                WHERE j.job_id=%s AND ''' + VISIBLE + ' LIMIT 2',
+                (job_id, current.user_id, current.user_id, current.user_id, self.auth.now())).fetchall()
+            if not rows:
+                raise ApiError('FORBIDDEN')
+            if len(rows) != 1:
+                raise ApiError('DEPENDENCY_UNAVAILABLE')
+            row = rows[0]
+            if (row[4] != row[2] or row[5] != row[3]
+                    or tuple(row[6:10]) != tuple(row[:4])):
+                raise ApiError('DEPENDENCY_UNAVAILABLE')
+            return validate_mock_task(row[10], {'job_id': str(row[0]), 'command_id': str(row[2])})
 
     def command(self, request, command_id):
         with self.transaction() as db:

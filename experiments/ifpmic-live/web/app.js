@@ -2,6 +2,7 @@ import { validateDemoContext } from './context.js';
 import { createAdmissionPanel } from './admission.js';
 import { createStoredAdmissionPanel } from './admission-read.js';
 import { createMockTaskPanel } from './mock-task-panel.js';
+import { createStoredMockTaskPanel } from './mock-task-read.js';
 
 const API = '';
 
@@ -58,6 +59,22 @@ const storedAdmission = createStoredAdmissionPanel(document, {
 });
 const admissionPanel = createAdmissionPanel(document, { saveScenario: value => writeUserStorage('admission-demo', value) });
 const mockTaskPanel = createMockTaskPanel(document, { saveScenario: value => writeUserStorage('mock-task-demo', value) });
+const storedMockTask = createStoredMockTaskPanel(document, {
+  read: async (jobId, signal) => {
+    const { data } = await request(`/api/v1/jobs/${encodeURIComponent(jobId)}/mock-task`, { signal });
+    const receipt = findReceiptForJob(jobId);
+    if (receipt && data?.command_id !== receipt.command_id) throw new Error('결과의 접수 명령이 일치하지 않습니다.');
+    return data;
+  },
+  onDenied: status => {
+    if (status === 401) resetAccountView();
+    else {
+      clearDetail();
+      el('detail-error').textContent = '이 작업을 확인할 권한이 없습니다.';
+      el('detail-error').hidden = false;
+    }
+  },
+});
 
 const storageKey = (kind, userId = state.userId) => `ifpmic-live:${encodeURIComponent(userId)}:${kind}`;
 const statusMessages = {
@@ -194,6 +211,7 @@ function resetAccountView() {
 function clearDetail() {
   admissionPanel.clear();
   mockTaskPanel.clear();
+  storedMockTask.clear();
   storedAdmission.clear();
   el('job-detail').hidden = true;
   el('empty-detail').hidden = false;
@@ -468,6 +486,7 @@ async function selectJob(jobId, { updateHash = false, refreshList = false } = {}
     state.detailEpoch === detailEpoch && state.selectedJobId === jobId;
   admissionPanel.clear();
   mockTaskPanel.clear();
+  storedMockTask.clear();
   storedAdmission.clear();
   state.selectedJobId = jobId;
   el('empty-detail').hidden = true;
@@ -497,6 +516,7 @@ async function selectJob(jobId, { updateHash = false, refreshList = false } = {}
     const taskPreference = readUserStorage('mock-task-demo');
     mockTaskPanel.show({ userId: owner, jobId, scenario: taskPreference?.job_id === jobId ? taskPreference.scenario : 'pending' });
     storedAdmission.select(jobId);
+    storedMockTask.select(jobId);
     await refreshCommand(findReceiptForJob(jobId), { owner, accountEpoch, detailEpoch });
     if (!current()) return;
     if (refreshList) await loadJobs();
@@ -511,6 +531,7 @@ async function selectJob(jobId, { updateHash = false, refreshList = false } = {}
       el('job-detail').hidden = true;
       admissionPanel.clear();
       mockTaskPanel.clear();
+      storedMockTask.clear();
       storedAdmission.clear();
     }
     setStatus(error.message, 'error');

@@ -5,7 +5,7 @@
 최종 목표는 제공된 IFPMIC 설계 계약의 전체 업무 흐름, 역할, 승인, 보안 경계 및 AT 수용이다. 중간 전달은 사용자 흐름 하나씩 확인하며 mock 결과를 실제 실행이나 최종 인수로 계산하지 않는다.
 
 - 필수 단계: **2/16 = 12.5%**(동일 가중치 단계 수). 목표 전체는 미완료다.
-- 현재 minimal-mock의 첫 결과 화면 slice를 전달했다. I02의 대기/완료/오류 예시와 계정·작업 전환/reload를 확인했으며 실제 결과 저장·조회/모의 실행은 남아 있다. 증거: `workflow-artifacts/delivery/mock-result-contract/2026-10-26T16-05-16-613Z/`.
+- 현재 minimal-mock의 합성 결과 화면과 실제 저장 결과 조회 slice를 전달했다. 실제 API/PG/UI pending·재조회·reload·B 접근 거부를 확인했고, 완료 결과는 합성 SQL seed로 검사했다. 실제 모의 작업 실행·결과 생성은 남아 있다. 증거: `workflow-artifacts/delivery/mock-result-contract/2026-10-26T16-05-16-613Z/`.
 - 전달됨: 29단계·6구간·41연결 탐색 화면 및 74개 합성 시나리오, 요청 저장·조회, 실제 pending API/DB/UI read flow.
 - `admission-live` normal-path candidate3에서 격리 PostgreSQL/Temporal의 실제 SDK run 1건/start 1건/phase `queued`, SQL job/command/binding/receipt 각 1건을 확인했다. Browser는 8개 확인을 통과했고 동일 키 POST 2회에도 실행 효과는 1회였다. A/B 권한 거부와 reload도 통과했다. clean restart에서는 POST 없이 같은 job/command/run/identity/count를 복원했다. 증거: `workflow-artifacts/delivery/admission-live/normal-20261027-03/`.
 - candidate3의 다섯 자식(각 2회 실행 포함), API/issuer/PostgreSQL은 강제 종료 없이 정리됐다. API/runtime 45개 source는 actual run 전후 동일했다. execution context v2 `execution_connected` boolean은 연결 상태 관찰이지 receipt 증명이 아니다.
@@ -13,9 +13,9 @@
 
 ## 다음 작업
 
-현재 제품 흐름은 실제 서비스가 통제하는 최소 mock 실행 → 결과 저장 → 화면 조회다. 첫 `mock-result-contract` slice의 합성 결과 대기/완료/오류 화면은 전달했다. 다음은 `mock-result-read`의 실제 저장 결과 조회 API이며 실행 activity는 그 다음이다. mock 결과는 전체 29단계 실행이나 실제 IFPMIC 업무 결과로 표시하지 않는다. V9 claim-expiry 진단은 30분 checkpoint의 별도 지원 작업으로 진행할 수 있으며 관련 crash/reclaim 실행만 막는다.
+현재 제품 흐름은 실제 서비스가 통제하는 최소 mock 실행 → 결과 저장 → 화면 조회다. 합성 결과 화면과 `mock-result-read` 실제 조회 API를 전달했다. 다음은 `mock-task-live`의 제한된 activity 실행과 같은 job/run 결과 저장이다. mock 결과는 전체 29단계 실행이나 실제 IFPMIC 업무 결과로 표시하지 않는다. V9 claim-expiry 진단은 30분 checkpoint의 별도 지원 작업으로 진행할 수 있으며 관련 crash/reclaim 실행만 막는다.
 
-1. `npm run ifpmic:delivery -- --flow minimal-mock`으로 다음 기본 slice `mock-result-contract`와 선택 검사를 확인한다. 후속 `--slice mock-result-read`에서 추가할 실제 기능 검사를 확인한다. 합성 결과 조회 → 실제 저장 결과 조회 → 제한된 모의 실행 순이다. 구현 착수 시에만 JSON의 current flow/slice와 WIP를 갱신한다. 현재 선택은 minimal-mock/mock-result-contract이며 첫 slice 전달 후 상위 흐름은 진행 중이다. `feedback_profiles`는 기본 검사, `allowed_feedback_profiles`는 필요 시 선택할 검사다. `npm run ifpmic:delivery:check`는 선택 profile만 실행하며 DB/Temporal을 시작하지 않는다.
+1. `npm run ifpmic:delivery`로 현재 read slice와 기본 DTO/controller 검사를 확인한다. 다음 `--slice mock-task-live`는 실행 activity·멱등 기록·실제 단일 흐름 검사를 추가해야 한다. 실제 연결 전에 변경된 source·role/grant·workspace·cleanup을 검토한다. 새 API/SQL이 source manifest를 바꾸므로 이전 execution 이름/identity를 재사용하지 않고 새 격리 후보로 준비한다. 현재 선택은 minimal-mock/mock-result-read이며 상위 흐름은 진행 중이다.
 2. 제품 코드 변경에는 해당 DTO/controller 등 관련 profile을 선택한다. 전달 도구 변경 시 `--profile delivery-tool`, supervisor 변경 시 `--flow admission --slice admission-live --profile execution-owner`를 명시한다. 실행 시간/로그를 확인하고 통과한 검사를 보고용으로 반복하지 않는다. offline fixture browser가 필요할 때 `npm run ifpmic:admission:browser`를 명시 실행한다.
 3. `--level integration|acceptance`는 남은 조건만 출력한다. 해당 수준의 `--run`은 미구현이고 종료 코드 2로 실패한다. candidate3 실행은 별도 명시된 launcher 경로 `--execution --execution-toolchain <absolute-private-H1-installation.json>`을 사용했다. 이는 재실행 승인으로 간주하지 않는다.
 4. 다음 회차에서 화면/캡처, 실제와 mock의 구분, 미검증 범위, 다음 조치 하나를 기록한다. mock/read/live 중간 결과는 전체 admission이나 AT 인수가 아니다.
@@ -25,3 +25,10 @@
 ## 증거와 private 자료
 
 V9 raw/private SQL, history, 인증 및 process identity 자료를 공개하거나 삭제하지 않는다. ignored `workflow-artifacts/`는 `git clean` 등으로 지우지 않는다. 최종 배포 및 외부 제출은 원래 승인 절차를 따른다.
+
+
+## 실제 결과 조회 전달 증거
+
+`workflow-artifacts/delivery/mock-result-read/actual-ui-driver-03/`은 원래 저장 요청 한 건을 POST 없이 읽은 실제 API/PG/browser 결과다. UI refresh/reload·다른 사용자 거부와 DB job/command 각1·결과/binding/receipt 각0을 확인했다. API/issuer/PG/browser는 force 없이 정리되고 source50개 hash가 보존됐다. 완료 결과는 별도의 합성 SQL/API와 offline browser 검증이며 Temporal 실행 증거가 아니다.
+
+기존 실행/기록 함수가 있던 미완성006 초안은 `workflow-artifacts/delivery/mock-result-read/drafts-e8c14e74534b/`에 SHA와 함께 보존했다. 현재006에는 테이블과 runtime 전용 읽기 함수만 있다. 다음 실행 단계의 input/record capability는 별도 migration으로 구현·검토한다. 원본 승인·full490 결과를 승계하지 않는다.

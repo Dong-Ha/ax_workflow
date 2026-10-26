@@ -17,3 +17,10 @@
 .mock-task-controls select { width: 100%; min-height: 42px; padding: 8px 10px; border: 1px solid #876c40; border-radius: 6px; background: #0e1724; color: #e7eef9; }
 .mock-task-controls .button { flex: 0 0 auto; }
 @media (max-width: 480px) { .mock-task-controls { align-items: stretch; flex-direction: column; } }
+
+.stored-mock-task { margin-top: 20px; padding-top: 16px; border-top: 1px solid #344a64; }
+.stored-mock-task .mock-task-heading h3 { font-size: 14px; }
+.stored-mock-task-status { display: block; margin-top: 14px; color: #b3e5d4; font-size: 20px; line-height: 1.4; }
+.stored-mock-task p { margin: 8px 0 12px; color: #a4b8d0; font-size: 12px; line-height: 1.6; }
+.stored-mock-task .mock-task-checks strong { color: #b3e5d4; }
+.stored-mock-task[data-phase="error"] .stored-mock-task-status { color: #f1b8be; }

@@ -37,7 +37,8 @@
     "test:ifpmic:delivery:browser": "node tests/ifpmic-delivery.browser.mjs",
     "ifpmic:admission:browser": "node tests/ifpmic-admission.browser.mjs",
     "ifpmic:admission:pg": "node tests/ifpmic-admission-pg.browser.mjs",
-    "ifpmic:mock-task:browser": "node tests/ifpmic-admission.browser.mjs --mock-task"
+    "ifpmic:mock-task:browser": "node tests/ifpmic-admission.browser.mjs --mock-task",
+    "ifpmic:mock-task:read:browser": "node tests/ifpmic-admission.browser.mjs --stored-mock-task"
   },
   "dependencies": {
     "ajv": "8.20.0",

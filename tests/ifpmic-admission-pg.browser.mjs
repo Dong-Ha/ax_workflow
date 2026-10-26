@@ -25,8 +25,13 @@ function parseArgs(argv) {
   const values = new Map();
   let readExisting = false;
   let expectQueued = false;
+  let expectMockTaskRead = false;
   for (let index = 0; index < argv.length; index += 1) {
     const key = argv[index];
+    if (key === '--expect-mock-task-read' && !expectMockTaskRead) {
+      expectMockTaskRead = true;
+      continue;
+    }
     if (key === '--read-existing' && !readExisting) {
       readExisting = true;
       continue;
@@ -47,6 +52,7 @@ function parseArgs(argv) {
     evidence: path.resolve(values.get('--evidence')),
     readExisting,
     expectQueued,
+    expectMockTaskRead,
   };
 }
 
@@ -103,7 +109,7 @@ function assertAppliedDto(dto, jobId, commandId) {
   assert.equal(dto.error_code, null);
 }
 
-async function runSmoke({ origin, issuerOrigin, evidence, readExisting, expectQueued }) {
+async function runSmoke({ origin, issuerOrigin, evidence, readExisting, expectQueued, expectMockTaskRead }) {
   let queuedPage = null;
   let createReplay = null;
   if (stopRequested) throw new Error('stopped');
@@ -281,6 +287,26 @@ async function runSmoke({ origin, issuerOrigin, evidence, readExisting, expectQu
     assert.equal(await page.getByTestId('detail-status').innerText(), expectedJobStatus);
     safeStep(expectQueued ? 'ui_refresh_preserves_same_job_queued' : 'ui_refresh_preserves_same_job_pending');
 
+    const readMockTask = async () => page.evaluate(async selectedJobId => {
+      const response = await fetch(`/api/v1/jobs/${encodeURIComponent(selectedJobId)}/mock-task`, {
+        credentials: 'same-origin', cache: 'no-store',
+      });
+      return { status: response.status, body: await response.json() };
+    }, jobId);
+    const assertMockPending = response => {
+      assert.equal(response.status, 200);
+      assert.deepEqual(response.body, { schema_version: 'ifpmic.mock-task.v1', job_id: jobId,
+        command_id: commandId, admitted_run_id: null, status: 'pending', result: null, completed_at: null });
+    };
+    if (expectMockTaskRead) {
+      assertMockPending(await readMockTask());
+      await page.getByTestId('stored-mock-task-refresh').click();
+      await page.waitForFunction(() => document.getElementById('stored-mock-task-status')?.textContent === '저장된 모의 결과 없음');
+      assert.equal(await page.locator('#stored-mock-task-run').isVisible(), false);
+      assert.equal(await page.getByTestId('detail-status').innerText(), expectedJobStatus);
+      safeStep('actual_api_pg_mock_result_pending_matches_same_job_command_without_execution');
+    }
+
     const viewport = await page.evaluate(() => ({ width: innerWidth, height: innerHeight }));
     const jobAlias = '00000000-0000-4000-8000-000000000001';
     const commandAlias = '00000000-0000-4000-8000-000000000002';
@@ -304,7 +330,7 @@ async function runSmoke({ origin, issuerOrigin, evidence, readExisting, expectQu
     const captureContainsIdentifiers = await page.evaluate(({ jobId, commandId, admittedRunId }) => {
       const visible = document.body.innerText;
       return visible.includes(jobId) || visible.includes(jobId.slice(0, 8)) || visible.includes(commandId) ||
-        (admittedRunId && visible.includes(admittedRunId));
+        (Boolean(admittedRunId) && visible.includes(admittedRunId));
     }, { jobId, commandId, admittedRunId });
     assert.equal(captureContainsIdentifiers, false);
     const desktopPath = path.join(evidence, 'desktop.png');
@@ -353,8 +379,13 @@ async function runSmoke({ origin, issuerOrigin, evidence, readExisting, expectQu
     assert.equal(report.unexpectedOriginCount, 0);
     safeStep(expectQueued ? 'reload_restores_same_job_command_run_receipt_without_create'
       : 'reload_restores_same_job_pending_without_second_create');
+    if (expectMockTaskRead) {
+      assertMockPending(await readMockTask());
+      await page.waitForFunction(() => document.getElementById('stored-mock-task-status')?.textContent === '저장된 모의 결과 없음');
+      safeStep('reload_rereads_same_stored_mock_result_without_new_create');
+    }
 
-    if (expectQueued) {
+    if (expectQueued || expectMockTaskRead) {
       await page.getByTestId('logout-button').click();
       await page.getByTestId('login-button').waitFor({ state: 'visible' });
       await page.getByTestId('login-button').click();
@@ -370,6 +401,7 @@ async function runSmoke({ origin, issuerOrigin, evidence, readExisting, expectQu
         return { status: response.status, listing: await listing.json() };
       }, jobId);
       assert.equal(denied.status, 403);
+      if (expectMockTaskRead) assert.equal((await readMockTask()).status, 403);
       assert.equal(denied.listing.items.some(item => item.job_id === jobId), false);
       assert.equal(report.createPostCount, expectedCreatePostCount);
       safeStep('account_b_cannot_read_account_a_admission_or_job');
@@ -412,9 +444,17 @@ try {
     throw error;
   });
   await Promise.race([runPromise, overallDeadline, sigterm]);
-} catch {
+} catch (error) {
   failure = 'browser-smoke-failed';
   report.verdict = 'fail';
+  // Keep diagnostics private; the public report and stdout retain fixed codes.
+  if (evidencePath && privateEvidenceReady) {
+    const diagnostic = await open(path.join(evidencePath, 'failure-private.json'), 'wx', 0o600);
+    try {
+      await diagnostic.writeFile(JSON.stringify({ name: error?.name, message: error?.message,
+        stack: error?.stack }) + '\n', 'utf8');
+    } finally { await diagnostic.close(); }
+  }
 } finally {
   clearTimeout(overallTimer);
   if (!runSettled) stopRequested = true;

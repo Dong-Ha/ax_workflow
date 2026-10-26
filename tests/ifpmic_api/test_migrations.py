@@ -34,7 +34,7 @@ PINNED_RETENTION_MIGRATION_SHA256 = "95c01f06eb586e0c1067f04672edfed8e0a11215752
 MIGRATION_VERSIONS = [MIGRATION_VERSION, RETENTION_MIGRATION_VERSION]
 CURRENT_MIGRATION_VERSIONS = [
     MIGRATION_VERSION, RETENTION_MIGRATION_VERSION, "003_workflow_execution", "004_prebinding_incident",
-    "005_admission_read",
+    "005_admission_read", "006_mock_preflight",
 ]
 AUTH_RETENTION_DELETE_TABLES = {"oidc_login_transactions", "user_sessions"}
 

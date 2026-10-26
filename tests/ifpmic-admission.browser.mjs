@@ -2,10 +2,12 @@ import assert from 'node:assert/strict';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { chromium } from 'playwright';
+import { mockTaskFixture } from '../experiments/ifpmic-live/web/mock-task.js';
 
 const origin = 'http://ifpmic-admission.invalid';
 const taskMode = process.argv.includes('--mock-task');
-const outputRoot = path.resolve(`workflow-artifacts/delivery/${taskMode ? 'mock-result-contract' : 'admission-mock'}`);
+const readMode = process.argv.includes('--stored-mock-task');
+const outputRoot = path.resolve(`workflow-artifacts/delivery/${readMode ? 'mock-result-read' : taskMode ? 'mock-result-contract' : 'admission-mock'}`);
 const runId = new Date().toISOString().replaceAll(':', '-').replaceAll('.', '-');
 const runDir = path.join(outputRoot, runId);
 const timeoutMs = 8_000;
@@ -22,7 +24,7 @@ const contextDto = {
   storage: 'postgresql', identity: 'local-demo-oidc',
 };
 
-const report = { kind: taskMode ? 'ifpmic.mock-result.browser.v1' : 'ifpmic.admission-mock.browser.v1', verdict: 'fail', checks: [], failures: [], unexpectedRequests: [], writes: [], screenshots: [] };
+const report = { kind: readMode ? 'ifpmic.mock-result-read.browser.v1' : taskMode ? 'ifpmic.mock-result.browser.v1' : 'ifpmic.admission-mock.browser.v1', verdict: 'fail', checks: [], failures: [], unexpectedRequests: [], writes: [], screenshots: [] };
 let browser;
 let browserContext;
 let page;
@@ -33,6 +35,8 @@ let heldA1Seen;
 let jobDetailReads = 0;
 const admissionModes = new Map();
 const admissionReads = new Map();
+const taskReadModes = new Map();
+const taskReads = new Map();
 
 function admission(jobId) {
   const mode = admissionModes.get(jobId) || 'pending';
@@ -95,6 +99,8 @@ async function routeRequest(route) {
     ['/admission-read.js', ['../experiments/ifpmic-live/web/admission-read.js', 'text/javascript; charset=utf-8']],
     ['/style.css', ['../experiments/ifpmic-live/web/style.css', 'text/css; charset=utf-8']],
     ['/admission.js', ['../experiments/ifpmic-live/web/admission.js', 'text/javascript; charset=utf-8']],
+    ['/resource-read.js', ['../experiments/ifpmic-live/web/resource-read.js', 'text/javascript; charset=utf-8']],
+    ['/mock-task-read.js', ['../experiments/ifpmic-live/web/mock-task-read.js', 'text/javascript; charset=utf-8']],
     ['/mock-task.js', ['../experiments/ifpmic-live/web/mock-task.js', 'text/javascript; charset=utf-8']],
     ['/mock-task-panel.js', ['../experiments/ifpmic-live/web/mock-task-panel.js', 'text/javascript; charset=utf-8']],
     ['/mock-task.css', ['../experiments/ifpmic-live/web/mock-task.css', 'text/css; charset=utf-8']],
@@ -122,6 +128,21 @@ async function routeRequest(route) {
         : json(route, 401, { code: 'AUTH_REQUIRED' });
     }
     if (pathname === '/demo/context') return json(route, 200, contextDto);
+    const taskMatch = pathname.match(/^\/api\/v1\/jobs\/([^/]+)\/mock-task$/);
+    if (taskMatch) {
+      const jobId = decodeURIComponent(taskMatch[1]);
+      taskReads.set(jobId, (taskReads.get(jobId) || 0) + 1);
+      const own = account === accountA ? [ids.a1, ids.a2] : account === accountB ? [ids.b] : [];
+      if (!own.includes(jobId)) return json(route, 403, { code: 'FORBIDDEN' });
+      const mode = taskReadModes.get(jobId) || 'pending';
+      if (mode === 'unavailable') return json(route, 503, { code: 'DEPENDENCY_UNAVAILABLE' });
+      if (mode === 'denied') return json(route, 403, { code: 'FORBIDDEN' });
+      const dto = mockTaskFixture(jobId, mode === 'completed' ? 'completed' : 'pending');
+      dto.command_id = admission(jobId).body.command_id;
+      if (mode === 'completed') dto.admitted_run_id = admission(jobId).body.admitted_run_id;
+      if (mode === 'malformed') dto.raw_output = 'private fixture';
+      return json(route, 200, dto);
+    }
     const admissionMatch = pathname.match(/^\/api\/v1\/jobs\/([^/]+)\/admission$/);
     if (admissionMatch) {
       const jobId = decodeURIComponent(admissionMatch[1]);
@@ -180,7 +201,7 @@ try {
   const scenario = page.getByTestId('admission-scenario');
   const waitAdmissionStatus = value => page.waitForFunction(expected => document.querySelector('[data-testid="admission-status"]')?.textContent === expected, value);
 
-  if (!taskMode) {
+  if (!taskMode && !readMode) {
   await check('admission panel starts hidden until selecting a persisted job detail', async () => {
     await panel.waitFor({ state: 'hidden' });
     await page.locator(`[data-testid="job-row"][data-job-id="${ids.a1}"]`).click();
@@ -300,7 +321,7 @@ try {
     await waitAdmissionStatus('접수 대기 · 모의');
   });
 
-  } else {
+  } else if (taskMode) {
     const taskPanel = page.getByTestId('mock-task-panel');
     const taskScenario = page.getByTestId('mock-task-scenario');
     const taskStatus = page.getByTestId('mock-task-status');
@@ -380,6 +401,79 @@ try {
       assert.equal(await page.getByTestId('mock-task-refresh').evaluate(node => node === document.activeElement), true);
       await page.keyboard.press('Enter');
       await waitTask('모의 확인 완료');
+    });
+  }
+
+  if (readMode) {
+    const stored = page.getByTestId('stored-mock-task');
+    const waitStored = value => page.waitForFunction(expected => document.getElementById('stored-mock-task-status')?.textContent === expected, value);
+    await check('real read panel waits for a selected job and displays no stored result independently of the fixture panel', async () => {
+      await stored.waitFor({ state: 'hidden' });
+      await page.locator(`[data-testid="job-row"][data-job-id="${ids.a1}"]`).click();
+      await waitStored('저장된 모의 결과 없음');
+      assert.ok(taskReads.get(ids.a1) > 0);
+      await page.getByTestId('mock-task-scenario').selectOption('completed');
+      await page.waitForFunction(() => document.getElementById('mock-task-status')?.textContent === '모의 확인 완료');
+      assert.equal(await page.getByTestId('stored-mock-task-status').innerText(), '저장된 모의 결과 없음');
+      assert.equal(await page.locator('#stored-mock-task-run').isVisible(), false);
+    });
+    await check('canonical stored completion exposes only three safe checks and the same admitted run', async () => {
+      admissionModes.set(ids.a1, 'applied');
+      taskReadModes.set(ids.a1, 'completed');
+      await page.getByTestId('stored-admission-refresh').click();
+      await page.waitForFunction(() => document.getElementById('stored-admission-status')?.textContent === '접수 상태 확인됨');
+      await page.getByTestId('stored-mock-task-refresh').click();
+      await waitStored('모의 작업 확인 완료');
+      assert.equal(await page.locator('#stored-mock-task-checks li').count(), 3);
+      assert.equal(await page.getByTestId('stored-mock-task-run-id').innerText(), await page.getByTestId('stored-admission-run-id').innerText());
+      assert.equal(await page.getByTestId('detail-status').innerText(), 'QUEUED');
+      assert.match(await stored.innerText(), /전체 업무 완료와 별개/);
+    });
+    await check('503 retains the confirmed stored result; malformed response does not leak its raw fields', async () => {
+      taskReadModes.set(ids.a1, 'unavailable');
+      await page.getByTestId('stored-mock-task-refresh').click();
+      await waitStored('저장 결과 조회 실패');
+      assert.equal(await page.locator('#stored-mock-task-confirmed').innerText(), '마지막 확인: 모의 작업 확인 완료');
+      assert.equal(await page.locator('#stored-mock-task-checks li').count(), 3);
+      taskReadModes.set(ids.a1, 'malformed');
+      await page.getByTestId('stored-mock-task-refresh').click();
+      await waitStored('저장 결과 조회 실패');
+      assert.doesNotMatch(await stored.innerText(), /private fixture|raw_output/);
+      taskReadModes.set(ids.a1, 'completed');
+    });
+    await check('reload rereads the same job and result without persisting API result data', async () => {
+      const before = taskReads.get(ids.a1);
+      await page.reload({ waitUntil: 'domcontentloaded' });
+      await waitStored('모의 작업 확인 완료');
+      assert.ok(taskReads.get(ids.a1) > before);
+      const values = await page.evaluate(() => Object.values(sessionStorage));
+      assert.doesNotMatch(JSON.stringify(values), /ifpmic.mock-task.v1|result_sha256|completed_at/);
+    });
+    await check('job change clears confirmed result and denied read removes the visible detail', async () => {
+      await page.locator(`[data-testid="job-row"][data-job-id="${ids.a2}"]`).click();
+      await waitStored('저장된 모의 결과 없음');
+      assert.equal(await page.locator('#stored-mock-task-run-id').innerText(), '');
+      taskReadModes.set(ids.a2, 'denied');
+      await page.getByTestId('stored-mock-task-refresh').click();
+      await page.getByTestId('job-detail').waitFor({ state: 'hidden' });
+      assert.equal(await stored.isVisible(), false);
+      assert.match(await page.getByTestId('detail-error').innerText(), /권한/);
+    });
+    await check('account change cannot restore a previous account result', async () => {
+      await page.getByTestId('logout-button').click();
+      await page.locator('#auth-gate').waitFor({ state: 'visible' });
+      account = accountB;
+      await page.reload({ waitUntil: 'domcontentloaded' });
+      await page.locator('#signed-in').waitFor({ state: 'visible' });
+      await page.locator(`[data-testid="job-row"][data-job-id="${ids.b}"]`).click();
+      await waitStored('저장된 모의 결과 없음');
+      assert.equal(await page.locator('#stored-mock-task-run-id').innerText(), '');
+      admissionModes.set(ids.b, 'applied');
+      taskReadModes.set(ids.b, 'completed');
+      await page.getByTestId('stored-admission-refresh').click();
+      await page.waitForFunction(() => document.getElementById('stored-admission-status')?.textContent === '접수 상태 확인됨');
+      await page.getByTestId('stored-mock-task-refresh').click();
+      await waitStored('모의 작업 확인 완료');
     });
   }
 

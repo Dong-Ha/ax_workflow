@@ -10,7 +10,7 @@ IFPMIC workflow 시각화로 확장하는 방향은 [기준 자료와 이관 계
 
 - `npm run ifpmic:delivery`: 현재 목표와 선택 검사 목록을 출력합니다. 실행하지 않습니다.
 - `npm run ifpmic:delivery:check`: 현재 전달 단위의 고정 검사만 실행합니다. 기본 mock 단위는 접수 상태 controller만 검사하고, Python profile(`admission-dto`, `admission-local`)에는 `.ifpmic-venv`의 고정 의존성이 필요합니다. DB/Temporal을 시작하지 않습니다. 로그와 요약은 ignored `workflow-artifacts/delivery/`에 보존합니다.
-- `npm run ifpmic:delivery -- --flow minimal-mock`: 현재 모의 결과 화면 slice와 선택 검사를 출력합니다. 새 흐름마다 CLI를 수정할 필요가 없습니다. 기본 `feedback_profiles`와 선택 가능한 `allowed_feedback_profiles`를 구분하며 `--profile`로 검사 하나만 선택할 수 있습니다.
+- `npm run ifpmic:delivery -- --flow minimal-mock`: 현재 모의 결과 slice와 선택 검사를 출력합니다. 새 흐름마다 CLI를 수정할 필요가 없습니다. 기본 `feedback_profiles`와 선택 가능한 `allowed_feedback_profiles`를 구분하며 `--profile`로 검사 하나만 선택할 수 있습니다.
 - `npm run ifpmic:delivery:check -- --profile delivery-tool`: 전달 계획/도구 변경 시 도구 검사만 실행합니다. 각 profile과 전체 소요시간을 출력합니다.
 - `npm run ifpmic:delivery:browser`: 빌드 산출물만 사용하는 offline Chromium 화면 검사이며 API 서버를 시작하지 않습니다.
 - `npm run ifpmic:delivery -- --level integration` 또는 `--level acceptance`: 남은 조건을 출력합니다. 이 두 수준에 `--run`을 추가하면 자동 실행 미연결로 실패하며, 통과로 기록하지 않습니다.
@@ -21,11 +21,16 @@ IFPMIC workflow 시각화로 확장하는 방향은 [기준 자료와 이관 계
 
 ## 모의 작업 결과 화면
 
-요청 상세의 ‘모의 작업 결과’에서 결과 대기·확인 완료·조회 실패를 선택하고 다시 확인할 수 있습니다. 앰버 표시의 합성 예시이며 실제 job 상태·접수 영수증·실행 결과는 바뀌지 않습니다. 계정/작업 변경은 이전 응답을 폐기하고, 새로고침은 선택 작업과 예시 상황을 복원해 다시 읽습니다. 결과·실행 ID는 sessionStorage에 저장하지 않습니다.
+요청 상세의 ‘저장된 모의 결과’는 실제 `GET /api/v1/jobs/{job_id}/mock-task`로 현재 사용자가 볼 수 있는 저장 결과를 조회합니다. 결과가 없으면 실행을 추정하지 않고 ‘저장된 모의 결과 없음’으로 표시합니다. 완료 결과는 동일 job/command/run과 실제 첫 접수 영수증·작업 공간 identity를 확인하며 전체 업무 완료를 뜻하지 않습니다. 결과 테이블 직접 접근과 실행/결과 생성 API는 제공하지 않습니다.
 
-- `npm run ifpmic:delivery:check`: 순수 결과 계약/상태 검사만 실행합니다. DB/Temporal을 시작하지 않습니다.
+앰버 표시의 별도 ‘모의 작업 결과’는 합성 예시로 대기·확인 완료·조회 실패를 체험합니다. 이 예시는 실제 job 상태·접수 영수증·실행 결과를 바꾸지 않습니다. 계정/작업 변경은 이전 응답을 폐기하며, 실제 조회는 reload 때 다시 읽습니다. 결과·실행 ID·인증 자료는 sessionStorage에 저장하지 않습니다.
+
+- `npm run ifpmic:delivery:check`: 현재 read slice의 순수 Python DTO와 Node 조회 controller 검사를 실행합니다. DB/Temporal을 시작하지 않습니다. 과거 합성 화면만 검사하려면 `--slice mock-result-contract`를 지정합니다.
 - `npm run ifpmic:mock-task:browser`: 오프라인 I02 fixture에서 결과·오류·계정/작업 전환·reload·키보드·모바일 표시를 확인하고 캡처합니다.
-- [결과 DTO](./docs/ifpmic/api-extensions/mock-task.v1.json)는 fixture-first 계약이며 실제 조회 API와 결과 실행/저장은 후속 slice입니다.
+- `npm run ifpmic:mock-task:read:browser`: 오프라인 I02 fixture에서 실제 조회 패널의 pending/completed·503·잘못된 응답·권한 거부·reload·계정 전환을 확인합니다.
+- [결과 DTO](./docs/ifpmic/api-extensions/mock-task.v1.json)와 migration `006_mock_preflight`를 실제 읽기 API에 연결했습니다. 실행기가 결과를 생성하는 기능은 다음 slice입니다. 실제 연결 검사는 검토된 격리 launcher에 `ifpmic:admission:pg`의 `--expect-mock-task-read`를 명시하며 기존 작업은 `--read-existing`으로 새 POST 없이 확인합니다.
+
+실제 조회는 pending일 때 1/2/4/5초 간격으로 최대 60초 확인하고 완료·오류·권한 거부에 멈춥니다. 503에서는 마지막 확인 결과를 보존하며 계정/작업 변경 및 401/403에는 지웁니다. 접수와 결과 패널은 같은 취소/마감 controller를 사용하고 각자의 DTO와 종료 조건을 적용합니다.
 
 ## IFPMIC 흐름 보기
 

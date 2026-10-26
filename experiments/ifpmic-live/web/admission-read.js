@@ -1,3 +1,5 @@
+import { createResourceReadController } from './resource-read.js';
+
 const uuid = value => typeof value === 'string' && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(value);
 const keys = ['schema_version', 'job_id', 'command_id', 'admission_status', 'job_status', 'job_revision',
   'command_status', 'applied_revision', 'admitted_run_id', 'receipt', 'error_code'];
@@ -38,75 +40,9 @@ export function parseAdmission(value, jobId) {
   return value;
 }
 
-export function createStoredAdmissionController({ read, onChange, onDenied = () => {}, now = Date.now,
-  schedule = setTimeout, cancel = clearTimeout }) {
-  let jobId = null;
-  let generation = 0;
-  let active = null;
-  let timer = null;
-  let confirmed = null;
-
-  function stop() {
-    generation += 1;
-    if (timer !== null) cancel(timer);
-    timer = null;
-    active?.abort();
-    active = null;
-  }
-  function clear() {
-    stop();
-    jobId = null;
-    confirmed = null;
-    onChange({ phase: 'empty', value: null });
-  }
-  async function refresh() {
-    if (!jobId) return;
-    stop();
-    const current = generation;
-    const selected = jobId;
-    const deadline = now() + 60_000;
-    let index = 0;
-    const poll = async () => {
-      if (current !== generation) return;
-      if (now() >= deadline) {
-        onChange({ phase: 'timedout', value: confirmed });
-        return;
-      }
-      timer = null;
-      active = new AbortController();
-      const deadlineTimer = schedule(() => {
-        if (current !== generation) return;
-        stop();
-        onChange({ phase: 'timedout', value: confirmed });
-      }, deadline - now());
-      onChange({ phase: 'loading', value: confirmed });
-      try {
-        const data = await read(selected, active.signal);
-        if (current !== generation) return;
-        if (now() >= deadline) { onChange({ phase: 'timedout', value: confirmed }); return; }
-        confirmed = parseAdmission(data, selected);
-        onChange({ phase: 'ready', value: confirmed });
-        if (['pending', 'admitted_pending_projection'].includes(confirmed.admission_status)) {
-          const delay = [1000, 2000, 4000, 5000][Math.min(index++, 3)];
-          timer = schedule(poll, Math.max(0, Math.min(delay, deadline - now())));
-        }
-      } catch (error) {
-        if (current !== generation) return;
-        const denied = error.status === 401 || error.status === 403;
-        if (denied) confirmed = null;
-        onChange({ phase: 'error', value: confirmed });
-        if (denied) onDenied(error.status);
-      } finally {
-        cancel(deadlineTimer);
-        if (current === generation) active = null;
-      }
-    };
-    return poll();
-  }
-  return {
-    clear, refresh,
-    select(selected) { clear(); jobId = selected; return refresh(); },
-  };
+export function createStoredAdmissionController(options) {
+  return createResourceReadController({ ...options, parse: parseAdmission,
+    isPending: value => ['pending', 'admitted_pending_projection'].includes(value.admission_status) });
 }
 
 const labels = {

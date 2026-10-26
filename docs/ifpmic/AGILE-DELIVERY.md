@@ -5,7 +5,7 @@
 ## 현재 체크포인트 · 2026-10-27
 
 - 필수 단계 완료: **2/16 = 12.5%**(동일 가중치 단계 수, 작업량 추정이 아님).
-- 현재 제품 흐름: minimal-mock. 첫 `mock-result-contract`의 합성 결과 조회 화면을 전달했다. 다음은 실제 저장 결과 조회이며 상위 흐름은 진행 중이다.
+- 현재 제품 흐름: minimal-mock. `mock-result-contract` 합성 화면과 `mock-result-read` 실제 저장 결과 조회를 전달했다. 다음은 실제 제한된 모의 작업 실행이며 상위 흐름은 진행 중이다.
 - 전달된 사용자 흐름: 29단계·6구간의 설계 탐색 및 74개 합성 시나리오, 합성 계정/mock으로 요청을 저장·재조회하는 로컬 흐름.
 - 최근 전달: `admission-live` normal-path candidate3에서 격리 PostgreSQL/Temporal의 실제 접수와 I02 browser 확인을 마쳤다. 저장 요청 한 건이 동일 job/command/run/sequence-1 receipt로 `QUEUED`가 되었고, browser 8개 확인, 두 번의 정확한 idempotency-key POST에도 효과는 한 번이었다. 사용자 A/B 권한 거부와 reload 확인도 통과했다. 실제 clean restart는 POST 0건으로 기존 job/command/run과 identity/count를 보존했다. [V4 범위·절차](./delivery/iteration-03/ADMISSION-UI-PLAN-v4.md)
 - 최신 실제 H2 시도 V9: 490건 중 8건 실행, 7통과·1실패, 482건 미실행. 실패 원인은 DB 시간 기준 claim 만료 관측 timeout이며 아직 확정되지 않았다. [결과](./delivery/iteration-03/runtime-v9-execution-status.json) · [독립 실패 검토](./delivery/iteration-03/runtime-v9-attempt-01-result-review.json)
@@ -54,7 +54,7 @@
 
 리팩토링 확인: 전달 CLI/계획 집중 검사 10건 통과, 실제 `--profile delivery-tool` wrapper 569ms, TypeScript 검사 통과. 결과는 `workflow-artifacts/delivery/2026-10-26T16-00-12.091Z-33518/result.json`에 보존한다. 최초 검사에서 새 slice의 id와 화면 제목을 혼동한 assertion 하나를 수정한 뒤 해당 검사만 재확인했다. 새 제품 기능 없음. DB/Temporal/browser/full490은 이번 변경의 검증에 실행하지 않았고 필수 단계 완료는 2/16을 유지한다.
 
-현재 흐름·완료 조건·상태는 저장소의 단일 기준 파일 `docs/ifpmic/delivery-plan.json`에 기록하고, 루트 `/delivery.html`에서 같은 데이터를 보여준다. 흐름이나 상태를 바꾸면 JSON을 함께 갱신한다. 대시보드에 표시된 단계 완료 수는 원본 필수 단계의 수용 상태를 대체하지 않는다.
+현재 흐름·완료 조건·상태는 저장소의 단일 기준 파일 `docs/ifpmic/delivery-plan.json`에 기록하고, 루트 `/delivery.html`에서 같은 데이터를 보여준다. 흐름이나 상태를 바꾸면 JSON을 함께 갱신한다. 현재 read slice의 기본 검사는 `mock-task-dto`와 `mock-task-read-state`이며 Python DTO 17건과 공유 조회 controller의 Node 12건만 실행한다. 대시보드에 표시된 단계 완료 수는 원본 필수 단계의 수용 상태를 대체하지 않는다.
 
 - `npm run ifpmic:delivery`: 기본 목표 행동과 검사 범위를 출력한다. 현재 흐름은 `plan.current_slice`, 다른 `--flow`는 해당 흐름의 `default_slice`를 사용하고 `--slice`로 덮어쓸 수 있다. `--profile`은 해당 slice의 허용 목록에서 선택한다. `admission-mock` 기본은 `admission-state`, `admission-read`는 `admission-dto`·`admission-read-state`, `admission-live`는 `admission-context`·`admission-local`이다. 오프라인 UI browser는 `npm run ifpmic:admission:browser`로 별도 명시한다.
 - `npm run ifpmic:delivery:check`: 선택된 검사만 실행하며 DB/Temporal/서비스를 시작하지 않는다. 기본 실행은 JSON의 `feedback_profiles`를 따른다. 전달 도구 변경 시 `--profile delivery-tool`, supervisor 변경 시 `--flow admission --slice admission-live --profile execution-owner`를 명시한다. profile별/전체 실행 시간을 출력하고 private 결과에 남긴다.
@@ -106,3 +106,25 @@ I02에서 저장 요청을 선택하면 ‘모의 작업 결과’의 대기·�
 frontend-design 스킬에 따라 기존 네이비/민트 관제 화면을 유지하고 합성 결과는 앰버 테두리와 ‘화면 체험’, ‘예시’ 문구로 구분했다. 데스크톱/375px 캡처를 검토했으며 가로 넘침 없이 표시된다. 결과 계약/상태 검사 6건, 전달 도구 검사 10건, 해당 I02 browser 9개 확인이 통과했다. schema 검사 추가 후 기본 피드백은 `mock-task-state`만 333ms에 통과했다. `npm run build`는 계획 현황판 및 TypeScript/번들 영향을 확인한다.
 
 상태 증거: `workflow-artifacts/delivery/2026-10-26T16-07-16.169Z-34287/result.json`. Browser/capture: `workflow-artifacts/delivery/mock-result-contract/2026-10-26T16-05-16-613Z/`. 최종 계획 반영 뒤 build와 현황판 offline browser 3개 확인도 통과했다. 현황판 증거는 `workflow-artifacts/delivery/browser/2026-10-26T16-09-07-282Z-34400/result.json`에 둔다. 실제 결과 API/DB 저장·Temporal 모의 실행·full490/AT는 이번 slice에서 검증하지 않았다. 상위 minimal-mock은 미완료, 원본 필수 단계는 2/16이다. 다음 행동은 mock-result-read의 visibility·job/command/run 경계를 보존한 실제 조회 API 구현이다.
+
+
+## 이번 전달 · mock-result-read
+
+저장된 모의 결과를 `GET /api/v1/jobs/{job_id}/mock-task`로 조회한다. API의 한 statement에서 기존 VISIBLE, CREATE command 및 SECURITY DEFINER 읽기 함수의 job/project/command/owner를 맞추고, 결과가 있으면 admission·첫 receipt·binding/run/build·workspace token/generation과 모의 결과 형식을 확인한다. runtime에 읽기 함수 EXECUTE만 추가하며 결과 테이블 직접 권한과 실행·기록 함수는 주지 않았다. 과거 미완성 초안은 private 자료에 보존하고 실행 writer는 다음 migration으로 분리한다.
+
+I02의 실제 저장 결과는 민트, 합성 예시는 앰버로 구분한다. pending은 저장 결과 없음이며 실행 진행을 추정하지 않는다. 공유 GET controller는 대기 때만 1/2/4/5초 간격으로 최대60초 확인하고 완료·오류·권한 거부에 멈춘다. 503은 마지막 결과를 보존하고 계정/작업 변경·401/403은 지운다. 결과·인증 자료를 sessionStorage에 저장하지 않는다. frontend-design 방향을 유지하며 실제 화면의 데스크톱/375px 캡처를 확인했다.
+
+기본 피드백 DTO17+Node12건은 793ms에 통과했다. API annotation이 추가된 JSON schema는 기존 mock 계약 검사6건으로 확인했고 전달 도구10건도 통과했다. 격리 DB/API 5개 case는 fail-fast 실행에서 통과한 case를 다시 돌리지 않고 누적 확인했다. 준비 실패(인터프리터/pytest 경로, fixture UUID 직렬화·중복 seed·불변 command 변경·tuple 역할 접근)를 보존하고 해당 fixture를 수정했다. `focused-db-summary.json`에 case별 JUnit을 연결한다. 실제 연결 전 변경 SQL/권한과 격리/정리를 구현자와 분리해 검토했다.
+
+오프라인 실제 조회 패널 browser는8항목을 통과했다. 실제 API/PG/browser는 첫 저장 요청 한 건 이후 `--read-existing`으로 추가 POST0건, pending 동일 job/command 조회·재조회·reload·B403을 확인했다. 최초 actual capture 검사의 `null !== false`는 실행 ID가 없을 때 조건식이 null을 반환한 도구 오류였으며 순수 JS 재현 후 boolean guard로 수정했다. 정리 뒤 포트 probe의 TIME_WAIT 준비 실패는 listener 부재를 확인하고 HTTP 서버와 같은 SO_REUSEADDR probe로 바로잡았다. 모든 이전 증거는 보존한다.
+
+실제 read 후보03은9항목 통과, DB job/command 각1·mock result/binding/receipt 각0이다. API/issuer/PG/browser는 force 없이 정리됐고 source50개 hash가 실제 실행 전후 일치했다. 독립 결과 검토도 이 범위를 확인했다. 완료 결과는 합성 SQL seed 및 offline UI 근거이며 실제 Temporal 모의 실행·full490/AT는 실행/수용하지 않았다. 필수 단계는2/16을 유지한다.
+
+최종 staged 검사에서 공유 controller의 EOF 빈 줄 하나만 제거했다. archive와 변경 파일의 trailing-whitespace 제외 바이트가 같음을 확인했고 `actual-ui-driver-03/whitespace-followup.json`에 해시 차이를 기록했다. 동작 변경이 없어 실제 서비스를 재실행하지 않았다.
+
+- 기본 피드백: `workflow-artifacts/delivery/2026-10-26T16-28-14.478Z-38241/result.json`
+- DB/API case별 누적 근거: `workflow-artifacts/delivery/mock-result-read/focused-db-summary.json`
+- Offline browser8항목: `workflow-artifacts/delivery/mock-result-read/2026-10-26T16-17-42-039Z/report.json`
+- 실제 pending browser9항목·source·DB readback·cleanup·캡처: `workflow-artifacts/delivery/mock-result-read/actual-ui-driver-03/`
+
+다음 행동은 mock-task-live: 실제 접수 뒤 제한된 모의 activity 한 건을 실행하고 같은 job/run에 결과를 멱등 저장한다. 전체 job/P단계/사람 승인을 완료 처리하지 않는다.

@@ -15,7 +15,8 @@ const clone = value => structuredClone(value);
 test('published schema agrees with pending/completed fixtures and rejects extra result data', () => {
   const schema = JSON.parse(readFileSync(new URL('../docs/ifpmic/api-extensions/mock-task.v1.json', import.meta.url)));
   // Calendar validity is checked by validateMockTask, not the JSON schema format annotation.
-  const validate = new Ajv2020({ validateFormats: false }).compile(schema);
+  const validate = new Ajv2020({ validateFormats: false })
+    .addKeyword({ keyword: 'x-http', schemaType: 'object', valid: true }).compile(schema);
   for (const status of ['pending', 'completed']) assert.equal(validate(mockTaskFixture(JOB, status)), true);
   const value = mockTaskFixture(JOB, 'completed');
   value.result.raw_output = 'private';
