@@ -12,36 +12,45 @@ export function selectFlow(plan, id = plan.current_flow) {
   return flow;
 }
 
-// Fixed test paths only: never execute commands supplied through the plan or CLI.
-export function feedbackCommands(flow) {
+export function selectSlice(flow, id) {
+  const slice = flow.slices?.find(item => item.id === id);
+  if (!slice) throw new Error(`Unknown slice for ${flow.id}: ${id}`);
+  return slice;
+}
+
+// Executables and paths belong to code, never plan data or CLI input.
+const profiles = {
+  'delivery-tool': { executable: process.execPath, args: ['--test', 'tests/ifpmic-delivery.test.mjs'] },
+  'admission-local': { executable: resolve(root, '.ifpmic-venv/bin/python'),
+    args: ['-B', '-m', 'pytest', '-p', 'no:cacheprovider', '-q',
+      'tests/ifpmic_api/test_execution_protocol.py', 'tests/ifpmic_api/test_execution_workspace.py'] },
+};
+
+export function feedbackCommands(flow, slice, requestedProfiles) {
   if (flow.id !== 'admission') throw new Error('이 흐름의 개발 검사가 아직 정의되지 않았습니다.');
-  const nodeTests = ['tests/ifpmic-delivery.test.mjs'];
-  const pythonTests = [
-    'tests/ifpmic_api/test_execution_protocol.py',
-    'tests/ifpmic_api/test_execution_workspace.py',
-  ];
-  if (JSON.stringify(flow.feedback?.node_tests) !== JSON.stringify(nodeTests)
-      || JSON.stringify(flow.feedback?.python_tests) !== JSON.stringify(pythonTests)) {
-    throw new Error('검사 계획과 실행 목록이 다릅니다. 두 목록을 함께 검토하세요.');
-  }
-  return [
-    { name: 'delivery-tool', executable: process.execPath, args: ['--test', ...nodeTests] },
-    { name: 'admission-local', executable: resolve(root, '.ifpmic-venv/bin/python'),
-      args: ['-B', '-m', 'pytest', '-p', 'no:cacheprovider', '-q', ...pythonTests] },
-  ];
+  const allowed = slice.feedback_profiles;
+  if (!Array.isArray(allowed) || !allowed.length || new Set(allowed).size !== allowed.length
+      || allowed.some(name => !Object.hasOwn(profiles, name))) throw new Error('Unknown feedback profile in plan');
+  const selected = requestedProfiles ?? allowed;
+  if (!selected.length || new Set(selected).size !== selected.length
+      || selected.some(name => !allowed.includes(name))) throw new Error('Unknown or duplicate feedback profile for slice');
+  return selected.map(name => ({ name, ...profiles[name] }));
 }
 
 export function parseArgs(args) {
   const options = { level: 'feedback', run: false };
   for (let i = 0; i < args.length; i++) {
     if (args[i] === '--run') options.run = true;
-    else if (args[i] === '--flow' || args[i] === '--level') {
+    else if (['--flow', '--slice', '--level', '--profile'].includes(args[i])) {
       const key = args[i].slice(2);
       if (!args[i + 1] || args[i + 1].startsWith('--')) throw new Error(`Missing ${args[i]}`);
-      options[key] = args[++i];
+      const value = args[++i];
+      if (key === 'profile') (options.profiles ??= []).push(value);
+      else options[key] = value;
     } else throw new Error(`Unknown argument: ${args[i]}`);
   }
   if (!['feedback', 'integration', 'acceptance'].includes(options.level)) throw new Error('Unknown validation level');
+  if ((options.profiles || options.slice) && options.level !== 'feedback') throw new Error('--slice/--profile require feedback level');
   return options;
 }
 
@@ -100,12 +109,19 @@ export async function main(args = process.argv.slice(2)) {
     }
     return 0;
   }
-  const commands = feedbackCommands(flow);
+  const slice = selectSlice(flow, options.slice ?? (flow.id === plan.current_flow ? plan.current_slice : undefined));
+  console.log(`이번 전달: ${slice.title} (${slice.mode})\n행동: ${slice.outcome}`);
+  console.log(slice.acceptance.map(item => `- ${item}`).join('\n'));
+  console.log(`차단 조건: ${slice.blockers.join('; ') || '없음'}`);
+  console.log(`아직 연결할 기능 검사: ${slice.checks_to_add.join('; ')}`);
+  console.log('선택 검사 통과 뒤 종료합니다. 재검사는 새 변경·실패·미해결 위험이 있을 때만 추가합니다.');
+  const commands = feedbackCommands(flow, slice, options.profiles);
   console.log(commands.map(command => `${command.name}: ${command.args.join(' ')}`).join('\n'));
   if (!options.run) return 0;
   const directory = resolve(root, 'workflow-artifacts/delivery', new Date().toISOString().replaceAll(':', '-') + `-${process.pid}`);
   await mkdir(directory, { recursive: true, mode: 0o700 });
   const checks = [];
+  const started = Date.now();
   for (const command of commands) {
     const result = await runCheck(command, directory);
     checks.push(result);
@@ -114,7 +130,9 @@ export async function main(args = process.argv.slice(2)) {
   }
   const passed = checks.length === commands.length && checks.every(item => item.status === 'passed');
   await writeFile(resolve(directory, 'result.json'), JSON.stringify({
-    schema_version: 'ifpmic.delivery-feedback.v1', flow: flow.id, level: 'feedback',
+    schema_version: 'ifpmic.delivery-feedback.v2', flow: flow.id, slice: slice.id, level: 'feedback',
+    selected_profiles: commands.map(command => command.name), elapsed_ms: Date.now() - started,
+    pending_feature_checks: slice.checks_to_add,
     passed, full_acceptance: false, product_delivered: false, checks,
   }, null, 2) + '\n', { mode: 0o600, flag: 'wx' });
   console.log(`검사 기록: ${directory}/result.json`);

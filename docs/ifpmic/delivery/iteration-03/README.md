@@ -20,7 +20,7 @@
 
 ## 진행 도구
 
-`/delivery.html`과 `docs/ifpmic/delivery-plan.json`에서 현재 흐름 및 완료 조건을 확인한다. `npm run ifpmic:delivery`는 목표와 검사 범위를 출력하고, `npm run ifpmic:delivery:check`는 admission protocol/workspace 및 전달 도구의 선택 검사를 실행한다. 이 검사는 DB/Temporal을 시작하지 않는다. `--level integration|acceptance`는 남은 조건을 표시하며, 이 수준의 `--run`은 미구현이다. 제한된 실제 DB/Temporal 통합은 별도 V4 준비·검토 절차로 허용되며, full490은 전체 수용 단계에 남는다.
+`/delivery.html`과 `docs/ifpmic/delivery-plan.json`에서 현재 흐름 및 완료 조건을 확인한다. `npm run ifpmic:delivery`는 목표와 검사 범위를 출력하고, `npm run ifpmic:delivery:check`는 현재 slice의 선택 검사만 실행한다. 다음 `admission-mock`은 전달 도구 검사만 연결되어 있고 I02 기능 검사는 구현 시 추가한다. 후속 `admission-read`/`admission-live`에는 protocol/workspace 검사도 연결되어 있다. 이 검사는 DB/Temporal을 시작하지 않는다. `--level integration|acceptance`는 남은 조건을 표시하며, 이 수준의 `--run`은 미구현이다. 제한된 실제 DB/Temporal 통합은 별도 V4 준비·검토 절차로 허용되며, full490은 전체 수용 단계에 남는다.
 
 ## 실패 처리와 증거
 

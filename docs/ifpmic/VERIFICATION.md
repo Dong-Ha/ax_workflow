@@ -9,6 +9,8 @@
 
 2026-10-26부터 한 회차에 사용자 흐름 하나를 목표로 한다. 개발 우선순위와 다음 목표는 [애자일 전달 계획](./AGILE-DELIVERY.md)을 따르며, 좁은 개발 검사나 통합 결과는 최종 수용을 대신하지 않는다. 전체 H2, B 단계 및 AT는 최종 수용 시 원본 기준에 따라 별도로 검증한다. 이전 실패와 수용 증거는 역사 자료로 보존하며, 과거 승인이나 증거를 새 후보의 승인으로 승계하지 않는다.
 
+현재 제품 slice는 `admission-mock`(미구현 I02 UI 상태 조회), `admission-read`(실제 read-only API와 SQL ACL tuple), `admission-live`(격리 실제 엔진 receipt) 순이다. V9 timeout 진단은 30분 checkpoint가 있는 별도 지원 작업이며 관련 실제 runtime만 막는다. WIP 1은 제품 slice 하나로 계산한다. 각 slice의 필요한 검사는 시작 전에 고정하며 추가·반복은 변경 코드, 실패 재현 또는 미해결 우려에 한정하고 통과 시 종료한다. 명령 피드백 목표는 60초 이내, 진단 시간 초과 보고는 범위·시간과 다음 한 조치다. 이는 원래 test threshold, 승인, B 단계 또는 최종 gate를 낮추지 않는다. `--slice` 기본은 `plan.current_slice`; 선택 `--profile`은 현재 slice의 허용 목록에서 실행 profile 부분집합을 고른다. mock 기본은 Node 전달 도구 검사만 실행하고 UI browser 검사는 `checks_to_add`로 안내하며, read/live 기본은 Node와 Python protocol/workspace profile을 실행한다. `delivery:check`도 현재 선택된 profile만 실행한다. 검토는 변경된 코드/trust boundary와 영향 경로만 다루며, 실제 DB/Temporal 연결 전 바뀐 SQL/ACL/권한 경계는 독립 검토한다. Browser/build는 별도 명시 검사다. Mock/read slice는 각각 전달 결과로 기록할 수 있지만 전체 admission 또는 AT 인수가 아니다.
+
 Paperclip은 조직·작업·실행 이력의 상위 오케스트레이션/감독 계층이다. IFPMIC workflow, 상태 전이, 담당 경계, 품질 판정 및 승인 계약은 `workflow.v1.json`, `state-contract.json`, `agent-contract.json`, `acceptance-cases.json`이 권위 기준이다. Paperclip 상태 변경만으로 IFPMIC gate를 통과시킬 수 없다.
 
 ## 1. 검증 운영 규칙

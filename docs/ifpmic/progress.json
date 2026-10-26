@@ -665,7 +665,7 @@
   ],
   "real_acceptance_status": "not_executed",
   "waivers": [],
-  "next_step": "Diagnose V9 claim-expiry timeout using a bounded reproduction. Develop admission UI/API with focused feedback before full490; actual receipt, ACL/idempotency/reload integration and full H2/AT acceptance remain required.",
+  "next_step": "Implement admission-mock UI state retrieval first, then admission-read and admission-live as separate deliveries. Timeboxed V9 diagnosis blocks only related actual runtime. Focused feedback stops on pass; full H2/AT acceptance remains separate.",
   "environment_requests": [
     "IFPMIC source checkout/ref",
     "Build and KUnit commands",
@@ -719,7 +719,7 @@
       "scope": "Source path/schema/applicability only; no actual execution acceptance."
     },
     "current_candidate_static_verification": "evidence/b03/h2-runtime-full-runner-source-review-v9.json",
-    "next_foundation_scope": "Diagnose V9 claim-expiry timeout using a bounded reproduction. Develop admission UI/API with focused feedback before full490; actual receipt, ACL/idempotency/reload integration and full H2/AT acceptance remain required.",
+    "next_foundation_scope": "Implement admission-mock UI state retrieval first, then admission-read and admission-live as separate deliveries. Timeboxed V9 diagnosis blocks only related actual runtime. Focused feedback stops on pass; full H2/AT acceptance remains separate.",
     "candidate_authoring_reviews": {
       "independent": "evidence/b03/h2-runtime-full-execution-contract-review-v9.json",
       "tc": "evidence/b03/h2-runtime-full-execution-tc-review-v9.json"

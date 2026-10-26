@@ -5,6 +5,8 @@ import runtime from '../../docs/ifpmic/delivery/iteration-03/runtime-v9-executio
 import './delivery.css';
 
 const current = plan.flows.find(flow => flow.id === plan.current_flow)!;
+const slices = current.slices ?? [];
+const slice = slices.find(item => item.id === plan.current_slice)!;
 const completed = progress.stages.filter(stage => stage.status === 'verified').length;
 const labels: Record<string, string> = { in_progress: '진행 중', not_started: '대기' };
 
@@ -20,13 +22,19 @@ function DeliveryPage() {
       </nav>
     </header>
     <section className="current" aria-labelledby="current-flow">
-      <p className="eyebrow">이번 전달 목표 · {labels[current.status]}</p>
-      <h2 id="current-flow">{current.title}</h2>
-      <p>{current.outcome}</p>
+      <p className="eyebrow">이번 전달 목표 · {labels[slice.status]}</p>
+      <h2 id="current-flow">{slice.title}</h2>
+      <p>{slice.outcome}</p>
+      <p>현재 범위: {slice.mode} · 상위 목표: {current.title}</p>
       <h3>완료 조건</h3>
-      <ul>{current.acceptance.map(item => <li key={item}>{item}</li>)}</ul>
+      <ul>{slice.acceptance.map(item => <li key={item}>{item}</li>)}</ul>
       <p><strong>다음 행동: </strong>{current.next_action}</p>
-      <p className="blocker"><strong>현재 장애: </strong>{current.blocker}</p>
+      <p className="blocker"><strong>이번 전달의 차단 조건: </strong>{slice.blockers.join('; ') || '없음'}</p>
+      <p><strong>실제 엔진의 남은 문제: </strong>{current.blocker}</p>
+      <h3>작게 전달하는 순서</h3>
+      <ol>{slices.map(item => <li key={item.id} aria-current={item.id === slice.id ? 'step' : undefined}>
+        {item.title} · {item.mode} · {labels[item.status]}
+      </li>)}</ol>
       <p>실제 엔진 접수 화면은 아직 미완료입니다. 이 현황판은 업무 실행 서비스의 가동을 뜻하지 않습니다.</p>
     </section>
     <section aria-labelledby="evidence">

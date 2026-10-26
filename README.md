@@ -6,10 +6,10 @@ IFPMIC workflow 시각화로 확장하는 방향은 [기준 자료와 이관 계
 
 ## 사용자 흐름 단위로 개발하기
 
-현재 개발 우선순위는 [애자일 전달 계획](./docs/ifpmic/AGILE-DELIVERY.md)과 [전달 기준 데이터](./docs/ifpmic/delivery-plan.json)를 따릅니다. 한 번에 저장 요청의 실제 엔진 접수라는 흐름 하나를 진행합니다. UI/API 구현과 관련 검사는 전체 490건 수용을 기다리지 않고 진행하며, 실제 엔진 활성화·전체 H2·원본 AT 인수 기준은 유지합니다.
+현재 개발 우선순위는 [애자일 전달 계획](./docs/ifpmic/AGILE-DELIVERY.md)과 [전달 기준 데이터](./docs/ifpmic/delivery-plan.json)를 따릅니다. 한 번에 전달 단위 하나를 진행하며, 접수 흐름을 mock 화면 → 실제 조회 API → 실제 엔진 접수로 나눕니다. UI/API 구현과 관련 검사는 전체 490건 수용을 기다리지 않고 진행하며, 실제 엔진 활성화·전체 H2·원본 AT 인수 기준은 유지합니다.
 
 - `npm run ifpmic:delivery`: 현재 목표와 선택 검사 목록을 출력합니다. 실행하지 않습니다.
-- `npm run ifpmic:delivery:check`: 전달 도구와 admission protocol/workspace의 로컬 검사만 실행합니다. `.ifpmic-venv`의 고정 Python 의존성이 필요하며 DB/Temporal을 시작하지 않습니다. 로그와 요약은 ignored `workflow-artifacts/delivery/`에 보존합니다.
+- `npm run ifpmic:delivery:check`: 현재 전달 단위의 고정 검사만 실행합니다. 기본 mock 단위는 전달 도구만 검사하고, `admission-local` 선택 시에만 `.ifpmic-venv`의 고정 Python 의존성이 필요합니다. DB/Temporal을 시작하지 않습니다. 로그와 요약은 ignored `workflow-artifacts/delivery/`에 보존합니다.
 - `npm run ifpmic:delivery:browser`: 빌드 산출물만 사용하는 offline Chromium 화면 검사이며 API 서버를 시작하지 않습니다.
 - `npm run ifpmic:delivery -- --level integration` 또는 `--level acceptance`: 남은 조건을 출력합니다. 이 두 수준에 `--run`을 추가하면 자동 실행 미연결로 실패하며, 통과로 기록하지 않습니다.
 - `npm run test:ifpmic:delivery:browser`: 빌드된 현황판의 데스크톱·모바일 표시와 API/외부 요청 없음을 offline Chromium으로 확인합니다.
@@ -159,3 +159,27 @@ npm run test:browser
 [P12 자식 TC 관측](./docs/ifpmic/V2-CHILDREN.md)은 별도 code-dev coordinator의 요청·서버 할당·TC 반환·code-dev 수집·테스트 통합을 구분합니다. 모든 비재사용 P12는 통합 근거를 요구하며, 자식 완료만으로 업무 단계나 품질 판정을 통과하지 않습니다. `mock:ifpmic:children:v1` 카탈로그는 기존50 사건을 보존하는 합성 근거 이관과 대기·질문 재개·실패 재시도·오래된 결과·권한 위반·취소·중단9개를 합친59개입니다. 질문과 취소·중단 복구는 별도 사람 근거가 필요합니다. `npm run ifpmic:verify:ui`는 `children-migration.json`도 기록합니다. 실제 에이전트/worktree 실행·OS 권한 강제·pause/resume/cancel 및 실제 AT는 후속 범위입니다.
 
 [작업 제어 프로토콜 계획](./docs/ifpmic/V2-CONTROLS.md)에 따라 순수 replay의 명령 접수·적용·revision, pause/fence/resume 및 취소 종료·장비/원격 효과 관측을 개발 중입니다. 합성 job 사건은 step 좌표가 없는 정확한7필드 envelope를 사용하고 기존 step 사건 형식은 유지합니다. snapshot의 `revision`은 명령 외에도 수용된 업무 상태 변경마다 증가합니다. `node --test tests/ifpmic-control*.test.mjs`로 독립 TC의 중간 검사를 실행합니다. 취소는 등록된 실행 종료·미할당 요청 drain·장비 조정과 lease 해제·원격 종료 증거를 모두 요구하며, 늦은 결과와 영수증은 업무 단계 진행과 분리해 보존합니다. 식별 정보 없는 장비 격리는 idle 관측으로 해제하지 않습니다. 기존59 시나리오의 사건·체크포인트를 그대로 보존하고 제어 관측15개를 추가했습니다. retry 경계·명령 충돌·일시정지 중 결과 수집·취소 안전 경계는 독립 TC로 검사합니다. 제어 관측 화면은 명령 접수·적용, 제어·대기 복원, 실행·부작용의 세 영역으로 표시하며 업무 단계·Agent 상태와 제어 phase를 구분합니다. `npm run ifpmic:verify:ui`는 74개 카탈로그와 모바일·데스크톱 관측, Paperclip 호스트, 고정 trace 성능·결정성을 포함한 통합 검증입니다. 실제 제어 API나 작업 실행 기능은 후속 범위입니다.
+
+
+### IFPMIC의 작은 전달 단위와 선택 검사
+
+`docs/ifpmic/delivery-plan.json`의 `current_slice`가 이번 범위를 정합니다. 접수 흐름은
+`admission-mock`(다음 구현), `admission-read`, `admission-live` 순으로 나누며, 각 완료는
+전체 admission이나 H2/AT 인수와 별도로 기록합니다. V9 원인 조사는 관련 실제 실행만 차단합니다.
+
+```sh
+npm run ifpmic:delivery
+npm run ifpmic:delivery:check
+npm run ifpmic:delivery -- --slice admission-live --profile admission-local
+npm run ifpmic:delivery:check -- --slice admission-live --profile admission-local
+```
+
+기본 검사는 현재 slice의 고정 allowlist만 실행합니다. `--slice`와 `--profile`은 feedback 수준에서만 사용합니다. `--profile`은 허용된 검사 묶음을
+선택하며 여러 번 지정할 수 있습니다. 현재 mock slice에는 전달 도구 검사만 연결되어 있습니다.
+CLI는 아직 추가할 기능 검사도 출력합니다. 도구 검사 통과가 mock UI의 구현·검증을 뜻하지 않습니다.
+API/화면 구현 시 해당 경계의 검사를 코드의 allowlist와 함께 추가합니다.
+Python protocol/workspace 검사는 `admission-local`이며 실제 DB/Temporal을 시작하지 않습니다.
+각 명령은 최대 60초이고 실패 시 중단하며 자동 재시도하지 않습니다. 결과에는 slice·선택 검사·소요 시간·
+미연결 기능 검사를 기록합니다. 통과 후 새 변경·실패·미해결 위험 없이 검사를 반복하지 않습니다.
+브라우저·build는 변경에 필요할 때 별도로 선택합니다. 실제 통합/전체 인수의 `--run`은 여전히
+미구현으로 종료 코드 2를 반환하며, 실제 실행은 V4의 준비·독립 검토 절차를 따릅니다.
