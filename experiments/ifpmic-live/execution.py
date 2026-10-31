@@ -45,7 +45,10 @@ def allocate_ports():
 
 class LocalExecution:
     def __init__(self, state, toolchain_manifest, cluster, secrets_doc, roles,
-                 database, api_config_path):
+                 database, api_config_path, *, mock_task=False):
+        if type(mock_task) is not bool:
+            raise ValueError('invalid mock task mode')
+        self.mock_task_mode = 'request-preflight-v1' if mock_task else None
         self.state = absolute_path(str(state))
         self.root = self.state / 'execution'
         self.workspace_root = self.root / 'workspaces'
@@ -136,8 +139,16 @@ class LocalExecution:
 
             existing = registry()
             expected = ([expected_deployment], [expected_build], expected_principals)
+            expected_mock = ([(execution.deployment_id, execution.build_id, self.mock_task_mode, True)]
+                             if self.mock_task_mode is not None else [])
+
+            def mock_registry():
+                return owner.execute('SELECT deployment_id,build_id,task_kind,enabled '
+                    'FROM ifpmic.mock_task_builds WHERE deployment_id=%s ORDER BY build_id',
+                    (execution.deployment_id,)).fetchall()
+
             if saved is None:
-                if existing != ([], [], []):
+                if existing != ([], [], []) or mock_registry():
                     raise RuntimeError('execution registry exists without immutable local identity')
                 owner.execute('INSERT INTO ifpmic.execution_deployments '
                     '(deployment_id,namespace,server_endpoint,server_config_sha256,enabled) VALUES(%s,%s,%s,%s,%s)',
@@ -148,10 +159,15 @@ class LocalExecution:
                 for row in expected_principals:
                     owner.execute('INSERT INTO ifpmic.worker_principals '
                         '(role_oid,role_name,kind,deployment_id,build_id,active) VALUES(%s,%s,%s,%s,%s,%s)', row)
+                if expected_mock:
+                    owner.execute('INSERT INTO ifpmic.mock_task_builds '
+                        '(deployment_id,build_id,task_kind,enabled) VALUES(%s,%s,%s,%s)', expected_mock[0])
                 if registry() != expected:
                     raise RuntimeError('execution registry readback failed')
             elif existing != expected:
                 raise RuntimeError('execution registry changed or disabled')
+            if mock_registry() != expected_mock:
+                raise RuntimeError('mock task build opt-in changed or disabled')
         return role_oids
 
     def prepare(self):
@@ -163,10 +179,16 @@ class LocalExecution:
         self._attempt = private_dir(self.root / ('attempt-' + uuid4().hex))
         pin_path = self.root / 'identity.json'
         saved = private_json(str(pin_path)) if pin_path.exists() or pin_path.is_symlink() else None
-        if saved is not None and (type(saved) is not dict or set(saved) != {
-                'format', 'identity', 'ports', 'toolchain_root', 'toolchain_manifest_sha256', 'role_oids'} or
-                saved['format'] != 'ifpmic.local.execution.identity.v1'):
-            raise RuntimeError('invalid saved execution identity')
+        fields = {'format', 'identity', 'ports', 'toolchain_root', 'toolchain_manifest_sha256', 'role_oids'}
+        if saved is not None:
+            legacy = (type(saved) is dict and set(saved) == fields
+                      and saved['format'] == 'ifpmic.local.execution.identity.v1'
+                      and self.mock_task_mode is None)
+            current = (type(saved) is dict and set(saved) == fields | {'mock_task_mode'}
+                       and saved['format'] == 'ifpmic.local.execution.identity.v2'
+                       and saved['mock_task_mode'] == self.mock_task_mode)
+            if not (legacy or current):
+                raise RuntimeError('invalid saved execution identity or changed mock task mode')
         self.ports = saved['ports'] if saved else allocate_ports()
         deployment_id = 'ifpmic.local.' + hashlib.sha256(str(self.state).encode()).hexdigest()[:32]
         # Reading metadata here selects only the explicit interpreter. Environment
@@ -193,9 +215,12 @@ class LocalExecution:
                 prepared['toolchain_root'] != str(toolchain_root) or prepared['cli_binary_sha256'] != CLI_SHA or
                 prepared['cli_binary_path'] != str(toolchain_root / 'temporal')):
             raise RuntimeError('qualified execution preparation mismatch')
-        candidate = {'format': 'ifpmic.local.execution.identity.v1', 'identity': self.identity,
+        identity_format = saved['format'] if saved is not None else 'ifpmic.local.execution.identity.v2'
+        candidate = {'format': identity_format, 'identity': self.identity,
             'ports': self.ports, 'toolchain_root': prepared['toolchain_root'],
             'toolchain_manifest_sha256': prepared['toolchain_manifest_sha256']}
+        if identity_format == 'ifpmic.local.execution.identity.v2':
+            candidate['mock_task_mode'] = self.mock_task_mode
         if saved is not None and candidate != {key: value for key, value in saved.items() if key != 'role_oids'}:
             raise RuntimeError('immutable execution source, environment or toolchain changed')
         candidate['role_oids'] = self._register(saved)
@@ -203,11 +228,14 @@ class LocalExecution:
             write_new_private(pin_path, candidate)
         self.binary = absolute_path(prepared['cli_binary_path'])
         for mode, kind in (('worker', 'projector'), ('dispatcher', 'dispatcher')):
-            write_new_private(self._attempt / (mode + '-config.json'), {
+            config = {
                 'format': 'ifpmic.h2.runtime.v1', 'mode': mode, 'identity': self.identity,
                 'dsn': self._role_dsn(kind), 'workspace_root': str(self.workspace_root),
                 'source_manifest_path': str(self._attempt / 'source-manifest.json'),
-                'environment_manifest_path': str(self._attempt / 'environment-manifest.json')})
+                'environment_manifest_path': str(self._attempt / 'environment-manifest.json')}
+            if mode == 'worker' and self.mock_task_mode is not None:
+                config.update(format='ifpmic.h2.runtime.v2', mock_task_mode=self.mock_task_mode)
+            write_new_private(self._attempt / (mode + '-config.json'), config)
         self._status = 'prepared'
         return self.workspace_root
 

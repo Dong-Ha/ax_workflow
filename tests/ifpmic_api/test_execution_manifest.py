@@ -176,6 +176,34 @@ def test_load_config_rejects_extra_fields_and_endpoint_digest_mismatch(tmp_path:
     assert endpoint.value.code == "BUILD_UNAVAILABLE"
 
 
+def test_load_config_preserves_legacy_v1_and_accepts_only_explicit_worker_mock_v2(tmp_path: Path, monkeypatch):
+    _root, _workspace, _source, _environment, config_path, value = _config_tree(tmp_path / "legacy", monkeypatch)
+    loaded, _identity = load_config(str(config_path))
+    assert loaded == value
+
+    value.update(format="ifpmic.h2.runtime.v2", mode="worker",
+                 mock_task_mode="request-preflight-v1")
+    config_path.write_text(json.dumps(value, sort_keys=True, separators=(",", ":")) + "\n")
+    config_path.chmod(0o600)
+    loaded, _identity = load_config(str(config_path))
+    assert loaded["mock_task_mode"] == "request-preflight-v1"
+
+
+@pytest.mark.parametrize(("mode", "mock_task_mode"), [
+    ("dispatcher", "request-preflight-v1"),
+    ("worker", "unknown"),
+    ("worker", None),
+])
+def test_load_config_rejects_ineligible_or_ambiguous_mock_v2(tmp_path: Path, monkeypatch, mode, mock_task_mode):
+    _root, _workspace, _source, _environment, config_path, value = _config_tree(tmp_path, monkeypatch)
+    value.update(format="ifpmic.h2.runtime.v2", mode=mode, mock_task_mode=mock_task_mode)
+    config_path.write_text(json.dumps(value, sort_keys=True, separators=(",", ":")) + "\n")
+    config_path.chmod(0o600)
+    with pytest.raises(ProtocolError) as rejected:
+        load_config(str(config_path))
+    assert rejected.value.code == "BUILD_UNAVAILABLE"
+
+
 def test_loaded_environment_requires_b_and_fresh_empty_cache(tmp_path: Path, monkeypatch):
     cache = tmp_path / "cache"
     cache.mkdir(mode=0o700)

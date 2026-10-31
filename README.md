@@ -44,7 +44,7 @@ npm run ax:analyze -- --input examples/analysis-request.json
 - `npm run ifpmic:delivery:check`: 현재 선택된 slice의 검사만 실행합니다. 모의 결과 조회 검사는 `--flow minimal-mock --slice mock-result-read`로 선택합니다. DB/Temporal을 시작하지 않습니다. 과거 합성 화면만 검사하려면 `--slice mock-result-contract`를 지정합니다.
 - `npm run ifpmic:mock-task:browser`: 오프라인 I02 fixture에서 결과·오류·계정/작업 전환·reload·키보드·모바일 표시를 확인하고 캡처합니다.
 - `npm run ifpmic:mock-task:read:browser`: 오프라인 I02 fixture에서 실제 조회 패널의 pending/completed·503·잘못된 응답·권한 거부·reload·계정 전환을 확인합니다.
-- [결과 DTO](./docs/ifpmic/api-extensions/mock-task.v1.json)와 migration `006_mock_preflight`를 실제 읽기 API에 연결했습니다. 실행기가 결과를 생성하는 기능은 다음 slice입니다. 실제 연결 검사는 검토된 격리 launcher에 `ifpmic:admission:pg`의 `--expect-mock-task-read`를 명시하며 기존 작업은 `--read-existing`으로 새 POST 없이 확인합니다.
+- [결과 DTO](./docs/ifpmic/api-extensions/mock-task.v1.json)와 migration `006_mock_preflight`를 실제 읽기 API에 연결했습니다. migration `007_mock_execution`과 명시적 opt-in 실행 코드는 구현했으며, 순수 실행 검사와 격리 PostgreSQL 저장·권한 검사를 통과했습니다. 실제 Temporal → 결과 저장 → 화면 연결 검증은 남아 있습니다. 실제 조회 검사는 검토된 격리 launcher에 `ifpmic:admission:pg`의 `--expect-mock-task-read`를 명시하며 기존 작업은 `--read-existing`으로 새 POST 없이 확인합니다.
 
 실제 조회는 pending일 때 1/2/4/5초 간격으로 최대 60초 확인하고 완료·오류·권한 거부에 멈춥니다. 503에서는 마지막 확인 결과를 보존하며 계정/작업 변경 및 401/403에는 지웁니다. 접수와 결과 패널은 같은 취소/마감 controller를 사용하고 각자의 DTO와 종료 조건을 적용합니다.
 
@@ -79,6 +79,8 @@ H2 runtime 구현과 전체 수용 상태는 [checkpoint](./docs/ifpmic/H2-RUNTI
 ```sh
 .ifpmic-venv/bin/python experiments/ifpmic-live/launcher.py --name admission-live-01 --execution --execution-toolchain /absolute/path/to/private-H1-installation.json
 ```
+
+제한된 모의 사전 점검은 새 격리 이름으로 위 명령에 `--mock-task`를 추가해 선택합니다. `--execution`이 필수이며 기본 실행에는 포함되지 않습니다. 이 작업은 접수된 요청의 메타데이터만 점검하고 같은 job/run에 멱등적으로 결과를 저장합니다. LLM 요구사항 분석이나 IFPMIC 업무 완료를 뜻하지 않습니다. 모드는 새 로컬 identity v2에 고정되며 재시작 때 바꿀 수 없습니다. opt-in worker만 runtime config v2를 사용하고 dispatcher는 v1을 유지합니다. 과거 실행의 고정 소스·모드를 변경해 재사용하지 않습니다. 현재 이 경로의 실제 Temporal 통합 실행은 미검증입니다.
 
 `--execution-toolchain`은 기존 qualified H1 설치 기록을 지정하며 설치·다운로드를 하지 않습니다. API/owner 준비는 original32 `.ifpmic-venv`에서, dispatcher/worker CLI와 환경 manifest 검증은 qualified36 H1 Python에서 실행됩니다. 새 이름마다 PostgreSQL·Temporal SQLite·workspace·deployment/build identity와 role별 private config를 분리합니다. dispatcher와 worker config는 각 전용 DB role만 사용하며 owner DSN을 worker에 넘기지 않습니다. Temporal listener는 loopback으로 제한하고 서버·API·issuer·DB·runtime 자식은 시작 identity를 확인해 소유한 프로세스만 종료합니다. 실행 context의 versioned `execution_connected` boolean은 연결 상태 관찰일 뿐 receipt 증거가 아니며, 화면의 실제 `QUEUED`는 같은 job/command/run/sequence-1 receipt 조회로 확인해야 합니다. 구체적인 범위와 미수용 항목은 [주기03 기록](./docs/ifpmic/delivery/iteration-03/README.md)을 참고하세요.
 

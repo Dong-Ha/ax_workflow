@@ -63,10 +63,15 @@ async def run(config, identity):
             return
         if config['mode'] == 'worker':
             executor = ThreadPoolExecutor(max_workers=4, thread_name_prefix='ifpmic-h2-activity')
-            activities = ActivationActivities(store, identity, workspace)
+            mock_mode = config.get('mock_task_mode')
+            activities = ActivationActivities(store, identity, workspace, mock_task_mode=mock_mode)
+            registered = [activities.read_activation, activities.project_activation]
+            if mock_mode is not None:
+                from .execution_mock_task import MockTaskActivities
+                registered.append(MockTaskActivities(store, identity, workspace, mode=mock_mode).run)
             worker = Worker(transport.client, task_queue=identity.task_queue,
                 workflows=[IFPMICJobWorkflow],
-                activities=[activities.read_activation, activities.project_activation],
+                activities=registered,
                 activity_executor=executor, max_concurrent_activities=4,
                 max_concurrent_workflow_tasks=4, build_id=identity.build_id,
                 identity='ifpmic-h2', use_worker_versioning=False)

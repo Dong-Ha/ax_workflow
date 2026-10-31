@@ -11,8 +11,11 @@ def wait():
 
 
 class ActivationActivities:
-    def __init__(self, store, identity, workspace):
+    def __init__(self, store, identity, workspace, *, mock_task_mode=None):
         self.store, self.identity, self.workspace = store, identity, workspace
+        if mock_task_mode not in (None, 'request-preflight-v1'):
+            raise ValueError('EXECUTION_CONFIG_INVALID')
+        self.mock_task_mode = mock_task_mode
 
     def valid_request(self, request):
         return (type(request) is dict and set(request) == {'job_id', 'run_id', 'build_id', 'binding_sha256'}
@@ -45,7 +48,10 @@ class ActivationActivities:
             # Validate before serializing anything returned by SQL into history.
             activation_proposal(request['job_id'], request['run_id'], request['build_id'],
                                 answer['binding_sha256'], answer['command_id'], answer['command_payload_sha256'])
-            return {k: answer[k] for k in ('status', 'binding_sha256', 'command_id', 'command_payload_sha256')}
+            ready = {k: answer[k] for k in ('status', 'binding_sha256', 'command_id', 'command_payload_sha256')}
+            if self.mock_task_mode is not None:
+                ready['mock_task_mode'] = self.mock_task_mode
+            return ready
         except Exception:
             return wait()
 

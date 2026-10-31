@@ -47,6 +47,45 @@ def test_invalid_saved_identity_fails_before_any_database_or_child_activity(tmp_
     assert pin.exists()
 
 
+def test_mock_task_mode_change_from_legacy_identity_fails_before_database_or_child(tmp_path):
+    state = tmp_path / 'state'
+    pin = state / 'execution' / 'identity.json'
+    _private_json(pin, {
+        'format': 'ifpmic.local.execution.identity.v1', 'identity': {}, 'ports': [20001, 20002, 20003],
+        'toolchain_root': '/tmp/toolchain', 'toolchain_manifest_sha256': 'a' * 64, 'role_oids': {},
+    })
+
+    class NoDatabaseCalls:
+        calls = 0
+
+        def dsn(self, *_args):
+            self.calls += 1
+            raise AssertionError('database must not be contacted')
+
+    cluster = NoDatabaseCalls()
+    supervisor = execution.LocalExecution(
+        state, tmp_path / 'missing-h1.json', cluster, {'passwords': {}}, {},
+        'ifpmic', tmp_path / 'api-config.json', mock_task=True)
+
+    with pytest.raises(RuntimeError, match='invalid saved execution identity'):
+        supervisor.prepare()
+
+    assert cluster.calls == 0
+    assert supervisor._handles == []
+    assert pin.exists()
+
+
+def test_launcher_rejects_mock_task_without_execution_before_run(monkeypatch):
+    launcher = importlib.import_module('launcher')
+    monkeypatch.setattr(sys, 'argv', ['launcher', '--mock-task'])
+    monkeypatch.setattr(launcher, 'run', lambda _args: pytest.fail('launcher must reject before run'))
+
+    with pytest.raises(SystemExit) as rejected:
+        launcher.main()
+
+    assert rejected.value.code == 2
+
+
 def test_h1_metadata_preserves_fractional_timing_value(tmp_path):
     tmp_path.chmod(0o700)
     manifest = tmp_path / 'h1.json'

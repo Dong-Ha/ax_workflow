@@ -1,4 +1,4 @@
-"""H2 activation only. Successful executions wait; no P01 or human outcome."""
+"""Activation and an explicit recorded mock task; no P01 or human outcome."""
 from datetime import timedelta
 from typing import Any
 
@@ -81,6 +81,18 @@ class IFPMICJobWorkflow:
         while True:
             outcome = await self.attempt('ifpmic.h2.project_activation', proposal)
             if outcome.get('status') == 'applied':
+                # The activity result is recorded in history. Never branch on
+                # this worker process's environment during workflow replay.
+                if ready.get('mock_task_mode') == 'request-preflight-v1':
+                    self._phase = 'mock_running'
+                    result = await self.attempt('ifpmic.mock.preflight', request)
+                    if result.get('status') == 'completed':
+                        await self.parked('mock_complete')
+                    if result.get('status') == 'quarantined':
+                        await self.parked('mock_quarantined')
+                    # The SDK already bounded retries. Preserve this run for
+                    # recovery instead of issuing an unbounded new activity loop.
+                    await self.parked('mock_wait')
                 await self.parked('queued')
             if outcome.get('status') == 'rejected':
                 self._phase = 'rejected'

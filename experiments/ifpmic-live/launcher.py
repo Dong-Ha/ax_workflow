@@ -310,7 +310,7 @@ def run(args):
             from execution import LocalExecution
             execution = LocalExecution(state=state, toolchain_manifest=Path(args.execution_toolchain),
                 cluster=cluster, secrets_doc=secret, roles=ROLES, database=DATABASE,
-                api_config_path=state / "api-config.json")
+                api_config_path=state / "api-config.json", mock_task=args.mock_task)
             private_dir(execution.root)
             private_dir(execution.workspace_root)
         settings = Settings(mode="mock", api_origin=origin, issuer=issuer.issuer,
@@ -372,12 +372,14 @@ def main():
     parser.add_argument("--port", type=int, default=8769)
     parser.add_argument("--issuer-port", type=int, default=8770)
     parser.add_argument("--execution", action="store_true", help="enable isolated local Temporal admission")
+    parser.add_argument("--mock-task", action="store_true", help="run one bounded mock preflight after admission; requires --execution")
     parser.add_argument("--execution-toolchain", help="absolute private qualified H1 toolchain manifest")
     args = parser.parse_args()
     if (not args.name or len(args.name) > 40 or not args.name.replace("-", "").isalnum()
             or not args.name.isascii() or not 1024 <= args.port <= 65535
             or not 1024 <= args.issuer_port <= 65535 or args.port == args.issuer_port
             or args.execution != bool(args.execution_toolchain)
+            or (args.mock_task and not args.execution)
             or (args.execution_toolchain and not Path(args.execution_toolchain).is_absolute())):
         parser.error("invalid isolated demo arguments")
     try:

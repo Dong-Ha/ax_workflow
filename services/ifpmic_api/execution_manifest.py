@@ -152,11 +152,15 @@ def load_config(name):
     try:
         verify_loaded_environment()
         value = private_json(name)
-        if (type(value) is not dict or set(value) != {
-                'format', 'mode', 'identity', 'dsn', 'workspace_root',
-                'source_manifest_path', 'environment_manifest_path'}
-                or value['format'] != 'ifpmic.h2.runtime.v1'
-                or value['mode'] not in ('dispatcher', 'worker')):
+        fields = {'format', 'mode', 'identity', 'dsn', 'workspace_root',
+                  'source_manifest_path', 'environment_manifest_path'}
+        legacy = (type(value) is dict and set(value) == fields
+                  and value['format'] == 'ifpmic.h2.runtime.v1'
+                  and value['mode'] in ('dispatcher', 'worker'))
+        mock_worker = (type(value) is dict and set(value) == fields | {'mock_task_mode'}
+                       and value['format'] == 'ifpmic.h2.runtime.v2' and value['mode'] == 'worker'
+                       and value['mock_task_mode'] == 'request-preflight-v1')
+        if not (legacy or mock_worker):
             raise invalid()
         execution = ExecutionIdentity(**value['identity'])
         execution.validate()
