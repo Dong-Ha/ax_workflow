@@ -2,7 +2,21 @@
 
 최종 제품 목표와 원본 요구사항·역할·승인·AT 인수 기준은 [PLAN](./PLAN.md) 및 설계 계약에 둔다. 이 문서는 사용자에게 결과를 전달하는 순서와 회차 운영만 정한다. 개발 중간 결과와 원본 업무의 최종 인수를 별도로 기록한다.
 
-## 현재 체크포인트 · 2026-10-27
+## 현재 목표 · 2026-10-31
+
+- 사용자에게 전달할 결과는 **실제로 동작하는 AX 워크플로**와 **실행에 적용되는 에이전트별 지침 파일** 두 가지다. 현재 사용자 흐름은 `agent-analysis`이며, 기존 `mock-task-live`의 부분 구현과 미완료 상태는 후속 작업으로 보존한다. 제품 작업은 동시에 하나만 진행한다.
+- 첫 에이전트 pilot은 로컬 Codex CLI adapter로 P01/P02 요청 분석을 수행해 검토·수정 가능한 실제 산출물을 만들고, 사용자가 결과를 확인하는 시연을 제공한다. P03에는 진입하지 않고 멈춘다. 이 pilot은 adapter 연동 확인이며 IFPMIC job, gate, 단계 전이를 생성하거나 완료하지 않는다.
+- 다음 흐름은 P03–P05 분석 산출물과 사람 담당 X01 실행 경로다. 이후 code-dev/TC는 사람 담당 P06–P10의 선행 확인을 지킨다. arch-runner는 등록된 도구 wrapper만, SQE는 승인된 bridge 또는 수동 증거만 다룬다. report 역할은 승인·배포 실행을 맡지 않는다.
+- Paperclip은 과거 AX 실행의 참고 자료이며 선택 가능한 관제 화면이다. 새 에이전트 실행의 필수 의존성이나 별도 업무 상태 결정 주체로 추가하지 않는다. API/Temporal 연동 뒤에도 기존 IFPMIC runtime만 업무 상태를 결정한다.
+- 각 작업 단위는 실제 산출물과 사용자 시연·피드백을 남긴다. 시작 때 변경 경계에 맞는 검사만 정하고, UI 변경은 해당 시연과 browser 검사, 지침 변경은 pilot 산출물과 역할 경계 검사, source/DB/runtime 변경은 영향받는 검사를 선택한다. 일반 변경에서 전체 검사 묶음을 실행하지 않는다. 전체 H2/AT와 보안·권한·개인정보 경계는 원래 수용 단계에서 유지한다.
+
+### 이번 전달: 실제 로컬 분석
+
+`npm run ax:analyze -- --input examples/analysis-request.json`로 실제 로컬 Codex(`gpt-6-luna`)가 공개 합성 요청의 P01/P02를 실행했다. 결과는 요구사항 3개·검증 가능한 기대 동작·변경 영향이며, 두 단계의 지침 해시가 일치한다. 결과와 실패 이력·소스 해시는 `delivery-plan.json`의 `agent-analysis/analysis-local.evidence`에 연결했다. 보고서는 `workflow-artifacts/analysis/a41a3b9f-4316-45c7-a9f9-aa28e41e269c/report.md`다.
+
+첫 호출은 완료 상태와 누락 입력이 함께 반환되어 실패로 보존했다. 짧은 단일 호출로 원인을 확인한 뒤 현재 단계 필수 입력과 후속 환경 준비를 구분하도록 출력 계약과 프롬프트를 수정했다. 모순 응답을 거부하는 조건과 회귀 검사는 유지했다. 실제 업무 job/Temporal·코드 수정·Bedrock·장비·배포·전체 인수는 수행하지 않았다. 다음 행동은 결과와 지침에 대한 사용자 코멘트를 받은 뒤 같은 저장 요청의 분석 실행·결과 화면을 연결하는 것이다.
+
+## 이전 체크포인트 · 2026-10-27 (기록)
 
 - 필수 단계 완료: **2/16 = 12.5%**(동일 가중치 단계 수, 작업량 추정이 아님).
 - 현재 제품 흐름: minimal-mock. `mock-result-contract` 합성 화면과 `mock-result-read` 실제 저장 결과 조회를 전달했다. 다음은 실제 제한된 모의 작업 실행이며 상위 흐름은 진행 중이다.
@@ -13,7 +27,7 @@
 - 실행 증거 `workflow-artifacts/delivery/admission-live/normal-20261027-03/`은 실제 SDK run 1건/start 1건/phase `queued`, SQL job/command/binding/receipt 각 1건, A/B deny, clean restart에서 같은 단일 run을 확인한다. 다섯 자식(각 2회 실행 포함)과 API/issuer/PostgreSQL은 force 없이 종료됐다. API/runtime 45개 source는 실제 run 전후 동일했다. context v2 `execution_connected` boolean은 상태 관찰이며 receipt 증거가 아니므로 화면의 `QUEUED` 판정과 분리한다. 최신 V9의 crash/reclaim claim-expiry 원인은 여전히 inconclusive이며 이 candidate는 V9 retry, 전체 H2/full490, 원본 AT, 운영 준비 수용이 아니다. 기존 실패 `normal-01/-02`는 보존됐다.
 - 제품 WIP는 하나로 유지한다. 현재 사용자 흐름은 실제 서비스가 통제하는 최소 mock 실행→결과 저장→화면 조회다. 첫 합성 결과 화면 이후 실제 조회·실행을 연결한다. mock 결과는 실제 IFPMIC 작업이나 전체 29단계 실행으로 표시하지 않는다. V9 진단은 별도 지원 작업으로 계속할 수 있으며 관련 crash/reclaim과 전체 수용만 막는다.
 
-## 다음 사용자 흐름 순서
+## 이전 사용자 흐름 순서 · 2026-10-27 계획 기록
 
 | 순서 | 한 회차의 사용자 결과 | 완료 신호와 경계 |
 |---|---|---|
@@ -44,7 +58,7 @@
 | Temporal activity·supervisor | 활동 재시도·identity·정리의 관련 검사 | 준비된 단일 실제 경로와 필요한 복구 사례 |
 | 전달 계획·검사 도구 | `delivery-tool` | 제품 DB/Temporal 실행 불필요 |
 
-개발 반복마다 browser·build·전체 runtime을 묶지 않는다. TypeScript/번들 영향이 있으면 해당 검사 또는 build를 선택하고, 계약 변경이 소비자에 영향을 주면 그 소비 경로까지 넓힌다. 실제 DB/Temporal 연결 전 변경된 보안 경계의 독립 검토와 최종 전체 수용은 유지한다. 같은 source·환경·검사 범위에서 통과한 검사를 마무리 보고용으로 다시 실행하지 않는다. 실패 시 해당 profile에서 멈추고 기록의 로그와 소요시간으로 작은 재현을 선택한다.
+개발 반복마다 browser·build·전체 runtime을 묶지 않는다. UI/사용자 경로 변경에는 해당 시연과 browser 검사를, 역할 지침 변경에는 pilot 산출물과 역할 경계 검사를 선택한다. TypeScript/번들 영향이 있으면 해당 검사 또는 build를 선택하고, 계약 변경이 소비자에 영향을 주면 그 소비 경로까지 넓힌다. 실제 DB/Temporal 연결 전 변경된 보안 경계의 독립 검토와 최종 전체 수용은 유지한다. 같은 source·환경·검사 범위에서 통과한 검사를 마무리 보고용으로 다시 실행하지 않는다. 실패 시 해당 검사 묶음에서 멈추고 기록의 로그와 소요시간으로 작은 재현을 선택한다.
 
 ### 다음 실행 계층의 설계 경계
 
@@ -52,9 +66,9 @@
 
 작업 결과의 pending/completed와 전체 job 상태는 별도 계약으로 둔다. 모의 작업 성공만으로 `QUEUED`를 전체 업무 완료로 바꾸거나 P01·사람 승인 단계를 통과시키지 않는다. API는 기존 visibility 경계를 사용하고 화면은 원시 자료 없이 정제된 모의 결과만 표시한다. 이 구조를 차례로 구현하며 전체 29단계 엔진을 먼저 완성할 필요가 없도록 한다.
 
-리팩토링 확인: 전달 CLI/계획 집중 검사 10건 통과, 실제 `--profile delivery-tool` wrapper 569ms, TypeScript 검사 통과. 결과는 `workflow-artifacts/delivery/2026-10-26T16-00-12.091Z-33518/result.json`에 보존한다. 최초 검사에서 새 slice의 id와 화면 제목을 혼동한 assertion 하나를 수정한 뒤 해당 검사만 재확인했다. 새 제품 기능 없음. DB/Temporal/browser/full490은 이번 변경의 검증에 실행하지 않았고 필수 단계 완료는 2/16을 유지한다.
+2026-10-26 과거 도구 정비 기록: 전달 CLI/계획 집중 검사 10건, `--profile delivery-tool` wrapper 569ms, TypeScript 검사가 통과했다. 결과는 `workflow-artifacts/delivery/2026-10-26T16-00-12.091Z-33518/result.json`에 보존한다. 최초 검사에서 새 작업 단위 식별자와 화면 제목을 혼동한 assertion 하나를 수정한 뒤 해당 검사만 재확인했다. 새 제품 기능은 없었다. DB/Temporal/browser/full490은 당시 변경 검증에 실행하지 않았고 필수 단계 완료는 2/16이었다.
 
-현재 흐름·완료 조건·상태는 저장소의 단일 기준 파일 `docs/ifpmic/delivery-plan.json`에 기록하고, 루트 `/delivery.html`에서 같은 데이터를 보여준다. 흐름이나 상태를 바꾸면 JSON을 함께 갱신한다. 현재 read slice의 기본 검사는 `mock-task-dto`와 `mock-task-read-state`이며 Python DTO 17건과 공유 조회 controller의 Node 12건만 실행한다. 대시보드에 표시된 단계 완료 수는 원본 필수 단계의 수용 상태를 대체하지 않는다.
+현재 흐름·완료 조건·상태는 저장소의 단일 기준 파일 `docs/ifpmic/delivery-plan.json`에 기록하고, 루트 `/delivery.html`에서 같은 데이터를 보여준다. 흐름이나 상태를 바꾸면 JSON을 함께 갱신한다. 당시 read 작업 단위의 기본 검사는 `mock-task-dto`와 `mock-task-read-state`였으며 Python DTO 17건과 공유 조회 controller의 Node 12건만 실행했다. 대시보드에 표시된 단계 완료 수는 원본 필수 단계의 수용 상태를 대체하지 않는다.
 
 - `npm run ifpmic:delivery`: 기본 목표 행동과 검사 범위를 출력한다. 현재 흐름은 `plan.current_slice`, 다른 `--flow`는 해당 흐름의 `default_slice`를 사용하고 `--slice`로 덮어쓸 수 있다. `--profile`은 해당 slice의 허용 목록에서 선택한다. `admission-mock` 기본은 `admission-state`, `admission-read`는 `admission-dto`·`admission-read-state`, `admission-live`는 `admission-context`·`admission-local`이다. 오프라인 UI browser는 `npm run ifpmic:admission:browser`로 별도 명시한다.
 - `npm run ifpmic:delivery:check`: 선택된 검사만 실행하며 DB/Temporal/서비스를 시작하지 않는다. 기본 실행은 JSON의 `feedback_profiles`를 따른다. 전달 도구 변경 시 `--profile delivery-tool`, supervisor 변경 시 `--flow admission --slice admission-live --profile execution-owner`를 명시한다. profile별/전체 실행 시간을 출력하고 private 결과에 남긴다.
@@ -65,7 +79,7 @@
 
 ## 검증과 완료 보고
 
-개발 중에는 각 slice 시작 시 정한 변경 경계의 검사와 필요한 회귀만 선택한다. 좁은 mock 검증은 화면 흐름·상태 연결을 개발하는 데 쓸 수 있다. browser/build는 필요한 경우 각각 명시해서 실행한다. source·환경·계약·권한·격리·자원 정리가 준비되고 실제 DB/Temporal 경계를 독립 검토한 뒤 제한된 로컬 통합 검사를 허용하며, 결과와 범위를 보고한다. 이는 실제 전체 H2, AT, 장비 실행 또는 운영 준비를 수용했다는 뜻이 아니다. 실제 경로의 보안·권한·개인정보·멱등성 조건은 해당 단계의 계약과 검증을 유지한다.
+개발 중에는 각 작업 단위 시작 시 정한 변경 경계의 검사와 필요한 회귀만 선택한다. 각 전달은 사용자가 확인할 시연과 살펴볼 수 있는 실제 산출물을 포함한다. 좁은 mock 검증은 화면 흐름·상태 연결을 개발하는 데 쓸 수 있다. browser/build는 필요한 경우 각각 명시해서 실행한다. source·환경·계약·권한·격리·자원 정리가 준비되고 실제 DB/Temporal 경계를 독립 검토한 뒤 제한된 로컬 통합 검사를 허용하며, 결과와 범위를 보고한다. 이는 실제 전체 H2, AT, 장비 실행 또는 운영 준비를 수용했다는 뜻이 아니다. 에이전트 pilot 역시 IFPMIC 업무 단계/gate를 완료하지 않는다. 실제 경로의 보안·권한·개인정보·멱등성 조건은 해당 단계의 계약과 검증을 유지한다.
 
 한 번 실패하면 원시/private 증거와 실행 후보를 고정하고, 해당 실패를 작은 재현으로 좁힌다. 원인·변경 범위·영향받는 검사·복구 방법을 기록한다. 검사 범위를 넓히거나 반복하는 경우는 변경 코드, 실패 조건 또는 미해결 우려가 근거여야 하며 관련 검사 통과 뒤 멈춘다. 진단의 30분은 checkpoint와 범위 재설정 기준이지 테스트나 승인 완화가 아니다. 초과 시 범위·소요시간과 다음 한 조치를 보고한다. full490은 slice의 자체 준비·검토 완료 전 실행하지 않으며 통합/수용 단계에서 수행한다. `admission-mock`과 `admission-read` 각각의 완료는 사용자 결과로 전달·기록할 수 있지만 전체 admission이나 AT 수용으로 표시하지 않는다. 기존 V9 승인·실패 결과는 후속 후보의 승인으로 재사용하지 않는다.
 

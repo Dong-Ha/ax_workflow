@@ -6,7 +6,9 @@
 
 기본 검사는 변경 경계에 맞게 선택하고 전달 도구·supervisor·browser·build를 모든 변경에 묶지 않는다. 원본 전체 H2/AT는 최종 수용에 남긴다. V9 timeout 진단은 30분 checkpoint의 별도 지원 작업이며 관련 crash/reclaim 및 전체 수용만 차단한다. 검토는 바뀐 경계와 영향 경로에 한정하고, 실제 DB/Temporal 연결 전 변경된 보안 경계는 독립 검토한다. 과거 후보의 승인과 증거는 후속 후보에 승계하지 않는다.
 
-현재 AX의 기록 관제와 Paperclip 실험을 기반으로, IFPMIC 설계서의 업무 흐름을 Paperclip 기반 화면에서 확인하고 조작할 수 있게 한다. 최종 기준은 제공된 DOCX와 ZIP의 계약이다. 첫 산출물은 계약에 맞는 흐름 시각화이며, 다음 완료 단위는 B01–B05의 지속 실행 가능한 모의 완주다.
+과거 AX 기록 관제와 Paperclip 실험은 참고 자료로 보존한다. IFPMIC 업무 규칙의 최종 기준은 제공된 DOCX와 ZIP의 계약이다. 이 계획은 그 계약에 따른 화면·실행 계층과 실제 에이전트 작업 흐름을 다룬다.
+
+추가 산출물은 실제 AX 에이전트 작업 흐름과 역할별 지침 파일이다. 첫 로컬 Codex CLI pilot은 P01/P02 요청 분석 산출물을 만들고 검토용 시연을 제공한 뒤 P03 이전에 멈춘다. 이는 adapter 연동 확인이며 IFPMIC job/gate 결과나 단계 전이를 기록하지 않는다. Paperclip은 과거 AX 작업의 참고 자료이자 선택 가능한 관제 화면이며 새 실행기의 필수 의존성이 아니다. 이후 P03–P05와 사람 담당 X01, code-dev/TC 및 나머지 역할은 설계 계약의 사람 선행조건을 지킨다. API/Temporal에 연결할 때 업무 상태 결정 주체는 기존 IFPMIC runtime 하나로 유지한다.
 
 이 계획에서 구조와 단계 배치는 구현 방향이다. 실제 구현·검증 상태는 [진행 기록](./progress.json)과 단계별 증빙으로 확인한다. 화면 구현과 업무 실행 서비스의 완료를 구분한다.
 
@@ -81,23 +83,23 @@ P13/P14 실패는 P11, X01 반려는 P02, X03 반려는 사유에 따라 P11/P07
 
 진행 이벤트는 관측 가능한 도구 작업 종류·상태, 산출물 참조와 짧은 요약만 전달한다. 추론, 원시 명령, 도구 입력/출력, 인증 자료는 API에서 제외하며 표시 텍스트는 `safeText`를 거친다. 상세 증거는 권한을 확인한 정제 artifact로 제공한다.
 
-## Paperclip과 업무 실행 계층의 경계
+## 관제 호스트와 업무 실행 계층의 경계
 
-채택 방향은 Paperclip 기반 별도 IFPMIC 화면과 설계서의 FastAPI·Temporal 서비스 조합이다. 초기에는 별도 checkout과 DB에서 Paperclip을 고정 버전으로 실행한다. 기존 AX localhost 읽기 전용 서버에 쓰기·장비 제어 API를 추가하지 않는다.
+Paperclip은 선택 가능한 관제 화면이자 과거 실행 참고 자료다. 새 에이전트 작업 흐름 산출물은 Paperclip과 분리해 실제 AX 실행 지침·adapter contract로 구현할 수 있어야 한다. 설계서의 FastAPI·Temporal 실행 계층은 유지하고, 기존 AX localhost 읽기 전용 서버에는 쓰기·장비 제어 API를 추가하지 않는다.
 
 | 계층 | 책임 |
 |---|---|
-| Paperclip 기반 UI | 조직·작업 탐색, IFPMIC workflow 화면, 실행·증거 링크 |
+| 선택적 관제 UI | 조직·작업 탐색, IFPMIC workflow 화면, 실행·증거 링크 |
 | IFPMIC API | 인증, 프로젝트/job 권한, schema, artifact, command 수락과 outbox, SSE |
 | Temporal | 단계 전이의 단일 결정자, 사람 대기, 타이머, cycle, version pin과 재개 |
-| PostgreSQL | 명령·outbox, 불변 증거 메타데이터, 조회 projection 및 Paperclip 매핑 |
+| PostgreSQL | 명령·outbox, 불변 증거 메타데이터, 조회 projection 및 선택 호스트 매핑 |
 | Workers와 adapters | 역할별 실행, 빌드·측정 wrapper, 공통 TaskResult와 이벤트 |
 | Windows bridge | outbound HTTPS, SQLite journal, 명시적 단말 식별·lease·fencing |
 | Publisher | digest 승인 재검사, 제한된 제출 자격증명, 원격 결과 조회와 receipt |
 
-Paperclip company/project/agent/issue/case/run과 IFPMIC project/job/role/step_run/execution 사이에 ID 매핑을 둔다. Company 경계만으로 개인 job 권한이 충족된다고 보지 않는다. 모든 상세 조회와 다운로드에서 IFPMIC 소유권·프로젝트 권한을 확인한다.
+관제 화면과 연결하는 경우 호스트의 company/project/agent/issue/case/run과 IFPMIC project/job/role/step_run/execution 사이 ID mapping은 상태 표시용 연결일 뿐 권한을 부여하지 않는다. 모든 상세 조회와 다운로드에서 IFPMIC 소유권·프로젝트 권한을 확인한다.
 
-사용자의 IFPMIC 조작은 API 명령 → outbox → Temporal → projection/event 순서로 처리한다. Paperclip 화면의 별도 상태 변경으로 IFPMIC gate를 해제하지 않는다. 해당 case의 독립 routine·자동 전이는 끄고, 실행 계층의 결과를 멱등 반영한다. Paperclip을 실행기 호출에 사용하면 그 경로만 사용하고 같은 task를 worker가 직접 중복 호출하지 않는다.
+사용자의 IFPMIC 조작은 API 명령 → outbox → Temporal → projection/event 순서로 처리한다. 관제 화면의 별도 상태 변경으로 IFPMIC gate를 해제하지 않는다. 업무 상태 전이는 기존 IFPMIC runtime만 결정한다. 첫 로컬 Codex P01/P02 pilot은 분석 산출물 생산을 확인하는 adapter 연동이며 job/gate를 생성·완료하지 않는다. 향후 API/Temporal 연결 시 두 번째 업무 상태 결정 주체를 만들지 않는다.
 
 첫 연결 검증에서는 UI 확장 경로, API 권한 전달, pipeline projection, 실행 ID와 사용량 귀속을 확인한다. Paperclip 관리 화면의 직접 조작도 authoritative 상태를 바꾸지 못하도록 차단한다. 기본 transcript/API가 IFPMIC에서 제외할 원시 데이터를 노출하지 않는지 점검한 뒤 실사용 화면에 연결한다.
 
@@ -117,7 +119,7 @@ V 단계는 중간 사용자 흐름 전달이며 원본 B 백로그를 대체하
 
 | 순서 | 산출물 | 완료 확인 |
 |---|---|---|
-| V0 자료 기준 고정 | Paperclip 조사, 원본 계약·해시 보존, 이관 계획 | 이번 문서 변경 범위. 계약 구조 53/53, AT는 미실행 |
+| V0 자료 기준 고정 | 관제 호스트 reference, 원본 계약·해시 보존, 이관 계획 | 계약 구조 53/53, AT는 미실행 |
 | V1 계약 기반 정적 시각화 | 별도 IFPMIC 화면에서 29노드·6 phase·담당·정상/실패/반려 edge와 상세 panel | JSON과 노드/edge 비교, 사람·system 구분, 키보드·좁은 화면 확인 |
 | V2 모의 상태 탐색 | 성공, 사람 대기, TC 대기, 장비 단절, SAM/TEM/SQE 실패, 재작업·생략·불명확 결과 fixture | cycle/attempt 전환과 실제 근거 표시. ‘시나리오 재생’으로 표시하고 실행 서비스와 구분 |
 | B01–B02 | 계약 validator, 불변 profile, 사용자 범위 API·DB·workspace | AT-04/28, AT-21 |
@@ -133,6 +135,10 @@ B04의 ‘4개 화면’은 목록·요청 등록·실행 상세·내 작업함�
 
 ## 첫 실증과 연동 준비
 
+첫 에이전트 pilot은 `agents/common.md`, `agents/registry.json`, 여섯 역할별 `AGENTS.md` 지침 파일을 사용해 P01/P02 요청 분석을 실행하고 검토할 수 있는 산출물과 시연을 남긴다. pilot은 P03 진입 전에 멈춘다. 이어 P03–P05 산출과 사람 담당 X01 승인 단계를 구현하고, 이후 code-dev/TC 작업은 사람 담당 P06–P10 확인을 선행조건으로 삼는다. arch-runner는 등록된 wrapper만 실행하고, SQE는 승인된 bridge/수동 증거만 다루며, report는 승인·배포 실행을 맡지 않는다. 장비·SAM/TEM/정적분석·OSS 및 배포는 각 원본 gate와 준비가 갖춰진 뒤 순차 연결한다.
+
+이는 IFPMIC 원본 workflow, 기존 mock-task-live 미완료 작업, 사람 gate 또는 전체 수용을 대체하지 않는다. 각 회차의 mock/시연과 에이전트 실행 결과는 실제 job/gate PASS와 구분한다.
+
 첫 실제 job은 IFPMIC I2C 레지스터 읽기 실패 처리 확인과 필요 시 수정, 정상/실패 경로 KUnit TC 보완이다. 함수의 errno나 수정 위치는 실제 저장소와 사양을 읽고 결정한다. 단말 부팅·기본 스크립트 통과를 I2C 오류 경로 재현 증거로 사용하지 않는다.
 
 시각화·mock은 제공 계약으로 진행할 수 있다. 실제 실행 전에는 저장소·기준 ref·드라이버/TC 경로, 빌드/toolchain/config, 품질 도구·샘플·기준, Bedrock/runtime 버전, SSO, 단말/flash/boot/SQE profile, 제출 대상·권한·승인자를 준비한다. 설정 전에는 예제 profile의 비활성 mock 상태를 유지한다.
@@ -143,6 +149,6 @@ B04의 ‘4개 화면’은 목록·요청 등록·실행 상세·내 작업함�
 
 ZIP의 JSON 11개, 요구사항 15개, 수용사례 32개, 백로그 13개를 검토했다. 원본 검증 도구를 임시 복사본에서 실행한 결과 구조 검사 53/53이 통과했다. 이는 서비스·사내 도구·장비가 통과했다는 뜻이 아니다.
 
-이번 문서 변경의 저장소 검증은 `npm test` 148/148 및 `npm run build` 통과다. 가져온 참조 파일 17개는 ZIP 원본과 바이트 및 SHA-256이 일치하며 문서 내부 로컬 링크도 확인했다.
+과거 저장소 확인 기록에는 `npm test` 148/148, `npm run build`, 가져온 참조 파일 17개의 ZIP 원본 바이트·SHA-256 비교와 문서 내부 링크 확인이 포함된다. 이는 현재 변경의 검증 결과가 아니다.
 
-V1은 별도 Paperclip 기반 화면에 원본 계약을 읽어 29개 노드와 모든 전이를 표시하고, 선택 노드의 담당·입출력·완료 조건·생략 정책을 확인하도록 구현한다. V1의 독립 검증과 실제 host 장착 증거를 확인한 뒤 V2에서 모의 이벤트를 표시하고 B01–B05의 지속 실행 계층에 연결한다.
+과거 V1/V2 화면·호스트 결과와 원본 기준 검증은 기존 증거로 보존한다. 새 개발 순서는 AGILE-DELIVERY와 delivery-plan을 따른다. Paperclip 호스트 설치는 선택적 화면 검증이며 로컬 에이전트 pilot 또는 업무 실행 계층의 필수 의존성이 아니다.

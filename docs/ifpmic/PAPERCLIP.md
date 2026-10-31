@@ -1,6 +1,6 @@
 # Paperclip 구조와 IFPMIC 적용 범위
 
-Paperclip은 AI 에이전트를 역할별로 등록하고 목표, 작업, 실행 이력과 비용을 관리하는 오픈소스 플랫폼이다. Node.js 서버와 React UI를 제공하며, 에이전트 실행기는 adapter로 연결한다. IFPMIC에서는 이 조직·작업 관제 기반 위에 설계서의 단계 흐름과 증거 화면을 추가한다. [공식 소개](https://github.com/paperclipai/paperclip)
+Paperclip은 AI 에이전트를 역할별로 등록하고 목표, 작업, 실행 이력과 비용을 관리하는 오픈소스 플랫폼이다. Node.js 서버와 React UI를 제공하며, 에이전트 실행기는 adapter로 연결한다. 이 문서는 과거 AX 실험을 위한 참고 조사다. Paperclip은 IFPMIC 에이전트 workflow나 역할별 지침 파일의 필수 의존성이 아니다. [공식 소개](https://github.com/paperclipai/paperclip)
 
 ## 조사 기준
 
@@ -47,8 +47,8 @@ Heartbeat는 할당, 일정 또는 수동 호출 등의 계기로 실행되고 a
 
 Paperclip의 일반 승인이나 Case version은 IFPMIC 배포 명세 digest 승인의 대체물이 아니다. Paperclip UI의 원시 transcript를 그대로 사용자에게 노출하지 않고 IFPMIC 정책에 맞는 이벤트 projection을 사용한다. 범용 process adapter는 지정 wrapper만 호출하도록 제한한다.
 
-## 적용 방향
+## 참고 범위와 현재 방향
 
-Paperclip 기반의 격리된 IFPMIC 화면을 만들고, 설계서 기본안인 FastAPI·Temporal·PostgreSQL·artifact service를 업무 실행 계층으로 둔다. Paperclip의 작업과 Pipeline은 이 실행 계층의 상태를 반영한다. 업무 단계 전이의 최종 결정은 Temporal 한 곳에서 수행하고, Paperclip의 별도 routine이나 자동 전이가 같은 실행을 중복 시작하지 않도록 한다. 상세 경계와 검증 순서는 [이관 계획](./PLAN.md)에 정의한다.
+보존된 Paperclip plugin/host 검증은 선택적 관제 화면 참고 자료로 쓸 수 있다. 실제 AX workflow와 역할별 지침 파일은 로컬 Codex CLI adapter와 산출물·증거 계약으로 구현한다. 이후 IFPMIC API/Temporal에 연결해도 업무 상태는 기존 IFPMIC runtime 하나가 결정한다. 로컬 P01/P02 pilot은 검토할 수 있는 분석 산출물을 만든 뒤 P03 앞에서 멈추며 job/gate를 완료하지 않는다. 상세 경계와 순서는 [애자일 전달 계획](./AGILE-DELIVERY.md)과 [이관 계획](./PLAN.md)에 정의한다.
 
 Paperclip 소스를 이관할 때는 조사 commit과 실제 채택 버전을 고정하고 upstream과의 차이를 기록한다. 저장소의 [라이선스](https://github.com/paperclipai/paperclip/blob/307c27e3d82008223e1bf10a8aae0eea97cc187d/LICENSE)는 MIT이며, 복사한 소스에 해당 고지문을 보존한다.
