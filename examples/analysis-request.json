@@ -1,0 +1,5 @@
+{
+  "title": "분석 시연: 작업 상태 필터의 새로고침 복원",
+  "request": "작업 목록에서 선택한 상태 필터를 같은 탭 새로고침 뒤에도 유지하고 싶습니다. 계정이 바뀌거나 로그아웃하면 이전 계정의 필터를 지워야 합니다. 허용 상태는 전체, 진행 중, 완료이며 잘못된 저장 값은 전체로 복원합니다. 지금은 요구사항과 변경 영향만 분석하고 코드를 수정하지 마세요.",
+  "source_context": "이것은 실제 AX 구현을 주장하지 않는 공개 합성 예제입니다. 기준 소스 v1: let selectedStatus = 'all'; function selectStatus(value) { selectedStatus = value; } function onAccountChanged() { selectedStatus = 'all'; } 상태 key는 all, running, completed입니다. 저장은 아직 없으며 새로고침하면 all이 됩니다. 제약: sessionStorage에는 필터 key만 보관하고 계정 ID, 작업 내용, 인증 정보는 저장하지 않습니다. 계정 전환/로그아웃 이벤트는 존재하며 반드시 저장 필터도 삭제해야 합니다. 네트워크나 실제 저장소 접근은 필요 없습니다."
+}

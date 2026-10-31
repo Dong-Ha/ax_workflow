@@ -1,15 +1,31 @@
 # AX 에이전트 관제 페이지
 
-현재 PC의 Codex, Claude Code, OpenCode 기록에서 프로젝트 대화와 하위 에이전트의 상태, 위임 관계, 작업 요청, 완료 응답을 확인하는 로컬 대시보드입니다. 한국어 관제실 화면이며 추가 모델 호출이 없습니다.
+현재 PC의 Codex, Claude Code, OpenCode 기록에서 프로젝트 대화와 하위 에이전트의 상태, 위임 관계, 작업 요청, 완료 응답을 확인하는 로컬 대시보드입니다. 한국어 관제실 화면 자체는 모델을 호출하지 않으며, 아래 분석 CLI만 명시적 실행 때 모델을 호출합니다.
 
-IFPMIC workflow 시각화로 확장하는 방향은 [기준 자료와 이관 계획](./docs/ifpmic/README.md)에 정리했습니다. 현재 AX 자료를 기반으로 Paperclip을 활용하며, 제공된 IFPMIC 설계서와 JSON 계약을 최종 업무 기준으로 사용합니다. 해당 문서에는 Paperclip 조사, 시각화 우선순위와 B01–B13 구현 순서가 포함되어 있습니다.
+현재 개발 목표는 **실제로 동작하는 AX 워크플로**와 **실행에 적용되는 에이전트별 지침 파일**입니다. Paperclip은 과거 구현의 참고 자료이며 새 실행 경로의 필수 의존성이 아닙니다. IFPMIC 원본 역할·사람 승인·품질 기준은 보존합니다.
+
+## 첫 실제 분석 실행
+
+```sh
+npm run ax:analyze -- --input examples/analysis-request.json
+```
+
+로컬 Codex CLI에 로그인된 환경에서 실제 모델을 1~2회 호출합니다. 기본 모델은 `gpt-6-luna`이며 `--model`로 명시적으로 바꿀 수 있습니다. 현재 지원 대상은 Linux, Node.js 24 이상, `--ignore-user-config`·`--ephemeral`·구조화 출력을 지원하는 Codex CLI입니다. 첫 검증용 예제는 공개 합성 요청이고 모델 호출은 실제입니다. 사용자의 JSON은 `title`, `request`, `source_context` 문자열 세 필드로 작성하며 전달한 내용만 모델 입력으로 사용합니다.
+
+결과는 `workflow-artifacts/analysis/<실행 ID>/report.md`와 `run.json`, 단계별 JSON 및 지침 스냅샷에 저장됩니다. 이 디렉터리는 Git에서 제외하고 파일은 사용자 전용 권한으로 생성합니다. `report.md`를 열어 요구사항·수용 조건·영향·질문에 코멘트하면 됩니다. 일반 인증 패턴은 가리지만 완전한 비밀 탐지는 아니므로 비밀정보를 입력하지 않습니다.
+
+실행은 `agents/common.md`와 역할별 `AGENTS.md`를 읽고 해시를 고정합니다. 원시 추론·CLI 도구 출력은 기록하지 않습니다. 도구·앱·플러그인 호출은 제한하고 읽기 전용 임시 디렉터리에서 분석하며, 결과 저장은 실행기가 수행합니다. 단계별 제한은 60초, 자동 재시도는 없으며 질문·실패·중단 시 다음 단계를 호출하지 않습니다. 정상 종료 코드 0은 **로컬 P01/P02 구간 종료**, 2는 사람 입력 필요, 1은 실패입니다. 프로세스가 강제 종료되어 `running`에 남은 기록은 완료로 해석하지 않습니다.
+
+이 명령은 실행 어댑터 실증이며 IFPMIC job을 만들거나 원본 단계의 gate를 통과시키지 않습니다. 다음 개발은 같은 어댑터를 기존 API/Temporal에 연결해 저장 요청과 결과를 화면에서 확인하는 것입니다. 원본 Claude Code·Bedrock/장비/배포 검증과 구분합니다.
+
+역할 지침은 [agents/registry.json](./agents/registry.json)에 연결합니다. 저장소 개발용 루트 `AGENTS.md`와 업무 실행용 지침은 구분합니다.
 
 ## 사용자 흐름 단위로 개발하기
 
-현재 개발 우선순위는 [애자일 전달 계획](./docs/ifpmic/AGILE-DELIVERY.md)과 [전달 기준 데이터](./docs/ifpmic/delivery-plan.json)를 따릅니다. 한 번에 전달 단위 하나를 진행합니다. 접수 흐름을 전달했고, 현재 최소 모의 흐름을 합성 결과 화면 → 실제 결과 조회 → 제한된 실행으로 연결합니다. UI/API 구현과 관련 검사는 전체 490건 수용을 기다리지 않고 진행하며, 실제 엔진 활성화·전체 H2·원본 AT 인수 기준은 유지합니다.
+현재 개발 우선순위는 [애자일 전달 계획](./docs/ifpmic/AGILE-DELIVERY.md)과 [전달 기준 데이터](./docs/ifpmic/delivery-plan.json)를 따릅니다. 한 번에 사용자 행동 하나를 구현하고 작동하는 결과에 대한 코멘트를 받습니다. 현재 흐름은 로컬 실제 분석이며 기존 최소 모의 흐름의 부분 전달과 남은 작업은 별도로 보존합니다. UI/API 구현과 관련 검사는 전체 490건 수용을 기다리지 않고 진행하며, 실제 엔진 활성화·전체 H2·원본 AT 인수 기준은 유지합니다.
 
 - `npm run ifpmic:delivery`: 현재 목표와 선택 검사 목록을 출력합니다. 실행하지 않습니다.
-- `npm run ifpmic:delivery:check`: 현재 전달 단위의 고정 검사만 실행합니다. 기본 mock 단위는 접수 상태 controller만 검사하고, Python profile(`admission-dto`, `admission-local`)에는 `.ifpmic-venv`의 고정 의존성이 필요합니다. DB/Temporal을 시작하지 않습니다. 로그와 요약은 ignored `workflow-artifacts/delivery/`에 보존합니다.
+- `npm run ifpmic:delivery:check`: 현재 전달 단위의 고정 검사만 실행합니다. 기본 단위는 역할 지침과 분석 실행기의 집중 검사이며, Python profile(`admission-dto`, `admission-local`)에는 `.ifpmic-venv`의 고정 의존성이 필요합니다. DB/Temporal을 시작하지 않습니다. 로그와 요약은 ignored `workflow-artifacts/delivery/`에 보존합니다.
 - `npm run ifpmic:delivery -- --flow minimal-mock`: 현재 모의 결과 slice와 선택 검사를 출력합니다. 새 흐름마다 CLI를 수정할 필요가 없습니다. 기본 `feedback_profiles`와 선택 가능한 `allowed_feedback_profiles`를 구분하며 `--profile`로 검사 하나만 선택할 수 있습니다.
 - `npm run ifpmic:delivery:check -- --profile delivery-tool`: 전달 계획/도구 변경 시 도구 검사만 실행합니다. 각 profile과 전체 소요시간을 출력합니다.
 - `npm run ifpmic:delivery:browser`: 빌드 산출물만 사용하는 offline Chromium 화면 검사이며 API 서버를 시작하지 않습니다.
@@ -25,7 +41,7 @@ IFPMIC workflow 시각화로 확장하는 방향은 [기준 자료와 이관 계
 
 앰버 표시의 별도 ‘모의 작업 결과’는 합성 예시로 대기·확인 완료·조회 실패를 체험합니다. 이 예시는 실제 job 상태·접수 영수증·실행 결과를 바꾸지 않습니다. 계정/작업 변경은 이전 응답을 폐기하며, 실제 조회는 reload 때 다시 읽습니다. 결과·실행 ID·인증 자료는 sessionStorage에 저장하지 않습니다.
 
-- `npm run ifpmic:delivery:check`: 현재 read slice의 순수 Python DTO와 Node 조회 controller 검사를 실행합니다. DB/Temporal을 시작하지 않습니다. 과거 합성 화면만 검사하려면 `--slice mock-result-contract`를 지정합니다.
+- `npm run ifpmic:delivery:check`: 현재 선택된 slice의 검사만 실행합니다. 모의 결과 조회 검사는 `--flow minimal-mock --slice mock-result-read`로 선택합니다. DB/Temporal을 시작하지 않습니다. 과거 합성 화면만 검사하려면 `--slice mock-result-contract`를 지정합니다.
 - `npm run ifpmic:mock-task:browser`: 오프라인 I02 fixture에서 결과·오류·계정/작업 전환·reload·키보드·모바일 표시를 확인하고 캡처합니다.
 - `npm run ifpmic:mock-task:read:browser`: 오프라인 I02 fixture에서 실제 조회 패널의 pending/completed·503·잘못된 응답·권한 거부·reload·계정 전환을 확인합니다.
 - [결과 DTO](./docs/ifpmic/api-extensions/mock-task.v1.json)와 migration `006_mock_preflight`를 실제 읽기 API에 연결했습니다. 실행기가 결과를 생성하는 기능은 다음 slice입니다. 실제 연결 검사는 검토된 격리 launcher에 `ifpmic:admission:pg`의 `--expect-mock-task-read`를 명시하며 기존 작업은 `--read-existing`으로 새 POST 없이 확인합니다.
