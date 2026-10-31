@@ -1,0 +1,30 @@
+{
+  "schema_version": "ax.agent-registry.v1",
+  "common": "common.md",
+  "roles": {
+    "spec-gen": {
+      "instructions": "spec-gen/AGENTS.md",
+      "steps": ["P01", "P02", "P03", "P04", "P05"]
+    },
+    "tc": {
+      "instructions": "tc/AGENTS.md",
+      "steps": ["P09", "P12"]
+    },
+    "code-dev": {
+      "instructions": "code-dev/AGENTS.md",
+      "steps": ["P11", "P13", "P14"]
+    },
+    "arch-runner": {
+      "instructions": "arch-runner/AGENTS.md",
+      "steps": ["P15", "P17", "P19"]
+    },
+    "sqe": {
+      "instructions": "sqe/AGENTS.md",
+      "steps": ["P22", "P23"]
+    },
+    "report": {
+      "instructions": "report/AGENTS.md",
+      "steps": ["X02", "P25", "P26"]
+    }
+  }
+}
