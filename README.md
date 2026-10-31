@@ -161,7 +161,7 @@ npm run test:browser
 
 ## Paperclip 워크플로 실험
 
-정의된 단계와 에이전트를 실제로 호출하면서 진행 상황을 확인하는 별도 실험은 [experiments/paperclip/README.md](experiments/paperclip/README.md)에 있습니다. `npm run paperclip:install`, `npm run paperclip:start`로 localhost:3100의 독립된 Paperclip 인스턴스를 실행하고, `paperclip:seed`와 `paperclip:run`으로 예제 워크플로를 준비·실행합니다. AX 관제 서버는 기존 실행 방법을 사용합니다.
+과거 AX 개발 워크플로의 재현 안내는 [experiments/paperclip/README.md](experiments/paperclip/README.md)에 있습니다. `npm run paperclip:install`, `npm run paperclip:start`는 과거 AX 실행과 IFPMIC host 검증에 필요한 독립 인스턴스를 준비합니다. 현재 제품에 사용하지 않는 Slugify 예제와 전용 실행 명령은 삭제했습니다.
 
 전달된 소프트웨어 개발 프로세스 이미지를 적용한 AX 기능 개발은 `paperclip:ax:seed`, `paperclip:ax:run`으로 실행합니다. 제품부·개발팀·테스트팀·운영팀이 에이전트 검색·상태 필터를 실제로 개발하고, 결함 수정·재검증·출시 승인을 거쳐 localhost에 배포합니다. [팀별 흐름과 단계 대응](experiments/paperclip/FLOW.md), [실행·검증·반영 방법](experiments/paperclip/README.md)을 확인하세요.
 
