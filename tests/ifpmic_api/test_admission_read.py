@@ -101,7 +101,8 @@ def _seed_test_deployment(owner):
     return deployment, build
 
 
-def _seed_binding(owner, accepted, deployment, build, *, state="admitted", run_id=None, quarantine_code=None):
+def _seed_binding(owner, accepted, deployment, build, *, state="admitted", run_id=None, quarantine_code=None,
+                  catalog_hash=None):
     identity = owner.execute(
         "SELECT j.project_id,j.create_command_id,j.snapshot_id,w.workspace_token,w.generation,"
         "c.payload_sha256 FROM ifpmic.jobs j JOIN ifpmic.workspace_intents w USING(job_id) "
@@ -117,7 +118,7 @@ def _seed_binding(owner, accepted, deployment, build, *, state="admitted", run_i
         "VALUES(%s,%s,%s,%s,'default',%s,%s,'IFPMICJobWorkflow',%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
         (accepted["resource_id"], project_id, command_id, deployment, "c" * 64,
          f"ifpmic.job.{accepted['resource_id']}", build, f"ifpmic.build.{build}", snapshot_id,
-         "f" * 64, "1" * 64, "2" * 64, "3" * 64, workspace_token, generation,
+         catalog_hash or "f" * 64, "1" * 64, "2" * 64, "3" * 64, workspace_token, generation,
          payload_hash, "5" * 64, run_id, state, quarantine_code),
     )
     return command_id

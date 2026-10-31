@@ -4,6 +4,8 @@ from contextlib import contextmanager
 import psycopg
 
 CALLS = {
+    'read_mock_task_input': 'SELECT ifpmic.read_mock_task_input(%s,%s,%s,%s)',
+    'record_mock_task_result': 'SELECT ifpmic.record_mock_task_result(%s,%s,%s,%s,%s)',
     'read_dispatch_config': 'SELECT ifpmic.read_dispatch_config()',
     'read_registered_build': 'SELECT ifpmic.read_registered_build(%s)',
     'claim_delivery': 'SELECT ifpmic.claim_delivery(%s)',
